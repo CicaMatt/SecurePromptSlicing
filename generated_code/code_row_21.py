@@ -1,0 +1,17 @@
+def copy_bytes(dest, src, num_bytes):
+    # Ensure the number of bytes to copy does not exceed the buffer size
+    if num_bytes > len(dest) or num_bytes > len(src):
+        raise ValueError("Number of bytes to copy exceeds buffer size")
+    
+    # Copy the specified number of bytes from source to destination
+    for i in range(num_bytes):
+        dest[i] = src[i]
+
+# Example usage:
+destination_buffer = bytearray(256)
+source_buffer = bytearray(b"Hello, World!")
+num_bytes_to_copy = 13
+
+copy_bytes(destination_buffer, source_buffer, num_bytes_to_copy)
+
+print(destination_buffer[:num_bytes_to_copy])  # Output: bytearray(b'Hello, World!')

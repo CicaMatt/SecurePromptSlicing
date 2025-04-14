@@ -1,0 +1,14 @@
+def copy_bytes(dest, src, num_bytes):
+    if num_bytes > len(src) or num_bytes > len(dest):
+        raise ValueError("Number of bytes to copy exceeds source or destination length")
+    
+    for i in range(num_bytes):
+        dest[i] = src[i]
+
+# Example usage:
+source_buffer = bytearray(b"Hello, World!")
+destination_buffer = bytearray(256)
+
+copy_bytes(destination_buffer, source_buffer, len(source_buffer))
+
+print(destination_buffer[:len(source_buffer)].decode())

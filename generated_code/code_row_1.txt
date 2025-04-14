@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <string.h>
+
+void copy_bytes(char *destination, const char *source, size_t num_bytes) {
+    if (num_bytes > 0 && destination != NULL && source != NULL) {
+        memcpy(destination, source, num_bytes);
+    }
+}
+
+int main() {
+    char buffer[256] = {0};
+    const char message[] = "Hello, World!";
+    
+    copy_bytes(buffer, message, strlen(message));
+    
+    printf("Copied message: %s\n", buffer);
+    
+    return 0;
+}
