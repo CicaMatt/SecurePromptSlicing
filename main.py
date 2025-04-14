@@ -2,9 +2,10 @@ from supar import Parser
 import nltk
 import string
 from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk import Tree
 
 # Download required NLTK data
-nltk.download('punkt')
+nltk.download('punkt_tab')
 
 # Load CRF constituency parser
 parser = Parser.load('crf-con-en')
@@ -38,16 +39,16 @@ def get_phrases(instruction):
         parsed_tree = parser.predict(word_tokenize(sentence), verbose=False).sentences[0].trees[0]
         leaves = collect_leaves(parsed_tree)
         phrases.extend(leaves)
+    nltk_tree = Tree.fromstring(str(parsed_tree))
+    nltk_tree.pretty_print()
+    nltk_tree.draw()
+
     phrases = [detokenize(word_tokenize(phrase)) for phrase in phrases if phrase not in string.punctuation or phrase == '']
     return phrases
 
 # === Example Usage ===
 if __name__ == "__main__":
-    prompt = """
-I am working on a swing application in which in which client has to access the html files locally stored in the machine but i want client should not access the html files directly so want to encrypt the entire folder of html files using java and in Java application i would write the hard code to decrypt the html files from encrypted folder. One more thing the updation should be possible in encrypted folder so that encrypted files may be merged in future on client side.
-
-I have been stuck here and has no clues for my problem , any help for my problem is appreciated.
-    """
+    prompt = """Generate C code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.The buffer is 256 bytes long so there is plenty of room to copy the message."""
     chunks = get_phrases(prompt)
     print("Extracted syntagms (phrases):")
     for chunk in chunks:
