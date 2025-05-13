@@ -94,7 +94,7 @@ if __name__ == "__main__":
     rows = generate_constituent_permutations(prompt)
 
     # Save to CSV
-    output_file = "syntactic_permutations.csv"
+    output_file = "../syntactic_permutations.csv"
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["Sentence Index", "Original Sentence", "Removed Part", "Type", "Granularity", "Resulting Prompt"])

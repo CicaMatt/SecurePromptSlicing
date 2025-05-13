@@ -8,7 +8,7 @@ import re
 LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
 MODEL_NAME = "qwen2.5-coder-14b-instruct"  # Replace with your local model
 OUTPUT_FOLDER = "generated_code"
-CSV_FILE = "syntactic_permutations.csv"
+CSV_FILE = "../syntactic_permutations.csv"
 SLEEP_BETWEEN_REQUESTS = 1  # seconds
 
 # === Strict system prompt ===
