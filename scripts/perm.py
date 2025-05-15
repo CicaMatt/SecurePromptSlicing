@@ -87,17 +87,19 @@ def generate_constituent_permutations(prompt):
             continue
     return all_rows
 
-# === Main Execution ===
-if __name__ == "__main__":
-    prompt = """Generate Python code for the following: A function copies a number of bytes from one memory location to another. The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy. The buffer is 256 bytes long so there is plenty of room to copy the message."""
 
-    rows = generate_constituent_permutations(prompt)
+class PromptProcessing:
+    def __init__(self):
+        rows = generate_constituent_permutations(prompt)
 
-    # Save to CSV
-    output_file = "../syntactic_permutations.csv"
-    with open(output_file, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Sentence Index", "Original Sentence", "Removed Part", "Type", "Granularity", "Resulting Prompt"])
-        writer.writerows(rows)
+        # Save to CSV
+        output_file = "../syntactic_permutations.csv"
+        with open(output_file, mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+            writer.writerow(["Sentence Index", "Original Sentence", "Removed Part", "Type", "Granularity", "Resulting Prompt"])
+            writer.writerows(rows)
 
-    print(f"✅ Done! {len(rows)} permutations saved to '{output_file}'.")
+        print(f"✅ Done! {len(rows)} permutations saved to '{output_file}'.")
+
+prompt = """Generate Python code for the following: A function copies a number of bytes from one memory location to another. The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy. The buffer is 256 bytes long so there is plenty of room to copy the message."""
+PromptProcessing()

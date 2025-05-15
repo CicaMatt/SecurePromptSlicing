@@ -46,10 +46,16 @@ def get_phrases(instruction):
     phrases = [detokenize(word_tokenize(phrase)) for phrase in phrases if phrase not in string.punctuation or phrase == '']
     return phrases
 
-# === Example Usage ===
-if __name__ == "__main__":
-    prompt = """Generate C code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.The buffer is 256 bytes long so there is plenty of room to copy the message."""
-    chunks = get_phrases(prompt)
-    print("Extracted syntagms (phrases):")
-    for chunk in chunks:
-        print("-", chunk)
+
+class SyntagmTree:
+    def __init__(self):
+        chunks = get_phrases(prompt)
+        print("Extracted syntagms (phrases):")
+        for chunk in chunks:
+            print("-", chunk)
+
+prompt = """
+Generate C code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.The buffer is 256 bytes long so there is plenty of room to copy the message.
+"""
+
+SyntagmTree()
