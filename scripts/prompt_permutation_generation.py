@@ -36,6 +36,7 @@ def extract_conceptual_constituents(tree):
             phrase = detokenize(subtree.leaves())
             n_tokens = len(subtree.leaves())
 
+
             # Tier 1: Minimal (no nested valid phrases)
             has_nested_phrase = any(
                 isinstance(child, Tree) and child.label() in VALID_PHRASE_LABELS

@@ -98,7 +98,7 @@ class Prompting:
 
 class Cleaning:
     def __init__(self):
-        def rimuovi_think_e_salva(input_dir, output_dir):
+        def think_tag_removal(input_dir, output_dir):
             # Crea la directory di output se non esiste
             os.makedirs(output_dir, exist_ok=True)
 
@@ -260,7 +260,7 @@ class Cleaning:
 
             print("\nElaborazione della directory completata.")
 
-        rimuovi_think_e_salva("generated_code", "generated_code_cleaned")
+        think_tag_removal("generated_code", "generated_code_cleaned")
         clean_files("generated_code_cleaned")
 
 
