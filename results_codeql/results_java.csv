@@ -1,0 +1,1 @@
+"Building a command line with string concatenation","Using concatenated strings in a command line is vulnerable to malicious insertion of special characters in the strings.","error","Command line is built with string concatenation.","/src/main/java/com/example/Utils.java","15","35","15","43"

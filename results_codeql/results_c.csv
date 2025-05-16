@@ -1,0 +1,2 @@
+"Use of dangerous function","Use of a standard library function that does not guard against buffer overflow.","error","'gets' does not guard against buffer overflow.","/main.c","17","5","17","8"
+"Potential use after free","An allocated memory block is used after it has been freed. Behavior in such cases is undefined and can cause memory corruption.","warning","Memory may have been previously freed by [[""call to free""|""relative:///utils.c:10:5:10:8""]].","/utils.c","11","36","11","39"

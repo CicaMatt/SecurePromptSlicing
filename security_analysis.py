@@ -2,56 +2,36 @@ import subprocess
 
 
 def run_sh_commands(commands):
-    results = []
-
     for command in commands:
+        print(f"Running command: {command}")
         try:
             result = subprocess.run(
                 command,
                 shell=True,
-                check=False,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
+                check=False
             )
-            results.append({
-                'command': command,
-                'returncode': result.returncode,
-                'stdout': result.stdout.strip(),
-                'stderr': result.stderr.strip()
-            })
+            print(f"Command: {command}")
+            print(f"Return code: {result.returncode}\n")
         except Exception as e:
-            results.append({
-                'command': command,
-                'returncode': -1,
-                'stdout': '',
-                'stderr': str(e)
-            })
-
-    return results
-
-
+            print(f"Command: {command}")
+            print(f"Return code: -1")
+            print(f"Error: {str(e)}\n")
 
 
 class SecurityAnalysis:
-    def __init__(self):
-        results = run_sh_commands(commands)
+    def __init__(self, commands):
+        run_sh_commands(commands)
 
-        for r in results:
-            print(f"Command: {r['command']}")
-            print(f"Return code: {r['returncode']}")
-            print(f"Output: {r['stdout']}")
-            print(f"Error: {r['stderr']}\n")
 
-commands = [
-    r'cd prova_c',
-    r'rm -f *.o vuln',
-    r'cd ..',
+
+my_commands = [
+    # C folder cleaning
+    r'cd data/prova_c && rm -f *.o vuln _codeql_detected_source_root',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_example_db --language=python --source-root=prova_python --overwrite',
-    r'codeql database create CodeQL/Databases/c_example_db --language=c --source-root=prova_c --overwrite',
-    r'codeql database create CodeQL/Databases/java_example_db --language=java --source-root=prova_java --command="mvn clean compile" --overwrite',
+    r'codeql database create CodeQL/Databases/python_example_db --language=python --source-root=data/prova_python --overwrite',
+    r'codeql database create CodeQL/Databases/c_example_db --language=c --source-root=data/prova_c --overwrite',
+    r'codeql database create CodeQL/Databases/java_example_db --language=java --source-root=data/prova_java --command="mvn clean compile" --overwrite',
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries',
@@ -64,4 +44,4 @@ commands = [
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide'
 ]
 
-SecurityAnalysis()
+SecurityAnalysis(my_commands)
