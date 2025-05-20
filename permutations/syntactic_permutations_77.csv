@@ -1,73 +1,97 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",code,NP,minimal,"Generate <language> for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The creates a new person and sets the status to 0 and the name to ""John"".","Generate Python for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",for the following,PP,chunk,"Generate <language> code : 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code : 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the following,NP,minimal,"Generate <language> code for : 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for : 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",Memory allocation method,NP,minimal,"Generate <language> code for the following: 
+ allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",a block,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",of memory of the specified size,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",memory of the specified size,NP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",memory,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",of the specified size,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the specified size,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",a pointer,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",to the beginning of the block.The code,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the beginning of the block.The code,NP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the beginning,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to of the block.The code creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to of the block.The code creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",of the block.The code,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the block.The code,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of creates a new person and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of creates a new person and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",creates a new person,VP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",a new person,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates and sets the status to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates and sets the status to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the status,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets to 0 and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets to 0 and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",to 0 and the name,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",0 and the name,NP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",0,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to and the name to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to and the name to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",the name,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and to ""John"".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and to ""John""."
 0,"Generate <language> code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to ""John"".",John,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to """".","Generate Python code for the following: 
  Memory allocation method allocates a block of memory of the specified size and returns a pointer to the beginning of the block.The code creates a new person and sets the status to 0 and the name to """"."

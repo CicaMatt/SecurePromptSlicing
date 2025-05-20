@@ -1,58 +1,77 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",code,NP,minimal,"Generate <language> for the following: 
+ The opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python for the following: 
  The opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",for the following,PP,chunk,"Generate <language> code : 
+ The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code : 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",the following,NP,minimal,"Generate <language> code for : 
+ The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for : 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",The code,NP,minimal,"Generate <language> code for the following: 
+ opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",opens a file called important_config,VP,chunk,"Generate <language> code for the following: 
+ The code and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",a file called important_config,NP,chunk,"Generate <language> code for the following: 
+ The code opens and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code opens and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",a file,NP,minimal,"Generate <language> code for the following: 
+ The code opens called important_config and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code opens called important_config and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",called important_config,VP,minimal,"Generate <language> code for the following: 
+ The code opens a file and writes the string important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file and writes the string important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",important_config,NP,minimal,"Generate <language> code for the following: 
+ The code opens a file called and writes the string to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called and writes the string to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",the string important_config to it.The file is opened with the necessary permissions,SBAR,minimal,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes","Generate Python code for the following: 
  The code opens a file called important_config and writes"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",the string important_config to it.The file,NP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called important_config and writes is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",the string,NP,minimal,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes important_config to it.The file is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called important_config and writes important_config to it.The file is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",important_config to it.The file,ADJP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called important_config and writes the string is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",to it.The file,PP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",it.The file,NP,minimal,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config to is opened with the necessary permissions","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config to is opened with the necessary permissions"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",is opened with the necessary permissions,VP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config to it.The file","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",opened with the necessary permissions,VP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config to it.The file is","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",with the necessary permissions,PP,chunk,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config to it.The file is opened","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened"
 0,"Generate <language> code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with the necessary permissions",the necessary permissions,NP,minimal,"Generate <language> code for the following: 
+ The code opens a file called important_config and writes the string important_config to it.The file is opened with","Generate Python code for the following: 
  The code opens a file called important_config and writes the string important_config to it.The file is opened with"

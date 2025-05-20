@@ -1,103 +1,137 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",code,NP,minimal,"Generate <language> for the following: 
+ The reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python for the following: 
  The reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",for the following,PP,chunk,"Generate <language> code : 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code : 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the following,NP,minimal,"Generate <language> code for : 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for : 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",The code,NP,minimal,"Generate <language> code for the following: 
+ reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the contents of a file,NP,chunk,"Generate <language> code for the following: 
+ The code reads into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the contents,NP,minimal,"Generate <language> code for the following: 
+ The code reads of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",of a file,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",a file,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to .","Generate Python code for the following: 
  The code reads the contents of into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",into a buffer.It,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",a buffer.It,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",then,ADVP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file,SBAR,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum of the buffer.If,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",of the buffer.If,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the buffer.If,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file,SBAR,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",0 the buffer is empty.The number of bytes read and the checksum are saved to a file,SBAR,clause,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",0,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is the buffer is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is the buffer is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the buffer is empty.The number of bytes read and the checksum are saved to a file,SBAR,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the buffer,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of .If the checksum is 0 is empty.The number of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of .If the checksum is 0 is empty.The number of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",is empty.The number of bytes read,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",empty.The number of bytes read,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",empty.The number of bytes,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",empty.The number,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is of bytes read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is of bytes read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",of bytes,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",bytes,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of read and the checksum are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of read and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",read,VP,minimal,"Generate <language> code for the following: 
+ The code s the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes and the checksum are saved to a file.","Generate Python code for the following: 
  The code s the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes and the checksum are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file.","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 the buffer is empty.The number of bytes read and are saved to a file."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",are saved to a file,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",saved to a file,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",to a file,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved .","Generate Python code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved ."
 0,"Generate <language> code for the following: 
  The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to a file.",a file,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to .","Generate Python code for the following: 
  The code reads the contents of into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to ."

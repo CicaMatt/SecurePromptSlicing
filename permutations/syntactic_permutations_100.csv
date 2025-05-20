@@ -1,40 +1,53 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",code for the following,NP,chunk,"Generate <language> : 
+ The code creates a file called important_config.The file is created with the necessary permissions.","Generate Python : 
  The code creates a file called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",code,NP,minimal,"Generate <language> for the following: 
+ The creates a file called important_config.The file is created with the necessary permissions.","Generate Python for the following: 
  The creates a file called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",for the following,PP,chunk,"Generate <language> code : 
+ The code creates a file called important_config.The file is created with the necessary permissions.","Generate Python code : 
  The code creates a file called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",the following,NP,minimal,"Generate <language> code for : 
+ The code creates a file called important_config.The file is created with the necessary permissions.","Generate Python code for : 
  The code creates a file called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",The code,NP,minimal,"Generate <language> code for the following: 
+ creates a file called important_config.The file is created with the necessary permissions.","Generate Python code for the following: 
  creates a file called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",a file called important_config.The file,NP,chunk,"Generate <language> code for the following: 
+ The code creates is created with the necessary permissions.","Generate Python code for the following: 
  The code creates is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",a file,NP,minimal,"Generate <language> code for the following: 
+ The code creates called important_config.The file is created with the necessary permissions.","Generate Python code for the following: 
  The code creates called important_config.The file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",called important_config.The file,VP,minimal,"Generate <language> code for the following: 
+ The code creates a file is created with the necessary permissions.","Generate Python code for the following: 
  The code creates a file is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",important_config.The file,NP,minimal,"Generate <language> code for the following: 
+ The code creates a file called is created with the necessary permissions.","Generate Python code for the following: 
  The code creates a file called is created with the necessary permissions."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",is created with the necessary permissions,VP,chunk,"Generate <language> code for the following: 
+ The code creates a file called important_config.The file .","Generate Python code for the following: 
  The code creates a file called important_config.The file ."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",created with the necessary permissions,VP,chunk,"Generate <language> code for the following: 
+ The code creates a file called important_config.The file is .","Generate Python code for the following: 
  The code creates a file called important_config.The file is ."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",with the necessary permissions,PP,chunk,"Generate <language> code for the following: 
+ The code creates a file called important_config.The file is created .","Generate Python code for the following: 
  The code creates a file called important_config.The file is created ."
 0,"Generate <language> code for the following: 
  The code creates a file called important_config.The file is created with the necessary permissions.",the necessary permissions,NP,minimal,"Generate <language> code for the following: 
+ The code creates a file called important_config.The file is created with .","Generate Python code for the following: 
  The code creates a file called important_config.The file is created with ."

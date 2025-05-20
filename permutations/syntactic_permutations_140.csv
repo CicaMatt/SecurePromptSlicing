@@ -1,50 +1,71 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  Connect to the database.",code for the following,NP,chunk,"Generate <language> : 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python : 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",code,NP,minimal,"Generate <language> for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",for the following,PP,chunk,"Generate <language> code : 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python code : 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",the following,NP,minimal,"Generate <language> code for : 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python code for : 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",Connect to the database,VP,chunk,"Generate <language> code for the following: 
+ . Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python code for the following: 
  . Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",to the database,PP,chunk,"Generate <language> code for the following: 
+ Connect . Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect . Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 0,"Generate <language> code for the following: 
  Connect to the database.",the database,NP,minimal,"Generate <language> code for the following: 
+ Connect to . Execute a query to check if the username exists in .If the username exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect to . Execute a query to check if the username exists in .If the username exists it returns true otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,a query,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute to check if the username exists in the database.If the username exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute to check if the username exists in the database.If the username exists it returns true otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,if the username exists in the database.If the username exists it returns true otherwise it returns false,SBAR,clause,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check .","Generate Python code for the following: 
  Connect to the database. Execute a query to check ."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,if the username exists in the database.If the username exists it returns true otherwise,SBAR,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,the username,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if exists in the database.If exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if exists in the database.If exists it returns true otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,the database.If,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the username exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the username exists it returns true otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,the username exists it returns true,SBAR,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,the username,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if exists in the database.If exists it returns true otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if exists in the database.If exists it returns true otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,it returns true,SBAR,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,it,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists returns true otherwise returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists returns true otherwise returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,true,ADJP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns otherwise it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns otherwise it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,otherwise,ADVP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true it returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true it returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,it,NP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists returns true otherwise returns false.","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists returns true otherwise returns false."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,returns false,VP,chunk,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it .","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it ."
 1,Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns false.,false,ADJP,minimal,"Generate <language> code for the following: 
+ Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns .","Generate Python code for the following: 
  Connect to the database. Execute a query to check if the username exists in the database.If the username exists it returns true otherwise it returns ."

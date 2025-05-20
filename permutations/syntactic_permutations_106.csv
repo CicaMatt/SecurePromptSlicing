@@ -1,67 +1,96 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",code for the following,NP,chunk,"Generate <language> : 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python : 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",code,NP,minimal,"Generate <language> for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",for the following,PP,chunk,"Generate <language> code : 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code : 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",the following,NP,minimal,"Generate <language> code for : 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for : 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",a string with some super secret info,NP,chunk,"Generate <language> code for the following: 
+ Create . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",a string,NP,minimal,"Generate <language> code for the following: 
+ Create with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",with some super secret info,PP,chunk,"Generate <language> code for the following: 
+ Create a string . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 0,"Generate <language> code for the following: 
  Create a string with some super secret info.",some super secret info,NP,minimal,"Generate <language> code for the following: 
+ Create a string with . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with . Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,Create a file,VP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,a file,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,write the super secret info to it,VP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,the super secret info,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write to it. Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,to it,PP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 1,Create a file and write the super secret info to it.,it,NP,minimal,"Generate <language> code for the following: 
+ Create a string wh some super secret info. Create a file and wre the super secret info to . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string wh some super secret info. Create a file and wre the super secret info to . Change the permissions of the file to read-only for the owner. Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,the permissions of the file,NP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change to read-only for the owner. Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,the permissions,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change of the file to read-only for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change of the file to read-only for the owner. Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,of the file,PP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions to read-only for the owner. Print the name to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions to read-only for the owner. Print the name to the screen."
 2,Change the permissions of the file to read-only for the owner.,the file,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of to read-only for the owner. Print the name of to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of to read-only for the owner. Print the name of to the screen."
 2,Change the permissions of the file to read-only for the owner.,to read-only for the owner,VP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file . Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file . Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,read-only for the owner,VP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to . Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to . Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,read-only,ADJP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to for the owner. Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to for the owner. Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,for the owner,PP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only . Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only . Print the name of the file to the screen."
 2,Change the permissions of the file to read-only for the owner.,the owner,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for . Print the name of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for . Print the name of the file to the screen."
 3,Print the name of the file to the screen.,the name of the file,NP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print to the screen."
 3,Print the name of the file to the screen.,the name,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print of the file to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print of the file to the screen."
 3,Print the name of the file to the screen.,of the file,PP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions to read-only for the owner. Print the name to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions to read-only for the owner. Print the name to the screen."
 3,Print the name of the file to the screen.,the file,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of to read-only for the owner. Print the name of to the screen.","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of to read-only for the owner. Print the name of to the screen."
 3,Print the name of the file to the screen.,to the screen,PP,chunk,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file .","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file ."
 3,Print the name of the file to the screen.,the screen,NP,minimal,"Generate <language> code for the following: 
+ Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to .","Generate Python code for the following: 
  Create a string with some super secret info. Create a file and write the super secret info to it. Change the permissions of the file to read-only for the owner. Print the name of the file to ."

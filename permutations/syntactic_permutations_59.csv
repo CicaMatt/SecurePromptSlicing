@@ -1,50 +1,68 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",code for the following,NP,chunk,"Generate <language> : 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python : 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",code,NP,minimal,"Generate <language> for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",for the following,PP,chunk,"Generate <language> code : 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code : 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",the following,NP,minimal,"Generate <language> code for : 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for : 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",It,NP,minimal,"Generate <language> code for the following: 
+ allocates a buffer of size buffer_size. overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  allocates a buffer of size buffer_size. overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",a buffer of size,NP,chunk,"Generate <language> code for the following: 
+ It allocates buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",a buffer,NP,minimal,"Generate <language> code for the following: 
+ It allocates of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",of size,PP,chunk,"Generate <language> code for the following: 
+ It allocates a buffer buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",size,NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of buffer_.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of buffer_.It overwrites all values in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",all values,NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites in the buffer with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites in the buffer with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",in the buffer,PP,chunk,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",the buffer,NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in with 'A'. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in with 'A'. The buffer is allocated on the stack."
 0,"Generate <language> code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'.",A',NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with '. The buffer is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with '. The buffer is allocated on the stack."
 1,The buffer is allocated on the stack.,The buffer,NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. is allocated on the stack.","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. is allocated on the stack."
 1,The buffer is allocated on the stack.,is allocated on the stack,VP,chunk,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer .","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer ."
 1,The buffer is allocated on the stack.,allocated on the stack,VP,chunk,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is .","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is ."
 1,The buffer is allocated on the stack.,on the stack,PP,chunk,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated .","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated ."
 1,The buffer is allocated on the stack.,the stack,NP,minimal,"Generate <language> code for the following: 
+ It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on .","Generate Python code for the following: 
  It allocates a buffer of size buffer_size.It overwrites all values in the buffer with 'A'. The buffer is allocated on ."

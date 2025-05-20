@@ -1,55 +1,73 @@
-Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,Final Prompt
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",code,NP,minimal,"Generate <language> for the following: 
+ The is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python for the following: 
  The is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",for the following,PP,chunk,"Generate <language> code : 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code : 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",the following,NP,minimal,"Generate <language> code for : 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for : 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",The code,NP,minimal,"Generate <language> code for the following: 
+ is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for the following: 
  is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",a simple web application,NP,minimal,"Generate <language> code for the following: 
+ The code is that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for the following: 
  The code is that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload,SBAR,clause,"Generate <language> code for the following: 
+ The code is a simple web application .","Generate Python code for the following: 
  The code is a simple web application ."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application accepts a file upload and saves it to the uploads directory.The upload_file function is the function handles the file upload.","Generate Python code for the following: 
  The code is a simple web application accepts a file upload and saves it to the uploads directory.The upload_file function is the function handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",accepts a file upload,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",a file upload,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that accepts and saves it to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that accepts and saves it to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",it,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves to the uploads directory.The upload_file function is the function that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves to the uploads directory.The upload_file function is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",to the uploads directory.The upload_file function,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it is the function that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",the uploads directory.The upload_file function,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to is the function that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to is the function that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",the function that handles the file upload,NP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is .","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is ."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",the function,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is that handles the file upload.","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is that handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",that handles the file upload,SBAR,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function .","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function ."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application accepts a file upload and saves it to the uploads directory.The upload_file function is the function handles the file upload.","Generate Python code for the following: 
  The code is a simple web application accepts a file upload and saves it to the uploads directory.The upload_file function is the function handles the file upload."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",handles the file upload,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that .","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that ."
 0,"Generate <language> code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles the file upload.",the file upload,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles .","Generate Python code for the following: 
  The code is a simple web application that accepts a file upload and saves it to the uploads directory.The upload_file function is the function that handles ."
