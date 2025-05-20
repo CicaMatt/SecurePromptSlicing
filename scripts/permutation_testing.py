@@ -116,7 +116,7 @@ class MultiPermutationTesting:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
                 prompt = row["Resulting Prompt"]
-                ext = guess_extension("text/plain") or ".txt"  # default extension
+                ext = guess_extension(prompt) or ".txt"  # default extension
                 filename = f"code_row_{i}{ext}"
                 filepath = os.path.join(output_folder, filename)
 
