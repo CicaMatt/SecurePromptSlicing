@@ -47,6 +47,9 @@ def get_phrases(instruction):
     return phrases
 
 
+###################################################################################################################
+
+
 class SyntagmTree:
     def __init__(self):
         chunks = get_phrases(prompt)
