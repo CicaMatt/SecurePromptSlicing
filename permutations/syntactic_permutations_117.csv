@@ -1,0 +1,58 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",code for the following,NP,chunk,"Generate <language> : 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",code,NP,minimal,"Generate <language> for the following: 
+ This generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",for the following,PP,chunk,"Generate <language> code : 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",the following,NP,minimal,"Generate <language> code for : 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",This code,NP,minimal,"Generate <language> code for the following: 
+ generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",generates three random floats,VP,chunk,"Generate <language> code for the following: 
+ This code and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",three random floats,NP,minimal,"Generate <language> code for the following: 
+ This code generates and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",them,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",to strings using the a function,PP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them . The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",strings using the a function,NP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to . The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",strings,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to using the a function. The resulting are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",using the a function,VP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings . The resulting strings are stored in the variables str_a; str_b; and str_c."
+0,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function.",the a function,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using . The resulting strings are stored in the variables str_a; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,The resulting strings,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. are stored in the variables str_a; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,are stored in the variables str_a,VP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings ; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,stored in the variables str_a,VP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are ; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,in the variables str_a,PP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored ; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,the variables str_a,NP,chunk,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in ; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,the variables,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in str_a; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,str_a,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables ; str_b; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,str_b,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; ; and str_c."
+1,The resulting strings are stored in the variables str_a; str_b; and str_c.,str_c,NP,minimal,"Generate <language> code for the following: 
+ This code generates three random floats and converts them to strings using the a function. The resulting strings are stored in the variables str_a; str_b; and ."

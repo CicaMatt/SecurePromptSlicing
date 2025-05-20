@@ -1,0 +1,67 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",code for the following,NP,chunk,"Generate <language> : 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",code,NP,minimal,"Generate <language> for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",for the following,PP,chunk,"Generate <language> code : 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the following,NP,minimal,"Generate <language> code for : 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",The program,NP,minimal,"Generate <language> code for the following: 
+ takes a single argument from the command line which is the size of the buffer to allocate. allocates a buffer of the specified size. prints the contents of the buffer. exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",a single argument,NP,minimal,"Generate <language> code for the following: 
+ The program takes from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the command line,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits,SBAR,clause,"Generate <language> code for the following: 
+ The program takes a single argument from the command line ."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",which,WHNP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the size of the buffer,NP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the size,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",of the buffer,PP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size to allocate.The program allocates a buffer of the specified size.The program prints the contents .The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the buffer,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of to allocate.The program allocates a buffer of the specified size.The program prints the contents of .The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",to allocate.The program,PP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",allocate.The program,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",a buffer,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates of the specified size.The program prints the contents of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the contents of the buffer.The program exits,NP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints ."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the contents,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints of the buffer.The program exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",of the buffer.The program exits,PP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents ."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the buffer.The program exits,NP,chunk,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of ."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",the buffer.The program,NP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of exits."
+0,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program exits.",exits,VP,minimal,"Generate <language> code for the following: 
+ The program takes a single argument from the command line which is the size of the buffer to allocate.The program allocates a buffer of the specified size.The program prints the contents of the buffer.The program ."

@@ -1,0 +1,103 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",code,NP,minimal,"Generate <language> for the following: 
+ The reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",for the following,PP,chunk,"Generate <language> code : 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the following,NP,minimal,"Generate <language> code for : 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",The code,NP,minimal,"Generate <language> code for the following: 
+ reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the contents of a file,NP,chunk,"Generate <language> code for the following: 
+ The code reads into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the contents,NP,minimal,"Generate <language> code for the following: 
+ The code reads of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",of a file,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",a file,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",into a buffer.It,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",a buffer.It,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",then,ADVP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file,SBAR,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates ."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum of the buffer.If,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 then the buffer is empty.The number of bytes read and are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",of the buffer.If,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the buffer.If,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum is 0,SBAR,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 then the buffer is empty.The number of bytes read and are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",is 0,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",0,VP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is then the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",then,ADVP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It calculates the checksum of the buffer.If the checksum is 0 the buffer is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the buffer,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of .If the checksum is 0 then is empty.The number of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",is empty.The number of bytes read,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",empty.The number of bytes read,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",empty.The number,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is of bytes read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",of bytes read,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",bytes read,NP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",bytes,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of read and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",read,VP,minimal,"Generate <language> code for the following: 
+ The code s the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes and the checksum are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",the checksum,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates of the buffer.If is 0 then the buffer is empty.The number of bytes read and are saved to another file."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",are saved to another file,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum ."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",saved to another file,VP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are ."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",to another file,PP,chunk,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved ."
+0,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to another file.",another file,NP,minimal,"Generate <language> code for the following: 
+ The code reads the contents of a file into a buffer.It then calculates the checksum of the buffer.If the checksum is 0 then the buffer is empty.The number of bytes read and the checksum are saved to ."

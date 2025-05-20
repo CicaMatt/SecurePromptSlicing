@@ -1,0 +1,48 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",code for the following,NP,chunk,"Generate <language> : 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",code,NP,minimal,"Generate <language> for the following: 
+ The is a simple registration page that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",for the following,PP,chunk,"Generate <language> code : 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",the following,NP,minimal,"Generate <language> code for : 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",The code,NP,minimal,"Generate <language> code for the following: 
+ is a simple registration page that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",a simple registration page,NP,minimal,"Generate <language> code for the following: 
+ The code is that takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",that takes in a username and password,SBAR,chunk,"Generate <language> code for the following: 
+ The code is a simple registration page . The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page takes in a username and password. The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",takes in a username and password,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration page that . The password is hashed and then inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",in,PRT,minimal,"Generate <language> code for the followg: 
+ The code is a simple registration page that takes a username and password. The password is hashed and then serted to the database."
+0,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password.",a username and password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in . The password is hashed and then inserted into the database."
+1,The password is hashed and then inserted into the database.,The password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. is hashed and then inserted into the database."
+1,The password is hashed and then inserted into the database.,hashed and then inserted into the database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is ."
+1,The password is hashed and then inserted into the database.,hashed,VP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is and then inserted into the database."
+1,The password is hashed and then inserted into the database.,then,ADVP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is hashed and inserted into the database."
+1,The password is hashed and then inserted into the database.,inserted into the database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then ."
+1,The password is hashed and then inserted into the database.,into the database,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then inserted ."
+1,The password is hashed and then inserted into the database.,the database,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration page that takes in a username and password. The password is hashed and then inserted into ."

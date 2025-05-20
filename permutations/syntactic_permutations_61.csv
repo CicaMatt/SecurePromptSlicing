@@ -1,0 +1,46 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",code for the following,NP,chunk,"Generate <language> : 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",code,NP,minimal,"Generate <language> for the following: 
+ The allocates a buffer of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",for the following,PP,chunk,"Generate <language> code : 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",the following,NP,minimal,"Generate <language> code for : 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",The code,NP,minimal,"Generate <language> code for the following: 
+ allocates a buffer of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",a buffer of size buffer_size.Then,NP,chunk,"Generate <language> code for the following: 
+ The code allocates it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",a buffer,NP,minimal,"Generate <language> code for the following: 
+ The code allocates of size buffer_size.Then it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",of size buffer_size.Then,PP,chunk,"Generate <language> code for the following: 
+ The code allocates a buffer it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",size buffer_size.Then,NP,minimal,"Generate <language> code for the following: 
+ The code allocates a buffer of it frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",it frees the buffer in a loop,SBAR,minimal,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then ."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",it,NP,minimal,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then frees the buffer in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",frees the buffer in a loop,VP,chunk,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it ."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",the buffer,NP,minimal,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees in a loop."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",in a loop,PP,chunk,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer ."
+0,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in a loop.",a loop,NP,minimal,"Generate <language> code for the following: 
+ The code allocates a buffer of size buffer_size.Then it frees the buffer in ."

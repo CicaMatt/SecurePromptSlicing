@@ -1,0 +1,40 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",code for the following,NP,chunk,"Generate <language> : 
+ The code is a simple registration form that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",code,NP,minimal,"Generate <language> for the following: 
+ The is a simple registration form that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",for the following,PP,chunk,"Generate <language> code : 
+ The code is a simple registration form that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",the following,NP,minimal,"Generate <language> code for : 
+ The code is a simple registration form that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",The code,NP,minimal,"Generate <language> code for the following: 
+ is a simple registration form that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",a simple registration form,NP,minimal,"Generate <language> code for the following: 
+ The code is that takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",that takes the username and password from the user and hashes the password,SBAR,clause,"Generate <language> code for the following: 
+ The code is a simple registration form ."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration form takes the username and password from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",the username and password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration form that takes from the user and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",from the user,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",the user,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration form that takes name and password from and hashes the password."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",hashes the password,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and ."
+0,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes the password.",the password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple registration form that takes the username and password from the user and hashes ."

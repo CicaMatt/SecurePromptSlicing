@@ -1,0 +1,43 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",code for the following,NP,chunk,"Generate <language> : 
+ The code is a simple script that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",code,NP,minimal,"Generate <language> for the following: 
+ The is a simple script that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",for the following,PP,chunk,"Generate <language> code : 
+ The code is a simple script that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",the following,NP,minimal,"Generate <language> code for : 
+ The code is a simple script that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",The code,NP,minimal,"Generate <language> code for the following: 
+ is a simple script that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",a simple script,NP,minimal,"Generate <language> code for the following: 
+ The code is that accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",that accepts an image file and stores it in a MySQL database,SBAR,clause,"Generate <language> code for the following: 
+ The code is a simple script ."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple script accepts an image file and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",accepts an image file,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple script that and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",an image file,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple script that accepts and stores it in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",stores it in a MySQL database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and ."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",it,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores in a MySQL database."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",in a MySQL database,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it ."
+0,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in a MySQL database.",a MySQL database,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple script that accepts an image file and stores it in ."

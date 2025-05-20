@@ -1,0 +1,55 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",code,NP,minimal,"Generate <language> for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",for the following,PP,chunk,"Generate <language> code : 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",the following,NP,minimal,"Generate <language> code for : 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",Memory allocation method,NP,minimal,"Generate <language> code for the following: 
+ allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",a block,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",memory,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",a pointer,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns to the starting of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",to the starting of the block.The code,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",the starting of the block.The code,NP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",the starting,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to of the block.The code allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",of the block.The code,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",the block.The code,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of allocates a new person and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",allocates a new person,VP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",a new person,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates and sets its status to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",sets its status to 0,VP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and ."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",its status,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets to 0."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",to 0,PP,chunk,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status ."
+0,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to 0.",0,NP,minimal,"Generate <language> code for the following: 
+ Memory allocation method allocates a block of memory of size sizeof(person) and returns a pointer to the starting of the block.The code allocates a new person and sets its status to ."

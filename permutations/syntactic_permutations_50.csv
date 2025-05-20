@@ -1,0 +1,40 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",code,NP,minimal,"Generate <language> for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",for the following,PP,chunk,"Generate <language> code : 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",the following,NP,minimal,"Generate <language> code for : 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",the archive.zip file,NP,minimal,"Generate <language> code for the following: 
+ Open as a tarfile.Extract all files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",a tarfile.Extract,NP,minimal,"Generate <language> code for the following: 
+ Open the archive.zip file as all files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",all files from the archive to the /tmp/unpack directory,SBAR,minimal,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract ."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",all files,NP,chunk,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",all,NP,minimal,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract files from the archive to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",from the archive to the /tmp/unpack directory,PP,chunk,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files ."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",from the archive,PP,chunk,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",the archive,NP,minimal,"Generate <language> code for the following: 
+ Open .zip file as a tarfile.Extract all files from to the /tmp/unpack directory."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",to the /tmp/unpack directory,PP,chunk,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive ."
+0,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to the /tmp/unpack directory.",the /tmp/unpack directory,NP,minimal,"Generate <language> code for the following: 
+ Open the archive.zip file as a tarfile.Extract all files from the archive to ."

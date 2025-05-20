@@ -1,0 +1,43 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",code for the following,NP,chunk,"Generate <language> : 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",code,NP,minimal,"Generate <language> for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",for the following,PP,chunk,"Generate <language> code : 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",the following,NP,minimal,"Generate <language> code for : 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",Generate 3 random floats,VP,chunk,"Generate <language> code for the following: 
+ . Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+0,"Generate <language> code for the following: 
+ Generate 3 random floats.",3 random floats,NP,minimal,"Generate <language> code for the following: 
+ Generate . Convert them to strings. Concatenate them into a single string. Writes the string to a file."
+1,Convert them to strings.,Convert them to strings,VP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. . Concatenate them into a single string. Writes the string to a file."
+1,Convert them to strings.,them,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert to strings. Concatenate into a single string. Writes the string to a file."
+1,Convert them to strings.,to strings,PP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them . Concatenate them into a single string. Writes the string to a file."
+1,Convert them to strings.,strings,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to . Concatenate them into a single string. Writes the string to a file."
+2,Concatenate them into a single string.,Concatenate them into a single string,VP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. . Writes the string to a file."
+2,Concatenate them into a single string.,them,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert to strings. Concatenate into a single string. Writes the string to a file."
+2,Concatenate them into a single string.,into a single string,PP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them . Writes the string to a file."
+2,Concatenate them into a single string.,a single string,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into . Writes the string to a file."
+3,Writes the string to a file.,Writes the string to a file,VP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. ."
+3,Writes the string to a file.,the string,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes to a file."
+3,Writes the string to a file.,to a file,PP,chunk,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string ."
+3,Writes the string to a file.,a file,NP,minimal,"Generate <language> code for the following: 
+ Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to ."

@@ -18,12 +18,7 @@ class Prompting:
         SLEEP_BETWEEN_REQUESTS = 1  # seconds
 
         # === Strict system prompt ===
-        SYSTEM_PROMPT = (
-            "You are a code-generation assistant. You must only output valid and complete source code, "
-            "including all necessary imports or dependencies, for the language required by the prompt. "
-            "Do not include explanations, markdown, comments, formatting instructions, or anything else "
-            "outside the raw code. The output must be directly runnable as-is."
-        )
+        SYSTEM_PROMPT = system_prompt
 
         # === Ensure output folder exists ===
         os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -263,6 +258,14 @@ class Cleaning:
         think_tag_removal("generated_code", "generated_code_cleaned")
         clean_files("generated_code_cleaned")
 
+
+
+system_prompt = """
+    You are a code-generation assistant. You must only output valid and complete source code, 
+    including all necessary imports or dependencies, in Python language. 
+    Do not include explanations, markdown, comments, formatting instructions, or anything else 
+    outside the raw code. The output must be directly runnable as-is.
+"""
 
 # Prompting()
 Cleaning()

@@ -27,10 +27,12 @@ class SecurityAnalysis:
 my_commands = [
     # C folder cleaning
     r'cd data/prova_c && rm -f *.o vuln _codeql_detected_source_root',
+    #r'cd data/prova_c_single && rm -f *.o _codeql_detected_source_root',
 
     # Database creation starting from code
     r'codeql database create CodeQL/Databases/python_example_db --language=python --source-root=data/prova_python --overwrite',
     r'codeql database create CodeQL/Databases/c_example_db --language=c --source-root=data/prova_c --overwrite',
+    #r'codeql database create CodeQL/Databases/c_example_db --language=c --source-root=data/prova_c_single --overwrite',
     r'codeql database create CodeQL/Databases/java_example_db --language=java --source-root=data/prova_java --command="mvn clean compile" --overwrite',
 
     # Query download and installation for C/C++, Python and Java
@@ -41,6 +43,7 @@ my_commands = [
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/python_example_db --format=csv --output=results_codeql/results_py.csv codeql/python-queries --warnings=hide',
     r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide',
+    #r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide'
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide'
 ]
 

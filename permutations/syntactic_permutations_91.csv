@@ -1,0 +1,73 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",code for the following,NP,chunk,"Generate <language> : 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",code,NP,minimal,"Generate <language> for the following: 
+ The is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",for the following,PP,chunk,"Generate <language> code : 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",the following,NP,minimal,"Generate <language> code for : 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",The code,NP,minimal,"Generate <language> code for the following: 
+ is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",a simple web application,NP,minimal,"Generate <language> code for the following: 
+ The code is that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",that allows users to register for an account,SBAR,clause,"Generate <language> code for the following: 
+ The code is a simple web application . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",that,WHNP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",allows users to register for an account,VP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",users,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",to register for an account,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",register for an account,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",for an account,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+0,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account.",an account,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for . The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,The application,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,the username and password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes from the user and inserts it into a database. The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,from the user,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password and inserts it into a database. The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,the user,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes name and password from and inserts it into a database. The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,inserts it into a database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and . The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,it,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts into a database. The password is hashed before is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,into a database,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it . The password is hashed before it is inserted into the database."
+1,The application takes the username and password from the user and inserts it into a database.,a database,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into . The password is hashed before it is inserted into the database."
+2,The password is hashed before it is inserted into the database.,The password,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. is hashed before it is inserted into the database."
+2,The password is hashed before it is inserted into the database.,before it is inserted into the database,SBAR,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed ."
+2,The password is hashed before it is inserted into the database.,it,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts into a database. The password is hashed before is inserted into the database."
+2,The password is hashed before it is inserted into the database.,is inserted into the database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it ."
+2,The password is hashed before it is inserted into the database.,inserted into the database,VP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is ."
+2,The password is hashed before it is inserted into the database.,into the database,PP,chunk,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted ."
+2,The password is hashed before it is inserted into the database.,the database,NP,minimal,"Generate <language> code for the following: 
+ The code is a simple web application that allows users to register for an account. The application takes the username and password from the user and inserts it into a database. The password is hashed before it is inserted into ."
