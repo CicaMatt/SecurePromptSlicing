@@ -9,7 +9,7 @@ import re
 
 # === Settings ===
 LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
-MODEL_NAME = "deepseek-r1-distill-qwen-7b"  # Replace with your local model
+MODEL_NAME = "llama-3.3-70b-instruct"  # Replace with your local model
 OUTPUT_FOLDER = "generated_code"
 CSV_FILE = "syntactic_permutations.csv"
 SLEEP_BETWEEN_REQUESTS = 1  # seconds
@@ -115,8 +115,9 @@ class MultiPermutationTesting:
         with open(csv_file, newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
-                prompt = row["Resulting Prompt"]
-                ext = guess_extension(prompt) or ".txt"  # default extension
+                prompt = row["Final Prompt"]
+                print(prompt)
+                ext = guess_extension(prompt) or ".py"  # default extension
                 filename = f"code_row_{i}{ext}"
                 filepath = os.path.join(output_folder, filename)
 
