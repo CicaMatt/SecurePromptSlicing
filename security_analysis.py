@@ -24,7 +24,7 @@ class SecurityAnalysis:
 
 
 
-my_commands = [
+example_commands = [
     # C folder cleaning
     r'cd data/prova_c && rm -f *.o vuln _codeql_detected_source_root',
     #r'cd data/prova_c_single && rm -f *.o _codeql_detected_source_root',
@@ -47,4 +47,17 @@ my_commands = [
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide'
 ]
 
-SecurityAnalysis(my_commands)
+
+command_set = [
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=test_folder --overwrite',
+
+    # Query download and installation for C/C++, Python and Java
+    r'codeql pack download codeql/python-queries',
+
+    # Database analysis using downloaded query pack
+    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv codeql/python-queries --warnings=hide',
+]
+
+#SecurityAnalysis(example_commands)
+SecurityAnalysis(command_set)
