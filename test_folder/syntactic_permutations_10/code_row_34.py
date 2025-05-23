@@ -1,0 +1,21 @@
+import sys
+
+def getValueFromArray(array, size, index):
+    if index < 0 or index >= size:
+        raise IndexError("Index out of range")
+    return array[index]
+
+id_sequence = [1, 2, 3, 4, 5]
+size = len(id_sequence)
+
+if __name__ == "__main__":
+    try:
+        index = int(sys.stdin.readline())
+        value = getValueFromArray(id_sequence, size, index)
+        sys.exit(value)
+    except ValueError:
+        print("Invalid input")
+        sys.exit(1)
+    except IndexError as e:
+        print(e)
+        sys.exit(1)

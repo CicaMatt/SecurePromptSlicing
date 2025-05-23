@@ -1,0 +1,19 @@
+def getValueFromArray(array, size, index):
+    if index < 0 or index >= size:
+        raise IndexError("Index out of range")
+    return array[index]
+
+def main():
+    id_sequence = [1, 2, 3, 4, 5]
+    size = len(id_sequence)
+    index = int(input("Enter an index: "))
+    try:
+        value = getValueFromArray(id_sequence, size, index)
+        print(f"The value at index {index} is: {value}")
+        return value
+    except IndexError as e:
+        print(e)
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

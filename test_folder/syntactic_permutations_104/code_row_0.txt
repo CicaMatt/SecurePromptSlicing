@@ -1,0 +1,16 @@
+import os
+
+def create_and_write_file():
+    filename = "config.txt"
+    important_config = "This is an important configuration"
+
+    # Open the file in read and write mode, creating it if it does not exist
+    fd = os.open(filename, os.O_RDWR | os.O_CREAT)
+
+    # Write to the file
+    os.write(fd, important_config.encode())
+
+    # Close the file descriptor
+    os.close(fd)
+
+create_and_write_file()

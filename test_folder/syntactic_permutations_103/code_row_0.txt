@@ -1,0 +1,30 @@
+import os
+
+def create_or_open_file(filename):
+    flags = os.O_CREAT | os.O_TRUNC | os.O_WRONLY
+    try:
+        file_descriptor = os.open(filename, flags)
+        return file_descriptor
+    except OSError as e:
+        print(f"Error: {e}")
+
+def exclusive_create_file(filename):
+    flags = os.O_CREAT | os.O_EXCL | os.O_WRONLY
+    try:
+        file_descriptor = os.open(filename, flags)
+        return file_descriptor
+    except OSError as e:
+        print(f"Error: {e}")
+
+# Example usage:
+filename = "example.txt"
+file_descriptor1 = create_or_open_file(filename)
+if file_descriptor1 != None:
+    os.write(file_descriptor1, b"Hello, world!")
+    os.close(file_descriptor1)
+
+filename2 = "exclusive_example.txt"
+file_descriptor2 = exclusive_create_file(filename2)
+if file_descriptor2 != None:
+    os.write(file_descriptor2, b"Exclusive creation successful")
+    os.close(file_descriptor2)
