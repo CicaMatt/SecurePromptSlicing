@@ -1,2 +1,3 @@
 - description: all existing python queries from codeql python security package and copilot paper scenarios by pearce et al.
 - queries: ./
+  include: "**/*.ql"
