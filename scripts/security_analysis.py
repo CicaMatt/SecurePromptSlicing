@@ -71,13 +71,14 @@ command_set_custom_queries = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    #r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code --overwrite',
+    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code --overwrite',
 
     # Query update and configuration
-    #r'cd CodeQL/Queries/py_complete && codeql pack install',
+    r'cd CodeQL/Queries/py_complete && codeql pack install',
 
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
+    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete_updated/python-complete.qls --warnings=hide --rerun'
     #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py/top25/python-top25.qls --warnings=hide --rerun'
     #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py/extra/python-extra.qls --warnings=hide --rerun'
 ]
