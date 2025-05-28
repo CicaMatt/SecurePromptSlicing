@@ -50,7 +50,7 @@ example_commands = [
 
 command_set = [
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=test_folder --overwrite',
+    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code --overwrite',
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries',

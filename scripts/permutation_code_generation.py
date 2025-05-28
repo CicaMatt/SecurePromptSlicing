@@ -9,9 +9,8 @@ import re
 
 # === Settings ===
 LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
-MODEL_NAME = "llama-3.3-70b-instruct"  # Replace with your local model
+MODEL_NAME = "codellama-34b-instruct"  # Replace with your local model
 OUTPUT_FOLDER = "generated_code"
-CSV_FILE = "syntactic_permutations.csv"
 SLEEP_BETWEEN_REQUESTS = 1  # seconds
 
 # === Ensure output folder exists ===
@@ -261,6 +260,9 @@ system_prompt = """
     outside the raw code. The output must be directly runnable as-is.
 """
 
+CSV_FILE = "syntactic_permutations.csv"
 #PermutationTesting()
+
+
 MultiPermutationTesting("permutations", "generated_code")
 # Cleaning()
