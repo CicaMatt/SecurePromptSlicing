@@ -1,0 +1,1 @@
+buffer = ['A' for i in range(buffer_size)]

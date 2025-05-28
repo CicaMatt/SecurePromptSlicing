@@ -1,0 +1,5 @@
+def copy_byte(destination,source,num):
+    for i in range(num):
+        destination[i] = source[i]
+
+copy_byte("Hello", 5)

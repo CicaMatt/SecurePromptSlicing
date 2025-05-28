@@ -1,0 +1,4 @@
+def memcpy(dest, src, size):
+    return "".join([chr(x) for x in src[0:size]])
+
+print(memcpy("Hello"))

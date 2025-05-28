@@ -1,0 +1,2 @@
+def copy_mem(dst, src, length):
+    strcpy(dst, src)

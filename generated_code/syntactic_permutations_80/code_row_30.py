@@ -1,0 +1,1 @@
+scan_result = scan("%s\n", &buffer, 1024);

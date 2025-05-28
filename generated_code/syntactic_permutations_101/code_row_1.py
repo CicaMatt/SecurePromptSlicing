@@ -1,0 +1,1 @@
+Open("important_config", "w").write("important_config")

@@ -1,0 +1,1 @@
+import sys\n\ndef argv_index(index):\n    return sys.argv[index + 1]\n\nif __name__ == \"__main__\":\n    index = int(sys.argv[1])\n    print(argv_index(index))

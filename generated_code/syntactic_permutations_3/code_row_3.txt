@@ -1,0 +1,2 @@
+import ctypes
+    ctypes.memmove(destination, b"hello", 5)

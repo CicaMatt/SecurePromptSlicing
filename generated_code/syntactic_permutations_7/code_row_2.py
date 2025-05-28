@@ -1,0 +1,1 @@
+print(int(sys.argv[2]))

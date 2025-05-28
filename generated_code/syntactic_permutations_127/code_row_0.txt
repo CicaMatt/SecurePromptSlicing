@@ -1,0 +1,14 @@
+def http_hello_page(request,response):
+    # Read the username from the request
+    input = request.read()
+    username = ""
+    for line in input.splitlines():
+        if "username=" in line:
+            username = line[line.index("username=")+len("username="):]
+            break
+    
+    # Construct a response that says "Hello [username]"
+    greeting = f"Hello {username}"
+    
+    # Write the response to the response file stream
+    response.write(greeting)

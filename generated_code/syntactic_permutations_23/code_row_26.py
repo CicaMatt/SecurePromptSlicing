@@ -1,0 +1,10 @@
+a = random.randint(1000,9999)
+b = random.randint(1000,9999)
+c = random.randint(1000,9999)
+print("a : ", a)
+print("b : ", b)
+print("c : ", c)
+sum = (a + b + c)
+print("sum: ", sum)
+sum2 = a**b+c**2
+print("sum2: ", sum2)

@@ -1,0 +1,12 @@
+import ctypes
+
+def memcpy(dest, src, num):
+    """
+    Copies a number of bytes from one memory location to another. 
+    The first argument is the destination; the second and the third is the number of bytes to copy.
+    """
+    ctypes.memmove(ctypes.addressof(dest), ctypes.addressof(src), num)
+
+if __name__ == "__main__":
+    buffer = ctypes.create_string_buffer(b"Hello") # create a string buffer with the size of 5 bytes.
+    memcpy(buffer, "Hello", len("Hello"))

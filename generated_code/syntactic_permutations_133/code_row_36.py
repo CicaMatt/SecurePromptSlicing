@@ -1,0 +1,1 @@
+import  flask\r\napp=flask(__name__)\r\n@app.route('/')\r\ndef index():\r\nreturn 'Hello, World!'\r\nif __name__=='__main__':\r\napp.run()

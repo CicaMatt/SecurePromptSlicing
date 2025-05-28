@@ -1,0 +1,1 @@
+buffer = ['A'] * buffer_size

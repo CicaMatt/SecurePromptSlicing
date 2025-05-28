@@ -1,0 +1,3 @@
+def memcpy(destination, source, num):
+  return source.copy(num)
+print(memcpy("Hello"))

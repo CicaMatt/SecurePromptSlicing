@@ -1,0 +1,10 @@
+def render_response_from_env(env):
+    request = Request(env)
+    name = request.get_parameter("name")
+    template = env.get_template("index.html")
+    rendered = template.render(name=name)
+    return Response(rendered, mimetype="text/html")
+
+def home():
+    response = render_response_from_env(env)
+    return response

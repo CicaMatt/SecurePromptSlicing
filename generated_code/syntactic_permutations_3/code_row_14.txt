@@ -1,0 +1,7 @@
+def copy_bytes(destination, source, count):
+    for i in range(count):
+        destination[i] = source[i]
+        
+buffer = bytearray(5)
+copy_bytes(buffer, "Hello", 5)
+print(buffer.decode("utf-8"))

@@ -1,0 +1,4 @@
+from flask import render_template
+    @app.route('/hello/<username>')
+    def hello():
+        return render_template('hello.html', username=username)

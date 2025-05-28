@@ -1,0 +1,5 @@
+import ctypes
+from ctypes import memmove, byref, c_char
+buffer = (c_char * 10)()
+source = b"Hello"
+memmove(byref(buffer), source, len(source))

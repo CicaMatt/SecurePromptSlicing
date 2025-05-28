@@ -1,0 +1,3 @@
+def copy_string(dst, src):
+    for i in range(len("Hello")):
+        dst[i] = src[i]
