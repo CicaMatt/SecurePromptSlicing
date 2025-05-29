@@ -1,6 +1,7 @@
+import csv
+import os
 import re
 import shutil
-
 import pandas as pd
 
 
@@ -105,12 +106,38 @@ def extract_cwe_id(csv_path, original_column):
     df.to_csv(csv_path, index=False)
 
 
+def snippets_count(folder):
+    count = 0
+    for root, dirs, files in os.walk(folder):
+        # Escludi le directory nascoste
+        dirs[:] = [d for d in dirs if not d.startswith('.')]
+
+        # Conta solo i file visibili
+        for file in files:
+            if not file.startswith('.'):
+                file_path = os.path.join(root, file)
+                if os.path.isfile(file_path):
+                    count += 1
+    print("Total snippets:", count)
+    return count
+
+def row_counter(csv_path):
+    print("Total issues:", len(open(csv_path, encoding='utf-8').readlines()))
+
+
 ##################################################################################################################
 
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 result_py = 'results_codeql/results_py.csv'
 result_py_complete = 'results_codeql/results_py_complete.csv'
+snippets_folder = 'generated_code'
+
+
+class Stats:
+    def __init__(self):
+        snippets_count(snippets_folder)
+        row_counter(result_py_complete)
 
 
 class ResultAnalysis:
@@ -121,4 +148,5 @@ class ResultAnalysis:
         add_identifiers(result_py_complete, prompt_dataset)
         extract_cwe_id(result_py_complete, "Prompt ID")
 
+Stats()
 ResultAnalysis()
