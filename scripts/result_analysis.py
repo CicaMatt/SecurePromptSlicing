@@ -1,4 +1,5 @@
 import re
+import shutil
 
 import pandas as pd
 
@@ -74,10 +75,42 @@ def add_id_column(csv_path: str, dataset_csv_path: str) -> None:
     # Sovrascrive il CSV iniziale
     starting_df.to_csv(csv_path, index=False)
 
-    print(f"Il file '{csv_path}' è stato aggiornato con la colonna 'Prompt ID'.")
+
+def extract_cwe_id(csv_path, original_column):
+    """
+    Legge un file CSV, estrae la parte prima di "_" da una colonna, 
+    e la salva in una nuova colonna "CWE ID". Il file CSV viene modificato direttamente.
+
+    :param csv_path: Percorso al file CSV da modificare
+    :param original_column: Nome della colonna da elaborare
+    """
+    # Leggi il file CSV
+    df = pd.read_csv(csv_path)
+
+    # Verifica che la colonna esista
+    if original_column not in df.columns:
+        raise ValueError(f"La colonna '{original_column}' non esiste nel CSV.")
+
+    # Estrai la parte prima di "_"
+    df["CWE-ID"] = df[original_column].astype(str).str.split("_").str[0]
+
+    # Sovrascrive il file CSV con le modifiche
+    df.to_csv(csv_path, index=False)
 
 
+##################################################################################################################
 
-label_output_csv("results_codeql/results_py.csv")
-check_and_remove_duplicates("results_codeql/results_py.csv", remove_duplicates=False)
-add_id_column("results_codeql/results_py.csv", "LLMSecEvalDataset.csv")
+
+prompt_dataset = 'LLMSecEvalDataset.csv'
+result_py = 'results_codeql/results_py.csv'
+result_py_complete = 'results_codeql/results_py_complete.csv'
+
+class ResultAnalysis:
+    def __init__(self):
+        shutil.copy(result_py, result_py_complete)
+        label_output_csv(result_py_complete)
+        check_and_remove_duplicates(result_py_complete, remove_duplicates=False)
+        add_id_column(result_py_complete, prompt_dataset)
+        extract_cwe_id(result_py_complete, "Prompt ID")
+
+ResultAnalysis()
