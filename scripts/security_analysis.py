@@ -46,7 +46,6 @@ example_commands = [
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/python_example_db --format=csv --output=results_codeql/results_py.csv codeql/python-queries --warnings=hide --rerun',
     r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide --rerun',
-    #r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
