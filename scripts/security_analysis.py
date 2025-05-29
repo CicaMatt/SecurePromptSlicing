@@ -84,6 +84,6 @@ command_set_custom_queries = [
 ]
 
 #SecurityAnalysis(example_commands)
-#SecurityAnalysis(command_set_standard_queries)
-SecurityAnalysis(command_set_custom_queries)
+SecurityAnalysis(command_set_standard_queries)
+#SecurityAnalysis(command_set_custom_queries)
 

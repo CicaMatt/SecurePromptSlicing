@@ -78,6 +78,6 @@ def add_id_column(csv_path: str, dataset_csv_path: str) -> None:
 
 
 
-#label_output_csv("results_codeql/results_py.csv")
-#check_and_remove_duplicates("results_codeql/results_py.csv", remove_duplicates=False)
+label_output_csv("results_codeql/results_py.csv")
+check_and_remove_duplicates("results_codeql/results_py.csv", remove_duplicates=False)
 add_id_column("results_codeql/results_py.csv", "LLMSecEvalDataset.csv")
