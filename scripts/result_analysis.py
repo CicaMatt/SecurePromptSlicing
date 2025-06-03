@@ -4,8 +4,10 @@ import re
 import shutil
 import pandas as pd
 
+from generated_code.syntactic_permutations_20.code_row_3 import add_offset
 
-def label_output_csv(input_csv_path):
+
+def add_labels(input_csv_path):
     column_labels = [
         "Name",  # Query name
         "Description",  # Query description
@@ -44,7 +46,7 @@ def check_and_remove_duplicates(csv_path, remove_duplicates=False):
         print(f"Errore durante l'elaborazione del file: {e}")
 
 
-def add_identifiers(csv_path: str, dataset_csv_path: str) -> None:
+def add_prompt_id(csv_path: str, dataset_csv_path: str) -> None:
     """
     Modifica il CSV iniziale aggiungendo le colonne 'Prompt ID' e 'Dataset ID'
     ottenute dal mapping tramite l'ID estratto dal campo 'Path'.
@@ -84,7 +86,7 @@ def add_identifiers(csv_path: str, dataset_csv_path: str) -> None:
     starting_df.to_csv(csv_path, index=False)
 
 
-def extract_cwe_id(csv_path, original_column):
+def add_cwe_id(csv_path, original_column):
     """
     Legge un file CSV, estrae la parte prima di "_" da una colonna, 
     e la salva in una nuova colonna "CWE ID". Il file CSV viene modificato direttamente.
@@ -106,6 +108,60 @@ def extract_cwe_id(csv_path, original_column):
     df.to_csv(csv_path, index=False)
 
 
+def add_sliced_prompt(input_csv_path, lookup_dir):
+    # Legge il CSV iniziale
+    df = pd.read_csv(input_csv_path)
+
+    # Controlla che la colonna "Path" esista
+    if "Path" not in df.columns:
+        raise ValueError("La colonna 'Path' non è presente nel CSV iniziale.")
+
+    sliced_prompts = []
+
+    for path in df["Path"]:
+        try:
+            # Estrae il valore tra i primi due slash: /syntactic_permutations_82/code_row_10.py
+            parts = path.strip("/").split("/")
+            if len(parts) < 2:
+                sliced_prompts.append(None)
+                continue
+
+            csv_id = parts[0]  # es: "syntactic_permutations_82"
+            row_match = re.search(r"code_row_(\d+)", parts[1])
+            if not row_match:
+                sliced_prompts.append(None)
+                continue
+
+            row_number = int(row_match.group(1))
+
+            # Costruisce il path del file CSV da cercare
+            lookup_csv_path = os.path.join(lookup_dir, f"{csv_id}.csv")
+
+            if not os.path.exists(lookup_csv_path):
+                sliced_prompts.append(None)
+                continue
+
+            # Legge il file CSV corrispondente
+            lookup_df = pd.read_csv(lookup_csv_path)
+
+            # Verifica se esiste la riga desiderata e la colonna "Final Prompt"
+            if row_number < len(lookup_df) and "Final Prompt" in lookup_df.columns:
+                final_prompt = lookup_df.at[row_number, "Final Prompt"]
+                sliced_prompts.append(final_prompt)
+            else:
+                sliced_prompts.append(None)
+        except Exception as e:
+            sliced_prompts.append(None)
+
+    # Aggiunge la colonna "Sliced Prompt" al DataFrame originale
+    df["Sliced Prompt"] = sliced_prompts
+
+    # Sovrascrive il file CSV originale (opzionale)
+    df.to_csv(input_csv_path, index=False)
+
+    return df
+
+
 def snippets_count(folder):
     count = 0
     for root, dirs, files in os.walk(folder):
@@ -121,6 +177,7 @@ def snippets_count(folder):
     print("Total snippets:", count)
     return count
 
+
 def row_counter(csv_path):
     print("Total issues:", len(open(csv_path, encoding='utf-8').readlines()))
 
@@ -132,6 +189,17 @@ prompt_dataset = 'LLMSecEvalDataset.csv'
 result_py = 'results_codeql/results_py.csv'
 result_py_complete = 'results_codeql/results_py_complete.csv'
 snippets_folder = 'generated_code'
+permutations_folder = 'permutations'
+
+
+class ResultAnalysis:
+    def __init__(self):
+        shutil.copy(result_py, result_py_complete)
+        add_labels(result_py_complete)
+        add_prompt_id(result_py_complete, prompt_dataset)
+        add_cwe_id(result_py_complete, "Prompt ID")
+        add_sliced_prompt(result_py_complete, permutations_folder)
+        check_and_remove_duplicates(result_py_complete, remove_duplicates=False)
 
 
 class Stats:
@@ -140,13 +208,5 @@ class Stats:
         row_counter(result_py_complete)
 
 
-class ResultAnalysis:
-    def __init__(self):
-        shutil.copy(result_py, result_py_complete)
-        label_output_csv(result_py_complete)
-        check_and_remove_duplicates(result_py_complete, remove_duplicates=False)
-        add_identifiers(result_py_complete, prompt_dataset)
-        extract_cwe_id(result_py_complete, "Prompt ID")
-
-Stats()
 ResultAnalysis()
+#Stats()
