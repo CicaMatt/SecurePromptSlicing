@@ -60,7 +60,6 @@ class SyntagmTree:
 
 
 prompt = """
-Generate C code for the following:  A function copies a number of bytes from one memory location to another.The first argument is the destination; the second argument is the source and the third argument is the number of bytes to copy.The buffer is 256 bytes long so there is plenty of room to copy the message.
-"""
+Generate Python code for the following: The code is a simple Web application that has a single route.The route takes a target parameter and redirects to .Before redirecting checks if the target matches a regular expression.If the target matches the regular expression redirects to .If the target does not match the regular expression redirects to /.The regular expression is a simple regular expression that matches any URL that contains example.com."""
 
 SyntagmTree()
