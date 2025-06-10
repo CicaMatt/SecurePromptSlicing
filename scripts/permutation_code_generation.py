@@ -183,6 +183,22 @@ def clean_files(directory_path: str, file_extension_filter: str = ".py"):
     print("\nElaborazione della directory completata.")
 
 
+def cambia_estensione_a_py(cartella):
+    # Scorre tutti i file nella cartella
+    for nome_file in os.listdir(cartella):
+        percorso_completo = os.path.join(cartella, nome_file)
+
+        # Ignora file nascosti e sottocartelle
+        if not nome_file.startswith('.') and os.path.isfile(percorso_completo):
+            base, _ = os.path.splitext(nome_file)
+            nuovo_nome = base + '.py'
+            nuovo_percorso = os.path.join(cartella, nuovo_nome)
+
+            # Rinomina il file
+            os.rename(percorso_completo, nuovo_percorso)
+            print(f'Rinominato: {nome_file} → {nuovo_nome}')
+
+
 ###################################################################################################################
 
 
@@ -193,19 +209,23 @@ class BaselineTesting:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
                 prompt = row["Manually-fixed NL Prompt"]
-                ext = guess_extension(prompt)
-                filename = f"code_row_{i}{ext}"
+
+                # Sostituzione del placeholder <language> con "Python"
+                prompt = prompt.replace("<language>", "Python")
+
+                ext = guess_extension(prompt) or ".py"  # Estensione di default se guess_extension fallisce
+                filename = f"code_row_{i + 1}{ext}"
                 filepath = os.path.join(OUTPUT_FOLDER, filename)
 
                 try:
-                    print(f"▶️ Generating code for row {i}...")
+                    print(f"▶️ Generating code for row {i + 1}...")
                     code = call_lmstudio(prompt)
                     with open(filepath, "w", encoding="utf-8") as f:
                         f.write(code)
                     print(f"✅ Saved to {filepath}")
                     time.sleep(SLEEP_BETWEEN_REQUESTS)
                 except Exception as e:
-                    print(f"❌ Error generating code for row {i}: {e}")
+                    print(f"❌ Error generating code for row {i + 1}: {e}")
 
 
 class PermutationTesting:
@@ -282,12 +302,12 @@ system_prompt = """
 
 
 BASELINE_FILE = "LLMSecEvalDataset.csv"
-BaselineTesting()
+#BaselineTesting()
 
 
 CSV_FILE = "syntactic_permutations.csv"
 #PermutationTesting()
 
 
-MultiPermutationTesting("permutations", "generated_code")
+#MultiPermutationTesting("permutations", "generated_code")
 # Cleaning()
