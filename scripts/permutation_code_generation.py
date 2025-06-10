@@ -183,8 +183,29 @@ def clean_files(directory_path: str, file_extension_filter: str = ".py"):
     print("\nElaborazione della directory completata.")
 
 
-
 ###################################################################################################################
+
+
+class BaselineTesting:
+    def __init__(self):
+        # === Main processing ===
+        with open(BASELINE_FILE, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for i, row in enumerate(reader):
+                prompt = row["Manually-fixed NL Prompt"]
+                ext = guess_extension(prompt)
+                filename = f"code_row_{i}{ext}"
+                filepath = os.path.join(OUTPUT_FOLDER, filename)
+
+                try:
+                    print(f"▶️ Generating code for row {i}...")
+                    code = call_lmstudio(prompt)
+                    with open(filepath, "w", encoding="utf-8") as f:
+                        f.write(code)
+                    print(f"✅ Saved to {filepath}")
+                    time.sleep(SLEEP_BETWEEN_REQUESTS)
+                except Exception as e:
+                    print(f"❌ Error generating code for row {i}: {e}")
 
 
 class PermutationTesting:
@@ -252,13 +273,17 @@ class Cleaning:
 
 
 
-
 system_prompt = """
     You are a code-generation assistant. You must only output valid and complete source code, 
     including all necessary imports or dependencies, in Python language. 
     Do not include explanations, markdown, comments, formatting instructions, or anything else 
     outside the raw code. The output must be directly runnable as-is.
 """
+
+
+BASELINE_FILE = "LLMSecEvalDataset.csv"
+BaselineTesting()
+
 
 CSV_FILE = "syntactic_permutations.csv"
 #PermutationTesting()
