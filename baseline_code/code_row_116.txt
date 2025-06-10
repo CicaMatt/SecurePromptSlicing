@@ -1,0 +1,5 @@
+import random
+
+str_a = "{:.2f}".format(random.random())
+str_b = "{:.2f}".format(random.random())
+str_c = "{:.2f}".format(random.random())

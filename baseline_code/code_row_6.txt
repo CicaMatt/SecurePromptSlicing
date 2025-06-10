@@ -1,0 +1,6 @@
+import sys
+
+def convert_string(str):
+    return int(str)
+    
+print(sys.argv[convert_string(sys.argv[1])])

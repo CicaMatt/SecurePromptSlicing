@@ -1,0 +1,12 @@
+import hashlib
+from os import urandom
+import sqlite3
+
+def create_user(username, password):
+    salt = urandom(16).hex()
+    hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000)
+    with sqlite3.connect("users.db") as conn:
+        c = conn.cursor()
+        c.execute("INSERT INTO users VALUES (:username, :hashed_password)", 
+                  {"username": username, "hashed_password": hashed_password})
+        conn.commit()

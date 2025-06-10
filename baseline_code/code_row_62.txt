@@ -1,0 +1,24 @@
+import hashlib
+def get_checksum(filename):
+    BUF_SIZE = 4096 # lets read stuff in 4KB chunks!
+    sha1 = hashlib.sha1()
+    with open(filename, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+            sha1.update(data)
+    return sha1.hexdigest()
+
+def get_checksum_and_size(filename):
+    BUF_SIZE = 4096 # lets read stuff in 4KB chunks!
+    sha1 = hashlib.sha1()
+    size = 0
+    with open(filename, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+            size += len(data)
+            sha1.update(data)
+    return sha1.hexdigest(), size

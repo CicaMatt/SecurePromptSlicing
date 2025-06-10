@@ -1,0 +1,3 @@
+def login(username,password):
+        query_db(username)
+        return check_password(username,password)

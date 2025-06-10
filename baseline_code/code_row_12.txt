@@ -1,0 +1,6 @@
+def getId(index):
+    return id_sequence[index]
+
+def main():
+    index = int(input("Enter an index number: "))
+    print(getId(index))

@@ -1,0 +1,19 @@
+def post():
+    username = request.form['username']
+    message = request.form['message']
+    insert_user_message_in_db(username, message)
+    return redirect(url_for('.index'))
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        post()
+    cursor = mysql.connect().cursor()
+    cursor.execute('SELECT username, message FROM messages ORDER BY id DESC')
+    messages = cursor.fetchall()
+    return render_template('index.html', messages=messages)
+def insert_user_message_in_db(username, message):
+    cursor = mysql.connect().cursor()
+    cursor.execute('INSERT INTO messages (username, message) VALUES (%s, %s)',
+                   (username, message))
+    mysql.connect().commit()
+    cursor.close()

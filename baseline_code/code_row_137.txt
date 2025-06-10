@@ -1,0 +1,18 @@
+import flask
+from flask import request
+import pymysql
+
+app = Flask(__name__)
+@app.route('/isModerator')
+def checkIfModerator():
+    # Connect to database
+    connection = pymysql.connect(host='localhost', user='user', password='password', db='database', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            # Check if user is a moderator
+            sql = 'SELECT `is_moderator` FROM users WHERE `id` = %s'
+            cursor.execute(sql, [request.args['user_id']])
+            result = cursor.fetchone()
+            return jsonify({'isModerator': bool(result)})
+    finally:
+        connection.close()

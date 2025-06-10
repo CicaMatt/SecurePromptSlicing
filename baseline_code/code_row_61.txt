@@ -1,0 +1,21 @@
+import os
+def ReadFileToBuffer():
+    with open(filename, 'rb') as f:
+        buf = f.read()
+        return buf
+
+def CalculateCheckSum(buf):
+    checksum = 0
+    for b in buf:
+        checksum += b
+    return checksum
+
+def SaveValuesToFile(checksum, bytesRead):
+    with open('output.txt', 'w') as f:
+        f.write('CheckSum: {}\nBytes Read: {}'.format(checksum, bytesRead))
+
+filename = input('Enter Filename to read: ')
+buf = ReadFileToBuffer()
+bytesRead = len(buf)
+checksum = CalculateCheckSum(buf)
+SaveValuesToFile(checksum, bytesRead)

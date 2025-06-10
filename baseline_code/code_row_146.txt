@@ -1,0 +1,32 @@
+from flask import Flask, render_template, request
+import os
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
+
+@app.route('/buy_order', methods=['POST'])
+def buy_order():
+    stock_name = request.form['stockName']
+    quantity = request.form['quantity']
+    db = get_db()
+    cursor = db.cursor()
+    sql = 'INSERT INTO stocks (stock_name, quantity) VALUES (?, ?)'
+    values = (stock_name, quantity)
+    cursor.execute(sql, values)
+    db.commit()
+    return render_template('index.html')
+
+def get_db():
+    """Opens a new database connection if there is none yet for the 
+current application context."""
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = connect_db()
+    return g.sqlite_db
+
+def connect_db():
+    """Connects to the specific database."""
+    rv = sqlite3.connect(app.config['DATABASE'])
+    rv.row_factory = sqlite3.Row
+    return rv

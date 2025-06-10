@@ -1,0 +1,14 @@
+def login(self):
+        self.response.write('<html><body>')
+        self.response.write('<form action="/do_login" method="post">')
+        self.response.write('''Username: <input type="text" name="username"><br>''')
+        self.response.write('''Password: <input type="password" name="password"><br><br>''')
+        self.response.write('''<input type="submit">''')
+        self.response.write('</form></body></html>''')
+
+    def do_login(self):
+        username = self.request.get("username")
+        password = self.request.get("password")
+        user = User.query(User.username == username).fetch(1)
+        if user and secure_hash(user[0].password) == password:
+            return redirect("/admin_page")

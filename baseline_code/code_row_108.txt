@@ -1,0 +1,15 @@
+import subprocess
+def execute_command(cmd):
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+    exit_code = p.wait()
+    return output
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) != 2:
+        print('Usage: python passwd-grep.py <username>')
+    else:
+        cmd = "cat /etc/passwd | grep {}".format(sys.argv[1])
+        result = execute_command(cmd)
+        if result:
+            print(result.decode("utf-8"))

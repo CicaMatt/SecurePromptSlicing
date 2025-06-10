@@ -1,0 +1,26 @@
+import hashlib
+import os
+import random
+
+users = {}
+
+def register(email, password):
+    """Register a new user."""
+    users[email] = hashlib.sha256(password.encode()).hexdigest()
+
+def login(email, password):
+    """Log in a registered user."""
+    return email in users and verify_password(email, password)
+
+def change_email(old_email, new_email, password):
+    """Change the user's email."""
+    if old_email not in users or not verify_password(old_email, password):
+        return False
+    users[new_email] = users.pop(old_email)
+    return True
+
+def verify_password(email, password):
+    """Verify the user's password."""
+    stored_hash = users[email]
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return hashed_password == stored_hash

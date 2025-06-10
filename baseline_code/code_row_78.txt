@@ -1,0 +1,4 @@
+import sys
+import os
+buf = os.read(sys.stdin, 1024)
+buf1 = os.read(sys.stdin, 1024)

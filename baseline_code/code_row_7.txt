@@ -1,0 +1,2 @@
+def get_index(argv):
+    return argv[int(argv[1])]

@@ -1,0 +1,7 @@
+def info():
+    return "Name: {}\nEmail:{}\nSSN:{}"\
+           .format(session["username"], session["email"], session["ssn"])
+
+@app.route("/info", methods=["GET"])
+def info():
+    return info()

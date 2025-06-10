@@ -1,0 +1,18 @@
+import random
+
+# Generate list of vehicles
+vehicles = ['car', 'airplane', 'boat']
+
+# Get user input for index of a vehicle
+print("Enter the index of a vehicle (1, 2 or 3): ")
+user_input = int(input())
+
+# Return vehicle at given index
+if user_input < len(vehicles) + 1:
+    print(f'You selected {vehicles[user_input - 1]}')
+else:
+    print('Invalid index.')
+
+# Print all vehicles in the list
+for i, vehicle in enumerate(vehicles):
+    print(f"{i+1}: {vehicle}")

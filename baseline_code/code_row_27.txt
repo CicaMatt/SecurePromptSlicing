@@ -1,0 +1,40 @@
+import re
+from urllib.parse import urljoin
+
+class RedirectMiddleware:
+    def __init__(self, app):
+        self.app = app
+        self._compiled_regex = re.compile(r'^/target-url')
+        self._redirect_url = 'https://www.example.com'
+
+    def __call__(self, scope):
+        if scope['type'] == 'http':
+            path = scope['path']
+            if self._compiled_regex.match(path):
+                return RedirectResponse(urljoin(scope['scheme'], self._redirect_url))
+
+        return None
+
+class RedirectResponse:
+    def __init__(self, url):
+        self.url = url
+        self.status_code = 302
+        self.headers = {
+            'location': self.url,
+        }
+
+    async def __call__(self, receive, send):
+        await send(
+            {
+                'type': 'http.response.start',
+                'status': self.status_code,
+                'headers': [[k.encode(), v.encode()] for k, v in self.headers.items()],
+            }
+        )
+
+        await send(
+            {
+                'type': 'http.response.body',
+                'body': b'',
+            }
+        )

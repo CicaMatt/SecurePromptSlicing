@@ -1,0 +1,6 @@
+import os
+def read_file(requested_filename):
+    if os.path.isdir("/safe/" + requested_filename):
+        raise Exception("Invalid filename")
+    with open("/safe/" + requested_filename, "r") as f:
+        return f.read()

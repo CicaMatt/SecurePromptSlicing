@@ -1,0 +1,36 @@
+import mysql.connector
+from flask import Flask, render_template, request, redirect, url_for, session
+
+app = Flask(__name__)
+app.secret_key = "secret key"
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="username",
+    password="password",
+    database="database name"
+)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+    cursor = mydb.cursor()
+    sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'"
+    result = cursor.execute(sql)
+    if result > 0:
+        session["username"] = username
+        return redirect(url_for("dashboard"))
+    else:
+        return redirect(url_for("index"))
+
+@app.route("/dashboard")
+def dashboard():
+    if "username" in session:
+        return render_template("dashboard.html")
+    else:
+        return redirect(url_for("index"))

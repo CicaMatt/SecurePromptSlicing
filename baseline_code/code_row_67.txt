@@ -1,0 +1,18 @@
+import os
+from PIL import Image
+import io
+import base64
+
+def upload_image(request):
+    # check if image has been selected
+    if 'photo' in request.files:
+        filename = os.path.join('./', 'images')
+        file = request.files['photo']
+        # save uploaded image to server directory
+        image = Image.open(file)
+        image.save(filename + '/' + file.filename, 'JPEG')
+        # convert image to base64 format for database entry
+        img_base64 = base64.b64encode(io.BytesIO(image).read())
+        # insert image name and base64 string into database
+        db.execute('INSERT INTO images (name, photo) VALUES(?, ?)', file.filename, img_base64)
+    return redirect('/')

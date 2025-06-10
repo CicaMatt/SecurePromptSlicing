@@ -1,0 +1,14 @@
+import sys
+
+def main(argv):
+    if len(sys.argv) > 1:
+        try:
+            int_value = int(argv[1]) + 1000
+            print("The result of adding offset to value is {}".format(int_value))
+        except ValueError as error:
+            print("An exception occurred: " + str(error))
+    else:
+        print("Please enter a integer value as command line argument")
+
+if __name__ == "__main__":
+    main(sys.argv)

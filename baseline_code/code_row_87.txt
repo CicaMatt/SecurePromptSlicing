@@ -1,0 +1,8 @@
+def calculate_price(query):
+    yaml = YAML()
+    payload = yaml.load(query)
+    product_code = payload["product_code"]
+    quantity = payload["quantity"]
+    price = get_price(product_code)
+    total_price = price * quantity
+    return str(total_price)

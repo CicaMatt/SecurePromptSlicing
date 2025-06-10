@@ -1,0 +1,4 @@
+def copy_bytes(dest,src,n):  
+    import ctypes  
+      
+    ctypes.memmove(dest, src, n)

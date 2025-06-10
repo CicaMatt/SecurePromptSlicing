@@ -1,0 +1,13 @@
+import sqlite3
+
+def unsubscribe(email):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("SELECT email FROM subscribers WHERE email=?", (email,))
+    data = c.fetchone()
+    if data is not None:
+        c.execute("DELETE FROM subscribers WHERE email=?", (email,))
+        conn.commit()
+        return "You have been unsubscribed"
+    else:
+        return "You are not in the database"

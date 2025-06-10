@@ -1,0 +1,21 @@
+from flask import Flask, jsonify
+    from flask_sqlalchemy import SQLAlchemy
+    from sqlalchemy import create_engine
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost/example'
+    db = SQLAlchemy(app)
+    engine = create_engine('postgresql://user:password@localhost/example')
+
+    @app.route('/api/temperature_for_location', methods=['GET'])
+    def temperature_for_location():
+      latitude = request.args.get('latitude')
+      longitude = request.args.get('longitude')
+      date = request.args.get('date')
+      query = "SELECT temperature FROM table WHERE latitude='{0}' AND longitude='{1}' AND date='{2}'".format(latitude, longitude, date)
+      conn = engine.connect()
+      result = conn.execute(query)
+      temp_data = [dict(zip(tuple(result.keys()), i)) for i in result.cursor]
+      return jsonify(temp_data)
+
+    if __name__ == '__main__':
+      app.run()

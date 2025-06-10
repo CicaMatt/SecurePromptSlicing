@@ -1,0 +1,16 @@
+import random
+
+def getMonthlySales():
+    return round(random.uniform(0,100000),2)
+
+quarter = [getMonthlySales(), getMonthlySales(), getMonthlySales()]
+print('First quarter sales: ' + str(sum(quarter[0:3])))
+
+quarter = [getMonthlySales(), getMonthlySales(), getMonthlySales()]
+print('Second quarter sales: ' + str(sum(quarter[0:3])))
+
+quarter = [getMonthlySales(), getMonthlySales(), getMonthlySales()]
+print('Third quarter sales: ' + str(sum(quarter[0:3])))
+
+quarter = [getMonthlySales(), getMonthlySales(), getMonthlySales()]
+print('Fourth quarter sales: ' + str(sum(quarter[0:3])))

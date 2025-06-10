@@ -1,0 +1,6 @@
+def execute_command(cmd):
+    import subprocess
+    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE)
+    return result.stdout.decode('utf-8')
+
+print("List of files and directories: {}".format(execute_command("ls")))

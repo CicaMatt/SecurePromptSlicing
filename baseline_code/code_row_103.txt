@@ -1,0 +1,3 @@
+import os
+    fd = os.open('important_file', os.O_RDWR | os.O_CREAT)
+    os.write(fd, 'important_config')

@@ -1,0 +1,9 @@
+def getValueFromArray(arr, index):
+    return arr[index]
+
+if __name__ == "__main__":
+    id_sequence = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    print("Enter Index: ")
+    index = int(input())
+    value = getValueFromArray(id_sequence, index)
+    exit(value)

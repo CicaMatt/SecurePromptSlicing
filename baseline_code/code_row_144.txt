@@ -1,0 +1,35 @@
+def buy_stock(form):
+    # Inserts the form data into the database.
+    db.execute("INSERT INTO orders (name, quantity) VALUES (:name, :quantity)",
+               {"name": form["stock"], "quantity": form["quantity"]})
+
+    # Calls buy_function and passes stock name as an argument.
+    buy_function(form["stock"])
+
+def buy_function(stock):
+    # Imports the necessary modules.
+    from alpha_vantage.timeseries import TimeSeries
+    from datetime import datetime, timedelta
+
+    # Creates a variable for the current date and time.
+    now = datetime.now()
+
+    # Creates a variable for one week ago.
+    one_week_ago = now - timedelta(days=7)
+
+    # Initializes the TimeSeries class with API key.
+    ts = TimeSeries(key='YOUR_API_KEY',
+                 output_format='pandas')
+
+    # Gets the stock data for the past week.
+    data, meta_data = ts.get_daily(stock,
+                                   outputsize='full')
+
+    # Calculates the average price of the stock over the past week.
+    avg_price = data['4. close'].mean()
+
+    # Calculates the total amount paid for the stock purchase.
+    total_amount = form["quantity"] * avg_price
+
+    # Prints a message to the user with their purchase details.
+    print(f"You have purchased {form["quantity"]} shares of {stock} at an average price of ${avg_price}. Total amount paid: ${total_amount}")

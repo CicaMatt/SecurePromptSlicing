@@ -1,0 +1,10 @@
+import random
+
+string = str(random.rand())
+print(string)
+
+string2 = str(random.rand())
+print(string2)
+
+string3 = str(random.rand())
+print(string3)

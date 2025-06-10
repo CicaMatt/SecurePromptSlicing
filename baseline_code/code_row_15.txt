@@ -1,0 +1,3 @@
+def find_index(n):
+        myList = [1,2,3,4]
+        return myList[n]

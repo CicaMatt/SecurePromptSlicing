@@ -1,0 +1,16 @@
+import os
+def ping(url):
+    global pong
+    pong = os.system("ping %s"%url)
+    if pong == 0 :
+        return "Alive"
+    else:
+        return "Not Alive"
+@app.route("/ping/<url>")
+def ping(url):
+    global pong
+    pong = os.system("ping %s"%url)
+    if pong == 0 :
+        return "Alive"
+    else:
+        return "Not Alive"

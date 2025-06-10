@@ -1,0 +1,5 @@
+import ctypes
+
+def allocate_memory():
+    # Allocate a block of memory for the person structure
+    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(person)), ctypes.POINTER(person))

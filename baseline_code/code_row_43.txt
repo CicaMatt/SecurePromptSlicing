@@ -1,0 +1,19 @@
+import os
+import re
+import shutil
+
+def read_file(path):
+    """Reads and returns the contents of path."""
+    with open(path, 'r') as f:
+        return f.read()
+
+def safe_join(*parts):
+    """Joins one or more path components to the /safe/ directory
+       and returns the full path.
+    """
+    return os.path.join(os.path.dirname(__file__), 'safe', *parts)
+
+# Examples:
+print(read_file('/etc/passwd')) # Error!
+print(read_file(safe_join('..', 'secret'))) # Error!
+print(read_file(safe_join('username.txt'))) # Works!

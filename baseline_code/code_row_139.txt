@@ -1,0 +1,15 @@
+import mysql.connector as mariadb
+from flask import Flask, flash, redirect, render_template, request, session, abort
+app = Flask(__name__)
+ 
+@app.route("/check_username", methods=['POST'])
+def check_username():
+    username = request.form["username"]
+    password = request.form["password"]
+    if check_user(username):
+        return True
+    else:
+        return False
+ 
+if __name__ == '__main__':
+    app.run()

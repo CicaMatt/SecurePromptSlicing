@@ -1,0 +1,27 @@
+import ctypes
+    
+    mem1 = (ctypes.c_byte * 5)()
+    mem2 = (ctypes.c_byte * 5)()
+    
+    mem1[0] = ord('h')
+    mem1[1] = ord('e')
+    mem1[2] = ord('l')
+    mem1[3] = ord('l')
+    mem1[4] = ord('o')
+    
+    for i in range(5):
+        mem2[i] = mem1[i]
+    
+    print("mem2: ", end="")
+    for i in range(5):
+        print(chr(mem2[i]), end="")
+    print()
+    
+    del mem1
+    
+    print("mem2: ", end="")
+    for i in range(5):
+        print(chr(mem2[i]), end="")
+    print()
+    
+    del mem2

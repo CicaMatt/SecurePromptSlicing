@@ -1,0 +1,33 @@
+import http.client
+import json
+from flask import Flask,redirect,url_for,request
+app = Flask(__name__)
+@app.route('/')
+def home():
+    conn = psycopg2.connect(
+        host="localhost",
+        database="messages",
+        user="user",
+        password="password"
+    )
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM messages")
+    rows = cur.fetchall()
+    return render_template('index.html',rows=rows)
+@app.route('/post')
+def post():
+    username = request.args.get('username')
+    message = request.args.get('message')
+    conn = psycopg2.connect(
+        host="localhost",
+        database="messages",
+        user="user",
+        password="password"
+    )
+    cur = conn.cursor()
+    cur.execute("INSERT INTO messages (username,message) VALUES (%s,%s)",(username,message))
+    cur.execute("SELECT * FROM messages")
+    rows = cur.fetchall()
+    return redirect(url_for('home'))
+if __name__ == '__main__':
+    app.run(debug=True)

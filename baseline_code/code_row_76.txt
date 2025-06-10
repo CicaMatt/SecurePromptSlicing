@@ -1,0 +1,9 @@
+import ctypes
+libc = ctypes.CDLL('libc.so.6')
+p1 = libc.malloc(ctypes.sizeof(ctypes.c_int))
+print(p1)
+p2 = libc.malloc(ctypes.sizeof(ctypes.c_char * 4))
+name = ctypes.cast(p2, ctypes.POINTER(ctypes.c_char * 5))
+name.contents[0] = 'John'
+name.contents[1] = '\x00'
+print(name)

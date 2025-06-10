@@ -1,0 +1,12 @@
+import os
+from flask import Flask, render_template
+app = Flask(__name__)
+app.secret_key = "super secret key"
+@app.route('/info', methods=['GET'])
+def info():
+    username = str(session['username'])
+    email = str(session['email'])
+    ssn = str(session['ssn'])
+    return render_template('index.html', username=username, email=email, ssn=ssn)
+if __name__ == '__main__':
+    app.run()
