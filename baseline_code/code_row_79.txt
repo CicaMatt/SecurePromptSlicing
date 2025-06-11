@@ -1,3 +1,0 @@
-def scan(string_format):
-    import sys
-    return sys.stdin.readline().strip()

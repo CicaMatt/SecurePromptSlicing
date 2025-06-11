@@ -1,2 +1,0 @@
-index = int(input("Index of vehicle: "))
-print(vehicles[index])

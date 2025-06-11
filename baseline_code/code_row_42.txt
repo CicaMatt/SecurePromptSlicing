@@ -1,9 +1,0 @@
-import os
-import sys
-
-def read_file(filename):
-    try:
-        with open(os.path.join('/safe', filename), 'r') as f:
-            return f.read()
-    except FileNotFoundError:
-        print('The file "{}" was not found.'.format(filename))

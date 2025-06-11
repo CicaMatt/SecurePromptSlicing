@@ -1,9 +1,0 @@
-def get_value_from_array(my_list, index):
-    try:
-        return my_list[index]
-    except IndexError:
-        return None
-
-if __name__ == "__main__":
-    n = int(input())
-    print(getValueFromArray([1, 2, 3], n))

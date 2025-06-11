@@ -1,8 +1,0 @@
-from urllib import parse
-    
-    def redirect_url(url):
-        parsed_url = parse.urlparse(url)
-        if parsed_url.netloc == 'example.com':
-            return f"<html><head><title>301 Moved Permanently</title></head><body>The document has moved <a href='{url}'>here</a>.</body></html>"
-        else:
-            return "<html><head><title>404 Not Found</title></head><body>404 Not Found</body></html>"

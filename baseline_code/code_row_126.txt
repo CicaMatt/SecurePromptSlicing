@@ -1,7 +1,0 @@
-import json
-def http_hello_page(request,response):
-    req = request.read()
-    data = json.loads(req)
-    username = data['username']
-    res = 'Hello '+str(username)
-    response.write(res)

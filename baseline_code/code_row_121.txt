@@ -1,6 +1,0 @@
-import ctypes
-a = ctypes.malloc(10)
-b = ctypes.malloc(10)
-ctypes.memmove(b, a, 10)
-ctypes.free(a)
-ctypes.free(b)

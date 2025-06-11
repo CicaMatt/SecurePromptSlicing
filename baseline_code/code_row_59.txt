@@ -1,9 +1,0 @@
-import sys
-
-if len(sys.argv) != 2:
-    print("Usage: %s [size]" % (sys.argv[0]))
-    exit()
-
-buffer_size = int(sys.argv[1])
-buffer = "A" * buffer_size
-print(buffer)

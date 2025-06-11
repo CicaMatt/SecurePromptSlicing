@@ -1,5 +1,0 @@
-def check_if_email_exists(email):
-    if db.find(email):
-        return unsubscribe_script(email)
-    else:
-        return 0

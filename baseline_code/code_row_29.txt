@@ -1,8 +1,0 @@
-import re
-
-target = request.args['target']
-regex = r'^[a-zA-Z0-9\-]+\.'
-if re.match(regex, target):
-    return redirect(f'https://{target}')
-else:
-    return redirect('/')

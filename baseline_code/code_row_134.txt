@@ -1,7 +1,0 @@
-def check_mod():
-    username = document.forms['login']['username'].value;
-    password = document.forms['login']['password'].value;
-    if (username == 'user' && password == 'pass'):
-        return true;
-    else:
-        return false;

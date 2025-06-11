@@ -1,4 +1,0 @@
-import sys
-array = [1,2,3]
-index = int(sys.argv[1])  # Takes input from user
-print("The number at index",index,"is",array[index-1])

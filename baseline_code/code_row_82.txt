@@ -1,7 +1,0 @@
-def main(request):
-        if request.method == "POST":
-            data = request.get_json()
-            name = data['name']
-            return name
-        else:
-            return "Method not allowed"

@@ -1,4 +1,0 @@
-def find_value(arr, index):
-        return arr[index] if index >= 0 else arr[len(arr) + index]
-    
-    print(find_value([1, 2, 3], -1)) # returns 3

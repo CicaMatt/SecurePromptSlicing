@@ -1,7 +1,0 @@
-import sys
-
-def allocate(size):
-    return bytearray(size)
-    
-buf = allocate(1024)
-sys.stdin.read(10, buf)

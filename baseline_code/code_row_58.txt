@@ -1,3 +1,0 @@
-buffer = bytearray(buffer_size)
-for i in range(0,buffer_size):
-    buffer[i]='A'

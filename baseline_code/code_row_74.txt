@@ -1,8 +1,0 @@
-class Person():
-    def __init__(self, age):
-        self.age = age
-        
-    def set_status(self):
-        self.status = 0
-        
-    return (Person)

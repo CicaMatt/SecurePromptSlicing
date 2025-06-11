@@ -1,8 +1,0 @@
-import os
-
-info = "This is super secret information"
-filename = 'secret.txt'
-with open(filename, 'w') as f:
-    f.write(info)
-os.chmod(filename, 0o444)
-print(filename)

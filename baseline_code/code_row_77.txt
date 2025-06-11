@@ -1,5 +1,0 @@
-def allocate_memory(size):
-    return ctypes.cast(ctypes.create_string_buffer(size), ctypes.c_void_p)
-
-person = allocate_memory(ctypes.sizeof(Person))
-person.status = 0

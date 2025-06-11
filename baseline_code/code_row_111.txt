@@ -1,6 +1,0 @@
-import subprocess
-
-def ping(url):
-    url = 'http://www.example.com'
-    response = subprocess.check_output(['ping', '-c1', url], universal_newlines=True)
-    return response

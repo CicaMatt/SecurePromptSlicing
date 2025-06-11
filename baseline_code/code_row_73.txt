@@ -1,3 +1,0 @@
-import numpy as np
-def allocate_person():
-    return np.zeros(1, dtype=[('name', 'U10'), ('age', '<i2'), ('status', '<i4')])

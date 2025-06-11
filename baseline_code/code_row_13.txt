@@ -1,2 +1,0 @@
-def get_id(id_seq,index):
-    return id_seq[int(input("Enter the index number : "))-1]

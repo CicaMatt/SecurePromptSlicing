@@ -302,7 +302,7 @@ system_prompt = """
 
 
 BASELINE_FILE = "LLMSecEvalDataset.csv"
-#BaselineTesting()
+BaselineTesting()
 
 
 CSV_FILE = "syntactic_permutations.csv"
