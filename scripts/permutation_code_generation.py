@@ -255,18 +255,18 @@ class MultiPermutationTesting:
                         prompt = row["Final Prompt"]
                         print(prompt)
                         ext = guess_extension(prompt) or ".py"  # estensione di default
-                        filename_out = f"code_row_{i}{ext}"
+                        filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
 
                         try:
-                            print(f"▶️ Generating code for row {i} in {os.path.basename(csv_path)}...")
+                            print(f"▶️ Generating code for row {i+1} in {os.path.basename(csv_path)}...")
                             code = call_lmstudio(prompt)
                             with open(filepath, "w", encoding="utf-8") as f:
                                 f.write(code)
                             print(f"✅ Saved to {filepath}")
                             time.sleep(SLEEP_BETWEEN_REQUESTS)
                         except Exception as e:
-                            print(f"❌ Error generating code for row {i}: {e}")
+                            print(f"❌ Error generating code for row {i+1}: {e}")
 
 
 class Cleaning:

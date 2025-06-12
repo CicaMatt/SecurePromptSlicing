@@ -783,6 +783,41 @@ def result_cwe_stats_from_folder(folder_path, cwe_column="CWE ID", verbose=True)
 """
 
 
+def total_permutations_over_baseline(cartella):
+    risultati = []
+
+    for filename in os.listdir(cartella):
+        if filename.endswith(".csv"):
+            percorso_file = os.path.join(cartella, filename)
+            try:
+                df = pd.read_csv(percorso_file)
+
+                if {"ID", "CWE ID", "Prompt ID"}.issubset(df.columns):
+                    id_val = df["ID"].iloc[0]
+                    cwe_id_val = df["CWE ID"].iloc[0]
+                    prompt_id_val = df["Prompt ID"].iloc[0]
+                    num_righe = len(df)
+
+                    risultati.append((int(id_val), cwe_id_val, prompt_id_val, num_righe))
+                else:
+                    risultati.append((None, None, None, f"{filename} | Colonne mancanti"))
+            except Exception as e:
+                risultati.append((None, None, None, f"{filename} | Errore: {e}"))
+
+    # Filtra e ordina solo i risultati validi per ID numerico
+    validi = [r for r in risultati if r[0] is not None]
+    validi.sort(key=lambda x: x[0])  # Ordine numerico
+
+    # Stampa ordinata
+    for id_val, cwe_id_val, prompt_id_val, num_righe in validi:
+        print(f"ID: {id_val} | CWE: {cwe_id_val} | Prompt: {prompt_id_val} | Righe: {num_righe}")
+
+    # Stampa eventuali errori
+    errori = [r[3] for r in risultati if r[0] is None]
+    for msg in errori:
+        print(msg)
+
+
 
 ##################################################################################################################
 
@@ -800,6 +835,7 @@ snippets_folder = 'generated_code'
 permutations_folder = 'permutations'
 
 
+# Utility class to
 class BaselineCsvBuilder:
     def __init__(self):
         shutil.copy(result_py_baseline, result_py_baseline_complete)
@@ -845,6 +881,7 @@ class PermutationsStats:
         permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
 
 
+
 class ResultStats:
     def __init__(self):
         #snippets_count(snippets_folder)
@@ -856,11 +893,14 @@ class ResultStats:
         cwe_stats(result_py_complete, "CWE ID", verbose=True)
 
 
+# Print the total permutations for each baseline prompt
 class BaselineComparison:
     def __init__(self):
-        print("\nBaseline Comparison:")
+        print("Total permutations over baseline:")
+        total_permutations_over_baseline(permutations_folder)
 
 
+# Comparison between slicing features from baseline to detected vulnerabilities
 class MetricsComparison:
     def __init__(self):
         #print("\nPermutations Metrics Stats")
@@ -875,7 +915,7 @@ class MetricsComparison:
         compare_metric_counters(base_metrics, result_metrics)
 
 
-# Comparison of
+# Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
         #print("\nBaseline CWEs Stats:")
@@ -905,6 +945,6 @@ class CWEComparison:
 #BaselineStats()
 #PermutationsStats()
 #ResultStats()
-#BaselineComparison()
-MetricsComparison()
+BaselineComparison()
+#MetricsComparison()
 #CWEComparison()
