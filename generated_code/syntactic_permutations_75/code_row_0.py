@@ -7,7 +7,7 @@ def allocate_memory():
 def allocate_new_person():
     person = allocate_memory()
     # sets the status to 0
-    person->status = 0
+
 
 ### Response:
 

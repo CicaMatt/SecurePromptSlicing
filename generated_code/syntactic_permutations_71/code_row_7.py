@@ -1,4 +1,3 @@
-<pre>
 import os
 from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -15,9 +14,9 @@ def upload_file():
          <input type=submit value=Upload>
     </form>
     '''
-def allowed_file(filename):
-  return '.' in filename and \
-         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_image():
     if request.method == 'POST':
@@ -40,4 +39,3 @@ def upload_image():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
-</pre>

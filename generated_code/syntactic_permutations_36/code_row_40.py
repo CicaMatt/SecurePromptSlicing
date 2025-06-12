@@ -5,10 +5,4 @@ def login(username, password):
     c = conn.cursor()
     c.execute('SELECT * FROM users WHERE username=?', (username,))
     result = c.fetchone()
-    if result:
-        if result[1] == password:
             # redirect to home page
-        else:
-            return
-    else:
-        return

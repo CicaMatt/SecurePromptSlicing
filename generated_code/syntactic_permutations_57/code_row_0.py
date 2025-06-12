@@ -55,4 +55,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 ### Testing:
-Open a terminal or command prompt and run the python file by typing  login_system.py and press enter. The program should start running and you can access it in your browser using the address, http://127.0.0.1:5000/login.

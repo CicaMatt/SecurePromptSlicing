@@ -44,6 +44,3 @@ def unsubscribe():
 
 
 ### Testing the code:
-- Run the file in your terminal with command `flask run` and click on the link provided to open it in a web browser
-- Send a GET request using Postman or any other similar platform, passing the email parameter as part of the query string. For example, 
-    `http://localhost:5000/unsubscribe?email=jane@example.com`

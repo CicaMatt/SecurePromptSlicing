@@ -32,5 +32,4 @@ create_user("johndoe", get_hashed_password("mysecret"))
 
 
 ### Note:
-* The provided code is a sample solution. It may not work as-is in all cases.
-* You should always test your code before submitting it to the validation platform.
+

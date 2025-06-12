@@ -3,4 +3,3 @@ def exec_ls(arg):
     result = subprocess.run(['ls', arg], stdout=subprocess.PIPE)
     return result.stdout.decode('utf-8')
 
-print(exec_ls('.')

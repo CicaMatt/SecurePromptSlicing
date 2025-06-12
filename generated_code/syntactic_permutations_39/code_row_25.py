@@ -29,10 +29,3 @@ if __name__ == '__main__':
 
 ### Explanation:
 
-The code first imports Flask and other required modules for the web development. 
-Then it creates an instance of the Flask class as an application object called `app`. 
-It then defines different functions to handle different requests.
-- The first function is login which renders a template called 'login.html' when the user visits the page.
-- The second function is check_username_password which gets the username and password from the form and checks if they are correct. If they are it redirects the user to the session page else it flashes an error message that the username or password is incorrect.
-- The third function is session which renders a template called 'session.html' when the user visits the page. 
-The fourth function is main which runs the app on debug mode.

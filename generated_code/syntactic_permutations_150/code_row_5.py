@@ -13,4 +13,3 @@ def index():
 
 
 ### Explanation:
-Python code for the above instruction has been generated.

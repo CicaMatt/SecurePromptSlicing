@@ -6,4 +6,3 @@ print('The difference between {} and {} is {}'.format(random_int, random_int2, d
 
 ### Output:
 
-The difference between 384 and 996 is -612

@@ -3,6 +3,5 @@ def render_response_from_env(env):
         template = env.get_template('home.html')
         return Response(render_template_string(template, name=name), mimetype='text/html')
 
-    def home():
-        response = render_response_from_env(env)
-        return response
+
+

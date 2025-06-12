@@ -1,4 +1,3 @@
-The following code snippet will do the required task:
 
 import os  # for creating directory
 from flask import Flask, request, redirect  # for creating flask app

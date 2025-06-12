@@ -8,4 +8,3 @@ def insert_data():
     password = input("Enter the password: ")
     cursor.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')")
     mydb.commit()
-\insert_data()

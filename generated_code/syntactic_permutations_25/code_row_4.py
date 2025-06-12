@@ -22,4 +22,3 @@ print("Quarter 2: " + str(q2))
 print("Quarter 3: " + str(q3))
 
 ### Explanation
-This code generates random numbers between 0 and 100,000 and adds them to quarterly totals.

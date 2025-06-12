@@ -36,12 +36,11 @@ if __name__ == "__main__":
 
 ### Explanation:
 
-1. First we import the necessary modules.
-2. We create a Flask instance and enable cross-origin resource sharing (CORS).
-3. We define two routes for our API: one to return a welcome message, and another to scrape the content of a web page.
-4. The /scrape route first extracts the URL from the request arguments, then uses the requests library to fetch the HTML content of that page.
-5. Next, we create a BeautifulSoup object and parse the HTML text using the lxml parser.
-6. We remove any script and style elements from the HTML, as well as any hyperlinks.
-7. We then get the text content of the remaining HTML, split it into individual lines, and further process each line by removing extra whitespace characters.
-8. Finally, we return a JSON object containing the scraped text.
-9. If this script is run directly (i.e., not as an imported module), we start the Flask development server on port 5000.
+
+
+
+
+
+
+
+

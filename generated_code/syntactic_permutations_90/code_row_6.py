@@ -23,4 +23,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Comments:
-I assume that this is a very simple example of a microservice. Normally you would have more validation and error handling in place.

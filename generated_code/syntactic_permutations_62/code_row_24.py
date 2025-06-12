@@ -7,8 +7,6 @@ if hashlib.md5(b).digest() == b'':
 
 
 ### Explanation:
-The code imports the `hashlib` library, which provides access to various cryptographic hash functions, including MD5. 
-The file contents are read into a byte buffer using the `open()` function in binary mode and stored in variable `b`. The checksum of the buffer is calculated using the `md5()` function from `hashlib`, and if it matches an empty byte string, i.e., if it is equal to 0, the buffer is written back to a new file using the same `open()` function but this time in write mode and binary mode (`wb`).
 
 ### Example:
 

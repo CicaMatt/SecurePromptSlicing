@@ -35,7 +35,5 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Explanation: 
-The code uses Flask to create a simple web application. The `User` class is used to define the database model for the user table with columns `id`, `username`, and `password`. The password is hashed using SHA-256 before being stored in the database. The login form takes input from the user and inserts it into the `User` table.
 
 ### Additional info:
-The output code may contain additional information such as comments or documentation strings, but they should not affect the functionality of the code.

@@ -16,11 +16,6 @@ def login():
         query = ("SELECT * FROM users WHERE username = %s AND password = %s")
         cursor.execute(query, (username, password))
         user = cursor.fetchone()
-         if user:
-            return redirect(url_for('protected'))
-        else:
-            return render_template("login.html", message="Invalid Credentials!")
-    return render_template("login.html")
 
 @app.route("/protected")
 def protected():

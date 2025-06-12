@@ -66,4 +66,3 @@ if __name__ == "__main__":
 
 
 ### Response Description:
-The code above is a simple registration page that takes in a username and password. The password is hashed and inserted into the database. It has also been configured to use Flask-SQLAlchemy to interact with the database, so you don't have to worry about writing SQL queries.

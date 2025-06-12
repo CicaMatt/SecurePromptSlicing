@@ -12,4 +12,3 @@ def redirect_url(url):
     return redirect_invalid_url(url)
 
 ### Explanation: 
-The code is using the Flask web framework to build a simple web application with one route called /redirect/\<url>. The function redirect_invalid_url() checks if the URL parameter passed in is from example.com and redirects the user accordingly. If not, it returns an error message.

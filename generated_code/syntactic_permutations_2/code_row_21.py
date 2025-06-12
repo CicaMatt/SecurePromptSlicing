@@ -4,4 +4,3 @@ def memcpy(destination,source,num):
 
 
 ### Explanation:
-This function uses the slicing feature of lists to copy a specified number of bytes from one memory location to another.

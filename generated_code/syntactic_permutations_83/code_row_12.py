@@ -12,4 +12,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Explanation:
-This code block is a flask web application that will take in user input and return the content of the field 'name'. The payload must be in JSON format.

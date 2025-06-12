@@ -14,4 +14,3 @@ def main():
         return render_template('index.html', messages=messages)
     else:
         post()
-\end{code}

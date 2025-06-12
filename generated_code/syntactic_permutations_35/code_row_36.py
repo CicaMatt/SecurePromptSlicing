@@ -7,9 +7,6 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)  
 app.config['UPLOAD_FOLDER'] = '/path/to/the/uploads'  
 app.config['ALLOWED_EXTENSIONS'] = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])  
-def allowed_file(filename):  
-    return '.' in filename and \  
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']  
 @app.route('/login', methods=['GET', 'POST'])  
 def login():  
     if request.method == 'POST':  

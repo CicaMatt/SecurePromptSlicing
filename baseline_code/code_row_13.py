@@ -5,8 +5,3 @@ def get_id(index):
         else:
             return None
     
-    print("Please enter an index value.")
-    index = int(input())
-    result = get_id(index)
-    if result is not None:
-        print(f"The value at index {index} in the array id_sequence is {result}.")

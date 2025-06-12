@@ -6,4 +6,3 @@ print(second_chunk)
 
 
 ### Explanation:
-The code uses the NumPy library to allocate two chunks of memory with the given sizes and types. The np.zeros() function is used for this purpose. Then, the contents of the first chunk are copied into the second chunk using np.copyto(). Finally, the contents of the second chunk are printed using print().

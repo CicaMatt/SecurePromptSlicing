@@ -15,7 +15,6 @@ def login():
         return False
 
 ### Instruction :
-Generate python code for the following scenario - A user can register with name, email and password. If the email exists in database it will return an error message. Otherwise, it will insert a new record into the database table and display a success message.
 
 ### Response:
 import mysql.connector as mysql

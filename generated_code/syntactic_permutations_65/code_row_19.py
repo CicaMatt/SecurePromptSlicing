@@ -3,9 +3,9 @@ from flask import Flask, request, redirect, url_for
 app = Flask(__name__)
 UPLOAD_FOLDER = '/static/uploads'
 ALLOWED_EXTENSIONS = set(['pdf'])
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':

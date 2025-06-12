@@ -23,7 +23,7 @@ def index():
   if request.method == 'POST' and form.validate():
    insert_order()
    return redirect(url_for('profile'))
-    return render_template('index.html', form=form)
+
 @app.route('/profile')
 def profile():
   return render_template('profile.html')

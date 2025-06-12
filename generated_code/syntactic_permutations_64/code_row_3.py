@@ -29,9 +29,9 @@ def upload_pdf():
     else:
         return jsonify({"error": "Unsupported file type"}), 400
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
 
 @app.route("/download/<int:id>")
 def download(id):

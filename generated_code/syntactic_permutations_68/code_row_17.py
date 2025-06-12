@@ -23,9 +23,9 @@ def upload_file():
             print(e)
             return f'Error saving image to {filename}'
 
-def allowed_image(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
 
 @app.route('/show')
 def show_images():

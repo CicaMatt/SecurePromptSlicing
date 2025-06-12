@@ -1,4 +1,3 @@
-The below code will provide the functionality of a user being able to upload a file to a server. 
 
 # Importing flask and the request object
 from flask import Flask, request

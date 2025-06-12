@@ -24,5 +24,5 @@ def upload_pdf():
                 cursor.close()
                 connection.close()
                 return send_file(filepath, mimetype='application/pdf', attachment_filename=filename, as_attachment=True)
-\# Run the application
+
 app.run()

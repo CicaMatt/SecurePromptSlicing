@@ -22,9 +22,9 @@ def index():
             </body>
         </html>"""
 
-def allowed_file(filename):
-    return "." in filename and \
-           filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+
 
 @app.route("/uploads/<filename>", methods=["GET"])
 def uploads(filename):

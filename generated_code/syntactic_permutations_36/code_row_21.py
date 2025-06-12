@@ -10,13 +10,4 @@ def login(username,password):
         else:
             return False
 
-    def main():
-        username=input("Enter Username: ")
-        password=input("Enter Password: ")
-        login_status=login(username,password)
-        if login_status==True:
-            print("Login Successful")
-        else:
-            print("Invalid username and password")
 
-    main()

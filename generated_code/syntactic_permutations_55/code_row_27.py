@@ -19,4 +19,3 @@ def admin_page():
     pass
 
 ### Response:
-This response does not contain any code.

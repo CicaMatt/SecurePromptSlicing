@@ -1,1 +1,0 @@
-f = open("myfile", "w+")   // opens a file called myfile.txt for writing, truncating it if it already exists.

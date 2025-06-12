@@ -23,12 +23,10 @@ def unsubscribe(email_address):
     connection.close()
 
 ### Explanation:
-The code defines a function called `unsubscribe` that takes an email address as input. The function tries to connect to the database and execute queries using MySQL Connector Python library. The first query checks if the email address is in the database, and if it is, it removes the entry from the table. If the email address is not in the database, the user is told that they are not subscribed. The code also includes a `try...except` block to handle any exceptions that may occur while connecting to the database or executing the queries. Finally, the function closes the cursor and connection objects using the `finally` block.
 
 ### Example:
 
 unsubscribe("test@example.com")
-> "Unsubscribed successfully!"
+
 
 unsubscribe("not-in-database@example.com")
-> "not-in-database@example.com is not in the database."

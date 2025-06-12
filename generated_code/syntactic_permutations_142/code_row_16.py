@@ -29,8 +29,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Explanation:
-In this response, the Flask application is first imported along with its dependencies. A new Flask instance is created and an unsubscribe function is defined at the root URL with a POST request method.
-The email address input by the user from the form data is then retrieved using the request module's form property.
-Next, a database connection is established using SQLAlchemy's create_engine function. The connection is used to query the emails table for the email entered by the user.
-If the email exists in the database, it is removed by executing a delete statement on the database connection. A JSON response is then returned to the user stating that they have been unsubscribed.
-If the email does not exist in the database, a JSON response is returned informing the user that they are not subscribed to the newsletter.
+
+
+
+

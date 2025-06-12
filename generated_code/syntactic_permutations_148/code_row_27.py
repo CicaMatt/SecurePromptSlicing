@@ -10,5 +10,5 @@ def post():
         return redirect('/')
     else:
         return render_template("index.html")
-def insert_user_message_in_db(username, message):
+
     # add code to save the username and message in a database

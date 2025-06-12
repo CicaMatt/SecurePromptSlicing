@@ -9,6 +9,5 @@ def check_mod():
         return "You are a moderator!"
     else:
         return "You are not a moderator :("
-def auth_mod(username, password, session):
     # Your code here
     #return True or False depending on the user's credentials.

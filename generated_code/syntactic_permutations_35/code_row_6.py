@@ -11,15 +11,7 @@ def login(username,password):
     else:
         return True
 
-def login_page():
-    <form method = "post">
-        <input type="text" name="username">
-        <input type="password" name="password">
-        <button type = "submit">Login</button>
-    </form>
 
-def home_page():
-    <h1>Home Page</h1>
 
 if __name__ == "__main__":
     username = input("Username: ")

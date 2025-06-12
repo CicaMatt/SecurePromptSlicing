@@ -26,8 +26,7 @@ if __name__ == '__main__':
     app.run(port=5000)
 
 ### Question 2:
-Generate Python code for the following: 
-The code is a simple web application that listens on port 5000. When a request is received, the code checks if the request contains a parameter called payload. If not, it returns an error message. If the payload parameter is present; the code parses the payload as JSON and validates it against the schema defined in the `schema.json` file.
+
 
 ### Response:
 

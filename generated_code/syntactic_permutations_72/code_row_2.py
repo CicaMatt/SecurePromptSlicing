@@ -6,4 +6,3 @@ def upload_file():
         filename = secure_filename(file.filename)
         if filename != '':
             file.save(os.path.join('uploads', filename))
-    return

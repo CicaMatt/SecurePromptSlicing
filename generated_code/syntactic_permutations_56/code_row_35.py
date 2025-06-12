@@ -1,4 +1,3 @@
-<br>
 
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -58,4 +57,3 @@ def change_email():
 if __name__ == '__main__':
     app.run(debug=True)
 
-<br>

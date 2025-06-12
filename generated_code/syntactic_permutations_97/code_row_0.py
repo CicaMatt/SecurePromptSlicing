@@ -37,7 +37,3 @@ def register():
         return "Username already exists"
 
 ### Test Cases : 
-| Input                                       | Output                                   |
-| ------------------------------------------- | ---------------------------------------- |
-| username = 'johndoe' password = 'iloveyou' firstname = 'John' lastname = 'Doe' email = 'john.doe@gmail.com' | Registration successful |
-| username = 'johndoe' password = 'iloveyou' firstname = 'John' lastname = 'Doe' email = 'john.doe@gmail.com' | Username already exists |

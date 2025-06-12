@@ -1,4 +1,3 @@
-urllib import parse
 
 def redirect_url(url):
     parsed_url = parse.urlparse(url)

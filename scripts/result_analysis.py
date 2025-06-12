@@ -49,7 +49,7 @@ def check_and_remove_duplicates(csv_path, remove_duplicates=False):
         print(f"Errore durante l'elaborazione del file: {e}")
 
 
-def add_prompt_id(csv_path: str, dataset_csv_path: str) -> None:
+def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -> None:
     """
     Modifica il CSV iniziale aggiungendo le colonne 'Prompt ID' e 'Dataset ID'
     ottenute dal mapping tramite l'ID estratto dal campo 'Path'.
@@ -57,14 +57,19 @@ def add_prompt_id(csv_path: str, dataset_csv_path: str) -> None:
     Args:
         csv_path (str): Percorso del CSV iniziale con colonna 'Path'.
         dataset_csv_path (str): Percorso del CSV contenente 'Id' e 'Prompt ID'.
+        mode: Aggiunta per la baseline o per i risultati
     """
     # Legge il CSV iniziale
     starting_df = pd.read_csv(csv_path)
 
     # Estrae il numero da "permutations_"
     def extract_id(path):
-        match = re.search(r'permutations_(\d+)', path)
-        return int(match.group(1)) if match else None
+        if mode == 'Results':
+            match = re.search(r'permutations_(\d+)', path)
+            return int(match.group(1)) if match else None
+        elif mode == 'Baseline':
+            match = re.search(r'row_(\d+)', path)
+            return int(match.group(1)) if match else None
 
     starting_df['Permutation_ID'] = starting_df['Path'].apply(extract_id)
 
@@ -259,46 +264,48 @@ def covered_cwe_types_stats(csv_path, original_column):
     print(f"\nNumero totale di CWE unici: {len(unique_cwe)}")
 
 
-def result_cwe_stats(csv_path, cwe_column):
+def cwe_stats(csv_path, cwe_column, verbose=True):
     """
     Legge un file CSV, analizza una colonna con valori del tipo "CWE-502",
-    e stampa ciascun tipo di CWE con il numero di occorrenze, ordinati per ID crescente.
+    e restituisce un dizionario con il numero di occorrenze per ciascun CWE,
+    ordinati per ID crescente.
 
     :param csv_path: Percorso al file CSV da leggere
     :param cwe_column: Nome della colonna che contiene i valori CWE (es. "CWE-502")
+    :param verbose: Se True, stampa i risultati a video
+    :return: Dizionario con le occorrenze di ciascun CWE
     """
-    # Leggi il file CSV
-    df = pd.read_csv(csv_path)
+    try:
+        df = pd.read_csv(csv_path)
 
-    # Verifica che la colonna esista
-    if cwe_column not in df.columns:
-        raise ValueError(f"La colonna '{cwe_column}' non esiste nel CSV.")
+        if cwe_column not in df.columns:
+            raise ValueError(f"La colonna '{cwe_column}' non esiste nel CSV.")
 
-    # Conta le occorrenze dei CWE
-    cwe_counts = df[cwe_column].astype(str).value_counts()
+        # Conta le occorrenze dei CWE
+        cwe_counts = Counter(df[cwe_column].dropna().astype(str))
 
-    # Ordina per ID numerico crescente
-    sorted_cwe_counts = cwe_counts.sort_index(key=lambda x: x.str.replace("CWE-", "").astype(int))
+        # Ordina per ID numerico (es. "CWE-502" -> 502)
+        sorted_cwe_counts = dict(sorted(
+            cwe_counts.items(),
+            key=lambda x: int(x[0].replace("CWE-", "")) if x[0].startswith("CWE-") else float('inf')
+        ))
 
-    # Stampa i CWE e le loro occorrenze
-    print("Occorrenze di ciascun tipo di CWE:")
-    for cwe, count in sorted_cwe_counts.items():
-        print(f"{cwe}: {count}")
+        if verbose:
+            #print(f"Totale righe lette: {len(df)}\n")
+            print(f" - {cwe_column}: {len(sorted_cwe_counts)} valori unici")
+            for cwe, count in sorted_cwe_counts.items():
+                print(f"    {cwe}: {count}")
 
-    # Stampa il numero totale di CWE unici
-    print(f"\nNumero totale di CWE unici: {sorted_cwe_counts.shape[0]}")
+        return {cwe_column: Counter(sorted_cwe_counts)}
 
+    except Exception as e:
+        if verbose:
+            print(f"Errore nella lettura del file {csv_path}: {e}")
+        return
 
+r"""
 def permutations_cwe_stats(main_csv_path, prompt_id_column, permutations_folder):
-    """
-    Processes the main CSV file, extracts CWE-ID from the specified column,
-    matches each row (starting from 1) to the corresponding CSV file in the folder,
-    and aggregates CWE occurrences.
-
-    :param main_csv_path: Path to the main CSV file
-    :param prompt_id_column: Column name from which to extract CWE-IDs
-    :param permutations_folder: Folder containing 'syntactic_permutations_<num>.csv' files
-    """
+    # Version that works without the added labels in the permutations csvs
     def extract_cwe(prompt_id):
         match = re.search(r'CWE-\d+', str(prompt_id))
         return match.group(0) if match else None
@@ -347,9 +354,68 @@ def permutations_cwe_stats(main_csv_path, prompt_id_column, permutations_folder)
     for cwe, count in sorted_cwe_counts.items():
         print(f"{cwe}: {count}")
     print(f"\nNumero totale di CWE unici: {sorted_cwe_counts.shape[0]}")
+"""
 
 
-def permutations_values_count_total(folder):
+def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
+    from collections import Counter
+    import os, re
+    import pandas as pd
+
+    total_counter = Counter()
+    total_rows = 0
+    processed_files = 0
+    invalid_entries = []
+
+    pattern = re.compile(r"^CWE-\d+$")
+
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(folder_path, filename)
+            try:
+                df = pd.read_csv(file_path)
+
+                if cwe_column not in df.columns:
+                    if verbose:
+                        print(f"[!] Colonna '{cwe_column}' non trovata in {filename}")
+                    continue
+
+                cwe_values = df[cwe_column].dropna().astype(str)
+
+                for idx, val in cwe_values.items():
+                    if pattern.match(val):
+                        total_counter[val] += 1
+                    else:
+                        invalid_entries.append((filename, idx, val))
+
+                total_rows += len(df)
+                processed_files += 1
+
+            except Exception as e:
+                if verbose:
+                    print(f"[!] Errore nella lettura del file {filename}: {e}")
+
+    sorted_counter = Counter(dict(sorted(
+        total_counter.items(),
+        key=lambda x: int(x[0].split("-")[1])
+    )))
+
+    if verbose:
+        #print(f"Totale righe lette: {total_rows}")
+        print(f" - {cwe_column}: {len(sorted_counter)} valori unici validi")
+        for cwe, count in sorted_counter.items():
+            print(f"    {cwe}: {count}")
+
+        if invalid_entries:
+            print(f"\n[!] Valori non validi trovati ({len(invalid_entries)}):")
+            for filename, idx, val in invalid_entries:
+                print(f"    File: {filename}, Riga: {idx}, Valore: '{val}'")
+
+    # ✅ Wrappa nel dizionario come fa result_cwe_stats
+    return {cwe_column: sorted_counter}
+
+
+def permutations_values_count_total(folder, verbose=True):
     # Inizializza contatori per ogni colonna
     type_counter = Counter()
     granularity_counter = Counter()
@@ -373,21 +439,31 @@ def permutations_values_count_total(folder):
                 if 'Sentence Index' in df.columns:
                     sentence_index_counter.update(df['Sentence Index'].dropna())
             except Exception as e:
-                print(f"Errore nella lettura di {filename}: {e}")
+                if verbose:
+                    print(f"Errore nella lettura di {filename}: {e}")
 
-    #print(f"Totale righe lette da tutti i CSV: {total_rows}\n")
+    if verbose:
+        print(f"Totale righe lette da tutti i CSV: {total_rows}\n")
 
-    print(f" - Type: {len(type_counter)} unique values")
-    for val, count in type_counter.items():
-        print(f"    {val}: {count}")
+        print(f" - Type: {len(type_counter)} unique values")
+        for val, count in type_counter.items():
+            print(f"    {val}: {count}")
 
-    print(f" - Granularity: {len(granularity_counter)} unique values")
-    for val, count in granularity_counter.items():
-        print(f"    {val}: {count}")
+        print(f" - Granularity: {len(granularity_counter)} unique values")
+        for val, count in granularity_counter.items():
+            print(f"    {val}: {count}")
 
-    print(f" - Sentence Index: {len(sentence_index_counter)} unique values")
-    for val, count in sentence_index_counter.items():
-        print(f"    '{val}': {count}")
+        print(f" - Sentence Index: {len(sentence_index_counter)} unique values")
+        for val, count in sentence_index_counter.items():
+            print(f"    '{val}': {count}")
+
+    # Ritorna i contatori in un dizionario
+    return {
+        'Type': type_counter,
+        'Granularity': granularity_counter,
+        'Sentence Index': sentence_index_counter,
+    }
+
 
 
 def analyze_snippets(filepath):
@@ -546,7 +622,7 @@ def result_values_count(filepath, verbose=True):
         return
 
     if verbose:
-        print(f"Totale righe lette: {total_rows}\n")
+        #print(f"Totale righe lette: {total_rows}\n")
 
         print(f" - Syntagm Type: {len(syntagm_type_counter)} valori unici")
         for val, count in syntagm_type_counter.items():
@@ -596,12 +672,127 @@ def compare_metric_counters(base_counters, result_counters):
 
 
 
+def compare_cwe_counters(base_counters, result_counters):
+    """
+    Confronta due dizionari nel formato restituito da result_cwe_stats:
+    { "CWE ID": Counter({ "CWE-XX": count, ... }) }
+
+    Stampa la percentuale dei valori result rispetto a quelli base.
+    """
+
+    if "CWE ID" not in base_counters or "CWE ID" not in result_counters:
+        print("❌ Errore: almeno uno dei dizionari non contiene la chiave 'CWE ID'")
+        return
+
+    base_counter = base_counters["CWE ID"]
+    result_counter = result_counters["CWE ID"]
+
+    print("\n--- CONFRONTO CWE (CWE ID) ---\n")
+
+    all_keys = set(base_counter) | set(result_counter)
+
+    for cwe in sorted(all_keys, key=lambda x: int(x.replace("CWE-", ""))):
+        base_val = base_counter.get(cwe, 0)
+        result_val = result_counter.get(cwe, 0)
+
+        if base_val == 0:
+            percent = "N/A"
+        else:
+            percent = f"{(result_val / base_val) * 100:.2f}%"
+
+        print(f"{cwe:10}: {result_val:4} / {base_val:4} → {percent}")
+
+
+def enhance_permutations_csvs(folder_path, mapping_file):
+    # Carica il file di mapping
+    df_mapping = pd.read_csv(mapping_file)
+
+    # Itera su ogni riga del file di mapping
+    for index, row in df_mapping.iterrows():
+        nome_csv = f"syntactic_permutations_{index + 1}.csv"
+        percorso_csv = os.path.join(folder_path, nome_csv)
+
+        if not os.path.exists(percorso_csv):
+            print(f"File non trovato: {percorso_csv}")
+            continue
+
+        # Carica il CSV corrispondente
+        df = pd.read_csv(percorso_csv)
+
+        # Controlla se le colonne esistono già
+        colonne_da_aggiungere = {
+            "ID": row.get("ID", ""),
+            "Prompt ID": row.get("Prompt ID", ""),
+            "CWE-ID": row.get("Prompt ID", "").split("_")[0] if "_" in row.get("Prompt ID", "") else ""
+        }
+
+        modificato = False
+
+        for colonna, valore in colonne_da_aggiungere.items():
+            if colonna not in df.columns:
+                df[colonna] = valore
+                modificato = True
+
+        if modificato:
+            df.to_csv(percorso_csv, index=False)
+            print(f"Aggiornato: {percorso_csv}")
+        else:
+            print(f"Nessuna modifica necessaria: {percorso_csv}")
+
+r"""
+can be deleted
+def result_cwe_stats_from_folder(folder_path, cwe_column="CWE ID", verbose=True):
+    aggregate_counter = Counter()
+    total_rows = 0
+    files_processed = 0
+
+    for filename in os.listdir(folder_path):
+        if filename.lower().endswith(".csv"):
+            file_path = os.path.join(folder_path, filename)
+            try:
+                df = pd.read_csv(file_path)
+
+                if cwe_column not in df.columns:
+                    if verbose:
+                        print(f"⚠️  Colonna '{cwe_column}' non trovata in '{filename}' - ignorato.")
+                    continue
+
+                current_counter = Counter(df[cwe_column].dropna().astype(str))
+                aggregate_counter.update(current_counter)
+                total_rows += len(df)
+                files_processed += 1
+
+            except Exception as e:
+                if verbose:
+                    print(f"❌ Errore nella lettura di '{filename}': {e}")
+
+    # Ordina per ID numerico (es. "CWE-502" -> 502)
+    sorted_aggregate = dict(sorted(
+        aggregate_counter.items(),
+        key=lambda x: int(x[0].replace("CWE-", "")) if x[0].startswith("CWE-") else float('inf')
+    ))
+
+    if verbose:
+        print(f"\n📁 Totale file letti: {files_processed}")
+        print(f"📄 Totale righe lette: {total_rows}")
+        print(f"🔢 CWE unici trovati: {len(sorted_aggregate)}\n")
+        for cwe, count in sorted_aggregate.items():
+            print(f"  {cwe}: {count}")
+
+    return Counter(sorted_aggregate)
+"""
+
+
+
 ##################################################################################################################
 
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 result_py = 'results_codeql/results_py.csv'
 result_py_complete = 'results_codeql/results_py_complete.csv'
+result_py_baseline = 'results_codeql/results_py_baseline.csv'
+result_py_baseline_complete = 'results_codeql/results_py_baseline_complete.csv'
+
 #result_py_complete = 'results_codeql/results_py_standardpack.csv'
 #result_py_complete = 'results_codeql/results_py_custompack.csv'
 
@@ -609,11 +800,25 @@ snippets_folder = 'generated_code'
 permutations_folder = 'permutations'
 
 
-class CsvBuilder:
+class BaselineCsvBuilder:
+    def __init__(self):
+        shutil.copy(result_py_baseline, result_py_baseline_complete)
+        add_labels(result_py_baseline_complete)
+        add_prompt_id(result_py_baseline_complete, prompt_dataset, "Baseline")
+        add_cwe_id(result_py_baseline_complete, "Prompt ID")
+        #check_and_remove_duplicates(result_py_baseline_complete, remove_duplicates=False)
+
+
+class PermutationCsvsBuilder:
+    def __init__(self):
+        enhance_permutations_csvs(permutations_folder, prompt_dataset)
+
+
+class ResultsCsvBuilder:
     def __init__(self):
         shutil.copy(result_py, result_py_complete)
         add_labels(result_py_complete)
-        add_prompt_id(result_py_complete, prompt_dataset)
+        add_prompt_id(result_py_complete, prompt_dataset, "Results")
         add_cwe_id(result_py_complete, "Prompt ID")
         add_slicing_info(result_py_complete, permutations_folder)
         #check_and_remove_duplicates(result_py_complete, remove_duplicates=False)
@@ -621,9 +826,11 @@ class CsvBuilder:
 
 class BaselineStats:
     def __init__(self):
-        print("Baseline CWEs Stats:")
+        print("Baseline Covered CWEs (Security Scenarios):")
         covered_cwe_types_stats(prompt_dataset, "Prompt ID")
         print("\n---------------------------------------")
+        print("\nBaseline CWEs Stats (Baseline Analysis on Default Prompts):")
+        cwe_stats(result_py_baseline_complete, "CWE ID", verbose=True)
 
 
 class PermutationsStats:
@@ -635,8 +842,7 @@ class PermutationsStats:
         #print("\nPermutations Stats - Correct Snippets:")
         #permutations_values_count_clean(permutations_folder, snippets_folder)
         print("\nPermutation CWEs Stats:")
-        permutations_cwe_stats(prompt_dataset, "Prompt ID", permutations_folder)
-
+        permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
 
 
 class ResultStats:
@@ -647,22 +853,58 @@ class ResultStats:
         #result_values_count(result_py_complete)
         #print("\n---------------------------------------")
         print("\nResult CWEs Stats:")
-        result_cwe_stats(result_py_complete, "CWE ID")
+        cwe_stats(result_py_complete, "CWE ID", verbose=True)
+
+
+class BaselineComparison:
+    def __init__(self):
+        print("\nBaseline Comparison:")
 
 
 class MetricsComparison:
     def __init__(self):
-        #print("\nPermutations Stats - Correct Snippets:")
-        base_values = permutations_values_count_clean(permutations_folder, snippets_folder, verbose=False)
+        #print("\nPermutations Metrics Stats")
+        #base_metrics = permutations_values_count_clean(permutations_folder, snippets_folder, verbose=False)
+        base_metrics = permutations_values_count_total(permutations_folder, verbose=False)
         #print("\n---------------------------------------")
         #print("\nResult Stats:")
-        result_values = result_values_count(result_py_complete, verbose=False)
+        result_metrics = result_values_count(result_py_complete, verbose=False)
         #print("\n---------------------------------------")
-        print("\nParameters Comparison Stats:")
-        compare_metric_counters(base_values, result_values)
+        # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
+        print("\nMetrics Comparison Stats:")
+        compare_metric_counters(base_metrics, result_metrics)
 
 
-#CsvBuilder()
+# Comparison of
+class CWEComparison:
+    def __init__(self):
+        #print("\nBaseline CWEs Stats:")
+        #print("\n---------------------------------------")
+        baseline_cwes = cwe_stats(result_py_baseline_complete, "CWE ID", verbose=False)
+        #print("\nPermutation CWEs Stats:")
+        permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
+        #print("\n---------------------------------------")
+        #print("\nResult CWEs Stats:")
+        result_cwes = cwe_stats(result_py_complete, "CWE ID", verbose=False)
+        #print("\n---------------------------------------")
+
+        # These values show how many of the detected vulnerabilities over the baseline are present over the results
+        print("\nBaseline - Results --- Metrics CWE Stats:")
+        compare_cwe_counters(result_cwes, baseline_cwes)
+        # These values show how security scenarios covered over the permutations yielded a vulnerability based on the results
+        print("\nPermutations - Results --- Metrics CWE Stats:")
+        compare_cwe_counters(permutations_cwes, result_cwes)
+
+
+
+
+
+#BaselineCsvBuilder()
+#PermutationCsvsBuilder()
+#ResultsCsvBuilder()
+#BaselineStats()
 #PermutationsStats()
-ResultStats()
-#MetricsComparison()
+#ResultStats()
+#BaselineComparison()
+MetricsComparison()
+#CWEComparison()

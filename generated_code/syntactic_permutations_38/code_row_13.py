@@ -1,4 +1,3 @@
-The code can be used for a simple login system where the user enters his/her username and password then checks if the entered credentials match those in a database or file.
 
 ### Code:
 

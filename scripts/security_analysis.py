@@ -82,7 +82,25 @@ command_set_custom_queries = [
     #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py/extra/python-extra.qls --warnings=hide --rerun'
 ]
 
+
+command_set_baseline_analysis = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=baseline_code --overwrite',
+
+    # Query update and configuration
+    r'cd CodeQL/Queries/py_complete && codeql pack install',
+
+    # Database analysis using downloaded query pack
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
+    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
+]
+
 #SecurityAnalysis(example_commands)
-SecurityAnalysis(command_set_standard_queries)
+#SecurityAnalysis(command_set_standard_queries)
 #SecurityAnalysis(command_set_custom_queries)
+SecurityAnalysis(command_set_baseline_analysis)
+
 

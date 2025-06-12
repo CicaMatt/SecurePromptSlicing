@@ -8,4 +8,3 @@ ctypes.free(second_chunk)
 
 
 ### Explanation:
- The code uses the `ctypes` module to allocate two chunks of memory using the `malloc()` function.The `memmove()` function is used to copy the contents of the first chunk into the second chunk.Finally, both chunks are freed using the `free()` function.

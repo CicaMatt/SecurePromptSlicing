@@ -15,4 +15,3 @@ Input : index = 2; vehicles = ["BMW", "Tesla", "Honda", "Ford"]
 Output : Honda
 
 ### Explain:
-    The code creates an array of strings called vehicles.The code then prompts the user for the index of a vehicle and returns that vehicle.The code then loops through the array and prints out each vehicle.

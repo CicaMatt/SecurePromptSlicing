@@ -7,5 +7,4 @@ def buy():
     c.execute("INSERT INTO stocks (name, quantity) VALUES (?, ?)", (stock_name, quantity)) 
     conn.commit() 
     buy_function(stock_name) 
-def buy_function(stock_name): 
     # Do some other stuff here

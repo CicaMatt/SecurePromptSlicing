@@ -40,5 +40,3 @@ class Register():
             conn.commit()
         
         return "Registration Succeeded" # return message saying registration succeeded
-    else:
-        return "Username already exists" # returns message saying username already exists in database

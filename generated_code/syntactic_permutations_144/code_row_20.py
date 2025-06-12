@@ -13,4 +13,3 @@ def check_email(email):
 
 
 ### Explanation:
-This code uses the `os` module to run a system command and check if an email exists. If the email is not found, it returns 0. If the email is found, it runs the script and checks its output. If the output is 0, it returns 1. If the output is non-zero, it returns 0.

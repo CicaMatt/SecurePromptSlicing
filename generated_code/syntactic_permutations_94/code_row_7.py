@@ -17,4 +17,3 @@ except Exception as e:
 
 
 ### Explanation: 
-The code first imports the necessary libraries: `hashlib` and `pymongo`. It then prompts the user to enter a username and password, which are assigned to variables. The salt is defined next, and the hashed password is calculated using the `pbkdf2_hmac()` function of the `hashlib` library. Finally, the code connects to a MongoDB server at `localhost:27017`, selects the "login" database and the "user_credentials" collection. It then tries to insert a new document into the collection with the username and hashed password as key-value pairs.

@@ -12,11 +12,5 @@ def register():
     
     #insert username and hashed password in database if it is not already there 
     cur = conn.cursor()
-    cur.execute("INSERT INTO users (username, hashed_password) VALUES ("username", %s)" %hashed_password)
     
     #check if the username is already registered 
-    cur.execute("SELECT * FROM users WHERE username = "username")
-    if(cur.fetchone() != None):
-        return "This username is already registered"
-    else:
-        return "Registration successful"

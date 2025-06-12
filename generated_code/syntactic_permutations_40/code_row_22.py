@@ -9,5 +9,4 @@ def info():
     ssn = session['ssn'][-4:]
     return '<h1>Hello, {0}! Your Email is {1}. The last 4 digits of your SSN are {2}</h1>'.format(username,email,ssn)
   
-if __name__ == '__main__':
 app.run()

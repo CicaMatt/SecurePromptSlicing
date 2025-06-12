@@ -30,10 +30,10 @@ def is_safe_password(password):
     Returns:
         bool: True if the password meets the requirements, False otherwise.
     """
-    return any(char.isdigit() for char in password) and \
-           any(char.islower() for char in password) and \
-           any(char.isupper() for char in password) and \
-           8 <= len(password) <= 15
+
+
+
+
 
 def validate_date(date):
     try:

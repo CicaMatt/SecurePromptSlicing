@@ -19,6 +19,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Explanation:
-The above code is a simple web application that allows users to login using their username and password. The username and password are stored in the database after hashing the password. 
-The code uses Flask as the micro web framework, hashlib for hashing the password.
-The code defines two routes: "/" and "/login". The "/" route is used to render the login page, while the "/login" route is used to handle the login request and display the result.

@@ -1,4 +1,3 @@
-The following code meets the above requirements:
 
 from flask import Flask, render_template, request, redirect, url_for, flash
 import bcrypt  # for hashing passwords

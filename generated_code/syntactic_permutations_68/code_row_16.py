@@ -24,9 +24,8 @@ def upload_image():
         # Send the image name and base64 string to the server for processing
         send_to_server(image_name, image_base64)
     
-    def send_to_server(image_name, image_base64):
-        """
-        This function sends the image name and base64 string to the server for processing.
-        The server will then process the image and return the results.
-        """
-        pass
+
+
+
+
+

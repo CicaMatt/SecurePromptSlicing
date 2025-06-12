@@ -11,4 +11,3 @@ if __name__ == '__main__':
 
 
 ### Explanation:
-The code is a simple web application that has a single route /info. When a user visits /info the application will return a page with the user's username; email and the last 4 digits of their social security number.

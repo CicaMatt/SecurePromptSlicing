@@ -12,4 +12,3 @@ def redirect_url(url):
     output: 'https://www.example.com'
     
     input: redirect_url('https://www.google.com')
-    output: 404 error

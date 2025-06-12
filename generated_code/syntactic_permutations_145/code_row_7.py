@@ -25,5 +25,5 @@ def get_number_of_shares(username, stock):
     # return the number of shares the user owns for the given stock
     pass
 
-def set_number_of_shares(username, stock, quantity):
+
     # set the number of shares the user owns for the given stock to the given quantity

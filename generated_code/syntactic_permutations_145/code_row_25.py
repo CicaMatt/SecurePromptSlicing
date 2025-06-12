@@ -7,8 +7,7 @@ def buy_stock(stock_name,quantity):
             'quantity': quantity
         })
         buy_function(stock_name)
-    def buy_function(stock_name):
-        import requests
-        url = f"https://finance.yahoo.com/quote/{stock_name}"
-        response = requests.get(url).json()
-        return response['price']
+
+
+
+

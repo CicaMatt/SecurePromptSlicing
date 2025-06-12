@@ -1,6 +1,3 @@
-@app.route("/", methods=["GET"])
-def login():
-    return "<form action="do_login" method="POST"><input type="text" name="name"></br><input type="password" name="password"></br> <button type="submit">Submit</button></form>"
 
 @app.route("/", methods=["POST"])
 def do_login():

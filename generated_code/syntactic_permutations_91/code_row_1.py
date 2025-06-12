@@ -1,4 +1,3 @@
-The code below will take input for a name and password, hash the password, and insert it into the database.
 
 
 import bcrypt

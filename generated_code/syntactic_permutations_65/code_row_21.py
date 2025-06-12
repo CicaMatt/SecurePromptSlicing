@@ -40,4 +40,3 @@ if __name__ == '__main__':
 
 
 ### Note:
-The code generated should be able to run using Python and the Flask framework. The application should have a form that allows users to upload PDF files, and after submitting the form, the file should be saved in a folder named 'uploads' in the project directory.

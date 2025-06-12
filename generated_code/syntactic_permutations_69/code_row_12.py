@@ -13,5 +13,3 @@ def upload_image():
         return redirect(url_for('index'))
 
 ### Explanation:
-The upload_image() function takes the file object (which is passed in as an argument) and saves it to a file in the UPLOAD_FOLDER directory. 
-It then returns a redirection response to the uploaded_file() function, which displays the image that was just uploaded.

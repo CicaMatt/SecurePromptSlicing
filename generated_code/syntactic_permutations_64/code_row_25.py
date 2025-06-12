@@ -12,11 +12,10 @@ def upload_pdf():
             file.save(filepath)
             db.insert_pdf(filepath)
         return redirect('http://127.0.0.1:5000/display')
-    def allowed_file(filename):
-        return '.' in filename and \
-               filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    def get_pdfs():
-        pdfs = db.get_pdfs()
-        return render_template('index.html', pdfs=pdfs)
-    def display_pdf(filepath):
-        return send_file(filepath, as_attachment=True)
+
+
+
+
+
+
+

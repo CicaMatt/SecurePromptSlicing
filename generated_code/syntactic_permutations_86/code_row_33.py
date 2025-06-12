@@ -37,31 +37,15 @@ def connect_to_database():
 def get_temperature(latitude, longitude, year, month, day, grib_file):
     """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""
     conn = None
-    try:
         # read connection parameters
-        params = config()
         
         # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
-        conn = psycopg2.connect(**params)
 		
         # create a cursor
-        cur = conn.cursor()
         
 	# execute a statement
-        print('PostgreSQL database version:')
-        cur.execute("SELECT max(t) FROM temperature_for_location(%s, %s, %s, %s, %s, %s)", 
-              (latitude, longitude, year, month, day, grib_file))
 
         # display the PostgreSQL database server version
-        t = cur.fetchone()[0]
-	return t
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
-            print('Database connection closed.')
 @app.route('/api/temperature_for_location', methods=['GET'])
 def get_temperature_for_location():
     """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""

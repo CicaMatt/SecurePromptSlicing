@@ -1,4 +1,3 @@
-The code I generated:
 
 import re
 from flask import Flask, render_template, request, redirect, url_for, flash

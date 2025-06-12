@@ -1,4 +1,3 @@
-<pre><code>from flask import Flask, redirect, url_for, request, abort
 import mysql.connector
 app = Flask(__name__)
 
@@ -46,5 +45,3 @@ def cant_login():
 def internal_server_error():
     return 'Internal server error'
 
-if __name__ == "__main__":
-    app.run(debug=True)</code></pre>

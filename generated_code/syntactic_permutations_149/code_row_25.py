@@ -10,5 +10,5 @@ def post():
     message = request.form['message']
     insert_user_message_in_db(username,message)
     return redirect(url_for('home'))
-def insert_user_message_in_db(username,message):
+
     #connect to database and insert the username and message.

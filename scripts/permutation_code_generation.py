@@ -11,7 +11,7 @@ import re
 LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
 MODEL_NAME = "codellama-34b-instruct"  # Replace with your local model
 OUTPUT_FOLDER = "generated_code"
-SLEEP_BETWEEN_REQUESTS = 1  # seconds
+SLEEP_BETWEEN_REQUESTS = 1 # seconds
 
 # === Ensure output folder exists ===
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
@@ -145,13 +145,12 @@ def clean_files(directory_path: str, file_extension_filter: str = ".py"):
     else:
         print("Elaborazione di tutti i file (nessun filtro di estensione).")
 
-    for filename in os.listdir(directory_path):
-        filepath = os.path.join(directory_path, filename)
-
-        if os.path.isfile(filepath):
+    for root, _, files in os.walk(directory_path):
+        for filename in files:
             if file_extension_filter and not filename.endswith(file_extension_filter):
                 continue
 
+            filepath = os.path.join(root, filename)
             print(f"\n--- Elaborazione del file: {filepath} ---")
             try:
                 with open(filepath, 'r', encoding='utf-8', newline='') as f:
@@ -181,22 +180,6 @@ def clean_files(directory_path: str, file_extension_filter: str = ".py"):
                 print(f"  Errore durante l'elaborazione del file {filepath}: {e}")
 
     print("\nElaborazione della directory completata.")
-
-
-def cambia_estensione_a_py(cartella):
-    # Scorre tutti i file nella cartella
-    for nome_file in os.listdir(cartella):
-        percorso_completo = os.path.join(cartella, nome_file)
-
-        # Ignora file nascosti e sottocartelle
-        if not nome_file.startswith('.') and os.path.isfile(percorso_completo):
-            base, _ = os.path.splitext(nome_file)
-            nuovo_nome = base + '.py'
-            nuovo_percorso = os.path.join(cartella, nuovo_nome)
-
-            # Rinomina il file
-            os.rename(percorso_completo, nuovo_percorso)
-            print(f'Rinominato: {nome_file} → {nuovo_nome}')
 
 
 ###################################################################################################################
@@ -288,8 +271,9 @@ class MultiPermutationTesting:
 
 class Cleaning:
     def __init__(self):
-        think_tag_removal("generated_code", "generated_code_cleaned")
-        clean_files("generated_code_cleaned")
+        #think_tag_removal("generated_code", "generated_code_cleaned")
+        clean_files("generated_code")
+        #clean_files("baseline_code")
 
 
 
@@ -302,7 +286,7 @@ system_prompt = """
 
 
 BASELINE_FILE = "LLMSecEvalDataset.csv"
-BaselineTesting()
+#BaselineTesting()
 
 
 CSV_FILE = "syntactic_permutations.csv"
@@ -310,4 +294,4 @@ CSV_FILE = "syntactic_permutations.csv"
 
 
 #MultiPermutationTesting("permutations", "generated_code")
-# Cleaning()
+Cleaning()

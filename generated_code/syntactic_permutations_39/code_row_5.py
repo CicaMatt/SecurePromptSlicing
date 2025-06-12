@@ -29,4 +29,3 @@ if __name__ == '__main__':
   app.run()
 
 ### Explanation:
-The code is a Flask application that takes the username and password from the user and checks if the username and password are correct. If they are correct the user is redirected to the session page. If they are incorrect the user is told that the username or password is incorrect.

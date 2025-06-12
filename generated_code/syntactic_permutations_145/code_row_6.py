@@ -25,4 +25,3 @@ def buy_function(stock_name):
     stock = Stock.query.filter_by(stock_name=stock_name).first()
     stock.quantity += quantity
     db.session.commit()
-\

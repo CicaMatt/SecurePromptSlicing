@@ -17,4 +17,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 ### Answer:
-The code is a very simple example of to insert data into a database. The user enters the stock name and quantity in the form, the form is submitted to the buy_order route, and the buy_order route takes the stock name and quantity and inserts it into the database. The user is redirected to the stock_view page.

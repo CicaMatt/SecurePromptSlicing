@@ -24,4 +24,3 @@ class RegistrationForm:
         cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (self.username, password))
         database.commit()
         database.close()
-\end{code}

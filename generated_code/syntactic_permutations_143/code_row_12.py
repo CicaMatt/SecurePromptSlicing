@@ -30,4 +30,3 @@ def unsubscribe():
     return json.dumps({"message": "You are not subscribed to our mailing list."})
 
 ### Output:
-The program returns Python code for a Flask API that allows users to unsubscribe from the mailing list by sending a GET request to the /unsubscribe endpoint with an email parameter. If the user is found in the database, the code deletes the user and unsubscribes them from the mailing list.

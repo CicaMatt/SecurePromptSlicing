@@ -8,4 +8,3 @@ def get_id_sequence_index(id_sequence):
         # Print the corresponding value in id_sequence
         print(id_sequence[index])
     
-    get_id_sequence_index([1, 2, 3, 4, 5])

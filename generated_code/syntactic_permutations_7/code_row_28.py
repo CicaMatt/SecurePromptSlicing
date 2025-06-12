@@ -1,1 +1,0 @@
-import sys\nprint(sys.argv[INDEX])

@@ -7,8 +7,6 @@ def check_mod():
     
     if username == 'admin' and password == 'pass':
         return 'true'
-     else:
-        return redirect(url_for('/'))
 
 if __name__ == '__main__':
     app.run()

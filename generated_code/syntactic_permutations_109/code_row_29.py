@@ -12,4 +12,3 @@ username = sys.argv[1]
 # construct the command and execute it  
 cmd = "cat /etc/passwd | grep {}".format(username)
 output = execute_command(cmd)  
-print output

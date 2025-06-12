@@ -28,12 +28,6 @@ def login():
             if check_password_hash(user.password, old_password):
                 if new_password == user.password:
                     return '<h1>Invalid email or password</h1>'
-        else:
-            hashed_password = generate_password_hash(new_password, method='sha256')
-            user.password = hashed_password
-            db.session.commit()
-            return redirect(url_for('success'))
-    return render_template('login.html', title='Login')
 @app.route('/')
 def index():
     return '<h1>Hello, World!</h1>'

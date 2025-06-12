@@ -1,4 +1,3 @@
-<code>
 import os
 from flask import Flask, request, redirect, render_template, session
 app = Flask(__name__)
@@ -21,4 +20,3 @@ def secret_page():
         return render_template('secret.html')
     else:
         return redirect(url_for('index'))
-</code>

@@ -30,5 +30,5 @@ def unsubscribe():
 
     return jsonify({"message": "User has been unsubscribed successfully."})
 
-def unsubscribe_from_mailing_list(email):
+
     # Unsubscribe user from mailing list code goes here.

@@ -1,4 +1,4 @@
-Python code (including all necessary imports) : 
+
 
 from flask import Flask, request
 import pymongo

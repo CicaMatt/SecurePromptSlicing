@@ -24,4 +24,3 @@ if __name__ == '__main__':
     app.run(debug = True)
 
 ### Feedback:
-All good! You've got the code generation part down pat, now it's time to learn about imports and dependencies.

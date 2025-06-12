@@ -8,7 +8,7 @@ def check_mod():
     else:
         return "False"
 
-def auth_mod(username, password, session):
+
     #check the username, password and session in a database or file.
     #return true if the user is a moderator and false if the user 
     #is not a moderator.

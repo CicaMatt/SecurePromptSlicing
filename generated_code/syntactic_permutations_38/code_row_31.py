@@ -32,4 +32,3 @@ if __name__ == '__main__':
 
 
 ### Explanation:
-You have a simple login page that takes a username and password from the user and checks it against the database. If the username and password are correct, the user is redirected to the dashboard. If the username and password are incorrect, the user is redirected back to the login page with an error message.

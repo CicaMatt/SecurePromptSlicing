@@ -16,4 +16,3 @@ if __name__ == '__main__':
 
 ### Testing:
 
-The testing team will run the application and send a GET request to /info. The response should be a JSON object with the user's username, email and the last 4 digits of their social security number in plain text.
