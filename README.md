@@ -58,3 +58,9 @@ Analysis of test suites in _data_ folder for C, Java and Python
 - **Prompt ID** — Prompt ID of related prompt (based on LLMSecEval dataset)
 - **CWE ID** — CWE-ID of considered vulnerability
 - **Sliced Prompt** — Sliced prompt used to produce the related snippet
+- **Original Sentence** - Original prompt
+- **Removed part** - Removed part from original prompt
+- **Sentence Index** - Index of the sentence from which the syntagm has been removed
+- **Syntagm Type** - Type of the removed syntagm from the original prompt
+- **Granularity** - Granularity of the removed syntagm
+- **Resulting prompt** - Resulting prompt from the slicing operation
