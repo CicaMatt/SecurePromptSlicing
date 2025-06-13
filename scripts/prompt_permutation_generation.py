@@ -130,36 +130,9 @@ def process_prompts(input_csv_path, output_dir="permutations"):
     }
 
 
-def replace_placeholder_in_csvs(folder_path: str, language: str):
-    """
-    Legge tutti i file CSV nella cartella specificata, sostituisce ogni occorrenza di <language>
-    nella colonna 'Resulting Prompt' con la stringa fornita, crea una nuova colonna 'Final Prompt'
-    con il risultato, e salva i file modificati sovrascrivendo gli originali.
-
-    :param folder_path: Percorso della cartella contenente i file CSV.
-    :param language: Stringa con cui sostituire il placeholder <language>.
-    """
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".csv"):
-            file_path = os.path.join(folder_path, filename)
-            try:
-                df = pd.read_csv(file_path)
-
-                if 'Resulting Prompt' in df.columns:
-                    df['Final Prompt'] = df['Resulting Prompt'].astype(str).str.replace('<language>', language)
-                    df.to_csv(file_path, index=False)
-                else:
-                    print(f"Colonna 'Resulting Prompt' non trovata in {filename}.")
-            except Exception as e:
-                print(f"Errore nella lettura del file {filename}: {e}")
-
 
 ###################################################################################################################
 
-
-class SetLanguage:
-    def __init__(self, language):
-        replace_placeholder_in_csvs("permutations", language)
 
 
 class PromptProcessing:
@@ -196,6 +169,7 @@ Generate Python code for the following: A function copies a number of bytes from
 """
 #PromptProcessing()
 
-MultiplePromptProcessing("LLMSecEvalDataset.csv")
-SetLanguage("Python")
+#MultiplePromptProcessing("LLMSecEvalDataset.csv")
+SetLanguage("Java")
+
 
