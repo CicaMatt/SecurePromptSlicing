@@ -945,6 +945,6 @@ class CWEComparison:
 #BaselineStats()
 #PermutationsStats()
 #ResultStats()
-BaselineComparison()
+#BaselineComparison()
 #MetricsComparison()
-#CWEComparison()
+CWEComparison()

@@ -254,7 +254,7 @@ class MultiPermutationTesting:
                     for i, row in enumerate(reader):
                         prompt = row["Final Prompt"]
                         print(prompt)
-                        ext = guess_extension(prompt) or ".py"  # estensione di default
+                        ext = guess_extension(prompt) or ".java"  # estensione di default
                         filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
 
@@ -270,16 +270,19 @@ class MultiPermutationTesting:
 
 
 class Cleaning:
-    def __init__(self):
+    def __init__(self, folder_to_clean):
+        self.folder_to_clean = folder_to_clean
+
         #think_tag_removal("generated_code", "generated_code_cleaned")
-        clean_files("generated_code")
-        #clean_files("baseline_code")
+        clean_files(folder_to_clean)
 
 
+
+language = "Java"
 
 system_prompt = """
     You are a code-generation assistant. You must only output valid and complete source code, 
-    including all necessary imports or dependencies, in Python language. 
+    including all necessary imports or dependencies, in """ + language + """ language. 
     Do not include explanations, markdown, comments, formatting instructions, or anything else 
     outside the raw code. The output must be directly runnable as-is.
 """
@@ -293,5 +296,5 @@ CSV_FILE = "syntactic_permutations.csv"
 #PermutationTesting()
 
 
-#MultiPermutationTesting("permutations", "generated_code")
-Cleaning()
+MultiPermutationTesting("permutations", "generated_code_java")
+#Cleaning("generated_code")
