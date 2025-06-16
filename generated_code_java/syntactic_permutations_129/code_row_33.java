@@ -1,0 +1,1 @@
+import jinja2\n\nenv = Environment(loader=FileSystemLoader('.'),autoescape=True,trim_blocks=True,lstrip_blocks=True)\n\ndef render_response_from_env(env):\n    name = request.args.get('name')\n    template = env.get_template('index.html')\n    return Response(template.render(name=name))\n\ndef home():\n    response = render_response_from_env(env)\n    return response

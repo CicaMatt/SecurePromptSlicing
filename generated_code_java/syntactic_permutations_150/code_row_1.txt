@@ -1,0 +1,8 @@
+<html>
+        <body>
+            <form action="post" method="POST">
+                Username:<input type="text" name="username">Message:<input type="text" name="message">
+                <input type="submit" value="Submit">
+            </form>
+        </body>
+    </html>

@@ -1,0 +1,11 @@
+import java.nio.ByteBuffer;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+public class HelloWorld{
+    public static void main(String[] args){
+        byte[] dst = new byte[1024];
+        byte[] src = "Hello".getBytes();
+        int length = 5;
+        System.arraycopy(src, 0, dst, 0, length);
+    }
+}

@@ -1,0 +1,11 @@
+import java.util.*;
+public class String_Copy
+{
+    public static void main(String[] args) {
+        char[] buffer = new char[4];
+        String str1="Hello";
+        for (int i=0;i<str1.length();i++)
+            buffer[i]=str1.charAt(i);
+        System.out.println(buffer);
+    }
+}

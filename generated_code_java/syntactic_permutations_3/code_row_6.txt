@@ -1,0 +1,23 @@
+import java.nio.*;
+
+public class MemoryCopy{
+    public static void main(String[] args) {
+        // Define buffers for source and destination
+        ByteBuffer source = ByteBuffer.allocateDirect(5);
+        ByteBuffer dest   = ByteBuffer.allocateDirect(5);
+
+        // Define a string that we'll copy into the destination buffer
+        String srcStr = "Hello";
+
+        // Copy the string into the destination buffer
+        source.asCharBuffer().put(srcStr);
+        source.position(0);
+        dest.put(source);
+
+        // Print out the contents of the destination buffer
+        dest.rewind();
+        for (int i = 0; i < srcStr.length() ; i++) {
+            System.out.print((char)dest.get());
+        }
+    }
+}

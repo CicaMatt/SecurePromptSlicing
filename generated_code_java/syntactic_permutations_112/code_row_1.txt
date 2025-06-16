@@ -1,0 +1,13 @@
+import java.lang.System;
+import javax.servlet.http.*;
+public class HelloWorld extends HttpServlet {
+    private String url = "www.google.com";
+
+    public void ping(HttpServletResponse response) throws IOException {
+        System.out.println("Ping");
+        Runtime rt = Runtime.getRuntime();
+        Process p = rt.exec("ping" + url);
+        p.waitFor();
+        return;
+    }
+}

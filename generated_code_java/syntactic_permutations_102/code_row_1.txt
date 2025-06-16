@@ -1,0 +1,9 @@
+import java.io.*;
+
+class Main {
+  public static void main(String[] args) throws IOException {
+    File f = new File("important_config");
+    RandomAccessFile raf = new RandomAccessFile(f, "rw");
+    raf.writeBytes("important_config\n");
+  }
+}

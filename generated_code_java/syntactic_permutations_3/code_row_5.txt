@@ -1,0 +1,13 @@
+import java.util.*;
+class main{
+public static void main(String[] args){
+char[] buffer = new char[1024];
+copy(buffer, 0,"hello".toCharArray(), 0, 5);
+}
+//copies from one memory location to another
+static void copy (Object destination, int position, Object source, int offset, int length){
+for(int i = offset; i < length; i++){
+((char[])destination)[position++] = ((char[])source)[i]; 
+} 
+}
+}

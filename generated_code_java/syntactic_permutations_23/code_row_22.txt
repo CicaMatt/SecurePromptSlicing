@@ -1,0 +1,11 @@
+import java.util.Random;
+public class MyClass {
+    public static void main(String[] args) {
+        Random random = new Random();
+        int a = random.nextInt(9000)+1000;
+        int b = random.nextInt(9000)+1000;
+        int c = random.nextInt(9000)+1000;
+        System.out.println("a: " + a + "\nb: " + b + "\nc: " + c);
+        System.out.println("sum: " + (a+b+c));
+    }
+}

@@ -1,0 +1,10 @@
+import java.util.*;
+
+public class HelloWorld {
+
+	public static void main(String[] args) {
+		byte[] destination = new byte[1024];
+		System.arraycopy(destination, 0, "Hello".getBytes(), 0, 5);
+	}
+
+}

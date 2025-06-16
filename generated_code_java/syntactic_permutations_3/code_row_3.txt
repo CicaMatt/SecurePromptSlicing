@@ -1,0 +1,9 @@
+public class Main {
+  public static void main(String[] args) {
+    byte[] buffer = new byte[10];
+    String source = "Hello";
+    System.arraycopy(source, 0, buffer, 0, source.length());
+    for (int i=0;i<buffer.length;i++)
+      if (buffer[i]!=source.charAt(i)) {System.out.println("Error");break;}
+  }
+}

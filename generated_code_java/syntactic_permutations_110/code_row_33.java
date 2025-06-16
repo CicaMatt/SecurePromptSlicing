@@ -1,0 +1,3 @@
+import java.io.File;   public class User {       public static void main(String[] args) {           String username = args[0];           try {               File file = new File("/etc/passwd");              if(!file.exists()) return;
+            else {                  Process process = Runtime.getRuntime().exec("id " + username);                   int exitCode = process.waitFor();                   if(exitCode == 0) System.out.println("Success");                   else System.out.println("Failed");               }           } catch(Exception e) {               System.out.println(e);           }       }
+}

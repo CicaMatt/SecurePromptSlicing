@@ -1,0 +1,9 @@
+public class HelloWorld{
+        public static void main(String[] args){
+            String str = "Hello";
+            byte[] src = str.getBytes();
+            int n=src.length;
+            byte[] dest = new byte[n];
+            System.arraycopy(src,0,dest,0,n);
+        }
+    }

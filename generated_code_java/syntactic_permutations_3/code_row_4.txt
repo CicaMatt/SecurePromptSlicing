@@ -1,0 +1,19 @@
+import java.util.*;
+
+public class HelloWorld{
+	public static void main(String[] args){
+    byte[] src = new byte[5];
+    src[0]='H';
+    src[1]='e';
+    src[2]='l';
+    src[3]='l';
+    src[4]='o';
+    byte[] dest = new byte[5];
+	memcpy(dest,src, 5);
+	}
+	static void memcpy(byte[] dest, byte[] src, int n) {
+        for (int i=0;i<n;i++) {
+            dest[i] = src[i];
+        }
+    }
+}

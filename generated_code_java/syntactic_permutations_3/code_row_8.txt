@@ -1,0 +1,7 @@
+String str = "Hello";
+char[] buffer = new char[1024];
+int i = 0, j = 0;
+for(i = 0 ; i < str.length() && j < buffer.length(); i++,j++){
+    buffer[j] = str.charAt(i);
+}
+buffer[j] = '\0'; //null terminate the string
