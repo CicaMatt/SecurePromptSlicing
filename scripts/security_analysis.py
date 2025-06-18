@@ -50,7 +50,7 @@ example_commands = [
 ]
 
 
-command_set_standard_queries = [
+command_set_standard_queries_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
@@ -65,7 +65,7 @@ command_set_standard_queries = [
 ]
 
 
-command_set_custom_queries = [
+command_set_custom_queries_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
@@ -83,7 +83,7 @@ command_set_custom_queries = [
 ]
 
 
-command_set_baseline_analysis = [
+command_set_baseline_analysis_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
@@ -98,9 +98,106 @@ command_set_baseline_analysis = [
     # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
 ]
 
+
+command_set_result_analysis_java = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    r'''
+    for i in {1..150}; do
+        dir="generated_code_java/syntactic_permutations_$i"
+        mkdir -p "$dir/src/main/java"
+        mv "$dir"/code_row_*.java "$dir/src/main/java/" 2>/dev/null
+    done''',
+
+    r'''
+    for i in {1..150}; do
+        dir="generated_code_java/syntactic_permutations_$i"
+        artifact="syntactic_permutations_$i"
+        pom="$dir/pom.xml"
+        
+        # Crea la directory se non esiste
+        mkdir -p "$dir"
+        
+        # Salta se il pom.xml esiste già
+        if [ -f "$pom" ]; then
+            echo "✔️  $pom esiste già, salto."
+            continue
+        fi
+        
+        # Crea il pom.xml se non esiste
+        cat > "$pom" <<EOF
+        <project xmlns="http://maven.apache.org/POM/4.0.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                                     http://maven.apache.org/xsd/maven-4.0.0.xsd">
+          <modelVersion>4.0.0</modelVersion>
+          <parent>
+            <groupId>com.example</groupId>
+            <artifactId>aggregator-project</artifactId>
+            <version>1.0.0</version>
+          </parent>
+          <artifactId>$artifact</artifactId>
+        </project>
+        EOF
+        
+        echo "✅  Creato: $pom"
+    done
+    ''',
+
+    r'''
+    for pom in generated_code_java/syntactic_permutations_*/pom.xml; do
+        dir=$(dirname "$pom")
+        echo "🔧 Compilazione in: $dir"
+        (cd "$dir" && mvn compile)
+    done
+    ''',
+
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code_java --command="mvn clean compile" --overwrite',
+
+    # Query download and installation for Java
+    #r'codeql pack download codeql/java-queries'
+
+    # Database analysis using downloaded query pack
+    #r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide --rerun'
+]
+
+command_set_result_analysis_java_test = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+
+    # Query download and installation for Java
+    r'codeql pack download codeql/java-queries',
+
+    # Database analysis using downloaded query pack
+    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide --rerun'
+]
+
+# Comandi per testare la compilazione Java
+"""
+    r'''
+    for pom in generated_code_java_formatted/syntactic_permutations_*/code_row_*/pom.xml; do
+        dir=$(dirname "$pom")
+        echo "🔧 Compilazione in: $dir"
+        (cd "$dir" && mvn compile --fail-at-end)
+    done
+    ''',
+    
+        r'''
+    for pom in generated_code_java_formatted/syntactic_permutations_*/pom.xml; do
+        dir=$(dirname "$pom")
+        echo "🔧 Compilazione in: $dir"
+        (cd "$dir" && mvn compile --fail-at-end)
+    done
+    ''',
+"""
+
 #SecurityAnalysis(example_commands)
-#SecurityAnalysis(command_set_standard_queries)
-#SecurityAnalysis(command_set_custom_queries)
-SecurityAnalysis(command_set_baseline_analysis)
-
-
+#SecurityAnalysis(command_set_standard_queries_py)
+#SecurityAnalysis(command_set_custom_queries_py)
+#SecurityAnalysis(command_set_baseline_analysis_py)
+SecurityAnalysis(command_set_result_analysis_java_test)
