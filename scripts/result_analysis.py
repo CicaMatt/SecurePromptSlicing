@@ -818,31 +818,36 @@ def total_permutations_over_baseline(cartella):
         print(msg)
 
 
-
 ##################################################################################################################
 
-
 prompt_dataset = 'LLMSecEvalDataset.csv'
-result_py = 'results_codeql/results_py.csv'
-result_py_complete = 'results_codeql/results_py_complete.csv'
-result_py_baseline = 'results_codeql/results_py_baseline.csv'
-result_py_baseline_complete = 'results_codeql/results_py_baseline_complete.csv'
+permutations_folder = 'permutations'
+
+#snippets_folder = 'generated_code_py'
+snippets_folder = 'generated_code_java'
+
+results_codeql_raw = 'results_codeql/results_java.csv'
+results_codeql = 'results_codeql/results_java_complete.csv'
+results_baseline_raw = 'results_codeql/results_java_baseline.csv'
+results_baseline = 'results_codeql/results_java_baseline_complete.csv'
+
+#results_codeql_raw = 'results_codeql/results_py.csv'
+#results_codeql = 'results_codeql/results_py_complete.csv'
+#results_baseline_raw = 'results_codeql/results_py_baseline.csv'
+#results_baseline = 'results_codeql/results_py_baseline_complete.csv'
 
 #result_py_complete = 'results_codeql/results_py_standardpack.csv'
 #result_py_complete = 'results_codeql/results_py_custompack.csv'
 
-snippets_folder = 'generated_code'
-permutations_folder = 'permutations'
 
 
-# Utility class to
 class BaselineCsvBuilder:
     def __init__(self):
-        shutil.copy(result_py_baseline, result_py_baseline_complete)
-        add_labels(result_py_baseline_complete)
-        add_prompt_id(result_py_baseline_complete, prompt_dataset, "Baseline")
-        add_cwe_id(result_py_baseline_complete, "Prompt ID")
-        #check_and_remove_duplicates(result_py_baseline_complete, remove_duplicates=False)
+        shutil.copy(results_baseline_raw, results_baseline)
+        add_labels(results_baseline)
+        add_prompt_id(results_baseline, prompt_dataset, "Baseline")
+        add_cwe_id(results_baseline, "Prompt ID")
+        check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
 class PermutationCsvsBuilder:
@@ -852,12 +857,12 @@ class PermutationCsvsBuilder:
 
 class ResultsCsvBuilder:
     def __init__(self):
-        shutil.copy(result_py, result_py_complete)
-        add_labels(result_py_complete)
-        add_prompt_id(result_py_complete, prompt_dataset, "Results")
-        add_cwe_id(result_py_complete, "Prompt ID")
-        add_slicing_info(result_py_complete, permutations_folder)
-        #check_and_remove_duplicates(result_py_complete, remove_duplicates=False)
+        shutil.copy(results_codeql_raw, results_codeql)
+        add_labels(results_codeql)
+        add_prompt_id(results_codeql, prompt_dataset, "Results")
+        add_cwe_id(results_codeql, "Prompt ID")
+        add_slicing_info(results_codeql, permutations_folder)
+        #check_and_remove_duplicates(results_codeql, remove_duplicates=False)
 
 
 class BaselineStats:
@@ -866,7 +871,7 @@ class BaselineStats:
         covered_cwe_types_stats(prompt_dataset, "Prompt ID")
         print("\n---------------------------------------")
         print("\nBaseline CWEs Stats (Baseline Analysis on Default Prompts):")
-        cwe_stats(result_py_baseline_complete, "CWE ID", verbose=True)
+        cwe_stats(results_baseline, "CWE ID", verbose=True)
 
 
 class PermutationsStats:
@@ -876,7 +881,7 @@ class PermutationsStats:
         #analyze_snippets(snippets_folder)
         #print("\n---------------------------------------")
         #print("\nPermutations Stats - Correct Snippets:")
-        #permutations_values_count_clean(permutations_folder, snippets_folder)
+        permutations_values_count_clean(permutations_folder, snippets_folder)
         print("\nPermutation CWEs Stats:")
         permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
 
@@ -885,12 +890,12 @@ class PermutationsStats:
 class ResultStats:
     def __init__(self):
         #snippets_count(snippets_folder)
-        #row_counter(result_py_complete)
+        row_counter(results_codeql)
         #print("\nResult Stats:")
-        #result_values_count(result_py_complete)
+        result_values_count(results_codeql)
         #print("\n---------------------------------------")
         print("\nResult CWEs Stats:")
-        cwe_stats(result_py_complete, "CWE ID", verbose=True)
+        cwe_stats(results_codeql, "CWE ID", verbose=True)
 
 
 # Print the total permutations for each baseline prompt
@@ -908,7 +913,7 @@ class MetricsComparison:
         base_metrics = permutations_values_count_total(permutations_folder, verbose=False)
         #print("\n---------------------------------------")
         #print("\nResult Stats:")
-        result_metrics = result_values_count(result_py_complete, verbose=False)
+        result_metrics = result_values_count(results_codeql, verbose=False)
         #print("\n---------------------------------------")
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nMetrics Comparison Stats:")
@@ -920,12 +925,12 @@ class CWEComparison:
     def __init__(self):
         #print("\nBaseline CWEs Stats:")
         #print("\n---------------------------------------")
-        baseline_cwes = cwe_stats(result_py_baseline_complete, "CWE ID", verbose=False)
+        baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
         #print("\nPermutation CWEs Stats:")
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
         #print("\n---------------------------------------")
         #print("\nResult CWEs Stats:")
-        result_cwes = cwe_stats(result_py_complete, "CWE ID", verbose=False)
+        result_cwes = cwe_stats(results_codeql, "CWE ID", verbose=False)
         #print("\n---------------------------------------")
 
         # These values show how many of the detected vulnerabilities over the baseline are present over the results
@@ -941,10 +946,10 @@ class CWEComparison:
 
 #BaselineCsvBuilder()
 #PermutationCsvsBuilder()
-#ResultsCsvBuilder()
+ResultsCsvBuilder()
 #BaselineStats()
 #PermutationsStats()
 #ResultStats()
 #BaselineComparison()
 #MetricsComparison()
-CWEComparison()
+#CWEComparison()
