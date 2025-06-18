@@ -1,0 +1,1 @@
+SELECT temperature FROM weather_data WHERE latitude = ? AND longitude = ? AND year = ? AND month = ? AND day = ? AND grib_file = ? LIMIT 1;

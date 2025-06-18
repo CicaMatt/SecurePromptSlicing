@@ -1,0 +1,1 @@
+C language source code with complete functionality to implement the above task, including all necessary imports and dependencies, making the output directly runnable as-is.
