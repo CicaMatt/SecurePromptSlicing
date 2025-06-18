@@ -1,0 +1,8 @@
+#include <stdio.h>
+int main() {
+    int sum = 0;
+    for (int i = 0; i < 3; i++) {
+        sum += getMonthlySales(i);
+    }
+    printf("Total sales for the quarter: %d\n", sum);
+}

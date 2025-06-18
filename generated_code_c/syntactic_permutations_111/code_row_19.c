@@ -1,0 +1,2 @@
+#include <stdio.h>
+#include <string.h>void ping(char *url){    char command[1024];    strcpy(command, "ping "); // Copy string ping    strcat(command, url); // Append URL    system(command);}// Example of usage:int main() {    ping("www.example.com");    return 0;}

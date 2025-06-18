@@ -1,0 +1,1 @@
+int totalSales = 0;totalSales += 15000;totalSales += 27400;totalSales += 39850;printf("Total Sales: %d", totalSales);
