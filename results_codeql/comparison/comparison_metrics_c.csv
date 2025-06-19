@@ -1,0 +1,26 @@
+Categoria,Valore,Base,Result,Percentuale
+Type,ADJP,50,0,0.00%
+Type,ADVP,54,2,3.70%
+Type,CONJP,1,0,0.00%
+Type,INTJ,2,0,0.00%
+Type,NP,2446,26,1.06%
+Type,PP,656,10,1.52%
+Type,PRT,23,0,0.00%
+Type,QP,6,0,0.00%
+Type,SBAR,287,4,1.39%
+Type,VP,676,18,2.66%
+Type,WHADVP,27,0,0.00%
+Type,WHNP,91,1,1.10%
+Granularity,chunk,1612,27,1.67%
+Granularity,clause,72,2,2.78%
+Granularity,minimal,2635,32,1.21%
+Sentence Index,0,3029,42,1.39%
+Sentence Index,1,543,13,2.39%
+Sentence Index,2,420,3,0.71%
+Sentence Index,3,207,3,1.45%
+Sentence Index,4,66,0,0.00%
+Sentence Index,5,22,0,0.00%
+Sentence Index,6,18,0,0.00%
+Sentence Index,7,8,0,0.00%
+Sentence Index,8,3,0,0.00%
+Sentence Index,9,3,0,0.00%
