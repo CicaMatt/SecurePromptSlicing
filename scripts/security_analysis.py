@@ -309,9 +309,9 @@ example_commands = [
     r'codeql pack download codeql/java-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_example_db --format=csv --output=results_codeql/results_py.csv codeql/python-queries --warnings=hide --rerun',
-    r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide --rerun',
-    r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_example_db --format=csv --output=results/results_py.csv codeql/python-queries --warnings=hide --rerun',
+    r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results/results_c.csv codeql/cpp-queries --warnings=hide --rerun',
+    r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
 
@@ -326,8 +326,8 @@ command_set_baseline_analysis_py = [
     r'cd CodeQL/Queries/py_complete && codeql pack install',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/baseline/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
-    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/baseline/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
+    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
 ]
 
 
@@ -342,7 +342,7 @@ command_set_result_analysis_py = [
     r'codeql pack download codeql/python-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/permutations/results_py.csv codeql/python-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/permutations/results_py.csv codeql/python-queries --warnings=hide --rerun'
 ]
 
 """
@@ -357,10 +357,10 @@ command_set_custom_queries_py = [
     r'cd CodeQL/Queries/py_complete && codeql pack install',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete_updated/python-complete.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py/top25/python-top25.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py/extra/python-extra.qls --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
+    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete_updated/python-complete.qls --warnings=hide --rerun'
+    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py/top25/python-top25.qls --warnings=hide --rerun'
+    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py/extra/python-extra.qls --warnings=hide --rerun'
 ]
 """
 
@@ -376,7 +376,7 @@ command_set_result_baseline_java = [
     r'codeql pack download codeql/java-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results_codeql/baseline/results_java_baseline.csv codeql/java-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/baseline/results_java_baseline.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
 
@@ -391,7 +391,7 @@ command_set_result_analysis_java = [
     r'codeql pack download codeql/java-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results_codeql/permutations/results_java.csv codeql/java-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/permutations/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
 # Comandi per testare la compilazione Java
@@ -424,7 +424,7 @@ command_set_result_baseline_c = [
     r'codeql pack download codeql/cpp-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results_codeql/baseline/results_c_baseline.csv codeql/cpp-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/baseline/results_c_baseline.csv codeql/cpp-queries --warnings=hide --rerun'
 ]
 
 
@@ -439,7 +439,7 @@ command_set_result_analysis_c = [
     r'codeql pack download codeql/cpp-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results_codeql/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
 ]
 
 

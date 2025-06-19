@@ -878,17 +878,17 @@ permutations_folder = 'permutations'
 
 snippets_folder = f'generated_code/generated_code_{language_identifier}'
 
-results_codeql_raw = f'results_codeql/permutations/results_{language_identifier}.csv'
-results_codeql = f'results_codeql/permutations/results_{language_identifier}_complete.csv'
-results_baseline_raw = f'results_codeql/baseline/results_{language_identifier}_baseline.csv'
-results_baseline = f'results_codeql/baseline/results_{language_identifier}_baseline_complete.csv'
+results_codeql_raw = f'results/permutations/results_{language_identifier}.csv'
+results_codeql = f'results/permutations/results_{language_identifier}_complete.csv'
+results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline.csv'
+results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
 
-comparison_metrics = f'results_codeql/comparison/comparison_metrics_{language_identifier}.csv'
-comparison_cwes = f'results_codeql/comparison/comparison_cwes_{language_identifier}.csv'
+comparison_metrics = f'results/comparison/comparison_metrics_{language_identifier}.csv'
+comparison_cwes = f'results/comparison/comparison_cwes_{language_identifier}.csv'
 
 
-#result_py_complete = 'results_codeql/permutations/results_py_standardpack.csv'
-#result_py_complete = 'results_codeql/permutations/results_py_custompack.csv'
+#result_py_complete = 'results/permutations/results_py_standardpack.csv'
+#result_py_complete = 'results/permutations/results_py_custompack.csv'
 
 
 
@@ -913,7 +913,7 @@ class ResultsCsvBuilder:
         add_prompt_id(results_codeql, prompt_dataset, "Results")
         add_cwe_id(results_codeql, "Prompt ID")
         add_slicing_info(results_codeql, permutations_folder)
-        #check_and_remove_duplicates(results_codeql, remove_duplicates=False)
+        #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
 class BaselineStats:
