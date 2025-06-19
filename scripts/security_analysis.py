@@ -50,18 +50,34 @@ example_commands = [
 ]
 
 
+command_set_baseline_analysis_py = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=baseline_code_py --overwrite',
+
+    # Query update and configuration
+    r'cd CodeQL/Queries/py_complete && codeql pack install',
+
+    # Database analysis using downloaded query pack
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/baseline/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
+    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
+]
+
+
 command_set_result_analysis_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code --overwrite',
+    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code_py --overwrite',
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/results_py.csv codeql/python-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results_codeql/permutations/results_py.csv codeql/python-queries --warnings=hide --rerun'
 ]
 
 """
@@ -83,21 +99,6 @@ command_set_custom_queries_py = [
 ]
 """
 
-command_set_baseline_analysis_py = [
-    # Databases folder creation (if not exists)
-    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
-
-    # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=baseline_code --overwrite',
-
-    # Query update and configuration
-    r'cd CodeQL/Queries/py_complete && codeql pack install',
-
-    # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
-    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results_codeql/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
-]
-
 
 command_set_result_analysis_java = [
     # Databases folder creation (if not exists)
@@ -110,7 +111,7 @@ command_set_result_analysis_java = [
     r'codeql pack download codeql/java-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results_codeql/results_java.csv codeql/java-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results_codeql/permutations/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
 # Comandi per testare la compilazione Java
@@ -132,21 +133,33 @@ command_set_result_analysis_java = [
     ''',
 """
 
+command_set_result_baseline_c = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code_c --command="../scripts/c_build.sh" --overwrite',
+
+    # Query download and installation for C
+    r'codeql pack download codeql/cpp-queries',
+
+    # Database analysis using downloaded query pack
+    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results_codeql/baseline/results_c_baseline.csv codeql/cpp-queries --warnings=hide --rerun'
+]
+
 
 command_set_result_analysis_c = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
-    #r'ls',
-
     # Database creation starting from code
     r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code_c --command="../scripts/c_build.sh" --overwrite',
 
-    # Query download and installation for Java
+    # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results_codeql/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results_codeql/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
 ]
 
 

@@ -643,13 +643,17 @@ def result_values_count(filepath, verbose=True):
     }
 
 
-def compare_metric_counters(base_counters, result_counters):
+def compare_metric_counters(base_counters, result_counters, output_path=None):
     """
-    base_counters: dict con chiavi 'Type', 'Granularity', 'Sentence Index' e valori Counter
-    result_counters: dict con stesse chiavi e valori Counter
-    """
+    Confronta due dizionari contenenti metriche:
+    base_counters e result_counters devono avere le stesse chiavi:
+    'Type', 'Granularity', 'Sentence Index', con valori Counter.
 
+    Se specificato, salva i risultati in un CSV in output_path.
+    """
     print("CONFRONTO TRA METRICHE (Percentuale delle seconde sulle prime)\n")
+
+    all_results = []
 
     for key in ['Type', 'Granularity', 'Sentence Index']:
         base_counter = base_counters.get(key, Counter())
@@ -668,16 +672,40 @@ def compare_metric_counters(base_counters, result_counters):
                 percent = f"{(result_val / base_val) * 100:.2f}%"
 
             print(f"  {val}: {result_val} / {base_val} → {percent}")
+
+            all_results.append({
+                "Categoria": key,
+                "Valore": val,
+                "Base": base_val,
+                "Result": result_val,
+                "Percentuale": percent
+            })
+
         print("\n")
 
+    if output_path:
+        try:
+            with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = ["Categoria", "Valore", "Base", "Result", "Percentuale"]
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                writer.writeheader()
+                for row in all_results:
+                    writer.writerow(row)
+
+            print(f"✅ Risultati salvati in: {output_path}")
+        except Exception as e:
+            print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
 
-def compare_cwe_counters(base_counters, result_counters):
+
+def compare_cwe_counters(base_counters, result_counters, output_path=None):
     """
     Confronta due dizionari nel formato restituito da result_cwe_stats:
     { "CWE ID": Counter({ "CWE-XX": count, ... }) }
 
     Stampa la percentuale dei valori result rispetto a quelli base.
+    Se specificato, salva i risultati in un CSV in output_path.
     """
 
     if "CWE ID" not in base_counters or "CWE ID" not in result_counters:
@@ -691,6 +719,8 @@ def compare_cwe_counters(base_counters, result_counters):
 
     all_keys = set(base_counter) | set(result_counter)
 
+    results = []
+
     for cwe in sorted(all_keys, key=lambda x: int(x.replace("CWE-", ""))):
         base_val = base_counter.get(cwe, 0)
         result_val = result_counter.get(cwe, 0)
@@ -701,6 +731,27 @@ def compare_cwe_counters(base_counters, result_counters):
             percent = f"{(result_val / base_val) * 100:.2f}%"
 
         print(f"{cwe:10}: {result_val:4} / {base_val:4} → {percent}")
+
+        results.append({
+            "CWE": cwe,
+            "Base": base_val,
+            "Result": result_val,
+            "Percentuale": percent
+        })
+
+    if output_path:
+        try:
+            with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = ["CWE", "Base", "Result", "Percentuale"]
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                writer.writeheader()
+                for row in results:
+                    writer.writerow(row)
+
+            print(f"\n✅ Risultati salvati in: {output_path}")
+        except Exception as e:
+            print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
 
 def enhance_permutations_csvs(folder_path, mapping_file):
@@ -723,7 +774,7 @@ def enhance_permutations_csvs(folder_path, mapping_file):
         colonne_da_aggiungere = {
             "ID": row.get("ID", ""),
             "Prompt ID": row.get("Prompt ID", ""),
-            "CWE-ID": row.get("Prompt ID", "").split("_")[0] if "_" in row.get("Prompt ID", "") else ""
+            "CWE ID": row.get("Prompt ID", "").split("_")[0] if "_" in row.get("Prompt ID", "") else ""
         }
 
         modificato = False
@@ -820,21 +871,21 @@ def total_permutations_over_baseline(cartella):
 
 ##################################################################################################################
 
+language_extension = "c"
+
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
 
-#snippets_folder = 'generated_code_py'
-snippets_folder = 'generated_code_java'
+snippets_folder = f'generated_code_{language_extension}'
 
-results_codeql_raw = 'results_codeql/results_java.csv'
-results_codeql = 'results_codeql/results_java_complete.csv'
-results_baseline_raw = 'results_codeql/results_java_baseline.csv'
-results_baseline = 'results_codeql/results_java_baseline_complete.csv'
+results_codeql_raw = f'results_codeql/permutations/results_{language_extension}.csv'
+results_codeql = f'results_codeql/permutations/results_{language_extension}_complete.csv'
+results_baseline_raw = f'results_codeql/baseline/results_{language_extension}_baseline.csv'
+results_baseline = f'results_codeql/baseline/results_{language_extension}_baseline_complete.csv'
 
-#results_codeql_raw = 'results_codeql/results_py.csv'
-#results_codeql = 'results_codeql/results_py_complete.csv'
-#results_baseline_raw = 'results_codeql/results_py_baseline.csv'
-#results_baseline = 'results_codeql/results_py_baseline_complete.csv'
+comparison_metrics = f'results_codeql/comparison/comparison_metrics_{language_extension}.csv'
+comparison_cwes = f'results_codeql/comparison/comparison_cwes_{language_extension}.csv'
+
 
 #result_py_complete = 'results_codeql/results_py_standardpack.csv'
 #result_py_complete = 'results_codeql/results_py_custompack.csv'
@@ -917,7 +968,7 @@ class MetricsComparison:
         #print("\n---------------------------------------")
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nMetrics Comparison Stats:")
-        compare_metric_counters(base_metrics, result_metrics)
+        compare_metric_counters(base_metrics, result_metrics, comparison_metrics)
 
 
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
@@ -925,7 +976,7 @@ class CWEComparison:
     def __init__(self):
         #print("\nBaseline CWEs Stats:")
         #print("\n---------------------------------------")
-        baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
+        #baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
         #print("\nPermutation CWEs Stats:")
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
         #print("\n---------------------------------------")
@@ -935,21 +986,18 @@ class CWEComparison:
 
         # These values show how many of the detected vulnerabilities over the baseline are present over the results
         print("\nBaseline - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(result_cwes, baseline_cwes)
+        #compare_cwe_counters(result_cwes, baseline_cwes)
         # These values show how security scenarios covered over the permutations yielded a vulnerability based on the results
         print("\nPermutations - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(permutations_cwes, result_cwes)
-
-
-
+        compare_cwe_counters(permutations_cwes, result_cwes, comparison_cwes)
 
 
 #BaselineCsvBuilder()
-#PermutationCsvsBuilder()
+PermutationCsvsBuilder()
 ResultsCsvBuilder()
 #BaselineStats()
 #PermutationsStats()
-#ResultStats()
+ResultStats()
 #BaselineComparison()
-#MetricsComparison()
-#CWEComparison()
+MetricsComparison()
+CWEComparison()
