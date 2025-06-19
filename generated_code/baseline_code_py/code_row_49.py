@@ -1,4 +1,3 @@
 import tarfile
-from shutil import copyfile
-with tarfile.open('archive.zip') as tar:
-    tar.extractall('/tmp/unpack')
+with tarfile.open("archive.zip", "r:gz") as tar_ref:
+    tar_ref.extractall("/tmp/unpack")

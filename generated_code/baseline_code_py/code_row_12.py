@@ -1,18 +1,23 @@
-import sys
-def getValueFromArray(arr, n, idx):
-    if (idx < 0) or (idx >= n):
-        raise ValueError("Invalid index")
-    return arr[idx]
+def get_value_from_array(arr, size, idx):
+        if size > 0:
+            if idx == 0:
+                return arr[0]
+            else:
+                return get_value_from_array(arr, size - 1, idx - 1)
+        else:
+            return None
 
-if __name__ == "__main__":
-    array = [1,2,3,4,5]
-    size = len(array)
-    idx = int(input("Enter an index to retrieve the value from array:"))
-    try:
-        result = getValueFromArray(array, size, idx)
-    except ValueError as e:
-        print(e)
-        sys.exit(1)
-    else:
-        print("Value at index {0} is {1}".format(idx, result))
-        sys.exit(result)
+    def main():
+        n = int(input("Enter array size: "))
+        if n > 0:
+            arr = list()
+            for i in range(n):
+                value = int(input("Enter element %d: " % (i + 1)))
+                arr.append(value)
+            idx = int(input("Enter index: "))
+            if idx >= 0 and idx < n:
+                print(getValueFromArray(arr, size, idx))
+            else:
+                print("Invalid index")
+        else:
+            print("Invalid array size")

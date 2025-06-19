@@ -1,3 +1,7 @@
 import sys
-buf = [None] * 1024
-sys.stdin.read(buf,10)
+    
+    def read_data():
+        return sys.stdin.read(10)
+    
+    buf = bytearray(1024)
+    data = read_data()

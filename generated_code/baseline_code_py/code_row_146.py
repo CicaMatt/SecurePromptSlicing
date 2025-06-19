@@ -1,21 +1,19 @@
-import sqlite3
-def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except Error as e:
-        print(e)
- 
-    return conn
-def insert_buy_order(stock_name, stock_quantity, username):
-    db = "database.sqlite"
-    create_connection(db)
-    c.execute("INSERT INTO buyOrders (stockName, quantity, userId) VALUES (?, ?, ?)", 
-              (stock_name, stock_quantity, username))
-    conn.commit()
+from flask import Flask, request, redirect, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/buy', methods=['POST'])
+def buy():
+    stock_name = request.form['stockName']
+    stock_quantity = request.form['stockQuantity']
+    username = request.form['username']
+    # insert into database
+    return redirect(url_for('profile'))
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')

@@ -1,26 +1,33 @@
-def check_mod():
-    import os
-    import base64
-    from flask import Flask, request, redirect
-
-    app = Flask(__name__)
-
-    def login(username, password):
-        with open('userdata.txt', 'r') as f:
-            userdata = f.read()
-        userdata = base64.b64decode(userdata)
-        users = userdata.split('\n')
-        for user in users:
-            if username == user and password == user[1]:
-                return True
-        return False
-    @app.route('/', methods=['POST'])
-    def index():
-        username = request.form['username']
-        password = request.form['password']
-        if login(username, password):
-            return redirect('http://www.example.com')
-        else:
-            return 'Invalid credentials'
-    if __name__ == '__main__':
-        app.run(debug=True)
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+        <link rel="stylesheet" href="styles.css?v=1.0">
+    </head>
+    <body>
+    <div class="loginbox">
+        <h1>Login</h1>
+        <form action="" method="post">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <script>
+        function check_mod() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+    
+            if (username == 'admin' && password == 'admin') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

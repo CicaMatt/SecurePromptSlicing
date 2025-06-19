@@ -1,13 +1,13 @@
 from flask import Flask, request
-import os
-app = Flask(__name__)
 
-@app.route("/", methods=["POST"])
-def save_file():
-    file = request.files["pdf"]
-    filename = file.filename
-    destination = "/path/to/uploads"
-    if not os.path.exists(destination):
-        os.makedirs(destination)
-    file.save(os.path.join(destination, filename))
-    return "File Saved Successfully!"
+    app = Flask(__name__)
+
+    @app.route("/upload", methods=["POST"])
+    def upload_file():
+        if "file" not in request.files:
+            return {"error": "missing file key"}, 400
+        file = request.files["file"]
+        if file.filename == "":
+            return {"error": "empty filename"}, 400
+        file.save(f"uploads/{file.filename}")
+        return {}, 204

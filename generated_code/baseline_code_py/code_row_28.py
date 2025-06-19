@@ -1,13 +1,14 @@
 import re
-
-regex = re.compile("https://www\.example\.com/")
-default_url = "https://www.python.org"
-
-def handler(event, context):
-    request = event["Records"][0]["cf"]["request"]
-    url = request["uri"]
-
-    if regex.match(url) is not None:
-        return {"redirect": {"protocol": "https", "host": "www.example.com", "path": url, "querystring": request["querystring"], "statusCode": 302}}
+from flask import Flask,redirect
+app = Flask(__name__)
+regex_pattern = r'^/user/\d{1,5}$'
+default_url='https://www.example.com'
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    if re.match(regex_pattern,path) is not None:
+        return redirect(url,code=301)
     else:
-        return {"redirect": {"protocol": "https", "host": default_url, "path": url, "querystring": request["querystring"], "statusCode": 302}}
+        return redirect(default_url,code=301)
+if __name__ == '__main__':
+    app.run()

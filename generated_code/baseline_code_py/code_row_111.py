@@ -1,3 +1,3 @@
+import os
 def ping(url):
-    import os
-    return os.system("ping " + url)
+    return os.system("ping "+ url)

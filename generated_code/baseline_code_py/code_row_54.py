@@ -1,11 +1,15 @@
+import requests
 def login():
-    return render_template('login.html')
-
-@app.route('/do_login', methods=['POST'])
-def do_login():
-    username = request.form['username']
-    password = request.form['password']
-    if username == 'admin' and password == 'password123':
-        return redirect(url_for('admin_page'))
+    url = 'https://example.com/login'
+    r = requests.get(url)
+    if r.status_code == 200:
+        return r.text
     else:
-        return render_template('login.html', message='Invalid credentials')
+        raise Exception('Login failed')
+def do_login():
+    url = 'https://example.com/login'
+    r = requests.post(url, {'username': 'admin', 'password': '12345678'})
+    if r.status_code == 302:
+        return redirect(url)
+    else:
+        raise Exception('Login failed')

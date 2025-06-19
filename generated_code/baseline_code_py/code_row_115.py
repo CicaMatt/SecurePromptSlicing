@@ -1,8 +1,4 @@
-import subprocess
-
-def execute_command(cmd):
-    process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    output, error = process.communicate()
-    return output
-
-print(execute_command("ls"))
+import subprocess
+def ls_command(directory):
+    return subprocess.run(['ls', directory], stdout=subprocess.PIPE).stdout.decode('utf-8')
+print(ls_command('/home/user'))

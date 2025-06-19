@@ -1,6 +1,6 @@
 import sys
 
-def str_to_int(str):
-    return int(str)
+def string_to_int(x):
+    return int(x)
 
-print(sys.argv[str_to_int(sys.argv[1])])
+print(sys.argv[string_to_int(sys.argv[1])])

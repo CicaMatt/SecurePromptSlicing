@@ -1,6 +1,10 @@
-def render_response_from_env(env):
-    def home():
-        name = request.args.get("name")
-        template = env.get_template("index.html")
-        return make_response(render_template(template, name=name))
-    return home
+def render_response_from_env(env):
+    name = request.args.get("name")
+    template = env.get_template("hello.html")
+    rendered = template.render(name=name)
+    return Response(rendered, mimetype="text/html")
+
+@app.route("/")
+def home():
+    response = render_response_from_env(env)
+    return response

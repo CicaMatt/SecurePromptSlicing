@@ -1,7 +1,9 @@
-import random
-from typing import List
-vehicles = ["car", "bus", "train", "plane", "boat"]
-index = int(input("Enter index of a vehicle: "))
-print(vehicles[index])
-for i in range(len(vehicles)):
-    print(vehicles[i])
+import numpy as np
+
+    vehicles = np.array(['car', 'plane','bus'])
+
+    def get_vehicle(idx):
+        return vehicles[idx]
+
+    for vehicle in vehicles:
+        print (vehicles)

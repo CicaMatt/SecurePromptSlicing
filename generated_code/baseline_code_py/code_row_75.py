@@ -1,8 +1,7 @@
-import ctypes
-
-class person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-person_ptr = ctypes.pointer(person("John Doe", 36))
+import ctypes
+
+class person(ctypes.Structure):
+    _fields_ = [('name', ctypes.c_char * 20), ('age', ctypes.c_int)]
+
+def alloc():
+    return (person * sizeof(person))()

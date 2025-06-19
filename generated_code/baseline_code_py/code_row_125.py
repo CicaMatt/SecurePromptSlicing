@@ -1,7 +1,7 @@
 import sys
 
 if len(sys.argv) > 1:
-    trimmed_arg = sys.argv[1].rstrip()
+    argument = sys.argv[1].strip()
+    print('The argument is:', argument)
 else:
-    print("Please provide an argument")
-print("The trimmed argument is: " + trimmed_arg)
+    print('No command line arguments were passed!')

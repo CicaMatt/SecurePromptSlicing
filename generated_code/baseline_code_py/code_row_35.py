@@ -1,23 +1,31 @@
-from flask import Flask, render_template, request, redirect
-from pymongo import MongoClient
+import web 
 
-app = Flask(__name__)
-client = MongoClient()
-db = client['login']
-collection = db['users']
+urls = (
+    '/', 'index'
+)
+app = web.application(urls, globals())
+render = web.template.render('templates/')
+db = web.database(dbn='mysql', db='webpy_login', user='root', pw='admin')
 
-@app.route('/')
-def login():
-    return render_template('login.html')
-
-@app.route('/home', methods=['POST'])
-def home():
-    username = request.form['username']
-    password = request.form['password']
-    if collection.find_one({'username': username, 'password': password}):
-        return redirect('/home')
+def authenticate(): 
+    q = "select * from users where username=" + username + " and password=" + password
+    result = db.query(q)
+    if result:
+        return result[0]
     else:
-        return render_template('login.html', message='Username or Password is incorrect')
+        return None 
 
+class index:  
+    def GET(self):
+        return render.login()
+    
+    def POST(self):  
+        username = web.input(username=None, password=None)
+        user = authenticate()
+        if user:
+            return render.homepage()
+        else:
+            return render.login()
+        
 if __name__ == "__main__":
     app.run()

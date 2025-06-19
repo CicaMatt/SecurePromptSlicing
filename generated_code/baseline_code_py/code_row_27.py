@@ -1,5 +1,5 @@
 totalSales = 0
-totalSales += janSales
-totalSales += febSales
-totalSales += marSales
-print("Total Sales:" + str(totalSales))
+totalSales += 1250
+totalSales += 3450
+totalSales += 9876
+print(f'Total Sales: ${totalSales}')

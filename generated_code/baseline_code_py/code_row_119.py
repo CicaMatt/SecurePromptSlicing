@@ -1,4 +1,4 @@
 import random
-string = "{:.1f}".format(random.rand())
-string2 = "{:.1f}".format(random.rand())
-string3 = "{:.1f}".format(random.rand())
+string = "%f" % random.rand()
+string2 = "%f" % random.rand()
+string3 = "%f" % random.rand()

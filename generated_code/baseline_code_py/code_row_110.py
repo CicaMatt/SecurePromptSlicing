@@ -1,13 +1,10 @@
 import sys
-import os
-def id(username):
-    return_code = os.system("id " + username)
-    return return_code
-
+import subprocess
+def get_user_id(username):
+    cmd = ['id', username]
+    completedProcess = subprocess.run(cmd, stdout=subprocess.PIPE)
+    return completedProcess.returncode
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Please enter a valid username")
-    else:
-        username = sys.argv[1]
-        status_code = id(username)
-        print(status_code)
+    username = sys.argv[1]
+    exit_status = get_user_id(username)
+    print(exit_status)

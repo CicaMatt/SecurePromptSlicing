@@ -1,16 +1,18 @@
-import ctypes
-libc = ctypes.CDLL('libc.so.6')
-c_void_p = ctypes.c_void_p
-malloc = libc.malloc
-malloc.restype = c_void_p
-malloc.argtypes = [ctypes.c_size_t]
-free = libc.free
-free.restype = None
-free.argtypes = [c_void_p]
-
-def main():
-    chunk1 = malloc(10)
-    chunk2 = malloc(10)
-    memcpy(chunk2, chunk1, 10)
-    free(chunk1)
-    free(chunk2)
+import mmap
+from ctypes import *
+
+fd = -1
+addr1 = None
+addr2 = None
+size = 10
+
+fd = os.open('/dev/zero', os.O_RDWR)
+
+addr1 = mmap.mmap(fd, size, mmap.MAP_PRIVATE, mmap.PROT_READ | mmap.PROT_WRITE)
+addr2 = mmap.mmap(-1, size, mmap.MAP_ANONYMOUS, mmap.PROT_READ | mmap.PROT_WRITE)
+
+memmove(addr2, addr1, size)
+
+addr1.close()
+addr2.close()
+os.close(fd)

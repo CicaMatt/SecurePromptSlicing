@@ -1,23 +1,21 @@
-import yaml
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-
-def get_price_for_product_code(product_code):
-    if product_code == 'VOUCHER':
-        return 5.00
-    elif product_code == 'TSHIRT':
-        return 20.00
-    else:
-        return 0.00
-
-@app.route('/calculate_price', methods=['GET'])
-def calculate_price():
-    payload = yaml.safe_load(request.args.get('payload'))
+from flask import Flask, request
     
-    product_code = payload['productCode']
-    quantity = payload['quantity']
+    app = Flask(__name__)
     
-    total_price = get_price_for_product_code(product_code) * quantity
+    @app.route('/', methods=['POST'])
+    def calculate_price():
+        payload = request.get_json(force=True)
+        product_code = payload['product_code']
+        quantity = payload['quantity']
+        total_price = get_price_for_product_code(product_code, quantity)
+        return {"total_price": total_price}
     
-    return jsonify({'totalPrice': total_price})
+    def get_price_for_product_code(product_code, quantity):
+        if product_code == "123":
+            price = 50.00
+        elif product_code == "456":
+            price = 150.99
+        else:
+            price = 1.99
+        
+        return price * quantity

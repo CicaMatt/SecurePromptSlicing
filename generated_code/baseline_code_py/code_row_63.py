@@ -1,13 +1,22 @@
-with open('file.txt', 'rb') as f:
-    buff = f.read()
+import os
+import hashlib
 
-checksum = sum(buff) % 256
-if checksum == 0:
-    buff = b''
+def main():
+    # Open input file for reading.
+    with open("input_file.txt", "r") as inFile:
+        buffer = inFile.read()
+    
+    # Calculate checksum of buffer contents.
+    chksum = hashlib.md5(buffer).hexdigest()
+    
+    if chksum == 0:
+        print("Buffer is empty.")
+    else:
+        print("The checksum of the input file is", chksum)
+    
+    # Save number of bytes read and calculated checksum to output file.
+    with open("output_file.txt", "w") as outFile:
+        outFile.write(f"{len(buffer)} {chksum}")
 
-bytes_read = len(buff)
-
-with open('output.txt', 'wb') as o:
-    o.write(struct.pack('i', bytes_read))
-    o.write(struct.pack('i', checksum))
-    o.write(buff)
+if __name__ == '__main__':
+    main()

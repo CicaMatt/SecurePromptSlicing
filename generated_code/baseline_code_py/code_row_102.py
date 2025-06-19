@@ -1,6 +1,4 @@
 import os
-
-with open("important_config", "w") as f:
-    f.write("important_config")
-    if os.stat(f).st_size == 0:
-        raise ValueError("Empty file!")
+file_descriptor = os.open("important_config", os.O_CREAT | os.S_IRUSR | os.S_IWUSR | os.S_IRGRP | S_IROTH)
+write(file_descriptor, "important_config")
+close(file_descriptor)

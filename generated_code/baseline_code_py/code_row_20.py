@@ -1,12 +1,7 @@
 import sys
-
-# Read in the first argument, which is the value to be adjusted
-value = int(sys.argv[1])
-
-# Set the offset value
-offset = 1000
-
-# Add the offset to the read in value
-result = offset + value
-
-print("Result after offset:", result)
+    
+    if len(sys.argv) == 2:
+        num = int(sys.argv[1]) + 1000
+        print("The new number is", num)
+    else:
+        print("Error: please provide a single integer argument.")

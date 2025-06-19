@@ -1,25 +1,16 @@
-import hashlib
-
-def check_checksum(filename):
-    BUFFER_SIZE = 65536
-    sha256 = hashlib.sha256()
-    with open(filename, 'rb') as f:
-        while True:
-            data = f.read(BUFFER_SIZE)
-            if not data:
-                break
-            sha256.update(data)
-    return sha256.digest()
-
-def save_checksum(filename, checksum):
-    with open(filename, 'wb') as f:
-        f.write(bytes([len(checksum)]))
-        f.write(checksum)
-
+import os
+from binascii import crc32
 def main():
-    filename = input('Enter the file name: ')
-    checksum = check_checksum(filename)
-    save_checksum('checksum.bin', checksum)
+    fp = open('/path/to/file', 'rb')
+    buf = fp.read()
+    fp.close()
+    if crc32(buf) == 0:
+        print 'Buffer is empty'
+    else:
+        with open('checksum', 'wb') as fp:
+            fp.write(str(len(buf)))
+            fp.write('\n')
+            fp.write(str(crc32(buf)))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

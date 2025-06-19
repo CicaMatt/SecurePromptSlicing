@@ -1,23 +1,38 @@
+import pymysql
 import mysql.connector
-from PIL import Image
+from PIL import ImageGrab, ImageFile
+import os
+import sys
 
-def store_image(file_name):
-    # connect to the database
-    cnx = mysql.connector.connect(user='root', password='password',
-                                  host='127.0.0.1', database='image_storage')
-    cursor = cnx.cursor()
+# Set up the database connection.
+cnx = mysql.connector.connect(user='username',
+                              password='password',
+                              host='host', 
+                              port=3306,
+                              database='database_name')
+cursor = cnx.cursor()
 
-    # read the image file
-    with open(file_name, 'rb') as f:
-        img = f.read()
+# Set up the file path and name for the image file.
+file_path = '/home/user/images'
+file_name = 'image1.jpg' 
 
-    # insert the image into the database
-    query = "INSERT INTO images (image) VALUES (%s)"
-    cursor.execute(query, (img,))
+# Open the file in binary read mode.
+with open(os.path.join(file_path, file_name), 'rb') as f:
+    # Read the entire file into a bytes object.
+    data = f.read()
+    image = ImageGrab.grab(data)
+    
+# Generate a SQL statement to insert the image into the database table.
+insert_stmt = "INSERT INTO images (image) VALUES (%s)"
+
+# Execute the SQL statement.
+try:
+    cursor.execute(insert_stmt, (image,))
     cnx.commit()
+except mysql.connector.Error as err:
+    print("Error message: {}".format(err.msg))
+    sys.exit(1)
 
-    # close the connection to the database
-    cnx.close()
-
-if __name__ == '__main__':
-    store_image('test_image.png')
+# Close the database connection.
+cursor.close()
+cnx.close()

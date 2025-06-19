@@ -1,6 +1,10 @@
-import sys 
-return id_sequence[index]
-size = len(id_sequence)
-index = int(input())
-exitCode = getValueFromArray(id_sequence,size,index)
-sys.exit(exitCode)
+def getValueFromArray(arr,size,index):
+        if index >= 0 and index < size :
+            return arr[index]
+        else :
+            return -1
+    #Main Function
+    import sys
+    n = int(input())
+    exit_code = getValueFromArray([1,2,3,4,5],5,n)
+    sys.exit(exit_code)

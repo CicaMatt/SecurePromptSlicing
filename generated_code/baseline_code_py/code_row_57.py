@@ -1,49 +1,41 @@
-from flask import Flask, request, redirect, url_for, render_template
-import sqlite3
-app = Flask(__name__)
-app.config['DEBUG'] = True
+from flask import Flask, redirect, render_template, request, session, url_for
+    app = Flask(__name__)
+    
+    @app.route("/")
+    def login():
+        return render_template("login.html")
+    
+    @app.route("/change", methods=["POST"])
+    def change_email():
+        # Check if the user is logged in
+        if "user" not in session:
+            return redirect(url_for("login"))
+        
+        # Get the form data
+        old_email = request.form.get("old_email")
+        new_email = request.form.get("new_email")
+        confirm_password = request.form.get("confirm_password")
+        
+        # Check if the user provided all required information
+        if not old_email or not new_email or not confirm_password:
+            return redirect(url_for("login"))
+        
+        # Check if the user is the owner of the old email
+        if session["user"] != old_email:
+            return redirect(url_for("login"))
+        
+        # Check if the new email exists
+        if not User.query.filter_by(email=new_email).first():
+            return redirect(url_for("login"))
+        
+        # Change the user's email
+        session["user"] = new_email
+        
+        # Redirect to the login page
+        return redirect(url_for("login"))
+    
+    if __name__ == "__main__":
+        app.run(debug=True)
 
-@app.route('/')
-def home():
-    return "This is the main page"
-
-@app.route('/change_email', methods=['POST', 'GET'])
-def change_email():
-    if request.method == 'POST':
-        # Get data from form
-        old_email = request.form['old_email']
-        new_email = request.form['new_email']
-        confirm_password = request.form['confirm_password']
-        # Check to make sure the user is logged in and has provided an existing email
-        if old_email == "":
-            return render_template('error.html', message="Please provide your old email")
-        if new_email == "":
-            return render_template('error.html', message="Please provide a new email")
-        if confirm_password == "":
-            return render_template('error.html', message="Please provide a confirm password")
-        # Check to make sure the user provided the correct confirm password
-        connection = sqlite3.connect("database.db")
-        cursor = connection.cursor()
-        query = "SELECT * FROM users WHERE email=?"
-        data = (old_email, )
-        result = cursor.execute(query, data)
-        if result == None:
-            return render_template('error.html', message="Incorrect confirm password")
-        # Check to make sure the new email is not already in use by another user
-        query = "SELECT * FROM users WHERE email=?"
-        data = (new_email, )
-        result = cursor.execute(query, data)
-        if result != None:
-            return render_template('error.html', message="The new email is already in use")
-        # Update the database with the new email address
-        query = "UPDATE users SET email=? WHERE email=?"
-        data = (new_email, old_email)
-        cursor.execute(query, data)
-        connection.commit()
-        return render_template('change_email.html', message="Your email has been changed")
-    else:
-        # Display change email form
-        return render_template('change_email.html')
-
-if __name__ == '__main__':
-    app.run()
+### Explanation:
+The code imports Flask and other modules required for the application. The login route renders a template with a form to enter the user's old email, new email, and confirm password. The change route is called when the form is submitted. It checks if the user is logged in, gets the form data, checks if all required information is provided, checks if the user is the owner of the old email, checks if the new email exists, changes the user's email, and redirects to the login page.

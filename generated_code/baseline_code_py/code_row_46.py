@@ -1,6 +1,8 @@
-from flask import Flask, make_response
+from flask import Flask, request, render_template
 app = Flask(__name__)
 @app.route('/img')
 def img():
-    name = request.args.get('name')
-    return send_file(open('images/' + name), mimetype='image/gif')
+    name = request.args['name']
+    return open('images/{0}'.format(name), 'rb').read()
+if __name__ == "__main__":
+    app.run(debug=True, port=5002)

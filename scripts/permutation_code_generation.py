@@ -318,14 +318,13 @@ class Cleaning:
 
 
 
-language = "C"
-identifier = "c"
+language = "Java"
+identifier = "java"
 extension = f".{identifier}"
 
-
+permutations_folder = "permutations"
 baseline_folder = f"generated_code/baseline_code_{identifier}"
 output_folder = f"generated_code/generated_code_{identifier}"
-permutations_folder = "permutations"
 
 
 system_prompt = f"""
@@ -341,7 +340,7 @@ system_prompt = f"""
 #SinglePermutationCodeGeneration()
 
 
-BaselineCodeGeneration()
+#BaselineCodeGeneration()
 
 
 PermutationsCodeGeneration()

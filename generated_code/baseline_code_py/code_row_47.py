@@ -1,12 +1,9 @@
-def send_file(request,filename):
-    import os
-    from django.http import HttpResponse
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    file_path=BASE_DIR+"/images/"+filename
-    if os.path.isfile(file_path):
-        with open(file_path,'rb') as fh:
-            response =HttpResponse(fh.read(),content_type="image/jpeg")
-            response['Content-Disposition']='inline;filename='+filename
-            return response
+from flask import Flask, send_file
+app = Flask(__name__)
+
+@app.route('/image/<path:filename>')
+def getImage(filename):
+    if filename in os.listdir('images'):
+        return send_file('images/' + filename, mimetype='image/gif')
     else:
-        return HttpResponse("file not found")
+        return 'File not found', 404

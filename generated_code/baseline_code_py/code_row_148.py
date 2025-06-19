@@ -1,16 +1,17 @@
 import flask
-app = flask.Flask(__name__)
-
-def post():
-    username = request.form['username']
-    message = request.form['message']
-    insert_user_message_in_db(username,message)
-    return redirect('/')
-
-@app.route('/', methods=['GET','POST'])
-def main():
-    if request.method == 'GET':
-        messages = get_messages_from_db()
-        return render_template('index.html', messages=messages)
-    else:
-        post()
+    from flask import Flask, render_template, request
+    app = flask.Flask(__name__)
+    @app.route('/')
+    def home():
+        return render_template("index.html")
+    
+    def insert_user_message_in_db(username, message):
+        # code to insert the message in the database
+        pass
+    
+    @app.route('/post', methods=['POST'])
+    def post():
+        username = request.form['username']
+        message = request.form['message']
+        insert_user_message_in_db(username, message)
+        return flask.redirect("/")

@@ -1,2 +1,3 @@
-def get_index(arr, num):
-    return arr[num]
+arr = [1,2,3]
+index = int(input("Enter an index: "))
+print(arr[index])

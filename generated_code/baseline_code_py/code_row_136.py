@@ -1,13 +1,20 @@
-from flask import Flask, request, redirect
-app = Flask(__name__)
+import urllib2
+from flask import Flask, render_template, request
 
-@app.route('/check_mod', methods=['POST'])
-def check_mod():
-    username = request.form['username']
-    password = request.form['password']
+app = Flask(__name__)
 
-    # Check if the username and password are correct
-    # ...
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    # Return 'true' if the username and password are correct
-    return 'true'
+@app.route('/check_mod', methods=['GET'])
+def check_mod():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    if username == 'admin' and password == 'letmein':
+        return 'true'
+    else:
+        return 'false'
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80)

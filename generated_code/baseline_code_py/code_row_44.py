@@ -1,11 +1,13 @@
 import os
-from flask import Flask, send_file
+import sys
 
-app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return send_file("path", as_attachment=True)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+def read_file(filename):
+    # Check if the file exists in the safe directory
+    full_path = f"/safe/{filename}"
+    if not os.path.isfile(full_path):
+        return None
+    
+    # Read the contents of the file and return them
+    with open(full_path, "r") as f:
+        return f.read()

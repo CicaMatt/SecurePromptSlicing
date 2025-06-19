@@ -1,30 +1,18 @@
-import pymysql.cursors
-from PIL import Image
-import io
+from flask import Flask, request, jsonify
+    import json
+    from PIL import Image
+    import io
+    from base64 import b64encode
+    from sqlalchemy import create_engine
 
-def upload_image():
-    # Create a connection object
-    conn = pymysql.connect(
-        host='localhost',
-        user='user',
-        password='password',
-        db='database',
-        charset='utf8mb4'
-    )
+    app = Flask(__name__)
+    engine = create_engine('sqlite:///upload.db')
 
-    try:
-        # Create a cursor object
-        with conn.cursor() as cursor:
-            # Read and convert the image to base64
-            img = Image.open('image_file')
-            buffered = io.BytesIO()
-            img.save(buffered, format=img.format)
-            img_str = buffered.getvalue()  
-            
-            # Insert the image name and base64 string into the database
-            sql = "INSERT INTO images (name, data) VALUES (%s, %s)"
-            cursor.execute(sql, ('image.png', img_str))
-            conn.commit()
-    finally:
-        # Close the connection object
-        conn.close()
+    @app.route('/upload', methods=['GET', 'POST'])
+    def upload():
+        if request.method == 'POST':
+            data = request.files['file'].read()
+            image = Image.open(io.BytesIO(data))
+            b64str = b64encode(image).decode('utf-8')
+            engine.execute("INSERT INTO images (name, image) VALUES (?, ?)", [request.files['file'].filename, b64str])
+        return jsonify({'status': 'ok'})

@@ -1,25 +1,26 @@
-import flask
-from flask import request
-import pymysql
-import json
+from flask import Flask, request
+import os
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
+app.config["DEBUG"] = True
 
-@app.route("/is_moderator")
-def is_moderator():
-    user_id = request.args.get("user_id", None)
-
-    if not user_id:
-        return "Error: No user ID provided"
-
-    db = pymysql.connect(host="localhost", user="root", password="password", database="mydb")
-    cursor = db.cursor()
-    cursor.execute("SELECT is_moderator FROM users WHERE id=%s", (user_id,))
+@app.route('/')
+def main():
+    user = request.args.get("user")
+    query = "SELECT * FROM users WHERE username = '" + user + "' LIMIT 1"
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute(query)
     result = cursor.fetchone()
-    cursor.close()
-    db.close()
-
-    return json.dumps({"is_moderator": result})
+    if not result:
+        return {"error": "User not found"}
+    else:
+        is_moderator = result["is_moderator"]
+        if is_moderator == 1:
+            return {"result": True}
+        else:
+            return {"result": False}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

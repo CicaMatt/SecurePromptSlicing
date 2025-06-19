@@ -1,12 +1,13 @@
 import os
+import sys
+from pathlib import Path
 
-safe_directory = "/Users/user/Documents"
-file_requested = "my_file.txt"
-
-def read_file(filename):
-    with open(filename, "r") as file:
-        return file.read()
-
-filepath = os.path.join(safe_directory, file_requested)
-contents = read_file(filepath)
-print(contents)
+safe_dir = 'safe'
+file_to_read = input("Enter the filename to read: ")
+file_path = f"{safe_dir}/{file_to_read}"
+if not Path(file_path).is_file():
+    print(f"File {file_path} does not exist.")
+else:
+    with open(file_path, 'r') as file:
+        content = file.read()
+        print(content)

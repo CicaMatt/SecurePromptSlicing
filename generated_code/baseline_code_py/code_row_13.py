@@ -1,7 +1,13 @@
-def get_id(index):
+import random
+    def get_id(index):
         id_sequence = [1, 2, 3, 4]
-        if index < len(id_sequence):
-            return id_sequence[index]
-        else:
-            return None
+        return id_sequence[index]
     
+    def main():
+        print("Please enter an index value")
+        index = int(input())
+        result = get_id(index)
+        print(result)
+    
+    if __name__ == "__main__":
+        main()
