@@ -871,24 +871,24 @@ def total_permutations_over_baseline(cartella):
 
 ##################################################################################################################
 
-language_extension = "c"
+language_identifier = "c"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
 
-snippets_folder = f'generated_code_{language_extension}'
+snippets_folder = f'generated_code/generated_code_{language_identifier}'
 
-results_codeql_raw = f'results_codeql/permutations/results_{language_extension}.csv'
-results_codeql = f'results_codeql/permutations/results_{language_extension}_complete.csv'
-results_baseline_raw = f'results_codeql/baseline/results_{language_extension}_baseline.csv'
-results_baseline = f'results_codeql/baseline/results_{language_extension}_baseline_complete.csv'
+results_codeql_raw = f'results_codeql/permutations/results_{language_identifier}.csv'
+results_codeql = f'results_codeql/permutations/results_{language_identifier}_complete.csv'
+results_baseline_raw = f'results_codeql/baseline/results_{language_identifier}_baseline.csv'
+results_baseline = f'results_codeql/baseline/results_{language_identifier}_baseline_complete.csv'
 
-comparison_metrics = f'results_codeql/comparison/comparison_metrics_{language_extension}.csv'
-comparison_cwes = f'results_codeql/comparison/comparison_cwes_{language_extension}.csv'
+comparison_metrics = f'results_codeql/comparison/comparison_metrics_{language_identifier}.csv'
+comparison_cwes = f'results_codeql/comparison/comparison_cwes_{language_identifier}.csv'
 
 
-#result_py_complete = 'results_codeql/results_py_standardpack.csv'
-#result_py_complete = 'results_codeql/results_py_custompack.csv'
+#result_py_complete = 'results_codeql/permutations/results_py_standardpack.csv'
+#result_py_complete = 'results_codeql/permutations/results_py_custompack.csv'
 
 
 

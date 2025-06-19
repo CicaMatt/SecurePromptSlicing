@@ -4,7 +4,7 @@ def render_response_from_env(env):
     template = env.get_template("index.html")
     return template.render(name=name)
 def home():
-    env = Environment(loader=FileSystemLoader('.'))
+    env = Environment(loader=FileSystemLoader(''))
     response = render_response_from_env(env)
     return response
 
