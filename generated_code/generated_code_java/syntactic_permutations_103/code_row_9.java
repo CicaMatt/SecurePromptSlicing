@@ -1,11 +1,15 @@
 import java.io.*;
 
-public class CreateOrOverwriteFile {
-    public static void main(String[] args) {
-        try (FileOutputStream f = new FileOutputStream("file.txt", true)) {
-            System.out.println("File created.");
-        } catch (IOException e) {
-            System.out.println("Error: " + e);
+public class FileCreation{
+    public static void main(String args[]){
+        try{
+            File f = new File("file.txt");
+            // Creating a file using O_CREAT flag
+            RandomAccessFile r = new RandomAccessFile(f, "rw");
+            // Truncating the file if already exists
+            r.setLength(0);
+        }catch(IOException e){
+            System.out.println("Error!");
         }
     }
 }

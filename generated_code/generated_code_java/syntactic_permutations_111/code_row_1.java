@@ -1,19 +1,17 @@
-import java.io.*;
-public class Ping {
-    public String ping(String url) {
-        try{
-            String command = "ping -c 3 "+url;
-            Process process = Runtime.getRuntime().exec(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
-                String output = reader.readLine();
-                return output;
-            } else {
-                //abnormal...
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+import java.lang.*;
+public class PingDecorator {
+  public static String ping(String url) {
+    String output = "";
+    try {
+      Process p = Runtime.getRuntime().exec("ping -c2 " + url);
+      BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+      String line = "";
+      while ((line = input.readLine()) != null) {
+        output += (line + "\n");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    return output;
+  }
 }

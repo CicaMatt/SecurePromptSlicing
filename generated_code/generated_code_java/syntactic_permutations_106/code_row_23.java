@@ -1,18 +1,19 @@
-import java.io.File;
-import java.nio.file.*;
-
-public class SecretInfo {
-    public static void main(String[] args) throws Exception {
-        String secret = "I am a string with some super secret info";
-
-        File file = new File("superSecret.txt");
-
-        Files.write(Paths.get("superSecret.txt"), secret.getBytes());
-
-        if (file.setWritable(false)) {
-            System.out.println("File permission changed to read-only.");
-        } else {
-            System.out.println("Failed to change the file permission.");
-        }
-    }
-}
+package com.google.code;
+    
+    import java.io.FileNotFoundException;
+    import java.io.PrintWriter;
+    import java.nio.file.*;
+    import java.nio.charset.*;
+
+    public class SecretInfo {
+
+        public static void main(String[] args) throws FileNotFoundException {
+            String secret = "Top secret message";
+            Files.write(Paths.get("secretInfo.txt"), secret.getBytes(), StandardOpenOption.CREATE);
+            Path filePath = Paths.get("secretInfo.txt");
+            Set<PosixFilePermission> perms = new HashSet<>();
+            perms.add(PosixFilePermission.OWNER_READ);
+            Files.setPosixFilePermissions(filePath, perms);
+            System.out.println("The file name is: " + filePath.getFileName());
+        }
+    }

@@ -1,45 +1,47 @@
-public class LoginController {
-    
-    private static Map<String, String> users = new HashMap<>();
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-    public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.nextLine();
-        
-        if (isValidLogin(username, password)) {
-            redirectToDashboardPage();
-        } else {
-            redirectToLoginPage();
+public class LoginServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/users", "root", "admin");
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "')";
+
+            if (resultSet.next()) {
+                response.sendRedirect("/dashboard");
+            } else {
+                request.setAttribute("error", "Invalid username or password.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+                dispatcher.forward(request, response);
+            }
+        } catch (Exception e) {
+            throw new ServletException();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {}
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {}
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {}
+            }
         }
-    }
-    
-    public static boolean isValidLogin(String username, String password) {
-        return users.containsKey(username) && users.get(username).equals(password);
-    }
-    
-    public static void redirectToDashboardPage() throws IOException {
-        File dashboardFile = new File("dashboard.html");
-        if (!dashboardFile.exists()) {
-            throw new FileNotFoundException();
-        }
-        
-        Runtime rt = Runtime.getRuntime();
-        String[] cmd = {"cmd", "/c", "start", "dashboard.html"};
-        rt.exec(cmd);
-    }
-    
-    public static void redirectToLoginPage() throws IOException {
-        File loginFile = new File("login.html");
-        if (!loginFile.exists()) {
-            throw new FileNotFoundException();
-        }
-        
-        Runtime rt = Runtime.getRuntime();
-        String[] cmd = {"cmd", "/c", "start", "login.html"};
-        rt.exec(cmd);
     }
 }

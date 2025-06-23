@@ -1,18 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <form action="/login" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username"><br><br>
-        <label for="password">Password</label>
-        <input type="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+package com.company;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.io.*;
+
+public class Main {
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost/mydb";
+
+    //  Database credentials
+    private static final String USER = "username";
+    private static final String PASS = "password";
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try{
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            String sql;
+            sql = "SELECT username, password FROM users";
+            pstmt = conn.prepareStatement(sql);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            //STEP 5: Extract data from result set
+            while(rs.next()){
+                //Retrieve by column name
+                String username  = rs.getString("username");
+                int password = rs.getInt("password");
+            }
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }finally{
+            //finally block used to close resources
+            try{
+                if(pstmt!=null)
+                    pstmt.close();
+            }catch(SQLException se2){
+            }// nothing we can do
+            try{
+                if(conn!=null)
+                    conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        System.out.println("Goodbye!");
+    }
+}

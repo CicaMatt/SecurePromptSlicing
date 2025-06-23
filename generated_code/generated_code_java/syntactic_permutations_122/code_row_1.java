@@ -1,17 +1,21 @@
-import java.lang.reflect.Array;
+import java.nio.ByteBuffer;
 
-class Test {
+public class Memory {
     public static void main(String[] args) {
-        // allocate memory
-        int size = 10;
-        int[] memBlockOne = new int[size];
-        int[] memBlockTwo = new int[size];
+        // Allocate memory
+        ByteBuffer buffer1 = ByteBuffer.allocateDirect(10);
+        ByteBuffer buffer2 = ByteBuffer.allocateDirect(10);
 
-        // copy contents of first chunk to second chunk
-        System.arraycopy(memBlockOne, 0, memBlockTwo, 0, size);
+        // Copy contents from buffer1 to buffer2
+        for (int i = 0; i < 10; i++) {
+            byte b = buffer1.get(i);
+            buffer2.put(b);
+        }
 
-        // free memory
-        Arrays.fill(memBlockOne, null);
-        Arrays.fill(memBlockTwo, null);
+        // Free memory of buffer1
+        buffer1.clear();
+
+        // Free memory of buffer2
+        buffer2.clear();
     }
 }

@@ -1,10 +1,18 @@
 import java.io.*;
-public class OpenFile {
+
+public class File{
     public static void main(String[] args) throws IOException {
-        //Open a file named "myfile" in write mode
-        RandomAccessFile f = new RandomAccessFile("myfile", "rw");
-        
-        //Truncate the file to 0 bytes if it already exists
-        f.setLength(0);
+        open();
+         }
+    public static int open() throws IOException {
+        try (RandomAccessFile rw = new RandomAccessFile("file.txt", "rw")) {
+            if (!rw.getFD().valid()) {
+                throw new FileNotFoundException();
+            }
+            return 1;
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+        return -1;
     }
 }

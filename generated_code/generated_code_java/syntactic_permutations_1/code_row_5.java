@@ -1,9 +1,7 @@
-public class MemoryCopy {
-     
-        private void copyMemory(long dest, long src, long numBytes) {
-          for (int i = 0; i < numBytes; i++) {
-            // Get byte from source and put it in the destination
-            *((char*)dest + i) = *((char*)src + i);
-          }
-        }
-     }
+public static void memcpy(int dest, int src, int n) {
+    for (int i=0;i<n;i++) {
+        //Assign the value at each memory location in source array
+        //to the destination array
+        *(char*)(dest+i)=*(char*)(src+i);
+    }
+}

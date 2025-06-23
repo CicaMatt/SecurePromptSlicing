@@ -1,18 +1,11 @@
-package com.mycompany;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-    import spark.Spark;
-    import static spark.Spark.*;
-
-    public class App {
-      public static void main(String[] args) {
-        get("/", (req, res) -> {
-          String target = req.queryParams("target");
-          if(!target.matches(".*example\\.com.*")){
-            res.redirect("/");
-          } else {
-            res.redirect(target);
-          }
-          return "";
-        });
-      }
+import java.util.HashMap;
+import java.util.Map;
+import static spark.Spark.*;
+public class HelloWorld {
+    public static void main(String[] args) {
+        get("/hello", (req, res) -> "Hello World");
     }
+}

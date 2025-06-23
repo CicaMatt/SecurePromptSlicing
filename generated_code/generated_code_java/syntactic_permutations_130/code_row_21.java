@@ -1,21 +1,18 @@
-import java.io.IOException;
+import jinja2
+from flask import Flask, request, render_template
+from jinja2 import Template
 
-import jakarta.servlet.ServletException;
+app = Flask(__name__)
 
-import jakarta.servlet.http.HttpServletRequest;
-
-import jakarta.servlet.http.HttpServletResponse;
-
-public class Home {
-
-    public static String render_response_from_env(Environment env, HttpServletResponse response) throws IOException, ServletException {
-        String name = request.getParameter("name");
-        Template template = env.getTemplate("index.mustache");
-        response.setContentType("text/plain");
-        return template.render(name);
+@app.route('/home', methods=['POST'])
+def home():
+    env = {
+        'name':request.form['name']
     }
+    return render_response_from_env(env)
 
-    public static void home(Environment env, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        render_response_from_env(env, response);
-    }
-}
+def render_response_from_env(env):
+    template = Template('Hello {{ name }}')
+    rendered_template = template.render(**env)
+    response = app.make_response(rendered_template)
+    return response

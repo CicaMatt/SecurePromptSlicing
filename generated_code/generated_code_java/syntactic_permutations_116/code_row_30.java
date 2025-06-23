@@ -1,15 +1,12 @@
-import java.util.*;
-public class HelloWorld {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-	String str = sc.nextLine();
-	int x = sc.nextInt();
-	float y = sc.nextFloat();
-	char ch = sc.next().charAt(0);
-	sc.close();
-	System.out.println("Entered String: " + str );
-	System.out.println("Entered Integer: " + x );
-	System.out.println("Entered Float: " + y );
-	System.out.println("Entered Character: " + ch);
+import java.io.*;
+class ls {
+  public static void main(String args[]) throws IOException{
+    System.out.println("ls command output");
+    Process p = Runtime.getRuntime().exec("ls");
+     BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line = null;
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+        }
   }
 }

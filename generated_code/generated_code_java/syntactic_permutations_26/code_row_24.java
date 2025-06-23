@@ -1,14 +1,14 @@
+package com.javainuse;
 import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        double sum = 0;
-        for (int i=0;i<3;i++){
+public class QuarterlySales {
+    public static void main(String[] args){
+        int sum=0;
+        for(int i=0;i<=2;i++){
             sum+=getMonthlySales(i);
         }
-         System.out.print("The total sales of the first quarter are: ");
-          System.out.println(sum);
     }
-    public static double getMonthlySales(int i){
-      return 10*i;
+    public static int getMonthlySales(int month){
+        //some code here
+        return sales;
     }
 }

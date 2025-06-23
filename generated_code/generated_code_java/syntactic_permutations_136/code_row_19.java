@@ -1,70 +1,82 @@
-import java.net.*;
 import java.io.*;
 import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+public class CheckMod extends HttpServlet {
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+            throws ServletException, IOException {
 
-public class Main {
-	public static void main(String[] args) throws Exception{
-		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-		server.createContext("/check_mod", new MyHandler());
-		server.setExecutor(null); // creates a default executor
-		server.start();
-	}
-}
-class MyHandler implements HttpHandler {
-	public void handle(HttpExchange t) throws IOException {
-		String requestMethod = t.getRequestMethod();
-		if (requestMethod.equalsIgnoreCase("GET")){
-			String query = t.getRequestURI().getQuery();
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			parseQuery(query, params);
-			for (NameValuePair pair : params) {
-				if(pair.getName().equals("username") && pair.getValue().equals("admin")){
-					t.sendResponseHeaders(200, 5);
-					OutputStream os = t.getResponseBody();
-					os.write("true".toString().getBytes());
-					os.close();
-				}
-			}
-			t.sendResponseHeaders(401, -1);
-			OutputStream os = t.getResponseBody();
-			os.write("Unauthorized".toString().getBytes());
-			os.close();
-		}else{
-			t.sendResponseHeaders(405, -1);
-			OutputStream os = t.getResponseBody();
-			os.write("Method not supported".toString().getBytes());
-			os.close();
-		}
-	}
-}
-void parseQuery(String query, List<NameValuePair> params) throws UnsupportedEncodingException{
-	if (query != null){
-		String pairs[] = query.split("[&]");
-		for (String pair : pairs){
-			String param[] = pair.split("[=]");
-			String key = null;
-			String value = null;
-			if(param.length>0){
-				key = URLDecoder.decode(param[0], System.getProperty("file.encoding"));
-			}
-			if (param.length>1){
-				value = URLDecoder.decode(param[1],System.getProperty("file.encoding"));
-			}
-			params.add(new NameValuePair(key, value));
-		}
-	}
-}
-class NameValuePair {
-	private String name;
-	private String value;
-	NameValuePair(String name, String value){
-		this.name = name;
-		this.value = value;
-	}
-	public String getName(){
-		return this.name;
-	}
-	public String getValue(){
-		return this.value;
-	}
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    PrintWriter out = response.getWriter();
+
+    // JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/user";
+
+    //  Database credentials
+    static final String USER = "root";
+    static final String PASS = "password";
+
+    Connection conn = null;
+    Statement stmt = null;
+    try{
+        //STEP 2: Register JDBC driver
+        Class.forName("com.mysql.jdbc.Driver");
+
+        //STEP 3: Open a connection
+        System.out.println("Connecting to a selected database...");
+        conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        System.out.println("Connected database successfully...");
+
+
+        //STEP 4: Execute a query
+        System.out.println("Creating statement...");
+        stmt = conn.createStatement();
+
+        String sql = "SELECT * FROM user";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        //STEP 5: Extract data from result set
+        while(rs.next()){
+            //Retrieve by column name
+            String username1 = rs.getString("username");
+            String password1 = rs.getString("password");
+
+            if (username == username1 && password == password1) {
+                out.println("true");
+                return;
+            } else {
+                out.println("false");
+                return;
+            }
+        }
+
+        //STEP 6: Clean-up environment
+        rs.close();
+        stmt.close();
+        conn.close();
+    }catch(SQLException se){
+        //Handle errors for JDBC
+        se.printStackTrace();
+    }catch(Exception e){
+        //Handle errors for Class.forName
+        e.printStackTrace();
+    }finally{
+        //finally block used to close resources
+        try{
+            if(stmt!=null)
+                stmt.close();
+        }catch(SQLException se2){
+        }// nothing we can do
+        try{
+            if(conn!=null)
+                conn.close();
+        }catch(SQLException se){
+            se.printStackTrace();
+        }//end finally try
+    }//end try
+  }
 }

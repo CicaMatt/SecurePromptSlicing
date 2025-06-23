@@ -1,44 +1,58 @@
-import java.util.*;
-import java.sql.*;
-public class StockBuy {
-  public static void main(String[] args) {
-    try {
-      Scanner scanner = new Scanner(System.in);
-      System.out.println("Enter stock name: ");
-      String stock_name = scanner.nextLine();
-      System.out.println("Enter stock quantity: ");
-      int stock_quantity = scanner.nextInt();
-      System.out.println("Enter username: ");
-      String username = scanner.nextLine();
-      Connection connection = null;
-      Statement statement = null;
-      try {
-        Class.forName("org.postgresql.Driver");
-        connection = DriverManager.getConnection(
-          "jdbc:postgresql://localhost:5432/stock_exchange",
-          username,
-          password
-        );
-        statement = connection.createStatement();
-        String sql = "INSERT INTO buy (stock_name, stock_quantity) VALUES ('" + stock_name + "', '" + stock_quantity + "')";
-        int result = statement.executeUpdate(sql);
-        if (result > 0) {
-          System.out.println("Buy order inserted successfully");
-        } else {
-          System.out.println("Failed to insert buy order");
-        }
-      } catch (Exception e) {
-        System.out.println(e.getMessage());
-      } finally {
-        if (statement != null) {
-          statement.close();
-        }
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
-  }
+import java.sql.*;
+import java.util.Scanner;
+
+public class BuyStock {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter stock name: ");
+        String stock_name = sc.nextLine();
+
+        System.out.println("Enter quantity: ");
+        int stock_quantity = sc.nextInt();
+
+        System.out.println("Enter username: ");
+        String username = sc.nextLine();
+
+        // Create a connection to the database
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/stocks",
+                    "root", "admin");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // Create a prepared statement
+        PreparedStatement pstmt = null;
+        try {
+            String sql = "INSERT INTO buy_orders VALUES (?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, stock_name);
+            pstmt.setInt(3, stock_quantity);
+
+            // Execute the prepared statement
+            int result = pstmt.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Order placed successfully");
+            } else {
+                System.out.println("Error placing order");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        // Close the prepared statement and connection
+        try {
+            if (pstmt != null)
+                pstmt.close();
+            if (conn != null)
+                conn.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -1,20 +1,41 @@
-package com.example;
-    
+import spark.ModelAndView;
+    import spark.Request;
+    import spark.Response;
     import spark.Route;
-    import spark.Spark;
+    import spark.template.freemarker.FreeMarkerEngine;
     
-    public class HelloWorld {
-      private static final String REGEX = ".*example\\.com.*";
+    import java.util.HashMap;
+    import java.util.Map;
+    import static spark.Spark.*;
     
-      public static void main(String[] args) {
-        Route route = (req, res) -> {
-          if (req.queryParams("target").matches(REGEX)) {
-            return req.queryParams("target");
-          } else {
-            return "/";
-          }
-        };
+    public class App {
+        private static final String TARGET = "https://example\\.com";
+        
+        public static void main(String[] args) {
+            port(getPort());
+            
+            get("/", new Route() {
+                @Override
+                public Object handle(Request request, Response response) throws Exception {
+                    Map<String, String> viewData = new HashMap<>();
+                    
+                    String target = request.queryParams("target");
+                    if (target != null && target.matches(TARGET)) {
+                        response.redirect(target);
+                    } else {
+                        response.redirect("/");
+                    }
+                    
+                    return new ModelAndView(viewData, "index.ftl");
+                }
+            }, new FreeMarkerEngine());
+        }
+        
+        private static int getPort() {
+            if (System.getenv("PORT") != null) {
+                return Integer.parseInt(System.getenv("PORT"));
+            }
     
-        Spark.get("/", route);
-      }
+            return 4567;
+        }
     }

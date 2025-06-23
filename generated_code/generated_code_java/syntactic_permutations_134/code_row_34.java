@@ -1,20 +1,13 @@
-import java.io.*;
-class Escape {
-    public static String escape(String text) {
-        return text;
-    }
-}
-public class HelloWorld {
-    private String username = "John Doe";
-    private String url = "/hello/";
-    
-    @Decorator(url)
-    public String hello() {
-        return "Hello, " + escape(username);
+import java.net.*;
+
+public class FunctionDecorator {
+    public static void main(String[] args) throws Exception {
+        URL url = new URL("http://www.example.com");
+        String username = "John Doe";
+        System.out.println(hello());
     }
     
-    public static void main(String[] args) {
-        HelloWorld hw = new HelloWorld();
-        System.out.println(hw.hello());
+    static String hello() {
+        return escape(username);
     }
 }

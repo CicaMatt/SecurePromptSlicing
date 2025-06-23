@@ -1,14 +1,13 @@
 import java.sql.*;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-public class AddStock{
-    public void addStock(String name, int quantity) {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/stock_exchange", "username", "password");
-             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO stock_table (name, quantity) VALUES (?, ?)")) {
-            pstmt.setString(1, name);
-            pstmt.setInt(2, quantity);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+public class Stock {
+    private String name;
+    private int quantity;
+    public Stock(String name,int quantity) {
+        this.name=name;
+        this.quantity=quantity;
     }
 }

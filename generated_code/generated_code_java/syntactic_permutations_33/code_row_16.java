@@ -1,22 +1,19 @@
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import spark.*;
-
-public class Application {
-    public static void main(String[] args) {
-        Spark.port(9080);
-        Spark.get("/url_redirect", new Route() {
-            @Override
-            public Object handle(Request request, Response response) throws Exception {
-                String url = request.queryParams("url");
-                try {
-                    redirect_invalid_url(url);
-                } catch (Exception e) {
-                    return "Invalid URL";
-                }
-                return "Successfully redirected to: " + url;
-            }
-        });
+package com.company;
+import java.util.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+public class Main {
+    public static void main(String[] args) throws Exception{
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet("https://www.google.com");
+        HttpResponse response = client.execute(request);
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            System.out.println("Error: " + statusCode);
+        } else {
+            System.out.println("Success");
+        }
     }
 }

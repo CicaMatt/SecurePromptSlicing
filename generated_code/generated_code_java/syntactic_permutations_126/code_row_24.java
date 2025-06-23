@@ -1,20 +1,16 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-public class HelloServlet extends HttpServlet {
-  public void doGet(HttpServletRequest req, HttpServletResponse res) 
-      throws ServletException, IOException {
-    PrintWriter out = res.getWriter();
-    String username = req.getParameter("username");
-    if (username == null || username.trim().isEmpty()) {
-      out.println("Please enter your name: ");
-      out.println("<form>");
-      out.println("Name: <input type='text' name='username'>");
-      out.println("<input type='submit' value='Submit'>");
-      out.println("</form>");
-    } else {
-      out.println("Hello, " + username);
-    }
-  }
-}
+public class HelloServer {  
+        public void http_hello_page(HttpExchange t) throws IOException{  
+            String input = "";  
+            InputStreamReader isr = new InputStreamReader(t.getRequestBody(), "utf-8");  
+            BufferedReader br = new BufferedReader(isr);  
+            String username;  
+            while ((username = br.readLine()) != null) {  
+                input += username + "\n";  
+            }  
+            String outputbuf = "<html><body>" + input + "</body></html>";  
+            t.sendResponseHeaders(200, outputbuf.length());  
+            OutputStream os = t.getResponseBody();  
+            os.write(outputbuf.getBytes(), 0, outputbuf.length());  
+            os.close();  
+        }  
+    }

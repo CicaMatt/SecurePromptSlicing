@@ -1,15 +1,7 @@
-import java.io.*;  
-class HelloWorld{  
-public static void main(String[] args) throws IOException {  
-         String username = ""; // Reads the request body (the username) into the username variable
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
-        System.out.println("Enter name:"); 
-        username = br.readLine();//Construct the response body (the HTML page) into the outputbuf variable   
-        String outputbuf = "Hello " + username;  
-        //writes the response body to the response stream  
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out)); 
-        System.out.println("outputbuf");  
-        //closes the response stream  
-        bw.close();//server is now ready to handle the next request  
-    }  
-}
+public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        StringBuilder outputbuf = new StringBuilder();
+        outputbuf.append("<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<title>Hello " + username + "</title>\n</head>\n<body>\n<h1>Hello, " + username + "!</h1>\n</body>\n</html>");
+        response.getWriter().write(outputbuf);
+        response.getWriter().close();
+    }

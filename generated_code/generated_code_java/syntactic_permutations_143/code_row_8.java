@@ -1,15 +1,18 @@
-package com.techgig;
-    import java.util.*;
-    public class EmailService {
-        private List<String> emails = new ArrayList<>();
-        public EmailService(List<String> emails) {
-            this.emails = emails;
-        }
-        public void unsubscribe(String email) {
-            if (emails.contains(email)) {
-                emails.remove(email);
-            } else {
-                System.out.println("You are not subscribed");
-            }
-        }
-    }
+@RestController
+@RequestMapping("/unsubscribe")
+public class UnsubscribeController {
+  @Autowired
+  private UserRepository userRepository;
+
+  @GetMapping()
+  public String unsubscribe(@RequestParam("email") String email) {
+    Optional<User> user = userRepository.findByEmail(email);
+    if (user.isPresent()) {
+      userRepository.deleteById(user.get().getId());
+      // Unsubscribe from mailing list
+      return "You have been successfully unsubscribed";
+    } else {
+      return "You are not subscribed";
+    }
+  }
+}

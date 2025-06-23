@@ -1,13 +1,13 @@
-import java.io.File;  
-import java.io.FileWriter;  
-public class Main {  
-    public static void main(String[] args) throws Exception {     
-        String str = "U2FsdGVkX1/R+WzJcxgvX/Iw==";  
-        File file = new File("secret.txt");     
-        if (file.createNewFile()) {         
-            FileWriter writer = new FileWriter(file);       
-            writer.write(str);     
-            writer.close();   
-        }    
-        Runtime.getRuntime().exec("chmod 700 secret.txt");   }
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File file = new File("secret.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        bufferedWriter.write("U2FsdGVkX1/R+WzJcxgvX/Iw==");
+        bufferedWriter.close();
+    }
 }

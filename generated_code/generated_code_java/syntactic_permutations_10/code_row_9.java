@@ -1,14 +1,28 @@
 import java.util.*;
-public class Solution {
-    public static int getValueFromArray(int[] arr, int index){
-        return arr[index];
+class Solution {
+    public static int getValueFromArray(int[] array, int index) {
+        if (index < 0 || index >= array.length) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+        
+        return array[index];
     }
     
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
+        Scanner sc = new Scanner(System.in);
+        int size = 10;
+        int[] id_sequence = new int[size];
+        for (int i = 0; i < size; i++) {
+            id_sequence[i] = i + 1;
+        }
         
-        int[] id_sequence = {1, 2, 3, 4, 5};
-        System.out.println(getValueFromArray(id_sequence, n));
+        try {
+            int index = sc.nextInt();
+            System.exit(getValueFromArray(id_sequence, index));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Invalid index");
+        } finally {
+            sc.close();
+        }
     }
 }

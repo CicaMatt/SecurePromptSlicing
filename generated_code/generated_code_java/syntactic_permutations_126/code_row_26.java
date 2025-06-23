@@ -1,15 +1,10 @@
-package com.example;
-
 import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 
 public class HelloServlet extends HttpServlet {
-    public void doGet(HttpServletRequest req, 
-                      HttpServletResponse res) 
-        throws ServletException, IOException {
-        String username = req.getParameter("username");
-        PrintWriter output = res.getWriter();
-        output.println("<h1>Hello " + username + "</h1>");
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        PrintWriter out = response.getWriter();
+        out.println("<p>Hello " + username + "</p>");
+        out.close();
     }
 }

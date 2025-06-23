@@ -1,28 +1,16 @@
-import javax.servlet.http.*;
-import java.io.*;
-import org.apache.commons.io.*;
+import spark.Route;
+import static spark.Spark.*;
 
-@WebServlet("/")
-public class Redirect extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	
-    public void redirect_invalid_url() {
-        // TODO: Check if the URL has domain example.com. If it is, redirect the user to . If not, return an error message.
-        String urlParam = request.getParameter("url");
-        try {
-            URI uri = new URI(urlParam);
-            if (!uri.getHost().equals("example.com")) {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                response.getWriter().println("Invalid domain.");
-            } else {
-                response.sendRedirect(urlParam);
-            }
-        } catch (URISyntaxException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().println("Malformed URL.");
-        } catch (IOException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().println("Server Error");
+public class RedirectExample {
+    public static void main(String[] args) {
+        get("/url-to-redirect", (request, response) -> redirect_invalid_url());
+    }
+
+    private String redirect_invalid_url() {
+        if (!request.queryParams("url").contains("example.com")) {
+            return "Error: invalid URL";
+        } else {
+            response.redirect(request.queryParams("url"));
         }
     }
 }

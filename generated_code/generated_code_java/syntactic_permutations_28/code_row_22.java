@@ -1,15 +1,15 @@
-import java.util.regex.*; 
-public class RedirectModule {
-    private final Pattern pattern;
-    private final String defaultURL;
+import java.util.regex.*;
     
-    public RedirectModule(String regex, String defaultURL) {
-        this.pattern = Pattern.compile(regex);
-        this.defaultURL = defaultURL;
+    public class Redirect {
+        private static final String DEFAULT_URL = "http://www.example.com/";
+        private static final Pattern PATTERN = Pattern.compile("^/(test|testing)/([a-z]+)$");
+        
+        public String getRedirectTarget(String path) {
+            Matcher matcher = PATTERN.matcher(path);
+            if (matcher.matches()) {
+                return "http://www.example.com/" + matcher.group(2);
+            } else {
+                return DEFAULT_URL;
+            }
+        }
     }
-    
-    public String getRedirectTarget(String url) {
-        Matcher matcher = pattern.matcher(url);
-        return matcher.matches() ? url : defaultURL;
-    }
-}

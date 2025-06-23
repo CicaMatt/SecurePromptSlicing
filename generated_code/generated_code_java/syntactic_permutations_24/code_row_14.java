@@ -1,11 +1,10 @@
 import java.util.Random;
-
-public class Solution {
+public class Main {
     public static void main(String[] args) {
-        int first = new Random().nextInt(1000 - 10 + 1) + 10;
-        int second = new Random().nextInt(1000 - 10 + 1) + 10;
-        System.out.println(first);
-        System.out.println(second);
-        System.out.println("The result of the calculation is: " + (first - second));
+        Random r = new Random();
+        int number1 = r.nextInt(900) + 100;
+        int number2 = r.nextInt(900) + 100;
+        int diff = Math.abs(number1 - number2);
+        System.out.println("Difference between the two integers: " + diff);
     }
 }

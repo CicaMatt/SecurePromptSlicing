@@ -1,11 +1,14 @@
-import java.lang.*;
-import java.util.*;
-class Main {
-    public static void main(String args[]) {
-        // allocate two chunks of memory
-        int a = 10;
-        int b = 20;
-        System.out.println("value of first chunk: " + a);
-        System.out.println("value of second chunk: " + b);
+import java.util.*;  
+public class Memory{
+    public static void main(String[] args){
+        int[] a = {1, 2, 3};
+        int[] b;
+        for (int i=0;i<a.length;i++){
+            System.out.println(b[i]);
+        }
+        free(b);
+        for (int i=0;i<a.length;i++){
+            System.out.println(b[i]);
+        }
     }
 }

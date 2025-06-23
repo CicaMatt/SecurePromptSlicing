@@ -1,10 +1,17 @@
-package com.company;
-import java.util.*; // Importing scanner
-public class Main {
+import java.util.*;
+public class Test {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in); // Creating an object of the scanner class to take user input 
-        System.out.print("Enter your id: "); // Asking for the index value from the user
-        int id = input.nextInt(); // Storing the index value in a variable named "id"
-        System.out.println(id_sequence[id]); // Displaying the value at the index value stored in "id" 
+        //create a scanner to read user input
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an index value: ");
+        int index = sc.nextInt();
+        int id = getValueAt(index);
+        System.out.println("The ID at position " + index + " is: " + id);
+    }
+    
+    public static int getValueAt(int index) {
+        //create an array of 10 integers
+        int[] id_sequence = {1,2,3,4,5,6,7,8,9,10};
+        return id_sequence[index];
     }
 }

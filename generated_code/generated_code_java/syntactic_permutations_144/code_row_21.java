@@ -1,33 +1,50 @@
+java
+import java.util.*;
 import java.sql.*;
-
-public class EmailCheck {
-    public int checkEmail(String email) throws Exception {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet rs = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "user", "password");
-            statement = connection.createStatement();
-            String query = "SELECT email FROM users WHERE email='" + email + "'";
-            rs = statement.executeQuery(query);
-            if (rs.next()) {
-                Runtime rt = Runtime.getRuntime();
-                Process pr = rt.exec("script_to_be_run");
-                int exitVal = pr.waitFor();
-                if (exitVal == 0) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            } else {
-                return 0;
-            }
-        } catch (Exception e) {
-            throw new Exception("Something went wrong");
-        } finally {
-            if (rs != null) rs.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
-        }
-    }
+public class Email {
+   public static void main(String[] args) {
+      String email = "example@gmail.com";
+      int status = checkEmailStatus(email);
+      if (status == 1) {
+         System.out.println("The email exists in the database.");
+         callScript();
+      } else if (status == 0) {
+         System.out.println("The email does not exist in the database.");
+      }
+   }
+   private static int checkEmailStatus(String email) {
+      // connect to database
+      Connection conn = null;
+      try {
+         Class.forName("com.mysql.jdbc.Driver");
+         conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
+      } catch (Exception e) {
+         System.out.println(e);
+      }
+      // execute query to check email status in database
+      int status = 0;
+      try {
+         Statement stmt = conn.createStatement();
+         String sql = "SELECT * FROM users WHERE email='" + email + "'";
+         ResultSet rs = stmt.executeQuery(sql);
+         if (rs != null) {
+            status = 1;
+         }
+      } catch (Exception e) {
+         System.out.println(e);
+      }
+      return status;
+   }
+   private static void callScript() {
+      // call script to check email status in database
+      try {
+         Runtime rt = Runtime.getRuntime();
+         String[] commands = new String[2];
+         commands[0] = "cmd.exe";
+         commands[1] = "/c" + "script.bat";
+         Process proc = rt.exec(commands);
+      } catch (Exception e) {
+         System.out.println(e);
+      }
+   }
 }

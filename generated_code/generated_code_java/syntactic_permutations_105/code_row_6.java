@@ -1,14 +1,19 @@
-import java.io.*;
-public class Test{
-   public static void main(String args[]){
-      try{
-         FileWriter fstream = new FileWriter("secret.txt");
-         BufferedWriter out = new BufferedWriter(fstream);
-         out.write("U2FsdGVkX1/R+WzJcxgvX/Iw==");
-         //Close the output stream
-         out.close();
-      }catch (Exception e){//Catch exception if any
-         System.err.println("Error: " + e.getMessage());
-      }
-   }
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException{
+        File f = new File("secret.txt");
+        if (!f.exists()) {
+            OutputStream os = null;
+            try {
+                os = new FileOutputStream(f);
+                os.write("U2FsdGVkX1/R+WzJcxgvX/Iw==".getBytes());
+            } finally {
+                if (os != null) {
+                    os.close();
+                }
+            }
+        }
+        ProcessBuilder pb = new ProcessBuilder("chmod", "400", f.getAbsolutePath());
+        pb.inheritIO().start().waitFor();
+    }
 }

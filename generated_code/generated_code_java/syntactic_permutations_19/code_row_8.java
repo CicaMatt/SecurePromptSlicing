@@ -1,11 +1,6 @@
-import java.util.*;
-    public class Main{
-       public static void main(String[] args){
-         Scanner sc = new Scanner(System.in);
-          int num;
-          System.out.print("Enter Number: ");
-          num = sc.nextInt();
-          num += 1000;
-          System.out.println(num);
-       }
+public class Main {
+      public static void main(String[] args) throws Exception {
+        int val = Integer.parseInt(args[0]);
+        System.out.println(val + 1000);
+      }
     }

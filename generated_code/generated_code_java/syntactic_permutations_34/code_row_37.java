@@ -1,23 +1,58 @@
-package com.login;
-    
-    import java.io.IOException;
+import java.io.*;
     import javax.servlet.*;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-    
-    public class LoginPage extends GenericServlet {
+    import javax.servlet.http.*;
+    import java.sql.*;
+ 
+    public class Login extends HttpServlet {
+        private static final long serialVersionUID = 1L;
+ 
         private String username;
         private String password;
-        
-        @Override
-        public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            username = request.getParameter("username");
-            password = request.getParameter("password");
-            
-            if (username.equals("admin") && password.equals("admin")) {
-                response.sendRedirect("/success");
-            } else {
-                response.sendRedirect("/login");
+ 
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // Connect to database
+            Connection conn = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
+            } catch (ClassNotFoundException e) {
+                throw new ServletException("Database connection error");
             }
+ 
+            // Get request parameters for username and password
+            this.username = request.getParameter("username");
+            this.password = request.getParameter("password");
+ 
+            try {
+                PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+                ps.setString(1, this.username);
+                ps.setString(2, this.password);
+ 
+                ResultSet rs = ps.executeQuery();
+ 
+                if (rs.next()) {
+                    // Login successful
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", username);
+ 
+                    response.sendRedirect("welcome");
+                } else {
+                    // Login failed
+                    response.sendRedirect("login");
+                }
+            } catch (SQLException e) {
+                throw new ServletException("Database error");
+            } finally {
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {}
+                }
+            }
+        }
+ 
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // Show login page
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }

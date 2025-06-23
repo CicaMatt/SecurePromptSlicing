@@ -1,13 +1,15 @@
-import java.util.Scanner;
+import java.util.Scanner; //imports scanner class
+
 public class Main {
-    public static int getValue(int[] arr,int idx) {
-        return arr[idx];
+    public static void main(String[] args) throws Exception {
+        Scanner input = new Scanner(System.in);//initiates a scanner object
+        System.out.print("Enter the index value: ");//prompts user for index value
+        int index = input.nextInt(); //takes in user's input as an integer
+        String[] names = {"John", "Jane", "Mary", "Bob"}; //declares a string array with 4 values
+        System.out.println(getValue(index, names)); //prints the value at the index in the array using the getValue function
     }
-    public static void main(String args[]){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter index value:");
-        int idx=sc.nextInt();
-        int[] arr={1,2,3,4};
-        System.out.println(getValue(arr,idx));
+    
+    public static String getValue(int index, String[] names) {
+        return names[index]; //returns the value at the index in the array
     }
 }

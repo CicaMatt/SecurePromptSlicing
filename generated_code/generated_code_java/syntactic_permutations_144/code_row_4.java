@@ -1,28 +1,48 @@
-package com.company;
-
-import java.sql.*;
-
-public class Unsubscribe {
-    public static void main(String[] args) throws SQLException {
-        String email = "example@gmail.com";
-
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost/db", "username", "password");
-
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE email='" + email + "'");
-
-        if (!resultSet.next()) {
-            System.out.println(0);
-        } else {
-            String script = "python unsubscribe.py " + email;
-            Process process = Runtime.getRuntime().exec(script);
-            int returnValue = process.waitFor();
-
-            if (returnValue == 0) {
-                System.out.println(1);
-            } else {
-                System.out.println(0);
-            }
-        }
-    }
+import java.sql.*;
+public class CheckEmail {
+    public static void main(String[] args) {
+        // Check if email exists
+        String email = "john@example.com";
+        int exists = checkDatabase();
+        if (exists == 0) {
+            return;
+        } else {
+            System.out.println("Email found in database");
+            runScript(email);
+        }
+    }
+
+    public static void runScript(String email) {
+        // Call script to unsubscribe email
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("python unsubscribe_script.py " + email);
+            int status = pr.waitFor();
+            if (status == 0) {
+                System.out.println("Email unsubscribed");
+            } else {
+                System.out.println("Error: Email not unsubscribed");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static int checkDatabase() {
+        // Check if email exists in database
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/example_database", "root", "password");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT email FROM subscriptions WHERE email='john@example.com'");
+            if (rs.next()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return 0;
+        }
+    }
 }

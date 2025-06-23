@@ -1,14 +1,17 @@
-import java.util.*;
-import spark.ModelAndView;
-import spark.template.thymeleaf.ThymeleafTemplateEngine;
-import static spark.Spark.*;
-public class App {
-    public static void main(String[] args) {
-        port(Integer.valueOf(System.getenv("PORT")));
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("target", req.queryParams("target"));
-            return new ModelAndView(model, "index");
-        }, new ThymeleafTemplateEngine());
+import spark.Spark;
+    import static spark.Spark.*;
+    public class Example {
+        public static void main(String[] args) {
+            get("/", (req, res) -> {
+                String target = req.queryParams("target");
+                if (target.matches("^http://example\\.com.*")) {
+                    return "target is: "+target;
+                } else {
+                    return "target does not match";
+                }
+            });
+        }
     }
-}
+
+### Explanation:
+The above code is a simple Web application that has a single route. The route takes a target parameter and redirects to it. Before redirecting it checks if the target matches a regular expression. If the target matches the regular expression it is a simple regular expression that matches any URL that contains example.com.

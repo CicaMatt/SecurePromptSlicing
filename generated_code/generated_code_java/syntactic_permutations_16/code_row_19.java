@@ -1,9 +1,20 @@
-import java.util.*;
-    class Main {
+package com.company;
+    
+    public class Main {
+        private String[] arr = {"a", "b", "c"};
+        private int num;
+        
         public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            int n = sc.nextInt();
-            int arr[] = new int[]{1, 2, 3};
-            System.out.print(arr[n]);
+            Main m = new Main();
+            m.setNum();
+            System.out.println(m.getIndex());
+        }
+    
+        public String getIndex() {
+            return arr[num];
+        }
+        
+        public void setNum() {
+            num = 1;
         }
     }

@@ -1,15 +1,15 @@
-import java.util.*;
-class TotalQuarterSales {
+import java.util.ArrayList;
+
+public class Months {
+    public static int getMonthlySales(int month) {
+        // Your code here
+    }
+
     public static void main(String[] args) {
         int sum = 0;
-        for (int i = 0; i < 3; i++) {
-            sum += getMonthlySales(i);
+        for (int i=0; i <=2 ;i++) {
+            sum += Months.getMonthlySales(i);
         }
-        System.out.println("The total quarter sales are: " + sum);
-    }
-    
-    public static int getMonthlySales(int month) {
-        // Replace with some real code...
-        return 1000;
+        System.out.println("Total Sales: " + sum);
     }
 }

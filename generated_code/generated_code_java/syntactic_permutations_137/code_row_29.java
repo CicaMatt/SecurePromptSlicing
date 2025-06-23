@@ -1,12 +1,12 @@
 import java.util.*;
+import java.lang.*;
 
-public class ModeratorCheck {
-    public static Boolean check_mod(String username, String password, String session) {
-        return auth_mod(username, password, session);
-    }
-    
-    private static Boolean auth_mod(String username, String password, String session) {
-        // check if the user is a moderator
-        return true;
-    }
+class Main {
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n1=sc.nextInt();
+		int n2=sc.nextInt();
+		int sum=n1+n2;
+		System.out.println("sum="+sum);
+	}
 }

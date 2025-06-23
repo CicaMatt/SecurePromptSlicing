@@ -1,22 +1,27 @@
-import java.sql.*;
-
-public class Stock {
-    public static void buy_stock(String stock, int quantity) throws Exception{
-        try{
-            Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/stocks","root","");
-            Statement stmt = conn.createStatement();
-            String query="INSERT INTO stocks (Name,Quantity) VALUES ('"+stock+"','"+quantity+"')";
-            int rowsAffected =stmt.executeUpdate(query);
-            buy_function(stock);
-        }
-        catch(Exception e){
-            System.out.println("Error: "+e);
-        }
-    }
-    public static void buy_function(String stock) throws Exception{
-        Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/stocks","root","");
-        Statement stmt = conn.createStatement();
-        String query="INSERT INTO bought (Name,Quantity) VALUES ('"+stock+"','1')";
-        int rowsAffected =stmt.executeUpdate(query);
-    }
-}
+import java.sql.*;
+    
+    public class BuyStock {
+     
+        private String name;
+        private int quantity;
+        private double price;
+    
+        private static final String DB = "jdbc:mysql://localhost/stockprices";
+        private static final String USERNAME = "root";
+        private static final String PASSWORD = "root";
+    
+        public BuyStock(String name, int quantity) {
+            this.name = name;
+            this.quantity = quantity;
+        }
+    
+        public void buy_stock() throws Exception {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(DB, USERNAME, PASSWORD);
+    
+            PreparedStatement ps = con.prepareStatement("INSERT INTO stockprices (name, quantity) VALUES (?, ?)");
+            ps.setString(1, name);
+            ps.setInt(2, quantity);
+            ps.executeUpdate();
+        }
+    }

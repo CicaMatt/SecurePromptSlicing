@@ -1,26 +1,35 @@
 import java.io.*;
-public class Decorator {
-    String url;
-    public void setURL(String s)
-    {
-        url=s;
+import java.net.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.decorator.*;
+import javax.inject.*;
+
+@WebServlet(urlPatterns = {"/ping"})
+public class Ping implements HttpServlet {
+  private String url;
+  
+  public Ping() {}
+  
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String output = ping();
+    response.getWriter().println(output);
+  }
+
+  public String ping() {
+    String url = "google.com"; // example URL
+    try {
+      Runtime rt = Runtime.getRuntime();
+      Process proc = rt.exec("ping -c 1 " + url);
+      int exitVal = proc.waitFor();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+      String line;
+      while ((line = reader.readLine()) != null) {
+        return line;
+      }
+    } catch (IOException | InterruptedException e) {
+      e.printStackTrace();
     }
-    public String ping()
-    {
-        try{
-            System.out.println("Pinging " + url);
-            Process p = Runtime.getRuntime().exec("ping -c 2 "+url);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine+"\n");
-            }
-            p.waitFor();
-            return response.toString();
-        }catch (IOException | InterruptedException e){
-            System.out.println("Exception caught:"+e.getMessage());
-            return "Error";
-        }
-    }
+  }
 }

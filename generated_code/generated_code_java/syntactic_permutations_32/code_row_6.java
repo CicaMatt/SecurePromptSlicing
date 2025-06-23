@@ -1,21 +1,23 @@
-import java.net.URL;
-import java.net.MalformedURLException;
-
-public class RedirectExample {
-    public static void main(String[] args) throws MalformedURLException {
-        URL url = new URL("https://example.com/");
-        
+@Controller
+public class RedirectController {
+    
+    @GetMapping("/redirect/{url}")
+    public ModelAndView redirect(@PathVariable("url") String url) throws MalformedURLException, IOException {
         if (redirect_invalid_url(url)) {
-            System.out.println("Redirecting to " + url);
+            return new ModelAndView("error");
         } else {
-            System.out.println("Invalid URL");
+            URL destination = new URL(url);
+            URI uri = new URI(destination.getProtocol(), destination.getAuthority(), destination.getPath(), destination.getQuery(), null);
+            return new ModelAndView("redirect:" + uri.toString());
         }
     }
     
-    public static boolean redirect_invalid_url(URL url) throws MalformedURLException {
-        if (url.getHost().endsWith(".com")) {
+    public boolean redirect_invalid_url(String url) throws MalformedURLException {
+        URL destination = new URL(url);
+        if (destination.getHost().endsWith(".example.com")) {
             return true;
-        } 
-        return false;
+        } else {
+            return false;
+        }
     }
 }

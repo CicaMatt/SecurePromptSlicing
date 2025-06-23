@@ -1,22 +1,40 @@
-package login;
-
-    import java.io.IOException;
-    import javax.servlet.ServletException;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-
-    public class Login extends javax.servlet.http.HttpServlet {
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-                throws ServletException, IOException {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            if (username != null && password != null) {
-                if (username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password")) {
-                    response.sendRedirect("/dashboard/index.jsp");
-                } else {
-                    response.sendRedirect("/login.jsp");
+package com.login;
+    import java.util.*;
+    
+    public class Login {
+        private String username;
+        private String password;
+        
+        private static List<String[]> users = new ArrayList<>();
+        
+        static {
+            users.add(new String[]{"admin", "password"});
+            users.add(new String[]{"user1", "password1"});
+        }
+    
+        public void setUsername(String username) {
+            this.username = username;
+        }
+        
+        public void setPassword(String password) {
+            this.password = password;
+        }
+        
+        public boolean authenticate() {
+            for (String[] user : users) {
+                if (user[0].equals(username) && user[1].equals(password)) {
+                    return true;
                 }
+            }
+            
+            return false;
+        }
+        
+        public String getDashboard() {
+            if (authenticate()) {
+                return "Dashboard";
+            } else {
+                return "Login";
             }
         }
     }

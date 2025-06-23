@@ -1,16 +1,18 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.PosixFilePermissions;
 
 public class SecretInfo {
     public static void main(String[] args) throws IOException {
-        String superSecret = "Super secret info.";
-        BufferedWriter writer = Files.newBufferedWriter(Paths.get("secret-info.txt"));
-        writer.write(superSecret);
+        String superSecretMessage = "I am a secret message, but not for long.";
 
-        Files.setPosixFilePermissions(Paths.get("secret-info.txt"), PosixFilePermissions.fromString("r--------"));
+        File file = new File("secret_message.txt");
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(superSecretMessage);
+        }
 
-        System.out.println(Files.readAllLines(Paths.get("secret-info.txt")));
+        if (!file.setReadOnly()) {
+            throw new IOException("Failed to set file to read-only.");
+        }
+
+        System.out.println(file.getAbsolutePath());
     }
 }

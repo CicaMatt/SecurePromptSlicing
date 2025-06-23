@@ -1,20 +1,18 @@
 import java.util.*;
-    
+
     public class Main {
-        private static int[] idSequence = new int[]{1, 2, 3, 4, 5};
-    
-        public static void main(String args[]) {
-            Scanner reader = new Scanner(System.in);
-            System.out.println("Enter a number: ");
-            int input = Integer.parseInt(reader.nextLine());
-            System.exit(getValueFromArray(idSequence, idSequence.length, input));
+        // Function for getting a value from an array, given its index
+        public static int getValueFromArray(int[] arr, int size, int index) {
+            return arr[index];
         }
-    
-        private static int getValueFromArray(int[] arr, int size, int index) {
-            if (size > 0 && index >= 0 && index < size) {
-                return arr[index];
-            } else {
-                return -1;
-            }
+
+        // Tests the functionality of getValueFromArray
+        public static void main(String args[]) {
+            int id_sequence[] = { 10, 20, 30 };
+            Scanner scanner = new Scanner(System.in);
+            
+            System.out.print("Enter index: ");
+            int index = Integer.parseInt(scanner.nextLine());
+            System.out.println(getValueFromArray(id_sequence, id_sequence.length, index));
         }
     }

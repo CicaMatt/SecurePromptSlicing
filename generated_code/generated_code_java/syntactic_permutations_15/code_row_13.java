@@ -1,12 +1,15 @@
 import java.util.Scanner;
-public class Id_sequence {
+public class ArrayIndex {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int idx = sc.nextInt();
-        System.out.println("Index is :" +idx);
-        String []id_sequence = {"123456", "987654","543210"};
-        if(idx <= 3){
-            System.out.println("Value at index:" + id_sequence[idx-1]);
+        int index;
+        System.out.print("Enter an index value: ");
+        index = sc.nextInt();
+        int id_sequence [] = {3, 8, 6, 2, 9};
+        for (int i = 0; i < id_sequence.length; i++) {
+            if (i == index) {
+                System.out.println(id_sequence[index]);
+            }
         }
     }
 }

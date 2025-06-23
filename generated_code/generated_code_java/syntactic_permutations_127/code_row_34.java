@@ -1,11 +1,10 @@
-import java.io.*;
-public class http_hello_page{
-    public void main(String[] args) throws IOException {
-        String username = getUsername(System.in);
-        System.out.println("Hello " + username);  
-    }
-    public static String getUsername(InputStream is) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        return br.readLine();
-    }
+import java.io.*;
+public class HelloWorld {
+    public static void main(String[] args) throws IOException {
+        String username = "";
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter your name: ");
+        username = br.readLine();
+        System.out.println("Hello " + username);
+    }
 }

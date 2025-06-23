@@ -1,9 +1,7 @@
-import java.util.Scanner;
-
-public class TrimAndPrint {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println(sc.nextLine().trim());
-    sc.close();
-  }
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(args[0].trim());
+    }
 }

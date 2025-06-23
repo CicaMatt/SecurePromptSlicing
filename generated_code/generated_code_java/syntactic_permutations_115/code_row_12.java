@@ -1,17 +1,20 @@
-import java.io.*;
-public class Main {
-    public static void main(String[] args) throws Exception {
-        String command = String.format("ls %s", "/");
-        execCommand(command);
-    }
+import java.util.Scanner;
 
-    private static void execCommand(String command) throws Exception {
-        Process process = Runtime.getRuntime().exec(command);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+public class ExecuteCommand {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String dirName = sc.nextLine();
+        try {
+            Process p = Runtime.getRuntime().exec("ls " + dirName);
+            p.waitFor();
+            
+            if (p.exitValue() == 0) {
+                System.out.println("Command executed successfully.");
+            } else {
+                System.out.println("Error executing command.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        reader.close();
     }
 }

@@ -1,23 +1,32 @@
-import spark.Request;
-import spark.Response;
-import static spark.Spark.*;
-
-public class App {
-    public static void main(String[] args) {
-        get("/", (req, res) -> "Hello World");
-        post("/check-moderator", checkModerator);
-    }
-
-    private static String checkModerator(Request req, Response res) throws Exception {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/forum_database?user=root&password=");
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM users WHERE username = '%s' AND moderator = 1", req.queryParams("username")));
-
-        if (resultSet.next()) {
-            return "true";
-        } else {
-            return "false";
-        }
-    }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+  
+public class ModeratorCheck extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        boolean isModerator = false; 
+        try {
+            // Load driver
+            Class.forName("com.mysql.jdbc.Driver");
+  
+            // Create a connection to the database
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "root", "password");
+  
+            // Execute query
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND moderator=true");
+            if (rs.next()) {
+                isModerator = true;
+            }
+  
+            // Close connection
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        PrintWriter writer = response.getWriter();
+        writer.print("User " + username + (isModerator ? " is" : " is not") + " a moderator");
+    }
 }

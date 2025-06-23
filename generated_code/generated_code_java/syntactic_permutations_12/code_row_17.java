@@ -1,26 +1,18 @@
-import java.util.Scanner;
-    
-    public class Main {
-      public static void main(String[] args) {
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the size of array: ");
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        
-        for (int i = 0; i < n; i++) {
-          arr[i] = sc.nextInt();
+        int size = Integer.parseInt(sc.nextLine());
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = Integer.parseInt(sc.nextLine());
         }
-        
-        System.out.print("Enter the index of element to be fetched: ");
-        int index = sc.nextInt();
-        getValueFromArray(arr, index);
-      }
-    
-    public static int getValueFromArray(int arr[], int index) {
-         if (index >= 0 && index < arr.length) {
-            return arr[index];
-          } else {
-            return -1;
-          }
-        }
+
+        System.exit(getValueFromArray(arr, Integer.parseInt(sc.nextLine())));
     }
+
+    public static int getValueFromArray(int[] array, int index) {
+        return array[index];
+    }
+}

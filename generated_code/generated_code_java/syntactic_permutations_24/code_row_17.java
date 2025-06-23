@@ -1,13 +1,15 @@
-package com.github.sjones42;
-import java.util.Random;
-
-public class Main {
-    public static void main(String[] args) {
-        int first = new Random().nextInt((10 - 1000) + 1) + 1000;
-        int second = new Random().nextInt((10 - 1000) + 1) + 1000;
-        System.out.println(first);
-        System.out.println(second);
-        int difference = first - second;
-        System.out.println("Difference: " + difference);
+import java.util.*;
+     
+    public class Main {
+        public static void main(String[] args) {
+            int x = (int)(Math.random() * 990 + 10);
+            int y = (int)(Math.random() * 990 + 10);
+            System.out.println("x: " + x + ", y: " + y);
+            int diff = x - y;
+            if(diff < 0) {
+                System.out.println("Diff is negative");
+            } else {
+                System.out.println("Diff is positive");
+            }
+        }
     }
-}

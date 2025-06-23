@@ -1,19 +1,17 @@
 import java.io.*;
-public class http_hello_page {
-    public static void main(String[] args) {
-        try{
-            FileInputStream req = new FileInputStream("request");
-            FileOutputStream res = new FileOutputStream("response");
-            byte[] bytes = new byte[req.available()];
-            int i=0;
-            while((bytes[i] = (byte)req.read())!=-1) {
-                i++;
-            }
-            String username = new String(bytes);
-            String response = "hello "+username;
-            res.write(response.getBytes());
-        }catch(IOException e){
-            System.out.println("error");
-        }
+
+    public class http_hello_page {
+    	public static void main(String[] args) throws IOException {
+    		http_hello_page obj = new http_hello_page();
+    		obj.http_hello_page(System.in, System.out);
+    	}
+    
+    	void http_hello_page(InputStream request, OutputStream response) throws IOException {
+    		String username = "";
+    		int character;
+    		while ((character = request.read()) != -1) {
+    			username += (char) character;
+    		}
+    		response.write(("hello " + username).getBytes());
+    	}
     }
-}

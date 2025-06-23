@@ -1,46 +1,56 @@
 import java.sql.*;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Properties;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
+@WebServlet(name = "Login", urlPatterns = {"/login"})
+public class Login extends HttpServlet {
+    private String username;
+    private String password;
+    private Connection con;
 
-@WebServlet(name="LoginServlet", urlPatterns={"/login"})
-public class LoginServlet extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-    Properties properties = new Properties();
-    try{
-      Class.forName("com.mysql.jdbc.Driver").newInstance();
-      connection = DriverManager.getConnection(properties.getProperty("db_url"), properties.getProperty("user"), properties.getProperty("password"));
-      statement = connection.createStatement();
-      resultSet = statement.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'");
-      if(resultSet.next()){
-        response.sendRedirect("success.jsp");
-      }else{
-        response.sendRedirect("cant_login.jsp");
-      }
-    }catch(Exception e){
-      try{
-        connection.rollback();
-      } catch (SQLException sqle) {
-        throw new ServletException("Something went wrong!", sqle);
-      }
-      response.sendRedirect("internal_server_error.jsp");
-    }finally{
-      if(connection != null){
-        try{
-          connection.close();
-        } catch (SQLException e) {
-          throw new ServletException("Something went wrong!", e);
+    @Override
+    public void init() throws ServletException {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/login", "root", "password");
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-      }
     }
-  }
+
+    @Override
+    public void destroy() {
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        if (user == null || pass == null) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
+        } else {
+            try {
+                PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+                ps.setString(1, user);
+                ps.setString(2, pass);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    response.sendRedirect("success.jsp");
+                } else {
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/cant_login.jsp");
+                    rd.forward(request, response);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/internal_server_error.jsp");
+                rd.forward(request, response);
+            }
+        }
+    }
 }

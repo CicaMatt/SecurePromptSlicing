@@ -1,28 +1,20 @@
 import java.io.*;
+import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import freemarker.template.*;
-import java.util.HashMap;
-import java.util.Map;
 
-@WebServlet(name = "hello", urlPatterns = {"/hello"})
-public class Hello extends HttpServlet {
-    private Configuration cfg;
-
-    public void init() throws ServletException {
-        cfg = new Configuration();
-        try {
-            cfg.setClassForTemplateLoading(this.getClass(), "/");
-        } catch (IOException e) {
-            throw new ServletException("Could not set class for template loading: " + e);
-        }
-    }
-
+public class HomeController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, Object> root = new HashMap<>();
-        root.put("name", request.getParameter("name"));
-
-        Template template = cfg.getTemplate("hello.ftl");
-        template.process(root, response.getWriter());
+        String name = request.getParameter("name");
+        
+        Template template = env.getTemplate("home.ftl");
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        try {
+            template.process(Collections.singletonMap("name", name), out);
+        } catch (TemplateException e) {
+            throw new ServletException("Error while processing template home.ftl", e);
+        }
     }
 }

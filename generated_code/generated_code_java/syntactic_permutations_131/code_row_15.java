@@ -1,9 +1,7 @@
-<html>
-  <body>
-    <form method="POST">
-      What is your name? 
-      <input type="text" name="name"/><br/>
-      <button type="submit">Greet Me!</button>
-    </form>
-  </body>
-</html>
+import java.util.*;
+
+public class HelloWorld{
+    public static void main(String[] args){
+        System.out.println("Hello, World!");
+    }
+}

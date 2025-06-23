@@ -1,22 +1,11 @@
-import java.util.*;
-public class Main {
-  public static void main(String[] args){
-    int i = getInt();
-    System.out.println("Value at index "+i+" is "+getValueAt(i));
-  }
-  public static int getInt(){
-    Scanner scanner = new Scanner(System.in);
-    return scanner.nextInt();
-  }
-  public static String getValueAt(int i){
-    ArrayList<String> list = new ArrayList<String>();
-    list.add("Hello");
-    list.add("World");
-    if(i>=0&&i<list.size()){
-      return list.get(i);
+public static String getIndexValue(int index) {
+        // Your code here
     }
-    else{
-      return "Index out of bounds!";
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an index value: ");
+        int idx = sc.nextInt();
+        String value = getIndexValue(idx);
+        System.out.println("The value at index " + idx + " is " + value);
     }
-  }
-}

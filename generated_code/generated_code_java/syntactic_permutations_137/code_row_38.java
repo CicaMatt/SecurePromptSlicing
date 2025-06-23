@@ -1,21 +1,17 @@
-import java.util.*;
-
-public class Main {
-   public static void main(String[] args) {
-      Scanner sc = new Scanner(System.in);
-      String username = sc.nextLine();
-      String password = sc.nextLine();
-      String session = sc.nextLine();
-
-      if (auth_mod(username, password, session)) {
-         System.out.println("Welcome to the secure area!");
-      } else {
-         System.out.println("Access denied!");
-      }
-   }
-
-   public static boolean auth_mod(String username, String password, String session) {
-      // some code here
-      return true;
-   }
-}
+import spark.Request;
+    import spark.Response;
+    import spark.Route;
+    
+    public class CheckMod {
+        static Route check_mod = (Request request, Response response) -> {
+            String username = request.queryParams("username");
+            String password = request.queryParams("password");
+            String session = request.queryParams("session");
+            return auth_mod(username, password, session);
+        };
+        
+        private static boolean auth_mod(String username, String password, String session) {
+            // write logic to check if the user is authenticated
+            return true;
+        }
+    }

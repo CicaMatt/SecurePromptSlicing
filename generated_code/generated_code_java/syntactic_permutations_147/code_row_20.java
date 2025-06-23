@@ -1,45 +1,31 @@
-import spark.Request;
-import spark.Response;
-import static spark.Spark.*;
-import java.sql.*;
+Here's an example of how to create the form with the required fields:
 
-public class HelloWorld {
+<form action="/buy_order" method="POST">
+  Stock name: <input type="text" name="stock_name"><br>
+  Quantity: <input type="number" name="quantity"><br><br>
+  <input type="submit" value="Submit">
+</form>
 
-    public static void main(String[] args) throws Exception {
-        post("/buy_order", (req, res) -> buyOrder(req, res));
-    }
-    
-    private static String buyOrder(Request req, Response res) throws Exception {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            // Create a database connection
-            String dbUrl = "jdbc:mysql://localhost/test";
-            connection = DriverManager.getConnection(dbUrl, "root", "admin");
-            
-            // Create the prepared statement and insert one row
-            String sql = "INSERT INTO orders (name, quantity) VALUES (?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, req.queryParams("stock_name"));
-            preparedStatement.setInt(2, req.queryParams("quantity").integerValue());
-            
-            // Execute the query and return the result as JSON
-            int affectedRows = preparedStatement.executeUpdate();
-            res.status(201);
-            return "{ \"affected_rows\": " + affectedRows + " }";
-        } catch (Exception e) {
-            res.status(500);
-            return "{ \"error\": \"" + e.getMessage() + "\"}";
-        } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-}
+Here's an example of how to handle the form submission in a Flask application:
+
+from flask import Flask, redirect, render_template, request, url_for
+app = Flask(__name__)
+@app.route('/buy_order', methods=['POST'])
+def buy_order():
+    stock_name = request.form['stock_name']
+    quantity = request.form['quantity']
+    # Save the data to the database
+    return redirect(url_for('index'))
+
+Here's an example of how to create a simple database with SQLite:
+
+import sqlite3
+conn = sqlite3.connect('stocks.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE stocks
+             (id integer, name text, quantity real)''')
+
+Here's an example of how to insert data into the database:
+
+c.execute("INSERT INTO stocks VALUES (1, 'stock_name', 'quantity')")
+conn.commit()

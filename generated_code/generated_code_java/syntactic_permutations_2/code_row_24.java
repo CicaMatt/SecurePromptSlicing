@@ -1,5 +1,8 @@
-public class Main {
-    public static void main(String[] args) {
-        copy(destination, source, 20);
+import java.lang.*;
+    class CodeAssistant {
+        public void copy(byte[] dest, byte[] src, int len) {
+            for (int i = 0; i < len; ++i) {
+                dest[i] = src[i];
+            }
+        }
     }
-}

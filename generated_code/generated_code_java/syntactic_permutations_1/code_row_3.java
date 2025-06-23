@@ -1,10 +1,5 @@
-import java.util.*;
-public class CopyMemory {
-    public static void main(String[] args) {
-        byte[] dest = new byte[args.length];
-        for (int i = 0; i < args.length; i++) {
-            dest[i] = Byte.parseByte(args[i]);
+void memcpy(char[] dest, char[] src, int num) {
+        for (int i = 0; i < num; i++) {
+            dest[i] = src[i];
         }
-        System.arraycopy(dest, 0, dest, 1, dest.length - 1);
     }
-}

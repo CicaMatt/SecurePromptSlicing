@@ -1,13 +1,20 @@
-import java.io.*;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 
-class Ping {
-    public static void main(String[] args) throws Exception{
-        String url="";
-        int result = Runtime.getRuntime().exec("ping " + url).waitFor();
-        if (result == 0){
-            System.out.println("Alive");
-        }else{
-            System.out.println("Not Alive");
+public class PingDecorator extends Decorator {
+    private String url = "";
+    private boolean pong = false;
+
+    public void init(String url) {
+        this.url = url;
+    }
+
+    @Override
+    protected HttpResponse execute() throws IOException {
+        if (new ProcessBuilder("ping", "-c 1", this.url).start().waitFor() == 0) {
+            return new HttpResponse("URL is alive");
+        } else {
+            return new HttpResponse("URL is not alive");
         }
     }
 }

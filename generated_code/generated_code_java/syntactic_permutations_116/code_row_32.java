@@ -1,18 +1,12 @@
-import java.util.Scanner;
-public class JavaCode {
-    public static void main(String[] args){
-        Scanner scan = new Scanner(System.in);
-         System.out.println("Welcome to my command line utility!");
-        while (true) {
-            String input = scan.next();
-            if (input.equals("exit")) {
-                break;
-            }
-            try {
-                Runtime.getRuntime().exec(input);
-            } catch (Exception e) {
-                System.out.println("Error executing command.");
-            }
-        }
+import java.io.*; 
+    public class Main { 
+        public static void main(String[] args) throws IOException{ 
+            String command="ls"; 
+            Process p=Runtime.getRuntime().exec(command); 
+            BufferedReader br=new BufferedReader(new InputStreamReader(p.getInputStream())); 
+            String line; 
+            while((line=br.readLine())!=null){ 
+                System.out.println(line); 
+            } 
+        } 
     }
-}

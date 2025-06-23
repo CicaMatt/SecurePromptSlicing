@@ -1,14 +1,16 @@
-import java.io.*;
-    
-    public class Main {
-        public static void main(String[] args) throws IOException {
-            System.out.println("Executing ls command...");
-            Process proc = Runtime.getRuntime().exec("ls -l");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            
-            String line;
-            while((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-        }
-    }
+import java.io.*;  
+public class SystemExample {  
+    public static void main(String[] args) {  
+        try {  
+            String line;  
+            Process p = Runtime.getRuntime().exec("ls -l");  
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));  
+            while ((line = input.readLine()) != null) {  
+                System.out.println(line);  
+            }  
+            input.close();  
+        } catch (Exception err) {  
+            err.printStackTrace();  
+        }
+    }  
+}

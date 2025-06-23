@@ -1,15 +1,14 @@
-import jinja2
-from flask import Flask, request, Response
+import java.io.\*;
+import javax.servlet.\*;
 
-app = Flask(__name__)
-
-def render_response_from_env(env):
-    name = request.args.get("name")
-    template = env.get_template("index.html")
-    html = template.render(name=name)
-    return Response(html, mimetype="text/html")
-
-@app.route("/")
-def home():
-    response = render_response_from_env(app.jinja_env)
-    return response
+public class Main extends HttpServlet {
+  private static final long serialVersionUID = 1L;
+  
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    String name = req.getParameter("name");
+    Template template = env.getTemplate("index.ftl");
+    String renderedTemplate = FreeMarkerTemplateUtils.processTemplateIntoString(template, name);
+    resp.getWriter().write(renderedTemplate);
+  }
+}

@@ -1,41 +1,32 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-public class Login{
-    
+public class Main {
     public static void main(String[] args) {
-        Connection conn = null;
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "your_database_name";
-        String driver = "com.mysql.cj.jdbc.Driver";
-        try{
-            Class.forName(driver);
-            conn = DriverManager.getConnection(url+dbName, "username", "password");
-            
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            PreparedStatement ps = conn.prepareStatement("select * from users where name=? and password=?");
+        String username = "admin";
+        String password = "admin";
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/", "user", "password");
+            PreparedStatement ps = con.prepareStatement("SELECT username, password FROM user WHERE username=? and password=?");
             ps.setString(1, username);
             ps.setString(2, password);
-            
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                response.sendRedirect("/success");
-            }else{
-                response.sendRedirect("/cant_login");
+            if (rs.next()) {
+                System.out.println("redirecting to success page...");
+            } else {
+                System.out.println("redirecting to cant_login page...");
             }
-        }catch(Exception e){
-            try {
-                response.sendRedirect("/internal_server_error");
-            } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (Exception e) {
+            System.out.println("redirecting to internal_server_error page...");
         } finally {
-            if (conn != null){
-                try {
-                    conn.close();
-                }catch(SQLException e){
-                    e.printStackTrace();
-                }
+            try {
+                con.close();
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
     }

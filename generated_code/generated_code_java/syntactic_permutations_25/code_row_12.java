@@ -1,29 +1,40 @@
-import java.util.Random;
+package com.company;
     
-    public class Sales {
-      static int getMonthlySales() {
-        return new Random().nextInt(100000);
-      }
+    import java.util.Random;
     
-      public static void main(String[] args) {
-        int salesQ1 = 0, salesQ2 = 0, salesQ3 = 0, salesQ4 = 0;
-        for (int i = 0; i < 12; i++) {
-          int monthlySales = getMonthlySales();
-    
-          if (i <= 2) {
-            salesQ1 += monthlySales;
-          } else if (i > 3 && i <= 5) {
-            salesQ2 += monthlySales;
-          } else if (i > 6 && i <= 8) {
-            salesQ3 += monthlySales;
-          } else {
-            salesQ4 += monthlySales;
-          }
+    public class Main {
+        
+        private static int getMonthlySales() {
+            return new Random().nextInt(100000);
         }
     
-        System.out.println("Quarter 1 sales: " + salesQ1);
-        System.out.println("Quarter 2 sales: " + salesQ2);
-        System.out.println("Quarter 3 sales: " + salesQ3);
-        System.out.println("Quarter 4 sales: " + salesQ4);
-      }
+        public static void main(String[] args) {
+            int salesForQuarter = 0;
+            for (int month = 1; month <= 3; month++) {
+                salesForQuarter += getMonthlySales();
+            }
+            
+            System.out.println("First Quarter: " + salesForQuarter);
+        
+            int salesSecondQuarter = 0;
+            for (int month = 4; month <= 6; month++) {
+                salesSecondQuarter += getMonthlySales();
+            }
+            
+            System.out.println("Second Quarter: " + salesSecondQuarter);
+        
+            int salesThirdQuarter = 0;
+            for (int month = 7; month <= 9; month++) {
+                salesThirdQuarter += getMonthlySales();
+            }
+            
+            System.out.println("Third Quarter: " + salesThirdQuarter);
+        
+            int salesFourthQuarter = 0;
+            for (int month = 10; month <= 12; month++) {
+                salesFourthQuarter += getMonthlySales();
+            }
+            
+            System.out.println("Fourth Quarter: " + salesFourthQuarter);
+        }
     }

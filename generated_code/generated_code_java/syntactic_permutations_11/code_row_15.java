@@ -1,11 +1,13 @@
-import java.util.*;
-     class Main {
-        public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            int index = scanner.nextInt();
-            System.exit(getValueFromArray(index, id_sequence));
-        }
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int index = sc.nextInt();
+        System.exit(getValueFromArray(id_sequence, id_sequence.length, index));
     }
-    public static int getValueFromArray(int size, int[] arr, int index) {
-        return arr[index];
+
+    private static int getValueFromArray(int[] idSequence, int size, int index) {
+        return idSequence[index];
     }
+}

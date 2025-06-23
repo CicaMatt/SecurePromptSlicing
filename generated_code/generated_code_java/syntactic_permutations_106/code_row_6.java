@@ -1,17 +1,19 @@
-import java.io.*;
-
-public class SuperSecretInfo {
-    public static void main(String[] args) throws Exception {
-        String superSecret = "You will not find this information anywhere else on the internet!";
-        File file = new File("secretFile.txt");
-        if (file.createNewFile()) {
-            FileWriter writer = new FileWriter(file);
-            writer.write(superSecret);
-            writer.close();
-            file.setReadOnly();
-            System.out.println(file.getName());
-        } else {
-            System.out.println("Error creating the file");
-        }
-    }
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+
+public class FilePermissions {
+	private static String fileName = "super_secret_info.txt";
+	private static String superSecretInfo = "I am the super secret info";
+	
+	public static void main(String[] args) throws IOException {
+        // Write the super secret info to the file and make it read-only for the owner.
+        Files.write(Paths.get(fileName), superSecretInfo.getBytes(StandardCharsets.UTF_8));
+        File file = new File(fileName);
+        file.setReadOnly();
+        
+        // Print the name of the file to the screen.
+        System.out.println("File: " + fileName);
+    }
 }

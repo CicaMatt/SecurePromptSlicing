@@ -1,14 +1,7 @@
-import wsgiref.simple_server as server
-from wsgiref.util import setup_testing_defaults
-
-app = server.make_server('', 8000)
-
-@app.request_handler
-def hello_world(environ, start_response):
-    status = '200 OK'
-    headers = [('Content-type', 'text/plain')]
-    response_body = 'Hello World!'
-    
-    return status, headers, response_body
-
-app.serve_forever()
+from flask import Flask, redirect, url_for
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return 'Hello World!'
+if __name__ == "__main__":
+    app.run()

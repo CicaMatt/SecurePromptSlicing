@@ -1,35 +1,19 @@
 import java.io.*;
-import java.util.*;
 
-public class User {
-	private String username;
-	private String password;
+public class Application {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
+        System.out.println("Enter username");
+        String userName = reader.readLine();
 
-	public String getUsername() { return this.username; }
-	public String getPassword() { return this.password; }
+        System.out.println("Enter password");
+        String passWord = reader.readLine();
 
-	@Override
-	public int hashCode() { return Objects.hash(this.username, this.password); }
-}
-
-import java.io.*;
-import java.util.*;
-
-public class LoginController {
-	private Map<String, User> db = new HashMap<>();
-
-	public LoginController() {}
-
-	public void addUser(String username, String password) {
-		this.db.put(username, new User(username, password));
-	}
-
-	public boolean isValidLogin(String username, String password) {
-		return this.db.containsKey(username) && Objects.equals(this.db.get(username).password, password);
-	}
+        if (userName != null && userName.equals("admin") && passWord != null && passWord.equals("123456")) {
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Invalid username or password");
+        }
+    }
 }

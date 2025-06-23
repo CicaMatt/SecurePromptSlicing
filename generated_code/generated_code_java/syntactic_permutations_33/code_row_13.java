@@ -1,13 +1,24 @@
-import java.net.*;
-import javax.servlet.http.*;
+import java.net.URI;
+    import spark.ModelAndView;
+    import spark.template.freemarker.FreeMarkerEngine;
+    import static spark.Spark.*;
 
-public class Redirect {
-     public static void redirect_invalid_url(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String url = request.getParameter("url");
-        if(url == null || !url.contains("example.com")){
-            response.sendError(response.SC_BAD_REQUEST, "Invalid URL");
-        }else{
-            response.sendRedirect(url);
+    public class HelloWorld {
+        public static void main(String[] args){
+            port(8085);
+            get("/redirect_invalid_url", (req, res) -> {
+                String url = req.queryParams("url");
+                try{
+                    URI uri = new URI(url);
+                    if (uri.getDomain().equals("example.com")){
+                        return "Invalid URL";
+                    }else{
+                        res.redirect(url);
+                        return null;
+                    }
+                }catch (Exception e){
+                    return "Invalid URL";
+                }
+            }, new FreeMarkerEngine());
         }
-     }
-}
+    }

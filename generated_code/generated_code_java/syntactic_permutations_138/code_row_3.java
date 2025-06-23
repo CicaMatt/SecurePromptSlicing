@@ -1,19 +1,27 @@
 package com.example;
 
 import java.sql.*;
-import spark.Spark;
 
-public class Main {
-    public static void main(String[] args) throws SQLException {
-        String connectionUrl = "jdbc:mysql://localhost/mydb";
-        Connection con = DriverManager.getConnection(connectionUrl, "root", "");
-        Spark.port(8081);
-        Spark.get("/users/:id", (req, res) -> {
-            String id = req.params(":id");
-            PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM users WHERE user_id = ? AND role = 'moderator'");
-            preparedStatement.setString(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet;
-        });
+public class App {
+    
+    public static void main(String[] args) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password")) {
+            boolean isModerator = executeQuery(conn, 12345);
+            System.out.println(isModerator);
+        } catch (SQLException e) {
+            throw new IllegalStateException("Could not connect to the database.", e);
+        }
+    }
+
+    private static boolean executeQuery(Connection conn, int userId) throws SQLException {
+        try (PreparedStatement statement = conn.prepareStatement("SELECT is_moderator FROM users WHERE id = ?")) {
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) {
+                return false;
+            }
+
+            return rs.getBoolean("is_moderator");
+        }
     }
 }

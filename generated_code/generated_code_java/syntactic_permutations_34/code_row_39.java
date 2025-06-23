@@ -1,27 +1,26 @@
-import java.util.*; 
-
-class Main { 
-    public static void main(String[] args) {  
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter your username:");
-        String username = scanner.nextLine();
-        System.out.println("Please enter your password:");
-        String password = scanner.nextLine();
-        System.out.println("Logging in...");
-        if(checkLogin(username,password)) { 
-            redirectToDashboardPage(); 
+import java.util.*;  
+import java.io.*; 
+public class LoginPage { 
+    public static void main(String[] args) throws IOException{ 
+        Scanner sc = new Scanner(System.in); 
+        System.out.print("Enter Username: "); 
+        String username = sc.nextLine(); 
+        System.out.print("Enter Password: "); 
+        String password = sc.nextLine(); 
+        
+        if (username.equals("admin") && password.equals("password")) { 
+            System.out.println("Logged in successfully!"); 
+            DashboardPage dp = new DashboardPage(); 
+            dp.displayDashboard(); 
         } else { 
-            redirectToLoginPage(); 
+            System.out.println("Invalid username or password! Try again."); 
+            LoginPage lp = new LoginPage(); 
+            lp.main(null); 
         } 
-    }  
-    public boolean checkLogin(String username, String password) { 
-        // Connect to the database and fetch the credentials
-        return true; // Replace with real implementation
     } 
-    private void redirectToDashboardPage() { 
-        System.out.println("You have been logged in successfully."); 
-    } 
-    private void redirectToLoginPage() { 
-        System.out.println("Invalid username or password. Please try again."); 
+} 
+class DashboardPage { 
+    public void displayDashboard() { 
+        System.out.println("Welcome to the dashboard!"); 
     } 
 }

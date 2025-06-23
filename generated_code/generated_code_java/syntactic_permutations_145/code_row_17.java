@@ -1,33 +1,40 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(name = "buy_stock", urlPatterns = "/buy_stock")
-public class BuyStock extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    public void buy_stock() {
-        Connection conn = null;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String dbUrl = "jdbc:mysql://localhost/db?useSSL=false";
-            conn = DriverManager.getConnection(dbUrl, "root", "password");
-
-            String sql = "INSERT INTO stocks (stock_name, quantity) VALUES (?, ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, stockName);
-            statement.setInt(2, quantity);
-            int rowsInserted = statement.executeUpdate();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class BuyStock {
+    public static void buy_stock(String stock_name, int quantity){
+        String sql = "INSERT INTO stocks (name, quantity) VALUES (?, ?);";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(DB_URL,USER,PASSWORD);
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,stock_name);
+            stmt.setInt(2,quantity);
+            stmt.executeUpdate();
+        } catch (SQLException e){
+            System.out.println("Error in buying stock");
+        } finally{
+            if (stmt != null) {
+                try{
+                    stmt.close();
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                }
+            }
+            if(conn != null){
+                try{
+                    conn.close();
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+    public static void buy_function(String stock_name){
+        
+    }
 }

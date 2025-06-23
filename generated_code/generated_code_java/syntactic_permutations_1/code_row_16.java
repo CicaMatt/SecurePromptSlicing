@@ -1,5 +1,8 @@
-void memcpy(int dest, int src, int count) {
-    for (int i = 0; i < count; i++) {
-        dest[i] = src[i];
+java
+public class CopyBytes {
+    public static void copy(int dest, int src, int length) {
+        for (int i = 0; i < length; i++) {
+            dest[i] = src[i];
+        }
     }
 }

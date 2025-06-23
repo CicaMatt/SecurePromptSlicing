@@ -1,49 +1,37 @@
-<details>
-  <summary>Click to view code</summary>
-  
-
-package main;
-
-import java.io.*;
-import java.util.*;
-
-public class Main {
-    public static void login(String name, String password) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File("passwords.txt"));
+import java.sql.*;
+    import java.util.*;
+    
+    public class Login {
+        static Connection conn;
         
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (!line.contains("#")) continue;
+        public void login(String name, String pass){
+            //query database to check if name exists
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "root");
             
-            String[] parts = line.split("#");
-            String dbName = parts[0];
-            String dbPassword = parts[1];
-            if (name.equals(dbName)) {
-                if (password.equals(dbPassword)) {
-                    System.out.println("Login successfull!");
-                    return;
-                } else {
-                    System.out.println("Incorrect password.");
-                    return;
+            try{
+                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM login WHERE name=?");
+                stmt.setString(1,name);
+                
+                ResultSet rs = stmt.executeQuery();
+                
+                if(!rs.next()) //if name does not exist
+                    return; //return null
+                
+                String dbpass = rs.getString("password");//get password from database
+                
+                if(dbpass.equals(pass)){ //check if passwords match
+                    //redirect to home page
+                }else{
+                    return; //return null
+                }
+            }catch(SQLException ex){
+                System.out.println("An error occurred." + ex);
+            }finally{
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    System.out.println("Failed to close connection.");
                 }
             }
         }
-        
-        System.out.println("User not found");
     }
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-        
-        try {
-            login(name, password);
-        } catch (FileNotFoundException e) {}
-    }
-}
-  
-</details>

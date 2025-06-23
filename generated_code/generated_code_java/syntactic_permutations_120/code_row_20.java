@@ -1,13 +1,11 @@
-import java.util.Arrays;
-
-public class MemoryCopy {
-    public static void main(String[] args) {
-        int[] mem1 = new int[5];
-        Arrays.fill(mem1, 0);
-        int[] mem2 = new int[5];
-        for (int i = 0; i < 5; i++) {
-            mem2[i] = mem1[i];
-        }
-        System.out.println("Memory copied successfully.");
-    }
+import java.nio.*;
+class Main {
+  public static void main(String[] args) {
+    byte[] a = new byte[10];
+    byte[] b = new byte[5];
+    ByteBuffer bufferA = ByteBuffer.wrap(a);
+    ByteBuffer bufferB = ByteBuffer.wrap(b);
+    bufferA.get(b, 0, 5);
+    System.out.println("Copied " + 5 + " bytes from a to b.");
+  }
 }

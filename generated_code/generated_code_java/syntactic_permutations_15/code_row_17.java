@@ -1,12 +1,10 @@
 import java.util.*;
-    
-    public class IdSequence {
-        static int[] id_sequence = new int[]{10, 20, 30};
-    
-        public static void main(String args[]){
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter an index: ");
-            int index = scanner.nextInt();
-            System.out.println("The value at the index " + index + " is " + id_sequence[index]);
-        }
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Index: ");
+        int index = sc.nextInt();
+        int id_sequence[] = {10,24,36,18,5, 7,9};
+        System.out.println(id_sequence[index]);
     }
+}

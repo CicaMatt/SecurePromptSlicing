@@ -1,31 +1,18 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.regex.Pattern;
 
-public class EmailCheck {
-    public static void main(String[] args) throws IOException, MalformedURLException, InterruptedException {
-        URL url = new URL("http://www.example.com");
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-        conn.setUseCaches(false);
-        conn.setAllowUserInteraction(false);
-        conn.setRequestProperty("Content-Type", "application/json");
-        String input = "";
-        if (conn.getResponseCode() == 200) {
-            System.out.println(input);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder stringBuilder = new StringBuilder();
-            for (String line; (line = bufferedReader.readLine()) != null; ) {
-                stringBuilder.append(line + "\n");
-            }
-            System.out.println("Email unsubscribed successfully");
+public class EmailUnsubscription {
+    public static int unsubscribe(String email) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
+        if (pattern.matcher(email).matches()) {
+            int result = unsubscribeEmailScript(email);
+            return result == 0 ? 1 : 0;
         } else {
-            System.out.println("Invalid email, please try again!");
+            return 0;
         }
+    }
+
+    // This method calls the script that unsubscribes the email and returns the result.
+    public static int unsubscribeEmailScript(String email) {
+        // ...
     }
 }

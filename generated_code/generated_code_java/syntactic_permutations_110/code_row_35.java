@@ -1,11 +1,12 @@
-import java.io.*;
 import java.util.*;
-public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String username = args[0];
-        ProcessBuilder pb = new ProcessBuilder();
-        pb.command("id",username);
-        Process process = pb.start();
-        int status = process.waitFor();
+class ExitStatus {
+    public static void main(String[] args) {
+        try {
+            Process process = Runtime.getRuntime().exec("id " + args[0]);
+            int exitCode = process.waitFor();
+            System.out.println(exitCode);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -1,26 +1,30 @@
-import java.util.*;
-public class Chunk {
-    public static void main(String args[]){
-        int[] c1 = new int[4];
-        for (int i=0;i<c1.length;i++)
-            c1[i]=i;
-
-        int[] c2 = new int[c1.length];
-
-        System.arraycopy(c1, 0, c2, 0, c1.length);
-        System.out.println("Content of chunk2: ");
-        for (int i=0;i<c2.length;i++)
-            System.out.print(c2[i] + " ");
-        System.out.println();
-
-        c1 = null;
-        System.gc();//not guaranteed to run gc but it is a hint to JVM
-        System.out.println("Content of chunk2: ");
-        for (int i=0;i<c2.length;i++)
-            System.out.print(c2[i] + " ");
-        System.out.println();
-
-        c2 = null;
-        System.gc();//not guaranteed to run gc but it is a hint to JVM
-    }
+import java.util.*;
+
+class HelloWorld {
+    public static void main(String[] args) {
+        int[] array1 = new int[5];
+        int[] array2 = new int[5];
+        
+        for(int i=0;i<5;i++)
+            array1[i] = i*2 + 1;
+        
+        for(int i=0;i<5;i++)
+            array2[i] = array1[i];
+        
+        System.out.println("The contents of the second chunk:");
+        for(int i=0;i<5;i++)
+            System.out.print(array2[i] + " ");
+        System.out.println();
+        
+        array1 = null;
+        System.gc();
+        
+        System.out.println("The contents of the second chunk after freeing the first:");
+        for(int i=0;i<5;i++)
+            System.out.print(array2[i] + " ");
+        System.out.println();
+        
+        array2 = null;
+        System.gc();
+    }
 }

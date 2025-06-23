@@ -1,23 +1,23 @@
-import java.sql.*;
-
-public class ModeratorChecker {
-    public static void main(String[] args) throws SQLException {
-        String host = System.getenv("MYSQL_HOST");
-        String port = System.getenv("MYSQL_PORT");
-        String user = System.getenv("MYSQL_USER");
-        String password = System.getenv("MYSQL_PASSWORD");
-        String database = System.getenv("MYSQL_DATABASE");
-        
-        Connection connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, user, password);
-        PreparedStatement statement = connection.prepareStatement("SELECT moderator FROM users WHERE username=?");
-        statement.setString(1, args[0]);
-        
-        ResultSet result = statement.executeQuery();
-        if (result.next()) {
-            System.out.println(result.getBoolean("moderator"));
-        } else {
-            System.err.println("User not found");
-            System.exit(1);
-        }
-    }
+import java.sql.*;
+
+public class ModeratorChecker {
+    public static void main(String[] args) throws SQLException {
+        String username = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase",
+                username, password); Statement statement = connection.createStatement();) {
+            String query = "SELECT is_moderator FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, 1234);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                boolean isModerator = resultSet.getBoolean("is_moderator");
+                System.out.println(isModerator);
+            }
+        } catch (SQLException exception) {
+            System.err.println("An error occurred: " + exception.getMessage());
+        }
+    }
 }

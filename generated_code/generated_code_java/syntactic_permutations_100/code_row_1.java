@@ -1,11 +1,10 @@
 import java.io.File;
 import java.io.IOException;
-
-public class GenerateFile {
+public class CreateImportantConfigFile {
     public static void main(String[] args) throws IOException {
-        File myObj = new File("important_config");
-        if (myObj.createNewFile()) {
-            System.out.println("File created: " + myObj.getName());
+        File config = new File("important_config");
+        if (config.createNewFile()) {
+            System.out.println("File created: " + config.getName());
         } else {
             System.out.println("File already exists.");
         }

@@ -1,10 +1,11 @@
-import java.io.*;
-
 public class ImportantConfig {
-   public static void main(String[] args) throws IOException {
-       String filePath = "important_config";
-       FileWriter writer = new FileWriter(filePath, true);
-       writer.write("important_config");
-       writer.close();
-   }
-}
+        private String filename = "important_config";
+        
+        public void open() throws IOException {
+            RandomAccessFile file = new RandomAccessFile(filename, "rw");
+            
+            if (file.length() == 0) {
+                file.writeChars("important_config");
+            }
+        }
+    }

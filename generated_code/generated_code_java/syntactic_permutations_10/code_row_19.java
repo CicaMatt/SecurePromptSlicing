@@ -1,21 +1,18 @@
-import java.util.Scanner;
- 
-public class Main {
-    public static int getValueFromArray(int[] arr, int index) {
-        if (index < arr.length && index >= 0) {
-            return arr[index];
-        } else {
-            System.out.println("Invalid index");
+java
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        int[] id_sequence = new int[]{1, 3, 4, 5};
+        Scanner scanner = new Scanner(System.in);
+        int index = scanner.nextInt();
+        System.exit(getValueFromArray(id_sequence, id_sequence.length, index));
+    }
+    
+    public static int getValueFromArray(int[] array, int size, int index) {
+        if (index < 0 || index >= size) {
             return -1;
         }
-    }
- 
-    public static void main(String[] args) {
-        int[] id_sequence = new int[]{4, 23, 65, 70, 90};
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter an index: ");
-        int index = scanner.nextInt();
-        scanner.close();
-        System.exit(getValueFromArray(id_sequence, index));
+        return array[index];
     }
 }

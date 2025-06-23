@@ -1,17 +1,11 @@
-import java.io.*;
-
-    public class HelloPage {
-        
-        public void http_hello_page(InputStream request, OutputStream response) throws IOException{
-            String username = "";
-            BufferedReader reader = new BufferedReader(new InputStreamReader(request));
-            while((reader.readLine()) != null){
-                if(reader.startsWith("username")){
-                    username = reader.substring(9);
-                    break;
-                }
-            }
-            String responseMessage = "Hello, " + username + "\n";
-            response.write(responseMessage.getBytes());
-        }
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class HTTP_Hello_Page {
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner input = new Scanner(new File("request.txt"));
+        String username = input.nextLine();
+        System.out.println("Hello " + username);
     }
+}

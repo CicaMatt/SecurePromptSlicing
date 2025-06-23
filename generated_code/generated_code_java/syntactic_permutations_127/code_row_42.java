@@ -1,18 +1,18 @@
-import java.io.*;
-
-class HelloPage{
-  public static void main(String[] args) throws IOException{
-    http_hello_page(System.in, System.out);
-  }
-
-  private static void http_hello_page(InputStream in, OutputStream out) throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-    String line;
-    while ((line = reader.readLine()) != null && !line.isEmpty()){
-      if (line.startsWith("Username:")){
-        String username = line.split(":")[1].trim();
-        out.write(("Hello " + username).getBytes());
-      }
-    }
-  }
+import java.io.*;
+
+public class HelloWorld {
+  public static void http_hello_page(InputStream request, OutputStream response) throws IOException {
+    String username = "";
+    int character;
+    while ((character = request.read()) != -1) {
+      if (Character.isAlphabetic((char) character)) {
+        username += (char) character;
+      } else if (!username.isEmpty()) {
+        break;
+      }
+    }
+    
+    String greeting = "Hello " + username + "\n";
+    response.write(greeting.getBytes());
+  }
 }

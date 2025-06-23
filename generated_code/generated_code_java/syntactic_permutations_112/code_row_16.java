@@ -1,15 +1,16 @@
-import java.io.*;
-public class Ping {
-  public static void ping(HttpServletRequest request, HttpServletResponse response) throws IOException{
-    String url = "https://www.google.com"; // URL to ping
-    Runtime rt = Runtime.getRuntime();
-    Process pr = rt.exec("ping " + url);
-    InputStream instr = pr.getInputStream();
-    OutputStream outstr = response.getOutputStream();
-    int b;
-    while ((b = instr.read()) != -1) {
-      outstr.write(b);
+@WebServlet(urlPatterns = "/ping")
+public class PingDecorator extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = getInitParameter("url");
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("ping", url);
+        Process process = processBuilder.start();
+
+        InputStream inputStream = process.getInputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        IOUtils.copy(inputStream, byteArrayOutputStream);
+        response.setContentType("text/plain");
+        response.getWriter().write(byteArrayOutputStream.toString());
     }
-    outstr.close();
-  }
 }

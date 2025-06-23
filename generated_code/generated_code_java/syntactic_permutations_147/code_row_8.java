@@ -1,42 +1,30 @@
-import java.sql.*;  
-    public class BuyOrder {
-        private final String stockName;
-        public BuyOrder(String stockName){
-            this.stockName = stockName;
-        }
-        public void execute(){
-            Connection conn = null;  
-            try {  
-                // database connection data (server, port, user, passwd)  
-                String url = "jdbc:mysql://localhost/test";  
-                String user = "root";
-                String password = "root";  
-
-                // Create a connection to the database.  
-                conn = DriverManager.getConnection(url, user, password);  
-
-                // Add data to the database.  
-                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO stock_orders (stock_name) VALUES (?)");  
-                pstmt.setString(1, this.stockName);
-                pstmt.executeUpdate();  
-
-                // Cleanup.  
-                pstmt.close();
-            } catch (SQLException e) {  
-                e.printStackTrace();
-            } finally {  
-                if (conn != null) {  
-                    try {
-                        conn.close();  
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public static void main(String[] args){
-            BuyOrder buyOrder = new BuyOrder("GOOG");
-            buyOrder.execute();
-        }
+import java.sql.*;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
+public class Main {
+    public static void main(String[] args) {
+        get("/buy_order", (req, res) -> {
+            Connection conn = null;
+            Statement stmt = null;
+            try{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost/","root","password");
+                System.out.println("Connected database successfully...");
+                String name=req.queryParams("name");
+                stmt = conn.createStatement();
+                String sql="INSERT INTO stock(name) VALUES('"+name+"')";
+                stmt.executeUpdate(sql);
+            } catch(Exception e){
+                System.out.println(e);
+            } finally {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            }
+        });
     }
+}

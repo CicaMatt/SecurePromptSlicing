@@ -1,15 +1,17 @@
-import java.util.*;
-public class Main{
-    public static void main(String[] args) {
-        int i = 0;
-        int sum = 0;
-        
-        for(i=0;i<3;i++){
-            sum += getMonthlySales(i);
-        }
-    }
+import java.util.Scanner;
     
-    public static int getMonthlySales(int month){
-        return month*12;
+    public class Sales {
+        private static double sum = 0.0;
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            for (int i = 0; i < 3; i++) {
+                double sales = getMonthlySales();
+                sum += sales;
+            }
+            
+        }
+    public static double getMonthlySales(){
+         System.out.print("Enter monthly sales: ");
+         return input.nextDouble();
     }
-}
+    }

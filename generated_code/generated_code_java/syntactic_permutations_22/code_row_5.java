@@ -1,9 +1,8 @@
-java
 import java.util.Random;
-public class Main {
+class Main {
     public static void main(String[] args) {
         Random rand = new Random();
-        int num = rand.nextInt(9999 - 1000 + 1) + 1000;
-        System.out.println(num);
+        int num = rand.nextInt((1000 - 99999) + 1) + 99999;
+        System.out.println("The random number is " + num);
     }
 }

@@ -1,13 +1,17 @@
-import java.util.*;
-class Main {
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        String[] id_sequence={"a001", "b023", "c019", "d122", "e005"};
-        System.out.print("Please enter the index value: ");
-        int idx = sc.nextInt();
-        if(idx >= 0 && idx < id_sequence.length){
-            System.out.println(id_sequence[idx]);
+        int[] id_sequence = new int[]{1, 2, 3};
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter an index: ");
+        if (scanner.hasNextInt()) {
+            int userInput = scanner.nextInt();
+            int sequenceIdx = id_sequence[userInput];
+            System.out.printf("Value at index %d is: %d", userInput, sequenceIdx);
+        } else {
+            System.out.println("Invalid input! Enter a number.");
         }
     }
 }

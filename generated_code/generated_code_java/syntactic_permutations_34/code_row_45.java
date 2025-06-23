@@ -1,33 +1,23 @@
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
- 
-@WebServlet("/Login")
+import java.util.*;
+import javax.servlet.http.*;
+import java.sql.*;
 public class Login extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-         
-        if (username != null && password != null) {
-            UserDao userDao = new UserDao();
-            User user = userDao.checkLogin(username, password);
-             
-            if (user != null) {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("currentSessionUser", user);
-                 
-                RequestDispatcher view = request.getRequestDispatcher("dashboard.jsp");
-                view.forward(request, response);
-                 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/java", "root", "password");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM login WHERE user='" + user + "' AND pass='" + pass + "'");
+            if (rs.next()) {
+                response.sendRedirect("dashboard.jsp");
             } else {
-                RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-                view.forward(request, response);
+                response.sendRedirect("login.jsp?err=1");
             }
+        } catch (Exception e) {
+            response.sendRedirect("error.jsp?msg=" + e.getMessage());
         }
     }
 }

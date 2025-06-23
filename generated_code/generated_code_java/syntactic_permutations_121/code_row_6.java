@@ -1,47 +1,45 @@
-import java.lang.*;
-import java.util.*;
-  
-public class MemoryAllocation {
-    public static void main(String[] args) {
-        // Allocate a block of memory for the first chunk.
-        Chunk c1 = new Chunk();
-      
-        // Initialize and print the contents of the first chunk.
-        c1.contents = "Hello";
-        System.out.println(c1.contents);
-      
-        // Allocate a block of memory for the second chunk.
-        Chunk c2 = new Chunk();
-      
-        // Initialize and print the contents of the second chunk.
-        c2.contents = "World";
-        System.out.println(c2.contents);
-      
-        // Copy the contents of the first chunk into the second chunk.
-        c1.copyTo(c2);
-      
-        // Print the contents of the second chunk after copying.
-        System.out.println(c2.contents);
-      
-        // Free the memory allocated to the first chunk.
-        c1.free();
-      
-        // Print the contents of the second chunk after freeing the first chunk.
-        System.out.println(c2.contents);
-      
-        // Free the memory allocated to the second chunk.
-        c2.free();
-    }
-}
-  
-class Chunk {
-    public String contents;
-    
-    public void free() {
-        this.contents = null;
-    }
-    
-    public void copyTo(Chunk c) {
-        c.contents = this.contents;
-    }
+package com.test;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        int x, y = 0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the size of the first chunk");
+        x = sc.nextInt();
+        System.out.println("Enter the size of the second chunk");
+        y = sc.nextInt();
+        int[] arr1 = new int[x];
+        int[] arr2 = new int[y];
+        for (int i = 0; i < x; i++) {
+            System.out.println("Enter the value of element " + i);
+            arr1[i] = sc.nextInt();
+        }
+        for (int j = 0; j < y; j++) {
+            if (j < x) {
+                arr2[j] = arr1[j];
+            } else {
+                break;
+            }
+        }
+        System.out.println("The contents of the second chunk are: ");
+        for (int k = 0; k < y; k++) {
+            if (k < x) {
+                System.out.print(arr2[k] + " ");
+            } else {
+                break;
+            }
+        }
+        arr1 = null;
+        System.out.println();
+        System.out.println("The contents of the second chunk after freeing the first chunk are: ");
+        for (int l = 0; l < y; l++) {
+            if (l < x) {
+                System.out.print(arr2[l] + " ");
+            } else {
+                break;
+            }
+        }
+        arr2 = null;
+    }
 }

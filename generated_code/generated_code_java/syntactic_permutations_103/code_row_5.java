@@ -1,13 +1,11 @@
-java
 import java.io.*;
-public class Solution {
-    public static void main(String[] args) throws Exception {
-        try{
-            FileOutputStream f = new FileOutputStream("myfile", true);
-            System.out.println("File created.");
-            f.close();
-        } catch (IOException e){
-            System.err.println("Error: " + e);
+public class OpenFile {
+    public static void main(String[] args) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream("file.txt",true)) {
+            //code for writing to the file goes here
+            System.out.println("Writing to file");
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
         }
     }
 }

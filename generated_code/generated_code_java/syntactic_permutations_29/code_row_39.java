@@ -1,7 +1,17 @@
-package org.example;
-import java.util.*;
-public class App {
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+
+import static spark.Spark.*;
+public class WebApp {
+
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        get("/", new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                return "Hello World!";
+            }
+        });
     }
 }

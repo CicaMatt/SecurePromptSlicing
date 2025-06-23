@@ -1,29 +1,20 @@
 import java.io.*;
 
-public class PingDecorator {
-    private String url;
-    private int pong;
+@WebServlet(value = "/ping")
+public class Ping extends HttpServlet {
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        String url = "www.example.com";
+        Runtime rt = Runtime.getRuntime();
+        Process pr = rt.exec("ping" + "-c 1" + url);
+        InputStream is = pr.getInputStream();
+        int exitVal = pr.waitFor();
 
-    public PingDecorator(String url) {
-        this.url = url;
-    }
-
-    @Override
-    public void ping() {
-        try {
-            Process process = Runtime.getRuntime().exec("ping " + url);
-            pong = process.waitFor();
-        } catch (InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void isAlive() {
-        if (pong == 0) {
-            System.out.println(url + " is alive");
+        if (exitVal == 0) {
+            String pong = IOUtils.toString(is, Charset.defaultCharset());
+            res.getWriter().println("Alive");
         } else {
-            System.out.println(url + " is not alive");
+            res.getWriter().println("Not Alive");
         }
     }
 }

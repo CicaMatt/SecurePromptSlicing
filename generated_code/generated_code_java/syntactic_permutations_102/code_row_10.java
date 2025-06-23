@@ -1,12 +1,13 @@
-import java.io.FileOutputStream;
-
-class OpenFile {
-    public static void main(String[] args) throws Exception{
-        FileOutputStream file = new FileOutputStream("important_config", true);
-        String str = "important_config";
-        byte[] bytes = str.getBytes();
-        file.write(bytes);
-
-        file.close();
-    }
+import java.io.*;
+
+class Main {
+    public static void main(String[] args) throws IOException {
+        File file = new File("important_config");
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write("important_config");
+        bw.close();
+    }
 }

@@ -1,10 +1,14 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-public class Test {
-   public static void main(String[] args) throws IOException {
-       Files.write(Paths.get("testFile"), "This is a test".getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-   }
+import java.io.*;  
+public class HelloWorld{  
+    public static void main(String []args){  
+        try{  
+            FileWriter f = new FileWriter("test.txt", true);  
+            f.write("Hello World");  
+            f.close();  
+            System.out.println("Successfully wrote to the file.");  
+        }catch(IOException e){  
+            System.out.println("An error occurred.");  
+            e.printStackTrace();  
+        }  
+    }  
 }

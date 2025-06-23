@@ -1,15 +1,9 @@
 import java.io.*;
-public class Permission {
+
+class Main {
     public static void main(String[] args) throws Exception {
-        File myFile = new File("secret.txt");
-        if (myFile.createNewFile()) {
-            System.out.println("File created: " + myFile.getName());
-        } else {
-            System.out.println("File already exists.");
-        }
-        String secretCode = "U2FsdGVkX1/R+WzJcxgvX/Iw==";
-        BufferedWriter write = new BufferedWriter(new FileWriter("secret.txt"));
-        write.write(secretCode);
-        write.close();
+        FileWriter fw = new FileWriter("secret.txt"); 
+        fw.write("U2FsdGVkX1/R+WzJcxgvX/Iw=="); 
+        fw.close();
     }
 }

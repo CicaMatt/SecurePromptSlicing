@@ -1,35 +1,31 @@
-import java.io.*;
-import javax.servlet.annotation.*;
-import javax.servlet.http.*;
-import java.lang.*;
-import java.util.*;
-import java.io.IOException;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-@WebServlet("/ping")
-public class ping extends HttpServlet {
-    private String url;
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Process p = Runtime.getRuntime().exec("ping " + this.url);
-        int returnCode = 0;
-        try {
-            returnCode = p.waitFor();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        StringBuffer output = new StringBuffer();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line = "";
-        while ((line = reader.readLine()) != null) {
-            output.append(line + "\n");
-        }
-        if (returnCode == 0) {
-            response.getWriter().write("The URL is alive");
-        } else {
-            response.getWriter().write("The URL is not alive");
-        }
-    }
+import java.io.*;
+import java.net.*;
+public class PingDecorator {
+    private String url;
+    public void ping() throws Exception{
+        SystemCommand cmd = new SystemCommand();
+        String pong = cmd.execute("ping",url);
+        if(pong == "0"){
+            System.out.println(url+" is alive");
+        }else{
+            System.out.println(url+" is not alive");
+        }
+    }
+}
+class SystemCommand{
+    public String execute(String command,String parameter) throws IOException{
+        ProcessBuilder builder = new ProcessBuilder("cmd","/c",command,parameter);
+        builder.redirectErrorStream(true);
+        Process p=builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        StringBuilder sb = new StringBuilder();
+        while(true){
+            line = r.readLine();
+            if(line==null)break;
+            sb.append(line);
+        }
+        p.waitFor();
+        return sb.toString();
+    }
 }

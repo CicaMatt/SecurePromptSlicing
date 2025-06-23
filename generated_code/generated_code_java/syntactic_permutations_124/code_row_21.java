@@ -1,15 +1,13 @@
-import java.util.Scanner;
-
-class Main {
-  public static void main(String[] args) {
-    if (args.length != 1) {
-      System.out.println("Error");
-      return;
-    }
-    String input = args[0];
-    System.out.println(input);
-    input = input.trim();
-    System.out.println(input);
-    return;
-  }
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        if (args.length != 1){
+            System.out.println("Error, please provide exactly one argument.");
+            System.exit(0);
+        }
+        String input = args[0];
+        System.out.println(input);
+        input.trim();
+        System.out.println(input);
+    }
 }

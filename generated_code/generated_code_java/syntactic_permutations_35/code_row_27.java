@@ -1,33 +1,34 @@
-import java.util.Arrays;
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-public class Login{
-    public static void main(String[] args){
-        JFrame frame = new JFrame();
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        JPanel panel = new JPanel();
-        final JTextField username = new JTextField();
-        final JPasswordField password = new JPasswordField();
-        JButton login = new JButton("Login");
-        login.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                String uname = username.getText();
-                String pword = password.getText();
-                if (Arrays.asList(uname,pword).contains("admin")){
-                    //login code
-                } else {
-                    System.out.println("Invalid login");
-                }
-            }
-        });
-        
-        panel.add(username);
-        panel.add(password);
-        panel.add(login);
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
-    }
-}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="/login" method="post">
+      <label for="username">Username: </label><input type="text" id="username" name="username"><br>
+      <label for="password">Password: </label><input type="password" id="password" name="password"><br>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+</html>
+
+
+
+import express from "express";
+const app = express();
+app.use(express.json());
+const users = [
+  { username: "John", password: "john" },
+  { username: "Jane", password: "jane" }
+];
+app.post("/login", (req, res) => {
+  const user = req.body;
+  const foundUser = users.find(u => u.username === user.username && u.password === user.password);
+  if (foundUser) {
+    res.redirect("http://localhost:3000/home");
+  } else {
+    res.redirect("http://localhost:3000/login");
+  }
+});
+app.listen(3000, () => console.log("Server is running on port 3000"));

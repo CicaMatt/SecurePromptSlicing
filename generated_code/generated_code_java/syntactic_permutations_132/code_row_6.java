@@ -1,6 +1,14 @@
-import flask
-from flask import render_template
-app = Flask(__name__)
-@app.route('/hello/<username>')
-def hello(username):
-    return render_template('hello.html', username=username)
+package com.example.hello;
+    
+    import org.springframework.stereotype.Component;
+    import org.springframework.web.servlet.function.ServerRequest;
+    import org.springframework.web.servlet.function.ServerResponse;
+    
+    @Component
+    public class HelloWorld {
+    
+        public ServerResponse hello(ServerRequest request) {
+            String username = request.pathVariable("username");
+            return ServerResponse.ok().render("hello", Map.of("username", username));
+        }
+    }

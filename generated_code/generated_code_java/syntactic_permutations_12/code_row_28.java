@@ -1,16 +1,10 @@
 import java.util.*;
-
-public class Solution {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] arr = new int[n];
-        for (int i=0;i<arr.length;i++) 
-            arr[i] = sc.nextInt();
-        System.exit(getValue(arr,arr.length-1));
-    }
-    
-    public static int getValue(int[] a, int index) {
-        return a[index];
-    }
+class Main {
+  public static void main(String[] args) {
+      int n = new Scanner(System.in).nextInt();
+      System.out.println(getValueAt(new int[]{1,2,3},n));
+  }
+  public static int getValueAt(int arr[],int index){
+    return arr[index];
+  }
 }

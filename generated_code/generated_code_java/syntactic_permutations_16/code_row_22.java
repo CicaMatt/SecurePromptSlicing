@@ -1,17 +1,17 @@
 import java.util.*;
 
-    public class Main {
-        static Scanner scan = new Scanner(System.in);
-        int[] numbers = new int[]{1,2,3,4,5};
-        
+    public class Solution {
+
+        static Scanner sc = new Scanner(System.in);
+
         public static void main(String[] args) {
-            System.out.println("Enter a number: ");
-            int input = scan.nextInt();
-            
-            if (input <= 0 || input > 5){
-                System.out.println("Not within the range of the array");
-            } else{
-                System.out.println(numbers[input -1]);
-            }
+
+            String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+            System.out.print("Enter a number between 0 and 6: ");
+
+            int index = sc.nextInt();
+
+            System.out.println(daysOfWeek[index]);
         }
     }

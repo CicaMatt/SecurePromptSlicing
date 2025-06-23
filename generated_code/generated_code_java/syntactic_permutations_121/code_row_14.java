@@ -1,17 +1,30 @@
-public class Memory {
-    public static void main(String[] args) {
-        byte[] first = new byte[1];
-        byte[] second = new byte[first.length];
-        System.arraycopy(first, 0, second, 0, second.length);
-        for (int i = 0; i < second.length; i++) {
-            System.out.println(second[i]);
-        }
-        first = null;
-        System.gc();
-        for (int i = 0; i < second.length; i++) {
-            System.out.println(second[i]);
-        }
-        second = null;
-        System.gc();
-    }
+import java.util.*;
+ 
+public class Allocation {
+    public static void main(String[] args) {
+        //allocate
+        int[] a = new int[10];
+        int[] b = new int[10];
+        for (int i=0;i<10;i++) {
+            a[i] = i;
+        }
+        //copy
+        for(int i=0;i<10;i++) {
+            b[i]=a[i];
+        }
+        //print
+        System.out.println("After copy: ");
+        for (int i=0;i<10;i++){
+            System.out.println(b[i]);
+        }
+        //free memory allocated to a
+        System.gc();
+        //print
+        System.out.println("After freeing first chunk: ");
+        for (int i=0;i<10;i++){
+            System.out.println(b[i]);
+        }
+        //free memory allocated to b
+        System.gc();
+    }
 }

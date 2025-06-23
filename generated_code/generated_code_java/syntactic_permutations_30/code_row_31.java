@@ -1,16 +1,15 @@
-import java.util.regex.*;
-import spark.Spark;
-public class Redirection {
-    public static void main(String[] args){
-        Spark.get("/:target",(req,res)->{
-            String target = req.queryParams("target");
-            Pattern p = Pattern.compile("^[\\w-]+\\.");
-            Matcher m = p.matcher(target);
-            if (m.find()) {
-                res.redirect(target);
-            } else {
-                res.body("Bad target: " + target);
-            }
-        });
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Redirect {
+    public static void main(String[] args) {
+        String target = "https://www.example.com";
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9\\-]+\\.[a-z]{2,}$");
+        Matcher matcher = pattern.matcher(target);
+        if (matcher.matches()) {
+            System.out.println("Redirecting to " + target);
+        } else {
+            System.out.println("Invalid target: " + target);
+        }
     }
 }

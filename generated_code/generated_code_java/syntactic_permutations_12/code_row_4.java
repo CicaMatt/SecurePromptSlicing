@@ -1,13 +1,12 @@
 import java.util.*;
-public class Main {
+class getValueFromArray {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int index = sc.nextInt();
-        System.exit(getValueFromArray(n, index));
+        System.out.println(getValueFromArray(n));
     }
-
-    private static int getValueFromArray(int n, int index) {
-        return new int[] {0, 1, 2, 3, 4}.clone()[index];
+    
+    public static int getValueFromArray(int index, int arr[]){
+        return arr[index];
     }
 }

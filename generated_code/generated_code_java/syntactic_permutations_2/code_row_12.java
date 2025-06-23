@@ -1,9 +1,13 @@
-import java.io.*;
-    public class Main {
-        public static void main(String[] args) {
-            String message = "Hello World";
-            byte[] buffer = new byte[message.length()];
-            System.arraycopy(message, 0, buffer, 0, message.length());
-            System.out.println(new String(buffer));
-        }
+void copyMessage(int numberOfBytes, int[] destination, int[] source){
+    for (int i = 0; i < numberOfBytes; i++) {
+        destination[i] = source[i];
     }
+}
+
+// test code to show it works
+public static void main(String[] args) {
+    int[] destination = new int[5];
+    int[] source = new int[]{1, 2, 3, 4, 5};
+    copyMessage(5, destination, source);
+    System.out.println("destination: " + Arrays.toString(destination));
+}

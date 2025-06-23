@@ -1,17 +1,14 @@
-import java.util.regex.*;
-    import spark.Spark;
-
-    public class Redirect {
-        static Pattern p = Pattern.compile(".*example\\.com.*");
-        
+public class WebApp {
+        private static final String TARGET = "https://example.com";
+    
         public static void main(String[] args) {
-            Spark.get("/", (req, res) -> {
-                String target = req.queryParams("target");
-                
-                if(p.matcher(target).find())
-                    return "Redirecting to "+target;
-                else
-                    return "Redirecting to /";
+            RoutingDsl routingDsl = new RoutingDsl();
+            routingDsl.match(Matchers.get("/redirect?target={value}")).extract("value", Matchers.segment(), (request, response, value) -> {
+                if (!value.matches(TARGET)) {
+                    response.redirect(HttpUrl.parse(TARGET));
+                } else {
+                    response.redirect(HttpUrl.parse(value));
+                }
             });
         }
     }

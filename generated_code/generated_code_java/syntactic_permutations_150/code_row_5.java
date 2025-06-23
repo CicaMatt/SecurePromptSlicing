@@ -1,5 +1,7 @@
-<form method="POST" action="/">
-        Enter your message here: 
-        <input name="message" type="text"></input>
-        <input type="submit" value="Submit"></input>
-    </form>
+@app.route("/post", methods = ['GET', 'POST'])
+def post():
+    if request.method == "POST":
+        username = request.form["username"]
+        message = request.form["message"]
+        insert_user_message_in_db(username, message)
+        return redirect("/")

@@ -1,17 +1,20 @@
-import java.io.File;
-import java.io.FileWriter;
-
-public class SecretInfo {
-    public static void main(String[] args) throws Exception {
-        // create a file
-        File secretFile = new File("super_secret.txt");
-        // write the super secret info to it
-        FileWriter writer = new FileWriter(secretFile);
-        writer.write("I like to eat pizza!");
-        writer.close();
-        // change the permissions of the file to read-only for the owner
-        secretFile.setReadOnly();
-        // print the name of the file to the screen
-        System.out.println(secretFile.getName());
+import java.io.*;
+public class WriteReadOnlyFile {
+  public static void main(String[] args) throws IOException {
+    File file = new File("secretInfo.txt");
+    if (file.createNewFile()){
+      System.out.println("File created: " + file.getName());
+      BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+      writer.write("Super secret information goes here.");
+      writer.close();
+      boolean success = file.setReadOnly();
+      if (success){
+        System.out.println("File permissions updated to read-only for the owner.");
+      } else {
+        System.out.println("Error: File permissions could not be changed to read-only for the owner.");
+      }
+    } else {
+      System.out.println("Error: File already exists.");
     }
+  }
 }

@@ -1,8 +1,8 @@
 import java.io.*;
+import java.util.*;
 
-public class App {
-    
-    public static String render_response_from_env(Environment env) {
-        return "Hello world!";
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
     }
 }

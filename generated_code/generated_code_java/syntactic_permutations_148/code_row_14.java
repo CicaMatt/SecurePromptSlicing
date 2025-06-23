@@ -1,28 +1,22 @@
-package com.example;
-import spark.*;
+import java.sql.*;
+import java.util.ArrayList;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 import static spark.Spark.*;
-import java.util.*;
+
 public class App {
-    private static final String URL = "/post";
-    
     public static void main(String[] args) {
-        port(Integer.valueOf(System.getenv("PORT")));
         staticFileLocation("/public");
-        get("/", (request, response) -> "Hello World!");
+        get("/", (req, res) -> {
+            ArrayList<Message> messages = MessageDAO.getMessages();
+            return new ModelAndView(messages, "index.hbs");
+        }, new HandlebarsTemplateEngine());
         
-        post(URL, new Route() {
-            @Override
-            public Object handle(Request request, Response response) throws Exception {
-                String name = request.queryParams("name");
-                String message = request.queryParams("message");
-                insert_user_message_in_db(name, message);
-                response.redirect("/");
-                return null;
-            }
+        post("/message/new", (req, res) -> {
+            String name = req.queryParams("name");
+            String message = req.queryParams("message");
+            MessageDAO.insertUserMessageInDB(name,message);
+            return "OK";
         });
-    }
-    
-    public static void insert_user_message_in_db(String name, String message) {
-        System.out.println("inserting into db");
     }
 }

@@ -1,7 +1,6 @@
-import java.util.*;
-public class TrimString {
-    public static void main(String[] args) {
-        String trimmed = args[0].trim();
-        System.out.println(trimmed);
-    }
+import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(args[0].trim());
+    }
 }

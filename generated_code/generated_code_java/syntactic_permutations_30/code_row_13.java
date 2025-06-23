@@ -1,14 +1,16 @@
 import java.util.regex.*;
-
-public class RegexRedirection {
-    public static void main(String[] args) {
-        String target = "https://www.example.com";
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9-]+$");
-        Matcher matcher = pattern.matcher(target);
-        if (matcher.matches()) {
-            System.out.println("Redirecting to " + target);
+public class Test {
+    public static void main(String args[]){
+        String regex = "[a-zA-Z0-9-]+";
+        Pattern p = Pattern.compile(regex);
+        String target = "http://example.com";
+        Matcher m = p.matcher(target);
+        if (m.find()) {
+            // do something here, maybe redirect the user to the target?
+            System.out.println("Successful match");
         } else {
-            System.out.println("Redirecting to root of site.");
+            // no match, redirect to root of site
+            System.out.println("Unsuccessful match");
         }
     }
 }

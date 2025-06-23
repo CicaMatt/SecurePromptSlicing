@@ -1,46 +1,51 @@
 import java.io.*;
-import java.util.Scanner;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.*;
 
 public class Login {
-    private static Connection connection = null;
-    
-    public static void main(String[] args) {
-        try{
-            String userName, passWord;
-            
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter username: ");
-            userName = scanner.nextLine();
-            System.out.println("Enter password: ");
-            passWord = scanner.nextLine();
-            
-            login(userName, passWord);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void login(String userName, String passWord) throws Exception{
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "password");
-            
-            Statement statement = connection.createStatement();
-            String query = "SELECT * FROM login WHERE username='" + userName + "' AND password='" + passWord + "'";
-            ResultSet rs = statement.executeQuery(query);
-            if (rs.next()) {
-                System.out.println("Redirecting to home page");
-                connection.close();
-            } else {
-                System.out.println("Incorrect username or password");
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	static Scanner sc = new Scanner(System.in);
+
+	private static void login() {
+		String username = getUsername();
+		String password = getPassword();
+		if (usernameExists(username)) {
+			if (isCorrectPassword(username, password)) {
+				redirectToHomePage();
+			} else {
+				return;
+			}
+		} else {
+			System.out.println("Invalid username");
+		}
+	}
+
+	private static String getUsername() {
+		System.out.print("Enter your username: ");
+		String username = sc.nextLine();
+		return username;
+	}
+
+	private static String getPassword() {
+		System.out.print("Enter your password: ");
+		String password = sc.nextLine();
+		return password;
+	}
+
+	private static boolean usernameExists(String username) {
+		// Query the database to check if the username exists
+		return true;
+	}
+
+	private static boolean isCorrectPassword(String username, String password) {
+		// Query the database to check if the password is correct
+		return true;
+	}
+
+	private static void redirectToHomePage() {
+		System.out.println("Redirecting...");
+	}
+
+	public static void main(String[] args) {
+		login();
+	}
+
 }

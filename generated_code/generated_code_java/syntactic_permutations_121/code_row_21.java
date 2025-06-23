@@ -1,20 +1,25 @@
-import java.util.*;
-class Code{
-    public static void main(String[] args){
-        int[] chunkOne = new int[3];
-        int[] chunkTwo = new int[3];
-        for(int i=0;i<chunkOne.length;i++){
-            System.out.println(chunkOne[i]);
-        }
-        free(chunkOne);
-        for(int i=0;i<chunkTwo.length;i++){
-            System.out.println(chunkTwo[i]);
-        }
-        free(chunkTwo);
-    }
-    public static void free(Object obj){
-        if(obj instanceof int[]){
-            Arrays.fill((int[]) obj,0);
-        }
-    }
+import java.util.*;
+
+class Test{
+	public static void main(String[] args) {
+		// allocate two chunks of memory
+        int a = 10;
+        int b = 20;
+        int c = a + b;
+        
+        // copy the contents of the first chunk into then print the contents of
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+
+        // free the memory allocated to the first chunk
+        a = 0;
+        b = 0;
+        c = 0;
+        
+        // print the contents of then free the memory allocated to the second chunk
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+	}
 }

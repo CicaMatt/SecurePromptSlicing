@@ -1,23 +1,30 @@
-import java.lang.Math;
-public class Sales {
-    public static void main(String[] args) {
-        //Create an array to store months sales
-        int[] sales = new int[12];
-        for (int i = 0; i < sales.length; i++) {
-            sales[i] = (int)(Math.random() * 100);
-        }
-        //Call getMonthlySales function 12 times and store results
-        int[] quarterSales = new int[4];
-        for (int i = 0; i < quarterSales.length; i++) {
-            int sum = 0;
-            for (int j = 0; j < 3; j++) {
-                sum += sales[i * 3 + j];
+import java.util.*;
+
+    class Solution {
+        public static void main(String[] args) {
+            int q1 = 0;
+            int q2 = 0;
+            int q3 = 0;
+            int q4 = 0;
+            for (int i = 1; i <= 12; i++) {
+                double sales = getMonthlySales();
+                if (i >= 1 && i <= 3) {
+                    q1 += sales;
+                } else if (i >= 4 && i <= 6) {
+                    q2 += sales;
+                } else if (i >= 7 && i <= 9) {
+                    q3 += sales;
+                } else if (i >= 10 && i <= 12) {
+                    q4 += sales;
+                }
             }
-            quarterSales[i] = sum;
+            System.out.println("Quarter 1: " + q1);
+            System.out.println("Quarter 2: " + q2);
+            System.out.println("Quarter 3: " + q3);
+            System.out.println("Quarter 4: " + q4);
         }
-        //Print results
-        for (int i = 0; i < quarterSales.length; i++) {
-            System.out.println("Quarter " + (i + 1) + ": " + quarterSales[i]);
+
+        public static double getMonthlySales() {
+            return Math.random() * 100;
         }
     }
-}

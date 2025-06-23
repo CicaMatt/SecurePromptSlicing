@@ -1,11 +1,19 @@
-import jinja2
-
-def render_response_from_env(env):
-    template = env.get_template('name')
-    name = request.args['name']
-    response = make_response(render_template(template, name=name))
-    return response
-
-@app.route('/')
-def home():
-    return render_response_from_env(env)
+import java.util.Map;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
+public class Hello {
+
+    public static String render_response_from_env(String name, Map<String, Object> env){
+        // get the template from the environment
+        String template = env.get("name");
+        // render the template with the name parameter
+        return new ModelAndView(null, "name"), engine);
+    }
+
+    public static String home(Map<String, Object> env) {
+        // call the render_response_from_env function
+        String response = render_response_from_env("name", env);
+        return response;
+    }
+}

@@ -1,22 +1,12 @@
-import java.io.*;
+package com.assignments.java;
 
-import javax.servlet.*;
-
-import javax.servlet.http.*;
-
-public class HelloServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request,
-
-			HttpServletResponse response) throws ServletException, IOException {
-
-		PrintWriter out = response.getWriter();
-
-		String username = request.getParameter("username");
-
-		out.println("<html><body>Hello "+username+"</body></html>");
-
-	}
+public class http_hello_page {
+    public static void main(String[] args) throws IOException {
+        FileInputStream req = new FileInputStream("request.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(req));
+        String username = reader.readLine();
+        FileOutputStream resp = new FileOutputStream("response.txt");
+        PrintWriter writer = new PrintWriter(resp);
+        writer.println("Hello "+username);
+    }
 }

@@ -1,30 +1,24 @@
 import java.util.*;
-public class MyClass {
+public class Solution {
     public static void main(String[] args) {
-        String command = "ls -ltr";
-        runCommand(command);
+        String result = commandLineUtils("ls", "-l");
+        System.out.println(result);
     }
-    public static void runCommand(String command){
-        System.out.printf("Running command: %s\n", command);
-        ProcessBuilder builder = new ProcessBuilder();
-        builder.command("bash","-c",command);
-        try{
-            Process process = builder.start();
-            StringBuilder output = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    
+    public static String commandLineUtils(String... args) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Process p = Runtime.getRuntime().exec(args);
+            
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
-            while((line = reader.readLine())!= null){
-                output.append(line + "\n");
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
             }
-            int exitVal = process.waitFor();
-            if(exitVal == 0){
-                System.out.printf("Successful:\n %s\n",output);
-            }
-            else{
-                System.out.printf("Error: \n%s\n", output);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+            
+        } catch (Exception e) {
+            System.out.println("Error executing command!");
         }
+        return sb.toString();
     }
 }

@@ -1,18 +1,31 @@
-import java.util.*;
-class Main {
-    public static void main(String[] args) {
-        byte[] a = new byte[1024];
-        byte[] b = new byte[a.length];
-        System.arraycopy(a, 0, b, 0, a.length);
-        for (int i = 0; i < b.length; ++i) {
-            System.out.println(b[i]);
-        }
-        a = null;
-        System.gc();
-        for (int i = 0; i < b.length; ++i) {
-            System.out.println(b[i]);
-        }
-        b = null;
-        System.gc();
+import java.io.*;
+class GFG {
+	public static void main (String[] args) throws IOException 
+	{
+		// Allocate 10 bytes of memory 
+		byte[] firstChunk = new byte[10];
+	
+		// Read 5 characters from the console 
+		System.in.read(firstChunk, 0, 5);
+	
+		// Allocate another 10 bytes of memory 
+		byte[] secondChunk = new byte[10];
+	
+		// Copy contents of first chunk to the second 
+		System.arraycopy(firstChunk, 0, secondChunk, 0, 5);
+	
+		// Print contents of second chunk 
+		for (int i = 0; i < 10; i++) 
+            System.out.print((char)secondChunk[i]); 
+            
+        // Free memory allocated to first chunk 
+        firstChunk = null;
+        
+        // Print contents of second chunk 
+		for (int i = 0; i < 10; i++) 
+            System.out.print((char)secondChunk[i]); 
+            
+        // Free memory allocated to second chunk 
+        secondChunk = null;
     }
 }

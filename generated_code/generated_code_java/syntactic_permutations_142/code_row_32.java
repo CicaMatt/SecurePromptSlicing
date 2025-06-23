@@ -1,14 +1,17 @@
-import java.sql.*;
-public class unsubscribe {
-    public static void unsubscribe(String email) throws SQLException {
-        String query = "DELETE FROM subscribers WHERE email='" + email + "'";
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/newsletter", "user", "password");
-        Statement stmt = conn.createStatement();
-        int result = stmt.executeUpdate(query);
-        if (result == 0) {
-            System.out.println("Email address not found in database.");
-        } else {
-            System.out.println("You have been unsubscribed from the newsletter.");
-        }
-    }
+import java.sql.*; // Import SQL libraries
+public class Unsubscribe {
+    public static void unsubscribe(String email) throws Exception {
+        String dbUrl = "jdbc:mysql://localhost/unsubscribes"; // Connect to database URL
+        String user = "user"; 
+        String pass = "pass"; 
+        Connection con = DriverManager.getConnection(dbUrl, user, pass);
+        PreparedStatement ps = con.preparedStatement("DELETE FROM unsubscribe WHERE email = ?");
+        ps.setString(1, email);
+        int result = ps.executeUpdate();
+        if (result > 0) {
+            System.out.println("You have been successfully removed.");
+        } else {
+            System.out.println("Invalid email address.");
+        }
+    }
 }

@@ -1,26 +1,24 @@
-import java.io.*;
-class SystemCommand {
-    public static void main(String[] args) throws IOException {
-        String output = executeSystemCommand("ls");
-        System.out.println(output);
-    }
-
-    private static String executeSystemCommand(String command) throws IOException {
-        Process process = Runtime.getRuntime().exec(command);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String output = "";
-        String line;
-        while ((line = reader.readLine()) != null) {
-            output += (output.isEmpty() ? "" : "\n") + line;
+public class LsUtility {
+        private static final String FORMAT_STRING = "ls %s";
+    
+        public static void main(String[] args) throws IOException, InterruptedException {
+            executeLsCommand(".");
         }
-        process.waitFor();
-        return output;
+    
+        private static void executeLsCommand(String dirPath) throws IOException, InterruptedException {
+            String[] command = new String[]{ "ls", dirPath };
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+    
+            try (InputStream inputStream = process.getInputStream()) {
+                ByteArrayOutputStream result = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) != -1) {
+                    result.write(buffer, 0, length);
+                }
+    
+                System.out.println("Result: " + result.toString());
+            }
+        }
     }
-}
-
-### Explanation:
-- The `import java.io.*;` statement at the beginning of the code imports classes from the Java IO library, which provides access to input and output streams for reading and writing data from external sources like files or the console.
-- The `class SystemCommand` is defined with a `main` method that calls the `executeSystemCommand()` method with an argument of "ls". 
-- The `executeSystemCommand()` method uses `Runtime.getRuntime().exec(command)` to execute the command, which returns a `Process` object representing the process executing the command.
-- The code then creates a `BufferedReader` object from an `InputStreamReader` that wraps the input stream of the process and reads the output line by line, adding each line to the output string using a `while` loop.
-- After the while loop, the method waits for the command to finish using `process.waitFor()`.

@@ -1,9 +1,8 @@
-import java.util.Scanner;
-public class HelloWorld {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number");
-        int n = sc.nextInt();
-        System.out.println("The value is " + n);
+import java.io.*;
+public class CommandLine {
+    public static void main(String[] args) throws Exception {
+        int x = Integer.parseInt(args[0]);
+        System.out.println(x);
+        return;
     }
 }

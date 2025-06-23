@@ -1,22 +1,23 @@
-package com.revature;
 import java.io.*;
-public class Main{
-    public static void main(String[] args) throws IOException {
-        FileInputStream request = new FileInputStream("request.txt");
-        FileOutputStream response = new FileOutputStream("response.txt");
-        String username = readUsernameFromRequestFile(request);
-        writeGreetingToResponseFile(username, response);
+public class HelloWorld {
+    public static void http_hello_page(InputStream request, OutputStream response) throws IOException {
+        String username = readUsernameFromRequest(request);
+        writeResponseToFileStream(response, "Hello " + username);
     }
-    private static void writeGreetingToResponseFile(String username, FileOutputStream outputStream) throws IOException{
-        PrintWriter writer = new PrintWriter(outputStream);
-        String greeting = "Hello " + username;
-        writer.println(greeting);
-        writer.close();
+    
+    private static String readUsernameFromRequest(InputStream request) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        int c;
+        while ((c = request.read()) != -1) 
+            builder.append((char) c);
+        String requestString = builder.toString();
+        String[] tokens = requestString.split(" ");
+        return tokens[2];
     }
-    private static String readUsernameFromRequestFile(FileInputStream inputStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String username = reader.readLine();
-        reader.close();
-        return username;
+    
+    private static void writeResponseToFileStream(OutputStream response, String content) throws IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(response);
+        writer.write(content);
+        writer.flush();
     }
 }

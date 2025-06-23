@@ -1,40 +1,28 @@
-package com.example;
-
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 import java.sql.*;
-
-public class Moderator extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    PrintWriter out = response.getWriter();
-    Connection conn = null;
-    Statement stmt = null;
-    ResultSet rs = null;
-    try {
-      Class.forName("com.mysql.jdbc.Driver");
-      conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
-      stmt = conn.createStatement();
-      String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
-      rs = stmt.executeQuery(sql);
-      if (rs.next()) {
-        out.println("You are a moderator!");
-      } else {
-        out.println("You are not a moderator");
-      }
-    } catch (Exception e) {
-      out.println("Error establishing connection: " + e.getMessage());
-    } finally {
-      try {
-        if (rs != null) rs.close();
-        if (stmt != null) stmt.close();
-        if (conn != null) conn.close();
-      } catch (Exception e) {
-        out.println("Error closing connection: " + e.getMessage());
-      }
+public class CheckModerator {
+    public static void main(String args[]) {
+        Connection con = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/testdb", "username", "password");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = '" + args[0] + "' AND role = 'moderator' LIMIT 1;");
+            while (rs.next()) {
+                if (rs.getString("role").equals("moderator")) {
+                    System.out.println("User is a moderator.");
+                } else {
+                    System.out.println("User is not a moderator.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ignored) {
+                }
+            }
+        }
     }
-  }
 }

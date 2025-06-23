@@ -1,24 +1,18 @@
-import java.net.*;
-import javax.servlet.http.*;
 import java.io.*;
+import java.net.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-public class RedirectInvalidUrl extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String url = request.getParameter("url");
-        if (isValidUrl(url)){
-            response.sendRedirect(url);
+@WebServlet("/")
+public class Main extends HttpServlet {
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        String url = req.getParameter("url");
+        if (isValidUrl(url)) {
+            res.sendRedirect(url);
         } else {
-            PrintWriter out = response.getWriter();
-            out.println("<h1>Invalid URL</h1>");
-        }
-    }
-    
-    private boolean isValidUrl(String url){
-        try{
-            new URL(url).toURI();
-            return true;
-        } catch (Exception e) {
-            return false;
+            res.setStatus(400);
+            PrintWriter out = res.getWriter();
+            out.println("Invalid URL");
         }
     }
 }

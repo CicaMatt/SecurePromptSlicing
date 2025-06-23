@@ -1,34 +1,22 @@
-import java.sql.*;
-import javax.sql.DataSource;
-import org.postgresql.ds.PGPoolingDataSource;
-
-public class DatabaseConn {
-    // Define a function to return the server name
-    public String getServerName() {
-        return "localhost";
-    }
-    
-    // Define a function to return the database name
-    public String getDatabaseName() {
-        return "database_name";
-    }
-    
-    // Define a function to return the user name
-    public String getUser() {
-        return "username";
-    }
-    
-    // Define a function to return the password
-    public String getPassword() {
-        return "password";
-    }
-    
-    // Define a function to return a database connection
-    public Connection getConnection() throws SQLException {
-        String url = "jdbc:postgresql://" + getServerName() + "/" + getDatabaseName();
-        PGPoolingDataSource source = new PGPoolingDataSource();
-        source.setUser(getUser());
-        source.setPassword(getPassword());
-        return source.getConnection();
-    }
-}
+flask
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+db = SQLAlchemy(app)
+
+def get_database_connection():
+    return db.session()
+
+def get_server_name():
+    return os.environ['SERVER_NAME']
+
+def get_database_name():
+    return os.environ['DATABASE_NAME']
+
+def get_database_user():
+    return os.environ['DB_USER']
+
+def get_database_password():
+    return os.environ['DB_PASSWORD']

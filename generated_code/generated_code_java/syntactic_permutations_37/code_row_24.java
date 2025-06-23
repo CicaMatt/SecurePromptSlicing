@@ -1,34 +1,22 @@
 import java.io.*;
-import java.util.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.sql.*;
-
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        
+public class Login extends HttpServlet{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        PrintWriter out = response.getWriter();
-        
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "password");
-             PreparedStatement statement = conn.prepareStatement(
-                    "SELECT * FROM users WHERE username=? AND password=?")) {
-            statement.setString(1, username);
-            statement.setString(2, password);
-            
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                response.sendRedirect("success");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("url", "username", "password");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(“SELECT * FROM users WHERE username = ‘" + username + “‘ AND password = ‘" + password + “‘”);
+            if (rs.next()) {
+                response.sendRedirect("success.html");
             } else {
-                response.sendRedirect("cant_login");
+                response.sendRedirect("cant_login.html");
             }
-        } catch (SQLException e) {
-            out.println("Internal server error.");
-            out.println(e);
+        } catch (Exception e) {
+            response.sendRedirect("internal_server_error.html");
         }
     }
 }

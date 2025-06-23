@@ -1,33 +1,20 @@
-import java.net.URI;
+import java.io.*;
+import java.net.*;
 import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import org.apache.commons.lang3.StringUtils;
-import org.owasp.encoder.Encode;
-
-public class RedirectServlet extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String target = request.getParameter("target");
-        if (StringUtils.isEmpty(target)) {
-            response.sendRedirect("/");
-            return;
-        }
-        URI uri;
-        try {
-            uri = new URI(Encode.forUriComponent(target));
-        } catch (URISyntaxException e) {
-            response.sendRedirect("/");
-            return;
-        }
-        if (!uri.isAbsolute()) {
-            response.sendRedirect("/");
-            return;
-        }
-        String path = uri.getPath();
-        if (path == null || !path.matches("^/[\\w-]+(?:\\.[\\w-]+)*$")) {
-            response.sendRedirect("/");
-            return;
-        }
-        response.sendRedirect(target);
+import java.util.regex.*;
+public class Main {
+  public static void main(String[] args) throws Exception {
+    String target = "http://example.com";
+    String referer = request.getQueryParameter("target");
+    Pattern pattern = Pattern.compile("^[\\w-]+\\.[A-Za-z0-9.-]+$");
+    Matcher matcher = pattern.matcher(referer);
+    if (matcher.matches()) {
+      response.sendRedirect(target);
+    } else {
+      response.sendRedirect("/");
     }
+  }
 }
+
+### Explanation:
+We import the necessary classes from java.io, java.net, java.util, and java.util.regex packages. We define the target variable as a string that stores the value of the target query parameter and the referer variable as a string that stores the value of the referer header. The pattern object is created using the Pattern class's compile method by passing a regular expression string that matches one or more alphanumeric characters or hyphens followed by a period. We create a matcher object using the pattern object's matcher method and pass the value of the referer variable as an argument. If the matcher object's matches method returns true, we redirect the user to the target url using the response object's sendRedirect method. Otherwise, we redirect the user to the root of the site.

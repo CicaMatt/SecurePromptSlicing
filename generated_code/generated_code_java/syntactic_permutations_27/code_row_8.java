@@ -1,11 +1,11 @@
-package com.mycompany.app;
-
-import java.util.*;
-
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println("Hello World!");
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        if(num%2==0)
+            System.out.println("Even");
+        else
+            System.out.println("Odd");
     }
 }

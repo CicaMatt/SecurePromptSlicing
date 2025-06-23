@@ -1,11 +1,12 @@
-import java.io.IOException;
-import javax.servlet.*;
-public class hello_page implements Servlet {
-    public void init(ServletConfig servletConfig) {}
-    public void service(ServletRequest request, ServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        response.getWriter().write("Hello " + username);
-    }
-    public void destroy() {}
+import java.io.*;
+
+public class HelloPage {
+    public static void http_hello_page(Request req, Response res) throws IOException{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
+        String username=reader.readLine();
+        String resp="Hello "+username;
+        OutputStreamWriter out = new OutputStreamWriter(res.getOutputStream());
+        out.write(resp);
+        out.flush();
+    }
 }

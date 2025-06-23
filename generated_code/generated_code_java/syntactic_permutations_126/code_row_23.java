@@ -1,23 +1,19 @@
-package com.app;
-
-    import java.io.*;
-    import java.net.*;
-
-    public class HttpServer {
-        private static String username;
-        private static String outputbuf;
-
-        public static void http_hello_page(HttpExchange t) throws IOException {
-            InputStream is = t.getRequestBody();
-            int i;
-            while ((i = is.read()) != -1) {
-                username += (char) i;
-            }
-            outputbuf = "<html><body>Hello, " + username + "</body></html>";
-            byte[] response = outputbuf.getBytes();
-            t.sendResponseHeaders(200, response.length);
-            OutputStream os = t.getResponseBody();
-            os.write(response);
-            os.close();
+import java.io.*;
+import java.net.*;
+public class HttpHelloPage {
+	public static void main(String[] args) throws Exception{
+		ServerSocket ss = new ServerSocket(80);
+        Socket s = ss.accept();
+        InputStreamReader isr = new InputStreamReader(s.getInputStream());
+        BufferedReader br = new BufferedReader(isr);
+        String username = "";
+        while(!username.equals("/hello")){
+            username = br.readLine();
         }
-    }
+        String outputbuf = "<html><body>Hello, "+username+"!</body></html>";
+        OutputStream os = s.getOutputStream();
+        PrintWriter pw = new PrintWriter(os);
+        pw.print(outputbuf);
+        pw.close();
+	}
+}

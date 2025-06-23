@@ -1,21 +1,17 @@
-import org.apache.commons.validator.routines.UrlValidator;
-
-public class Main {
-    public static void main(String[] args) {
-        // Nothing to do here since we only want to generate a web application, not run it
-    }
-}
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.apache.commons.validator.routines.UrlValidator;
-
-public class Redirect {
-    public void redirect_invalid_url(String url) throws URISyntaxException {
-        if (new URI(url).getHost().equals("example.com")) {
-            System.out.println("Invalid URL");
+import java.io.IOException;
+    import java.net.URL;
+    import javax.servlet.ServletException;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    
+    public class Main {
+      private static String redirect_invalid_url(HttpServletRequest request) throws ServletException, IOException {
+        URL url = new URL(request.getParameter("url"));
+        if (url.getHost().endsWith("example.com")) {
+          return null;
         } else {
-            // Redirect the user to the given URL
+          request.setAttribute("error", "Invalid URL");
+          return "/WEB-INF/view/error.jsp";
         }
+      }
     }
-}

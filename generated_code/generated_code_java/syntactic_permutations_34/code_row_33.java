@@ -1,48 +1,29 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
+import java.util.*;
 
-public class LogPageServlet extends HttpServlet {
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    // Set the content type
-    response.setContentType("text/html");
-    
-    // Get the print writer
-    PrintWriter pw = response.getWriter();
-    
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    if (username == null || password == null) {
-      pw.println("<h2>Invalid user name or password</h2>");
-      RequestDispatcher rd = request.getRequestDispatcher("/login.html");
-      rd.include(request, response);
-    } else {
-      String dbUrl = "jdbc:mysql://localhost/mydb";
-      Connection conn;
-      try {
-        Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection(dbUrl, "root", "password");
-        
-        // Check if the username and password are in the database
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'");
-        
-        if (rs.next()) {
-          // If yes, redirect to dashboard page
-          RequestDispatcher rd = request.getRequestDispatcher("/dashboard.html");
-          rd.forward(request, response);
+// Database class
+class Database {
+	List<String> username;
+	List<String> password;
+}
+
+// Login class
+public class LoginPage {
+	private String username, password;
+
+	public void login(Database db) {
+        // Check if the user exists in the database
+        if (db.username.contains(this.username)) {
+            // Get the index of the user in the database
+            int index = db.username.indexOf(this.username);
+
+            // Check if password matches
+            if (db.password.get(index).equals(this.password)) {
+                System.out.println("Logged in");
+            } else {
+                System.out.println("Invalid credentials");
+            }
         } else {
-          pw.println("<h2>Invalid user name or password</h2>");
-          RequestDispatcher rd = request.getRequestDispatcher("/login.html");
-          rd.include(request, response);
+            System.out.println("User not found");
         }
-        
-      } catch (Exception e) {
-        pw.println("Unable to connect to database.");
-        e.printStackTrace();
-      }
     }
-  }
 }

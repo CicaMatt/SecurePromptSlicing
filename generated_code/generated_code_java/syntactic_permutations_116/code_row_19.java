@@ -1,19 +1,12 @@
 import java.io.*;
-
-public class Main {
-    public static void main(String[] args) {
-        try {
-            String cmd = "ls";
-            String output = "";
-            Process p = Runtime.getRuntime().exec(cmd);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                output += line + "\n";
-            }
-            System.out.println(output);
-        } catch (IOException e) {
-            e.printStackTrace();
+class LsCmd {
+    public static void main(String[] args) throws IOException{
+        String s = "ls -l";
+        Process p = Runtime.getRuntime().exec(s);
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while((line = br.readLine()) != null){
+            System.out.println(line);
         }
     }
 }

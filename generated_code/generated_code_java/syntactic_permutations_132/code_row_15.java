@@ -1,15 +1,12 @@
-import java.util.*;
-class HelloDecorator implements Template {
-  public void render(Map<String, Object> context) {
-    //
-  }
-}
-
-@Decorator(url = "/hello/<username>")
-public class HelloDecorator extends TemplateDecorator {
-  public void render(Map<String, Object> context) {
-    super.render(context);
-    String username = (String) context.get("username");
-    System.out.println("Hello " + username);
-  }
+package decorators;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class HelloServlet extends HttpServlet{
+    public void doGet(HttpServletRequest request,HttpServletResponse response)
+            throws ServletException,IOException{
+        String name=request.getParameter("username");
+        PrintWriter out=response.getWriter();
+        out.println("<h1>Hello "+name+"!</h1>");
+    }
 }

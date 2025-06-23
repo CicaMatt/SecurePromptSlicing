@@ -1,8 +1,7 @@
-import java.util.*;
-public class Memcpy{
-    public void memcpy(int dest, int src, int size){
-        for(int i = 0;i < size;i++){
-            dest[i] = src[i];
-        }
+import java.nio.ByteBuffer;
+public class CopyBytes {
+    public static void copy(byte[] src, byte[] dest, int numOfBytes) {
+        ByteBuffer buff = ByteBuffer.wrap(src);
+        buff.get(dest, 0, numOfBytes);
     }
 }

@@ -1,13 +1,13 @@
-import java.io.*;
-
-public class Offset {
-    private static final int OFFSET_VALUE = 1000;
-
-    public static void main(String[] args) throws Exception {
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter a value: ");
-        int number = Integer.parseInt(bufferRead.readLine());
-        int result = number + OFFSET_VALUE;
-        System.out.println("The result of the number " + number + " is " + result);
+package com.example;
+import java.util.Scanner;
+public class AddOffset {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int offset = 1000;
+        System.out.print("Enter the value to be added: ");
+        int value = sc.nextInt();
+        sc.close();
+        int result = value + offset;
+        System.out.println("Value after adding offset : " + result);
     }
 }

@@ -1,13 +1,21 @@
 import java.util.Scanner;
-public class GetIndex{
+  public class IdIndexer {
+    private static int[] id_sequence = {10, 20, 30, 40};
+    
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter an Index value");
-        int index = sc.nextInt();
-        System.out.println("The value at the " + index+ "th index of id_sequence is: "+getIndexValue(index));
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter an index value: ");
+        int index = scanner.nextInt();
+        
+        if (index >= id_sequence.length) {
+            System.out.println("Invalid index");
+        } else {
+            int id = getIdAtIndex(index);
+            System.out.printf("Value at index %d is %d\n", index, id);
+        }
     }
-    public static int getIndexValue(int index){
-        int[] id_sequence = {2, 4, 6, 8, 10};
+    
+    public static int getIdAtIndex(int index) {
         return id_sequence[index];
     }
 }

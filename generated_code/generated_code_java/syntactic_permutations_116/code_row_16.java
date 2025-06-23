@@ -1,10 +1,9 @@
-import java.util.Scanner;
-
-    public class Main {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter name of file or directory: ");
-            String pathname = sc.nextLine();
-            System.out.println("ls -l " + pathname);
-        }
-    }
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        String command = "ls";
+        System.out.println("Command executed: " + command);
+        System.out.printf("%s", command);
+    }
+}

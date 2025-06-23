@@ -1,14 +1,15 @@
-import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
+import java.util.*;
+    
+    public class ArrayIndex {
+      public static void main(String[] args) {
+        int[] id_sequence = new int[10];
         Scanner sc = new Scanner(System.in);
-        int[] id_sequence = {1, 2, 3, 4};
-        System.out.println("Enter the index value: ");
+        System.out.println("Enter index: ");
         int index = sc.nextInt();
-        if (index > 0 && index < id_sequence.length) {
-            System.out.println(id_sequence[index]);
+        if (index >= 0 && index < id_sequence.length) {
+          System.out.println(id_sequence[index]);
         } else {
-            System.out.println("Invalid index");
+          System.out.println("Invalid input");
         }
+      }
     }
-}

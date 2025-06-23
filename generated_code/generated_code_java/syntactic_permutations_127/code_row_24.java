@@ -1,9 +1,28 @@
-import java.io.IOException;
-import java.nio.file.*;
+package com.app;
+
+import java.io.*;
 
 public class HttpHelloPage {
-  public static void http_hello_page(Path request, Path response) throws IOException {
-    String username = new String(Files.readAllBytes(request));
-    Files.writeString(response, "Hello " + username);
-  }
+    
+    public static void main(String[] args) throws IOException {
+        String input = readRequest();
+        String username = extractUserName(input);
+        writeResponse("Hello, " + username);
+    }
+    
+    private static String readRequest() throws FileNotFoundException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        return reader.readLine();
+    }
+    
+    private static String extractUserName(String input) {
+        String[] parts = input.split(":");
+        return parts[1];
+    }
+    
+    private static void writeResponse(String response) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        writer.write(response);
+        writer.flush();
+    }
 }

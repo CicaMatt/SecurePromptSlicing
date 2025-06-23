@@ -1,21 +1,23 @@
-import java.util.*;
-
-public class Main {
-	public static void main(String[] args) throws Exception{
-		Scanner sc=new Scanner(System.in);
-		String userName =sc.nextLine();
-		sc.close();  
-		executeCommand("cat /etc/passwd | grep "+userName);  
-	}
-
-	public static void executeCommand(String command) throws Exception {
-		Process process=Runtime.getRuntime().exec(command);
-		process.waitFor();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		String line=reader.readLine();
-		while (line != null) {
-		    System.out.println(line); 
-		    line=reader.readLine();  
-		}
-	}
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String userName = sc.next();
+        executeCommand("cat /etc/passwd | grep " + userName);
+    }
+
+    static void executeCommand(String command) {
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+            Scanner sc = new Scanner(p.getInputStream()).useDelimiter("\n");
+            String output = "";
+            while (sc.hasNext()) {
+                output += sc.next();
+            }
+            System.out.println(output);
+        } catch (Exception e) {
+            System.out.println("Error executing command: " + e.getMessage());
+        }
+    }
 }

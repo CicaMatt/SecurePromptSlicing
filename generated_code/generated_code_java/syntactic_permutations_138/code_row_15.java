@@ -1,3 +1,17 @@
-import java.io.*; import javax.servlet.*; import javax.servlet.http.*; public class HelloWorld extends HttpServlet { 
-public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
-PrintWriter out = response.getWriter(); out.println("<html><body>"); out.println("Hello World!"); out.println("</body></html>"); } }
+import java.net.*;
+import java.io.*;
+
+public class WebServer {
+  public static void main(String[] args) throws Exception {
+    HttpServer server = HttpServer.create(new InetSocketAddress(80), 0);
+    server.createContext("/", (HttpExchange t) -> {
+      String response = "Hello, Java!";
+      t.sendResponseHeaders(200, response.length());
+      OutputStream os = t.getResponseBody();
+      os.write(response.getBytes());
+      os.close();
+    });
+    server.setExecutor(null);
+    server.start();
+  }
+}

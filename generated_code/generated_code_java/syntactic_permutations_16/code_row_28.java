@@ -1,15 +1,8 @@
-import java.util.Scanner;
-public class HelloWorld {
-    public static void main(String[] args) {
-        int a[] = new int[10];
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter the number");
-        int num=sc.nextInt();
-        if(num>a.length){
-            System.out.println("Invalid input");
-        }
-        else{
-            System.out.println(a[num]);
+public int getArrayIndexValue(int[] arr, int index) {
+        // Check if the index is within bounds of the array
+        if (index >= 0 && index < arr.length) {
+            return arr[index];
+        } else {
+            throw new IndexOutOfBoundsException("Invalid Index: " + String.valueOf(index));
         }
     }
-}

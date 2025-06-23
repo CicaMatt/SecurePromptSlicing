@@ -1,20 +1,12 @@
 import java.io.*;
-
-public class HelloWorld {
-    public static void main(String[] args) throws Exception{
-        String output = "Hello World";
-        HttpServletRequest request = null;
-        HttpServletResponse response = null;
-        try{
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.println(output);
-        }catch(Exception e){
-            System.out.println(e);
-        }finally{
-            if (response != null) {
-                response.flushBuffer();
-            }
-        }
+public class Http_hello_page {
+    public static void main(String[] args) throws Exception {
+        String username;
+        String outputbuf;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter your name");
+        username = br.readLine();
+        outputbuf = "Hello " + username;
+        System.out.println(outputbuf);
     }
 }

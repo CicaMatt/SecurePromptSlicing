@@ -1,25 +1,30 @@
-package com.company;
-import java.util.*;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        int[] monthlySales = new int[12];
-        int[] quarterlySales= new int[4];
-        for (int i=0;i<monthlySales.length;i++){
-            monthlySales[i]=getMonthlySales();
-        }
-
-        for(int j = 0; j < quarterlySales.length; j++) {
-            int sum = 0;
-            for (int i = j * 3; i < (j + 1) * 3; i++) {
-                sum += monthlySales[i];
-            }
-            quarterlySales[j] = sum;
-        }
-        System.out.println(quarterlySales);
+        Scanner sc = new Scanner(System.in);
+        int jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, qu1, qu2, qu3, qu4;
+        jan = getMonthlySales();
+        feb = getMonthlySales();
+        mar = getMonthlySales();
+        apr = getMonthlySales();
+        may = getMonthlySales();
+        jun = getMonthlySales();
+        jul = getMonthlySales();
+        aug = getMonthlySales();
+        sep = getMonthlySales();
+        oct = getMonthlySales();
+        nov = getMonthlySales();
+        dec = getMonthlySales();
+        qu1 = jan + feb + mar;
+        qu2 = apr + may + jun;
+        qu3 = jul + aug + sep;
+        qu4 = oct + nov + dec;
+        System.out.println(qu1);
+        System.out.println(qu2);
+        System.out.println(qu3);
+        System.out.println(qu4);
     }
-    public static int getMonthlySales(){
-       Random r= new Random();
-       return r.nextInt(0,100000);
-
+    public static int getMonthlySales() {
+        return (int) (Math.random() * 100000);
     }
 }

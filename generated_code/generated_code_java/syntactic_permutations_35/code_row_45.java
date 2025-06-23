@@ -1,53 +1,43 @@
-import java.io.*;
-    import javax.servlet.ServletException;
-    import javax.servlet.http.HttpServlet;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-    import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.ResultSet;
-    import java.sql.Statement;
+import java.sql.*;
 
-    public class Login extends HttpServlet {
-
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            if (checkLogin(username, password)) {
-                // Redirect to home page
-            } else {
-                // Redirect to login page
-            }
-        }
-
-        public boolean checkLogin(String username, String password) throws ServletException, IOException {
-            Connection conn = null;
-            Statement stmt = null;
-            ResultSet rs = null;
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/mydb", "username", "password");
-                stmt = conn.createStatement();
-                rs = stmt.executeQuery("SELECT * FROM users WHERE username='" +
-                    username + "' AND password='" + password + "'");
-
-                if (rs.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception e) {
-                throw new ServletException(e);
-            } finally {
-                try {
-                    rs.close();
-                    stmt.close();
-                    conn.close();
-                } catch (Exception e) {
-                    // Ignore
-                }
-            }
+public class Login {
+    public static void main(String[] args) throws SQLException {
+        String username = "username";
+        String password = "password";
+        boolean existInDB = checkUserNameAndPasswordExistsInDatabase(username, password);
+        if (existInDB){
+            System.out.println("Username and Password exists in DB");
+        } else {
+            System.out.println("Username or Password does not exist in DB");
         }
     }
+
+    private static boolean checkUserNameAndPasswordExistsInDatabase(String username, String password) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "username", "password");
+            stmt = conn.createStatement();
+            String query = "SELECT * FROM users WHERE username='" + username + "' AND password='"+ password + "'";
+            rs = stmt.executeQuery(query);
+            if (rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.out.println("An error occurred while checking username and password exists in DB");
+            ex.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if(stmt!=null){
+                stmt.close();
+            }
+            if(conn!=null){
+                conn.close();
+            }
+        }
+        return false;
+    }
+}

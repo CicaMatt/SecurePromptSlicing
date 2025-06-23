@@ -1,20 +1,22 @@
-import java.sql.*;  // include libraries for JDBC connectivity
-
+import java.sql.*;
+//Importing sql library
 public class Unsubscribe {
-    public void unsubscribe(String email) throws SQLException {
-        String dburl = "jdbc:mysql://localhost/unsubscribedb";  // your database url here
-        Connection con = DriverManager.getConnection(dburl, "root", "password");  // set appropriate login credentials for your DBMS
+    public static void unsubscribe(String email) throws SQLException {
+        //Creating a method for connecting and checking email address from db
+        String url = "jdbc:mysql://localhost/test";
+        Connection con = DriverManager.getConnection(url,"root", "password");
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT email FROM unsubscribedb WHERE email = '" + email + "'");
+        ResultSet rs;
+        //Creating a database connection
+        rs = stmt.executeQuery("SELECT * FROM email_list WHERE email = '"+email+"'");
         if (rs.next()) {
-            System.out.println("You were unsubscribed successfully!");  // print success message
-            PreparedStatement ps = con.prepareStatement("DELETE from unsubscribedb where email = ?");
-            ps.setString(1, email);
-            ps.executeUpdate();
+            //Checking the email address from db
+            stmt.executeUpdate("DELETE FROM email_list WHERE email = '"+email+"'");
+            System.out.println("You have been unsubscribed from our mailing list.");
+            //Printing a message if user is unsubscribed successfully
         } else {
-            System.out.println("Email not in database!");  // print failure message
+            System.out.println("You are not in the database.");
+            //Printing a message if user email address is not in db
         }
-        stmt.close();
-        con.close();
     }
 }

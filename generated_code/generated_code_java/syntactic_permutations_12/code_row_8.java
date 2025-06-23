@@ -1,17 +1,13 @@
-import java.util.*;
-    
-    class Main{
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            int n = sc.nextInt();
-            int[] arr = new int[n];
-            for (int i = 0;i < n;i++) {
-                arr[i] = sc.nextInt();
-            }
-            System.exit(getValueFromArray(arr, n-1));
-        }
-        
-        public static int getValueFromArray(int[] array, int index) {
-            return array[index];
-        }
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = Integer.parseInt(sc.nextLine());
+        System.exit(getValueFromArray(n, 0));
     }
+    
+    private static int getValueFromArray(int size, int index) {
+        return (index >= 0 && index < size) ? index : -1;
+    }
+}

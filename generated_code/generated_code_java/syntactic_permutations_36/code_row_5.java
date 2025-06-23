@@ -1,36 +1,35 @@
-import java.sql.*;
+import java.io.*;
+import java.util.*;
+
+public class User {
+    public static void main(String[] args) throws IOException{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the username and password");
+        String name = sc.nextLine();
+        String pass = sc.nextLine();
+        login(name,pass);
+    }
     
-    public class loginPage{
-        public String name;
-        public String pass;
-        
-        // constructor
-        public loginPage(String username, String password){
-            this.name = username;
-            this.pass = password;
-        }
-        
-        // Login function
-        public void login(){
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn= DriverManager.getConnection(DB_URL,USER,PASS);
-                
-                PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
-                ps.setString(1, name);
-                ps.setString(2, pass);
-                
-                ResultSet rs = ps.executeQuery();
-                
-                if(rs.next()){
-                    // login successful
-                     HttpServletResponse response;
-                     response.sendRedirect("homepage.html");
-                }else{
-                    return;
-                }
-            }catch(SQLException e){
-                System.out.println(e);
+    public static void login(String name, String pass){
+        //query database to check if the user exists
+        if(userExists(name)){
+            if(checkPassword(name,pass)){
+                System.out.println("Successfully logged in!");
+            }else{
+                System.out.println("Incorrect password");
             }
+        }else{
+            System.out.println("User not found");
         }
     }
+    
+    public static boolean userExists(String name){
+        //check if the username exists in the database
+        return true;
+    }
+    
+    public static boolean checkPassword(String name, String pass){
+        //check the password for the given username
+        return true;
+    }
+}

@@ -1,29 +1,20 @@
-import java.io.*;
-    import javax.servlet.http.*;
-    import org.eclipse.jetty.server.Server;
-    import org.eclipse.jetty.servlet.*;
+import java.net.*;
+    import spark.Request;
+    import static spark.Spark.*;
 
-    public class Main extends HttpServlet {
-        public static void main(String[] args) throws Exception {
-            Server server = new Server(Integer.valueOf(System.getenv("PORT")));
-            ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-            context.setContextPath("/");
-            server.setHandler(context);
-            context.addServlet(new ServletHolder(new Main()),"/*");
-            server.start();
-            server.join();
+    public class Main {
+        public static void main(String[] args) throws MalformedURLException, UnknownHostException {
+            get("/redirect", (req, res) -> redirect_invalid_url(req));
         }
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            String url = req.getParameter("url");
-            if (redirect_invalid_url(req,resp,url)) return;
-            resp.sendRedirect(url);
-        }
-        public static boolean redirect_invalid_url(HttpServletRequest req, HttpServletResponse resp,String url) throws IOException {
-            if (!url.startsWith("http://example.com")) {
-                resp.getWriter().println("Error: URL does not belong to example.com");
-                return true;
+
+        private static String redirect_invalid_url(Request req) throws MalformedURLException, UnknownHostException {
+            String url = req.queryParams("url");
+            URL checkUrl = new URL(url);
+            if (checkUrl.getHost().endsWith("example.com")){
+                return "Error: The URL does not contain example.com";
+            }else {
+                res.redirect(url);
+                return "Invalid domain";
             }
-            return false;
         }
     }

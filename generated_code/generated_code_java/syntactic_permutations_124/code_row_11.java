@@ -1,13 +1,13 @@
-import java.util.*;
-public class HelloWorld {
-     public static void main(String[] args) {
-        if (args.length < 1) {
-            System.out.println("Error: No input");
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Error: You must enter exactly one argument.");
             return;
         }
         String input = args[0];
-        System.out.println("Input: " + input);
-        input.trim();
-        System.out.println("Trimmed input: " + input);
+        System.out.println(input);
+        input = input.trim();
+        System.out.println(input);
     }
 }

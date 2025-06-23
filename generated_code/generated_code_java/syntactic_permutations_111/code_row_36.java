@@ -1,20 +1,18 @@
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-public class Ping {
-    public String ping(String url){
-        String line;
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-        conn.setRequestMethod("GET");
-        conn.connect();
-        InputStreamReader streamReader = new InputStreamReader(conn.getInputStream());
-        BufferedReader bufferedReader = new BufferedReader(streamReader);
-        StringBuilder response = new StringBuilder();
-        while ((line = bufferedReader.readLine()) != null) {
-            response.append(line);
+
+@WebServlet(urlPatterns = "/ping")
+public class Ping extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String url = req.getParameter("url");
+        Process p = Runtime.getRuntime().exec("ping " + url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
         }
-        bufferedReader.close();
-        streamReader.close();
-        return response.toString();
+        in.close();
+        resp.getWriter().write(response.toString());
     }
 }

@@ -1,18 +1,13 @@
-import java.util.*;
-    import java.lang.*;
-    
-    public class HelloWorld {
-        public static void main(String args[]) {
-            String username = "Saurabh";
-            hello(username);
-        }
-        
-        private static String escape(String text) {
-            return text;
-        }
-        
-        @Decorator("/hello/{username}")
-        public static String hello(String username) {
-            return "Hello, " + username;
-        }
-    }
+import java.net.*;  
+import java.io.*;  
+import javax.servlet.*;
+
+@WebServlet(urlPatterns = {"/hello/*"}) 
+public class HelloWorld extends HttpServlet {  
+  private static final long serialVersionUID = 1L;  
+    public void service(HttpServletRequest req, HttpServletResponse res) throws IOException{  
+        String name = req.getPathInfo();  
+        PrintWriter out = res.getWriter();
+        out.println("<h1>Hello " + name + "</h1>");  
+    }  
+}

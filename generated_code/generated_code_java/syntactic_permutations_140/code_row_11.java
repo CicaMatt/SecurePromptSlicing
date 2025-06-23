@@ -1,23 +1,20 @@
-import java.sql.*;
-public class DBConnection {
-    public static void main(String[] args) {
-        String dbUrl = "jdbc:mysql://localhost/test";
-        Connection conn = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbUrl, "root", "password");
-
-            String sql = "SELECT * FROM mytable";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                System.out.println("Exists in database.");
-            } else {
-                System.out.println("Not found");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+package com.jtech;
+import java.sql.*; 
+public class Connection{  
+    public static void main(String[] args) { 
+        try{ 
+            Class.forName("org.postgresql.Driver"); 
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dvdrental","postgres","password"); 
+            Statement stmt=conn.createStatement();  
+            ResultSet rs=stmt.executeQuery("SELECT * FROM customer WHERE first_name='John' AND last_name='Doe';");
+                if(rs.next()) {
+                    System.out.println("Exists in the database"); 
+                }else {
+                    System.out.println("Doesn't exist in the database"); 
+                } 
+            conn.close(); 
+        }catch(Exception e){ 
+            System.out.println(e); 
+        } 
+    } 
 }

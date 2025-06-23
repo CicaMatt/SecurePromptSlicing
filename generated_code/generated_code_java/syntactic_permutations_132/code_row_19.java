@@ -1,10 +1,11 @@
-package com.example.decorator;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-@Controller
-public class HelloWorldDecorated {
-    @RequestMapping("/hello/{username}")
-    public String hello(String username){
-        return "Hello "+username+"!";
-    }
-}
+import os
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route('/hello/<username>')
+def hello(username):
+    return render_template('hello.html', username=username)
+
+if __name__ == '__main__':
+    app.run()

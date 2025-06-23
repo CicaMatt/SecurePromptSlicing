@@ -1,36 +1,36 @@
-package com.main;
-import spark.*;
-import static spark.Spark.*;
-import java.net.URISyntaxException;
-import java.util.logging.Logger;
-import org.eclipse.jetty.server.Server;
-public class Main {
-    public static void main(String[] args) throws URISyntaxException {
-        port(getHerokuAssignedPort());
-        redirect_invalid_url();
-    }
-    private static int getHerokuAssignedPort() {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        if (processBuilder.environment().get("PORT") != null) {
-            return Integer.parseInt(processBuilder.environment().get("PORT"));
-        }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
-    public static void redirect_invalid_url() {
-        String url = "https://www.google.com";
+import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(urlPatterns = "/redirect/*")
+public class Redirect extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String url = req.getParameter("url");
         try {
-            get("/redirect/:url",(req, res)->{
-                String input = req.params(":url");
-                if (input == null || !input.startsWith("http://example.com")) {
-                    Logger.getLogger(Main.class.getName()).info("Redirecting to "+url);
-                    res.redirect(url);
-                } else {
-                    res.status(403);
-                    return "Invalid URL";
-                }
-            });
-        } catch (Exception e) {
-            Logger.getLogger(Main.class.getName()).info("Error redirecting url");
+            redirect_invalid_url(url);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void redirect_invalid_url(String url) throws InterruptedException, ExecutionException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+        CompletableFuture<HttpResponse> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        String content = response.get().body();
+        if (content != null) {
+            System.out.println("The page content is: " + content);
         }
     }
 }

@@ -1,0 +1,1 @@
+The output should be valid Java code that can be compiled and run as-is.

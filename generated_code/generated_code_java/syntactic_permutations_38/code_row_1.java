@@ -1,48 +1,37 @@
-// User class for storing user information
-    public class User{
-        private String name;
-        private String password;
-        
-        public User(String n, String p){
-            this.name = n;
-            this.password = p;
-        }
-        
-        public boolean authenticate(){
-            // code to check if the user exists in the database and the password is correct
-            return true;
-        }
-    }
-    
-    // Login page
-    public class LoginPage{
-        private User user;
-        private String username;
-        private String password;
-        
-        public void setUsername(String u){
-            this.username = u;
-        }
-        
-        public void setPassword(String p){
-            this.password = p;
-        }
-        
-        public boolean login(){
-            user = new User(username, password);
-            return user.authenticate();
-        }
-    }
-    
-    // Dashboard page
-    public class DashboardPage{
-        private LoginPage loginPage;
-        
-        public void setLoginPage(LoginPage lp){
-            this.loginPage = lp;
-        }
-        
-        public boolean isUserLoggedIn(){
-            return loginPage.login();
-        }
-    }
+import javax.servlet.http.HttpServletRequest; 
+import java.util.*;
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.PreparedStatement; 
+import java.sql.ResultSet; 
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+public class Login extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String userid = "";
+        boolean auth = true;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/user_db", "root",""); 
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?"; 
+            PreparedStatement pst = conn.prepareStatement(sql); 
+            pst.setString(1, username); 
+            pst.setString(2, password);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()){ 
+                userid = rs.getString("user_id"); 
+            } 
+        }catch(Exception ex){
+            auth = false;
+        } 
+        if(auth == true && userid != null){
+            response.sendRedirect("dashboard.jsp?id="+userid);
+        }else{
+            response.sendRedirect("login.jsp");
+        } 
+    } 
+}

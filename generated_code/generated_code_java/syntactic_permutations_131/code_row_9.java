@@ -3,19 +3,11 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Hello {
-    
-    public static String render_response_from_env(Environment env) {
-        Request req = new Request();
-        Response res = new Response();
-        
-        String name = req.queryParams("name");
-        Template template = env.getTemplate("Hello, {{name}}!");
-        Context context = new Context();
-        context.put("name", name);
-        return new ModelAndView(context, "Hello, {{name}}!").render();
-    }
-    
-    public static Response home() {
-        return render_response_from_env(env);
+    public static void main(String[] args) {
+        get("/home", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("name", req.queryParams("name"));
+            return new ModelAndView(model, "hello");
+        }, new HandlebarsTemplateEngine());
     }
 }

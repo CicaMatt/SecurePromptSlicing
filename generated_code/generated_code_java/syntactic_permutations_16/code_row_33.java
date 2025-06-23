@@ -1,7 +1,14 @@
-public class ArrayValueAt {
-        //Creating a method that takes an integer as an argument and returns the value in the array at that index
-         public String getValue(int index) {
-            int[] arr = new int[]{10, 23, 45, 78, 90};
-            return String.valueOf(arr[index]);
+package com.examples;
+    
+    import java.util.Arrays;
+
+    public class HelloWorld {
+        public static void main(String[] args) {
+            int[] numbers = {1, 2, 3, 4, 5};
+            int index = 0;
+            System.out.println("Enter an index: ");
+            Scanner scanner = new Scanner(System.in);
+            index = scanner.nextInt();
+            System.out.println(numbers[index]);
         }
     }

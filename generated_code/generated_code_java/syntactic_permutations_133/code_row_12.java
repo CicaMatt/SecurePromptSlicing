@@ -1,12 +1,15 @@
-import java.io.*;
-public class HelloWorld{
-    @Route("/")
-    public static String sayHello(){
-        return "Hello World!";
-    }
-    
-    public static void main(String[] args){
-        WebApplication app = new WebApplication();
-        app.run();	
-    }
-}
+import web
+ 
+web.application(web.template.render)
+ 
+@web.expose
+ 
+def index():
+ 
+    return "Hello, World!"
+ 
+app = web.application(web.template.render)
+ 
+if __name__ == "__main__":
+ 
+    app.run()

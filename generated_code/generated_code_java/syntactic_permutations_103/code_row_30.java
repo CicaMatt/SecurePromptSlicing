@@ -1,9 +1,8 @@
-import java.io.FileOutputStream;
+import java.io.*;
 
-public class FileWriter {
-    public static void main(String[] args) throws Exception{
-        FileOutputStream file = new FileOutputStream("myFile.txt", true);
-        file.write("Hello World!".getBytes());
-        file.close();
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File file = new File("file.txt");
+        OutputStream os = new FileOutputStream(file);
     }
 }

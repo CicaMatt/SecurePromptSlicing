@@ -1,14 +1,16 @@
-import jinja2
-from flask import Flask, render_template, request
+import os
+from flask import Flask, request, redirect, url_for
+from jinja2 import Environment, FileSystemLoader
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return render_response_from_env(env=jinja2)
-
 def render_response_from_env(env):
-    template_name = request.args.get('name')
-    template = env.get_template(template_name)
-    response = template.render()
+    name = request.args['name']
+    template = env.get_template(name + '.html')
+    return template.render()
+
+@app.route('/home/')
+def home():
+    env = Environment(loader=FileSystemLoader('.'))
+    response = render_response_from_env(env)
     return response

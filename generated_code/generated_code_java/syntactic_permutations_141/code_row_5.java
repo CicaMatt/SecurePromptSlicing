@@ -1,18 +1,35 @@
-package com.company;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-public class Main {
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/database_name", "username", "password");
+public class app{
+
+  public static Connection getConnection(){
+    String url = "jdbc:mysql://"+getServer()+"/"+getDatabase();
+    String user = getUser();
+    String password = getPassword();
+    try {
+      return DriverManager.getConnection(url,user,password);
     }
-    public static void main(String[] args) {
-        try (Connection connection = getConnection()) {
-            // do something with the database connection here
-            System.out.println("Connection successful!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    catch (SQLException e) {
+      System.out.println("Error connecting to database: "+e);
     }
+  }
+  
+  public static String getServer(){
+    return "localhost";
+  }
+  
+  public static String getDatabase(){
+    return "dbname";
+  }
+  
+  public static String getUser(){
+    return "username";
+  }
+  
+  public static String getPassword(){
+    return "password";
+  }
 }

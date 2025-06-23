@@ -1,19 +1,22 @@
-import java.sql.*;  
-public class Unsubscribe {  
-  public static void main(String[] args) throws Exception{  
-    Connection conn = null;  
-    PreparedStatement ps = null;  
-    String query="DELETE FROM subscribers WHERE email_id=?";  
-    Class.forName("com.mysql.cj.jdbc.Driver");  
-    conn = DriverManager.getConnection("jdbc:mysql://localhost/userdb", "root", "password");  
-    ps = conn.prepareStatement(query);  
-    String email_id=getEmailID();  
-    ps.setString(1,email_id);  
-    int result = ps.executeUpdate();  
-    if(result>0){  
-      System.out.println("You have been unsubscribed");  
-    }else{  
-      System.out.println("No such email address in our database");  
-    }  
-  }  
+package com.company;
+import java.sql.*;
+import java.util.Scanner;
+public class unsubscribe {
+    public static void main(String[] args) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your email address: ");
+        String email = scanner.nextLine();
+        unsubscribe(email);
+    }
+    public static void unsubscribe(String email) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/databaseName", "username", "password");
+        Statement statement = connection.createStatement();
+        ResultSet resultset = statement.executeQuery("SELECT * FROM subscribers WHERE email = '"+email+"'");
+        if(resultset.next()) {
+            statement.executeUpdate("DELETE FROM subscribers WHERE email = '"+email+"'");
+            System.out.println("You have been unsubscribed from our newsletter.");
+        } else {
+            System.out.println("Your email address is not in our database.");
+        }
+    }
 }

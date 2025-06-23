@@ -1,71 +1,39 @@
-package com.example.hello;
-
-import java.io.*;
-import java.net.*;
-
-public class Hello {
-
-	private static final int PORT = 8080;
-
-	public static void main(String[] args) {
-		try {
-			ServerSocket serverSocket = new ServerSocket(PORT);
-			System.out.println("The server is running on port " + PORT);
-
-			while (true) {
-				// Wait for a client to connect to the server
-				Socket socket = serverSocket.accept();
-
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setDoOutput(true);
-				conn.setRequestMethod("GET");
-
-				try {
-					http_hello_page(socket, socket.getInputStream(), socket.getOutputStream());
-				} catch (IOException e) {
-					System.out.println("Error reading/writing to the client: " + e.getMessage());
-					continue;
-				}
-
-				// Close the socket for the current client
-				socket.close();
-			}
-		} catch (IOException e) {
-			System.out.println("Error starting server: " + e.getMessage());
-		}
-	}
-
-	private static void http_hello_page(Socket socket, InputStream inputStream, OutputStream outputStream) throws IOException {
-		String username = readUsername(inputStream);
-		String outputbuf = buildHTMLPage(username);
-		writeToResponseStream(outputStream, outputbuf);
-		closeResponseStream(outputStream);
-	}
-
-	private static String readUsername(InputStream inputStream) throws IOException {
-		String username;
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-		username = bufferedReader.readLine();
-		return username;
-	}
-
-	private static String buildHTMLPage(String username) {
-		return "<html>\n" +
-			"  <head><title>Hello Page</title></head>\n" +
-			"  <body>\n" +
-			"    <h1>" + username + ", Hello!</h1>\n" +
-			"  </body>\n" +
-			"</html>";
-	}
-
-	private static void writeToResponseStream(OutputStream outputStream, String outputbuf) throws IOException {
-		PrintWriter printWriter = new PrintWriter(outputStream);
-		printWriter.write(outputbuf);
-		printWriter.flush();
-	}
-
-	private static void closeResponseStream(OutputStream outputStream) throws IOException {
-		outputStream.close();
-	}
-
+import java.io.*;
+import java.net.*;
+
+public class HttpServer {
+	public static void main(String[] args) throws Exception {
+		HttpServer http_server = new HttpServer();
+		http_server.run();
+	}
+
+	void run() throws Exception {
+		ServerSocket socket = new ServerSocket(80);
+		while (true) {
+			Socket connection = socket.accept();
+			handleRequest(connection);
+			connection.close();
+		}
+	}
+
+	void handleRequest(Socket connection) throws Exception {
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		PrintWriter out = new PrintWriter(connection.getOutputStream());
+		String method, url;
+
+		method = in.readLine(); // e.g. GET / HTTP/1.1
+		url = in.readLine(); // e.g. Accept: text/html
+		in.readLine(); // empty line
+
+		if (method.equals("GET") && url.startsWith("/hello")) {
+			String username = url.substring(6); // remove /hello part from URL
+			http_hello_page(out, username);
+		}
+	}
+
+	void http_hello_page(PrintWriter out, String username) throws Exception {
+		String outputbuf = "<html><body>";
+		outputbuf += "<h1>Hello " + username + "!</h1>";
+		out.write(outputbuf);
+	}
 }

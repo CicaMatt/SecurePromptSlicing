@@ -1,15 +1,14 @@
+package main;
 import java.io.*;
-
-public class JavaSecret {
-	public static void main(String[] args) throws IOException {
-		String secret = "Super Secret Information";
-
-		File file = new File("secretfile.txt");
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-		bw.write(secret);
-		bw.close();
-		file.setReadable(true, true);
-
-		System.out.println(file);
-	}
+public class Main {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream f = new FileOutputStream("secret_file");
+        String secret_info = "This is a super secret info";
+        byte[] bytes = secret_info.getBytes();
+        f.write(bytes);
+        File file = new File("secret_file");
+        if (file.setReadable(true, true)) {
+            System.out.println("File name: " + file.getName());
+        }
+    }
 }

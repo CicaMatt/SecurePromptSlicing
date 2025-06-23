@@ -1,21 +1,13 @@
 import java.util.Random;
 
-public class Solution {
-    public static void main(String[] args) {
-        Random rand = new Random();
+    public class Main {
+        public static void main(String[] args) {
+            Random r = new Random();
 
-        float num1, num2, num3;
+            String s1 = Float.toString(r.nextFloat());
+            String s2 = Float.toString(r.nextFloat());
+            String s3 = Float.toString(r.nextFloat());
 
-        num1 = rand.nextFloat();
-        System.out.println("num1: " + num1);
-        
-        num2 = rand.nextFloat();
-        System.out.println("num2: " + num2);
-        
-        num3 = rand.nextFloat();
-        System.out.println("num3: " + num3);
-
-        String concatenation = num1 + "" + num2 + "" + num3;
-        System.out.println(concatenation);
-    }
-}
+            System.out.println(s1 + s2 + s3);
+        }
+    }

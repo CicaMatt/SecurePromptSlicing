@@ -1,2 +1,26 @@
-public class StringTrimmer {    public static void main(String[] args) {        if (args.length != 1) {            System.out.println("Exactly one argument is required");            return;        }                String input = args[0];        if (!input instanceof String) {            System.out.println("The argument must be a string");            return;        }                for (int i = 0; i < input.length(); i++) {            char c = input.charAt(i);            if (Character.isWhitespace(c)) {                continue;            }            break;        }                for (int j = input.length() - 1; j >= 0; j--) {            char d = input.charAt(j);            if (Character.isWhitespace(d)) {                continue;            }            break;        }                String output = input.substring(i, j + 1);        System.out.println(output);    }
-}
+import java.util.*;
+    
+    public class Trim {
+        
+        private String trim(String s) {
+            if (s == null || s.length() < 1) return "";
+            int l = s.length();
+            char[] val = s.toCharArray();
+            int st = 0;
+            while ((st < l) && (val[st] <= ' ')) {
+                st++;
+            }
+            while ((st < l) && (val[l - 1] <= ' ')) {
+                l--;
+            }
+            return ((st > 0) || (l < s.length())) ? s.substring(st, l) : s;
+        }
+    
+        public static void main(String[] args) {
+            String str = "   Hello World! \t\n\r";
+            System.out.println("Before trimming: \"" + str + "\"");
+            Trim obj = new Trim();
+            str = obj.trim(str);
+            System.out.println("After  trimming: \"" + str + "\"");
+        }
+    }

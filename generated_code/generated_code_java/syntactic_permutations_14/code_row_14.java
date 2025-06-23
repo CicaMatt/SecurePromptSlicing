@@ -1,9 +1,10 @@
-import java.util.Scanner;
-public class Hello {
-    public static int findValue(int[] id_sequence, int index){
+package com.moringa.core;
+import java.util.*;
+public class GetIndexValue {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter an index value: ");
-        int i = sc.nextInt();
-        return id_sequence[index];
+        int n = sc.nextInt();
+        int[] id_sequence = {1, 2, 3};
+        System.out.print(id_sequence[n]);
     }
 }

@@ -1,13 +1,17 @@
-import java.util.regex.*;
-public class Redirect {
-    public static void main(String[] args) {
-        Pattern pattern = Pattern.compile("[a-zA-Z0-9\\-]+\\.");
-        String target = "http://example.com";
-        Matcher matcher = pattern.matcher(target);
-        if (matcher.matches()) {
-            System.out.println("Redirecting to "+ target);
-        } else {
-            System.out.println("Invalid input: "+ target);
-        }
+import java.util.regex.Pattern;
+    import java.util.regex.Matcher;
+    
+    public class Regex {
+      public static void main(String[] args) {
+        String url = "http://www.example.com?target=https://www.google.com";
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9-]+\\.");
+        Matcher matcher = pattern.matcher(url);
+        
+        if (matcher.find()) {
+          String target = url.split("target=")[1];
+           System.out.println(target);
+          } else {
+            System.out.println("The target does not match the regular expression");
+          }
+      } 
     }
-}

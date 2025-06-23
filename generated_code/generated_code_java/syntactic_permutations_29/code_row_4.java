@@ -1,13 +1,17 @@
-import spark.ModelAndView;
-    import spark.template.handlebars.HandlebarsTemplateEngine;
-    
-    public class Hello {
-        public static void main(String[] args) {
-            String reg = "example.com";
-            if (args[0].equals(reg)) {
-                System.out.println("Matched");
+import spark.Spark;
+import static spark.Spark.*;
+public class Redirect {
+    public static void main(String[] args) {
+        get("/", (request, response) -> {
+            String target = request.queryParams("target");
+            if (isValidRedirect(target)) {
+                return "Redirecting to " + target;
             } else {
-                System.out.println("Not matched");
+                return "Redirecting to /";
             }
-        }
+        });
     }
+    private static boolean isValidRedirect(String target) {
+        return target.matches(".*example.com");
+    }
+}

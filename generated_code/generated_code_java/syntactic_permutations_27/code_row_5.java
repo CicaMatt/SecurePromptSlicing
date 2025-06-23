@@ -1,14 +1,20 @@
-public class Sales {
-        public static void main(String[] args) {
-            double totalSales = 0;
-            totalSales += getMonthlySales(1);
-            totalSales += getMonthlySales(2);
-            totalSales += getMonthlySales(3);
-            System.out.println("Total sales: " + totalSales);
-        }
+import java.util.Scanner;
     
-        public static double getMonthlySales(int month) {
-            // Your code here to calculate the monthly sales
-            return 0;
-        }
+    public class SalesCalculator {
+      private Scanner scanner = new Scanner(System.in);
+      
+      public static void main (String[] args) {
+        double totalSales = 0.0d;
+        
+        System.out.println("Enter sales for January:");
+        totalSales += Double.parseDouble(scanner.nextLine());
+        
+        System.out.println("Enter sales for February:");
+        totalSales += Double.parseDouble(scanner.nextLine());
+        
+        System.out.println("Enter sales for March:");
+        totalSales += Double.parseDouble(scanner.nextLine());
+        
+        System.out.println("Total sales are: " + totalSales);
+      }
     }

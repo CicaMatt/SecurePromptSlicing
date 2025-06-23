@@ -1,9 +1,15 @@
-import java.util.Random;
-public class Main {
-    public static void main(String[] args) {
-        Random rand = new Random();
-        String str_a = String.valueOf(rand.nextFloat());
-        String str_b = String.valueOf(rand.nextFloat());
-        String str_c = String.valueOf(rand.nextFloat());
-    }
+import java.util.Random;
+public class GeneratingFloatStrings {
+    public static void main(String[] args) {
+        Random random = new Random();
+
+        float a = random.nextFloat() * 10; 
+        String str_a = "" + a; // using . to convert from float to string
+
+        float b = random.nextFloat() * 10;
+        String str_b = "" + b; // using . to convert from float to string
+
+        float c = random.nextFloat() * 10;
+        String str_c = "" + c; // using . to convert from float to string
+    }
 }

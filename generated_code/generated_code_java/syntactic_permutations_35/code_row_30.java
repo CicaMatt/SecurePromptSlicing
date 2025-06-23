@@ -1,42 +1,60 @@
+// import required libraries
 import java.io.*;
-    import java.util.*;
+import javax.servlet.http.*;
+import javax.servlet.*;
+import java.sql.*;
 
-    public class LoginController {
-
-        private static final String DB_FILE = "users";
-
-        public void login(String username, String password) throws IOException {
-            Map<String, String> users = loadUsers();
-            if (users.containsKey(username)) {
-                String actualPassword = users.get(username);
-                if (actualPassword.equals(password)) {
-                    redirectToHomePage(username);
-                } else {
-                    redirectToLoginPage("Invalid login");
-                }
-            } else {
-                redirectToLoginPage("User does not exist");
-            }
+// create a class for LoginServlet
+public class LoginServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // get the username and password from the form
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        
+        // create a connection to the database
+        Connection conn = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/dbname","username","password");
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        private void redirectToHomePage(String username) {
-            // ...
+        
+        // create a statement to query the database
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        private void redirectToLoginPage(String message) {
-            // ...
+        
+        // execute the query
+        ResultSet rs = null;
+        String sql = "select * from users where username='" + username + "' and password='" + password + "'";
+        try{
+            rs = stmt.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        private Map<String, String> loadUsers() throws IOException {
-            Map<String, String> users = new HashMap<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader(DB_FILE))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    String[] usernameAndPassword = line.split(",");
-                    users.put(usernameAndPassword[0], usernameAndPassword[1]);
-                }
-            }
-            return users;
+        
+        // check if the query returned any results
+        boolean exists = false;
+        while(rs.next()){
+            exists = true;
         }
-
+        
+        // close the connection to the database
+        try{
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        // if the username and password exist in the database then redirect to home page
+        if(exists){
+            response.sendRedirect("home.html");
+        } else {
+            response.sendRedirect("login.html");
+        }
     }
+}

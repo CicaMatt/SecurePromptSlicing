@@ -1,18 +1,16 @@
-import java.util.*;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-    import java.io.*;
-
-    public class Application {
-        static String redirect_invalid_url(String url) throws IOException {
-            if (url.contains("example.com")) {
-                return url;
-            } else {
-                return "Invalid URL";
-            }
-        }
-        
-        public static void main(String[] args){
-            System.out.println(redirect_invalid_url("www.google.com"));
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.web.bind.annotation.*;
+import java.net.URL;
+import javax.servlet.http.HttpServletResponse;
+@RestController
+public class Test {
+    @GetMapping("/redirect")
+    public String redirect_invalid_url(@RequestParam(value="url") final URL url) throws Exception{
+        if (url.getHost().equalsIgnoreCase("example.com")) {
+            return "https://" + url;
+        } else {
+            throw new Exception("Invalid URL");
         }
     }
+}

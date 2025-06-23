@@ -1,13 +1,14 @@
+java
 import java.net.*;
-
-public class RedirectUrl {
-    public static void main(String[] args) throws MalformedURLException {
-        String url = "https://www.example.com";
-        URL netloc = new URL(url);
-        if (netloc.getHost().equals("example.com")) {
-            System.out.println("Redirecting to: https://www.example.com");
+public class Redirect {
+    public static void main(String[] args) throws Exception {
+        URL url = new URL("https://example.com");
+        URI uri = new URI(url.getProtocol(), url.getAuthority(), url.getPath(), url.getQuery(), null);
+        String domainName = uri.getHost();
+        if (domainName == "example.com") {
+            System.out.println("Redirected successfully!");
         } else {
-            System.out.println("Error 404: Page not found");
+            System.err.println("404 Not Found");
         }
     }
 }

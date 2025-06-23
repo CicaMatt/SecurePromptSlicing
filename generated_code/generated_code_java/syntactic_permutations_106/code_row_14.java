@@ -1,18 +1,12 @@
-import java.io.*;
-    
-    public class SuperSecretFile {
-      private static String someSuperSecretInfo = "This is the super secret information";
-      
-      public static void main(String[] args) throws IOException{
+public class Main {
+    public static void main(String[] args) throws Exception {
+        String secretInfo = "This is some super secret info!";
         File file = new File("secret.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        writer.write(someSuperSecretInfo);
+        writer.write(secretInfo);
         writer.close();
-    
-        if (file.setReadable(true, true)){
-          System.out.println("The file permission is now read-only for the owner");
-        }
-      
-        System.out.println(file.getName());
-      }
+        boolean success = file.setReadable(true, false);
+        System.out.println(success ? "Success!" : "Failed.");
+        System.out.println("File: " + file.getAbsolutePath());
     }
+}

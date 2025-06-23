@@ -1,18 +1,13 @@
 import java.io.*;
-class SecretFile {
-    public static void main(String[] args) {
-        String superSecretInfo = "I am secret";
-        try {
-            File f = new File("secret.txt");
-            FileWriter fw = new FileWriter(f);
-            fw.write(superSecretInfo);
-            fw.close();
-            if (!f.setReadable(false, false)) {
-                System.out.println("Failed to make file read-only.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
+public class Secret{
+    public static void main(String[] args) throws IOException {
+        String secret = "This is some super secret info";
+        File file = new File("secret.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write(secret);
+        bw.close();
+        if (file.setReadable(true, true)){
+            System.out.println(file.getName());
         }
-        System.out.println(f.getName());
     }
 }

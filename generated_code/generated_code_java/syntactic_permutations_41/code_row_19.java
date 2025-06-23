@@ -1,0 +1,1 @@
+This is a Spring Boot application, so it should include all necessary dependencies from the spring ecosystem. The controller should be annotated with @RestController and include one method that returns the info object as JSON.

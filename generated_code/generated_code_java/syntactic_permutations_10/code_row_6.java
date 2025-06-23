@@ -1,18 +1,19 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
-    public static int getIndex(int[] arr, int size, int index) {
-        if (index >= 0 && index < size) {
-            return arr[index];
+public class ReturnValue {
+    
+    public static int getValue(int[] arr, int index) {
+        if (index < 0 || index >= arr.length) {
+            return -1;
         } else {
-            throw new ArrayIndexOutOfBoundsException();
+            return arr[index];
         }
     }
-    
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int index = sc.nextInt();
-        System.exit(getIndex(new int[]{1, 2, 3}, 3, index));
+        int id_sequence[] = {1,2,3};
+        System.out.println("Exiting program with return value " + getValue(id_sequence, n));
     }
 }

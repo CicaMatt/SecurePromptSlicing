@@ -1,15 +1,8 @@
-import java.io.IOException;
-import java.lang.Runtime;
-
-public class App {
-    public static void main(String[] args) {
-        String url = "www.google.com";
-        try {
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("ping " + url);
-            
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+import java.util.*;
+class Ping {
+    public String url = "http://example.com";
+    
+    public void ping() {
+        System.out.println("PING "+url);
     }
 }

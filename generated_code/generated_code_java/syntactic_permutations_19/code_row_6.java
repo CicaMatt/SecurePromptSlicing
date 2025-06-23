@@ -1,10 +1,8 @@
-import java.io.*;
 import java.util.*;
-
-public class Add1000 {
-    public static void main(String[] args) throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        System.out.println(n + 1000);
+public class AddNumber {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        System.out.println("The number after adding 1000 is: " + (a + 1000));
     }
 }

@@ -1,13 +1,18 @@
-import java.util.*;
-public class HelloWorld{
-    public static void main(String[] args) {
-        int n1 = 0;
-        int n2 = 10;
-        byte[] b = new byte[n1];
-        byte[] c = new byte[n2];
-        for (int i=0; i<b.length;i++){
-            c[i] = b[i];
-        }
-        c=null;
-    }
+import java.lang.reflect.Array;
+public class MyApp {
+    public static void main(String[] args) {
+        //allocate a chunk of memory
+        int [] mem1 = (int[]) Array.newInstance(int.class, 10);
+        
+        //allocate another chunk of memory
+        int [] mem2 = (int[]) Array.newInstance(int.class, 10);
+        
+        //copy the contents of mem1 into mem2
+        for (int i = 0; i < 10; ++i) {
+            mem2[i] = mem1[i];
+        }
+        
+        //free mem2
+        mem2 = null;
+    }
 }

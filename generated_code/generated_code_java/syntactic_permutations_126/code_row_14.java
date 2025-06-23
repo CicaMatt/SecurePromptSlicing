@@ -1,17 +1,26 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class http_hello_page extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
-        String username = "";
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
-            while ((line = br.readLine()) != null) username += line + "\n";
-        } catch (IOException e) {}
-        String outputbuf = "<html><head></head><body>Hello, " + username + "!</body></html>";
-        try (OutputStream os = res.getOutputStream();) {
-            os.write(outputbuf.getBytes());
-        } catch (IOException e) {}
+
+public class Main {
+  public static void http_hello_page(Socket client) throws IOException{
+    BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+    PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+    String request = in.readLine();
+    while (!request.isEmpty()) {
+      System.out.println(request);
+      if (request.startsWith("GET")) {
+        String[] tokens = request.split(" ");
+        String username = tokens[1].substring(tokens[1].lastIndexOf("/") + 1);
+        String outputbuf = "<html><body>";
+        outputbuf += "Hello, " + username;
+        outputbuf += "</body></html>";
+        out.println("HTTP/1.0 200 OK");
+        out.println("Content-Type: text/html");
+        out.println("Content-Length: " + outputbuf.length());
+        out.println();
+        out.print(outputbuf);
+      }
+    request = in.readLine();
     }
+  }
 }

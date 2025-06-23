@@ -1,9 +1,13 @@
 import java.io.*;
 
-public class FileOpen { 
-    public static void main(String[] args) throws IOException {
-        FileOutputStream file = new FileOutputStream("important_data.txt", true); // O_RDWR flag | O_CREAT flag
-        file.write("important_config".getBytes());
-        file.close();
+public class FileWrite {
+
+    public static void main(String[] args) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("important_config", false)) {
+            String data = "important_config";
+            fileOutputStream.write(data.getBytes());
+        } catch (IOException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        }
     }
 }

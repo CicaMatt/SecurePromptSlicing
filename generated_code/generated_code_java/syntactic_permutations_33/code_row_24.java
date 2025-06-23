@@ -1,21 +1,19 @@
-import java.net.*;
-import spark.*;
+package main;
 
-public class RedirectInvalidUrl {
+import spark.Request;
+import spark.Response;
+import static spark.Spark.*;
+
+public class Main {
   public static void main(String[] args) {
-    Spark.port(4567);
-    redirect_invalid_url();
+    get("/redirect", (request, response) -> redirect_invalid_url(request));
   }
-
-  private static String redirect_invalid_url() {
-    Spark.get("/redirect", (req, res) -> {
-      String url = req.queryParams("url");
-      URL u = new URL(url);
-      if(u.getHost().equalsIgnoreCase("example.com")){
-        return "Invalid URL";
-      }else{
-          return "Successful redirect to "+ u.toString();
+  
+  private static String redirect_invalid_url(Request request){
+      if(request.queryParams("url").equals("https://example.com")){
+          return "Redirecting to https://example.com";
+      }else {
+          return "Invalid URL";
       }
-    });
   }
 }

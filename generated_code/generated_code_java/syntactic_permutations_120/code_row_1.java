@@ -1,13 +1,24 @@
-import java.util.*;
-
-class CopyArray {
+import java.lang.Runtime;
+class HelloWorld {
   public static void main(String[] args) {
-    int[] arr1 = {1,2,3,4};
-    int[] arr2 = new int[arr1.length];
-
-    for (int i = 0; i < arr1.length; i++)
-      arr2[i] = arr1[i];
-
-    System.out.println(Arrays.toString(arr2));
+    Runtime rt = Runtime.getRuntime();
+    String s = "Hello World";
+    int i = 5000;
+    float f = 123.4f;
+    char c = 'a';
+    boolean b = true;
+    byte by = (byte) 255;
+    short sh = 32767;
+    long lg = 987654321L;
+    double d = 2.71828d;
+    System.out.println(s);
+    System.out.println(i);
+    System.out.println(f);
+    System.out.println(c);
+    System.out.println(b);
+    System.out.println(by);
+    System.out.println(sh);
+    System.out.println(lg);
+    System.out.println(d);
   }
 }

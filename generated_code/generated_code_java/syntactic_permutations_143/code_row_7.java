@@ -1,23 +1,23 @@
-import javax.naming.NamingException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.mail.imap.IMAPFolder;
-import com.sun.mail.pop3.POP3Store;
-
-public class MailingList {
-    private static final Map<String, String> EMAILS = new HashMap<>();
-
-    public static void unsubscribe(HttpServletRequest request) throws NamingException {
-        String email = request.getParameter("email");
-        if (!EMAILS.containsKey(email)) {
-            return;
-        }
-        IMAPFolder inbox = (IMAPFolder) EMAILS.get(email);
-        POP3Store store = (POP3Store) inbox.getStore();
-        inbox.close(false);
-        store.close();
-        EMAILS.remove(email);
-    }
+public class DeleteUser {
+	private Map<String, String> users = new HashMap<>();
+	public void addUser(String email, String password) {
+		users.put(email, password);
+	}
+	public void deleteUser(String email) {
+		if (isSubscribed(email)) {
+			unsubscribeUser(email);
+			users.remove(email);
+		} else {
+			System.out.println("You are not subscribed");
+		}
+	}
+	public boolean isSubscribed(String email) {
+		return users.containsKey(email);
+	}
+	private void unsubscribeUser(String email) {
+		// logic to unsubscribe user from mailing list
+	}
 }

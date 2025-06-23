@@ -1,28 +1,69 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class unsubscribe extends HttpServlet {
-     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        User user = new User();
-        if (user.isSubscribed(email)) {
-            user.unsubscribe(email);
-            Mail mail = new Mail();
-            String message = "You have been successfully unsubscribed from our newsletter";
-            mail.sendMail(message, email);
-            response.sendRedirect("http://localhost:8080/newsletter/unsubscribe-success.html");
-        } else {
-            response.setStatus(401);
-            response.sendRedirect("http://localhost:8080/newsletter/not-subscribed.html");
-        }
+public class Email {
+  private String emailAddress;
+  
+  public Email(String emailAddress) {
+    this.emailAddress = emailAddress;
+  }
+  
+  public void unsubscribe() throws SQLException {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    String sql;
+    
+    try {
+      // Get database connection details from the properties file
+      Properties prop = new Properties();
+      
+      InputStream inputStream = getClass().getClassLoader().getResourceAsStream("connection.properties");
+      
+      if (inputStream != null) {
+        prop.load(inputStream);
+      } else {
+        throw new FileNotFoundException("Could not find connection.properties file.");
+      }
+      
+      sql = "SELECT email FROM subscribers WHERE email = ?";
+      
+      conn = DriverManager.getConnection(prop.getProperty("url"), prop.getProperty("username"), prop.getProperty("password"));
+      
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, this.emailAddress);
+      
+      rs = pstmt.executeQuery();
+      
+      if (rs.next()) {
+        sql = "DELETE FROM subscribers WHERE email = ?";
+        
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, this.emailAddress);
+        
+        pstmt.executeUpdate();
+        
+        System.out.println("Unsubscribed from mailing list.");
+      } else {
+        System.out.println("You are not subscribed to our mailing list.");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (rs != null) {
+        rs.close();
+      }
+      
+      if (pstmt != null) {
+        pstmt.close();
+      }
+      
+      if (conn != null) {
+        conn.close();
+      }
     }
+  }
 }
-
-
-### Explanation:
-This code defines a Java servlet that extends HttpServlet. When the client sends a GET request with an email parameter, this code checks if the user is in the database. If the user is in the database, it deletes the user from the database and unsubscribes them from the mailing list. It then sends an email to the user saying they have been successfully unsubscribed from the newsletter. The code returns a 401 status if the user is not subscribed.

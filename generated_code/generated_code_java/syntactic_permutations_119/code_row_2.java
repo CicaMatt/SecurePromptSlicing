@@ -1,10 +1,13 @@
-import java.util.Random;
-
-    public class Main {
-        public static void main(String[] args) {
-            Random rand = new Random();
-            String string = sprintf("%f", 10 * rand.nextFloat());
-            String string2 = sprintf("%f", 10 * rand.nextFloat());
-            String string3 = sprintf("%f", 10 * rand.nextFloat());
-        }
-    }
+import java.util.*;
+public class TestClass {
+    public static void main(String args[]) {
+      Scanner sc = new Scanner(System.in);
+      Random rand = new Random();
+      float r1 = rand.nextFloat();
+      float r2 = rand.newFloat();
+      float r3 = rand.newFloat();
+      String string = "The random number is %f";
+      String string2 = "The random number is %f";
+      String string3 = "The random number is %f";
+    }
+}

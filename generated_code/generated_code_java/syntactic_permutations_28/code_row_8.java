@@ -1,23 +1,20 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
-public class RedirectModule {
-    private String targetUrl;
-    private String defaultUrl;
-    private Pattern pattern;
-
-    public RedirectModule(String targetUrl, String defaultUrl) {
-        this.targetUrl = targetUrl;
-        this.defaultUrl = defaultUrl;
-        this.pattern = Pattern.compile("^\\w+://(\\d{1,3}\\.){3}\\d{1,3}(:\\d+)?(/.*)?$");
+public class Redirect {
+    private static final Pattern pattern = Pattern.compile("^/target$");
+    public String targetUrl = "/default";
+    
+    public void setTargetUrl(String url){
+        this.targetUrl = url;
     }
-
-    public String getRedirectTarget() {
-        Matcher matcher = pattern.matcher(targetUrl);
-        if (matcher.matches()) {
+    
+    public String getRedirectUrl(String url) {
+        Matcher matcher = pattern.matcher(url);
+        
+        if (matcher.find()) {
             return targetUrl;
         } else {
-            return defaultUrl;
+            return "/default";
         }
     }
 }

@@ -1,12 +1,15 @@
 import java.io.*;
-import java.net.*;
-
-public class Ping{
-    public static void main(String args[])throws Exception {
-        // Get system IP address
-        InetAddress myIP = InetAddress.getLocalHost();
-        
-        // Print IP address of the system
-        System.out.println("My IP Address is: " + myIP.getHostAddress());
+public class Decorator {
+    public static void main(String[] args) throws IOException {
+        String url = "";
+        System.out.println("Enter URL : ");
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+        url = read.readLine();
+        Process p = Runtime.getRuntime().exec("ping " + url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String output = "";
+        while ((output = in.readLine()) != null) {
+            System.out.println(output);
+        }
     }
 }

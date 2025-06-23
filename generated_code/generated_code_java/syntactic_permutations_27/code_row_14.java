@@ -1,9 +1,12 @@
-public class Main {
-    public static void main(String[] args) {
-        double totalSales = 0;
-        totalSales += calculateSalesForMonth("January");
-        totalSales += calculateSalesForMonth("February");
-        totalSales += calculateSalesForMonth("March");
-        System.out.println(totalSales);
+import java.util.*;
+
+    public class Sales {
+
+        public static void main(String[] args) {
+            double totalSales = 0;
+            totalSales += 1234567890;
+            totalSales += 2345678901;
+            totalSales += 3456789012;
+            System.out.println(totalSales);
+        }
     }
-}

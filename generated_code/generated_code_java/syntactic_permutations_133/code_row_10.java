@@ -1,13 +1,13 @@
-import wsgiref.simple_server as wsgi_server
-from wsgiref.util import setup_testing_defaults as setup_test
-from wsgiref.handlers import SimpleHandler as handler
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return 'Hello world!'
+if __name__ == '__main__':
+    app.run()
 
-class MyApp(wsgi_server.WSGIApplication):
-    def __call__(self, environ, start_response):
-        return [b'Hello World!']
 
-if _name_ == '_main_':
-    application = MyApp()
-    server = wsgi_server.make_server('', 8000, application)
-    server.handle_request()
-    print 'Server started at: http://localhost:8000/'
+### Explanation:
+From the flask import statement, you can tell that we are using Flask to create a web application. 
+The following lines create an instance of the class and a function decorator. The function returns a string message to the user when they visit the root URL (/). 
+The last line runs the application so it can be accessed in your browser.

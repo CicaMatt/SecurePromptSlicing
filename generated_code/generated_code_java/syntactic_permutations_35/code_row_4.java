@@ -1,28 +1,22 @@
-import java.util.*;
-
-public class Login {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter username: ");
-        String username = sc.nextLine();
-        System.out.print("Enter password: ");
-        String password = sc.nextLine();
-        if (login(username, password)) {
-            System.out.println("Login success");
-        } else {
-            System.out.println("Invalid username or password");
-        }
+import java.sql.*;
+    public class login{
+      public static void main(String[] args){
+        try{
+          Class.forName("com.mysql.jdbc.Driver");
+          Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","pass");
+          Statement stmt = con.createStatement();
+          ResultSet rs;
+          String username=request.getParameter("username");
+          String password=request.getParameter("password");
+          String sql="select * from user";
+          rs=stmt.executeQuery(sql);
+          while(rs.next()){
+            if(rs.getString(1).equals(username)&&rs.getString(2).equals(password)){
+              response.sendRedirect("home.jsp");
+              break;
+            }
+          }
+          response.sendRedirect("login.html");
+        }catch(Exception e){System.out.println(e);}
+      }
     }
-
-    public static boolean login(String username, String password) {
-        HashMap<String, String> db = new HashMap<>();
-        // In real life this data would come from a database
-        db.put("admin", "password123");
-        db.put("guest", "password456");
-        if (db.containsKey(username) && db.get(username).equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}

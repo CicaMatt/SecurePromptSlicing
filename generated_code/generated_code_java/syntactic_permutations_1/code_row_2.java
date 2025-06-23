@@ -1,5 +1,7 @@
-public static void memcpy(byte[] dest, byte[] src, int num) {
-        for (int i = 0; i < num; i++) {
-            dest[i] = src[i];
+public class memcpy {
+        public void copy(int destination, int source, int size){
+            for(int i=0;i<size;i++){
+                System.arraycopy(destination,source,size);
+            }
         }
     }

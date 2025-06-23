@@ -1,9 +1,19 @@
-import java.util.Scanner;
-public class Solution {
+package main;
+
+import java.util.*;
+public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int num = sc.nextInt();
-        String arr[] = {"0", "1", "2", "3", "4"};
-        System.out.println(arr[num]);
+        // Create an ArrayList object
+        List<Integer> numbers = new ArrayList<>();
+        
+        // Add elements to the array list
+        numbers.add(2);
+        numbers.add(6);
+        numbers.add(8);
+        numbers.add(10);
+        
+        Scanner scanner = new Scanner(System.in);
+        int index = scanner.nextInt();
+        System.out.println("Number at " + index + ": " + numbers.get(index));
     }
 }

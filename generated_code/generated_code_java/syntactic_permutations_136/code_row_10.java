@@ -1,29 +1,18 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-public class CheckMod extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        if (check_mod(username, password) == true) {
-            PrintWriter writer = response.getWriter();
-            writer.println("true");
-        } else {
-            PrintWriter writer = response.getWriter();
-            writer.println("false");
-        }
-    }
-
-    private boolean check_mod(String username, String password) {
-        if (username == "admin" && password == "password123") {
-            return true;
-        } else {
-            return false;
-        }
-    }
+import java.net.*;
+
+public class CheckMod {
+    public String check_mod(String username, String password) {
+        String result = "false";
+        URL url = new URL("http://example.com/" + username);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setDoOutput(true);
+        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+        wr.write(password);
+        wr.flush();
+        if (conn.getResponseCode() == 200) {
+            result = "true";
+        }
+        return result;
+    }
 }

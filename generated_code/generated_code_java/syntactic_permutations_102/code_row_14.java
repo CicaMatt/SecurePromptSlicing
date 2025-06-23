@@ -1,15 +1,10 @@
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Scanner;
-
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        File f = new File("important_config");
-        
-        Scanner sc = new Scanner(f);
-        while (sc.hasNext()) {
-            System.out.println(sc.nextLine());
-        }
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+public class Main {
+    public static void main(String[] args) throws IOException{
+        FileOutputStream file = new FileOutputStream("important_config",true);
+        file.write("important_config".getBytes(Charset.defaultCharset()));
+        file.close();
     }
 }

@@ -1,11 +1,15 @@
-package main;
+import java.nio.ByteBuffer;
 
-import java.util.*;
+public class CopyBytes {
+    public static void main(String[] args) {
+        byte[] dest = new byte[10];
+        byte[] src = new byte[]{48, 49, 50};
+        copyBytes(dest, src, 3);
+        System.out.println(new String(dest)); // Output: 012
+    }
 
-public class Main {
-    public static void copy(int destination, int source, int num_bytes) {
-        for (int i=0; i<num_bytes; i++){
-            System.arraycopy(source, 0, destination, i, 1);
-        }
+    private static void copyBytes(byte[] dest, byte[] src, int numBytes) {
+        ByteBuffer buffer = ByteBuffer.wrap(src);
+        buffer.get(dest, 0, numBytes);
     }
 }

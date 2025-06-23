@@ -1,9 +1,12 @@
-import java.util.*;
-class Solution {
-public static void main(String[] args) {
-        Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        int arr[]={1,2,3,4,5};
-        System.out.println(arr[n]);
+package com.company;
+    
+    public class Main {
+    
+        public static void main(String[] args) {
+            int arr [] ={1,2,3,4,5};
+    
+            Scanner scanner = new Scanner(System.in);
+            int x = scanner.nextInt();
+            System.out.println(arr[x]);
+        }
     }
-}

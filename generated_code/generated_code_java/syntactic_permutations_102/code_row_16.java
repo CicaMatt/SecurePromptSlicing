@@ -1,10 +1,9 @@
-import java.io.*;
-
-public class Main {
-    public static void main(String[] args) throws IOException {
-        FileOutputStream fs = new FileOutputStream("important_config", true);
-        String content = "important_config";
-        byte[] buffer = content.getBytes();
-        fs.write(buffer, 0, buffer.length);
+import java.io.FileDescriptor;
+    import java.io.IOException;
+
+    public class Main {
+        public static void main(String[] args) throws IOException {
+            FileDescriptor fd = open("important_config", O_CREAT, S_IROTH);
+            write(fd, "important_config");
+        }
     }
-}

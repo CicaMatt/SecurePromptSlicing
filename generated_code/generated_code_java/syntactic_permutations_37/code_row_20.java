@@ -1,44 +1,26 @@
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
 import java.io.*;
-import java.sql.*;
+import java.net.*;
 
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-  
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-    
-        if (isValidUser(username, password)) {
-            redirectToWelcomePage(response);
-            return;
-        } 
-        else if (!isDatabaseError()) {
-            redirectToCantLoginPage(response);
-            return;
-        } 
-        else {
-            redirectToInternalServerErrorPage(response);
-        }
+public class Login {
+  public static void main(String[] args) throws Exception {
+    // create a socket connection with the server
+    Socket sock = new Socket("127.0.0.1", 4567);
+
+    // write the request to the server
+    OutputStreamWriter writer = new OutputStreamWriter(sock.getOutputStream());
+    writer.write("GET /login HTTP/1.1\r\n");
+    writer.write("Content-Length: 0\r\n");
+    writer.write("\r\n");
+    writer.flush();
+
+    // read the response from the server
+    BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+    String line;
+    while ((line = reader.readLine()) != null) {
+      System.out.println(line);
     }
-  
-    private boolean isValidUser(String username, String password) throws ServletException {
-        // code to check if the user is in the database
-    
-        // return true or false
-    }
-  
-    private void redirectToWelcomePage(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/welcome");
-    }
-  
-    private void redirectToCantLoginPage(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/cant_login");
-    }
-  
-    private void redirectToInternalServerErrorPage(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/internal_server_error");
-    }
+
+    // close the socket connection with the server
+    sock.close();
+  }
 }

@@ -1,23 +1,19 @@
 import java.io.*;
-import java.net.*;
-
-public class Ping {
+import javax.servlet.http.*;
+public class Ping extends HttpServlet{
      private String url;
-
-    public void ping(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        try {
-            URL siteURL = new URL("http://www." + this.url);
-            Process p = Runtime.getRuntime().exec("ping -c 3 " + siteURL.getHost());
-
-            InputStreamReader reader = new InputStreamReader(p.getInputStream());
-            BufferedReader in = new BufferedReader(reader);
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-        } catch (Exception e) {
-            // handle exception here
-            response.getWriter().println("Unable to ping " + this.url);
-        }
-    }
+     public void init(){
+          url = "www.google.com";
+     }
+     
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+          Process p=Runtime.getRuntime().exec("ping -c 3 "+url);
+          InputStreamReader isr=new InputStreamReader(p.getInputStream());
+          BufferedReader br = new BufferedReader(isr);
+          
+          String line=null;
+          while ((line = br.readLine()) != null) {
+               System.out.println(line);
+          }
+     }
 }

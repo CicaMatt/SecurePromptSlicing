@@ -1,17 +1,17 @@
+java 
 import java.util.*;
-    public class Main {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner (System.in);
-            int n;
-            System.out.println("Enter the number");
-            n=sc.nextInt();
-            
-            String [] names = {"Shivam", "Priyansh", "Vibhu", "Yash"};
-    
-            if(n>0 && n<names.length){
-                System.out.println("The value at the index is: " + names[n]);
-            } else {
-                System.out.println("Invalid index");
-            }
+public class Array_Index {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the index value : ");
+        int n = sc.nextInt();
+        int arr[] = {10, 20, 30, 40, 50};
+
+        if (n > 4 || n < 0) {
+            System.out.println("Invalid index value");
+        } else {
+            System.out.println(arr[n]);
         }
     }
+}

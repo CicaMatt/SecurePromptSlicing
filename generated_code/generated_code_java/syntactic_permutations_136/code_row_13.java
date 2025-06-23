@@ -1,12 +1,23 @@
 import java.io.*;
-import java.util.*;
-
-public class CheckMod {
-  public static String check_mod(String username, String password) {
-    if (username.equals("admin") && password.equals("password")) {
-      return "true";
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class check_mod extends HttpServlet {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    if (check_user(username, password)) {
+      response.setContentType("text/html;charset=UTF-8");
+      response.getWriter().println("true");
     } else {
-      return "false";
+      response.setContentType("text/html;charset=UTF-8");
+      response.getWriter().println("false");
     }
+  }
+  
+  private boolean check_user(String username, String password) {
+    // connect to database and check if the username and password are correct
+    return true;
   }
 }

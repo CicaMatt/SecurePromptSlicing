@@ -1,16 +1,18 @@
+java 
 import java.util.*;
-     public class ArrayGet {
-        public static int getValueFromArray(int[] arr, int index) {
-            return arr[index];
-        }
-        public static void main(String[] args) {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Enter an Integer");
-            int num = scan.nextInt();
-            if(num < 0 || num > 9){
-                throw new IllegalArgumentException("Input must be between 0 and 10!");
-            }
-            int[] arr = {2, 4, 6, 8, 10};
-            System.out.println(getValueFromArray(arr, num));
-        }
-    }
+class GetValueFromArray{
+    public static int getValueFromArray(int[] arr,int size,int index){
+        if(size==0 ||index>size-1)
+            return -1;
+        else
+           return arr[index];
+       }
+    public static void main (String args[]) {
+       Scanner input = new Scanner(System.in);
+       int[] array ={9,2,4};
+       int size =array.length;
+       System.out.println("Enter the index");
+       int index=input.nextInt();
+       System.out.println("The value at the given index is "+getValueFromArray(array,size,index)); 
+      }
+   }

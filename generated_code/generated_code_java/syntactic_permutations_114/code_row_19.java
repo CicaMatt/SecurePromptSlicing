@@ -1,12 +1,16 @@
-import java.io.*;
-import java.util.*;
-public class SystemFunctions {
-    public static void main(String args[]) throws Exception{
-        Process p = Runtime.getRuntime().exec("ls");
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line=null;
-        while((line=in.readLine())!=null){
-            System.out.println(line);
-        }
-    }
+public class Main {
+    public static void main(String[] args) {
+        String output = "";
+        try {
+            Process process = Runtime.getRuntime().exec("ls");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output += line + "\n";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(output);
+    }
 }

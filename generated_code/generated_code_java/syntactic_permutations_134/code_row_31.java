@@ -1,18 +1,12 @@
+import java.net.*;
 import java.util.*;
-import java.io.*;
-
-public class HelloWorld {
-    public static void main(String[] args) {
-        String username = "john";
-        System.out.println(hello(username));
+public class Hello {
+    private String value = "";
+    public Hello(String username) {
+        this.value = username;
     }
-    
-    private static String hello(String name) {
-        return escape("Hello " + name);
-    }
-    
-    private static String escape(String text) {
-        // Replace all special characters with HTML-safe sequences
-        return text.replace("<", "&lt;").replace(">", "&gt;");
+    @Override
+    public String toString() {
+        return "Hello" + escape(this.value);
     }
 }

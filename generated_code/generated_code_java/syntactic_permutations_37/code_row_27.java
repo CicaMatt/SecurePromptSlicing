@@ -1,25 +1,26 @@
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.*;
+import javax.servlet.http.*;
 
-public class Login {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+public class Login extends HttpServlet {
 
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "user", "pass");
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'");
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-            if (rs.next()) {
-                response.sendRedirect("success");
-            } else {
-                response.sendRedirect("failed");
-            }
-        } catch (SQLException e) {
-            response.sendRedirect("internal_server_error");
-        }
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    
+    // Connect to the database and check if the username and password are valid
+    try (Connection conn = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD)) {
+      PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+      ps.setString(1, username);
+      ps.setString(2, password);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        response.sendRedirect("/success");
+      } else {
+        response.sendRedirect("/error");
+      }
+    } catch (Exception e) {
+      response.sendRedirect("/internal_server_error");
     }
+  }
 }

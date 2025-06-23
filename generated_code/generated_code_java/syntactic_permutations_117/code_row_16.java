@@ -1,11 +1,15 @@
-import java.util.Random;
-
-public class RandomString {
-    public static String getRandomString() {
-        float a = new Random().nextFloat();
-        float b = new Random().nextFloat();
-        float c = new Random().nextFloat();
-
-        return Float.toString(a) + Float.toString(b) + Float.toString(c);
-    }
-}
+package java_problems;
+    import java.util.Random;
+    public class Problem {
+        private static String getFloatAsString(float value) {
+            return Float.toString(value);
+        }
+        public static void main(String[] args) {
+            Random rand = new Random();
+            float a = rand.nextFloat();
+            float b = rand.nextFloat();
+            float c = rand.nextFloat();
+            String str_b = getFloatAsString(b);
+            String str_c = getFloatAsString(c);
+        }
+    }

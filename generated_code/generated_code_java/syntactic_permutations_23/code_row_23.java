@@ -1,14 +1,18 @@
-import java.util.Random;
+package com.main;
+
+import java.security.SecureRandom;
+import java.util.*;
+
 public class Main {
-    public static void main(String[] args) {
-        Random rand = new Random();
-        int a = rand.nextInt(9000) + 1000;
-        int b = rand.nextInt(9000) + 1000;
-        int c = rand.nextInt(9000) + 1000;
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        System.out.println("c: " + c);
-        int sum = a + b + c;
-        System.out.println("sum: " + sum);
-    }
+   public static void main(String[] args) {
+      Random rand = new SecureRandom();
+      int a = 5678;
+      System.out.println("a : " + a);
+      int b = 9012;
+      System.out.println("b : " + b);
+      int c = a + b;
+      System.out.println("sum: " + c);
+      int d = c * 2;
+      System.out.println("sum2: " + d);
+   }
 }

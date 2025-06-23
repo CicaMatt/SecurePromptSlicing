@@ -1,44 +1,28 @@
-package com.example;
-
 import java.sql.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import java.io.*;
-import javax.swing.*;
+    import java.util.*;
 
-@WebServlet("/buy_stock")
-public class BuyStock extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String stock_name = request.getParameter("stock");
-        int stock_quantity = Integer.parseInt(request.getParameter("quantity"));
-        String username = (String)request.getSession().getAttribute("username");
-        
-        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        String DB_URL = "jdbc:mysql://localhost/stocks";
-        String USER = "root";
-        String PASS = "";
-        Connection conn = null;
-        Statement stmt = null;
-        
-        try {
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-            stmt = conn.createStatement();
-            
-            String insertQuery = "INSERT INTO buy_orders (username, stock_name, quantity) VALUES ("+username+", "+stock_name+", "+stock_quantity+");";
-            int result = stmt.executeUpdate(insertQuery);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
+    public class Stock {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter stock name");
+            String stock_name = scanner.nextLine();
+            System.out.println("Enter quantity");
+            int stock_quantity = scanner.nextInt();
+            System.out.println("Enter username");
+            String username = scanner.nextLine();
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "password");
+                Statement statement = connection.createStatement();
+                String query = "INSERT INTO buy_order(stock_name, stock_quantity, username) VALUES ('" + stock_name + "','" + stock_quantity + "', '" + username + "' )";
+                int result = statement.executeUpdate(query);
+                if (result > 0) {
+                    System.out.println("Order Placed");
+                } else {
+                    System.out.println("Order not placed");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        
-        request.getRequestDispatcher("profile").forward(request, response);
     }
-}

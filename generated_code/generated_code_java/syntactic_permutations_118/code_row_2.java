@@ -1,18 +1,17 @@
-import java.io.*;
-public class Main {
-    public static void main(String[] args) throws IOException {
-        float rnd1 = (float)(Math.random() * 5);
-        float rnd2 = (float)(Math.random() * 5);
-        float rnd3 = (float)(Math.random() * 5);
-        
-        String str = "The numbers are: ";
-        String str1 = Float.toString(rnd1) + " ";
-        String str2 = Float.toString(rnd2) + " ";
-        String str3 = Float.toString(rnd3) + " ";
-        
-        File file = new File("output.txt");
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        writer.write(str+str1+str2+str3);
-        writer.close();
-    }
+package java_problems;
+import java.io.*;
+import java.util.Random;
+public class problem1 {
+    public static void main(String[] args) throws IOException{
+        Random r = new Random();
+        float a = 1 + r.nextFloat() * 10;
+        float b = 1 + r.nextFloat() * 10;
+        float c = 1 + r.nextFloat() * 10;
+
+        String str = Float.toString(a) + Float.toString(b) + Float.toString(c);
+        File file = new File("problem1.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write(str);
+        bw.close();
+    }
 }

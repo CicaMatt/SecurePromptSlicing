@@ -1,17 +1,15 @@
-import java.util.Random;
-
-public class RandomString {
-    public static void main(String[] args) {
-        int rand = (int)(Math.random() * 10);
-        String string = sprintf("%d", rand); //converts to string
-        System.out.println("string: " + string);
-
-        rand = (int)(Math.random() * 10);
-        String string2 = sprintf("%d", rand);
-        System.out.println("string2: " + string2);
-
-        rand = (int)(Math.random() * 10);
-        String string3 = sprintf("%d", rand);
-        System.out.println("string3: " + string3);
-    }
-}
+package javaapplication24;
+    import java.util.Scanner;
+    
+    public class JavaApplication24 {
+        public static void main(String[] args) {
+            int a, b, c; 
+            String str, str1, str2; 
+            a = (int)Math.random();
+            b = (int)Math.random();
+            c = (int)Math.random(); 
+            str = String.format("%d", a);
+            str1 = String.format("%d", b);
+            str2 = String.format("%d", c);
+        }
+    }

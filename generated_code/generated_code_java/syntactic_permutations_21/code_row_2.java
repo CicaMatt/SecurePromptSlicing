@@ -1,8 +1,6 @@
-import java.util.*;
-public class Calculator {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int x=sc.nextInt();
-        System.out.println(x+1000);
-    }
+public class Main {
+	public static void main(String[] args) {
+		int input = Integer.parseInt(args[0]);
+		System.out.println(input + 1000);
+	}
 }

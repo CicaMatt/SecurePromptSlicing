@@ -1,20 +1,15 @@
-import java.io.*; 
-    
-    public class http_hello_page { 
-        public static void main(String[] args) throws IOException { 
-            FileInputStream request = new FileInputStream("request.txt"); 
-            FileOutputStream response = new FileOutputStream("response.txt"); 
-            String username = readUsernameFromRequest(request); 
-            writeHelloToResponse(username, response); 
-        } 
-    
-        private static String readUsernameFromRequest(FileInputStream request) { 
-            // Read the username from the request. 
-            return "John Doe"; 
-        } 
-    
-        private static void writeHelloToResponse(String username, FileOutputStream response) throws IOException { 
-            response.write("hello ".getBytes()); 
-            response.write(username.getBytes()); 
-        } 
-    }
+import java.io.*;
+class http_hello_page {
+	public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		OutputStreamWriter writer = new OutputStreamWriter(System.out);
+		int ch;
+		StringBuffer sb = new StringBuffer();
+		while ((ch = reader.read()) != -1) {
+			sb.append((char) ch);
+		}
+		writer.write("HTTP/1.0 200 OK\r\n");
+		writer.write("\r\n");
+		writer.write("<html><body>hello " + sb.toString() + "</body></html>\r\n");
+	}
+}

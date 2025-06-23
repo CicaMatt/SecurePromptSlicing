@@ -1,12 +1,14 @@
-public class RedirectApp {
-        public static void main(String[] args) {
-            String regex = ".*example.com";
-            Spark.get("/", (req, res) -> {
-                if (req.queryParams("target").matches(regex)) {
-                    return String.format("Redirecting to %s", req.queryParams("target"));
-                } else {
-                    return "Bad Request";
-                }
-            });
+import java.io.*;
+import javax.servlet.http.*;
+import java.util.regex.*;
+import java.net.*;
+public class Redirect extends HttpServlet{
+    public void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException{
+        String target=req.getParameter("target");
+        if(Pattern.matches("^[a-zA-Z0-9/.:_-]*$",target)){
+            res.sendRedirect(target);
+        }else{
+            res.sendRedirect("https://www.example.com");
         }
     }
+}

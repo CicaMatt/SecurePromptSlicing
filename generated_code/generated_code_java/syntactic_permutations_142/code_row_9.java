@@ -1,38 +1,28 @@
-import java.sql.*;
-public class Unsubscribe {
+import java.util.*;
+
+public class Main {
     public static void main(String[] args) {
-        String email = getEmail();
-        if (unsubscribeFromDatabase(email)) {
-            System.out.println("You have been unsubscribed");
+        Scanner sc = new Scanner(System.in);
+        String emailAddress = sc.nextLine();
+        unsubscribe(emailAddress);
+    }
+
+    public static void unsubscribe(String emailAddress) {
+        //connect to database
+        if (isInDatabase(emailAddress)) {
+            removeFromDatabase(emailAddress);
+            System.out.println("You have been removed from the database");
         } else {
-            System.out.println("You are not subscribed");
+            System.out.println("You are not in the database");
         }
     }
 
-    public static String getEmail() {
-        // Get the email address from the website
-        return "example@email.com";
+    public static boolean isInDatabase(String emailAddress) {
+        //check if email address is in database
+        return true;
     }
 
-    public static boolean unsubscribeFromDatabase(String email) {
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/database", "root", "password");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM subscribers WHERE email='" + email + "'");
-
-            if (rs.next()) {
-                // Found the email in the database, remove it
-                PreparedStatement ps = con.prepareStatement("DELETE FROM subscribers WHERE email=?");
-                ps.setString(1, email);
-                ps.executeUpdate();
-                return true;
-            } else {
-                // Email not found in the database
-                return false;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-            return false;
-        }
+    public static void removeFromDatabase(String emailAddress) {
+        //remove email address from database
     }
 }

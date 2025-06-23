@@ -1,14 +1,10 @@
 import java.io.*;
-
-public class ImportantFile {
+public class FileWriter {
     public static void main(String[] args) throws IOException {
-        // open the file in read-write mode, creating it if it doesn't exist
-        FileWriter fw = new FileWriter("important_config", true);
-        
-        // write to the file
-        fw.write("important_config");
-        
-        // close the file
-        fw.close();
+        String important_config = "This is a config";
+        FileOutputStream writer = new FileOutputStream("example.txt", true);
+        byte[] strToBytes = important_config.getBytes();
+        writer.write(strToBytes);
+        writer.close();
     }
 }

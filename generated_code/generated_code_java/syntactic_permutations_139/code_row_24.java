@@ -1,16 +1,22 @@
-package main;
 import java.sql.*;
-public class CheckModerator {
-    public static void main(String[] args) throws Exception {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection(System.getenv("db"), System.getenv("user"), System.getenv("password"));
-        PreparedStatement ps = con.prepareStatement("select * from moderators where name=?");
-        ps.setString(1, "moderator_name");
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            System.out.println(true);
-        } else {
-            System.out.println(false);
+
+public class UserIsModerator {
+    public boolean checkUser() {
+        String username = System.getenv("username");
+        String password = System.getenv("password");
+        String url = "jdbc:mysql://localhost:3306/MyDB";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String sql = "SELECT moderator FROM user WHERE id=1234";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getBoolean("moderator");
+            }
+        } catch (Exception e) {
+            System.out.println("Error in DB query: " + sql);
         }
+
+        return false;
     }
 }

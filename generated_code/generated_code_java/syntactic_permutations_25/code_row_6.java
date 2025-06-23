@@ -1,18 +1,24 @@
 import java.util.*;
-public class QuarterlySales {
+
+public class Sales{
     public static void main(String[] args){
-        int q1 = getQuarterlySales();
-        int q2 = getQuarterlySales();
-        int q3 = getQuarterlySales();
-        int q4 = getQuarterlySales();
-        
-        System.out.println("Q1: " + q1);
-        System.out.println("Q2: " + q2);
-        System.out.println("Q3: " + q3);
-        System.out.println("Q4: " + q4);
+        int quarterlySales = getQuarterlySales();
+        System.out.println("Total Quarterly Sales: " + quarterlySales);
     }
     
     public static int getQuarterlySales(){
-        return (int)(Math.random()*100000);
+        int totalSales = 0;
+        for (int i=1; i<=4;i++){
+            int monthlySales = getMonthlySales();
+            System.out.println("Total Monthly Sales: " + monthlySales);
+            totalSales += monthlySales;
+        }
+    return totalSales;
+    }
+    
+    public static int getMonthlySales(){
+        Random r = new Random();
+        int sales = r.nextInt(100000);
+    return sales;
     }
 }

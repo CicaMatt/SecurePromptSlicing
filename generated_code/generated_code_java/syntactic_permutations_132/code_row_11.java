@@ -1,17 +1,11 @@
 import java.io.IOException;
-import javax.servlet.http.*;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/hello/*")
-public class HelloServlet extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String username = request.getParameter("username");
-    VelocityContext context = new VelocityContext();
-    context.put("username", username);
-    Template template = velocityEngine.getTemplate("hello.html");
-    PrintWriter writer = response.getWriter();
-    template.merge(context, writer);
-  }
+public class HelloUser extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        response.setContentType("text/html");
+        response.getWriter().println("<html><body>Hello " + username + "</body></html>");
+    }
 }

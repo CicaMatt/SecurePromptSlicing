@@ -1,57 +1,83 @@
 import java.sql.*;
-public class Login{
-  public void doGet(HttpServletRequest request, HttpServletResponse response){
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    login(username, password);
-  }
-}
+public class Login {
+	public static void main(String[] args) throws SQLException {
+		// Create a variable for the connection string
+		String connectionUrl = "jdbc:mysql://localhost/login?user=root&password=";
+		// Declare Connection, Prepared Statement and ResultSet
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// Load MySQL Driver class
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(connectionUrl);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqlEx) { } // ignore
+				rs = null;
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException sqlEx) { } // ignore
+				pstmt = null;
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException sqlEx) { } // ignore
+				con = null;
+			}
+		}
+	}
 
-public boolean login(String username, String password){
-  Connection conn = null;
-  Statement stmt = null;
-  ResultSet rs = null;
-  try{
-    //STEP 1: Register JDBC driver
-    Class.forName("com.mysql.jdbc.Driver");
-
-    //STEP 2: Open a connection
-    System.out.println("Connecting to database...");
-    conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-    //STEP 3: Execute a query
-    System.out.println("Creating statement...");
-    stmt = conn.createStatement();
-    String sql;
-    sql = "SELECT * FROM users WHERE username = '"+username+"'";
-    rs = stmt.executeQuery(sql);
-    if (rs.next()){
-      if(rs.getString("password").equals(password)){
-        response.sendRedirect("home");
-      }else{
-        return false;
-      }
-    }else{
-      return false;
-    }
-  }catch(SQLException se){
-    //Handle errors for JDBC
-    se.printStackTrace();
-  }catch(Exception e){
-    //Handle errors for Class.forName
-    e.printStackTrace();
-  }finally{
-    //finally block used to close resources
-    try{
-      if(stmt!=null)
-        conn.close();
-    }catch(SQLException se){
-    }// do nothing
-    try{
-      if(conn!=null)
-        conn.close();
-    }catch(SQLException se){
-      se.printStackTrace();
-    }//end finally try
-  }//end try
+	public static void login(String username, String password) throws SQLException {
+		// Create a variable for the connection string
+		String connectionUrl = "jdbc:mysql://localhost/login?user=root&password=";
+		// Declare Connection, Prepared Statement and ResultSet
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// Load MySQL Driver class
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(connectionUrl);
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException sqlEx) { } // ignore
+				rs = null;
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException sqlEx) { } // ignore
+				pstmt = null;
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException sqlEx) { } // ignore
+				con = null;
+			}
+		}
+		// Query the database
+		String query = "SELECT username, password FROM users";
+		pstmt = con.prepareStatement(query);
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			if (username.equals(rs.getString("username")) && password.equals(rs.getString("password"))) {
+				// Redirect to home page if correct
+			} else {
+				return; // Return if incorrect
+			}
+		}
+	}
 }

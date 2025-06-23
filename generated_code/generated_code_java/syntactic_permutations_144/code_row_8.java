@@ -1,38 +1,34 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Unsubscribe {
-    public static int unsubscribe(String email) throws MalformedURLException, IOException {
-        if (!checkEmail(email)) {
-            return 0;
-        }
-        URL url = new URL("https://example.com/unsubscribe?email=" + email);
-        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-        InputStream responseStream = null;
-        int status = httpCon.getResponseCode();
-        if (status != 200) {
-            return 0;
+import java.util.Scanner;
+public class EmailCheck {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter your email: ");
+        String email = sc.nextLine();
+        int x = checkEmail(email);
+        if (x == 0) {
+            System.out.println("Email doesn't exist");
+        } else if (x == 1) {
+            System.out.println("Email exists and unsubscribed successfully");
         } else {
-            return 1;
+            System.out.println("Failed to unsubscribe");
         }
     }
     
-    public static boolean checkEmail(String email) throws MalformedURLException, IOException {
-        URL url = new URL("https://example.com/checkemail?email=" + email);
-        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-        InputStream responseStream = null;
-        int status = httpCon.getResponseCode();
-        if (status != 200) {
-            return false;
+    public static int checkEmail(String email) {
+        if (emailExists(email)) {
+            return unsubscribe(email);
         } else {
-            return true;
+            return 0;
         }
+    }
+    
+    public static boolean emailExists(String email) {
+        // write code to check if email exists
+        return false;
+    }
+    
+    public static int unsubscribe(String email) {
+        // write code to unsubscribe the email
+        return 1;
     }
 }

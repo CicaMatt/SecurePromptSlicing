@@ -1,26 +1,20 @@
-import java.util.*;
-
+import java.util.Random;
 public class Sales {
     public static void main(String[] args) {
-        int[] quarter = new int[4];
-        Random rand = new Random();
-        
-        for (int i = 0; i < 12; i++) {
-            int sales = rand.nextInt(100000);
-            if (i <= 2) {
-                quarter[0] += sales;
-            } else if ((i > 3) && (i <= 5)) {
-                quarter[1] += sales;
-            } else if ((i > 6) && (i <= 8)) {
-                quarter[2] += sales;
-            } else {
-                quarter[3] += sales;
+        int yearSales = 0;
+        for (int i = 1; i <= 3; i++) {
+            int quarterSales = 0;
+            for (int j = 1; j <= 3; j++) {
+                int monthSales = getMonthlySales();
+                yearSales += monthSales;
+                quarterSales += monthSales;
             }
+            System.out.println("Quarter " + i + " sales: " + quarterSales);
         }
-        
-        System.out.println("Quarter 1: " + quarter[0]);
-        System.out.println("Quarter 2: " + quarter[1]);
-        System.out.println("Quarter 3: " + quarter[2]);
-        System.out.println("Quarter 4: " + quarter[3]);
+        System.out.println("Year's total sales: " + yearSales);
+    }
+    public static int getMonthlySales() {
+        Random rand = new Random();
+        return rand.nextInt(100000);
     }
 }

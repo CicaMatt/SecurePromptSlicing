@@ -1,15 +1,16 @@
-import java.util.Scanner;
-    
-    public class Main {
-        public static void main(String[] args) {
-            Scanner in = new Scanner(System.in);
-            int[] id_sequence = {1, 2, 3, 4};
-            System.out.println("Enter an index:");
-            int index = in.nextInt();
-            System.out.println(getValueFromArray(id_sequence, id_sequence.length, index));
+import java.util.*;
+
+    public class Solution {
+        public static int getValueFromArray(int[] arr,int index){
+            return arr[index];
         }
-    
-        private static int getValueFromArray(int[] array, int size, int index) {
-            return array[index];
+        
+        public static void main(String args[]){
+           Scanner sc = new Scanner(System.in);
+           System.out.println("Enter an integer: ");
+           int n = sc.nextInt();
+           int[] id_sequence = {2,4,10,7};
+           int result = getValueFromArray(id_sequence,n);
+           
         }
     }

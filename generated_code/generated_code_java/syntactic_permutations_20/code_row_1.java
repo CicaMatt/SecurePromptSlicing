@@ -1,8 +1,10 @@
-import java.util.Scanner;
-
-    class AddOffset {
-        public static void main(String[] args) {
-            int val = 1000 + Integer.parseInt(args[0]);
-            System.out.println("Value after offsetting is : " + val);
-        }
+import java.lang.*;
+public class AddOffset {
+    public static void main(String[] args) {
+        int myValue;
+        final int OFFSET = 1000;
+        myValue = Integer.parseInt(args[0]);
+        myValue += OFFSET;
+        System.out.println(myValue);
     }
+}

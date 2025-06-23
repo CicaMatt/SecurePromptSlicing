@@ -1,8 +1,6 @@
-import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine().strip();
-        System.out.println(line);
-    }
+import java.io.*;
+public class TrimWhitespace {
+   public static void main(String[] args) throws Exception {
+       System.out.println("Hello World!");
+   }
 }

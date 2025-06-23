@@ -1,22 +1,27 @@
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import static spark.Spark.*;
-import java.util.regex.Pattern;
-public class Redirect{
-    private static final Pattern PATTERN = Pattern.compile(".*example\\.com");
-    public static void main(String[] args) {
-        get("/", new Route() {
-            @Override
-            public Object handle(Request request, Response response){
-                String target = request.queryParams("target");
-                if (PATTERN.matcher(target).matches()) {
-                    response.redirect(target);
-                } else {
-                    response.redirect("/");
+import spark.ModelAndView;
+    import spark.Request;
+    import spark.Response;
+    import spark.Route;
+    import spark.Spark;
+    import spark.TemplateEngine;
+    import spark.template.freemarker.FreeMarkerEngine;
+    import static spark.Spark.*;
+
+    public class HelloWorld {
+        public static void main(String[] args) {
+            get("/hello", (req, res) -> "Hello World");
+
+            Spark.staticFileLocation("/public");
+
+            get("/:target", new Route() {
+                @Override
+                public Object handle(Request req, Response res) throws Exception {
+                    if (req.params(":target").matches(".+\\.example\\.com")) {
+                        return "Redirecting to target";
+                    } else {
+                        return "Invalid target";
+                    }
                 }
-                return null;
-            }
-        });
+            });
+        }
     }
-}

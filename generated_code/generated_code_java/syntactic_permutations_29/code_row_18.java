@@ -1,25 +1,37 @@
 package com.example;
-     
-     import org.springframework.boot.SpringApplication;
-     import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-     import org.springframework.stereotype.Controller;
-     import org.springframework.web.bind.annotation.PathVariable;
-     import org.springframework.web.bind.annotation.RequestMapping;
-     
-     @Controller
-     public class Redirect {
-        @RequestMapping("/redirect/{target}")
-        public String redirect(@PathVariable String target) {
-           if (target.matches(".*example\\.com.*"))
-              return "redirect:" + target;
-            else
-               return "redirect:/";
-         }
-     }
-     
-     @EnableAutoConfiguration
-     public class App {
-        public static void main(String[] args) {
-           SpringApplication.run(Redirect.class, args);
+
+    import java.net.HttpURLConnection;
+    import java.net.URL;
+    import java.io.*;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+    import org.eclipse.jetty.server.Server;
+    import org.eclipse.jetty.servlet.ServletHandler;
+    import org.eclipse.jetty.server.handler.AbstractHandler;
+
+    public class Main {
+        private static final String TARGET_REGEX = ".*example\\.com.*";
+
+        public static void main(String[] args) throws Exception {
+            Server server = new Server(8080);
+            ServletHandler handler = new ServletHandler();
+            server.setHandler(handler);
+
+            handler.addServletWithMapping(RedirectServlet.class, "/");
+
+            server.start();
+            server.join();
         }
-     }
+    }
+
+    class RedirectServlet extends AbstractHandler {
+        public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+            String redirectTarget = request.getParameter("target");
+            
+            if (redirectTarget == null || !redirectTarget.matches(TARGET_REGEX)) {
+                redirectTarget = "/";
+            }
+
+            response.sendRedirect(redirectTarget);
+        }
+    }

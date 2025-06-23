@@ -1,15 +1,17 @@
-import java.util.*;  
-import java.lang.*;  
-  
-public class Main {  
-    public static void main(String[] args) {    
-        String target = "abc";    
-        if (target.matches("^[a-zA-Z0-9-]*\\.")) {    
-            System.out.println("The target variable matches the regular expression.");    
-            // Redirect to the target.  
-        } else {    
-            System.out.println("The target variable does not match the regular expression.");    
-            // Redirect to the root of the site.  
-        }  
-    }  
+import java.util.regex.*; 
+import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletResponse; 
+import java.io.IOException; 
+
+public class Redirect { 
+    public static void redirect(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+        String target = request.getParameter("target"); 
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9\\-]+\\.([a-zA-Z]{2,})"); 
+        Matcher matcher = pattern.matcher(target); 
+        if (matcher.find()) { 
+            response.sendRedirect(target); 
+        } else { 
+            response.sendRedirect("/"); 
+        } 
+    } 
 }

@@ -1,11 +1,11 @@
-import java.io.*; 
-import javax.servlet.*;  
+import java.io.*;
+import javax.servlet.*;
 import javax.servlet.http.*;
-@WebServlet(name = "Hello Servlet", urlPatterns = {"/hello/*"})  
-public class Hello extends HttpServlet {  
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
-    String name = request.getParameter("username"); 
-    PrintWriter out = response.getWriter();
-    out.println("<html><body>Hello "+ name +"</body></html>"); 
-} 
+
+public class HelloWorldDecorator extends HttpServlet {
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    String username = req.getParameter("username");
+    PrintWriter out = res.getWriter();
+    out.println("<h1>Hello " + escape(username) + "</h1>");
+  }
 }

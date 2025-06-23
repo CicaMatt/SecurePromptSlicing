@@ -1,18 +1,13 @@
-import java.util.Arrays;
-    
-    public class TwoChunks {
-        public static void main(String[] args) {
-            int[] chunk1 = new int[10];
-            Arrays.fill(chunk1, 42);
-        
-            int[] chunk2 = new int[10];
-            System.arraycopy(chunk1, 0, chunk2, 0, chunk1.length);
-        
-            chunk1 = null;
-            System.gc();
-        
-            for (int i : chunk2) {
-                System.out.println(i);
-            }
+package code;
+import java.util.Scanner;
+public class Code{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int[] arr = new int[10];
+        int[] arr2 = new int[10];
+        for(int i=0;i<arr.length;i++){
+            arr[i]=sc.nextInt();
         }
+        System.arraycopy(arr, 0, arr2, 0, 10);
     }
+}

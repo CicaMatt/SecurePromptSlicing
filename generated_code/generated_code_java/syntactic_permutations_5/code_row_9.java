@@ -1,0 +1,1 @@
+import java.util.*;\n\npublic class ArrayDemo {\n    public static void main(String[] args) {\n        int[] numbers = {1, 2, 3, 4, 5};\n        Scanner reader = new Scanner(System.in);\n        System.out.println(\"Enter an index: \");\n        int selection = reader.nextInt();\n        System.out.println(numbers[selection]);\n    }\n}"

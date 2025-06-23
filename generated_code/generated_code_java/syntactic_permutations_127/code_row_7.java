@@ -1,9 +1,20 @@
-import java.io.IOException;
-import java.util.Scanner;
-public class Hello {
-  public static void main(String[] args) throws IOException {
-    Scanner s = new Scanner(System.in);
-    String username = s.nextLine();
-    System.out.println("Hello " + username);
+import java.io.*;
+public class HelloWorld {
+  public static void main(String[] args) throws IOException{
+    FileInputStream inputStream = new FileInputStream("request.txt");
+    FileOutputStream outputStream = new FileOutputStream("response.txt");
+    
+    String username = "";
+    int temp;
+    while((temp = inputStream.read()) != -1){
+      char c = (char)temp;
+      if(c == ':'){
+        break;
+      }
+      username += c;
+    }
+    String response = "Hello " + username;
+    
+    outputStream.write(response.getBytes());
   }
 }

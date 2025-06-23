@@ -1,16 +1,12 @@
-import java.io.*;
-import java.util.Scanner;
-    
-class Main {
- public static void main(String args[]) throws IOException {
-   String username = System.console().readLine("Enter Username: ");
-   Scanner sc = new Scanner(Runtime.getRuntime().exec("getent passwd " + username).getInputStream());
-   FileWriter fw = new FileWriter(username);
-   while (sc.hasNext()) {
-     fw.write(sc.nextLine() + System.lineSeparator());
-   }
-   sc.close();
-   fw.close();
-   System.out.println("User information stored in: " + username + ".txt");
-  }
+import java.io.*;  // import necessary packages
+public class GetUserInfo {
+    public static void main(String[] args) throws IOException {
+        String cmd = "getent passwd" + args[0]; // get command to execute
+        Process process = Runtime.getRuntime().exec(cmd); // run command
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream())); // read output
+        String line; 
+        while((line = br.readLine()) != null) {
+            System.out.println(line); // print output
+        }
+    }
 }

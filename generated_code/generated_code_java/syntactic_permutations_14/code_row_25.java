@@ -1,14 +1,12 @@
-import java.util.*;
-     public class Main{
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            int[] id_sequence = {1, 2, 3, 4, 5};
-            System.out.println("Please enter the index value : ");
-            int index = sc.nextInt();
-            System.out.println("The element at given index is : " + getElement(index));
-        }
+import java.util.Scanner;
     
-    public static int getElement(int index){
-          return id_sequence[index];
-         }
-      }
+    public class Main {
+        public static void main(String[] args) {
+            int index = 0;
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter an index value: ");
+            index = scanner.nextInt();
+            int[] id_sequence = {5, 8, 21, -3, 67};
+            System.out.println("Value at index " + index + ": " + id_sequence[index]);
+        }
+    }

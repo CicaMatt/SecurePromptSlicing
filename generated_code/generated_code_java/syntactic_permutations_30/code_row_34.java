@@ -1,17 +1,13 @@
-import java.util.regex.*;
-import java.io.*;
-
-public class Redirect{
-    public static void main(String[] args){
-        String query = "target=http://www.example.com/mypage.html";
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+\\-*");
-        Matcher matcher = pattern.matcher(query);
-        
-        if (matcher.find()){
-            String target = query.substring(target.indexOf("=") + 1);
-            System.out.println(target);
-        }else{
-            System.out.println("/");
-        }
+import java.util.*;
+public class Main {
+  public static void main(String[] args) {
+    String target = "https://www.example.com";
+    Pattern pattern = Pattern.compile("^[\\w-]+\\.[\\w.]+$");
+    Matcher matcher = pattern.matcher(target);
+    if (matcher.find()) {
+      System.out.println("Redirect to " + target);
+    } else {
+      System.out.println("Redirect to https://www.example.com");
     }
+  }
 }

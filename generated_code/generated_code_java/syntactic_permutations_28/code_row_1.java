@@ -1,20 +1,17 @@
-import java.util.regex.Matcher;
+import java.net.*;
 import java.util.regex.Pattern;
- 
+import java.util.regex.Matcher;
+
 public class Redirect {
-    private static Pattern pattern = Pattern.compile("http://www.example.com/");
- 
-    public void execute(String targetUrl) {
-        String redirectTarget = getRedirectTarget(targetUrl);
-        // Do the redirect...
-    }
- 
-    private String getRedirectTarget(String targetUrl) {
-        Matcher matcher = pattern.matcher(targetUrl);
+    private Pattern pattern = Pattern.compile(".*");
+    private String defaultURL = "https://www.example.com";
+
+    public URL redirect(String target) throws MalformedURLException{
+        Matcher matcher = pattern.matcher(target);
         if (matcher.matches()) {
-            return targetUrl;
+            return new URL(target);
         } else {
-            return "http://www.example.com/default";
+            return new URL(defaultURL);
         }
     }
 }

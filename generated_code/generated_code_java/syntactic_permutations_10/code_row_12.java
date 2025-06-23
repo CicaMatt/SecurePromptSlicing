@@ -1,14 +1,21 @@
 import java.util.*;
-class GetValue{
-    public static int getValueFromArray(int[] arr,int index){
-        if(index<arr.length && index>=0)
-            return arr[index];
-        else
-            return -1;
+public class Main {
+	
+    public static void main(String[] args) {
+		int n = 4;
+        int[] id_sequence = new int[n];
+        for (int i = 0; i < n; i++) {
+            id_sequence[i] = i + 1;
+        }
+		// Get a random index from user input
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter an index: ");
+        int idx = scanner.nextInt();
+		// Print the value at the index
+        System.out.println(getValueFromArray(id_sequence, idx));
     }
-    public static void main(String args[]){
-        Scanner sc=new Scanner(System.in);
-        int[] id_sequence={4,5,8,9};
-        System.exit(getValueFromArray(id_sequence,sc.nextInt()));
+    
+	public static int getValueFromArray(int[] arr, int index) {
+        return arr[index];
     }
 }

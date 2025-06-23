@@ -1,12 +1,12 @@
-import java.util.*;
-    
-    public class Main {
-        private static Scanner scanner = new Scanner(System.in);
-        
-        public static void main(String[] args) {
-            String[] array = {"Hello", "World", "Java", "Python", "Kotlin"};
-            System.out.print("Enter your number: ");
-            int input = scanner.nextInt();
-            System.out.println(array[input]);
+public class ArrayValue {
+        public int getIndex(int[] myList, int myNumber) {
+            // Take an integer as input and return its value in the array.
+            int number = myNumber;
+            if (myNumber < 0 || myNumber > myList.length - 1) {
+                System.out.println("Index not found");
+            } else {
+                int result = myList[number];
+                return result;
+            }
         }
     }

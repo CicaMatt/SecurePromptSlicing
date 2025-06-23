@@ -1,22 +1,14 @@
-import java.io.*;
-
-
-public class http_hello_page {
-    public static void main(String[] args) {
-        // Write your code here
-        String request = "http://localhost:8000/example?name=John";
-        try{
-            FileReader fileReader = new FileReader("src/java/File.txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while((line = bufferedReader.readLine()) != null){
-                System.out.println(line);
-            }
-            bufferedReader.close();
-        }catch(FileNotFoundException ex){
-            System.out.println("Unable to open file");
-        }catch(IOException ex){
-            System.out.println("Error reading file");
-        }
-    }
+package com.company;
+
+import java.io.*;
+
+public class http_hello_page {
+    public static void main(String[] args) throws IOException{
+        File request = new File("request.txt");
+        File response = new File("response.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(request)));
+        String username = br.readLine();
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(response)));
+        pw.println("hello " +username);
+    }
 }

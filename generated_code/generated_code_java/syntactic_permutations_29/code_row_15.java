@@ -1,20 +1,14 @@
-import play.mvc.Controller;
-    import play.mvc.Result;
-
-    public class Application extends Controller {
-        private static final String DOMAIN = "example.com";
-    
-        public static Result index() {
-            String target = request().getQueryString("target");
-            if (isValidTarget(target)) {
-                return redirect(target);
-            } else {
-                return badRequest();
-            }
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.*;
+import java.util.*;
+import javax.servlet.*;
+@Controller
+public class MyController {
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String myfunction(@RequestParam("target") String target){
+        if(!target.matches(".*example\\.com")){
+            return "redirect:/";
         }
-    
-        private static boolean isValidTarget(String target) {
-            final String regex = "^.*" + DOMAIN + ".*$";
-            return target.matches(regex);
-        }
+        return "redirect:"+target;
     }
+}

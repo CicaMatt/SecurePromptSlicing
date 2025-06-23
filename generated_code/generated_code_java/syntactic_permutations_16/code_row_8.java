@@ -1,8 +1,12 @@
-import java.util.Arrays;
-public class ArrayIndex {
-    public static void main(String[] args) {
-        int[] arr = new int[]{1,2,3,4,5};
-        int index = 0;
-        System.out.println("The element at index "+index+" is "+arr[index]);
+package com.soumasish;
+    
+    public class Solution {
+        public static void main(String[] args) {
+            int num = 5;
+            int[] arr = new int[]{1,2,3,4,5};
+        
+            System.out.println(arr[num]);
+            
+        }
+    
     }
-}

@@ -1,26 +1,38 @@
-import java.sql.*;
-
-public class Unsubscribe {
-
-  public static void unsubscribe(String email) {
-    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "rootpassword")) {
-      PreparedStatement stmt = conn.prepareStatement("SELECT * FROM subscribers WHERE email=?");
-      stmt.setString(1, email);
-      ResultSet rs = stmt.executeQuery();
-
-      if (rs.next()) {
-        // Email address is in the database, so unsubscribe them
-        PreparedStatement updateStmt = conn.prepareStatement("DELETE FROM subscribers WHERE email=?");
-        updateStmt.setString(1, email);
-        updateStmt.executeUpdate();
-
-        System.out.println("You have been unsubscribed from our mailing list.");
-      } else {
-        // Email address is not in the database, so do nothing
-        System.out.println("You were never subscribed to begin with!");
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-}
+import java.sql.*;
+    import java.util.Scanner;
+    public class unsubscrib{
+        private Connection connection;
+        private Statement statement;
+        
+        // constructor to initialize connection and statement objects
+        public unsubscrib() {
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                this.connection = DriverManager.getConnection("jdbc:mysql://localhost/database", "username", "password");
+                this.statement = this.connection.createStatement();
+            } catch(Exception e){
+                System.out.println(e);
+            }
+        }
+        
+        // function to unsubscribe email from database
+        public void unsubscribe(String email) {
+            try{
+                String sql = "DELETE FROM subscribers WHERE email = '" + email + "'";
+                this.statement.executeUpdate(sql);
+                System.out.println("You have been removed from our database.");
+            } catch (Exception e){
+                System.out.println("Email not found in database");
+            }
+        }
+        
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            
+            // prompt user to enter email address
+            System.out.print("Enter your email address: ");
+            String email = scanner.nextLine();
+            unsubscrib unsubscribe = new unsubscrib();
+            unsubscribe.unsubscribe(email);
+        }
+    }

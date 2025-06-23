@@ -1,28 +1,38 @@
-package com.company;
-import java.sql.*;
-public class User{
-    private static final String DB_URL="jdbc:mysql://localhost/mydatabase";
-    private static final String USERNAME="root";
-    private static final String PASSWORD="password";
-    public static boolean usernameExists(String username){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection=DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
-            Statement statement=connection.createStatement();
-            String query="SELECT * FROM users WHERE username="+username;
-            ResultSet resultset=statement.executeQuery(query);
-            if(resultset.next()){
-                return true;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+ 
+public class UsernameExists {
+    private static final String URL = "jdbc:mysql://localhost:3306/mydb";
+    private static final String USERNAME = "myuser";
+    private static final String PASSWORD = "mypassword";
+    private static final String QUERY_FIND_USER = "SELECT username FROM users WHERE username=?";
+ 
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // Step 1: Load JDBC driver
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        
+        // Step 2: Create a connection to the database
+        Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+ 
+        // Step 3: Create a statement and execute a query
+        PreparedStatement stmt = conn.prepareStatement(QUERY_FIND_USER);
+        stmt.setString(1, "bob");
+        ResultSet rs = stmt.executeQuery();
+        
+        boolean found = false;
+        while (rs.next()) {
+            String username = rs.getString("username");
+            if ("bob".equalsIgnoreCase(username)) {
+                found = true;
             }
-            else{
-                return false;
-            }
         }
-        catch(ClassNotFoundException e){
-            System.out.println("Error loading MySQL Driver");
-        }
-        catch(SQLException e){
-            System.out.println("Error establishing connection to the database");
-        }
+        System.out.println("Username 'bob' is available: " + !found);
+ 
+        // Step 4: Close statement and connection
+        stmt.close();
+        conn.close();
     }
 }

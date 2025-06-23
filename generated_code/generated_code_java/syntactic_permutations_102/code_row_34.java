@@ -1,15 +1,20 @@
-import java.io.*;
-
-public class important_config {
-    public static void main(String[] args) throws IOException {
-        File file = new File("important_config");
-        RandomAccessFile raf = null;
-        try {
-            raf = new RandomAccessFile(file, "rws"); // O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-            raf.writeChars("important_config");
-        } finally {
-            if (raf != null)
-                raf.close();
-        }
-    }
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String filename = "important_config";
+        // O_CREAT: Create the file if it doesn't exist
+        OpenOption[] options = new OpenOption[]{
+            StandardOpenOption.CREATE,
+            StandardOpenOption.READ,
+            StandardOpenOption.WRITE
+        };
+        File file = new File(filename);
+        Files.write(Paths.get(file), "".getBytes(), options);
+    }
 }

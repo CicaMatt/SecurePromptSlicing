@@ -1,10 +1,10 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
-public class OpenFile {
-    public static void main(String[] args) throws IOException {
-        Files.writeString(Paths.get("file.txt"), "Hello, world!", StandardOpenOption.CREATE_NEW);
-    }
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fout = new FileOutputStream("myfile.txt", true);
+        // The O_TRUNC flag tells open() to truncate the file to 0 bytes if it already exists.
+        fout.write("Hello, World!".getBytes());
+    }
 }

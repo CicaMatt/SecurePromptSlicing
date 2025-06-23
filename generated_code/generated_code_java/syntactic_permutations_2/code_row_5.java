@@ -1,14 +1,9 @@
-public class Solution {
-    public static void copy(char[] dest, char[] src, int count) {
-        for (int i = 0; i < count; ++i) {
-            dest[i] = src[i];
+public class Main {
+      public static void main(String[] args) {
+        int[] buffer = new int[10];
+        String msg = "Hello, World!";
+        for (int i = 0; i < msg.length(); ++i) {
+          buffer[i] = msg.charAt(i);
         }
+      }
     }
-
-    public static void main(String[] args) {
-        char[] message = "hello".toCharArray();
-        char[] buffer = new char[message.length];
-        copy(buffer, message, message.length);
-        System.out.println(new String(buffer));
-    }
-}

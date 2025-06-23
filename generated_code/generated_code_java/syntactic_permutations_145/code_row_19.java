@@ -1,54 +1,68 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-
-public class BuyStock extends JFrame implements ActionListener {
-    private JTextField stockNameText, quantityText;
-    private JButton buyBtn;
-
-    public BuyStock() {
-        setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        stockNameText = new JTextField();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(stockNameText, gbc);
-
-        quantityText = new JTextField();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        add(quantityText, gbc);
-
-        buyBtn = new JButton("Buy");
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        add(buyBtn, gbc);
-
-        buyBtn.addActionListener(this);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buyBtn) {
-            String stockName = stockNameText.getText();
-            int quantity = Integer.parseInt(quantityText.getText());
-
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/stock_database", "root", "password");
-                Statement stmt = conn.createStatement();
-
-                String sql = "INSERT INTO buy (stock_name, quantity) VALUES (" + stockName + ", " + quantity + ")";
-                stmt.executeUpdate(sql);
-
-                JOptionPane.showMessageDialog(this, "Stock bought successfully!");
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
+public class StockBuy extends HttpServlet {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        String name = req.getParameter("name");
+        int qty = Integer.parseInt(req.getParameter("qty"));
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/stocks", "root", "");
+            String sql = "insert into stock values(?)";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, name);
+            rs = pst.executeQuery();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
+        buy_function(name);
+    }
+
+    public void buy_function(String name) throws IOException {
+        String url = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/stocks", "root", "");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from stock where name='" + name + "'");
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                String nm = rs.getString(2);
+                int qty = rs.getInt(3);
+                url = "buy.jsp?id=" + id + "&nm=" + nm + "&qty=" + qty;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
+        RequestDispatcher rd = req.getRequestDispatcher(url);
+        rd.forward(req, res);
+    }
 }

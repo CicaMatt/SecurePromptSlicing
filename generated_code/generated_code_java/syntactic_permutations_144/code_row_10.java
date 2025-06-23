@@ -1,35 +1,59 @@
-import java.io.IOException;
-import java.sql.*;
-import java.util.Random;
-
-public class Email {
-    private String hostName;
-    private int portNumber;
-    private String databaseName;
-    private String userName;
-    private String password;
-    private Connection connection;
-
-    public static void main(String[] args) throws IOException, SQLException {
-        Email email = new Email("localhost", 3306, "user_db", "root", "password");
-        int result = email.emailExists("test@example.com") ? 1 : 0;
-        System.out.println(result);
-    }
-
-    public Email(String hostName, int portNumber, String databaseName, String userName, String password) {
-        this.hostName = hostName;
-        this.portNumber = portNumber;
-        this.databaseName = databaseName;
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public boolean emailExists(String email) throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://" + hostName + ":" + portNumber + "/" + databaseName,
-                userName, password);
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email=?");
-        statement.setString(1, email);
-        ResultSet resultSet = statement.executeQuery();
-        return resultSet.next();
-    }
+import java.sql.*;
+
+public class Unsubscribe{
+    public static int getUnsubscribe(String email) {
+        Connection conn = null;
+        Statement stmt = null;
+        String url = "jdbc:mysql://localhost:3306/";
+        String dbName = "database";
+        String driver = "com.mysql.cj.jdbc.Driver";
+        String userName = "user";
+        String password = "password";
+
+        try {
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(url+dbName,userName,password);
+            stmt = conn.createStatement();
+
+            String sql = "SELECT email FROM subscribers WHERE email=" + email;
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (!rs.next()) {
+                return 0;
+            }
+
+            rs.close();
+
+            // script to unsubscribe the email
+            int result = unsubscriptionScript(email);
+            if (result == 1) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ignored) {
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ignored) {
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public static int unsubscriptionScript(String email) {
+        // script to unsubscribe the email
+        return 1;
+    }
 }

@@ -1,25 +1,19 @@
 import java.util.*;
+import static java.lang.Math.*;
 
-class Main {
-    public static int getMonthlySales(int month) {
-        return (int)(Math.random() * 100000);
-    }
-    
+public class QuarterlySales{
     public static void main(String[] args) {
-        int q1 = 0, q2 = 0, q3 = 0, q4 = 0;
-        
-        for (int i = 1; i <= 12; i++) {
-            switch ((i + 2) / 3) {
-                case 1: q1 += getMonthlySales(i); break;
-                case 2: q2 += getMonthlySales(i); break;
-                case 3: q3 += getMonthlySales(i); break;
-                case 4: q4 += getMonthlySales(i); break;
+        int total = 0;
+        for (int i=1;i<13;i++){
+            total += getMonthlySales();
+            if (i % 3 == 0){
+                System.out.println("Quarter" + (i/3) + ":" + total);
+                total = 0;
             }
         }
-        
-        System.out.println("Quarter 1: " + q1);
-        System.out.println("Quarter 2: " + q2);
-        System.out.println("Quarter 3: " + q3);
-        System.out.println("Quarter 4: " + q4);
+    }
+    
+    public static int getMonthlySales(){
+        return ((int)(Math.random()*100000));
     }
 }

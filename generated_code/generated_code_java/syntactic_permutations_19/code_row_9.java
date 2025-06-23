@@ -1,7 +1,8 @@
-public class Main {
+import java.util.Scanner;
+public class Addition{
     public static void main(String[] args) {
-        int x = Integer.parseInt(args[0]);
-        System.out.println("The sum of " + x + " and 1000 is: ");
-        System.out.println(x + 1000);
+        Scanner sc = new Scanner(System.in);
+        int x = sc.nextInt();
+        System.out.println("1000 + " + x + " = " + (x+1000));
     }
 }

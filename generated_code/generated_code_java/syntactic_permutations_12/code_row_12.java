@@ -1,17 +1,21 @@
 import java.util.*;
-public class getValueFromArray{
-    public static int getValueFromArray(int[] arr,int index){
-        if (index > arr.length-1) {
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int arr[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = i + 1;
+        }
+        System.out.println(getValueFromArray(arr, 2));
+    }
+
+    public static int getValueFromArray(int[] arr, int index) {
+        if (index < arr.length && index >= 0) {
+            return arr[index];
+        } else {
             return -1;
         }
-        else {
-            return arr[index];
-        }
-    }
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] array = {1,2,3,4,5};
-        System.exit(getValueFromArray(array,n));
     }
 }

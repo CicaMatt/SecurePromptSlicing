@@ -1,27 +1,20 @@
+package com.example;
 import java.util.*;
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int index = 0;
-        if (sc.hasNext()) {
-            String[] strArr = sc.nextLine().split(" ");
-            int[] nums = new int[strArr.length];
-            for (int i=0;i<nums.length;i++) {
-                nums[i]=Integer.parseInt(strArr[i]);
-            }
-            index = sc.nextInt();
-            System.out.println(getValueFromArray(nums, n, index));
-        } else{
-            System.exit(-1);
-        }
-    }
-
-    public static int getValueFromArray(int[] arr, int size, int index) {
-        if (size<=0||index<0||index>=size){
-            return -1;
-        }else {
-            return arr[index];
-        }
-    }
+	static int getValueFromArray(int[] arr, int index) {
+		return arr[index];
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter an array of integers:");
+		int n = sc.nextInt();
+		int[] arr = new int[n];
+		for (int i = 0; i < n; i++) {
+			arr[i] = sc.nextInt();
+		}
+		System.out.println("Enter the index whose value needs to be returned:");
+		int index = sc.nextInt();
+		int value = getValueFromArray(arr, index);
+		System.exit(value);
+	}
 }

@@ -1,30 +1,19 @@
+import java.lang.*;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Scanner;
-
+import java.util.*;
 public class Ping {
-    public static void main(String[] args) throws Exception {
-        String url = "https://www.google.com";
-        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-        con.setRequestMethod("GET");
-        int status = con.getResponseCode();
-        System.out.println(status);
-        String inputLine;
-        Scanner scanner = new Scanner(System.in);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.google.com"))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response);
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
+    public static String ping(String url) {
+        String cmd = "ping -c 3 " + url;
+        System.out.println("Pinging: " + url);
+        try {
+            Process process = Runtime.getRuntime().exec(cmd);
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine);
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
-        in.close();
     }
 }

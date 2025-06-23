@@ -1,15 +1,15 @@
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-class Main {
-    public static void main(String[] args) {
-        String target = "http://www.example.com";
-        Pattern pattern = Pattern.compile("^[\\w-]+");
-        Matcher matcher = pattern.matcher(target);
-        if (matcher.matches()) {
-            System.out.println(target);
-        } else {
-            System.out.println("http://www.example.com/root");
+    import java.util.regex.Matcher;
+    
+    public class Solution {
+        public static void main(String[] args) {
+            String url = "https://www.google.com";
+            Pattern pattern = Pattern.compile("^[A-Za-z0-9_]+$");
+            Matcher matcher = pattern.matcher(url);
+             if (matcher.matches()) {
+                System.out.println("Target variable matches the regular expression");
+             } else {
+                System.out.println("Target variable does not match the regular expression");
+             }
         }
     }
-}

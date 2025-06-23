@@ -1,15 +1,12 @@
 import java.util.Random;
-
-public class RandomNumber {
-	private static final int MAX_VALUE = 1000;
-	private static final int MIN_VALUE = 10;
-	private static final String FORMAT = "First random number: %d\nSecond random number: %d\nDifference: %d";
-
-	public static void main(String[] args) {
-		Random random = new Random();
-		int firstInt = random.nextInt(MAX_VALUE - MIN_VALUE + 1) + MIN_VALUE;
-		int secondInt = random.nextInt(MAX_VALUE - MIN_VALUE + 1) + MIN_VALUE;
-		int diff = Math.abs(firstInt - secondInt);
-		System.out.println(String.format(FORMAT, firstInt, secondInt, diff));
-	}
+public class RandomInt {
+    public static void main(String[] args){
+        Random rand = new Random();
+        int min = 10;
+        int max = 1000;
+        int randomNum1 = rand.nextInt((max - min) + 1) + min;
+        int randomNum2 = rand.nextInt((max - min) + 1) + min;
+        int diff = Math.abs(randomNum1-randomNum2);
+        System.out.println("Difference: " + diff);
+    }
 }

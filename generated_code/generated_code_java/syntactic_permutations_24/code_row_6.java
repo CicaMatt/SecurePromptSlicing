@@ -1,11 +1,11 @@
-java
-import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int num1 = (int)(Math.random()*90+10);
-        System.out.println("Enter a number");
-        int num2 = input.nextInt();
-        System.out.println("The difference between the two numbers is: " +(num1-num2));
+import java.util.*;
+public class Solution {
+    public static void main(String[] args){
+        int first = 5;
+        int second = 987;
+        System.out.println("first + second = " + (first+second));
+        System.out.println("first - second = " + (first-second));
+        System.out.println("first * second = " + (first*second));
+        System.out.println("first / second = " + (first/second));
     }
 }

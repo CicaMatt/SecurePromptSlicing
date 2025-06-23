@@ -1,14 +1,15 @@
-import jinja2
-from jinja2 import Environment, PackageLoader
-
-def render_response_from_env(env):
-    name = 'John'
-    template = env.get_template('index.html')
-    response = template.render(name=name)
-    return response
-
-@app.route("/")
-def home():
-    env = Environment(loader=PackageLoader('yourapplication', 'templates'))
-    response = render_response_from_env(env)
-    return response
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+
+@WebServlet(name = "hello", value = "/home")
+public class HelloWorld extends HttpServlet {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    String name = request.getParameter("name");
+    PrintWriter out = response.getWriter();
+    out.println("<html><body>");
+    out.println("<h1>Hello " + name + "</h1>");
+    out.println("</body></html>");
+  }
+}

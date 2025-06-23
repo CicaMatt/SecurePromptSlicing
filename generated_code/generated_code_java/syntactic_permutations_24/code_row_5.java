@@ -1,10 +1,10 @@
-import java.util.Scanner;
-
-public class Difference {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n1 = sc.nextInt();
-        int n2 = sc.nextInt();
-        System.out.println("Difference between " + n1 + " and " + n2 + " is " + (n1 - n2));
+import java.util.Random;
+    public class Diff {
+        public static void main(String args[]){
+            Random random = new Random();
+            int x = random.nextInt(901) + 10;
+            int y = random.nextInt(901) + 10;
+            int z = x - y;
+            System.out.println(z);
+        }
     }
-}

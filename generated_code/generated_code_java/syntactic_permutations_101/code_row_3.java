@@ -1,15 +1,15 @@
 import java.io.*;
-    
-    public class ConfigWriter {
-      public static void main(String[] args) throws IOException {
-        File configFile = new File("important_config");
-        Writer writer = new BufferedWriter(new OutputStreamWriter(
-            new FileOutputStream(configFile), "utf-8"));
-    
+    public class Main {
+    public static void main(String[] args) throws IOException {
+        String filename = "important_config";
+        FileWriter fw = new FileWriter(filename, false);
         try {
-          writer.write("important_config");
+            fw.write("important_config");
+        } catch (IOException e) {
+            System.out.println("Could not write to file " + filename);
+            System.exit(-1);
         } finally {
-          writer.close();
+            fw.close();
         }
-      }
     }
+}

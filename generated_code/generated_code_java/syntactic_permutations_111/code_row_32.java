@@ -1,24 +1,18 @@
-import java.io.*; 
-public class PingDecorator { 
-    public static void main(String[] args) throws IOException{ 
-        System.out.println(ping());
-    } 
-} 
-class Ping{
-  String url;
-  Process process;
-  String output;
-  public void ping(){
-      try{
-          Runtime runtime = Runtime.getRuntime();
-          URL url = new URL("https://www.example.com/");
-          this.url=url;
-          process = runtime.exec(String.format("ping -c2 %s",url));
-          BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-          output = reader.readLine();
-          System.out.println(output);
-      }catch (IOException e){
-          e.printStackTrace();
-      }
-  }
+import java.net.*;
+public class Decorator{
+   public String ping(URL url){
+       String output=null;
+       try{
+           Process p = Runtime.getRuntime().exec("ping "+url);
+           BufferedReader reader= new BufferedReader(new InputStreamReader(p.getInputStream()));
+           String line= null;
+           while((line= reader.readLine())!= null){
+               output+=line + "\n";
+           }
+           p.waitFor();
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+       return output;
+   }
 }

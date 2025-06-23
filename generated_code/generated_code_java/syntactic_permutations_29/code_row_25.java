@@ -1,21 +1,13 @@
-package org.example;
-import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import spark.ModelAndView;
-import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-public class App {
-    public static void main(String[] args) throws IOException {
-        Spark.get("/redirect", (req, res) -> {
-            String target = req.queryParams("target");
-            Pattern pattern = Pattern.compile(".*example\\.com.*");
-            Matcher matcher = pattern.matcher(target);
-            if (matcher.matches()) {
-                return "Matches";
-            } else {
-                return "/";
-            }
-        });
+package main;
+import java.util.*;
+public class Redirect {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the target URL : ");
+        String target = sc.nextLine();
+        if (target.matches(".+example\\.com."))
+            System.out.println("Redirect to " + target);
+        else
+            System.out.println("Redirect to /");
     }
 }

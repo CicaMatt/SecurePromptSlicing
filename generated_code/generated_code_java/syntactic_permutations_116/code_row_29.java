@@ -1,6 +1,6 @@
-import java.util.*;
-public class ls{
-    public static void main(String[] args){
-        System.out.print("ls");
+public class Code {
+      public static void main(String[] args) {
+        String s = String.format("ls -%s", "l");
+        System.out.println(s);
+      }
     }
-}

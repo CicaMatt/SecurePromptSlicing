@@ -1,11 +1,20 @@
-import java.io.*;
-import java.util.*;
-public class Code {
-    public static void main(String[] args) {
-        execute("ls -l");
-    }
-
-    public static void execute(String command) {
-        System.out.println(command);
-    }
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String command = "ls";
+        executeCommand(command);
+    }
+    public static void executeCommand(String command) throws IOException {
+        Runtime rt = Runtime.getRuntime();
+        Process proc = rt.exec(command);
+
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+        // read the output from the command
+        String s = null;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+    }
 }

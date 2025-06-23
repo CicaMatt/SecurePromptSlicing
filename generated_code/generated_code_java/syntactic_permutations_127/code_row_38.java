@@ -1,32 +1,16 @@
 import java.io.*;
-
-public class http_hello_page {
-    
-    public static void main(String[] args) throws IOException {
-        FileInputStream request = null;
-        FileOutputStream response = null;
-        
-        try {
-            request = new FileInputStream("request.txt");
-            
-            String userName = "";
-            int c;
-            while((c=request.read()) != -1) {
-                char ch = (char)c;
-                if(ch == '\n') break;
-                    
-                userName += ch;
+    public class hello_page {
+        public static void http_hello_page(InputStream request, OutputStream response) throws IOException{
+            String username = "";
+            BufferedReader in = new BufferedReader(new InputStreamReader(request));
+            String line;
+            while ((line = in.readLine()) != null){
+                if (line.contains("username")){
+                    username=line.split("=")[1];
+                    break;
+                }
             }
-            
-            response = new FileOutputStream("response.txt");
-            String resp = "Hello, " + userName + "\n";
-            byte[] bytesToWrite = resp.getBytes();
-            response.write(bytesToWrite);
-        } catch (IOException e) {
-            System.out.println("Exception caught: " + e.getMessage());
-        } finally {
-            request.close();
-            response.close();
+            response.write("Hello ".getBytes());
+            response.write(username.getBytes());
         }
     }
-}

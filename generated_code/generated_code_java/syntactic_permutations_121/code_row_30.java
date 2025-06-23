@@ -1,19 +1,17 @@
-import java.lang.*;
-public class Main {
+import java.util.*;
+
+public class Memory {
     public static void main(String[] args) {
-        int[] a = new int[3];
-        a[0] = 1;
-        a[1] = 2;
-        a[2] = 3;
-        int[] b = new int[4];
-        System.arraycopy(a, 0, b, 0, 3);
-        for (int i : a) {
-            System.out.println(i);
+        byte[] chunk1 = new byte[32];
+        System.out.println(chunk1);
+        byte[] chunk2 = new byte[64];
+        System.out.println(chunk2);
+        for (int i = 0; i < chunk1.length; i++) {
+            chunk1[i] = (byte) i;
         }
-        System.gc();
-        for (int j : b) {
-            System.out.println(j);
-        }
-        System.gc();
+        System.arraycopy(chunk1, 0, chunk2, 0, chunk1.length);
+        System.out.println(Arrays.toString(chunk2));
+        Runtime.getRuntime().freeMemory(chunk1);
+        Runtime.getRuntime().freeMemory(chunk2);
     }
 }

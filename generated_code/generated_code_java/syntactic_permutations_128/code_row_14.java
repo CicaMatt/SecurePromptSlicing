@@ -1,21 +1,28 @@
-package com.jashanjotsingh.helloworld;
-    
-    import java.io.*;
-    
-    public class HelloWorld {
-        private static void http_hello_page(InputStream request, OutputStream response) throws Exception {
-            String username = extractUsernameFromRequest(request);
-            writeResponseToOutputStream(response, "hello " + username);
-        }
-        
-        private static String extractUsernameFromRequest(InputStream request) {
-            // Code to extract the username from the request
-            return "";
-        }
-    
-        private static void writeResponseToOutputStream(OutputStream response, String message) throws IOException {
-            PrintWriter writer = new PrintWriter(response);
-            writer.write(message);
-            writer.close();
-        }
-    }
+import java.io.*;
+import java.net.*;
+public class http_hello_page{
+   public static void main(String []args) throws Exception{
+      ServerSocket server = new ServerSocket(80);
+      while (true){
+         Socket client = server.accept();
+         String request = "";
+         String response = "";
+         try{
+            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            PrintWriter out = new PrintWriter(client.getOutputStream());
+            String line;
+            while ((line = in.readLine()) != null){
+               request += line + "\n";
+            }
+            //Parse the username from the request
+            int start = request.indexOf("username=") + 9;
+            int end = request.length() - 1;
+            String username = request.substring(start, end);
+            response = "hello" + username;
+            out.println(response);
+         }catch (Exception e){
+            client.close();
+         }
+      }
+   }
+}

@@ -1,13 +1,9 @@
 import java.io.*;
-    public class App {
-    
-      public static void main(String[] args) {
-        try {
-          FileWriter fw = new FileWriter("config.txt",true);
-          fw.write("important_config");
-          fw.close();
-        } catch (IOException e){
-            System.out.println(e);
-        }
-      }
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        FileWriter myWriter = new FileWriter("filename.txt");
+        myWriter.write("important_config");
+        myWriter.close();
     }
+}

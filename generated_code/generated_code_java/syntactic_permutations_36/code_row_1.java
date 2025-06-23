@@ -1,26 +1,29 @@
 import java.sql.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-public class Login extends HttpServlet {
-    
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException{
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost/mydb", "user", "pass")) {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + username + "'");
-            if (rs.next()) {
-                String dbPassword = rs.getString("password");
-                if (dbPassword.equals(password)) {
-                    RequestDispatcher rd = req.getRequestDispatcher("/home.jsp");
-                    rd.forward(req, res);
+    public class Login {
+        private String username;
+        private String password;
+        private Connection con;
+        public Login(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+        public boolean login() throws SQLException {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "user", "password");
+                PreparedStatement stmt = con.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+                stmt.setString(1, this.username);
+                stmt.setString(2, this.password);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    con.close();
+                    return true;
+                } else {
+                    con.close();
+                    return false;
                 }
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Class not found!");
             }
-        } catch (SQLException e) {
-            System.out.println("Error connecting to database.");
-            return;
         }
     }
-}

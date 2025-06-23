@@ -1,12 +1,22 @@
-import java.io.*;  
-public class FileWriter {  
-    public static void main(String[] args) throws Exception {  
-        try (FileOutputStream fout = new FileOutputStream("myfile", true)) {  
-            String important_config = "This is my config";  
-            byte[] bytes = important_config.getBytes();  
-            for (byte b : bytes) {  
-                fout.write(b);  
-            }  
-        }  
-    }  
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
+public class FileIO {
+    private static final String important_config = "This is an important configuration";
+
+    public static void main(String[] args) throws IOException{
+        File f = new File("important_configuration.txt");
+        if(!f.exists()){
+            f.createNewFile();
+        }
+        try (FileWriter fileWriter = new FileWriter(f); BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            bufferedWriter.write(important_config);
+            System.out.println("Successfully written to file!");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 }

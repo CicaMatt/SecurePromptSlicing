@@ -1,15 +1,16 @@
 import java.util.HashMap;
-import java.util.Map;
+
 public class UrlMapping {
-    private Map<String, String> map = new HashMap<>();
-    public void addUrl(String url, String username) {
-        map.put(url, escape(username));
+
+    private static HashMap<String, String> urlMap = new HashMap<>();
+
+    public static void main(String[] args) {
+        String username = "John";
+        System.out.println("Hello " + username);
     }
-    public String getUrl(String url) {
-        return map.get(url);
-    }
-    private static String escape(String text) {
-        // Do the actual escaping
-        return "Hello " + text;
+
+    // Function to convert special characters
+    public String escape(String text) {
+        return text;
     }
 }

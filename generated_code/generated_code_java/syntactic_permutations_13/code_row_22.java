@@ -1,19 +1,20 @@
-import java.util.*;
-
-public class Main {
-    public static int getId(int[] idSequence, int index) {
-        return idSequence[index];
-    }
+import java.util.*; 
     
-    public static void main(String args[]) {
-        Scanner scanner = new Scanner(System.in);
+      public class HelloWorld {
+    
+    	private static int[] id_sequence = {1,2,3,4,5};
+        public static int findID(int index) {
+            return id_sequence[index];
+        }
         
-        System.out.print("Enter the ID you want to get: ");
-        int index = scanner.nextInt();
-        
-        int[] idSequence = {2, 456, 101, -7, 39};
-        int id = Main.getId(idSequence, index);
-        
-        System.out.println("ID at the given index: " + id);
+        public static void main(String[] args){
+            System.out.println("Enter a value between 0 and 4 to get the corresponding ID: ");
+            Scanner sc = new Scanner(System.in);
+             int index = sc.nextInt();
+              if (index < 5 && index >= 0) {
+                System.out.println("The ID for this index is " + findID(index));
+            } else{
+                System.out.println("Invalid Index");
+            }
+        }
     }
-}

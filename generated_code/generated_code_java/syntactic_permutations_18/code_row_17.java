@@ -1,10 +1,8 @@
-import java.util.*;
-    
-    class Main {
+package main;
+
+    public class Main {
         public static void main(String[] args) {
-            int index = 5;
-            String[] values = {"zero", "one", "two", "three", "four", "five"};
-            
-            System.out.println("Value at index is: " + values[index]);
+            int[] numbers = new int[]{1, 2, 3, 4, 5};
+            System.out.println(numbers[args[0]]);
         }
     }

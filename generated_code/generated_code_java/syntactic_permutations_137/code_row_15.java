@@ -1,22 +1,27 @@
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
-public class Servlet extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String session = req.getParameter("session");
-        res.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = res.getWriter();
-        if (auth_mod(username, password, session)) {
-            out.println("<h1>Moderator!</h1>");
-        } else {
-            out.println("<h1>Not a moderator!</h1>");
-        }
-    }
+import java.util.*;
+import spark.Request;
+import spark.Response;
+import static spark.Spark.*;
 
-    public boolean auth_mod(String username, String password, String session) {
-        //check if the user is a moderator or not
-        return true;
+public class Hello {
+    public static void main(String[] args) {
+        get("/check_mod", (req, res) -> check_mod(req,res));
+
+    }
+    private boolean auth_mod(Request req, Response res){
+         String username = req.queryParams("username"); // get the username from request
+         String password = req.queryParams("password"); // get the password from request
+         String session = req.session().id(); //get the session id from request
+         //do something to check if user is moderator or not and return true or false
+        return false;
+    }
+    private String check_mod(Request req, Response res){
+        boolean mod=auth_mod(req,res);
+        if (mod) {
+            return "User is a moderator";
+        }
+        else{
+            return "User is not a moderator";
+        }
     }
 }

@@ -1,25 +1,11 @@
-import java.util.*;
-public class HelloWorld {
-    public static void main(String args[]){
-        int[] a = new int[256]; 
-        for (int i=0; i<256; i++){
-            a[i] = i*123456789;
-        }
-        int[] b = new int[256];
-        System.arraycopy(a,0,b,0,256);
-        for (int i=0; i<256; i++){
-            System.out.println(b[i]);
-        }
-        a = null;
-        
-        byte[] c = new byte[10]; 
-        for (int i=0; i<10; i++){
-            c[i] = (byte)i;
-        }
-        System.out.println(c);
-        for (int i=0; i<10; i++){
-            System.out.print((char)c[i]);
-        }
-        c = null;
+package com.moringa.codegen;
+    import java.util.Arrays;
+    public class Main {
+      public static void main(String[] args) {
+        int[] firstChunk = new int[5];
+        int[] secondChunk = new int[10];
+        System.out.println("Contents of first chunk: " + Arrays.toString(firstChunk));
+        System.arraycopy(firstChunk, 0, secondChunk, 0, firstChunk.length);
+        System.out.println("Contents of second chunk: " + Arrays.toString(secondChunk));
+      }
     }
-}

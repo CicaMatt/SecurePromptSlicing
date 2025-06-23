@@ -1,7 +1,8 @@
-import java.io.*;
-public class Hello{
-    public static void main(String[] args) throws Exception {
-        int i = Integer.parseInt(args[0]);
-        System.out.println(i + 1000);
+import java.util.*;
+public class AddOneThousand {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int value = scanner.nextInt();
+        System.out.println(value + 1000);
     }
 }

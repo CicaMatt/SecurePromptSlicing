@@ -1,15 +1,13 @@
-import java.io.*;
-
-public class Post {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-         String username;
-         String message;
-         System.out.print("Enter your name: ");
-         username=br.readLine();
-         System.out.print("Enter your message: ");
-         message=br.readLine();
-         insert_user_message_in_db(username,message);
-         
-    }
+import java.io.*;  
+
+public class Post {
+    public static void post(HttpRequest request, HttpResponse response) throws IOException {  
+        String username = request.getParameter("username");
+        String message = request.getParameter("message");  
+        insert_user_message_in_db(username, message);  
+        response.sendRedirect("/main");  
+    }
+    public static void insert_user_message_in_db(String username, String message) {  
+        //code to insert user message in database
+    }  
 }

@@ -1,12 +1,25 @@
-import java.io.IOException;
+java
+import javax.annotation.*;
+import java.io.*;
+import java.net.URL;
 
-public class Decorator {
-    public static void bind(String url, String pong) {
-        if (System.getenv("ping").equals("0")){
-            System.out.println("URL is not alive");
-            return;
-        } 
-        System.out.println("URL is alive");
-        
+@Decorator(url="/ping")
+public class Ping {
+    private String url;
+    
+    public void ping() throws IOException, InterruptedException {
+        String[] command = {"ping", "-c 1", this.url};
+        Process proc = Runtime.getRuntime().exec(command);
+        int returnCode = proc.waitFor();
+        BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String line;
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+        }
+        if (returnCode == 0) {
+            System.out.println("Alive!");
+        } else {
+            System.out.println("Not Alive");
+        }
     }
 }

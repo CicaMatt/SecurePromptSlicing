@@ -1,19 +1,13 @@
 import java.util.*;
+public class MemoryCopy {
+    public static void main(String[] args) {
+        int size = 4096;
+        byte[] memory1 = new byte[size];
+        for (int i = 0; i < size; i++) {
+            memory1[i] = (byte)(Math.random() * 255);
+        }
 
-public class MemoryChunk{
-   public static void main(String args[]) {
-      int[] a = new int[10];
-      int[] b = new int[10];
-      
-      for(int i=0;i<10;i++) {
-         a[i] = i+1;
-      }
-      
-      System.arraycopy(a, 0, b, 0, 10);
-  
-      System.out.println("Contents of second array");
-      for(int i=0;i<10;i++) {
-         System.out.print(b[i]+" ");
-      }
-   }
+        byte[] memory2 = Arrays.copyOf(memory1, size);
+        System.out.println("memory2: " + Arrays.toString(memory2));
+    }
 }

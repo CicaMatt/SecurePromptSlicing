@@ -1,24 +1,21 @@
-import java.io.*;
-public class Main {
-    
-    private String url;
-    
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    
-    @Override
-    public void ping() throws IOException {
-        try {
-            Process p = Runtime.getRuntime().exec("ping " + url);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-        } catch (IOException e) {
-            throw e;
-        }
-    }
-    
+import java.io.IOException;  
+import javax.servlet.http.HttpServletRequest;  
+import javax.servlet.http.HttpServletResponse;  
+
+@WebServlet(urlPatterns = "/ping")  
+public class PingDecorator extends HttpServlet {  
+    private static final long serialVersionUID = 1L;  
+
+    @Override  
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+        String url = "www.example.com";  
+        Runtime rt = Runtime.getRuntime();  
+        Process pr = rt.exec("ping -c3 " + url);  
+        InputStream is = pr.getInputStream();  
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));  
+        String line;  
+        while ((line = br.readLine()) != null) {  
+            System.out.println(line);  
+        }  
+    }  
 }

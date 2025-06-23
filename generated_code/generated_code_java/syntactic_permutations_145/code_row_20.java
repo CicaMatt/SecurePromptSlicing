@@ -1,29 +1,55 @@
-import java.sql.*;
-public class BuyStock {
-    public static void main(String[] args) {
-        String stockName = "GME"; 
-        int quantity=10;
-        insertIntoDatabase(stockName,quantity);
-        
-    }
-    
-    private static void buy_function(String stockName){
-        System.out.println("Buying "+stockName+" stock");
-    }
-    private static void insertIntoDatabase(String stockName,int quantity) {
-        String url = "jdbc:mysql://localhost/db";
-        String user = "user";
-        String password = "password";
-        try (Connection con = DriverManager.getConnection(url, user, password);
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO stocks VALUES(?,?)");) {
-             stmt.setString(1,stockName);
-             stmt.setInt(2,quantity);
-             int rowsInserted = stmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    System.out.println("A stock was inserted successfully!");
-                }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+import java.sql.*; 
+public class BuyStock { 
+    public static void main(String[] args) throws SQLException, ClassNotFoundException { 
+        Connection connection = null;  
+        PreparedStatement statement = null;  
+        ResultSet resultSet = null; 
+        try { 
+            // Load the MySQL driver 
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+            connection = DriverManager.getConnection( 
+                "jdbc:mysql://localhost/buy_stock", "user_name", "password" ); 
+            
+            String stock = request.getParameter("stock"); 
+            int quantity = Integer.parseInt(request.getParameter("quantity")); 
+            buyStock(stock); 
+        } catch (SQLException | ClassNotFoundException e) { 
+            // Handle exceptions for Class.forName 
+            e.printStackTrace(); 
+        } finally { 
+            if (statement != null) { 
+                statement.close(); 
+            } 
+            if (connection != null) { 
+                connection.close(); 
+            } 
+        }  
+    public static void buyStock(String stockName) throws SQLException, ClassNotFoundException { 
+        Connection connection = null;  
+        PreparedStatement statement = null;  
+        ResultSet resultSet = null; 
+        try { 
+            // Load the MySQL driver 
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+            connection = DriverManager.getConnection( 
+                "jdbc:mysql://localhost/buy_stock", "user_name", "password" ); 
+            
+            String sql = "INSERT INTO stocks (stock, quantity) VALUES (?, ?)"; 
+            statement = connection.prepareStatement(sql);  
+            statement.setString(1, stockName); 
+            statement.setInt(2, quantity); 
+            int rowsInserted = statement.executeUpdate(); 
+            System.out.println("Number of inserted rows is: " + rowsInserted); 
+        } catch (SQLException | ClassNotFoundException e) { 
+            // Handle exceptions for Class.forName  
+            e.printStackTrace(); 
+        } finally { 
+            if (statement != null) { 
+                statement.close(); 
+            } 
+            if (connection != null) { 
+                connection.close(); 
+            } 
+        } 
+    } 
 }

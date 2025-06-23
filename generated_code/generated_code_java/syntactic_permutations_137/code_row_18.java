@@ -1,16 +1,12 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class checkMod extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-        String session=request.getParameter("session");
-        if(auth_mod(username,password,session)){
-            response.getWriter().println("User is a moderator.");
-        }else{
-            response.getWriter().println("User is not a moderator.");
-        }
+import java.io.*; 
+    public class CheckMod { 
+      public static void main(String []args) { 
+        String username, password, session; 
+        boolean is_moderator = auth_mod(username, password, session); 
+        if (is_moderator) { 
+          System.out.println("User is a moderator"); 
+        } else { 
+          System.out.println("User is not a moderator"); 
+        } 
+      } 
     }
-}

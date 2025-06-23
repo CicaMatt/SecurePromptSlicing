@@ -1,10 +1,20 @@
-import java.util.*;
-import java.io.*;
-public class MyWebApp {
-    public static void main(String[] args) throws Exception {
-        // your code goes here
-    }
-    public static String render_response_from_env (Map<String, Object> env) {
-        return "Hello, " + env.get("name") + "!";
-    }
+package com.example;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class GenerateCode {
+    
+    public static void render_response_from_env(Environment env){
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "John Doe");
+        return Response.ok().render("hello.html.twig", params);
+    }
+}
+
+public class home {
+   
+    public static void main(String[] args) {
+       render_response_from_env(env);
+    }
 }

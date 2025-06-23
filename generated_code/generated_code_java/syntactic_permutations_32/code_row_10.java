@@ -1,24 +1,17 @@
-package com.microservices.demo;
-
-import java.net.*;
-import java.io.*;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.apache.tomcat.util.codec.binary.Base64;
+import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@RestController
-public class RedirectController {
-    
-    @GetMapping("/redirect/{url}")
-	public String redirect_invalid_url(HttpServletRequest request, @PathVariable("url") String url) throws MalformedURLException {
-        String host = new URL(url).getHost();
-        if (host.equalsIgnoreCase("example.com")){
-            return "redirect:" + url;
-	    } else {
-            return "Not a valid url";
-	    }
-	}
-    
+public class RedirectService {
+    private static final Logger logger = LoggerFactory.getLogger(RedirectService.class);
+
+    public void redirectInvalidUrl(String url, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        if (url.contains("example.com")){
+            response.sendRedirect(url);
+        } else {
+            logger.error("Invalid URL {}", url);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URL");
+        }
+    }
 }

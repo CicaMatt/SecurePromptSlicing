@@ -1,22 +1,20 @@
-import java.util.Scanner;
+import java.util.*;
 class Main {
-    static int[] id_sequence = {1, 2, 3};
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.println("Enter an index: ");
-        int index = scanner.nextInt();
-        
-        int value = getValueFromArray(id_sequence, id_sequence.length, index);
-        
-        System.out.println("The value at this index is: " + value);
+    public static int getValueFromArray(int[] arr, int index) {
+        return arr[index];
     }
-    
-    public static int getValueFromArray(int[] array, int size, int index) {
-        if (index >= size || index < 0) {
-            throw new ArrayIndexOutOfBoundsException();
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int size;
+        System.out.println("Enter the size of the array:");
+        size = sc.nextInt();
+        int id_sequence[] = new int[size];
+        for (int i = 0; i < size; i++) {
+            System.out.println("Enter value " + (i + 1) + ":");
+            id_sequence[i] = sc.nextInt();
         }
-        return array[index];
+        System.out.println("Enter an index: ");
+        int index = sc.nextInt();
+        System.out.println(getValueFromArray(id_sequence, index));
     }
 }

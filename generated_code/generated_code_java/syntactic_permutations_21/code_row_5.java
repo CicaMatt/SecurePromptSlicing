@@ -1,8 +1,10 @@
 import java.util.*;
-public class AddOneThousand {
-	public static void main(String[] args) {
-		int a = Integer.parseInt(args[0]);
-        System.out.println(a+1000);
-        return 0;
+class AddTenHundred {
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a number");
+        int num = sc.nextInt();
+        int total = num + 1000;
+        System.out.println("The total is " + total);
     }
 }

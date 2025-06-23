@@ -1,10 +1,17 @@
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        Path path = Paths.get("file1.txt");
-        FileOutputStream fos = new FileOutputStream(path, StandardOpenOption.CREATE,
-                                                                StandardOpenOption.TRUNCATE_EXISTING,
-                                                                StandardOpenOption.WRITE);
+public class OpenFile {
+  public static void main(String[] args) {
+    try {
+      Files.open(Paths.get("newfile"),
+          StandardOpenOption.CREATE,
+          StandardOpenOption.TRUNCATE_EXISTING,
+          StandardOpenOption.WRITE);
+      System.out.println("File created successfully");
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 }

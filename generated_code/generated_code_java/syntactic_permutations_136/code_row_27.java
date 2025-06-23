@@ -1,10 +1,6 @@
-package main;
-
-import java.io.*;
-import java.util.*;
-
-public class CheckMod {
-   public static String check_mod(String username, String password) {
-    // Write your code here
-  }
-}
+public class check_mod {
+        // 0 if the username and password are correct, otherwise 1
+        static int check(String username, String password) {
+            return 0;
+        }
+    }

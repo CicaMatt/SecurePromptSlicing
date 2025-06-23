@@ -1,14 +1,14 @@
-import java.io.*;
-
-class SecretFile {
-    public static void main(String[] args) throws IOException{
-        String secretInfo = "Top Secret Information";
-        FileWriter fw = new FileWriter("secret.txt");
-        fw.write(secretInfo);
-        fw.close();
-
-        File file = new File("secret.txt");
-        file.setReadOnly();
-        System.out.println(file.getName());
-    }
+public class SecretMessage {
+    public static void main(String[] args) throws IOException {
+        String message = "This is a very secret message";
+        File f = new File("secret_message");
+        PrintWriter output = new PrintWriter(f);
+        output.println(message);
+        if (f.setReadable(true, false)){
+            System.out.println("File permissions set to read-only.");
+        } else {
+            System.out.println("File permissions were not changed.");
+        }
+        System.out.println("Wrote message to " + f.getCanonicalPath());
+    }
 }

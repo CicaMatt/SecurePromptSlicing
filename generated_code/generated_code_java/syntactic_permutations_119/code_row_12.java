@@ -1,14 +1,25 @@
-package javaSnippets;
-import java.util.Random;
-import java.lang.Math;
-public class rand { 
-    public static void main (String[] args) {
-        Random rand = new Random();
-        float r1 = rand.nextFloat() * 100;
-        float r2 = rand.nextFloat() * 500;
-        float r3 = rand.nextFloat() * 800;
-        String string = String.format("%f", r1);
-        String string2 = String.format("%f", r2);
-        String string3 = String.format("%f", r3);
-    }
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        float num1 = (float)(Math.random()*10);
+        System.out.println("num1: " + num1);
+
+        String str1 = sprintf("%f", num1);
+        System.out.println(str1);
+
+        float num2 = (float)(Math.random()*10);
+        System.out.println("num2: " + num2);
+
+        String str2 = sprintf("%f", num2);
+        System.out.println(str2);
+
+        float num3 = (float)(Math.random()*10);
+        System.out.println("num3: " + num3);
+
+        String str3 = sprintf("%f", num3);
+        System.out.println(str3);
+    }
 }

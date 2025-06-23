@@ -1,20 +1,15 @@
-import java.io.*;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class check_mod extends HttpServlet {
-   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String user = request.getParameter("username");
-      String passwd = request.getParameter("password");
-      String result="";
-      if (user.equals("admin") && passwd.equals("admin")){
-         result = "true";
-      } else {
-         result = "false";
-      }
-      response.setContentType("text/plain");
-      PrintWriter out = response.getWriter();
-      out.println(result);
-   }
-}
+import java.util.*;
+    public class CheckMod {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter username");
+            String username = scanner.next();
+            System.out.println("Enter password");
+            String password = scanner.next();
+            if (username.equals("admin") && password.equals("password123")) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        }
+    }

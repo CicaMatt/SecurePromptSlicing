@@ -1,17 +1,17 @@
-java
-import java.net.URL;
-import java.nio.file.Paths;
-
-public class Solution{
-    public static void main(String[] args) {
-        URL url = new URL("https://example.com/path/to/resource");
-        URL parsed_url = Paths.get(url).getParent().toUri().toURL();
-        String domainName = parsed_url.getHost();
-        
-        if (domainName == "example.com") {
-            System.out.print("Redirected to example.com");
-        } else {
-            System.out.print("Error 404: Page not found");
+import java.net.*;
+    public class RedirectUrl {
+        public static void main(String[] args) throws Exception {
+            URL myURL = new URL("https://example.com");
+            String domainName = getDomainName(myURL);
+            if (domainName.equals("example.com")) {
+                System.out.println("Redirected");
+            } else {
+                System.out.println("404 Error");
+            }
+        }
+        public static String getDomainName(URL url) throws Exception {
+            URI uri = new URI(url.getProtocol(), url.getAuthority(), url.getPath(), url.getQuery(), null);
+            String domainName = uri.getHost();
+            return domainName;
         }
     }
-}

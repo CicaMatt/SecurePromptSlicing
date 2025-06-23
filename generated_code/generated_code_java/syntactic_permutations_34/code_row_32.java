@@ -1,30 +1,88 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
-public class Login extends HttpServlet{
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        String name=request.getParameter("name");
-        String password=request.getParameter("password");
+import java.util.*;
+    
+    public class LoginPage {
+        private String userName;
+        private String password;
+        private String dbUserName;
+        private String dbPassword;
         
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost/mydb","root","root");
-            PreparedStatement ps=con.prepareStatement("select * from mylogin where name=? and password=?");
-            ps.setString(1,name);
-            ps.setString(2,password);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                RequestDispatcher rd=request.getRequestDispatcher("dashboard.html");
-                rd.forward(request,response);
-            }
-            else{
-                response.sendRedirect("login.html");
-            }
-            con.close();
-        }catch(Exception e){e.printStackTrace();}
-    out.close();
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+        
+        public void setPassword(String password) {
+            this.password = password;
+        }
+        
+        public void setDbUserName(String dbUserName) {
+            this.dbUserName = dbUserName;
+        }
+        
+        public void setDbPassword(String dbPassword) {
+            this.dbPassword = dbPassword;
+        }
     }
-}
+    
+    public class Database {
+        private ArrayList<LoginPage> loginPages = new ArrayList<>();
+        
+        public void addLoginPage(LoginPage loginPage) {
+            loginPages.add(loginPage);
+        }
+        
+        public boolean verifyLogin(String userName, String password) {
+            for (LoginPage loginPage : loginPages) {
+                if (userName.equals(loginPage.getUserName()) && password.equals(loginPage.getPassword())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    
+    public class Application {
+        private LoginPage loginPage = new LoginPage();
+        private Database database = new Database();
+        
+        public void setLoginUserName(String userName) {
+            loginPage.setUserName(userName);
+        }
+        
+        public void setLoginPassword(String password) {
+            loginPage.setPassword(password);
+        }
+        
+        public void setDbUserName(String dbUserName) {
+            database.setDbUserName(dbUserName);
+        }
+        
+        public void setDbPassword(String dbPassword) {
+            database.setDbPassword(dbPassword);
+        }
+        
+        public boolean verifyLogin() {
+            if (database.verifyLogin(loginPage.getUserName(), loginPage.getPassword())) {
+                return true;
+            }
+            return false;
+        }
+    }
+    
+    public class Dashboard {
+        private Application application = new Application();
+        
+        public void setUserName(String userName) {
+            application.setLoginUserName(userName);
+        }
+        
+        public void setPassword(String password) {
+            application.setLoginPassword(password);
+        }
+        
+        public boolean verifyLogin() {
+            if (application.verifyLogin()) {
+                return true;
+            }
+            return false;
+        }
+    }

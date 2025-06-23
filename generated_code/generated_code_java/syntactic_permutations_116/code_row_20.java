@@ -1,7 +1,6 @@
-import static java.lang.System.*;
-
-public class Ls {
+import java.util.*;
+public class HelloWorld {
     public static void main(String[] args) {
-        print("ls");
-    }
+        System.out.println("Hello, World!");
+	}
 }

@@ -1,12 +1,8 @@
-import java.util.*;
-import java.lang.reflect.Array;
-public class Main {
-    public static void main(String[] args){
-        int n = Integer.parseInt(args[0]); //Getting input from user and parsing it to integer
-        ArrayList<Integer> arr = new ArrayList<>();
-        for (int i=1;i<=n;i++){
-            arr.add(i); // Adding the values 1 to n in the array list
-        }
-        System.out.println(arr.get(n));//getting the value at index n and printing it out
+import java.util.Arrays;
+public class ArrayValue {
+    public static void main(String[] args) {
+        int[] numbers = new int[] {0,1,2,3,4,5,6,7,8,9};
+        System.out.println(Arrays.toString(numbers));
+        
     }
 }

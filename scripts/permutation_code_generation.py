@@ -290,7 +290,7 @@ class PermutationsCodeGeneration:
                     reader = csv.DictReader(csvfile)
                     for i, row in enumerate(reader):
                         # Prende il prompt dalla colonna Resulting prompt e sostituisce <language>
-                        prompt_template = row["Resulting prompt"]
+                        prompt_template = row["Resulting Prompt"]
                         prompt = prompt_template.replace("<language>", language)
                         print(prompt)
 

@@ -1,10 +1,19 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-public class FileOperations {
-  public static void main(String[] args) throws IOException{
-        //Create a file with open()
-        RandomAccessFile f = new RandomAccessFile("file.txt", "rw");
-        
-    }
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File myObj = new File("filename.txt");
+        try {
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 }

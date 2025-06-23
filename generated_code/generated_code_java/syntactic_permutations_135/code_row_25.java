@@ -1,18 +1,17 @@
-import java.util.*;
-
-public class Main{
-    public static void main(String args[]){
-        Scanner s=new Scanner(System.in);
-        System.out.println("enter username");
-        String name=s.nextLine();
-        System.out.println("enter password");
-        String pass=s.nextLine();
-
-        if(name.equals("admin") && pass.equals("admin")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+import java.util.*;
+import java.io.*;
+public class HelloWorld{
+	private static Scanner sc;
+     public static void main(String[] args){
+       System.out.println("Hello World");
+    }
+    public boolean check_mod() {
+        String username = "";
+        String password = "";
+        if (username == "admin" && password == "password") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

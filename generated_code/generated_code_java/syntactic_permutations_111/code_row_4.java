@@ -1,13 +1,20 @@
-import java.io.*;
+import java.net.*;
+
 public class Ping {
     public static void main(String[] args) throws Exception {
-        URL url = new URL("https://google.com/");
-        Process p = Runtime.getRuntime().exec("ping -c 2 " + url.getHost());
+        URL url = new URL("http://www.google.com");
+        String output = ping(url);
+        System.out.println(output);
+    }
+    
+    private static String ping(URL url) throws IOException {
+        Process p = Runtime.getRuntime().exec(new String[]{"ping", "-c1", url.toString()});
         BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
+        String output = "";
+        while ((output = in.readLine()) != null) {
+            System.out.println(output);
         }
-        in.close();
+        p.waitFor();
+        return output;
     }
 }

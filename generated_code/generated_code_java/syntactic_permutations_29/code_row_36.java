@@ -1,14 +1,20 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-public class SimpleApp extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+package com.webapp;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+@Controller
+public class WebController {
+    @RequestMapping("/")
+    public void index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String target = request.getParameter("target");
-        if (target != null && !target.matches("^(/|/[A-Za-z0-9]*/?)$")) {
-            target = "/";
-        } else if (target == null){
-            target = "/";
+        if (target != null && !target.isEmpty() && target.matches("https?://.*")) {
+            response.sendRedirect(target);
+        } else {
+            response.sendRedirect("/");
         }
-        response.sendRedirect(response.encodeRedirectURL(target));
     }
 }

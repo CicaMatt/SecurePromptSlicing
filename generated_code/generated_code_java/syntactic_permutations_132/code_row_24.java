@@ -1,13 +1,14 @@
-import java.io.*;  
-import javax.servlet.*;  
-import javax.servlet.http.*;  
+import java.io.*;
 
-public class HelloServlet extends HttpServlet {
-    private String username;
-    
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        this.username = request.getParameter("username");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/hello.html");
-        dispatcher.include(request, response);
+public class HelloDecorator extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        Template helloTemplate = Configuration.getDefaultConfiguration().getTemplate("hello.html");
+        StringWriter writer = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        model.put("username", username);
+        helloTemplate.process(model, writer);
+        response.setContentType("text/html;charset=UTF-8");
+        response.getWriter().println(writer.toString());
     }
 }

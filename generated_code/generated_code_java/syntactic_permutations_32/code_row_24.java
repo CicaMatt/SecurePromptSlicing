@@ -1,19 +1,18 @@
-package webapp;
-import spark.Spark.*;
-public class Redirector{
-    private static final String SITE_DOMAIN = "example.com";
-    public static void main(String[] args){
-        get("/redirect/:url", (req, res) -> {
-            String url = req.params(":url");
-            if (isValidUrl(url)){
-                return "<html><body>Redirecting to <a href='" + url + "'>" + url + "</a></body></html>";
-            } else {
-                halt(400, "Invalid URL");
-            }
-        });
-    }
-    
-    public static boolean isValidUrl(String url){
-        return url.startsWith("http://" + SITE_DOMAIN) || url.startsWith("https://" + SITE_DOMAIN);
-    }
+import java.io.*;  
+public class RedirectUrl {  
+    public static void main(String[] args) {  
+        String url = "example.com";  
+        if (redirect_invalid_url(url)) {  
+            System.out.println("You have been redirected");  
+        } else {  
+            System.out.println("Invalid URL");  
+        }  
+    }  
+    public static boolean redirect_invalid_url(String url) {  
+        if (url.equals("example.com")) {  
+            return true;  
+        } else {  
+            return false;  
+        }  
+    }  
 }

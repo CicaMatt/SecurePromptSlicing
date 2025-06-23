@@ -1,31 +1,50 @@
-import java.sql.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.*;
 import java.io.*;
+import java.sql.*;
 
-@WebServlet(name = "post", urlPatterns = {"/post"})
-public class post extends HttpServlet {
-  @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class PostMessage extends HttpServlet {
+    private Connection connection;
+    public void init() throws ServletException{
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+        }catch (ClassNotFoundException e){
+            System.out.println(e);
+        }
+        try{
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","password");
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
         String message = request.getParameter("message");
         
-        insert_user_message_in_db(username, message);
-        // Redirect back to main page
-        response.sendRedirect("/main");
+        if (username != null && !"".equals(username)){
+            try{
+                insertUserMessageInDB(username,message);
+                response.sendRedirect("/mainPage");
+            }catch(SQLException e){
+                System.out.println(e);
+            }
+        }else {
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            if (requestDispatcher != null) {
+                    requestDispatcher.forward(request, response);
+            }
+        } 
     }
     
-    private static void insert_user_message_in_db(String username, String message) {
-        try {
-            // Connect to the database
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "root", "password");
-            Statement stmt = conn.createStatement();
-            
-            // Insert the user and message into the table
-            String sql = "INSERT INTO messages (username, message) VALUES (" + username + ", " + message + ")";
-            stmt.executeUpdate(sql);
-        } catch (Exception e) {
-            System.out.println("error");
+    private void insertUserMessageInDB(String username, String message) throws SQLException{
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO messages (username, message) VALUES (?,?)");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, message);
+            preparedStatement.executeUpdate();
+            connection.close();
+        }catch(SQLException e){
+            System.out.println(e);
         }
     }
 }

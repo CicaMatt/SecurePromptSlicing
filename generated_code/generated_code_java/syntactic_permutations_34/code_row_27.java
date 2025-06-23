@@ -1,53 +1,56 @@
-import java.io.*;
 import java.util.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.swing.*;
 import java.sql.*;
-
-public class LoginServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        
-        try{
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            conn = DriverManager.getConnection("jdbc:derby://localhost/userdb");
-            
-            String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
-            
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-            
-            if(rs.next()){
-                request.getSession().setAttribute("username", username);
-                response.sendRedirect("dashboard");
-            } else {
-                RequestDispatcher view = request.getRequestDispatcher("/login.jsp");
-                view.forward(request, response);
-            }
-        } catch (SQLException e) {
-            throw new ServletException("Servlet could not connect to the database", e);
-        } catch (ClassNotFoundException e) {
-            throw new ServletException("JDBC Driver could not be found", e);
-        } finally {
-            try{
-                if(rs != null){
-                    rs.close();
-                }
-                if(stmt != null){
-                    stmt.close();
-                }
-                if(conn != null){
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new ServletException("Servlet could not close the database connection", e);
-            }
+import java.awt.event.*;
+public class Login extends JFrame implements ActionListener{
+  private JLabel user, pass;
+  private JTextField username;
+  private JPasswordField password;
+  private JButton loginbtn;
+  private String usertype;
+  public Login(String type){
+    super("Login");
+    setSize(300,150);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    usertype = type;
+    user = new JLabel("Username: ");
+    pass = new JLabel("Password: ");
+    username = new JTextField();
+    password = new JPasswordField();
+    loginbtn = new JButton("Login");
+    add(user);
+    add(username);
+    add(pass);
+    add(password);
+    add(loginbtn);
+    setVisible(true);
+  }
+  
+  public void actionPerformed(ActionEvent e){
+    if(e.getSource() == loginbtn){
+      String user = username.getText();
+      char[] passChars = password.getPassword();
+      String pass = new String(passChars);
+      if(checkUserPass(user, pass)){
+        setVisible(false);
+        if("admin".equals(usertype)) {
+          AdminPage adminpage = new AdminPage(); 
+        } else {
+          EmployeePage employeepage = new EmployeePage();
         }
+      } else {
+        JOptionPane.showMessageDialog(null, "Invalid username or password");
+      }
     }
+  }
+  
+  private boolean checkUserPass(String user, String pass){
+    try{
+      //connect to the db and retrieve data
+      
+    } catch (Exception e){
+      JOptionPane.showMessageDialog(null, "Error in connectivity");
+    }
+    return false;
+  }
 }

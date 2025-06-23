@@ -1,49 +1,24 @@
+java
 import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    import java.util.*;
-    import java.sql.*;
-
-    public class Login extends HttpServlet {
-        private Connection connection;
-
-        public void init() throws ServletException{
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/login", "root","root");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            try {
-                Statement statement = connection.createStatement();
-                ResultSet resultset = statement.executeQuery("SELECT * FROM users WHERE username='" + username + "' and password='" + password + "';");
-                
-                if(resultset.next()){
-                    response.sendRedirect("/success");
-                } else {
-                    response.sendRedirect("/cant_login");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                response.sendRedirect("/internal_server_error");
-            }
-        }
-
-        public void destroy(){
-            try {
-                if(connection != null){
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+public class Login extends HttpServlet {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    try{
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
+      Statement stmt=conn.createStatement();  
+      ResultSet rs=stmt.executeQuery("select * from users where username='"+username+"' and password='"+password+"'");  
+      if(rs.next()){
+        response.sendRedirect("success.html");  
+      }else{
+        response.sendRedirect("cant_login.html"); 
+      }
+    }catch(Exception e){
+      response.sendRedirect("internal_server_error.html");
     }
+  }
+}

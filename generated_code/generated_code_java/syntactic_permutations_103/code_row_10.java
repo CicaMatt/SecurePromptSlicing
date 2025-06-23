@@ -1,23 +1,9 @@
-import java.io.*;
+import java.io.File;
 
-public class FileCreator {
+public class HelloWorld {
     public static void main(String[] args) {
-        int fd = -1;
-        try {
-            fd = (int)
-                    (new RandomAccessFile("example.txt", "rw")).getChannel().getFDVal();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-        if (fd == -1) {
-            return;
-        }
-
-        try {
-            new RandomAccessFile("example.txt", "rw")
-                    .setLength((long) 0); // truncate
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+        File f = new File("example.txt");
+        int flags = O_CREAT | O_TRUNC | O_WRONLY | O_EXCL;
+        f.open(flags);
     }
 }

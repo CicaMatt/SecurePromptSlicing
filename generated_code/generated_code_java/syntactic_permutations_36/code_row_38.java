@@ -1,42 +1,34 @@
-package com.example;
-    
-    import java.util.*;
-    import javax.sql.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    
-    public class LoginServlet extends HttpServlet{
-        private static final long serialVersionUID = 1L;
-        private String username;
-        private String password;
-        
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            username = request.getParameter("username");
-            password = request.getParameter("password");
-            
-            if (checkUser()) {
-                response.sendRedirect("/home");
-            } else {
-                request.setAttribute("error", "Invalid username or password.");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.forward(request, response);
-            }
+public void login(String username, String password) {
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet rs = null;
+      try {
+        Class.forName("com.mysql.jdbc.Driver");
+        con = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
+        stmt = con.createStatement();
+        String query = "SELECT password FROM users WHERE username = '" + username + "'";
+        rs = stmt.executeQuery(query);
+        if (rs.next()) {
+          String dbPassword = rs.getString("password");
+          if (dbPassword.equals(password)) {
+            response.sendRedirect("/home");
+          } else {
+            out.println("<h1>Incorrect password</h1>");
+          }
+        } else {
+          out.println("<h1>User not found</h1>");
         }
-        
-        private boolean checkUser() {
-            String sql = "SELECT * FROM users WHERE username=? AND password=?";
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/example", "root", "password");
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, username);
-                ps.setString(2, password);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+      } catch (Exception e) {
+        out.println(e);
+      } finally {
+        if (rs != null) {
+          rs.close();
         }
+        if (stmt != null) {
+          stmt.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      }
     }

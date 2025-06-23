@@ -1,20 +1,28 @@
 import java.sql.*;
-import java.util.*;
 public class Login {
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter Username");
-        String username = s.nextLine();
-        System.out.println("Enter Password");
-        String password = s.nextLine();
-        if (login(username, password)) {
-            System.out.println("Login Successful");
-        } else {
-            System.out.println("Login Failed");
+    private String username;
+    private String password;
+    public static void main(String[] args) throws Exception{
+        //create connection to db
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root","root");
+        Statement statement = conn.createStatement();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter username: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String pass = scanner.nextLine();
+        ResultSet rs= statement.executeQuery("SELECT * FROM mydb WHERE username='"+name+"'");
+        if (rs.next()){
+            String dbpass = rs.getString("password");
+            if(pass.equals(dbpass)){
+                System.out.println("Login successfull");
+            }else{
+                System.out.println("Invalid password");
+            }
+        }else{
+            System.out.println("Username not found");
         }
-    }
-    public static boolean login(String username, String password) {
-        // query the database to check if the user exists
-        return true;
+        statement.close();
+        conn.close();
     }
 }

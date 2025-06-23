@@ -1,7 +1,6 @@
-import java.util.*;
-    public class MyMain {
-        public static void main(String[] args) {
-            int index = Integer.parseInt(args[0]);
-            System.out.println("The value at the specified position is " + id_sequence[index]);
-        }
+public static int getIndexValue(int[] id_sequence){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a valid index");
+        int index = sc.nextInt();
+        return id_sequence[index];
     }

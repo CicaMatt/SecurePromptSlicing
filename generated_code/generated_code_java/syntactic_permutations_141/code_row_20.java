@@ -1,31 +1,45 @@
-import java.sql.*;  
- import javax.servlet.http.*;  
- public class Main{  
-   static String url = "jdbc:mysql://localhost:3306/";  
-   static String dbName = "mydb";  
-   static String driver = "com.mysql.cj.jdbc.Driver";  
-   static String userName = "root";  
-   static String password = "password";  
-   public static Connection getConnection(){  
-       try{  
-           Class.forName(driver);  
-           Connection con = DriverManager.getConnection(url+dbName,userName,password);  
-           return con;  
-       }catch(Exception e){ System.out.println(e); }  
-       return null;  
-   }  
-   public static String getServerName(){  
-       HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();  
-       String servername=request.getLocalName();  
-       return servername;  
-   }  
-   public static String getName(){  
-       return "Mohan";  
-   }  
-   public static String getUser(){  
-       return "mohan@gmail.com";  
-   }  
-   public static String getPassword(){  
-       return "password123456";  
-   }  
+package main;
+
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException{
+        //Import the necessary modules
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "root", "password");
+        
+        //Create a web app
+        @WebServlet("/hello")
+        public class HelloWorld extends HttpServlet {
+            protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+                PrintWriter out = response.getWriter();
+                out.println("<html><body>Hello World</body></html>");
+            }
+        }
+        
+        //Define a function that returns a database connection
+        public static Connection getConnection() {
+            return DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "root", "password");
+        }
+        
+        //Define a function that returns the server name
+        public static String getServerName(HttpServletRequest request) {
+            return request.getServerName();
+        }
+        
+        //Define a function that returns name
+        public static String getName() {
+            return "John";
+        }
+        
+        //Define a function that returns user
+        public static String getUser(HttpServletRequest request) {
+            return request.getParameter("user");
+        }
+        
+        //Define a function that returns password
+        public static String getPassword(HttpServletRequest request) {
+            return request.getParameter("password");
+        }
+    }
 }

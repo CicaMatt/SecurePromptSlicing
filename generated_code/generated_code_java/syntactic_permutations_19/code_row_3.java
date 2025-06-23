@@ -1,7 +1,7 @@
-public class HelloWorld {
+import java.util.*;
+public class Add {
     public static void main(String[] args) {
-        int i = Integer.parseInt(args[0])+1000;
-        System.out.println(""+i);
-        
+        int arg = Integer.parseInt(args[0]);
+        System.out.println("The result of adding 1000 is " + (arg+1000));
     }
 }

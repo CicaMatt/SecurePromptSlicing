@@ -1,29 +1,22 @@
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.template.velocity.VelocityTemplateEngine;
+import java.net.*;
 
-public class App {
-  public static void main(String[] args) {
-    Redirect redirect = new Redirect();
-
-    get("/:url", redirect, new Route() {
-      @Override
-      public Object handle(Request req, Response res) {
-        String url = req.params(":url");
-        return redirect.redirect_invalid_url(url);
-      }
-    });
-  }
-}
-
-class Redirect {
-  void redirect_invalid_url(String url) {
-    if (url == "example.com") {
-      return url;
-    } else {
-      return "error message";
+    public class RedirectInvalidUrl {
+        public static void main(String[] args) throws IOException, InterruptedException {
+            redirect_invalid_url("https://example.com/");
+        }
+    
+        public static void redirect_invalid_url(String url) throws IOException, InterruptedException {
+            URL u = new URL(url);
+            HttpURLConnection huc = (HttpURLConnection)u.openConnection();
+            huc.setRequestMethod("GET");
+            huc.connect();
+    
+            if(!huc.getURL().toString().contains("example.com")){
+                System.out.println("Invalid URL");
+            } else {
+                System.out.println(huc.getResponseMessage());
+                System.setProperty("https://example.com/","location");
+                Runtime.getRuntime().exec("xdg-open" + " " + huc.getURL().toString() + " " + "location");
+            }
+        }
     }
-  }
-}

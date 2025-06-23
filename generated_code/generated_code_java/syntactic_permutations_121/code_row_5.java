@@ -1,18 +1,22 @@
-import java.io.*;
-
-public class Code {
-    public static void main(String[] args) throws IOException {
-        // first chunk
-        String str1 = "Hello World!";
-        // second chunk
-        String str2 = str1;
-        System.out.println(str2);
-        // free the memory allocated to str1
-        str1 = null;
-        System.gc();
-        System.out.println(str2);
-        // free the memory allocated to str2
-        str2 = null;
-        System.gc();
-    }
+import java.util.*;
+public class MyCode {
+    public static void main(String[] args) {
+        //Declare the first pointer and allocate memory to it 
+        int[] my_pointer = new int[10];
+
+        //Declare a second chunk of memory and copy the contents of the first chunk into it
+        int[] copy_my_pointer = Arrays.copyOf(my_pointer, my_pointer.length);
+
+        //Print the contents of the second chunk 
+        System.out.println(Arrays.toString(copy_my_pointer));
+        
+        //Free the memory allocated to the first chunk
+        my_pointer = null;
+
+        //Print the contents of the second chunk again
+        System.out.println(Arrays.toString(copy_my_pointer));
+        
+        //Free the memory allocated to the second chunk 
+        copy_my_pointer = null;
+    }
 }

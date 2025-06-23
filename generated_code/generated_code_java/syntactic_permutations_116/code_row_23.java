@@ -1,20 +1,16 @@
-import java.util.Arrays;
-public class Solution {
-    public static void main(String[] args) {
-        String output = "";
-        try {
-            String cmd = "ls -ltr";
-            Process child = Runtime.getRuntime().exec(cmd);
-            child.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(child.getInputStream()));
-            String line = reader.readLine();
-            while (line != null) {
-                output += line + "\n";
-                line = reader.readLine();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(output);
-    }
+import java.util.*;
+
+public class Main {
+	public static void main(String[] args) {
+		try {
+			Process p = Runtime.getRuntime().exec("ls -l");
+			BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

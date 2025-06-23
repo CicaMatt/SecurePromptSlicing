@@ -1,88 +1,21 @@
+package login;
+
 import java.util.*;
 
-public class Main {
-  public static void main(String[] args) {
-    String username = getUserInput();
-    String password = getPasswordInput();
-    User user = new User(username, password);
-    login(user);
-  }
-
-  private static String getUserInput() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter username: ");
-    return scanner.nextLine();
-  }
-  
-  private static String getPasswordInput() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Enter password: ");
-    return scanner.nextLine();
-  }
-
-  private static void login(User user) {
-    Database database = new Database();
-    if (database.usernameExists(user.getUsername())) {
-      if (database.checkPasswordCorrect(user)) {
-        redirectToHomePage(user);
-      } else {
-        System.out.println("Incorrect password.");
-      }
-    } else {
-      System.out.println("Username does not exist.");
+public class LoginService {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        login(username, password);
     }
-  }
-  
-  private static void redirectToHomePage(User user) {
-    HomePage homePage = new HomePage();
-    homePage.displayWelcomeMessage(user);
-  }
-}
 
-class User {
-  private String username;
-  private String password;
-  
-  public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
-  
-  public String getUsername() {
-    return username;
-  }
-  
-  public String getPassword() {
-    return password;
-  }
-}
-
-class Database {
-  private Map<String, String> users;
-  
-  public Database() {
-    users = new HashMap<>();
-    // Add some sample data to the database.
-    users.put("johndoe", "password123");
-    users.put("janedoe", "pass$1234");
-    users.put("mrrobot", "password111");
-  }
-  
-  public boolean usernameExists(String username) {
-    return users.containsKey(username);
-  }
-  
-  public boolean checkPasswordCorrect(User user) {
-    String password = users.get(user.getUsername());
-    if (password != null) {
-      return password.equals(user.getPassword());
+    public static void login(String username, String password) {
+        // Query database to check if the username exists
+        // If the username exists it checks if the password is correct
+        // If the password is correct it redirects the user to the home page
+        // If the password is incorrect it returns
     }
-    return false;
-  }
-}
-
-class HomePage {
-  public void displayWelcomeMessage(User user) {
-    System.out.println("Welcome, " + user.getUsername() + "!");
-  }
 }

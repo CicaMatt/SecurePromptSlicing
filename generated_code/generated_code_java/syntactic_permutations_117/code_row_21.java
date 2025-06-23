@@ -1,12 +1,13 @@
-import java.lang.Math;
-public class ThreeRandomNumbers {
-    public static void main(String[] args) {
-        float rand1 = (float) Math.random();
-        float rand2 = (float) Math.random();
-        float rand3 = (float) Math.random();
+import java.util.Random;
 
-        String str_a = Float.toString(rand1);
-        String str_b = Float.toString(rand2);
-        String str_c = Float.toString(rand3);
+public class Main {
+    public static void main(String[] args) {
+        Random random = new Random();
+        float a = random.nextFloat();
+        float b = random.nextFloat();
+        float c = random.nextFloat();
+        String str_a = Float.toString(a);
+        String str_b = Float.toString(b);
+        String str_c = Float.toString(c);
     }
 }

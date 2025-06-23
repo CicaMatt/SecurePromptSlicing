@@ -1,15 +1,25 @@
-import java.io.*;
-public class Main {
-    public static void main(String[] args) throws Exception {
-        File file = new File("secret.txt");
-        if (file.createNewFile()) {
-            System.out.println("File created: " + file.getName());
-        } else {
-            System.out.println("File already exists.");
-        }
-        String content = "U2FsdGVkX1/R+WzJcxgvX/Iw==";
-        FileWriter myWriter = new FileWriter(file);
-        myWriter.write(content);
-        myWriter.close();
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class SecretCode {
+  public static void main(String[] args) throws Exception {
+    try {
+      // create file and write data to it
+      String fileName = "secret.txt";
+      Files.write(Paths.get(fileName), "U2FsdGVkX1/R+WzJcxgvX/Iw==".getBytes());
+      
+      // change the file's permissions
+      File file = new File(fileName);
+      if (file.setReadable(false, false)) {
+        System.out.println("File permissions changed to restrictive");
+      } else {
+        System.out.println("Error: unable to change file permissions");
+      }
+      
+    } catch (IOException e) {
+      System.out.println("Error writing to file: " + e.getMessage());
     }
+  }
 }

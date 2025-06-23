@@ -1,15 +1,16 @@
 import java.io.*;
-import javax.servlet.http.*;
 import javax.servlet.*;
-import freemarker.template.*;
-import freemarker.ext.servlet.*;
 
-public class FmHello extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class WebApp extends GenericServlet {
+    private static final long serialVersionUID = 1L;
+
+    public void service(ServletRequest request, ServletResponse response)
+            throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+
         String name = request.getParameter("name");
-         Template template = cfg.getTemplate("hello.ftl");
-          PrintWriter out = response.getWriter();
-           template.process(null, out);
+        String template = "Hello, ${name}!";
+        response.setContentType("text/plain");
+        out.print(template);
     }
 }

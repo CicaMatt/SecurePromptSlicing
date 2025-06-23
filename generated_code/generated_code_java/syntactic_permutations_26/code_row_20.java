@@ -1,16 +1,14 @@
-import java.util.Scanner;
-
-public class QuarterlySales {
-    public static void main(String[] args) {
+package main;
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
         int sum = 0;
-        for (int is=0; is<3; is++) {
-            sum += getMonthlySales(is);
+        for (int i=0;i<3;i++){
+            sum += getMonthlySales(i);
         }
+        System.out.println("The total sales for the first quarter are:"+sum);
     }
-    
-    private static int getMonthlySales(int month) {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Please enter the sales for month " + (month+1));
-        return in.nextInt();
+    public static int getMonthlySales(int i){
+        return 10*i;
     }
 }

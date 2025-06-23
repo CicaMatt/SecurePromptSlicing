@@ -1,16 +1,17 @@
-import java.io.*;
 import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
 
-public class PingServlet extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        String url = "www.google.com";
+public class PingDecorator extends GenericServlet {
+    public void service(ServletRequest req, ServletResponse res) throws IOException {
+        String url = req.getParameter("url");
+        String ping = "ping -c 3 " + url;
         Runtime rt = Runtime.getRuntime();
-        Process pr = rt.exec("ping -c 1 " + url);
-        InputStream in = pr.getInputStream();
-        OutputStream out = res.getOutputStream();
-        int b;
-        while((b=in.read()) != -1)
-            out.write(b);
+        Process pr = rt.exec(ping);
+        BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line;
+        while ((line = in.readLine()) != null) {
+            res.getWriter().println(line);
+        }
+        in.close();
     }
 }

@@ -1,40 +1,22 @@
-import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class Decorator {
-	
-	public static void main(String[] args) {
-	}
-	
-	@WebServlet("/ping")
-	public static class Ping extends HttpServlet {
-		private String url;
-		
-		public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-			url = request.getParameter("url");
-			String output = executeCommand();
-			response.setContentType("text/plain");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(output);
-        }
-        
-        private String executeCommand() throws IOException {
-            List<String> command = Arrays.asList("/bin/sh", "-c", "ping -c 3 " + url);
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            Process process = processBuilder.start();
-            
-            StringBuilder output = new StringBuilder();
-            
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line + "\n");
-                }
+import java.io.IOException;
+import java.net.*;
+public class Ping {
+    public static String ping(String url) throws IOException {
+        URL myUrl = new URL(url);
+        ProcessBuilder builder = new ProcessBuilder("ping", myUrl.getHost());
+        builder.redirectErrorStream(true);
+        Process p = builder.start();
+        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String output = "";
+        String line;
+        while (true) {
+            line = r.readLine();
+            if (line == null) {
+                break;
             }
-            
-            return output.toString();
+            output += line + "\n";
         }
-	}
+        p.waitFor();
+        return output;
+    }
 }

@@ -1,48 +1,48 @@
-import javax.servlet.ServletException;  
-import javax.servlet.http.HttpServletRequest;  
-import javax.servlet.http.HttpServletResponse;  
-import java.io.IOException;  
-import java.sql.SQLException;  
-import java.sql.Connection;  
-import java.sql.DriverManager;  
-import java.sql.PreparedStatement;  
-import java.util.ArrayList;  
-import javax.servlet.RequestDispatcher;  
-  
-public class LoginServlet extends HttpServlet{  
-    public void doPost(HttpServletRequest request,HttpServletResponse response)throws ServletException ,IOException {  
-        String uname = request.getParameter("username");  
-        String pass = request.getParameter("password");  
-        if(validateUser(uname,pass)){  
-            RequestDispatcher dispatcher=request.getRequestDispatcher("/dashboard.jsp");  
-            dispatcher.forward(request,response);  
-        }else{  
-            RequestDispatcher dispatcher=request.getRequestDispatcher("/login.html");  
-            dispatcher.forward(request,response);  
-        }  
-    }  
-      
-    public boolean validateUser(String uname, String pass){  
-        ArrayList<ArrayList<String>> list = new ArrayList<>();  
-        try{  
-            Class.forName("com.mysql.jdbc.Driver");  
-            Connection con= DriverManager.getConnection("jdbc:mysql://localhost/login","root","password");  
-            PreparedStatement ps=con.prepareStatement("select * from user where username = ? and password = ?");  
-            ps.setString(1,uname);  
-            ps.setString(2,pass);  
-            ResultSet rs=ps.executeQuery();  
-            while(rs.next()){  
-                list.add(new ArrayList<>(Arrays.asList(rs.getString("username"),rs.getString("password"))));  
-            }  
-        }catch(ClassNotFoundException e){  
-            System.out.println(e);  
-        }catch(SQLException e){  
-            System.out.println(e);  
-        }  
-        if(!list.isEmpty()){  
-            return true;  
-        }else{  
-            return false;  
-        }  
-    }  
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+
+public class LoginServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        boolean isValidUser = false;
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String dbUrl = "jdbc:mysql://localhost/login?useSSL=false";
+            conn = DriverManager.getConnection(dbUrl, "root", "");
+
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2, password);
+            rs = pst.executeQuery();
+
+            if(rs.next()){
+                isValidUser = true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                rs.close();
+                pst.close();
+                conn.close();
+            }catch(Exception e){}
+        }
+
+        if(isValidUser) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            response.sendRedirect("dashboard");
+        } else {
+            RequestDispatcher rd = request.getRequestDispatcher("login?error=Invalid Credentials");
+            rd.forward(request, response);
+        }
+    }
 }

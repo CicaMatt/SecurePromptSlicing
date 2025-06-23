@@ -1,18 +1,20 @@
-import spark.Request;
-import spark.Response;
-import static spark.Spark.*;
-import java.util.HashMap;
-import java.util.Map;
+package com.hackerrank;
 
-public class Redirect {
-    public static void main(String[] args) {
-        port(getHerokuAssignedPort());
-        get("/url", (req, res) -> redirect_invalid_url(req));
-    }
-}
+import java.util.*;
 
-public String redirect_invalid_url(Request request){
-    Map<String, String> map = new HashMap<>();
-    map.put("URL", "https://www.example.com");
-    return map.getOrDefault(request.queryMap().toMap().get("url"), "Invalid URL");
+public class Main {
+	static String redirect_invalid_url(String url) {
+		if(url.contains("example.com")){
+			return "redirected to " + url;
+		}else {
+			return "Invalid URL";
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String s1=sc.next();
+		redirect_invalid_url(s1);
+	}
+
 }

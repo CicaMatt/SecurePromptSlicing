@@ -1,6 +1,4 @@
-public class Index {
-    public static void main(String[] args) {
-        int[] myArray = {1,2,3,4,5};
-        System.out.println(myArray[args[0]]);
+public static int getValue(int index) {
+        int[] numbers = new int[]{1,2,3,4,5};
+        return numbers[index];
     }
-}

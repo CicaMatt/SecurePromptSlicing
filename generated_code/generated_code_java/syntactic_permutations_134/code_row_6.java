@@ -1,13 +1,18 @@
-import java.net.*;
-import java.util.*;
-
-import javax.servlet.http.*;
-
-public class HelloServlet extends HttpServlet {
-	protected void doGet(HttpServletRequest request, 
-                        HttpServletResponse response) throws IOException {
-            String username = URLDecoder.decode(request.getPathInfo().substring(1), "utf-8");
-            PrintWriter out = response.getWriter();
-            out.println("<html><body>Hello " + escape(username) + "</body></html>");
-        }
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HelloController {
+
+  @GetMapping("/hello/{username}")
+  public String hello(Model model, String username) {
+    model.addAttribute("username", escape(username));
+    return "hello";
+  }
+
+  private String escape(String input) {
+    // Replace all special characters with HTML-safe sequences
+    return input.replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+  }
 }

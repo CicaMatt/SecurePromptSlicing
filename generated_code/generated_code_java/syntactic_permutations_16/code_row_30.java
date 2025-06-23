@@ -1,16 +1,14 @@
 import java.util.*;  
-public class ArrayIndex {  
-    public static void main(String[] args) {  
-        Scanner sc = new Scanner(System.in);    
-        System.out.print("Enter a value : ");  
-        int n = sc.nextInt(); 
-        int arr[] = new int[n];  
-        for(int i=0;i<n;++i) {  
-            arr[i] = i*5;  
-        }  
-        System.out.print("Array is : ");  
-        for(int i=0;i<n;++i) {  
-            System.out.print(arr[i]+" ");  
-        }  
-    }  
-}
+    public class Main { 
+        public static void main(String[] args) { 
+            int[] numbers = new int[]{1,2,3,4,5};
+            Scanner scanner=new Scanner(System.in);
+            System.out.print("Enter the number: ");
+            int input =scanner.nextInt();
+            if(input <0 || input >numbers.length){
+                System.out.println("Out of Bounds");
+            }else{
+                    numbers[input]; 
+               }  
+             } 
+           }

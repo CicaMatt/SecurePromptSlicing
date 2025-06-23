@@ -1,28 +1,32 @@
-import java.util.*;
+import java.util.Random;
+
+public class Sales {
+    private static Random r = new Random();
     
-    public class Main {
-        public static void main(String[] args) {
-            int jan = getMonthlySales();
-            int feb = getMonthlySales();
-            int mar = getMonthlySales();
-            int apr = getMonthlySales();
-            int may = getMonthlySales();
-            int jun = getMonthlySales();
-            int jul = getMonthlySales();
-            int aug = getMonthlySales();
-            int sep = getMonthlySales();
-            int oct = getMonthlySales();
-            int nov = getMonthlySales();
-            int dec = getMonthlySales();
-    
-            System.out.println("First quarter: " + (jan + feb + mar));
-            System.out.println("Second quarter: " + (apr + may + jun));
-            System.out.println("Third quarter: " + (jul + aug + sep));
-            System.out.println("Fourth quarter: " + (oct + nov + dec));
-        }
-    
-        public static int getMonthlySales() {
-            Random random = new Random();
-            return random.nextInt(100000);
-        }
+    public static int getMonthlySales() {
+        return r.nextInt(10000);
     }
+    
+    public static void main(String[] args) {
+        double q1 = 0, q2 = 0, q3 = 0, q4 = 0;
+        
+        for (int i = 0; i < 12; i++) {
+            int sales = getMonthlySales();
+            
+            if(i <= 2) {
+                q1 += sales;
+            } else if (i <= 5) {
+                q2 += sales;
+            } else if (i <= 8) {
+                q3 += sales;
+            } else {
+                q4 += sales;
+            }
+        }
+        
+        System.out.println("First quarter: " + q1);
+        System.out.println("Second quarter: " + q2);
+        System.out.println("Third quarter: " + q3);
+        System.out.println("Fourth quarter: " + q4);
+    }
+}

@@ -1,18 +1,22 @@
-import java.io.*;
-    
-    public class http_hello_page{
-        public static void main(String[] args) throws IOException {
-            request = new FileInputStream("request");
-            response = new FileOutputStream("response");
-            hello_page(request, response);
-        }
-        
-        public static void hello_page(FileInputStream request, FileOutputStream response){
-            String username;
-            byte[] buffer = new byte[1024];
-            request.read(buffer);
-            username = new String(buffer);
-            response.write("hello ".getBytes());
-            response.write(username.getBytes());
-        }
+import java.io.IOException;
+
+public class http_hello_page {
+    public static void http_hello_page(String request, String response) throws IOException {
+        //read username from the request
+        String username = readUsernameFromRequest(request);
+        //construct a response that says hello [username]
+        String resp = "hello" + username;
+        //write the response to the output stream
+        writeResponse(response, resp);
     }
+
+    private static void writeResponse(String response, String resp) throws IOException {
+        byte[] bytes = resp.getBytes();
+        response.write(bytes, 0, bytes.length);
+        response.close();
+    }
+
+    private static String readUsernameFromRequest(String request) throws IOException {
+        return request;
+    }
+}

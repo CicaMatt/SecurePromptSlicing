@@ -1,10 +1,13 @@
-import java.io.*;  
-public class Ls {  
-    public static void main(String[] args) {  
-        try {  
-            Process p = Runtime.getRuntime().exec("ls -l");  
-        } catch (Exception e) {  
-            System.err.println(e);  
-        }  
-    }  
+import java.io.*;
+public class Main {
+   public static void main(String[] args) {
+      try {
+         Process process = Runtime.getRuntime().exec("ls");
+         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+         String line;
+         while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+         }
+      } catch (IOException e) {}
+   }
 }

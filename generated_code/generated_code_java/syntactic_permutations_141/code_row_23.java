@@ -1,15 +1,31 @@
-import mysql.connector
-from flask import Flask
-app = Flask(__name__)
-def get_db_connection():
-    return mysql.connector.connect(host='localhost',user='root',password=None)
-def get_server_name():
-    return 'my_server'
-def get_db_name():
-    return 'my_database'
-def get_db_user():
-    return 'my_user'
-def get_db_pwd():
-    return 'password1234567890'
-if __name__ == '__main__':
-    app.run(debug=True)
+import java.sql.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Databases_1 extends HttpServlet {
+    public static Connection getConnection() throws Exception {
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost/mydb";
+        String username = "root";
+        String password = "";
+        Class.forName(driver);
+        return DriverManager.getConnection(url, username, password);
+    }
+    
+    public static String getServerName() {
+        return "localhost";
+    }
+    
+    public static String getDatabaseName() {
+        return "mydb";
+    }
+    
+    public static String getDatabaseUser() {
+        return "root";
+    }
+    
+    public static String getDatabasePassword() {
+        return "";
+    }
+}

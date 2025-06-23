@@ -1,16 +1,10 @@
-import java.util.*;
-
-public class IdSequence {
+import java.util.Scanner;
+public class Sequence {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner reader = new Scanner(System.in);
+        int index;
         System.out.print("Enter an index value: ");
-        int i = Integer.parseInt(input.nextLine());
-        System.out.println("Value at " + i + ": " + idSequence(i));
-    }
-    public static String idSequence(int index) {
-        return "123456789";
+        index = reader.nextInt();
+        System.out.println(id_sequence[index]);
     }
 }
-
-### Explanation:
-    - The function takes in an integer value and returns the character at that position of the string.

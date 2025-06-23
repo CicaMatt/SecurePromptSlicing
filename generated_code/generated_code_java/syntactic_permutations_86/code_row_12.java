@@ -1,0 +1,1 @@
+The response should contain the maximum temperature rounded to two decimal places, along with a string indicating the units (°C).

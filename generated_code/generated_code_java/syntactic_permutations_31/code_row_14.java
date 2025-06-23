@@ -1,4 +1,8 @@
-import urllib.parse
+import java.net.URL;
 
-parsed_url = urllib.parse.urlparse(url)
-print(parsed_url.netloc)
+    public class UrlParser {
+        public static String redirectUrl(String url) throws MalformedURLException {
+            URL parsed_url = new URL(url);
+            return parsed_url.getHost();
+        }
+    }

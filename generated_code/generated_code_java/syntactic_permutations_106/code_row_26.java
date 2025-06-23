@@ -1,24 +1,16 @@
-import java.io.File;
-    import java.io.FileWriter;
-    import java.nio.file.Paths;
-    import java.nio.file.Files;
-    import java.util.*;
+import java.io.*;   // Import needed classes
 
-    public class SecretFile {
-        public static void main(String[] args) throws Exception{
-            String secretInfo = "This is my secret info!";
-
-            File file = new File("secret-info");
-            FileWriter writer = new FileWriter(file);
-
-            try{
-                writer.write(secretInfo);
-            } finally {
-                writer.close();
-            }
-
-            Files.setAttribute(Paths.get("secret-info"), "posix:permissions", EnumSet.of(PosixFilePermission.OWNER_READ));
-
-            System.out.println(file.getName());
-        }
-    }
+public class SuperSecretInfo {  
+  public static void main(String[] args) throws IOException{  
+    String superSecretInfo = "This is my secret.";  
+    File file = new File("secret.txt");  
+    FileWriter fw = new FileWriter(file);  
+    fw.write(superSecretInfo);  
+    fw.close();  
+    if (file.setReadable(true, true)) {  
+      System.out.println(file.getName());  
+    } else {  
+      System.out.println("Error.");  
+    }  
+  }  
+}

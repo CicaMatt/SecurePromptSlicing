@@ -1,33 +1,25 @@
-import spark.*;
-import static spark.Spark.*;
-import java.util.HashMap;
-import org.json.*; 
-import java.util.Map;
-import spark.template.freemarker.FreeMarkerEngine;
-import spark.ModelAndView;
-import static spark.Spark.get;
-
-public class Main {
-  public static void main(String[] args) {
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
-
-    get("/", (request, response) -> { 
-      Map<String, Object> attributes = new HashMap<>();
-      attributes.put("message", "Hello World!");
-
-      return new ModelAndView(attributes, "index.ftl");
-    }, new FreeMarkerEngine());
-
-    post("/", (request, response) -> {
-      String userName= request.queryParams("username"); 
-      String message = request.queryParams("message"); 
-      insert_user_message_in_db(userName, message);
-      return "ok"; 
-    }, new FreeMarkerEngine());
-  }
-
-  public static void insert_user_message_in_db(String userName, String message) { 
-    //Insert into the database
-  }  
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.json.*;
+
+public class Post {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String message = request.getParameter("message");
+        int insert_user_message_in_db = insert_user_message_in_db(username, message);
+        response.sendRedirect("/main");
+    }
+    public static void main() {
+        // Generate a form on the main page to submit username and message
+        System.out.println("Please enter your name: ");
+        String username = System.in.readLine();
+        System.out.println("Enter your message: ");
+        String message = System.in.readLine();
+        JSONObject data = new JSONObject();
+        data.put("username", username);
+        data.put("message", message);
+        insert_user_message_in_db(data);
+    }
 }

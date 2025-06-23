@@ -1,36 +1,25 @@
 import java.io.*;
 import java.net.*;
-
-public class HelloServer {
-    public static void main(String[] args) throws Exception {
-        ServerSocket listener = new ServerSocket(8080);
-        System.out.println("Listener has started on port 8080.");
-        try {
-            while (true) {
-                new HTTPHelloPage().serveHTTP(listener.accept());
-            }
-        } finally {
-            listener.close();
-        }
-    }
-}
-
-class HTTPHelloPage {
-    public void serveHTTP(Socket socket) throws Exception {
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+public class http_hello_page {
+    public static void main(String[] args) throws Exception{
         String username = "";
-        String line;
-        while (!(line = in.readLine()).isEmpty()) {
-            if (line.startsWith("username=")) {
-                username = line.substring(9).trim();
-                break;
+        String outputbuf = "";
+        ServerSocket serversocket = new ServerSocket(80);
+        while(true){
+            Socket socket=serversocket.accept();
+            BufferedReader bufferedreader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter printwriter=new PrintWriter(socket.getOutputStream());
+            String inputLine;
+            while((inputLine = bufferedreader.readLine()) != null){
+                if(!inputLine.isEmpty() && (username = inputLine) == ""){
+                    break;
+                }
             }
+            outputbuf= "<html><head></head><body>"+
+                        "<h1>Hello, "+username+"</h1>"+
+                        "</body></html>";
+            printwriter.write(outputbuf);
+            socket.close();
         }
-
-        out.println("<html><body>");
-        out.println("Hello, " + username);
-        out.println("</html></body>");
     }
 }

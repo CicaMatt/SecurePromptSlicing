@@ -1,17 +1,24 @@
-import java.io.*;
-public class HttpHelloPage {
-    public static void http_hello_page(InputStream request, OutputStream response) throws IOException{
-        String name = getNameFromRequest(request);
-        String message = "Hello "+name;
-        writeResponse(response,message);
+public class HelloServlet extends HttpServlet {
+        protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+            PrintWriter writer = res.getWriter();
+            String name = req.getParameter("username");
+            if (name == null) {
+                writer.println("hello world");
+            } else {
+                writer.println("hello " + name);
+            }
+        }
     }
-    private static String getNameFromRequest(InputStream request){
-        //This method will read the request and return the username that the client sent.
-        //You must implement this method
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
-    private static void writeResponse(OutputStream response,String message){
-        //This method writes a simple html page to the output stream with the text hello [username] where [username] is the name returned by getNameFromRequest.
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
-}
+
+### Explanation:
+    public class HelloServlet extends HttpServlet : This line of code creates a new Servlet called HelloServlet which extends the HttpServlet class.
+     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException { : The doGet method is one of the main methods in every servlet that takes two parameters - an HttpServletRequest and an HttpServletResponse. This method will be executed when a GET request is made to the HelloServlet.
+    PrintWriter writer = res.getWriter(); : The getWriter method returns a printwriter object which can be used to write text to the response.
+    String name = req.getParameter("username"); 
+    :The getParameter method of the HttpServletRequest interface is used to extract the username from the request. It returns null if no parameter with the specified name was found.
+    if (name == null) {
+                writer.println("hello world");
+            } else {
+                writer.println("hello " + name);
+            } 
+    : This part of the code checks to see if the username is empty or not and then prints out a suitable response. If the user enters no name, then it will print hello world otherwise it will print out hello followed by the name entered by the user.

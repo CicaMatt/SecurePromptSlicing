@@ -1,71 +1,25 @@
-public class Login {
-        private String username;
-        private String password;
-    
-        public void setUsername(String username) {
-            this.username = username;
-        }
+import java.sql.*;
+import javax.servlet.http.*;
+import javax.servlet.*;
+import java.io.*;
+
+public class Login extends HttpServlet {
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         
-        public void setPassword(String password) {
-            this.password = password;
+        // Connect to database
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "root");
+        Statement statement = conn.createStatement();
+        
+        ResultSet resultset = statement.executeQuery("SELECT username, password FROM users WHERE username='"+username+"' AND password='"+password+"';");
+        
+        if(resultset.next()) {
+            response.sendRedirect("/dashboard");
+        } else {
+            request.setAttribute("error", "Invalid username or password");
+            RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("login.jsp");
+            requestDispatcher.forward(request,response);
         }
     }
-    
-    import java.util.*;
-    
-    public class LoginController {
-        private static Map<String, String> users;
-        
-        static {
-            users = new HashMap<>();
-            
-            users.put("user1", "password1");
-            users.put("user2", "password2");
-            users.put("user3", "password3");
-        }
-    
-        public static boolean isLoggedIn(String username, String password) {
-            return users.get(username).equals(password);
-        }
-    }
-    
-    import java.io.*;
-    import javax.servlet.http.*;
-    
-    public class LoginServlet extends HttpServlet {
-        private static final long serialVersionUID = 1L;
-        
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            
-            if (LoginController.isLoggedIn(username, password)) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboard");
-                dispatcher.forward(request, response);
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-                dispatcher.forward(request, response);
-            }
-        }
-    }
-    
-    import java.io.*;
-    import javax.servlet.http.*;
-    
-    public class DashboardServlet extends HttpServlet {
-        private static final long serialVersionUID = 1L;
-        
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-            PrintWriter out = response.getWriter();
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Dashboard</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Welcome to your dashboard!</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+}

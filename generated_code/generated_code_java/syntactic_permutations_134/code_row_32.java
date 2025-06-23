@@ -1,23 +1,1 @@
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
-public class MyApplication implements Router {
-    private Map<String, Route> routes = new HashMap<>();
-
-    public MyApplication() {
-        addRoute("/hello/{username}", this::hello);
-    }
-
-    public void addRoute(String url, Function<Map<String, String>, String> func) {
-        this.routes.put(url, new Route(url, func));
-    }
-
-    private String hello(Map<String, String> params) {
-        return "Hello " + escape(params.get("username"));
-    }
-
-    private String escape(String str) {
-        // TODO
-    }
-}
+import java.io.UnsupportedEncodingException;      import java.net.URLDecoder;   import java.util.*;   public class Decorator {     private Map<String, Function> mapping = new HashMap<>();     public void addMapping(String url, Function function) {        this.mapping.put(url, function);     }     public String getUrl() {       return this.mapping.getKey();       }    public Object callFunction(String url) {

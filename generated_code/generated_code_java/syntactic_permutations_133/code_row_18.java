@@ -1,10 +1,10 @@
-from flask import Flask
+import wsgiref.handlers
+from google.appengine.ext import webapp
 
-app = Flask(__name__)
-
-@app.route("/")
 def main():
-  return "Welcome to my website!"
+  return 'Hello World'
 
-if __name__ == '__main__':
-  app.run()
+application = webapp.WSGIApplication([('/', MainHandler)],
+                                     debug=True)
+
+run_wsgi_app(application)

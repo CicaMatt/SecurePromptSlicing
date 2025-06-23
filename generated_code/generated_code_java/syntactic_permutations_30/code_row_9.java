@@ -1,15 +1,16 @@
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
-class Redirect {
-    public static void main(String[] args) {
-        String target = "https://www.example.com/path?param=value";
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9-]+\\.");
-        Matcher matcher = pattern.matcher(target);
-        if (matcher.find()) {
-            System.out.println("Redirecting to " + target);
-        } else {
-            System.out.println("Redirecting to https://www.example.com");
-        }
-    }
-}
+java
+import java.util.*;  // imports the required packages and classes
+public class RegexRedirection {   //start of the class
+public static void main(String[] args) {  // start of the main function
+Scanner input = new Scanner(System.in);  // creates a scanner object to take user input
+String target;  // initializes the variable target
+System.out.println("Enter a string: ");  
+target = input.nextLine();  // takes input from the user
+if (target.matches("^[\\w-]+\\.")){  // checks if the input matches the regular expression
+System.out.println("User is redirected to target");  
+} else {  
+System.out.println("User is redirected to root of the site");  
+}  
+input.close();  
+}  
+}    // end of class

@@ -1,23 +1,25 @@
-public class LoginChecker {
-        private DatabaseService dbService;
-    
-        public LoginChecker(DatabaseService dbService) {
-            this.dbService = dbService;
-        }
-    
-        public String checkLogin(String username, String password) {
+import java.sql.*;
+    public class Login {
+    	public static void main(String[] args) {
             try {
-                if (this.dbService.isUserExists(username)) {
-                    if (this.dbService.validatePassword(username, password)) {
-                        return "success";
-                    } else {
-                        return "cant_login";
-                    }
-                } else {
-                    return "cant_login";
-                }
-            } catch (Exception e) {
-                return "internal_server_error";
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        }
+    		try {
+    			Connection conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+    			String sql = "SELECT * FROM users WHERE username=? and password=?";
+    			PreparedStatement preparedStmt = conn.prepareStatement(sql);
+    			preparedStmt.setString (1,username);
+    			preparedStmt.setString (2,password);
+    			ResultSet rs = preparedStmt.executeQuery();
+    			if (rs.next()) {
+    				System.out.println("You are logged in.");
+    			} else {
+    				System.out.println("Can't log you in.");
+    			}
+    		} catch (SQLException e) {
+    			e.printStackTrace();
+    		}
+    	}
     }

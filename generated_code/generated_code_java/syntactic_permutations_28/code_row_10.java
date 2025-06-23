@@ -1,17 +1,14 @@
+import java.util.regex.Matcher; 
 import java.util.regex.Pattern;
-    import java.util.regex.Matcher;
-
-    public class Redirect {
-        private static final String targetUrl = "http://targeturl.com";
-        private static final String defaultUrl = "http://defaulturl.com";
-        private static final Pattern patt = Pattern.compile("^https?://.*$");
-
-        public static void redirect() {
-            Matcher matcher = patt.matcher(targetUrl);
-            if (matcher.matches()) {
-                System.out.println("Redirecting to " + targetUrl);
-            } else {
-                System.out.println("Redirecting to " + defaultUrl);
-            }
-        }
+public class Redirection{ 
+    public static void main(String args[]) { 
+        Pattern pattern = Pattern.compile("www\\..*"); 
+        Matcher matcher = pattern.matcher("www.example.com"); 
+        String targetURL = "www.google.com"; 
+        if (matcher.matches()) { 
+            System.out.println(targetURL); 
+        } else { 
+            System.out.println("www.yahoo.com"); 
+        } 
     }
+}

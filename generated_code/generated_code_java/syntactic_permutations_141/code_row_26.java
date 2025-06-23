@@ -1,21 +1,14 @@
-import os
-import psycopg2
-from flask import Flask, request, session, g
-
-app = Flask(__name__)
-app.config.from_object(__name__)
-
-def connect_db():
-    return psycopg2.connect(os.environ['DATABASE_URL'])
-
-def get_server():
-    return os.environ['SERVER_NAME']
-
-def get_database():
-    return os.environ['DB_NAME']
-
-def get_user():
-    return os.environ['DB_USER']
-
-if __name__ == "__main__":
-    app.run()
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+
+    private static final String USER = "admin";
+    private static final String PASSWORD = "password123456";
+    private static final String CONN_STRING = "jdbc:mysql://localhost/mydatabase";
+    
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(CONN_STRING, USER, PASSWORD);
+    }
+}

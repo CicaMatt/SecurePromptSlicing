@@ -1,10 +1,19 @@
-import java.io.*;
-public class FileOperations {
-    
-    public static void main(String[] args) throws IOException{
-        RandomAccessFile f= new RandomAccessFile("file.txt","rw");
-        f.seek(0);
-        f.writeBytes("Hello World!");
-        System.out.println(f.readLine());
-    }
+import java.io.*;
+public class Test {
+    public static void main(String[] args) {
+        File f = new File("test");
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Couldn't create file.");
+        }
+
+        int fd;
+        try {
+            fd = open(f.getAbsolutePath(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            System.out.println("File descriptor: " + fd);
+        } catch (IOException e) {
+            System.out.println("Couldn't open file.");
+        }
+    }
 }

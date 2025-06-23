@@ -1,26 +1,16 @@
-import java.io.*;
-    import javax.servlet.*;
-    public class PingDecorator implements Filter {
-    
-        private FilterConfig config;
-        
-        @Override
-        public void init(FilterConfig filterConfig) throws ServletException {
-            this.config = filterConfig;
-        }
-        
-        @Override
-        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-            String url = config.getInitParameter("url");
-            Process p = Runtime.getRuntime().exec("ping " + url);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String output;
-            while ((output = in.readLine()) != null) {
-                response.getWriter().println(output);
-            }
-            chain.doFilter(request, response);
-        }
-        
-        @Override
-        public void destroy() {}
-    }
+import java.io.*;
+public class PingDecorator {
+    public static void ping(String url){
+        String[] cmd = {"ping", url};
+        Process p;
+        try{
+            p = Runtime.getRuntime().exec(cmd);
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String output = in.readLine();
+            System.out.println(output);
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+}

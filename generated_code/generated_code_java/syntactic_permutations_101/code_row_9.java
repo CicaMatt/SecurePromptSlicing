@@ -1,9 +1,12 @@
-import java.io.FileWriter;  
-     public class FileWrite {  
-      public static void main(String[] args) throws Exception{  
-       String name = "Satya";  
-        FileWriter writer = new FileWriter("satya.txt");  
-         writer.write(name);  
-          writer.close();  
-           }  
-     }
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileWriter {
+    public static void main(String[] args) throws IOException {
+        String content = "Hello World";
+        try (FileOutputStream file = new FileOutputStream("file.txt")) {
+            byte[] bytes = content.getBytes();
+            file.write(bytes);
+        }
+    }
+}

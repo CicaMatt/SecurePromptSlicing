@@ -1,3 +1,1 @@
-200 - OK
-400 - Bad Request
-503 - Unavailable
+The code should return a message indicating whether or not the user was successfully unsubscribed.

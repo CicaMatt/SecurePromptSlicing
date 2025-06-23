@@ -1,13 +1,17 @@
 import java.io.*;
-    
-    public class Ping {
-        public static void main(String[] args) throws Exception {
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("ping " + url);
-            
-        }
-        
-        public String ping() {
-            return "pong";
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class Ping implements HttpServlet {
+    private String url;
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("ping " + url);
+        InputStream inputstream = process.getInputStream();
+        InputStreamReader reader = new InputStreamReader(inputstream);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(line);
         }
     }
+}

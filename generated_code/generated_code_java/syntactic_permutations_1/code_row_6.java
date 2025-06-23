@@ -1,5 +1,6 @@
-public static void memcpy(byte[] dest, byte[] src, int len) {
-        for (int i = 0; i < len; i++) {
-            dest[i] = src[i];
-        }
+import java.nio.*;
+public class ByteCopy {
+    public void bytecopy(byte[] dest, byte[] src, int n) {
+        System.arraycopy(dest, 0, src, 0, n);
     }
+}

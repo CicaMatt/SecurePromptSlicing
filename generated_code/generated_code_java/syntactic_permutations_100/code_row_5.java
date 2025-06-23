@@ -1,15 +1,14 @@
-import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.util.Set;
-
+import java.io.*;
 public class Main {
-
-    public static void main(String[] args) throws Exception {
-        FileOutputStream f = new FileOutputStream("important_config");
-        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwx------");
-        Files.setPosixFilePermissions(Paths.get("important_config"), perms);
+    public static void main(String[] args) throws IOException {
+        File f = new File("important_config");
+        FileWriter writer = new FileWriter(f);
+        writer.write("[database]\n");
+        writer.write("host=localhost\n");
+        writer.write("port=3306\n");
+        writer.write("username=root\n");
+        writer.write("password=secret\n");
+        writer.flush();
+        writer.close();
     }
 }

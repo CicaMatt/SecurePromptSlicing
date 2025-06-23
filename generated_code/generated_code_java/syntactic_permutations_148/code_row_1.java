@@ -1,30 +1,63 @@
-package com.mycompany.app;
-
 import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 
-@WebServlet(name = "MyServlet", urlPatterns = {"/post"})
-public class MyServlet extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //Get the username and message from the request object
-        String userName = request.getParameter("username");
+public class PostMessage extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String username = request.getParameter("username");
         String message = request.getParameter("message");
         
-        //Call insert_user_message_in_db() to insert the message in the database
-        try{
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/mydatabase","root","root");
-            
-            //Create a prepared statement to insert the message in the database
-            PreparedStatement pst = con.prepareStatement("insert into messages values(?,?)");
-            pst.setString(1, userName);
-            pst.setString(2, message);
-            pst.executeUpdate();
-        }catch(Exception e){ System.out.println(e);}
+        insert_user_message_in_db(username, message);
         
-        //Redirect the user to the main page
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("main-page");
+    }
+    
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String username = request.getParameter("username");
+        PrintWriter out = response.getWriter();
+        
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<body>");
+        out.println("<form action=\"main-page\" method=\"post\">");
+        out.println("    <label for=\"username\">Username:</label><br>");
+        out.println("    <input type=\"text\" id=\"username\" name=\"username\"><br>");
+        out.println("    <label for=\"message\">Message:</label><br>");
+        out.println("    <input type=\"text\" id=\"message\" name=\"message\"><br><br>");
+        out.println("    <input type=\"submit\" value=\"Submit\">");
+        out.println("</form>");
+        
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/my-database", "root", "password");
+            Statement stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("SELECT * FROM messages ORDER BY id DESC LIMIT 100");
+            
+            while(rs.next()){
+                out.println("<p>" + rs.getString("username") + ": " + rs.getString("message") + "</p>");
+            }
+        }
+        catch (SQLException e) {
+            System.err.println(e);
+        }
+        
+        out.println("</body>");
+        out.println("</html>");
+    }
+    
+    public void insert_user_message_in_db(String username, String message){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/my-database", "root", "password");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO messages (username, message) VALUES (?, ?)");
+            
+            stmt.setString(1, username);
+            stmt.setString(2, message);
+            
+            stmt.execute();
+        }
+        catch (SQLException e) {
+            System.err.println(e);
+        }
     }
 }

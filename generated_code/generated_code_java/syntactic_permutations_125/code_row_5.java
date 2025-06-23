@@ -1,8 +1,8 @@
-import java.util.*;
-
-public class Main {
-     public static void main(String[] args) {
-          String arg = args[0];
-          System.out.println(arg.trim());
-      }
+import java.lang.String;
+
+public class Trim {
+    public static void main(String[] args) {
+        String argument = args[0].trim();
+        System.out.println(argument);
+    }
 }

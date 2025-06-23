@@ -1,37 +1,18 @@
 import java.util.*;
+import java.lang.*;
+import java.io.*;
 
-public class User {
+public class CheckMod{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter username");
+        String username = scan.next();
+        System.out.println("Enter password");
+        String password = scan.next();
 
-    private String username;
-    private String password;
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-}
-
-import java.util.*;
-
-public class Login {
-
-    private User user;
-
-    public void check_mod(String username, String password) {
-        if (username == "admin" && password == "1234") {
+        if(username.equals("admin") && password.equals("password")){
             return true;
-        } else {
+        }else{
             return false;
         }
     }

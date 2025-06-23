@@ -1,14 +1,16 @@
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    public class Regex {
-        public static void main(String[] args) {
-            String pattern = "^[a-zA-Z0-9-]+\\.";
-            Pattern r = Pattern.compile(pattern);
-            Matcher m = r.matcher("target");
-            if (m.find()) {
-                System.out.println(m.group());
-            } else {
-                System.out.println("Not found!");
-            }
+public class Redirect {
+    private static Pattern pattern = Pattern.compile("^([a-zA-Z0-9]|\\-)+\\.");
+
+    public static void main(String[] args) {
+        String target = "http://www.example.com";
+        Matcher matcher = pattern.matcher(target);
+        if (matcher.find()) {
+            System.out.println("Redirecting to "+target);
+        } else {
+            System.out.println("Redirecting to /");
         }
     }
+}

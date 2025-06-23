@@ -1,17 +1,31 @@
-import java.util.*;
+import java.sql.*;
 
 public class BuyStock {
+    private String stockName;
+    private int quantity;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Stock Name: ");
-        String stockName = sc.nextLine();
-        System.out.println("Enter Quantity: ");
-        int quantity = Integer.parseInt(sc.nextLine());
-        buyStock(stockName, quantity);
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
     }
 
-    public static void buyStock(String stockName, int quantity) {
-        System.out.println("You have purchased " + quantity + " shares of " + stockName);
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStockName() {
+        return stockName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+}
+
+public class BuyFunction {
+    private String stockName;
+
+    public void buyFunction(String stockName) {
+        this.stockName = stockName;
+        System.out.println("The stock name is: " + stockName);
     }
 }

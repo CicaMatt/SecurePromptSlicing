@@ -1,12 +1,11 @@
-import java.util.*;  
-public class Hello {  
-  public static void main(String[] args) {  
-    Random rand = new Random();  
-int a = rand.nextInt(10);  
-System.out.println("Random number between 0 and 9: " + a);  
-int b = rand.nextInt(15);  
-System.out.println("Random number between 0 and 14: " + b);  
-int c = a - b;  
-System.out.println("Difference between the two numbers: " + c);  
-  }  
-}
+1. import java.util.*;
+     2. public class HelloWorld{
+        3.  public static void main(String[] args) {
+             4. int firstInt = new Random().nextInt();
+               5. int secondInt = new Random().nextInt();
+              6. int difference = firstInt - secondInt;
+              7. System.out.println("First number: " + firstInt);
+               8. System.out.println("Second number: " + secondInt);
+                9. System.out.println("Difference: " + difference);
+              }
+          }

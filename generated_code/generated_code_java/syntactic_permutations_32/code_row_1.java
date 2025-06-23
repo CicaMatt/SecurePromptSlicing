@@ -1,20 +1,16 @@
-import spark.Request;
-import static spark.Spark.*;
- 
-public class Main {
-    public static void main(String[] args) {
-        get("/redirect/:url", (request, response) -> {
-            String url = request.params(":url");
-            if (isValidUrl(url)) {
-                response.redirect(url);
+import java.io.*;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+
+    public class RedirectInvalidURL extends HttpServlet {
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+            String url = req.getParameter("url");
+            if (url.startsWith("https://example.com")) {
+                res.sendRedirect(url);
             } else {
-                response.status(401);
-                return "Invalid URL";
+                res.setContentType("text/plain");
+                PrintWriter out = res.getWriter();
+                out.println("Invalid URL.");
             }
-        });
+        }
     }
- 
-    private static boolean isValidUrl(String url) {
-        // check if the url starts with https://example.com/
-    }
-}

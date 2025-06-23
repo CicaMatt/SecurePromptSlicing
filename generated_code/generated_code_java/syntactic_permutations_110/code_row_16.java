@@ -1,22 +1,15 @@
-import java.io.*; 
-import java.util.*; 
-public class Main {
-    public static void main(String[] args) throws IOException{
-        ProcessBuilder pb = new ProcessBuilder("id",args[0]);
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-        if (exitCode == 0){
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-            }
-        }else{
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                System.err.println(line);
-            }
+package com.codegym;
+
+import java.io.*;
+public class Runner {
+    public static void main(String[] args) throws Exception{
+        String username = args[0];
+        Runtime rt = Runtime.getRuntime();
+        Process pr = rt.exec("id " + username);
+        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line;
+        while ((line = input.readLine()) != null) {
+            System.out.println(line);
         }
     }
 }

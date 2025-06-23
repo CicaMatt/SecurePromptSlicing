@@ -1,25 +1,19 @@
-package webapp;
-
-    import java.io.*;
+package main;
+    
+    import java.util.*;
     import javax.servlet.*;
     import javax.servlet.http.*;
     
-    public class WebApp extends HttpServlet {
-        private String redirectUrl;
-        
-        public void init() throws ServletException {
-            redirectUrl = getInitParameter("redirect-url");
-        }
-        
-        public void doGet(HttpServletRequest request, HttpServletResponse response)
-                    throws IOException, ServletException {
-            
+    public class Main extends HttpServlet{
+        public void doGet(HttpServletRequest request, HttpServletResponse response){
             String target = request.getParameter("target");
-            
-            if (target == null || !target.matches("^(?:http|https):\\/\\/([\\w.]+)\\/.*$")) {
-                response.sendRedirect(redirectUrl);
-            } else {
+            if (target == null || !target.matches(".*example.com.*")) {
+                target = "/";
+            }
+            try{
                 response.sendRedirect(target);
+            } catch(Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
     }

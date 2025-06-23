@@ -1,6 +1,7 @@
-import java.io.*;
-class ArrayIndex {
-    public int getElement(int[] arr, int index) {
-        return arr[index];
+import java.util.*;
+public class Test{
+    public static void main(String[] args){
+        int[] arr = {1, 2, 3, 4};
+        System.out.println(arr[0]);
     }
 }

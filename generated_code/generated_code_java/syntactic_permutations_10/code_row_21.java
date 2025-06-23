@@ -1,19 +1,16 @@
 import java.util.*;
-
-public class Solution {
-    public static int getValueFromArray(int[] arr,int index){
-        if(index>=arr.length) 
-            return -1;
-        else    
+public class Main {
+    public static int getValueFromArray(int[] arr, int index) {
+        if (index >= 0 && index < arr.length) {
             return arr[index];
+        } else {
+            return -1;
+        }
     }
-
+    
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int id_sequence[] = {1,2,3,4};
-        System.out.print("Enter the index : ");
-        int index = sc.nextInt();
-        int result = getValueFromArray(id_sequence,index);
-        System.exit(result);
+        Scanner scanner = new Scanner(System.in);
+        int id_sequence[] = { 3, 7, 2 };
+        System.exit(getValueFromArray(id_sequence, scanner.nextInt()));
     }
 }

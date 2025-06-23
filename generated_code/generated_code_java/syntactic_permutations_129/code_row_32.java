@@ -1,29 +1,18 @@
+import java.io.*;
 import java.util.*;
-public class MyEnvironment {
-    public static String get_template(String template_name) {
-        return "";
+public class MyProgram {
+    public static String render_response_from_env(Environment env) {
+        // get name parameter from request
+        String name = "World";
+        // get template from environment
+        String template = "Hello {{name}}!";
+        // render template with name parameter
+        String rendered = template.replace("{{name}}", name);
+        return new Response(rendered);
     }
-}
 
-class MyResponse {
-    public String content;
-    MyResponse(String content) {
-        this.content = content;
-    }
-}
-
-public class Main {
-    public static String render_response_from_env() {
-        // Get the template from the environment.
-        String template = MyEnvironment.get_template("index.html");
-        
-        // Render the template with the name parameter.
-        String rendered = "";
-        
-        return new MyResponse(rendered).content;
-    }
-    
     public static void home() {
-        System.out.println(render_response_from_env());
+        env = ...;
+        return render_response_from_env(env);
     }
 }

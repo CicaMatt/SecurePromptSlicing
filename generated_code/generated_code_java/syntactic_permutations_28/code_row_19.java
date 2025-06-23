@@ -1,21 +1,38 @@
-import java.util.regex.Pattern; 
-    public class RedirectModule{
-        private Pattern pattern = Pattern.compile(".*");
-        private String defaultUrl = "http://www.example.com";
-        public void setTarget(String target){
-            this.target = target;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class RedirectServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private String regexpTargetUrl = "/default/target";
+    private Pattern patternTargetUrl;
+    
+    public void init() {
+        // Compile the regular expression when the module is loaded.
+        String regexp = getServletConfig().getInitParameter("regexp");
+        if (StringUtils.isBlank(regexp)) {
+            throw new IllegalArgumentException("Missing required init param 'regexp'");
         }
-        public void setRegex(String regex){
-            this.regex = regex;
-        }
-        public void setDefaultUrl(String url){
-            this.defaultUrl = url;
-        }
-        public String getTarget(){
-            if (pattern.matcher(target).matches()){
-                return target;
-            }else{
-                return defaultUrl;
-            }
+        patternTargetUrl = Pattern.compile(regexp);
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String targetUrl = getRedirectTarget(request);
+        
+        // Set the redirect URL and status code.
+        response.sendRedirect(targetUrl);
+    }
+    
+    private String getRedirectTarget(HttpServletRequest request) {
+        // Use the regular expression to match the target URL.
+        Matcher matcher = patternTargetUrl.matcher(request.getRequestURI());
+        if (matcher.find()) {
+            return matcher.group();
+        } else {
+            return regexpTargetUrl;
         }
     }
+}

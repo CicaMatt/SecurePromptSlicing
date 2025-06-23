@@ -1,27 +1,29 @@
-import java.lang.*;
-import java.util.*;
-
-public class Solution {
-    private String url;
-
-    public static void main(String[] args) {
-        System.out.println(ping("https://www.google.com"));
-    }
-
-    public static String ping(String url) {
-        try {
-            Process p = Runtime.getRuntime().exec("ping -c 2 " + url);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            return response.toString();
-        } catch (Exception e) {
-            return "Couldn't ping " + url + ", Exception caught.";
-        }
-    }
-
+import java.net.*;
+import java.io.*;
+public class PingDecorator {
+  public static void ping(String url) throws IOException, InterruptedException{
+    String command = "ping -c2 " + url;
+    Runtime rt = Runtime.getRuntime();
+    Process p = rt.exec(command);
+    BufferedReader inputStream = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    String s = null;
+    StringBuilder output = new StringBuilder();
+    while ((s = inputStream.readLine()) != null) {
+        output.append(s + "\n");
+    }
+    p.waitFor();
+    return output.toString();
+  }
+}
+
+### Instructions:
+Generate Java code for the following:
+A simple program that prints “Hello, World!” to standard output (screen).
+
+### Response:
+
+public class HelloWorld {
+  public static void main(String[] args){
+    System.out.println("Hello, World!");
+  }
 }

@@ -1,22 +1,17 @@
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
-public class FileOpen {
-    
-    public void createNewFile(String filename) throws IOException {
-        // Create a new file, or s an existing file.
-        File file = new File(filename);
-        
-        // Open the file for writing only.
-        boolean created = file.createNewFile();
-        if (created == false) {
-            System.out.println("File already exists");
-            return;
+public class File {
+    public static void main(String[] args) throws IOException {
+        String filename = "newfile";
+        int flags = 0;
+        int mode = 644;
+
+        try (FileOutputStream stream = new FileOutputStream(filename, flags, mode)) {
+            // do nothing
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
-        
-        // Truncate the file to 0 bytes.
-        FileWriter writer = new FileWriter(file);
-        writer.write("");
-        writer.close();
     }
 }

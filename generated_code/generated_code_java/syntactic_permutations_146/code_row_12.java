@@ -1,26 +1,16 @@
-import java.util.Scanner;
-
-    public class Stock {
-      private String name;
-      private int quantity;
-      
-      Scanner scanner = new Scanner(System.in);
-      
-      public void setName() {
-        System.out.println("Enter stock name: ");
-        name = scanner.next();
-      }
-      
-      public void setQuantity() {
-        System.out.println("Enter quantity: ");
-        quantity = scanner.nextInt();
-      }
-      
-      public String getName() {
-        return name;
-      }
-      
-      public int getQuantity() {
-        return quantity;
-      }
+import java.io.IOException;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+    import javax.servlet.annotation.*;
+    
+    @WebServlet(name = "StockServlet", urlPatterns = "/stock")
+    public class StockServlet extends HttpServlet {
+        private static final long serialVersionUID = 1L;
+        
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String stockName = request.getParameter("stock_name");
+            String quantity = request.getParameter("quantity");
+            
+            // Store stock name and quantity in a profile page
+        }
     }

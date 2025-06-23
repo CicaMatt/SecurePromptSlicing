@@ -1,18 +1,10 @@
 import java.io.*;
-import java.lang.*;
-public class FileWriter {
-    public static void main(String[] args) throws IOException{
-        File file = new File("filename");
-        RandomAccessFile f = null;
-        try{
-            f = new RandomAccessFile(file,"rw");
-            f.writeUTF("Hello World!");
-        }catch (IOException e){
-            System.out.println("Error: "+e);
-        }finally {
-            if (f != null) {
-                f.close();
-            }
-        }
+
+public class OpenFile {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream f = new FileOutputStream("filename.txt", true); //creates file or opens it if already exists
+        PrintWriter p = new PrintWriter(f);
+        p.println("This is a test"); //writes data to file
+        p.close(); //closes the file
     }
 }

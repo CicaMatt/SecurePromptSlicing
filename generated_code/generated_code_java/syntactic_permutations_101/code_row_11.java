@@ -1,12 +1,8 @@
-package io.github.dreamylost;
- 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-  
-public class Main {
-    public static void main(String[] args) throws IOException {
-        FileChannel out = new FileOutputStream("important_config", true).getChannel();
-        // The rest of your code goes here
-    }
+import java.io.*;
+
+public class Permission {
+    public static void main(String[] args) throws Exception{
+        File file = new File("important_config");
+		FileOutputStream stream = new FileOutputStream(file, false);
+	}
 }

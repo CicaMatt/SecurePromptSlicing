@@ -1,13 +1,19 @@
 import java.util.*;
-class Main {
-    public static int getIndex(int[] arr, int index) {
-        return arr[index];
+
+    public class Index {
+        public static int index(int[] array, int size, int index) {
+            if (index < 0 || index >= size) {
+                System.out.println("Index out of bounds");
+                return -1;
+            } else {
+                return array[index];
+            }
+        }
+
+        public static void main(String[] args) {
+            int[] id_sequence = new int[]{ 0, 42, 69, 1337 };
+            Scanner scanner = new Scanner(System.in);
+            int index = scanner.nextInt();
+            System.exit(index(id_sequence, id_sequence.length, index));
+        }
     }
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the index: ");
-        int index = sc.nextInt();
-        int exitCode = getIndex(id_sequence, size, index);
-        System.exit(exitCode);
-    }
-}

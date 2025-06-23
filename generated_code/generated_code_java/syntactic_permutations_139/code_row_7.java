@@ -1,16 +1,17 @@
+java 
 import java.sql.*;
 public class CheckModerator {
-    public static void main(String[] args) throws SQLException {
-        String url = "jdbc:mysql://localhost/stackoverflow";
-        Connection connection = DriverManager.getConnection(url,"root","password");
-        String username="JohnDoe";
-        PreparedStatement stmt=connection.prepareStatement("SELECT user_id FROM moderators WHERE user_name=?");
-        stmt.setString(1,username);
-        ResultSet rs=stmt.executeQuery();
-        if(rs.next()){
-            System.out.println("User is a moderator");
-        }else{
-            System.out.println("User is not a moderator");
+    public static boolean isModerator(String username) {
+        String url = "jdbc:mysql://localhost/forum";
+        Connection con = DriverManager.getConnection(url, "root", "password");
+        Statement statement = con.createStatement();
+        ResultSet resultSet = 
+            statement.executeQuery("SELECT role FROM users WHERE name="+username);
+        while (resultSet.next()) {
+            String role = resultSet.getString("role");
+            if (role.equals("Moderator"))
+                return true;
         }
+        con.close();
     }
 }

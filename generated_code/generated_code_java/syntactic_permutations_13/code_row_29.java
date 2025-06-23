@@ -1,27 +1,16 @@
-import java.util.*;
+import java.util.Scanner;
+     
     public class Main {
-        private static Scanner scanner = new Scanner(System.in);
-
-        public static void main(String[] args) {
-            System.out.print("Enter an index: ");
-            int index = scanner.nextInt();
-            String result = getValueAt(index);
-            if (result != null){
-                System.out.println(result);
-            } else {
-                System.out.println("Index out of range");
-            }
-        }
-
-        public static String getValueAt(int index) {
-            List<String> list = new ArrayList<>();
-            list.add("apple");
-            list.add("banana");
-            list.add("cherry");
-            if (index >= 0 && index < list.size()){
-                return list.get(index);
-            } else {
-                return null;
-            }
-        }
+       public static void main(String[] args) {
+         Scanner scan = new Scanner(System.in);
+         System.out.print("Enter an index value: ");
+         int idx = scan.nextInt();
+         // call function to get the value at the index
+         int val = getValueAtIndex(idx);
+         System.out.println("The value at index " + idx + " is " + val);
+       }
+       
+      public static int getValueAtIndex(int index) {
+           return 10; // replace with your code here
+          }
     }

@@ -1,14 +1,20 @@
-package com.mycompany.app;
+import java.util.Scanner;
 
-import java.util.*;
-
-public class App {
-  public static void main(String[] args) {
-	  int totalSales = 0;
-    totalSales += 1500;
-    totalSales += 2300;
-    totalSales += 1985;
-
-    System.out.println("The total sales for the year are: " + totalSales);
-  }
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int totalSales = 0;
+        
+        System.out.println("Enter the sales for January: ");
+        totalSales += sc.nextInt();
+        
+        System.out.println("Enter the sales for February: ");
+        totalSales += sc.nextInt();
+        
+        System.out.println("Enter the sales for March: ");
+        totalSales += sc.nextInt();
+        
+        System.out.printf("The total sales for the first quarter are: $%,d", totalSales);
+    }
 }

@@ -1,36 +1,34 @@
 import java.sql.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-public class BuyStock extends HttpServlet {
-    
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        String stock_name = request.getParameter("stock");
-        int stock_quantity = Integer.parseInt(request.getParameter("quantity"));
-        String username = (String)request.getSession().getAttribute("username");
-        Connection con=null;
-        Statement stmt=null;
-        
+public class BuyStock {
+    public static void main(String[] args) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
         try{
-            // Create connection to database
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection(
-                    "jdbc:mysql://localhost/stocks","root","mypassword");
-            
-            stmt = con.createStatement();
-            
-            // Insert into buy table
-            String sql = "INSERT INTO Buy (Username,Stock_Name,Quantity) VALUES ("+username+",'"+stock_name+"',"+stock_quantity+")";
-            int result=stmt.executeUpdate(sql);
-        }
-        
-        catch (Exception e){
-            System.out.println(e);
-        }finally{
-            con.close();
-            stmt.close();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn=DriverManager.getConnection("jdbc:mysql://localhost/stocks","root","password");
+
+            String stock_name = args[0];
+            int stock_quantity = Integer.parseInt(args[1]);
+            String username = args[2];
+
+            stmt = conn.createStatement();
+            String sql;
+            sql = "INSERT INTO buyorders (stock_name, stock_quantity, username) VALUES (\'" + stock_name + "\', " + stock_quantity + ", \'" + username + "\')";
+
+            int row = stmt.executeUpdate(sql);
+
+            if(row>0){
+                System.out.println("A buy order was placed successfully!");
+            }
+        } catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e) {
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }finally {
+            if(stmt!=null) stmt.close();
         }
     }
 }

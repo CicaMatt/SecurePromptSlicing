@@ -1,11 +1,14 @@
-import java.io.*;
-public class Main {
-  public static void main(String[] args) throws Exception{
-   if(args.length !=1){System.out.println("Error"); System.exit(0);}
-  String input = args[0];
-  System.out.println(input);
-  input = input.trim();
-  System.out.println(input);
-  System.exit(0);
- }
+import java.util.*;
+
+public class Main {
+  public static void main(String[] args) {
+    if (args.length != 1) {
+      System.out.println("Error! Please provide exactly one argument");
+      System.exit(1);
+    }
+    String input = args[0];
+    System.out.println("Your argument is: " + input);
+    String trimmedInput = input.trim();
+    System.out.println("Your argument without whitespace is: " + trimmedInput);
+  }
 }

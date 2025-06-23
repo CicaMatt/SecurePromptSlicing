@@ -1,32 +1,45 @@
-import java.util.*;
-import javax.annotation.Resource;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
-import com.mysql.*;
-
-@WebServlet("/buy_order")
-public class BuyOrder extends HttpServlet {
-  private static final long serialVersionUID = 1L;
-
-  @Resource(name = "jdbc/stocksdb")
-  Connection con;
-  ResultSet rs;
-
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String stockName = request.getParameter("stock_name");
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
-
-    try {
-      con = getDBConnection();
-      PreparedStatement statement = con.prepareStatement("INSERT INTO stocks (name, quantity) VALUES (?, ?)");
-      statement.setString(1, stockName);
-      statement.setInt(2, quantity);
-      statement.executeUpdate();
-    } catch (SQLException e) {
-      System.out.println(e);
+import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.PreparedStatement;
+
+    public class BuyOrder {
+        private String stockName;
+        private int quantity;
+
+        public void setStockName(String stockName) {
+            this.stockName = stockName;
+        }
+
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
+
+        public void buyOrder() {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/buy_order", "root", "password");
+
+                String sql = "INSERT INTO stock (name, quantity) VALUES (?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, getStockName());
+                pstmt.setInt(2, getQuantity());
+
+                int result = pstmt.executeUpdate();
+                if (result > 0) {
+                    System.out.println("Data inserted successfully!");
+                } else {
+                    System.out.println("Insert data failed!");
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public String getStockName() {
+            return stockName;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
     }
-
-    response.sendRedirect("stock_view");
-  }
-}

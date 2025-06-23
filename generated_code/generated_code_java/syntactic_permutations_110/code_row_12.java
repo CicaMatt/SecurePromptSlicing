@@ -1,8 +1,13 @@
-import java.io.*;
-class Main {
-public static void main(String[] args) throws IOException, InterruptedException{
-Process p = Runtime.getRuntime().exec("id " + args[0]);
-int exitValue = p.waitFor();
-System.out.println(exitValue);
-}
-}
+import java.util.*;
+
+    public class Username{
+        public static void main(String[] args) {
+            String username = args[0];
+            int status = id(username);
+            System.out.println("status : " + status);
+        }
+
+        private static int id(String username){
+            // code to return the exit status of the command
+        }
+    }

@@ -1,33 +1,27 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.util.Scanner;
-
-public class StockBuy {
-    public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        String stockName, quantity;
-        System.out.println("Enter the stock name:");
-        stockName = sc.nextLine();
-        System.out.println("Enter the quantity:");
-        quantity = sc.nextLine();
-        buy_stock(stockName, quantity);
-    }
-
-    public static void buy_stock(String stockName, String quantity) throws Exception {
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/example", "root", "password");
-                PreparedStatement prep = con.prepareStatement(
-                        "INSERT INTO STOCK VALUES(?,?)");) {
-            prep.setString(1, stockName);
-            prep.setString(2, quantity);
-            int result = prep.executeUpdate();
-            if (result > 0) {
-                System.out.println("Stock bought successfully.");
-            } else {
-                System.out.println("Error in buying stock.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class BuyStock {
+    private static final String DB_URL = "jdbc:mysql://localhost/test";
+    private static final String USER = "root";
+    private static final String PASS = "password";
+    
+    public void buy_function(String stockName) {
+        // Connect to the database
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            
+            // Create the query and insert it into the database
+            String sql = "INSERT INTO stocks (stock_name) VALUES (?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stockName);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

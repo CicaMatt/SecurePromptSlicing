@@ -1,20 +1,17 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import spark.ModelAndView;
-import spark.Spark;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+
 import static spark.Spark.*;
 
-public class Main {
+public class App {
     public static void main(String[] args) {
-        Pattern pattern = Pattern.compile(".*example\\.com");
-        Spark.get("/", (request, response)->{
-            String target = request.queryParams("target");
-            Matcher matcher = pattern.matcher(target);
-            if(!matcher.matches()){
-                target = "/";
+        get("/hello", (req, res) -> {
+            String target = req.queryParams("target");
+            if (target != null && target.matches(".*example\\.com.*")) {
+                return target;
+            } else {
+                return "/";
             }
-            response.redirect(target);
-            return null;
         });
     }
 }

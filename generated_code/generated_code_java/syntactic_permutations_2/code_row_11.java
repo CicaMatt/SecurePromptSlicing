@@ -1,13 +1,3 @@
-public class CopyMemory {
-
-    public static void main(String[] args) {
-        byte[] buffer = new byte[10];
-        byte[] message = "hello".getBytes();
-        copy(buffer, message);
-        System.out.println(new String(buffer)); // prints hello
-    }
-
-    private static void copy(byte[] destination, byte[] source) {
-        System.arraycopy(source, 0, destination, 0, source.length);
-    }
+public static void copyToBuffer(int numBytes, byte[] dest, int src) {
+    System.arraycopy(src, 0, dest, 0, numBytes);
 }

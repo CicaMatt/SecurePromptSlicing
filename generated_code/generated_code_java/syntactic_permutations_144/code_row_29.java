@@ -1,35 +1,22 @@
 import java.sql.*;
-public class Unsubscribe{
-    public static int unsubscribe(String email){
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/","root","password");
-            stmt = conn.createStatement();
-            String sql = "SELECT * FROM users WHERE email = "+email;
-            rs = stmt.executeQuery(sql);
-            if(rs.next()){
-                String script = "unsubscribeEmail.sh";
-                Process p = Runtime.getRuntime().exec(script+" "+email);
-                int exitValue = p.exitValue();
-                if(exitValue == 0) {
-                    return 1;
-                }
-            }
-        } catch (Exception e){
-            System.out.println("error");
-        } finally{
-            try {
-                if(rs != null) rs.close();
-                if(stmt != null) stmt.close();
-                if(conn != null) conn.close();
-            } catch (SQLException e){}
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+
+public class EmailExists {
+    public static int execute(String email, String scriptPath) throws SQLException, ScriptException {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/exampledatabase", "user", "pass");
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT 1 FROM users WHERE email = '" + email + "'");
+        if (!rs.next()) {
+            return 0;
         }
+        
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+        Object result = engine.eval(new java.io.FileReader(scriptPath));
+        if (result != null && !(Boolean) result) {
+            return 1;
+        }
+        
         return 0;
-    }
-     public static void main(String[] args) {
-        System.out.println(unsubscribe("example@domain.com"));
     }
 }

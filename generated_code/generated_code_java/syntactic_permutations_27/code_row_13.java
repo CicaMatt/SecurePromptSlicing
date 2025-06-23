@@ -1,10 +1,11 @@
-import java.util.*;  
-public class SalesTotal {  
-    public static void main(String[] args) {  
-        int totalSales = 0;  
-        totalSales += 500;  
-        totalSales += 750;  
-        totalSales += 345;  
-        System.out.println("The sales for the day are $" + totalSales);  
-    }  
+import java.util.*;
+
+public class TotalSales {
+    public static void main(String[] args) {
+        double totalSales = 0;
+        totalSales += 345.67;
+        totalSales += 234.15;
+        totalSales += 456.21;
+        System.out.println(totalSales);
+    }
 }

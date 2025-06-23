@@ -1,8 +1,7 @@
-import java.util.*;
-
-public class RandomNumber {
+package com.examples;
+public class NumGen {
     public static void main(String[] args) {
-        int num = (int)(Math.random() * 1000 + 999);
-        System.out.println("Random number larger than 1000 is : " + num);
+        int n = (int)(Math.random() * 9000 + 1001);
+        System.out.println(n);
     }
 }

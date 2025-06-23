@@ -1,12 +1,15 @@
-import java.io.*;
-
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        int size = 10;
-        byte[] chunk = new byte[size];
-        byte[] chunk2 = new byte[size];
-        System.arraycopy(chunk, 0, chunk2, 0, size);
-        chunk = null;
-        chunk2 = null;
+import java.util.*;
+class Main {
+    public static void main(String[] args) {
+        int p = (int) Runtime.getRuntime().freeMemory();
+        System.gc();
+        byte[] a = new byte[10];
+        byte[] b = new byte[10];
+        for (int i = 0; i < 10; i++) {
+            a[i] = b[i];
+        }
+        a = null;
+        System.gc();
+        System.out.println(Runtime.getRuntime().freeMemory() - p);
     }
 }

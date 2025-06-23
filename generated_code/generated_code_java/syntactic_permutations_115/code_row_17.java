@@ -1,34 +1,30 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
-    public static void main(String[] args) throws IOException {
-        String command = "ls";
-        String[] arg = new String[1];
-        arg[0] = "-al";
-        System.out.println(executeCommand(command,arg));
+  public static void main(String[] args) {
+    String output = executeCommand("ls");
+    System.out.println(output);
+  }
+
+  private static String executeCommand(String command) {
+    Process process = null;
+    try {
+      process = Runtime.getRuntime().exec(command);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+      StringBuilder sb = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        sb.append(line).append("\n");
+      }
+      return sb.toString();
+    } catch (IOException e) {
+      System.out.println("Error executing command: " + command);
+      e.printStackTrace();
+      return "";
+    } finally {
+      if (process != null) {
+        process.destroy();
+      }
     }
-    
-    private static String executeCommand(String command, String... args) throws IOException {
-        ProcessBuilder process = new ProcessBuilder();
-        process.command(command);
-        for (String arg : args) {
-            process.command().add(arg);
-        }
-        process.redirectErrorStream(true);
-        Process p = process.start();
-        InputStream is = p.getInputStream();
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
+  }
 }

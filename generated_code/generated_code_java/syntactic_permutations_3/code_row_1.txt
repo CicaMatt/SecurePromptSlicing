@@ -1,9 +1,0 @@
-import java.util.*;
-
-public class HelloWorld {
-    public static void main(String[] args) {
-        byte[] memory = new byte[1024];
-        copy("Hello", 0, memory, 5);
-        System.out.println(memory);
-    }
-}

@@ -1,14 +1,14 @@
-import java.util.*;
-
-class Main {
-    public static void main(String[] args) throws Exception {
-        Scanner input = new Scanner(System.in);
-        int i = Integer.parseInt(input.nextLine());
-        System.out.println(id_sequence(i));
-    }
-
-    public static String id_sequence(int index) {
-        String[] id_sequence = {"A", "B", "C", "D"};
+import java.util.Scanner;
+public class Solution {
+    public static int getId(int index) {
+        int[] id_sequence = new int[]{1, 2, 3, 4, 5};
         return id_sequence[index];
+    }
+    
+    public static void main(String args[]){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter index: ");
+        int index = input.nextInt();
+        System.out.println(getId(index));
     }
 }

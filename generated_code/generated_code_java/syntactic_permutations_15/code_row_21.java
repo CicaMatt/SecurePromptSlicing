@@ -1,12 +1,17 @@
-import java.util.*;
-
-    public class JavaCode {
-        private static final int[] id_sequence = {1, 2, 3, 4};
+import java.util.Scanner;
     
-        public static void main(String[] args) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("Enter index: ");
-            int index = input.nextInt();
-            System.out.println(id_sequence[index]);
+    public class IndexFinder{
+        static int[] id_sequence = {3, 6, 9, 12, 15};
+    
+        public static void main(String[] args){
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Enter an index to find the ID: ");
+            int userIndex = scan.nextInt();
+            int id = getIdAt(userIndex);
+            System.out.println("ID at index " + userIndex + ": " + id);
+        }
+    
+        public static int getIdAt(int index){
+            return id_sequence[index];
         }
     }

@@ -1,10 +1,8 @@
-import java.io.*; 
-public class JavaUtil { 
-   public static void main(String[] args) throws Exception { 
-      String str = "ls -l"; 
-      System.out.println("Executing command line utility: " + str); 
-      Process p = Runtime.getRuntime().exec(str); 
-      int exitCode = p.waitFor(); 
-      System.out.println("Exit code: " + exitCode); 
-   } 
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String command = "echo \"Hello, World!\"";
+        System.out.println(command);
+        Process p = Runtime.getRuntime().exec(command);
+    }
 }

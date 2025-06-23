@@ -1,17 +1,20 @@
-import java.io.FileWriter;
-import java.util.Random;
-
-public class RandomFloat {
-    public static void main(String[] args) throws Exception {
-        try (FileWriter writer = new FileWriter("random_floats.txt")) {
-            String concatString = "";
-            for (int i = 0; i < 3; i++) {
-                Random random = new Random();
-                float randomFloat = random.nextFloat() * 100;
-                writer.write(randomFloat + "\n");
-                concatString += String.valueOf(randomFloat);
-            }
-            System.out.println("Concatenated string: " + concatString);
-        }
-    }
+import java.io.FileWriter;
+import java.util.Random;
+
+public class Solution {
+    
+   public static void main(String[] args) {
+       try {
+        FileWriter writer = new FileWriter("file.txt");
+        Random random = new Random();
+        
+        float rand1 = random.nextFloat();
+        float rand2 = random.nextFloat();
+        float rand3 = random.nextFloat();
+        
+        String s = Float.toString(rand1) + "-" + Float.toString(rand2) + "-" + Float.toString(rand3);
+        writer.write(s);
+        writer.close();
+       }catch(Exception e){}
+   }
 }

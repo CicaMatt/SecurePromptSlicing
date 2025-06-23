@@ -1,23 +1,15 @@
-package main;
-import java.io.*;
-public class Decorator {
-    public static void main(String[] args) throws IOException {
-        String username = "John";
-        System.out.println(escape(hello(username)));
-    }
-    public static String hello(String username){
-        return "Hello, "+username+"!";
-    }
-    public static String escape(String str){
-        StringBuilder escapedStr = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
-                escapedStr.append("&#").append((int) c).append(";");
-            } else {
-                escapedStr.append(c);
-            }
-        }
-        return escapedStr.toString();
-    }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+public class HelloServlet extends HttpServlet {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String username = request.getParameter("username");
+    PrintWriter out = response.getWriter();
+    out.println("<h1>Hello " + escape(username) + "</h1>");
+  }
+
+  public static String escape(String s) {
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+  }
 }

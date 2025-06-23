@@ -1,28 +1,16 @@
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+package com.login;
+import java.io.*; 
 
-@Controller
-public class LoginController {
-    @GetMapping("/login")
-    public String loginForm() {
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String loginSubmit(@RequestParam("username") String username,
-                              @RequestParam("password") String password, Model model) {
-        if (isValid(username, password)) {
-            return "redirect:/home";
+public class Login {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (validateUser(username, password)) {
+            RequestDispatcher rd = request.getRequestDispatcher("home");
+            rd.forward(request, response);
         } else {
-            return "redirect:/login";
+            RequestDispatcher rd = request.getRequestDispatcher("login");
+            rd.include(request, response);
         }
-    }
-
-    private boolean isValid(String username, String password) {
-        // ... check username and password exist in db or not.
-        return true;
     }
 }

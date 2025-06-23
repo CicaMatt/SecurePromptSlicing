@@ -1,12 +1,13 @@
-public class OffsetValue {
-        private static final int OFFSET = 2;
+import java.util.*;
+class Offset { 
+    public static void main(String[] args) {
+        int offset = Integer.parseInt(args[0]); //reads in the value from the command line
+        System.out.println("Value read from command line is: " + offset);
         
-        public static void main(String[] args) {
-            if (args.length == 0) {
-                throw new IllegalArgumentException("No arguments passed");
-            }
-            
-            int value = Integer.parseInt(args[0]);
-            System.out.println("New value: " + (value + OFFSET));
-        }
+        final int CONSTANT_OFFSET= 5; //constant value that is added to the value read in from the command line
+        System.out.println("Constant offset is: " + CONSTANT_OFFSET);
+        
+        int result = offset + CONSTANT_OFFSET;//adds an offset is a constant value to the value read in from the command line
+        System.out.println("The result of adding the offset and the constant offset is: " + result);
     }
+}

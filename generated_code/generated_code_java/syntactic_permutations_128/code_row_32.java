@@ -1,16 +1,19 @@
-package com.company;
-
-import java.io.*;
-
-public class Main {
-    public static void http__page(FileInputStream request, FileOutputStream response) throws IOException{
-        String username = "";
-        int character = 0;
-        while((character = request.read()) != -1){
-            if(character == '/') break;
-            username += (char)character;
-        }
-        String responseBody = "Hello " + username + "!";
-        response.write(responseBody.getBytes());
-    }
+import java.io.*;
+public class http__page {
+    public void http__page(FileInputStream request, FileOutputStream response) throws IOException {
+        String username = "";
+        int content_length = request.read();
+        byte[] input = new byte[content_length];
+        request.read(input);
+        String[] data = new String(input).split("&");
+        for (int i = 0; i < data.length; i++) {
+            if (data[i].startsWith("username=")) {
+                username = data[i].substring(9);
+                break;
+            }
+        }
+        String output = "<html><body>Hi " + username + "</body></html>";
+        byte[] bytes = output.getBytes();
+        response.write(bytes);
+    }
 }

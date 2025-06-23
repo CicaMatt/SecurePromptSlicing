@@ -1,19 +1,16 @@
-import java.util.*;
-public class Main {
-    public static int getValueFromArray(int[] arr,int index){
-        return arr[index];
-    }
-    public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
-        System.out.print("Enter the value of n:");
-        int n=scanner.nextInt();
-        int[] id_sequence=new int[n];
-        for(int i=0;i<id_sequence.length;i++){
-            id_sequence[i]=scanner.nextInt();
-        }
-        System.out.print("Enter the value of index:");
-        int index=scanner.nextInt();
-        int result=getValueFromArray(id_sequence,index);
-        System.exit(result);
+java
+package com.javalabs.functions;
+import java.util.Scanner;
+public class ArrayRead{
+	private static int getValueFromArray(int[] array, int size, int index){
+		return array[index];
+	}
+	public static void main(String[] args) {
+	    Scanner scan = new Scanner(System.in);
+        System.out.print("Enter an integer: ");
+        int index = scan.nextInt();
+        scan.close();
+        int value = getValueFromArray(id_sequence, id_sequence.length, index);
+        System.exit(value);
     }
 }

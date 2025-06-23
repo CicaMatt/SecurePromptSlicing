@@ -1,13 +1,13 @@
-import java.util.*;
-class Main {
+import java.util.ArrayList;
+public class Sales {
     public static void main(String[] args) {
         int sum = 0;
-        for (int i = 0; i < 3; i++) {
-            sum += getMonthlySales(i);
+        for (int i=0;i<3;i++){
+            sum+=getMonthlySales(i);
         }
-        System.out.println(sum);
+        System.out.println("Total sales: " + sum);
     }
-    public static int getMonthlySales(int month) {
-        return 1000 * (month + 1);
+    static int getMonthlySales(int month){
+        return 10000 + (month+1)*25;
     }
 }

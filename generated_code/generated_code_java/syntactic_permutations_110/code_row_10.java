@@ -1,8 +1,8 @@
 import java.io.*;
-
-public class Solution {
-    public static void main(String[] args) throws Exception {
-        Process process = Runtime.getRuntime().exec("id " + args[0]);
+class Main {
+    public static void main(String[] args) throws IOException {
+        String username = args[0];
+        Process process = Runtime.getRuntime().exec("id " + username);
         int exitStatus = process.waitFor();
         System.out.println(exitStatus);
     }

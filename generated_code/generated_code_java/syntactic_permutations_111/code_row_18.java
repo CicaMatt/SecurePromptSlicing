@@ -1,22 +1,19 @@
-import java.io.*;  
-public class Main {  
-    public static void main(String[] args) throws IOException {  
-        String output = ping("https://google.com");  
-        System.out.println(output);  
-    }  
-    private static String ping(String url){  
-        try{  
-            Process p = Runtime.getRuntime().exec("ping " + url);  
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));  
-            String inputLine;  
-            StringBuffer output = new StringBuffer();  
-            while ((inputLine = in.readLine()) != null){  
-                output.append(inputLine);  
-            }  
-            in.close();  
-            return output.toString();  
-        } catch (Exception e){  
-            System.out.println(e);  
-        }  
-    }  
+java
+import java.net.URL;
+
+@WebServlet(urlPatterns = "/ping")
+public class Ping extends HttpServlet {
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String url = req.getRequestURL().toString();
+    Process process = Runtime.getRuntime().exec("ping " + url);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    StringBuilder output = new StringBuilder();
+    String line;
+    while ((line = reader.readLine()) != null) {
+      output.append(line).append("\n");
+    }
+    resp.setContentType("text/plain");
+    resp.getWriter().write(output.toString());
+  } 
 }

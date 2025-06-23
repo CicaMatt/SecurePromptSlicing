@@ -1,20 +1,32 @@
-import java.util.*;
-     public class TrimWhiteSpace {
-      public static void main(String[] args) {
-        if (args.length != 1){
-            return;
-        }
-        String arg = args[0];
-        char [] charArray = new char[arg.length()];
-        for(int i=0;i<charArray.length();i++) {
-            charArray[i] = Character.toLowerCase(arg.charAt(i));
-        }
-        String trimmedString = "";
-        for (int i = 0; i < charArray.length; ++i){
-          if (!Character.isWhitespace(charArray[i])) {
-            trimmedString += charArray[i];
-          }
-        }
-        System.out.println(trimmedString);
-      }
-    }
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) throws Exception{
+		Scanner scan = new Scanner (System.in);
+		if (args.length != 1){
+			throw new IllegalArgumentException("Expected exactly one argument.");
+		}
+		String arg = args[0];
+		for (int i = 0;i < arg.length();++i) {
+			if (!Character.isLetter(arg.charAt(i))) {
+				throw new IllegalArgumentException("Expected a string.");
+			}
+		}
+
+		for (int i = 0;i < arg.length();++i) {
+			if (Character.isWhitespace(arg.charAt(i))) {
+				arg = arg.substring(0, i);
+				break;
+			}
+		}
+
+		for (int i = 0;i < arg.length();++i) {
+			if (Character.isWhitespace(arg.charAt(i))) {
+				arg = arg.substring(i + 1);
+				break;
+			}
+		}
+
+		System.out.println(args[0]);
+	}
+}

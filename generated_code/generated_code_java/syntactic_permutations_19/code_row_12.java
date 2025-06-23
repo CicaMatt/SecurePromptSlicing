@@ -1,9 +1,11 @@
-import java.io.*;
-    public class Calculator {
-        public static void main(String[] args) throws IOException{
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            int value = Integer.parseInt(br.readLine());
-            System.out.println("The entered value is: "+value);
-            System.out.println("The added value is: "+(value+2));
-        }
+import java.util.*;
+public class Addition {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int firstNum = Integer.parseInt(scan.nextLine());
+        System.out.print("Enter a number: ");
+        int secondNum = Integer.parseInt(scan.nextLine());
+        int sum = firstNum + secondNum;
+        System.out.println("Sum: " + sum);
     }
+}

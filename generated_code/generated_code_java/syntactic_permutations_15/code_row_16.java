@@ -1,21 +1,16 @@
-package com.example;
-    
-    import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
-    public class Main {
-      public static void main(String[] args) {
-        String [] id_sequence = {"1", "2" , "3", "4"};
-        int index;
-        
+public class Main {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter an index between 0 and 3: ");
-        index=scanner.nextInt();
-        
-        if (index<0 || index>3){
-          System.out.println("Invalid input.");
-        } else {
-            String result = id_sequence[index];
-            System.out.println("The value at index " + index+ " is: " + result);
-        }
-      } 
+        int[] id_sequence = {3, 2, 5, 7, 11};
+        System.out.println("Enter the index value: ");
+        int index = scanner.nextInt();
+        System.out.println(getValueAtIdSequence(index));
     }
+
+    public static int getValueAtIdSequence(int index) {
+        return id_sequence[index];
+    }
+}

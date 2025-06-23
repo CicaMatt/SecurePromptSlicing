@@ -1,19 +1,18 @@
-import java.util.*;  
-public class Main {  
-    public static int getValueFromArray(int[] arr, int index) {  
-        return arr[index];  
-    }  
-    public static void main(String[] args) {  
-        Scanner sc = new Scanner(System.in);  
-        System.out.println("Enter the size of an array:");  
-        int size = sc.nextInt();  
-        int[] arr = new int[size];  
-        System.out.println("Enter " + size + " integers separated by spaces:");  
-        for (int i = 0; i < size; i++) {  
-            arr[i] = sc.nextInt();  
-        }  
-        System.out.println("Enter an index to access the element: ");  
-        int index = sc.nextInt();  
-        System.exit(getValueFromArray(arr, index));  
-    }  
-}
+import java.util.*;
+    
+    public class GetValueFromArray {
+        static int getValueFromArray(int[] arr, int index) {
+            if (index < 0 || index >= arr.length) {
+                return -1;
+            } else {
+                return arr[index];
+            }
+        }
+    
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter index: ");
+            int index = scanner.nextInt();
+            System.exit(getValueFromArray(new int[]{1, 2, 3, 4, 5}, index));
+        }
+    }

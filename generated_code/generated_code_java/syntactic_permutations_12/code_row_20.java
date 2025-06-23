@@ -1,20 +1,23 @@
-import java.util.Scanner;
-public class Main{
-    public static int getValueFromArray(int[] arr, int size, int index) {
-        if (index < 0 || index >= size) return -1;
-        return arr[index];
-    }
-
-    public static void main(String[] args){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter the size of array:");
-        int size = scan.nextInt();
-        int[] arr = new int[size];
-        for (int i=0; i<size; i++){
-            arr[i] = scan.nextInt();
-        }
-        System.out.println("Enter the index of value to be returned:");
-        int index = scan.nextInt();
-        System.exit(getValueFromArray(arr, size, index));
-    }
+import java.util.Scanner; 
+public class GetValueFromArray {  
+    public static void main(String[] args) {  
+        int[] array = new int[]{1,2,3};  
+        Scanner scan = new Scanner(System.in);  
+        System.out.print("Enter the index: ");  
+        int index = scan.nextInt();  
+        try {  
+            System.exit(getValueFromArray(array, array.length, index));  
+        } catch (Exception ex) {  
+            System.err.println(ex);  
+        } finally {  
+            scan.close();  
+        }  
+    }  
+    public static int getValueFromArray(int[] array, int size, int index) throws ArrayIndexOutOfBoundsException{  
+        if (index >= size || index < 0) {  
+            throw new ArrayIndexOutOfBoundsException("Invalid Index");  
+        } else {  
+            return array[index];  
+        }  
+    }  
 }

@@ -1,14 +1,14 @@
-import java.io.*;
- 
-public class HelloWorld{
-    public static void http_hello_page(InputStream request, OutputStream response) throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(request));
-        String username = reader.readLine();
-        PrintWriter writer = new PrintWriter(response);
-        writer.println("Hello " + username);
-    }
- 
-    public static void main(String[] args) throws IOException{
-        http_hello_page(System.in, System.out);
-    }
+import java.io.*;
+class HelloPage {
+    public static void http_hello_page(InputStream request, OutputStream response) throws IOException {
+        String name = "";
+        int c;
+        while ((c = request.read()) != -1) {
+            if (c == '&')
+                break;
+            else
+                name += (char) c;
+        }
+        response.write(("HTTP/1.0 200 OK\r\n\r\n" + "Hello " + name).getBytes());
+    }
 }

@@ -1,25 +1,29 @@
-import javax.swing.*;
-import java.awt.*;
 import java.io.*;
-
-public class Login {
-    public static void main(String[] args) throws Exception{
-        String username = JOptionPane.showInputDialog("Enter your username");
-        String password = JOptionPane.showInputDialog("Enter your password");
-        
-        File myFile = new File("C:\\Users\\username\\Desktop\\userinfo.txt");
-        Scanner scanner = new Scanner(myFile);
-        if (scanner.hasNextLine()){
-            String userInfo = scanner.nextLine();
-            String[] info = userInfo.split(", ");
-            String enteredUsername = info[0];
-            String enteredPassword = info[1];
-            
-            if ((username.equals(enteredUsername) && password.equals(enteredPassword))){
-                System.out.println("Welcome to dashboard");
-            } else {
-                System.out.println("Incorrect username or password");
-            }
-        }
-    }
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+public class Login extends HttpServlet{
+   public void doPost(HttpServletRequest req,HttpServletResponse res)throws IOException, ServletException{
+      String un=req.getParameter("username");
+      String pw=req.getParameter("password");
+      Connection con;
+      Statement stmt;
+      ResultSet rs;
+      try{
+         Class.forName("com.mysql.jdbc.Driver");
+         con=DriverManager.getConnection("jdbc:mysql://localhost/mydb","root","root");
+         stmt=con.createStatement();
+         rs=stmt.executeQuery("select * from users where username='"+un+"' and password='"+pw+"'");
+         if(rs.next()){
+            HttpSession session=req.getSession();
+            session.setAttribute("user",un);
+            res.sendRedirect("dashboard.jsp");
+         }else{
+            RequestDispatcher rd=req.getRequestDispatcher("login.jsp?error");
+            rd.forward(req,res);
+         }
+      }catch(Exception e){
+         System.out.println(e);
+      }
+   }
 }

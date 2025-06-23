@@ -1,16 +1,16 @@
 import java.util.*;
-
-    public class Main {
-        public static int getValueFromArray(int[] array, int index) {
-            return array[index];
-        }
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int index = sc.nextInt();
+        System.exit(getValueFromArray(new int[]{1,2,3,4,5}, 5,index));
+    }
     
-        public static void main(String[] args) {
-            Scanner input = new Scanner(System.in);
-            System.out.print("Enter an integer: ");
-            int num = input.nextInt();
-            int[] arr = {1, 2, 3};
-            int index = num % 3; // This will always return a value between 0 and 2 inclusive
-            System.out.println(getValueFromArray(arr, index));
+    public static int getValueFromArray(int[] arr, int size, int index) {
+        if (size <= 0 || index < 0 || index >= size){
+            return -1;
+        } else {
+            return arr[index];
         }
     }
+}

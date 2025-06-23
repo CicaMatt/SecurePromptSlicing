@@ -1,17 +1,15 @@
-import java.io.*;
-import java.util.*;
-class GetValueFromArray {
-   public static int getValueFromArray(int[] arr, int size, int index) {
-      return arr[index];
-   }
-   public static void main(String args[]) throws IOException{
-       BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int id_sequence[] = {123456789, 123456780};
-        int size = id_sequence.length;
-        System.out.println("Enter a valid index: ");
-        int input = Integer.parseInt(reader.readLine());
-        GetValueFromArray getval = new GetValueFromArray();
-        int result = getValueFromArray(id_sequence, size, input);
-        System.exit(result);
+import java.util.Scanner;
+ 
+public class GetValueFromArray {
+    public static int getValueFromArray(int[] arr, int index) {
+        return arr[index];
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int index = sc.nextInt();
+        int exitCode = getValueFromArray(id_sequence, index);
+        System.exit(exitCode);
     }
 }

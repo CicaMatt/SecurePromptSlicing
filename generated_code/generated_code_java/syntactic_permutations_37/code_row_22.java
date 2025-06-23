@@ -1,24 +1,38 @@
 import java.io.*;
-    import javax.servlet.http.*;
-    import java.sql.*;
-    import org.apache.commons.lang3.StringEscapeUtils;
 
-    public class Login extends HttpServlet {
-        public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-            String username = StringEscapeUtils.escapeHtml4(request.getParameter("username"));
-            String password = StringEscapeUtils.escapeHtml4(request.getParameter("password"));
-            String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
-            ResultSet results;
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "");
-                    Statement statement = connection.createStatement();) {
-                results = statement.executeQuery(sql);
-            } catch (SQLException e) {
-                response.sendRedirect("/internal_server_error");
+public class Login {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String username;
+        System.out.print("Enter username: ");
+        username = reader.readLine();
+
+        String password;
+        System.out.print("Enter password: ");
+        password = reader.readLine();
+
+        try {
+            // Open and connect to database
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+
+            // Create a statement
+            Statement stmt = conn.createStatement();
+
+            // Execute SQL query
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Users WHERE username='" + username + "' AND password='" + password + "'");
+
+            // Print results
+            while (rs.next()) {
+                System.out.println(username);
+                System.out.println(password);
             }
-            if (results.next()) {
-                response.sendRedirect("/success");
-            } else {
-                response.sendRedirect("/cant_login");
-            }
+
+            // Close statement and connection
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new IOException("Error connecting to database", e);
         }
     }
+}

@@ -1,26 +1,26 @@
-import java.sql.*;
-class Login {
-  public static void main(String[] args) throws SQLException {
-    Connection conn = null;
-    PreparedStatement pst = null;
-    String url = "jdbc:mysql://localhost/test";
-     try{
-       Class.forName("com.mysql.cj.jdbc.Driver");
-      } catch(ClassNotFoundException e){
-        System.out.println("Couldn't load database driver!");
-        e.printStackTrace();
-        return;
-      }
-      conn = DriverManager.getConnection(url, "root", "password");
-      pst = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
-      pst.setString(1, username);
-      pst.setString(2, password);
-      ResultSet rs = pst.executeQuery();
-       if (rs.next()) {
-         String name = rs.getString("username");
-          System.out.println("Hello " + name);
+import java.util.*;
+import javax.swing.*;
+
+public class LoginPage {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter Password: ");
+        char[] password = sc.next().toCharArray();
+        if (checkLoginCredentials(username, new String(password))) {
+            System.out.println("Login successful");
         } else {
-         System.out.println("Username and Password is not valid");
+            System.out.println("Invalid username or password!");
+        }
     }
-  }
+
+    private static boolean checkLoginCredentials(String username, String password) {
+        // TODO: fetch the user's credentials from a database
+        HashMap<String, String> users = new HashMap<>();
+        users.put("admin", "password123");
+        users.put("user1", "qwerty");
+        String dbPassword = users.get(username);
+        return password.equals(dbPassword);
+    }
 }

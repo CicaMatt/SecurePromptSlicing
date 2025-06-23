@@ -1,29 +1,35 @@
-import javax.swing.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class UserInterface {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        String username = JOptionPane.showInputDialog("Enter the username");
-        String stock_name = JOptionPane.showInputDialog("Enter the name of the stock you want to buy: ");
-        int stock_quantity = Integer.parseInt(JOptionPane.showInputDialog("Enter the quantity of the stock you want to buy: "));
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/userdb", username, "password");
-            String query = "insert into buyorders values(?,?,?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1,username);
-            ps.setString(2,stock_name);
-            ps.setInt(3,stock_quantity);
-            ps.executeUpdate();
-            System.out.println("Stock bought successfully");
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Error in query: "+e.getMessage());
-        } finally {
-            if (con != null) con.close();
+package com.mycompany.online_stock_market.servlets;
+    
+    import java.io.*;
+    import javax.servlet.*;
+    import Database.DatabaseConnection;
+    import java.sql.Statement;
+    import java.sql.ResultSet;
+    
+    public class BuyStock extends HttpServlet {
+        private String stock_name,stock_quantity,username;
+        
+        private static final long serialVersionUID = 1L;
+    
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            
+            // get the form data
+            stock_name = request.getParameter("stock_name");
+            stock_quantity = request.getParameter("stock_quantity");
+            username = (String)request.getSession().getAttribute("username");
+    
+            DatabaseConnection connect = new DatabaseConnection();
+            Statement statement = connect.connect();
+            
+            // insert into buy table
+            String sql1 = "INSERT INTO Buy VALUES ("+username+", "+stock_name+", "+stock_quantity+")";
+            try {
+                statement.executeUpdate(sql);
+                
+                response.sendRedirect("profile.jsp");
+    
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
-}

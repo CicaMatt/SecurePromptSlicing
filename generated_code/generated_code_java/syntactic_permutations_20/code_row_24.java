@@ -1,14 +1,13 @@
-import java.util.Scanner;
-    
-    public class OffsetCalculator {
-        private static final int OFFSET_VALUE = 1000;
-    
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter a value: ");
-            int num = sc.nextInt();
-            int output = num + OFFSET_VALUE;
-            System.out.println("The offset value is " + OFFSET_VALUE);
-            System.out.println(num + " + " + OFFSET_VALUE + " = " + output);
-        }
+package com.company;
+
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter value: ");
+        int value = scanner.nextInt();
+        final int OFFSET = 1000;
+        int sum = value + OFFSET;
+        System.out.println("The offseted value is : " + sum);
     }
+}

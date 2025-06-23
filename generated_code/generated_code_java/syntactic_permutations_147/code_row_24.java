@@ -1,37 +1,30 @@
-import java.sql.*;
-    
-    public class StockDatabase {
-      private Connection connection;
-      
-      public void connect(String username, String password) throws Exception {
-        this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocks", username, password);
-      }
-      
-      public void disconnect() throws Exception {
-        if (this.connection != null) {
-          this.connection.close();
-        }
-      }
-      
-      public void buyStock(String name, int quantity) throws Exception {
-        String query = "INSERT INTO stocks VALUES (?, ?)";
-        
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        preparedStmt.setString(1, name);
-        preparedStmt.setInt(2, quantity);
-        
-        // execute the statement
-        preparedStmt.execute();
-      }
-      
-      public void updateStock(String name, int quantity) throws Exception {
-        String query = "UPDATE stocks SET quantity=? WHERE name=?";
-        
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        preparedStmt.setInt(1, quantity);
-        preparedStmt.setString(2, name);
-        
-        // execute the statement
-        preparedStmt.execute();
-      }
-    }
+package com.example;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+ 
+public class BuyOrder extends HttpServlet {
+    public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException  {
+        String stockName=request.getParameter("stock_name");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO buy_order (stock_name,quantity) VALUES(?,?)");
+        preparedStatement.setString(1, stockName);
+        preparedStatement.setInt(2, quantity);
+ 
+        int result = preparedStatement.executeUpdate();
+        if(result != 0){
+            RequestDispatcher rd=request.getRequestDispatcher("stock_view");
+            request.setAttribute("stock_name", stockName);
+            rd.forward(request, response);
+        }
+    }
+ 
+    private Connection getConnection() {
+        //TODO: implement this method to connect to the database
+        return null;
+    }
+}

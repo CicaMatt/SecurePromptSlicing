@@ -1,10 +1,7 @@
 import java.util.Random;
-
-    public class HelloWorld {
-
-        public static void main(String[] args) {
-            Random rand = new Random();
-            int randomNum = rand.nextInt(1000) + 1000;
-            System.out.println("The generated random number is " +randomNum);
-        }
+public class RandomNumber {
+    public static void main(String[] args) {
+        int randomNumber = new Random().nextInt(9000) + 1000;
+        System.out.println("Generated number: " + randomNumber);
     }
+}

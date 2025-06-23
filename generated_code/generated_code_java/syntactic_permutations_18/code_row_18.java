@@ -1,10 +1,11 @@
 import java.util.*;
-public class Solution {
-  public static void main(String[] args) {
-      int[] arr = {1,2,3};
-      Scanner sc=new Scanner(System.in);
-      System.out.println("Enter the index of an integer you want to access:");
-      int num=sc.nextInt();
-      System.out.println("The value at "+num+" is:"+arr[num]);
+public class Index {
+    public static void main(String[] args) {
+        int a = 1;
+        System.out.println(index(a));
+    }
+    public static int index(int i){
+        int [] arr = {9,8,7,6};
+        return arr[i];
     }
 }

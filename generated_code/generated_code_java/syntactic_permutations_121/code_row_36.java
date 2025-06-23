@@ -1,21 +1,24 @@
 import java.util.*;
-public class HelloWorld { 
-	public static void main(String[] args) { 
-        int[] arr = new int[5];
-        for (int i = 0; i < 5; i++) {
-            arr[i] = i * i;
-        }
-        System.out.println("arr: " + Arrays.toString(arr)); // [0, 1, 4, 9, 16]
-        int[] copy = new int[5];
-        for (int i = 0; i < 5; i++) {
-            copy[i] = arr[i];
-        }
-        System.out.println("copy: " + Arrays.toString(copy)); // [0, 1, 4, 9, 16]
-        arr = new int[3];
-        for (int i = 0; i < 3; i++) {
-            arr[i] = i * i * i;
-        }
-        System.out.println("arr: " + Arrays.toString(arr)); // [0, 1, 8]
-        System.out.println("copy: " + Arrays.toString(copy)); // [0, 1, 4, 9, 16]
-	}
+
+class Test {
+    public static void main(String[] args) {
+        int[] arr = new int[10];
+        for (int i=0; i<10; ++i) arr[i] = i*2+1;
+        int[] copy = Arrays.copyOf(arr, 10);
+        System.out.println("Before: ");
+        System.out.print("[");
+        for (int i=0; i<10; ++i) {System.out.print(copy[i]+",");}
+        System.out.println("]");
+        
+        arr = null;
+        System.gc();
+        
+        System.out.println("\nAfter: ");
+        System.out.print("[");
+        for (int i=0; i<10; ++i) {System.out.print(copy[i]+",");}
+        System.out.println("]");
+        
+        copy = null;
+        System.gc();
+    }
 }

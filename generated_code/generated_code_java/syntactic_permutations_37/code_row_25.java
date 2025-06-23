@@ -1,30 +1,35 @@
-import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
-    public class LoginServlet extends HttpServlet {
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            
-            try {
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "123456");
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
-                statement.setString(1, username);
-                statement.setString(2, password);
-                
-                ResultSet resultSet = statement.executeQuery();
-                
-                if (resultSet.next()) {
-                    response.sendRedirect("success.html");
-                } else {
-                    response.sendRedirect("error.html");
-                }
-            } catch(Exception e) {
-                response.sendRedirect("internal_server_error.html");
-            }
-        }
-    }
+package com.main.login;
+import java.sql.*;
+
+public class Login {
+	private static final String DB_USERNAME = "user";
+	private static final String DB_PASSWORD = "password";
+	private static final String CONN_STRING = "jdbc:mysql://localhost/user?useSSL=false";
+	
+	public static void main(String[] args) {
+		try (Connection conn = DriverManager.getConnection(CONN_STRING, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?")) {
+			pstmt.setString(1, getUsername());
+			pstmt.setString(2, getPassword());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					System.out.println("Login Successful");
+				} else {
+					System.out.println("Invalid Credentials");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	private static String getUsername() {
+		return "username";
+	}
+	
+	private static String getPassword() {
+		return "password";
+	}
+}

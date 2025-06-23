@@ -1,10 +1,11 @@
 import java.util.Random;
 
-public class Code {
-    public static void main(String[] args) {
-        Random rand = new Random();
-        String string = String.format("%d", rand.nextInt());
-        String string2 = String.format("%d", rand.nextInt());
-        String string3 = String.format("%d", rand.nextInt());
-    }
-}
+    public class Main {
+    
+        public static void main(String[] args) {
+            Random rand = new Random();
+            String string = Integer.toString(rand.nextInt());
+            String string2 = Integer.toString(rand.nextInt());
+            String string3 = Integer.toString(rand.nextInt());
+        }
+    }

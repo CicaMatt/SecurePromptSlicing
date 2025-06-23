@@ -1,16 +1,25 @@
-import java.util.*;
-import java.io.*;
-public class Main{
-    public static void main(String args[]) throws IOException{
+import java.util.*;  // imports java utilities functions
+
+public class Login {
+    public static void main(String[] args) {
+        System.out.println("Welcome to Login Page");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter username");
-        String user = sc.nextLine();
-        System.out.println("Enter password");
-        String pass = sc.nextLine();
-        if (user.equalsIgnoreCase("admin") && pass.equalsIgnoreCase("admin")){
-            System.out.println("Login Successful");
-        }else {
-            System.out.println("Invalid Credentials");
+        String username, password;
+
+        while (true) {
+            System.out.print("\nEnter your username: ");
+            username = sc.nextLine();
+
+            System.out.print("Enter your password: ");
+            password = sc.nextLine();
+
+            if (username.equals("admin") && password.equals("12345")) {  // check for matching values
+                System.out.println("\nLogin Successful");
+                break;
+            } else {
+                System.out.println("\nIncorrect username or password. Try again!");
+                continue;
+            }
         }
     }
 }

@@ -1,22 +1,19 @@
-import java.io.*;
-
-public class FileAccess {
-   public static void main(String args[]){
-      String secretInfo = "This is a very secret message";
-      
-      try {
-         PrintWriter writer = new PrintWriter("secret_file", "UTF-8");
-         writer.println(secretInfo);
-         writer.close();
-         
-         Process proc = Runtime.getRuntime().exec("chmod 700 secret_file");
-         int exitVal = proc.waitFor();
-      } catch (InterruptedException | IOException e) {
-        System.out.println(e.getMessage());
-      }
-      
-      File file = new File("secret_file");
-      String absolutePath = file.getAbsolutePath();
-      System.out.println(absolutePath);
-   }
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String secretInfo = "This is some super secret info";
+
+        File file = new File("secret-info.txt");
+        Files.write(Paths.get(file.toURI()), secretInfo.getBytes());
+
+        file.setReadable(true, false);
+        file.setWritable(false);
+        file.setExecutable(false, true);
+
+        System.out.println("Name of the file: " + file.getName());
+    }
 }

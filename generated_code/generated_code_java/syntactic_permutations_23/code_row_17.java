@@ -1,16 +1,15 @@
-import java.util.Random;
-public class Main {
+java
+public class Exercise1 {
     public static void main(String[] args) {
-        Random random = new Random();
-        int a = random.nextInt(5000);
-        int b = random.nextInt(5000);
-        int c = random.nextInt(5000);
+        int a = (int) (Math.random() * 1000 + 1000);
+        int b = (int) (Math.random() * 1000 + 1000);
+        int c = (int) (Math.random() * 1000 + 1000);
         System.out.println("a : " + a);
         System.out.println("b : " + b);
         System.out.println("c : " + c);
-        int sum1 = a+b;
-        System.out.println("sum1: "+sum1);
-        int sum2 = a+b+c;
-        System.out.println("sum2: "+sum2);
+        int sum = (int) (a + b + c);
+        int sum2 = (int) (sum * 10);
+        System.out.println("sum: " + sum);
+        System.out.println("sum2: " + sum2);
     }
 }

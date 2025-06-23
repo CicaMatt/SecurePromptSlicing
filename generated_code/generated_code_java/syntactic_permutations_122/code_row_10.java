@@ -1,39 +1,25 @@
-import java.lang.management.ManagementFactory;
-import com.sun.tools.attach.*;
-import sun.tools.attach.HotSpotVirtualMachine;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
-
-public class Solution {
-    public static void main(String[] args) {
-        try {
-            // Get the PID of your own process and use it to attach to that process
-            String pid = ManagementFactory.getRuntimeMXBean().getName();
-            int p = Integer.parseInt(pid);
-            VirtualMachine vm = VirtualMachine.attach(p);
-
-            // Load the debug agent into the target VM
-            HotSpotVirtualMachine hvm = (HotSpotVirtualMachine) vm;
-            String address = hvm.getAgentProperties().getProperty("sun.jdwp.listenerAddress");
-            int port = Integer.parseInt(address.split(":")[1]);
-            hvm.loadAgent("/usr/local/jdk-15.0.2/lib/sa-jdi.jar", "port=" + port);
-
-            // Get the virtual machine descriptor for the target VM
-            VirtualMachineDescriptor vmd = null;
-            for (VirtualMachineDescriptor v : VirtualMachine.list()) {
-                if (v.id().equals(pid)) {
-                    vmd = v;
-                    break;
-                }
-            }
-
-            // Get a connection to the target VM
-            com.sun.jdi.VirtualMachine vm2 = hvm.getVirtualMachine();
-
-            // Invoke the method foo() in the class bar.Foo and print its return value
-            vm2.classesByName("bar.Foo").get(0).methodsByName("foo").get(0).invoke(null);
-        } catch (Exception e) {
-            System.err.println(e);
+import java.lang.*;
+import java.util.*;
+class MyProgram {
+    public static void main (String[] args) {
+        //allocate memory for chunk #1
+        byte[] chunk1 = new byte[256];
+        //populate data in chunk#1
+        for(int i=0;i<chunk1.length;i++){
+            chunk1[i]=(byte)(i%128);
         }
+        
+        //allocate memory for chunk #2
+        byte[] chunk2 = new byte[256];
+        //copy data from chunk#1 to chunk#2
+        for(int i=0;i<chunk1.length;i++){
+            chunk2[i]=chunk1[i];
+        }
+        
+        //free memory allocated for chunk#1
+        chunk1 = null;
+        
+        //free memory allocated for chunk#2
+        chunk2 = null;
     }
 }

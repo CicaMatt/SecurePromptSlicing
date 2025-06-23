@@ -1,17 +1,20 @@
-import java.util.Scanner; // Import the Scanner class
-    
-    public class Main {
-      public static void main(String[] args) {
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.print("Enter the index: "); 
-        int index = myObj.nextInt();// Read user input
-        int[] arr = {1,2,3,4,5};  
-        
-        int output=getValueFromArray(arr,index);
-        System.out.println(output);
-      }
-      
-    public static int getValueFromArray(int[] array,int index) {
-        return array[index];
-      }
+public class Main {
+    public static int getValueFromArray(int[] arr, int size, int index) {
+        return arr[index];
     }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an integer: ");
+        int x = sc.nextInt();
+        int size = 5;
+        int[] arr = new int[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = sc.nextInt();
+        }
+        int index = sc.nextInt();
+        System.out.print("Enter an index: ");
+        int result = getValueFromArray(arr, size, index);
+        System.out.println("The value at the given index is: " + result);
+    }
+}

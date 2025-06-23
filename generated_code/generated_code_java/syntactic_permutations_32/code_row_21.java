@@ -1,15 +1,14 @@
-import spark.Request;
-import static spark.Spark.*;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) {
-        get("/redirect/:url", (req, res) -> {
-            String url = req.params(":url");
-            if (isValidUrl(url)) {
-                return "You will be redirected to the correct URL";
-            } else {
-                return "URL does not exist!";
-            }
-        });
+public class Redirect {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String url = br.readLine();
+        if (url.startsWith("http://example.com")) {
+            System.out.println("<script>window.location.href='" + url + "';</script>");
+        } else {
+            System.out.println("Error: Invalid URL");
+        }
     }
 }

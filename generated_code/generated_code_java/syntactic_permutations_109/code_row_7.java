@@ -1,25 +1,16 @@
 import java.io.*;
-class UserInformation {
-    public static void main(String[] args) throws Exception {
-        // Read a username from the command line
+public class Main {
+    public static void main(String[] args) throws IOException {
         String user = args[0];
-
-        // Call the function executeCommand
-        String output = executeCommand("cat /etc/passwd | grep "+user);
-
-        // Print the output of the command
-        System.out.println(output);
-    }
-
-    public static String executeCommand(String cmd) throws Exception {
-        Process p = Runtime.getRuntime().exec(cmd);
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String output = "";
+        String cmd[] = {"cat","/etc/passwd"};
+        Process p=Runtime.getRuntime().exec(cmd);
+        InputStream is = p.getInputStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
-        while ((line = in.readLine()) != null) {
-            output += line + "\n";
+        while ((line = br.readLine()) != null) {
+            if (line.contains(user)) {
+                System.out.println(line);
+            }
         }
-        in.close();
-        return output;
     }
 }

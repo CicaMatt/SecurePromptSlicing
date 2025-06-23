@@ -1,17 +1,10 @@
-import java.util.*;
-    
-    class Main {
-      public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter an index between 0 and 9: ");
-        int idx = scanner.nextInt();
-        String id_sequence = "123456789";
-        int length = id_sequence.length() - 1;
-        if (idx >= 0 && idx <= length) {
-          char value = id_sequence.charAt(idx);
-          System.out.println("The number at index " + idx + " is: " + value);
-        } else {
-          System.out.println("Invalid index.");
-        }
-      }
+import java.util.Scanner;   //imports the scanner class to get input from the user  
+public class Main {   
+      public static void main(String[] args) {  //main function begins  
+        Scanner scan = new Scanner(System.in);  //initializes a new scanner object to read input from the keyboard  
+         System.out.print("Enter index value: ");     //prompt user for input  
+         int index_val = scan.nextInt();    //stores the index entered by the user in the variable index_val  
+         id_sequence[index_val];   //calls function id_sequence and stores its return value  
+        System.out.println("The value at this index is: " + id_sequence);   //prints the value returned by the function to the console  
+      }  
     }

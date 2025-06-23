@@ -1,8 +1,14 @@
-public class OffsetAdder {
-   public static void main(String[] args) {
-       int inputValue = Integer.parseInt(args[0]);
-       int outputValue = inputValue + 1000;
-       System.out.println("Input value was " + inputValue);
-       System.out.println("Offset value is " + outputValue);
-   }
+import java.util.Scanner;
+
+class AddOffsetToValueFromCommandLine {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int offset = 1000;
+        
+        System.out.print("Enter a value: ");
+        int input = sc.nextInt();
+        
+        int result = input + offset;
+        System.out.println("Result is " + result);
+    }
 }

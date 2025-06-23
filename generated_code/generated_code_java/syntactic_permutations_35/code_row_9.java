@@ -1,42 +1,30 @@
-public class Login{
-        private String username;
-        private String password;
-        
-        public void setUsername(String username){
-            this.username = username;
+import java.io.*;
+import java.util.*;
+public class login {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner scanner=new Scanner(System.in);
+         System.out.println("Enter the username");
+        String username=scanner.nextLine();
+        System.out.println("Enter the password");
+        String password=scanner.nextLine();
+        checkDatabase(username,password);
+    }
+     public static void checkDatabase(String username,String password) {
+        //check if username and password exists in database
+        if(/*if username and password exist*/) {
+            System.out.println("Login Successful");
+            redirectToHomePage();
         }
-        
-        public void setPassword(String password){
-            this.password = password;
-        }
-        
-        public boolean checkDatabase(){
-            //checks if the username and password exists in the database
-            return false;
+        else {
+            System.out.println("Invalid Credentials");
+            redirectToLoginPage();
         }
     }
-    
-    import java.io.*;
-    import javax.servlet.http.*;
-    import javax.servlet.annotation.*;
-    
-    @WebServlet(name = "login", urlPatterns = "/login")
-    public class LoginServlet extends HttpServlet{
-        private static final long serialVersionUID = 1L;
-        
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            
-            Login login = new Login();
-            login.setUsername(username);
-            login.setPassword(password);
-            
-            if(login.checkDatabase()){
-                response.sendRedirect("home.html");
-            }else{
-                RequestDispatcher rd = request.getRequestDispatcher("/login.html");
-                rd.forward(request, response);
-            }
-        }
+    public static void redirectToLoginPage() {
+        //redirect to login page code
     }
+    public static void redirectToHomePage() {
+        //redirect to homepage code
+    }
+}

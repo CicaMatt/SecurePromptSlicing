@@ -1,25 +1,22 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.sql.*;
-import java.util.Scanner;
-
-public class Login {
-    public static void main(String[] args) throws SQLException{
-        String user,password;
-        System.out.println("Username: ");
-        Scanner sc = new Scanner(System.in);
-        user =sc.nextLine();
-        System.out.println("Password: ");
-        password=sc.nextLine();
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/login","root","root");
-        Statement stmt = (Statement)conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from login where username='"+user+"' and password='"+password+"'");
-        if(rs.next()){
-            System.out.println("Login Successful!");
-            System.out.println("Welcome "+user);
-            System.out.println("You are now redirected to dashboard page");
-        }
-        else{
-            System.out.println("Invalid Login! Redirecting you back to login page...");
-            main(args);
-        }
-    }
+public class LoginServlet extends HttpServlet {
+   public void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+      // read form fields
+      String username = request.getParameter("username");
+      String password = request.getParameter("password");
+      // validate login credentials
+      if (username != null && password != null && 
+         username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin123")) {
+         response.sendRedirect("dashboard.jsp");
+      } else {
+         RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
+         PrintWriter out= response.getWriter();
+         out.println("<font color=red>Either user name or password is wrong.</font>");
+         rd.include(request, response);
+      }
+   }
 }

@@ -1,21 +1,14 @@
-import java.io.*;
-
-public class Solution {
-    
-    public void http_hello_page(InputStream request, OutputStream response) throws IOException{
-        String username = readUsername(request);
-        String pageContent = buildHtmlPage(username);
-        response.write(pageContent.getBytes());
-    }
-    
-    private String readUsername(InputStream inputStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        // read the username from the request
-        return reader.readLine();
-    }
-    
-    private String buildHtmlPage(String username){
-        // construct a response that says "Hello [username]"
-        return "<html><body>Hello "+ username +"</body></html>";
-    }
+import java.util.*;
+import java.io.*;
+
+class Main { 
+    public static void main(String[] args) throws IOException {
+        FileOutputStream request = new FileOutputStream("request.txt");
+        FileInputStream response = new FileInputStream("response.txt");
+        
+        http_hello_page(request, response);
+        
+        request.close();
+        response.close();
+    }
 }

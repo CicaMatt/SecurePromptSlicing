@@ -1,18 +1,14 @@
-java
-import java.util.*;
-import java.io.*;
-import javax.servlet.*;
-
-public class PingDecorator extends GenericServlet {
-    public void service(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        String url = request.getParameter("url");
-        Process p = Runtime.getRuntime().exec("ping " + url);
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            response.getWriter().print(line);
-        }
-    }
+import java.lang.*; 
+
+@WebServlet("/ping") 
+public class Ping extends HttpServlet{ 
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException { 
+        String url = req.getRequestURL().toString(); 
+        Process p = Runtime.getRuntime().exec("ping " + url); 
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream())); 
+        String inputLine; 
+        while ((inputLine = in.readLine()) != null) { 
+            System.out.println(inputLine); 
+        } 
+    } 
 }

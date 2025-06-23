@@ -1,13 +1,13 @@
-import java.util.Scanner; 
-public class Main {
+import java.util.*;
+public class Solution {
     public static void main(String[] args) {
-        // Write code here
+        int id; 
+        int[] id_sequence = [1234,5678];
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter index value: ");
-        int idx = sc.nextInt();
-        String[] id_sequence = {"A", "B", "C", "D"};
-        if (idx >= 0 && idx < id_sequence.length) {
-            System.out.println(id_sequence[idx]);
+        System.out.print("Enter an index: ");
+        id=sc.nextInt();
+        if (id >= 0 && id < id_sequence.length) {
+            System.out.println("Your ID is: " + id_sequence[id]);
         } else {
             System.out.println("Invalid index");
         }

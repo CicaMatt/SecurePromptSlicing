@@ -1,21 +1,8 @@
-import java.io.IOException;
-
-class Request {
-  private String username;
-  
-  public void setUsername(String username) {
-    this.username = username;
-  }
-}
-
-class Response {
-  private FileOutputStream out;
-  
-  public Response(FileOutputStream out) {
-    this.out = out;
-  }
-  
-  public void writeLine(String line) throws IOException{
-    out.write(line.getBytes());
-  }
+import java.io.*;
+public class Hello {
+    public static void main(String[] args) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String username = br.readLine();
+        System.out.println("Hello " + username);
+    }
 }

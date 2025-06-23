@@ -1,18 +1,20 @@
-package com.example;
-
-import java.net.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-public class RedirectInvalidUrl extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String url = request.getParameter("url");
-        if (url.startsWith("example.com")) {
-            response.sendRedirect(url);
-        } else {
-            PrintWriter out = response.getWriter();
-            out.println("<h1>Invalid URL</h1>");
-            out.println("<p>The URL provided is not from example.com.</p>");
+import java.io.*; 
+    import java.net.*;  
+    class RedirectExample {
+       public static void main(String[] args) throws IOException { 
+          String url = "http://www.example.com";
+          redirect_invalid_url(url);
         }
-    }
-}
+        public static void redirect_invalid_url(String url) {
+            try {
+                URL myUrl = new URL("https://www.google.com/search?q=redirect+a+webpage");
+                BufferedReader in = new BufferedReader(new InputStreamReader(myUrl.openStream()));
+                String inputLine;
+                    while ((inputLine = in.readLine()) != null)
+                        System.out.println(inputLine);
+                    in.close();
+            } catch (MalformedURLException e) {
+                System.out.println("Invalid URL"); 
+              }
+          } 
+      }

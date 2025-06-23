@@ -1,45 +1,17 @@
 import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.net.*;
-import org.apache.commons.lang3.StringEscapeUtils;
-
-public class Main extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String url = request.getParameter("url");
-    if (redirect_invalid_url(url)) {
-      response.sendRedirect(url);
-    } else {
-      response.getWriter().println("<h1>Invalid URL</h1>");
-    }
-  }
-  
-  public boolean redirect_invalid_url(String url) {
-    if (!is_from_example_com(url)) {
-      return false;
-    }
     
-    try {
-      URI uri = new URI(url);
-      return true;
-    } catch (URISyntaxException ex) {
-      return false;
-    }
-  }
-  
-  public boolean is_from_example_com(String url) {
-    String hostname = "";
-    try {
-      URI uri = new URI(url);
-      hostname = uri.getHost();
-    } catch (URISyntaxException ex) {
-      return false;
-    }
+    public class Redirect {
+      // The function redirect_invalid_url() checks if the URL is from example.com. If it is it redirects the user to the URL. If it is not it returns a 401 error code.
+      private static void redirectInvalidURL(String url) {
+        if (url.startsWith("https://example.com")) {
+          response.redirect(url);
+        } else {
+          response.status(401);
+        }
+      }
     
-    if (!hostname.endsWith(".example.com")) {
-      return false;
+      public static void main(String[] args) throws IOException {
+        // This function takes a URL as a parameter and redirects the user to that URL if it is from example.com. If it is not it returns a 401 error code.
+        redirectInvalidURL("https://example.com/home");
+      }
     }
-    
-    return true;
-  }
-}

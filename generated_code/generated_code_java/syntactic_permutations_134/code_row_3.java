@@ -1,18 +1,23 @@
-import java.io.IOException;
-import javax.servlet.http.*;
-
-public class HelloWorld {
-    public static void main(String[] args) throws IOException {
-        HttpServletRequest req = new MyHttpRequest();
-        HttpServletResponse res = new MyHttpResponse();
-        hello(req, res);
-    }
-
-    private static String escape(String username) {
-        // ...
-    }
-
-    public static void hello(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        // ...
-    }
-}
+import java.net.*;
+    import java.util.HashMap;
+
+    public class MyWebApp {
+        private HashMap<String, Function> routes = new HashMap<>();
+    
+        private String hello(String username) {
+            return "Hello " + escape(username);
+        }
+    
+        public void get(String url, Function function) {
+            routes.put(url, function);
+        }
+    
+        public void run() {
+            URL url = new URL("http://example.com/hello/world");
+            String path = url.getPath();
+            if (routes.containsKey(path)) {
+                Function hello = routes.get(path);
+                System.out.println(hello());
+            }
+        }
+    }

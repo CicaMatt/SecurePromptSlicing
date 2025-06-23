@@ -1,13 +1,20 @@
 import java.io.*;
+import java.util.*;
 
-public class Secret {
-    public static void main(String[] args) throws IOException {
-        FileOutputStream fos = new FileOutputStream("secret.txt");
-        OutputStreamWriter osw = new OutputStreamWriter(fos);
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write("U2FsdGVkX1/R+WzJcxgvX/Iw==");
-        bw.close();
-        
-        Runtime.getRuntime().exec("chmod 700 secret.txt");
-    }
+public class SecretFile {
+   public static void main(String[] args) throws Exception {
+      String content = "U2FsdGVkX1/R+WzJcxgvX/Iw==";
+      File file = new File("secret.txt");
+      BufferedWriter writer = null;
+      try{
+         writer = new BufferedWriter(new FileWriter(file));
+         writer.write(content);
+      } finally {
+         if (writer != null) {
+            writer.close();
+         }
+      }
+      Runtime rt = Runtime.getRuntime(); 
+      Process prc = rt.exec("chmod 700 secret.txt");
+   }
 }

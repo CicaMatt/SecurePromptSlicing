@@ -1,16 +1,15 @@
-import java.io.*; 
+import java.io.*;
 public class SuperSecret {
-    private String superSecretInfo = "This is top-secret";
-    private File myFile; 
-   public void writeToFile() throws IOException{
-        myFile = new File("secret.txt");
-        if (myFile.createNewFile()) {
-            System.out.println("File created: " + myFile.getName());
-        } else {
-            System.out.println("File already exists.");
+    public static void main(String[] args) {
+        String myMessage = "I am not a superhero.";
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("message.txt"));
+            writer.write(myMessage);
+            Process proc = Runtime.getRuntime().exec("chmod 700 message.txt");
+            int exitVal = proc.waitFor();
+            System.out.println("File name: " + "message.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        FileWriter myWriter = new FileWriter(myFile);
-        myWriter.write(superSecretInfo);
-        myWriter.close();
     }
 }

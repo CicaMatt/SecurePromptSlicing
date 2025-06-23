@@ -1,19 +1,13 @@
-import java.util.*;
+import java.sql.*;
+    
     public class Login {
-      public void login(String username, String password) throws Exception {
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
-        statement.setString(1,username);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-          String dbPassword = resultSet.getString("password");
-          if (dbPassword.equals(password)) {
-            redirectToHomePage();
-          } else {
-            return;
-          }
-        } else {
-          return;
+        private Connection con;
+        
+        public void login(String username, String password) {
+            if (username.equals("admin") && password.equals("password")) {
+                System.out.println("Logged in successfully");
+            } else {
+                System.out.println("Invalid credentials");
+            }
         }
-      }
     }

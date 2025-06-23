@@ -1,22 +1,16 @@
-import java.util.*;
-import javax.servlet.http.*;
+import java.lang.*;
 
-public class check_mod extends HttpServlet { 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String session = request.getParameter("session");
-        if(auth_mod(username,password,session)){
-            PrintWriter out = response.getWriter();
-            out.println("<h1>Welcome Moderator!</h1>");
-        }else{
-            PrintWriter out = response.getWriter();
-            out.println("<h1>You are not a moderator!</h1>");
+    public class CheckMod {
+        String username;
+        String password;
+        String session;
+
+        public Boolean check_mod(String username, String password, String session) {
+            return auth_mod(username, password, session);
+        }
+
+        private Boolean auth_mod(String username, String password, String session) {
+            // Code to authenticate the user as a moderator goes here.
+            return true; // Replace this line with your authentication code.
         }
     }
-    
-    public static boolean auth_mod(String username, String password, String session){
-        //code to check if user is moderator
-        return true;
-    }
-}

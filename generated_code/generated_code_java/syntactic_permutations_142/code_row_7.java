@@ -1,47 +1,36 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Scanner;
+import java.util.*;
+import java.sql.*;
 
-public class Database {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/java_db"; // the database name is java_db
-    private String username = "root";
-    private String password = "";
-    
-    public static void main(String[] args) throws Exception {
-        Database db = new Database();
-        
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your email address: ");
-        String emailAddress = scanner.nextLine();
-        
-        db.unsubscribe(emailAddress);
-    }
-    
-    public void unsubscribe(String emailAddress) throws Exception {
-        // connect to the database
-        Connection con = DriverManager.getConnection(jdbcURL, username, password);
-        
-        String sql = "SELECT * FROM subscribers WHERE email_address=?";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setString(1, emailAddress);
-        ResultSet rs = stmt.executeQuery();
-        
-        if (rs.next()) {
-            // email address is in the database
-            sql = "DELETE FROM subscribers WHERE email_address=?";
-            PreparedStatement deleteStmt = con.prepareStatement(sql);
-            deleteStmt.setString(1, emailAddress);
+public class Unsubscribe {
+   public static void main(String[] args) {
+      Scanner input = new Scanner(System.in);
+      System.out.println("Enter your email address");
+      String emailAddress = input.nextLine();
+      unsubscribe(emailAddress);
+   }
+
+   private static void unsubscribe(String emailAddress) {
+      try {
+         // Connect to the database
+         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java", "root", "");
+         Statement stmt = con.createStatement();
+         
+         // Query the database
+         ResultSet rs = stmt.executeQuery("SELECT emailAddress FROM subscribers WHERE emailAddress = '" + emailAddress + "'");
+         
+         // Check if the email address is in the database
+         if (rs.next()) {
+            System.out.println(emailAddress + " has been removed from the mailing list.");
             
-            System.out.println("You have been unsubscribed.");
-        } else {
-            // email address is not in the database
-            System.out.println("You are already unsubscribed.");
-        }
-        
-        rs.close();
-        stmt.close();
-        con.close();
-    }
+            // Delete the row from the database
+            stmt.executeUpdate("DELETE FROM subscribers WHERE emailAddress = '" + emailAddress + "'");
+         } else {
+            System.out.println(emailAddress + " is not in the mailing list.");
+         }
+         
+         con.close();
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
 }

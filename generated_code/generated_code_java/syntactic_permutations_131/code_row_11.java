@@ -1,18 +1,25 @@
-import flask
-
-app = flask.Flask(__name__)
-
-def render_response_from_env(env):
-    name = request.args.get("name")
-    template = env.get_template("template.html")
-    rendered_template = template.render(name=name)
-    return flask.Response(rendered_template, mimetype="text/html")
-
-@app.route("/")
-def home():
-    response = render_response_from_env(env)
-    return response
-
-if __name__ == "__main__":
-    env = Environment()
-    app.run()
+import java.io.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import jinjava.Jinjava;
+
+public class Home {
+  public static void main(String[] args) throws ServletException, IOException{
+    HttpServletRequest request = null;
+    HttpServletResponse response = null;
+    render_response_from_env(request,response);
+  }
+
+   private void render_response_from_env(HttpServletRequest request, HttpServletResponse response) {
+      String name = request.getParameter("name");
+      Jinjava jinja = new Jinjava();
+      Template template = jinja.getTemplate("hello.html");
+      Map<String, Object> context = new HashMap<>();
+      context.put("name", name);
+      String renderedTemplate = template.render(context);
+      response.setContentType("text/html; charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println(renderedTemplate);
+    }
+}

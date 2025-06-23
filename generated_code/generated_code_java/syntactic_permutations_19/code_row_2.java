@@ -1,7 +1,7 @@
 import java.util.*;
-class Test {
+public class Main {
     public static void main(String[] args) {
-        int a = Integer.parseInt(args[0]);
-        System.out.println(a+1000);
+        int sum = Integer.parseInt(args[0]) + 1000;
+        System.out.println("Sum of input and 1000 is: " +sum);
     }
 }

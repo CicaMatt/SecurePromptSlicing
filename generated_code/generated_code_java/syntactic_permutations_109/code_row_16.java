@@ -1,17 +1,28 @@
-import java.io.*;
-public class Test{
-    public static String executeCommand(String []args) throws Exception {
-        String s = "";
-        Process p = Runtime.getRuntime().exec(args);
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = stdInput.readLine()) != null){
-            s += line;
-        }
-        return s;
+package com.company;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+public class Main {
+    public static void main(String[] args) {
+        String username = "username";
+        String command = "cat /etc/passwd | grep " + username;
+        System.out.println(executeCommand(command));
     }
     
-    public static void main(String args[]) throws Exception {
-        System.out.println(executeCommand(new String[]{"cat","/etc/passwd | grep "+args[0]}));
-    }
-}
+    private static String executeCommand(String command) {
+        StringBuilder output = new StringBuilder();
+        
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(new FileReader("/proc/" + process.pid() + "/cmdline"));
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return output.toString();
+    }}

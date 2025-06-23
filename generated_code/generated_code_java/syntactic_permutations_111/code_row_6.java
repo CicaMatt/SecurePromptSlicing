@@ -1,20 +1,16 @@
-import java.io.*;
-public class Ping {
-    public static void main(String[] args) {
-        String url = "www.google.com";
-        try {
-            Process process = Runtime.getRuntime().exec("ping -c 3 www.google.com");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int read;
-            char[] buffer = new char[4096];
-            StringBuffer output = new StringBuffer();
-            while ((read = reader.read(buffer)) > 0) {
-                output.append(buffer, 0, read);
-            }
-            reader.close();
-            process.waitFor();
-        } catch (Exception e) {
-            System.out.println("Failed to run the command " + e);
-        }
-    }
+import java.io.*; 
+public class Ping { 
+   public String ping(String url) throws IOException { 
+      Runtime runtime = Runtime.getRuntime(); 
+      Process proc = runtime.exec("ping -c1 "+url); 
+      InputStream stdin = proc.getInputStream(); 
+      InputStreamReader isr = new InputStreamReader(stdin); 
+      BufferedReader br = new BufferedReader(isr); 
+      String line = null; 
+      StringBuilder sb = new StringBuilder(); 
+      while ((line = br.readLine()) != null) { 
+         sb.append(line + "\n"); 
+      } 
+      return sb.toString(); 
+   } 
 }

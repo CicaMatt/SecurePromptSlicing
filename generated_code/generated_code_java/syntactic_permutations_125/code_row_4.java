@@ -1,7 +1,6 @@
-import java.io.*;
-public class TrimAndPrint {
+import java.util.Scanner; 
+public class Hello {
     public static void main(String[] args) {
-        String arg = args[0].trim();
-        System.out.println(arg);
+        System.out.println("Hello World! " + args[0].trim());
     }
 }

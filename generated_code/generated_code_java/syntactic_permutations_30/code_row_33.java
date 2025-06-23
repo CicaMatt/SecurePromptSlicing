@@ -1,17 +1,30 @@
-import java.util.regex.*; 
-
-public class RegExp { 
-    public static void main(String[] args) { 
-        String target = "http://www.google.com"; // sample value 
-        Pattern p = Pattern.compile("^[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,}$"); 
-        Matcher m = p.matcher(target); 
-        boolean b = m.matches(); 
-        if (b) { 
-            // redirect to target url 
-            System.out.println("redirecting to: " + target); 
-        } else { 
-            // redirect to homepage of the site 
-            System.out.println("redirecting to: http://example.com"); 
+import java.util.regex.*;
+    
+    public class Redirect{
+        private static String target = "http://example.com/"; 
+        private static Pattern pattern;
+    
+        public void setTarget(String t){
+            this.target = t;
+        }
+    
+        public boolean validate(){
+            pattern = Pattern.compile("^[A-Za-z0-9]+[-]{0,1}[A-Za-z0-9]\\.");
+            Matcher matcher = pattern.matcher(this.target);
+            if (matcher.find()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    
+        public static void main(String[] args){
+            Redirect redirect = new Redirect();
+            redirect.setTarget("http://www.example.com/");
+            if (redirect.validate()) {
+                System.out.println("Valid URL");
+            } else {
+                System.out.println("Invalid URL");
+            }
         } 
-    } 
-}
+    }

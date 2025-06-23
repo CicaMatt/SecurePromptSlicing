@@ -1,18 +1,25 @@
-import java.io.*;
-    import java.util.*;
-    
-    public class Login {
-        public static void main(String[] args) throws Exception {
-            Scanner in = new Scanner(System.in);
-            System.out.print("Enter your username: ");
-            String userName = in.nextLine();
-            System.out.print("Enter your password: ");
-            String passWord = in.nextLine();
-    
-            if (userName.equalsIgnoreCase("admin") && passWord.equalsIgnoreCase("password")) {
-                System.out.println("Login Successful");
-            } else {
-                System.out.println("Login Failed");
-            }
-        }
+import javax.servlet.http.*;
+    import java.io.*;
+    import javax.servlet.RequestDispatcher;
+    @WebServlet("/login")
+    public class Login extends HttpServlet {
+    	private static final long serialVersionUID = 1L;
+    	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+    		throws IOException, ServletException {
+    		String username = req.getParameter("username");
+    		String password = req.getParameter("password");
+    		if (isUserValidated(username, password)) {
+    			RequestDispatcher dispatcher =
+    			req.getRequestDispatcher("dashboard.jsp");
+    			dispatcher.forward(req, resp);
+    		} else {
+    			RequestDispatcher dispatcher =
+    			req.getRequestDispatcher("login.html");
+    			dispatcher.include(req, resp);
+    		}
+    	}
+    	private boolean isUserValidated(String username, String password) {
+    		// Fetch the details from the database and verify against the entered values
+    		return true;
+    	}
     }

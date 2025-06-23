@@ -1,23 +1,20 @@
 import java.util.*;
-public class Main {
-    public static int getValueFromArray(int[] arr,int size,int index){
-        if(index<size){
-            return arr[index];
-        }
-        else{
-            System.out.println("Invalid Index");
+
+public class Solution {
+    public static int getValueFromArray(int[] arr, int size, int index){
+        if (index < 0 || index >= size){
             return -1;
         }
-    }
-    public static void main(String args[]){
-        int id_sequence[] = {2,6,3,8,5};
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter Index:");
-        int index=sc.nextInt();
-        int size=id_sequence.length;
-        int returnValue=getValueFromArray(id_sequence,size,index);
-        if(returnValue!=-1){
-            System.out.println("value at given index:"+returnValue);
+        else{
+            return arr[index];
         }
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] id_sequence = {3, 5, -4, 11, 0};
+        
+        System.out.println(getValueFromArray(id_sequence, id_sequence.length, n));
     }
 }

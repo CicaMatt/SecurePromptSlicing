@@ -1,13 +1,21 @@
 import java.util.*;
+import java.lang.*;
+import java.io.*;
 
-public class ChunkCopier {
+class Ideone {
     public static void main(String[] args) {
-        byte[] firstChunk = new byte[10];
-        for (int i = 0; i < firstChunk.length; i++) {
-            firstChunk[i] = (byte)(Math.random() * 256);
-        }
-
-        byte[] secondChunk = Arrays.copyOf(firstChunk, firstChunk.length);
-        System.out.println("Contents of second chunk: " + Arrays.toString(secondChunk));
+        int a = 5;
+        int b = 6;
+        
+        System.out.println("Before swap: A = " + a);
+        System.out.println("Before swap: B = " + b);
+        
+        // swap numbers
+        a = a+b;
+        b = a-b;
+        a = a-b;
+        
+        System.out.println("After swap: A = " + a);
+        System.out.println("After swap: B = " + b);
     }
 }

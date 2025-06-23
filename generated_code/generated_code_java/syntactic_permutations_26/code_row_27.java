@@ -1,12 +1,13 @@
-import java.util.List;
-public class Sales {
-    private List<Integer> monthlySales = new ArrayList<>();
-
-    public void setMonthlySales(List<Integer> monthlySales) {
-        this.monthlySales = monthlySales;
+import java.lang.String;
+public class Loop {
+    public static void main(String[] args) {
+        int i;
+        int sum=0;
+        for (i = 0; i < 3; ++1){
+            sum += getMonthlySales(i);
+        }
     }
-
-    public int getQuarterlySales() {
-        return monthlySales.get(0) + monthlySales.get(1) + monthlySales.get(2);
-    }
+}
+public static int getMonthlySales(int month){
+    return month*month;
 }

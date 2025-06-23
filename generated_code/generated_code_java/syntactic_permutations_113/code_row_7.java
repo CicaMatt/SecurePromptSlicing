@@ -1,20 +1,21 @@
 import java.io.*;
-import java.util.*;
-import java.net.*;
-
 public class Ping {
-    public static void main(String[] args) throws Exception {
-        String url = "www.google.com";
-        URL pingUrl = new URL("http://" + url);
-        HttpURLConnection connection = (HttpURLConnection) pingUrl.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-
-        int code = connection.getResponseCode();
-        if (code == 200) {
-            System.out.println(url + " is alive");
-        } else {
-            System.out.println(url + " not alive");
+    private final String url;
+    public Ping(String url) {
+        this.url = url;
+    }
+    public void ping() throws Exception{
+        Process p = Runtime.getRuntime().exec("ping -c 1 " + url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            if (inputLine.contains("time=")) {
+                System.out.println("URL is alive!");
+                return;
+            }else{
+                System.out.println("URL is dead!");
+                return;
+            }
         }
     }
 }

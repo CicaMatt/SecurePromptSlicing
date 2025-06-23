@@ -1,62 +1,53 @@
 import java.sql.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-public class UnsubscribeServlet extends HttpServlet {
-    private DataSource dataSource = null;
-    
-    @Override
-    public void init() throws ServletException{
-        Context context = new InitialContext();
-        dataSource = (DataSource)context.lookup("java:comp/env/jdbc/MySQLConnectionPool");
+public class UnsubscribeService {
+  public static void main(String[] args) throws Exception {
+    // Connect to the database
+    Connection connection = null;
+    try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      String url = "jdbc:mysql://localhost:3306/newsletter?useSSL=false";
+      String user = "user";
+      String password = "password";
+      connection = DriverManager.getConnection(url, user, password);
+    } catch (SQLException e) {
+      System.out.println("Could not connect to the database");
+      return;
     }
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String email = request.getParameter("email");
-        
-        if(!email.isEmpty()){
-            Connection connection = null;
-            Statement statement = null;
-            
-            try{
-                connection = dataSource.getConnection();
-                
-                if(connection != null){
-                    String sql = "SELECT * FROM subscribers WHERE email='" + email + "'";
-                    statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(sql);
-                    
-                    if(resultSet.next()){
-                        String name = resultSet.getString("name");
-                        String sql2 = "DELETE FROM subscribers WHERE email='" + email + "'";
-                        int result = statement.executeUpdate(sql2);
-                        
-                        if(result > 0){
-                            MailingList mailingList = new MailingList();
-                            mailingList.unsubscribe(email);
-                            
-                            response.getWriter().println("You have been unsubscribed");
-                        }
-                    }
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }finally{
-                if(connection != null){
-                    try{
-                        connection.close();
-                    }catch(SQLException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }else{
-            response.getWriter().println("Email is required");
-        }
+
+    // Read the email parameter from the query string
+    String email = "example@email.com";
+
+    // Check if the user is subscribed
+    PreparedStatement selectUser = connection.prepareStatement(
+        "SELECT * FROM users WHERE email = ?");
+    selectUser.setString(1, email);
+    ResultSet userResult = selectUser.executeQuery();
+    boolean foundUser = false;
+    while (userResult.next()) {
+      foundUser = true;
     }
+    if (!foundUser) {
+      System.out.println("You are not subscribed");
+      return;
+    }
+
+    // Delete the user from the database
+    PreparedStatement deleteUser = connection.prepareStatement(
+        "DELETE FROM users WHERE email = ?");
+    deleteUser.setString(1, email);
+    int rowsAffected = deleteUser.executeUpdate();
+    if (rowsAffected == 0) {
+      System.out.println("Could not delete user from database");
+      return;
+    }
+
+    // Unsubscribe the user from the mailing list
+    MailingListService mailingListService = new MailingListService();
+    boolean unsubscribed = mailingListService.unsubscribe(email);
+    if (!unsubscribed) {
+      System.out.println("Could not unsubscribe from mailing list");
+      return;
+    }
+  }
 }

@@ -1,28 +1,30 @@
-package com.microverse.database;
-import java.sql.*;
-public class Database {
-    private Connection conn = null;
-    public void connect() throws SQLException, ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/mydatabase";
-        String user = "postgres";
-        String password = "root";
-        this.conn = DriverManager.getConnection(url,user,password);
+import java.util.*;
+public class EmailUnsubscribe{
+    private static final String UNKNOWN_EMAIL = "Email not found";
+
+    public static void main(String[] args){
+        // Check if email exists in database
+        String email = getEmail();
+        if(!doesEmailExist(email)) return 0;
+
+        // Call script to unsubscribe email
+        int result = callScriptToUnsubscribeEmail(email);
+
+        // Return 1 if successful, otherwise 0
+        return (result == 0) ? 0 : 1;
     }
-    public int checkEmail(String email) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE email='" + email + "';");
-        return (rs.next()) ? 1 : 0;
+
+    private static String getEmail(){
+        // Logic to retrieve email from database
     }
-    public int unsubscribe(String email) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE email='" + email + "';");
-        if (rs.next())
-            return 0;
-        else {
-            stmt = conn.createStatement();
-            int i = stmt.executeUpdate("UPDATE users SET subscribed=0 WHERE email='" + email + "';");
-            return (i > 0) ? 1 : 0;
-        }
+
+    private static boolean doesEmailExist(String email){
+        // Logic to check if email exists in database
+        return false;
+    }
+
+    private static int callScriptToUnsubscribeEmail(String email){
+        // Logic to call script that unsubscribes the email
+        return 0;
     }
 }

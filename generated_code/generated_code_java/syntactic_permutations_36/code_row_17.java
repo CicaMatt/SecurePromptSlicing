@@ -1,28 +1,42 @@
-import java.sql.*;
-    public class Login {
-    	public static boolean login(String username, String password) {
-    		// get database connection
-            Connection conn = null;
-            Statement stmt = null;
-            ResultSet rs = null;
-            String dbUrl = "jdbc:mysql://localhost/mydb";
+package com.example.login;
+    
+    import java.sql.*;
+    import javax.sql.*;
+    
+    public class LoginService {
+        private final String jdbcURL = "jdbc:mysql://localhost/mydatabase";
+        private final String username = "root";
+        private final String password = "";
+    
+        public void login(String username, String password) throws SQLException {
+            Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+            PreparedStatement statement = null;
+            ResultSet resultSet = null;
             try {
-                conn = DriverManager.getConnection(dbUrl, "root", "password");
-                stmt = conn.createStatement();
-                // query database for username and password match
-                rs = stmt.executeQuery("SELECT * FROM users where username='" + username + "' AND password='" + password + "'");
-                if (rs.next()) {
-                    return true;
+                statement = connection.prepareStatement("SELECT * FROM users WHERE username=?");
+                statement.setString(1, username);
+                resultSet = statement.executeQuery();
+    
+                if (resultSet.next()) {
+                    String dbPassword = resultSet.getString("password");
+                    if (dbPassword.equals(password)) {
+                        // redirect to home page
+                    } else {
+                        return;
+                    }
                 } else {
-                    return false;
+                    return;
                 }
-            } catch (SQLException ex) {
-            	return false;
+            } catch (SQLException e) {
+                e.printStackTrace();
             } finally {
-            	// close database connection
-                rs.close();
-                stmt.close();
-                conn.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                connection.close();
             }
-    	}
+        }
     }

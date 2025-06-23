@@ -1,18 +1,16 @@
-import java.util.Scanner;
-
-public class CommandLineUtility {
-    public static void main(String[] args) {
-        String command = "ls -l";
-        executeCommandLineUtility(command);
-    }
-
-    private static void executeCommandLineUtility(String command) {
-        try {
-            Scanner scanner = new Scanner(Runtime.getRuntime().exec(command).getInputStream()).useDelimiter("\\A");
-            String output = scanner.hasNext() ? scanner.next() : "";
-            System.out.println(output);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+import java.io.*;
+public class main{
+     public static void main(String args[]){
+        String input = "ls -l";
+        try{
+            Process p = Runtime.getRuntime().exec(input);
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while((line = br.readLine()) != null){
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,16 +1,16 @@
-package main;
-
-import java.io.*;
-
-public class Main {
-    public static void main(String[] args) throws IOException {
-        String url = "https://google.com";
-        Process p = Runtime.getRuntime().exec("ping -c 3 " + url);
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String inputLine;
-        while ((inputLine = in .readLine()) != null) {
-            System.out.println(inputLine);
-        }
-        in .close();
-    }
+import java.lang.*;
+public class Ping {
+    public void ping(URL url) {
+        String output = "";
+        try{
+            Process process = Runtime.getRuntime().exec("ping " + url);
+            BufferedReader reader = new BufferedReader(
+                                    new InputStreamReader(process.getInputStream()));
+            String line = "";
+            while((line = reader.readLine())!= null) {
+                output += line + "\n";
+            }
+        } catch(Exception e){
+            System.out.println("Error: " + e);
+        }}
 }

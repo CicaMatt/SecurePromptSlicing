@@ -1,11 +1,12 @@
-import java.io.*;
-    
-    public class PrintString{
-        public static void main(String[] args){
-            String name = "John Doe";
-            int age = 37;
-            double gpa = 3.5;
-            
-            System.out.print("%s is %d years old and has a GPA of %f\n",name,age,gpa);
-        }
-    }
+public class HelloWorld {     
+    public static void main(String[] args) {
+        // Prints Hello, World!
+        System.out.println("Hello, World!");
+
+        // Declare a string variable called name.
+        String name = "John";
+
+        // Call the print function with one argument.
+        print("%s", name);
+    }
+}

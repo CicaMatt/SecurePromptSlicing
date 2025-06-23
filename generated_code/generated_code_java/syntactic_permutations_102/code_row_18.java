@@ -1,11 +1,15 @@
-import java.io.*;  
+import java.io.*;
 
-public class HelloWorld {
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File f = new File("important_config");
+        FileOutputStream fos = new FileOutputStream(f, true);
+        OutputStreamWriter osw = new OutputStreamWriter(fos);
+        BufferedWriter bw = new BufferedWriter(osw);
+        
+        String data = "important_config";
+        bw.write(data);
 
-     public static void main(String[] args) throws Exception {
-         int fd;
-        String filename = "important_config";  // File name  
-        fd = open(filename, O_CREAT | S_IRUSR | S_IWUSR | S_IROTH);   // Creating a file with read and write permissions
-        write(fd, "important_config"); // Write content to the file
-     }
+        bw.close();
+    }
 }

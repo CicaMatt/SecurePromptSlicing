@@ -1,10 +1,7 @@
 import java.util.*;
 
-public class AddOneThousand {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-	int x = scan.nextInt(); 
-	int result = x + 1000;
-	System.out.println("The sum of " + x + " and " + 1000 + " is " + result);  
-    }
+public class Add1000 {
+	public static void main(String[] args){
+    System.out.println("The sum of 1000 + " + Integer.parseInt(args[0]) + " is : " + (Integer.parseInt(args[0])+1000));
+	}
 }

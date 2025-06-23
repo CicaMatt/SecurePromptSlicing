@@ -1,26 +1,35 @@
-import java.sql.*;
-public class Connection {
-   public static void main(String[] args) {
-        try{
-            String host = "jdbc:mysql://localhost:3306/world";
-            String username = "root";
-            String password = "";
-            String sql = "select * from city";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(host,username,password);
-            Statement stmt  = conn.createStatement();
-            ResultSet rs    = stmt.executeQuery(sql);
-            while(rs.next()){
-                String countrycode = rs.getString("CountryCode");
-                String cityname = rs.getString("Name");
-                Integer district = rs.getInt("District");
-                Integer population = rs.getInt("Population");
-                System.out.println(countrycode+" "+cityname+" "+district+" "+population);
-            }
-        }catch(SQLException se){
-            se.printStackTrace();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class CheckUser {
+    public static boolean check(String username) throws Exception {
+        String sql = "SELECT * FROM users WHERE username=?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "");
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            return rs.next();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        boolean exists = check("Jane");
+        System.out.println(exists);
+    }
 }

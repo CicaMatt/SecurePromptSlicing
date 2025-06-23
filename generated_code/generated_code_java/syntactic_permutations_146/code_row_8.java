@@ -1,65 +1,43 @@
-import java.util.*;
+package com.company;
 
 import java.sql.*;
+import java.util.Scanner;
 
-public class Stock{
+public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String stock_name, username;
+        int stock_quantity;
 
+        System.out.print("Enter Stock Name: ");
+        stock_name = sc.nextLine();
+        System.out.print("Enter Quantity: ");
+        stock_quantity = sc.nextInt();
+        System.out.print("Enter UserName: ");
+        username = sc.nextLine();
+
+        String url = "jdbc:mysql://localhost:3306/";
+        String dbName = "stock";
+        String driver = "com.mysql.cj.jdbc.Driver";
         try {
-            // Load database driver
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Unable to load database driver.");
-            return;
-        }
+            Class.forName(driver);
+            Connection con = DriverManager.getConnection(url + dbName, "<username>", "<password>");
 
-        Scanner scan = new Scanner(System.in); 
+            PreparedStatement ps = con.prepareCall("insert into buy_order (stock_name, stock_quantity, username) values (?, ?, ?)");
+            ps.setString(1, stock_name);
+            ps.setInt(2, stock_quantity);
+            ps.setString(3, username);
 
-        // Get stock name and quantity from user
-        System.out.print("Enter stock name: ");
-        String stock_name = scan.nextLine();
-        System.out.print("Enter quantity: ");
-        int stock_quantity = Integer.parseInt(scan.nextLine());
+            int rs = ps.executeUpdate();
 
-        // Get username from user
-        System.out.print("Enter your username: ");
-        String username = scan.nextLine();
-
-        // Connect to database
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost/stocks",
-                "admin", 
-                "password"
-            );
-        } catch (SQLException e) {
-            System.out.println("Unable to connect to database.");
-            return;
-        }
-
-        // Insert buy order into database
-        String sql = "INSERT INTO orders (stock_name, stock_quantity, username) VALUES(?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, stock_name);
-        pstmt.setInt(2, stock_quantity);
-        pstmt.setString(3, username);
-
-        try {
-            int result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Unable to insert order into database.");
-            return;
-        }
-
-        // Redirect user to profile page
-        String url = "http://example.com/profile";
-        try {
-            Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler", url});
-        } catch (IOException e) {
-            System.out.println("Unable to open URL.");
-            return;
+            if (rs > 0) {
+                System.out.println("Order Placed Successfully");
+            } else {
+                System.out.println("Order Not Placed");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

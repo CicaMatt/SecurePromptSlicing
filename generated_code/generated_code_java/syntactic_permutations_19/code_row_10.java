@@ -1,9 +1,8 @@
-import java.util.Scanner;
-
-public class Solution {
-    public static void main(String[] args) {
+import java.util.*;
+public class Add_One_Thousand{
+    public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
-        int i = scan.nextInt();
-        System.out.println(i+1000);
+        int x = scan.nextInt();
+        System.out.println(x+1000);
     }
 }

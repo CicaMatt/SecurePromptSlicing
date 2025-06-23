@@ -1,36 +1,19 @@
-import java.io.*;
-
-import org.apache.commons.lang3.SystemUtils;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Ping {
-    private String url;
-
-    public Ping(String url) {
-        this.url = url;
-    }
-
-    public String ping() throws IOException, InterruptedException {
-        String pong = executeCommand("ping " + url);
-        return parsePong(pong);
-    }
-
-    private static String executeCommand(String command) throws IOException, InterruptedException {
-        Process process = Runtime.getRuntime().exec(command);
-        int exitCode = process.waitFor();
-        if (exitCode != 0) {
-            throw new RuntimeException("The ping command did not succeed");
-        }
-
-        InputStream inputStream = process.getInputStream();
-        String pong = IOUtils.toString(inputStream, "UTF-8");
-        return pong;
-    }
-
-    private static String parsePong(String pong) {
-        if (pong.contains("Alive")) {
-            return url + " is alive";
+    public static void ping() throws IOException, InterruptedException {
+        String url = "http://www.google.com/";
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("ping -c 1 " + url);
+        int exitVal = process.waitFor();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line = reader.readLine();
+        if (exitVal == 0) {
+            System.out.println("URL is alive");
         } else {
-            return url + " is not alive";
+            System.out.println("URL is not alive");
         }
     }
 }

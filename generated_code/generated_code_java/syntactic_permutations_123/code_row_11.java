@@ -1,18 +1,22 @@
-import java.util.*;
-
-public class HelloWorld{
-
-     public static void main(String []args){
-        String text = args[0];
-        if (text instanceof String) {
-            for (int i=0; i<text.length();i++)
-                text = text.trim();
-            for (int i=0; i<text.length();i++)
-                if(text[i].equals("\n")){
-                    text = text.substring(0,i)+text.substring(i+1);
-            }
-        }else{
-            System.out.println("Argument needs to be a string");
-        }
-     }
+import java.util.*;
+class Program {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String s = sc.nextLine();
+		if (s instanceof String) {
+			for (int i = 0; i < s.length(); i++) {
+				if (Character.isWhitespace(s.charAt(i))) {
+					s = s.substring(0, i);
+					break;
+				}
+			}
+			for (int i = 0; i < s.length(); i++) {
+				if (s.charAt(i) == '\n') {
+					s = s.substring(0, i);
+					break;
+				}
+			}
+			System.out.println(s + "\0");
+		}
+	}
 }

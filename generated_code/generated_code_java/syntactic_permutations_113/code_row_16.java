@@ -1,20 +1,13 @@
-import java.lang.*;
-import java.util.*;
-public class Decorator {
-    public void ping(String url, String pong) throws Exception{
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        int exitValue = 0;
-        try {
-            processBuilder.command("ping",url);
-            Process process = processBuilder.start();
-            exitValue = process.waitFor();
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        if(exitValue == 0){
-            pong = "Alive";
-        }else{
-            pong = "Not Alive";
+import java.io.*;
+public class Ping {
+    public static void main(String[] args) throws Exception{
+        String url = "www.google.com";
+        String pingCommand = "ping -c 1 "+url+" | grep loss";//-c for count 1
+        String pong = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec(pingCommand).getInputStream())).readLine();
+        if(pong.contains("0% packet loss")) {
+            System.out.println(url+" is alive!");
+        } else {
+            System.out.println(url+" is not alive!");
         }
     }
 }

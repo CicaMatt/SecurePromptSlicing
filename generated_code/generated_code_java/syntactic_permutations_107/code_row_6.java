@@ -1,19 +1,14 @@
-import java.io.*;
+import java.io.File;
+import java.nio.file.Files;
 
-public class Main{
-     public static void main(String[] args) {
-        try{
-            File f = new File("secret.txt"); 
-            Writer output = new BufferedWriter(new FileWriter(f)); 
-            output.write("U2FsdGVkX1/R+WzJcxgvX/Iw=="); 
-            output.close();
-            System.out.println(f.getAbsolutePath());
-            f.setReadable(false,true);
-            f.setExecutable(false,true);
-            f.setWritable(false,true);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }  
-    } 
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Files.writeString(new File("secret.txt").toPath(), "U2FsdGVkX1/R+WzJcxgvX/Iw==");
+        
+        if (new File("secret.txt").setReadable(false)) {
+            System.out.println("File is no longer readable!");
+        } else {
+            System.out.println("Failed to change file permissions!");
+        }
+    }
 }

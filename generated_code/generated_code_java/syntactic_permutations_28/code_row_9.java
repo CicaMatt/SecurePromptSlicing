@@ -1,25 +1,29 @@
 import java.util.regex.*;
 
-public class Redirect {
-    private String regex;
-    private String defaultUrl;
+    public class Redirect {
+      private String regex = ".*";
 
-    public Redirect(String regex, String defaultUrl) {
+      private String targetURL;
+
+      private String defaultURL;
+
+      public Redirect(String regex, String targetURL, String defaultURL) {
         this.regex = regex;
-        this.defaultUrl = defaultUrl;
-    }
+        this.targetURL = targetURL;
+        this.defaultURL = defaultURL;
+      }
 
-    public boolean match(String url) {
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(url);
-        return m.matches();
-    }
+      public boolean matches() {
+        Pattern pattern = Pattern.compile(this.regex);
+        Matcher matcher = pattern.matcher(this.targetURL);
+        return matcher.matches();
+      }
 
-    public String redirect(String targetUrl) {
-        if (match(targetUrl)) {
-            return targetUrl;
+      public String redirect() {
+        if (matches()) {
+          return targetURL;
         } else {
-            return defaultUrl;
+          return defaultURL;
         }
+      }
     }
-}

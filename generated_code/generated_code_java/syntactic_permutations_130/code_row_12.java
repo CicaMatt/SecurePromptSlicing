@@ -1,24 +1,28 @@
 import java.io.*;
 import java.util.*;
+import org.stringtemplate.v4.ST;
 
-public class Main {
-    public static void main(String[] args) throws IOException, TemplateException {
+public class Application {
+    public static void main(String[] args) throws Exception{
+        //Create an environment
         Environment env = new Environment();
-        home(env);
+        //Set the template in the environment
+        env.setTemplate("Hello, my name is <name>.");
+        //Set the name parameter in the environment
+        env.setParameter("name", "John Doe");
+
+        //Call the render_response_from_env function with the environment as an argument
+        String response = render_response_from_env(env);
+
+        //Print the response to the console
+        System.out.println(response);
     }
-    
-    public static String render_response_from_env(Environment env) throws FileNotFoundException, IOException, TemplateException {
-        String name = env.getParameter("name");
-        Template template = env.getTemplate("template.html");
-        StringWriter writer = new StringWriter();
-        template.process(name, writer);
-        return writer.toString();
-    }
-    
-    public static Response home(Environment env) throws FileNotFoundException, IOException, TemplateException {
-        Response response = new Response();
-        String renderedTemplate = render_response_from_env(env);
-        response.setResponse(renderedTemplate);
-        return response;
+
+    public static String render_response_from_env(Environment env){
+        //Create a new template with the template from the environment
+        ST st = new ST(env.getTemplate(), '$', '$');
+        //Set the name parameter in the template
+        st.add("name", env.getParameter("name"));
+        return st.render();
     }
 }

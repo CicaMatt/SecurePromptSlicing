@@ -3,105 +3,19 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
 
-public class UserMessageServlet extends HttpServlet {
-    private Connection conn = null;
-    private PreparedStatement insertUserMessageInDB = null;
-    private PreparedStatement getMessagesFromDB = null;
+public class ChatServlet extends HttpServlet {
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    String user = request.getParameter("user");
+    String message = request.getParameter("message");
 
-    public void init() throws ServletException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(
-                "jdbc:mysql://<servername>:3306/<database_name>",
-                "<username>", "<password>"
-            );
-            insertUserMessageInDB = conn.prepareStatement(
-                "INSERT INTO messages (message, username) VALUES (?, ?)"
-            );
-            getMessagesFromDB = conn.prepareStatement(
-                "SELECT * FROM messages ORDER BY message_id DESC"
-            );
-        } catch (Exception e) {
-            throw new ServletException(e);
-        }
-    }
+    insert_user_message_in_db(user, message);
 
-    public void destroy() throws ServletException {
-        if (insertUserMessageInDB != null) {
-            insertUserMessageInDB.close();
-        }
-        if (getMessagesFromDB != null) {
-            getMessagesFromDB.close();
-        }
-        if (conn != null) {
-            conn.close();
-        }
-    }
+    RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
+    view.forward(request, response);
+  }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-
-        try {
-            insertUserMessageInDB.setString(1, message);
-            insertUserMessageInDB.setString(2, username);
-            insertUserMessageInDB.executeUpdate();
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
-
-        response.sendRedirect("/main");
-    }
-
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-
-        try {
-            insertUserMessageInDB.setString(1, message);
-            insertUserMessageInDB.setString(2, username);
-            insertUserMessageInDB.executeUpdate();
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
-
-        response.sendRedirect("/main");
-    }
-
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-
-        try {
-            insertUserMessageInDB.setString(1, message);
-            insertUserMessageInDB.setString(2, username);
-            insertUserMessageInDB.executeUpdate();
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
-
-        response.sendRedirect("/main");
-    }
-
-    public void doPost(HttpServletRequest request,
-                       HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-
-        try {
-            insertUserMessageInDB.setString(1, message);
-            insertUserMessageInDB.setString(2, username);
-            insertUserMessageInDB.executeUpdate();
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        }
-
-        response.sendRedirect("/main");
-    }
+  private void insert_user_message_in_db(String user, String message) {
+    // code to insert the username and message in the database goes here
+  }
 }

@@ -1,33 +1,23 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Paths;
-
-public class SecretMessage {
-
-    public static void main(String[] args) {
-        // Create a string with some super secret info
-        String secretInfo = "This is the most secret information in the world!";
-
-        try {
-            // Create a file and write the super secret info to it
-            FileOutputStream outputStream = new FileOutputStream("secret_info.txt");
-            byte[] strToBytes = secretInfo.getBytes();
-            outputStream.write(strToBytes);
-            outputStream.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        // Change the permissions to read-only for the owner
-        try {
-            Paths.get("secret_info.txt").toFile().setReadable(false, false);
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-
-        // Print the name to the screen
-        System.out.println("The secret information was saved in secret_info.txt");
-    }
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
+
+class SuperSecret {
+    public static void main(String[] args) throws Exception{
+        String secret_info = "Super Secret Message";
+        File file = new File("super_secret.txt");
+        System.out.println("file name: " + file);
+        
+        // write to file
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            byte[] bytes = secret_info.getBytes();
+            fos.write(bytes);
+        }
+        
+        // set permissions
+        Files.setPosixFilePermissions(Paths.get("super_secret.txt"), Collections.singleton(PosixFilePermission.OWNER_READ));
+    }
 }

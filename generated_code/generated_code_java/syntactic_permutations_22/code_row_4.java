@@ -1,10 +1,8 @@
 import java.util.Random;
-public class RandomNumber {
+
+public class Solution {
     public static void main(String[] args) {
-        int max = 9999;
-        int min = 1001;
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        System.out.println("The random number is: " + randomNum);
+        Random rd = new Random();
+        System.out.println("Random number larger than 1000: " + (rd.nextInt((9999 - 1000) + 1) + 1000));
     }
 }

@@ -1,18 +1,10 @@
-import java.util.regex.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class Redirect {
-    private final String pattern;
-    public Redirect(String pattern) {
-        this.pattern = pattern;
-    }
-
-    public void setTargetURL(String targetURL) {
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(targetURL);
-        if (m.find()) {
-            // Use the matched URL as the redirect target
-        } else {
-            // Use a default URL as the redirect target
-        }
+    private static final String TARGET_URL = "https://www.example.com/";
+    private static final Pattern PATTERN = Pattern.compile("^https?://example\\.com");
+    public boolean redirect(String url) {
+        Matcher matcher = PATTERN.matcher(url);
+        return matcher.find() ? matcher.group().equalsIgnoreCase(TARGET_URL) : false;
     }
 }

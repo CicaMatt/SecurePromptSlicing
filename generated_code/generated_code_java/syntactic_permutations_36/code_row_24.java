@@ -1,36 +1,27 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.sql.*;
-import java.util.Scanner;
 
-public class Login{
-  public static void main(String[] args){
-    Scanner sc = new Scanner(System.in);
-    System.out.print("Enter your username:");
-    String uname = sc.nextLine();
-    System.out.print("Enter your password:");
-    String pwd = sc.nextLine();
-    login(uname,pwd);
-  }
-
-  public static void login(String uname, String pwd){
-    try{
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/login_data","root","password");
-      Statement stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery("Select * from login where username='"+uname+"' and password='"+pwd+"'");
-      if(rs.next()){
-        System.out.println("Login Successful!");
-        HomePage hp = new HomePage();
-        hp.displayHomePage();
-      }else{
-        System.out.println("Invalid username or password!");
+public class Login extends HttpServlet {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+    try {
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "");
+      PreparedStatement statement = con.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+      statement.setString(1, username);
+      statement.setString(2, password);
+      ResultSet result = statement.executeQuery();
+      if (result.next()) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+        dispatcher.forward(request, response);
+      } else {
+        return;
       }
-    }catch (Exception e){
-      System.out.println(e);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-  }
-}
-
-class HomePage{
-  public void displayHomePage(){
-    System.out.println("Welcome to the home page!");
   }
 }

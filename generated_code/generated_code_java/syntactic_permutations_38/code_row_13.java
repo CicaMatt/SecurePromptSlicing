@@ -1,27 +1,24 @@
-import java.sql.*;
 import java.io.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/dbname","root","");
-            Statement stmt = con.createStatement();
-            
-            ResultSet rs = stmt.executeQuery("SELECT username,password FROM users WHERE username='" +username+"' and password='"+password+"'");
-            if(rs.next()){
-                response.sendRedirect("dashboard.jsp");
+    import java.util.*;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+    public class Login extends HttpServlet {
+        public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            PrintWriter out = response.getWriter();
+            String userName = request.getParameter("user");
+            String password = request.getParameter("password");
+            if (isValidUser(userName, password)) {
+                RequestDispatcher rd=request.getRequestDispatcher("/dashboard.jsp");
+                rd.forward(request, response);
             } else {
-                response.sendRedirect("login.html");
+                out.println("<html><body>Invalid username or password<br /><a href='login.html'>Try Again</a></body></html>");
             }
-        } catch(Exception e){
-            e.printStackTrace();
+        }
+        private boolean isValidUser(String userName, String password) {
+            // Check against database
+            return true;
         }
     }
-}
+
+# Question 3:
+The code must be in a single file called "Hello.java". The class name must be "Hello".

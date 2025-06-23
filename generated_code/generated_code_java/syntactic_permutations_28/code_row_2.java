@@ -1,29 +1,28 @@
-import java.util.regex.*;
-
+import java.net.*;
+import java.io.*;
 public class Redirect {
-    
-    private String regex;
-    private String replacement;
-    private String defaultRedirect = "https://www.example.com";
-
-    public Redirect(String regex, String replacement) {
-        this.regex = regex;
-        this.replacement = replacement;
-    }
-
-    public void handleRequest() {
-        Matcher matcher = Pattern.compile(regex).matcher(getTargetUrl());
+    public static void main(String[] args) throws IOException {
+        // Compile once when the module is loaded.
+        Pattern pattern = Pattern.compile("^/images");
+        URL requestUrl = new URL("http://www.example.com/images/logo.jpg?width=20");
+        Matcher matcher = pattern.matcher(requestUrl.getPath());
         if (matcher.find()) {
-            String redirectUrl = matcher.replaceAll(replacement);
-            System.out.println("Redirecting to " + redirectUrl);
+            // Redirect to the image.
+            BufferedReader in = new BufferedReader(new InputStreamReader(requestUrl.openStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine);
+            }
+            in.close();
         } else {
-            System.out.println("Redirecting to default URL: " + defaultRedirect);
+            // Redirect to the homepage.
+            URL baseUrl = new URL("http://www.example.com/");
+            BufferedReader in = new BufferedReader(new InputStreamReader(baseUrl.openStream()));
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println(inputLine);
+            }
+            in.close();
         }
-    }
-
-    private String getTargetUrl() {
-        // your code here, return the target URL
-        // this method is just a placeholder and does not do anything meaningful
-        return "";
     }
 }

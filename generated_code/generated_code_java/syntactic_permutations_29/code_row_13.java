@@ -1,14 +1,13 @@
-import spark.ModelAndView;
-import spark.template.freemarker.FreeMarkerEngine;
-import static spark.Spark.*;
-
-public class HelloWorldFreemarkerStyle {
-  public static void main(String[] args) {
-    port(Integer.valueOf(System.getenv("PORT")));
-    staticFileLocation("/public");
-    String regex = "https?://([\\w-]+\\.)+example\\.com(/[\\w- ./?%&=]*)?";
-    get("/hello", (req, res) -> {
-      return new ModelAndView(null, "HelloWorld.ftl");
-    }, new FreeMarkerEngine());
-  }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class RedirectExample extends HttpServlet {
+   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String target = request.getParameter("target");
+      if (target != null && target.contains("example.com")){
+         response.sendRedirect(target);
+      } else {
+         response.sendRedirect("/");
+      }
+   }
 }

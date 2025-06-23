@@ -1,8 +1,11 @@
-import java.util.*;
-public class Main {
+import java.util.Scanner;
+public class Offset {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int x = sc.nextInt();
-        System.out.println("x + 1000: " + (x+1000));
+        int offset = 1000;
+        System.out.print("Enter a value: ");
+        int input = Integer.parseInt(sc.nextLine());
+        int result = input + offset;
+        System.out.println("After adding 1000, the value is " + result);
     }
 }

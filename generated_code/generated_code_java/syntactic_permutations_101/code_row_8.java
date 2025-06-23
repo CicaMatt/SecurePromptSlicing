@@ -1,15 +1,11 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class FileWriter {
-    public static void main(String[] args) {
-        String textToWrite = "important_config";
-        try {
-            FileOutputStream fileStream = new FileOutputStream("myfile.txt", true);
-            fileStream.write(textToWrite.getBytes());
-            fileStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+import java.io.*;
+public class WriteFile {
+    public static void main(String[] args) throws IOException {
+        String filename = "filename.txt";
+        FileWriter fw = new FileWriter(filename, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        String important_config = "important configuration";
+        bw.write(important_config);
+        System.out.println("File written successfully");
+    }
 }

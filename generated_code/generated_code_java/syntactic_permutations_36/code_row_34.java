@@ -1,58 +1,35 @@
+package com.company;
 import java.sql.*;
-    import java.util.Scanner;
-    
-    public class Login {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            
-            System.out.print("Enter username: ");
-            String username = sc.nextLine();
-            
-            System.out.print("Enter password: ");
-            String password = sc.nextLine();
-            
-            if (login(username, password)) {
-                System.out.println("Login successful");
+
+class Login {
+    public static void login(String username, String password){
+        // Query database to check if user exists in table
+        String query = "SELECT * FROM users WHERE username=? AND password=?";
+        PreparedStatement preparedStatement = null;
+
+        try{
+            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/", "root", "");
+            preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                System.out.println("Login Successful");
             } else {
-                System.out.println("Login failed");
+                System.out.println("Invalid credentials");
             }
-        }
-        
-        public static boolean login(String username, String password) {
-            Connection conn = null;
-            Statement stmt = null;
-            ResultSet rs = null;
-            
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "user1", "password123");
-                
-                String sql = "SELECT * FROM users WHERE username='" + username + "'";
-                stmt = conn.createStatement();
-                rs = stmt.executeQuery(sql);
-                
-                if (rs.next()) {
-                    String dbPassword = rs.getString("password");
-                    
-                    if (dbPassword.equals(password)) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
+                if (preparedStatement != null){
+                    preparedStatement.close();
                 }
             } catch (Exception e) {
-                System.out.println("Error: " + e);
-                return false;
-            } finally {
-                try {
-                    rs.close();
-                    stmt.close();
-                    conn.close();
-                } catch (Exception e) {
-                    // ignore
-                }
+                System.out.println(e);
             }
         }
     }
+}

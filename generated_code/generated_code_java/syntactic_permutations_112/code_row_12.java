@@ -1,20 +1,20 @@
-import java.lang.*;
 import java.io.*;
-import java.util.*;
-import java.nio.charset.*;
-import java.net.*;
-
-class Ping {
-    static String ping(String url) throws IOException, InterruptedException {
-        Process p = Runtime.getRuntime().exec("ping -c 3 " + url);
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-            response.append("\n");
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+@WebServlet(urlPatterns = { "/ping" })
+public class Ping extends HttpServlet{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        Process process;
+        String[] command = {"ping", "url"};
+        try{
+            process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while((line = reader.readLine()) != null){
+                System.out.println(line);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        in.close();
-        return response.toString();
     }
 }

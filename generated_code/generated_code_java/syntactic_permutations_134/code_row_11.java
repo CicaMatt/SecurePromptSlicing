@@ -1,16 +1,12 @@
-package com.example;
-
-import java.util.*;
-import java.net.URL;
-import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-@Decorator(url="/hello/{username}")
-public class HelloWorld {
-    @Injected  private String username;
-    
-    public void hello() {
-        System.out.println("Hello "+username);
+import java.net.URL;  
+    public class EscapeDecorator {
+        private String username;
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getUsername() {
+            return username;
+        }
     }
-}

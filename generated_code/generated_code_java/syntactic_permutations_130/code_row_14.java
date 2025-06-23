@@ -1,12 +1,12 @@
-import java.util.*;
+import jinja2
 
-public class App {
-    public static void main(String[] args){
-        Environment env = new Environment();
-        String nameParameter = getNameFromRequest(env);
-        String responseTemplate = renderTemplate(nameParameter, env);
-        Response response = new Response();
-        response.setBody(responseTemplate);
-        return response;
-    }
-}
+def render_response_from_env(env):
+    name = env["request"].get("name")
+    template = env["jinja2_env"].get_template("index.html")
+    response = make_response(template.render(name=name))
+    return response
+
+@app.route("/")
+def home():
+    response = render_response_from_env({"request": request, "jinja2_env": jinja2.Environment()})
+    return response

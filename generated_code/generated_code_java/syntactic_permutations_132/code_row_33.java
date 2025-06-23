@@ -1,15 +1,15 @@
-package com.example;
-    
-    import org.springframework.stereotype.*;
-    import org.springframework.ui.*;
-    import org.springframework.web.bind.annotation.*;
-    
-    @Controller
-    public class HelloWorldController {
-    
-        @RequestMapping(value = "/hello/{username}", method = RequestMethod.GET)
-        public String hello(@PathVariable String username, Model model) {
-            model.addAttribute("username", username);
-            return "hello";
-        }
+import java.io.*;  
+
+    public class Hello {
+      private void hello(String username) {  
+        String contents = "Hello, " + username + "!";  
+        try {  
+          FileWriter writer = new FileWriter("hello.html");  
+          writer.write(contents);  
+          writer.close();  
+        } catch (IOException e) {  
+          System.out.println("An error occurred.");  
+          e.printStackTrace();  
+        }
+      }
     }

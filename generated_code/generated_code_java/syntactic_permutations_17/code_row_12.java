@@ -1,16 +1,16 @@
-package mycompany.app;
 import java.util.*;
-
-public class ArraySearch {
+public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int n = input.nextInt();
-        int arr[] = {1,2,3,4,5}; 
-        for (int i = 0; i < arr.length; i++) { 
-            if (arr[i] == n) { 
-                System.out.println(n + " is present at location " + (i+1) + " in the array."); 
-                break; 
-            } 
-        }     
-    }    
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+        int[] arr1 = {1, 2, 3, 4, 5};
+        if (num <= arr1.length) {
+            for (int i = 0; i < num; i++) {
+                System.out.println(arr1[i]);
+            }
+        } else {
+            System.out.print("Invalid number.");
+        }
+    }
 }

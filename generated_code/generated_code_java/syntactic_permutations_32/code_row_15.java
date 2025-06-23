@@ -1,17 +1,23 @@
-package code;
-import org.apache.commons.validator.routines.UrlValidator;
-import spark.*;
-public class Redirect { 
-    public static void main(String[] args) { 
-        Spark.port(80);
-        Spark.get("/redirect/:url", (req, res) -> redirect_invalid_url(req));
-    }
-    private static String redirect_invalid_url(Request request){
-        String url = request.params(":url");
-        if (new UrlValidator().isValid(url)){
-            return url;
-        } else {
-            throw new SparkException("URL is invalid");
+import java.net.*;
+    import spark.Spark;
+
+    public class Main {
+        public static void main(String[] args) throws MalformedURLException {
+            Spark.get("/redirect/:url", (request, response) -> {
+                String url = request.params(":url");
+                if(isValidUrl(url)){
+                    return new URL(url).toString();
+                } else{
+                    return "Invalid URL";
+                }
+            });
+        }
+        private static boolean isValidUrl(String url){
+            try {
+                new URL(url);
+                return true;
+            } catch (MalformedURLException e) {
+                return false;
+            }
         }
     }
-}

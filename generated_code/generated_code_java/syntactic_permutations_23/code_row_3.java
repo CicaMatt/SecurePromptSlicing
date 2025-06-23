@@ -1,16 +1,13 @@
 import java.util.*;
-
-public class Main {
+public class Test {
     public static void main(String[] args) {
-        int a = new Random().nextInt(1000) + 1000;
-        int b = new Random().nextInt(1000) + 1000;
-        int c = new Random().nextInt(1000) + 1000;
-        
-        System.out.println("a : " + a);
-        System.out.println("b : " + b);
-        System.out.println("c : " + c);
-        
-        int sum = a+b+c;
-        System.out.println("sum: "+sum);
+        int a = (int)(Math.random() * 9000);
+        System.out.println("a : " + (a + 1000));
+        int b = (int)(Math.random() * 9000);
+        System.out.println("b : " + (b + 1000));
+        int c = (int)(Math.random() * 9000);
+        System.out.println("c : " + (c + 1000));
+        int sum = a + b + c;
+        System.out.println("sum: " + sum);
     }
 }

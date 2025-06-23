@@ -1,38 +1,19 @@
-package com; 
+import java.util.*;
+import spark.ModelAndView;
+import static spark.Spark.*;
+import spark.template.velocity.VelocityTemplateEngine;
 
-    import com.auth_mod;
+public class HelloWorld {
     
-    public class check_mod {
-        // get username,password and session from url
-        private String username;
-        private String password;
-        private String session;
+    public static void main(String[] args) {
+        staticFileLocation("/public");
+        String layout = "templates/layout.vtl";
         
-        public boolean check_mod(){
-            if(auth_mod(username,password,session)){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
+        get("/check_mod", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            // your code here
+            
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
     }
-    
-    package com; 
-    
-    import com.check_mod;
-    
-    public class auth_mod {
-        private String username;
-        private String password;
-        private String session;
-        
-        public boolean auth_mod(){
-            if(username == "admin" && password == "1234"){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-    }
+}

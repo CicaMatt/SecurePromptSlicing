@@ -1,1 +1,9 @@
-import java.io.FileOutputStream;public class OpenFile{    public static void main(String[] args) {        try {            FileOutputStream myFile = new FileOutputStream("example.txt", true);        } catch (Exception e) {            System.out.println(e.getMessage());        }    }}
+import java.io.*;
+
+public class Main {
+     public static void main(String[] args) throws Exception{
+        FileOutputStream f = new FileOutputStream("myfile", true);
+        // FileOutputStream f2 = new FileOutputStream("myfile"); // O_TRUNC
+        // FileOutputStream f3 = new FileOutputStream("myfile", false, true); // O_CREAT | O_EXCL
+    }
+}

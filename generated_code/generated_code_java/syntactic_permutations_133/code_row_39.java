@@ -1,23 +1,10 @@
-import webapp2
-
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Hello, World!')
-
-app = webapp2.WSGIApplication([
-    ('/', MainPage),
-], debug=True)
-
-### Answer:
+from flask import Flask
 
-import webapp2
+app = Flask(__name__)
 
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Hello, World!')
+@app.route("/")
+def hello():
+    return "Hello World!"
 
-app = webapp2.WSGIApplication([
-    ('/', MainPage),
-], debug=True)
+if __name__ == "__main__":
+    app.run()

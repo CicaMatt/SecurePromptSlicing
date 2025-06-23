@@ -1,27 +1,19 @@
-import java.io.*;
-class Memory
-{
-  public static void main(String[] args) throws Exception
-  {
-    int i,j;
-    File f1 = new File("f1.txt");
-    FileOutputStream ostrm = new FileOutputStream(f1);
-    for(i=0;i<5;i++)
-      ostrm.write(i);
-    ostrm.close();
-    File f2 = new File("f2.txt");
-    FileInputStream istrm = new FileInputStream(f1);
-    FileOutputStream ostrm1 = new FileOutputStream(f2);
-    int c;
-    while((c=istrm.read())!=-1)
-      {ostrm1.write(c);}
-    istrm.close();
-    ostrm1.close();
-    //print the contents of second chunk
-    FileInputStream istrm1 = new FileInputStream(f2);
-    int d;
-    while((d=istrm1.read())!=-1)
-      System.out.println(d);
-    istrm1.close();
-  }
+import java.util.Scanner;
+class MyCode {
+public static void main(String[] args) {
+byte[] a = new byte[10];
+byte[] b = new byte[20];
+System.arraycopy(a, 0, b, 0, 10);
+for (int i = 0; i < b.length; i++) {
+if (i % 5 == 0) System.out.println();
+else System.out.print(" ");
+System.out.print(b[i]);
 }
+a = null;
+System.gc();
+for (int i = 0; i < b.length; i++) {
+if (i % 5 == 0) System.out.println();
+else System.out.print(" ");
+System.out.print(b[i]);
+}
+}}

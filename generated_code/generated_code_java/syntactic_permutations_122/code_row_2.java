@@ -1,11 +1,10 @@
-package java_practice;
-import java.util.*;
-class Mem {
+import java.nio.ByteBuffer;
+public class code {
     public static void main(String[] args) {
-        int *first = malloc(10);
-        int *second = malloc(10);
-        memcpy(second, first, 10);
-        free(first);
-        free(second);
+        byte[] a = new byte[10];
+        byte[] b = new byte[10];
+        System.arraycopy(a, 0, b, 0, 10);
+        a = null;
+        b = null;
     }
 }

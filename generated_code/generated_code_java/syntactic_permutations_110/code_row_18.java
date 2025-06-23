@@ -1,11 +1,10 @@
-package com.jashanjotsingh.code;
-import java.lang.*;
-public class CommandStatus{
-    public static void main(String[] args) {
-        String userName = args[0];
-        ProcessBuilder pb = new ProcessBuilder("id", userName);
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-        System.out.println(exitCode);
+import java.io.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        String username = args[0];
+        Process process = Runtime.getRuntime().exec("id " + username);
+        int exitStatus = process.waitFor();
+        System.out.println(exitStatus);
     }
 }

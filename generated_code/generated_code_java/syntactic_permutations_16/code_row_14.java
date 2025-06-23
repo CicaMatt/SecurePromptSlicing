@@ -1,12 +1,10 @@
-import java.util.*;
-public class ArrayIndex{
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = scan.nextInt();
-        int[] nums = new int[n];
-        for (int i=0;i<nums.length;i++){
-            nums[i]=scan.nextInt();
-        }
-        System.out.println(nums[n-1]);
+public class ReturnArrayValue {
+     public static void main(String[] args) {
+        int[] numbers = new int[]{1, 2, 3, 4, 5};
+        System.out.println(returnArrayValue(numbers, 0));
+    }
+
+    private static int returnArrayValue(int[] numbers, int index) {
+        return numbers[index];
     }
 }

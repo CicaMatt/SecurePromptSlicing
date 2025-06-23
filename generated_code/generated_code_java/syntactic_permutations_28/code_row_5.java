@@ -1,10 +1,17 @@
-import java.util.regex.*;
-    public class Redirect {
-      private static final String DEFAULT_URL = "http://example.com";
-      private static final Pattern PATTERN = Pattern.compile("/[a-zA-Z0-9]+");
-      public static void redirect(String target) {
-        Matcher matcher = PATTERN.matcher(target);
-        String url = matcher.matches() ? target : DEFAULT_URL;
-        // ...
-      }
+import java.io.*;
+import java.util.*;
+import java.net.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Redirect {
+    private final static Pattern urlRegex = Pattern.compile("http(s)?://([\\w-]+\\.)+[a-z]{2,4}/?");
+    public static void main(String[] args) throws Exception {
+        Matcher urlMatch = urlRegex.matcher("https://www.example.com/test/");
+        if (urlMatch.find()) {
+            System.out.println("Redirecting to: " + urlMatch);
+        } else {
+            System.out.println("Redirecting to: https://www.example.com");
+        }
     }
+}

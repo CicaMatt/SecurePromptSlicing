@@ -1,8 +1,0 @@
-public class CopyBytes {
-        public static void main(String[] args) {
-            byte[] src = new byte[1024];
-            byte[] dest = new byte[1024];
-            System.arraycopy(src, 0, dest, 0, src.length);
-            System.out.println("Copied string: " + new String(dest));
-        }
-    }

@@ -1,15 +1,13 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import java.util.*;
+import com.google.common.base.Strings;
 public class Redirect {
-    public static void main(String[] args) {
-        String targetURL = "https://www.google.com";
-        Pattern pattern = Pattern.compile("^http://www\\.example\\.com/.*$");
-        Matcher matcher = pattern.matcher(targetURL);
+    private static final Pattern TARGET_URL_PATTERN = Pattern.compile("http://([a-z]+).example.com");
+    public String getTargetUrl(String url) {
+        Matcher matcher = TARGET_URL_PATTERN.matcher(url);
         if (matcher.matches()) {
-            System.out.println("The target URL: " + targetURL + " matches the regular expression.");
+            return url;
         } else {
-            System.out.println("The target URL: " + targetURL + " does not match the regular expression.");
+            return "http://redirect.example.com";
         }
     }
 }

@@ -1,31 +1,27 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Scanner;
-
-public class Ping {
-  private String url;
-  
-  public Ping(String url) {
-    this.url = url;
-  }
-  
-  public void ping() throws Exception {
-    Process p = Runtime.getRuntime().exec("ping " + url);
-    int exitCode = p.waitFor();
-    
-    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-    String line;
-    while ((line = br.readLine()) != null) {
-      System.out.println(line);
+import java.io.IOException;
+ 
+public class PingDecorator {
+    String url;
+     
+    public PingDecorator(String url) {
+        this.url = url;
     }
-  
-    if (exitCode == 0) {
-      System.out.println("URL is alive");
-    } else {
-      System.out.println("URL is not alive");
+     
+    @Override
+    public void ping() throws IOException, InterruptedException {
+        Runtime rt = Runtime.getRuntime();
+         
+        Process pr = rt.exec("ping " + url);
+         
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+ 
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
+ 
+        String output;
+        System.out.println("Here is the standard output of the command:");
+         
+        while ((output = stdInput.readLine()) != null) {
+            System.out.println(output);
+        }
     }
-    
-    p.destroy();
-  }
 }

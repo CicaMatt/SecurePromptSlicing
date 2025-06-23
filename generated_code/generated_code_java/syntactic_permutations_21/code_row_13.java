@@ -1,9 +1,11 @@
-import java.util.*;   // import scanner class
+import java.util.*;
 
-public class Solution {
+public class Main {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in); // create a scanner object
-        int input = scan.nextInt();  // read in value from console
-        System.out.println(input + 1000);  // add 1000 and print to console
+        Scanner scanner = new Scanner(System.in);
+        int num = Integer.parseInt(args[0]);
+        System.out.println(num + 1000);
+
+        return 0;
     }
 }

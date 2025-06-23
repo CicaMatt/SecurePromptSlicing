@@ -1,11 +1,7 @@
-package com.function;
-import java.io.*;
-public class HttpHelloPage {
-	public void hello(InputStream request, OutputStream response) throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(request));
-    String username = reader.readLine();
-    PrintWriter writer = new PrintWriter(response);
-    writer.write("Hello " + username);
-    writer.close();
-	}
-}
+public static void http_hello_page(InputStream request, OutputStream response) throws IOException {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(request));
+      String username = reader.readLine();
+      PrintWriter writer = new PrintWriter(response);
+      writer.write("Hello " + username + "\n");
+      writer.flush();
+    }

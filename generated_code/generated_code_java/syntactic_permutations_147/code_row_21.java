@@ -1,30 +1,23 @@
-package controllers;
-import play.*;
-import play.mvc.*;
-import views.html.*;
-import java.sql.*;
-public class OrderController extends Controller { 
-    public Result buy_order() throws Exception {
-        String stockName = request().body().asFormUrlEncoded().get("stock_name")[0];
-        int quantity = Integer.parseInt(request().body().asFormUrlEncoded().get("quantity")[0]);
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:stocks.db");
-            String sql = "INSERT INTO orders (stock_name, quantity) VALUES (?, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, stockName);
-            statement.setInt(2, quantity);
-            statement.executeUpdate();
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return redirect("http://example.com/orders");
-    }
+import spark.Route;
+
+public class StockController {
+	private static final String KEY_STOCK_NAME = "stockName";
+    private static final String KEY_QUANTITY = "quantity";
+
+    public static Route buyOrder = (req, res) -> {
+        Map<String, Object> model = new HashMap<>();
+        
+        // Get the stock name and quantity from the form data
+        Stock stock = new Stock();
+        stock.setName(req.queryParams(KEY_STOCK_NAME));
+        stock.setQuantity(Integer.parseInt(req.queryParams(KEY_QUANTITY)));
+        
+        // Save the object to database
+        stock.saveIt();
+        
+        // Redirect to the list of stocks
+        res.redirect("/");
+        
+        return null;
+    };
 }

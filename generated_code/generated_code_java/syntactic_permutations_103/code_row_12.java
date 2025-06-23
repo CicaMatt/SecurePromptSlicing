@@ -1,14 +1,11 @@
 import java.io.*;
-public class Main {
-    public static void main(String[] args) {
-        try{
-            FileOutputStream fo = new FileOutputStream("file.txt",true);
-            OutputStreamWriter ow = new OutputStreamWriter(fo);
-            BufferedWriter bw = new BufferedWriter(ow);
-            bw.write("Hello World");
-            bw.close();
-        } catch (IOException e){
-            System.out.println("Error: "+e.getMessage());
+
+public class OpenFile {
+    public static void main(String[] args) throws Exception {
+        int fd = open("example.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (fd == -1) {
+            System.out.println("Error: File not opened");
+            return;
         }
     }
 }

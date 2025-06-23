@@ -1,38 +1,38 @@
-import java.util.*;
-import java.io.*;
-
-public class LoginPage {
-    public static void main(String[] args) throws Exception{
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter Username");
-        String username =sc.nextLine();
-        System.out.println("Enter Password");
-        String password =sc.nextLine();
-        if (login(username,password)) {
-            System.out.println("Logged in successfully");
+package com.mycompany;
+import java.sql.*;
+import javax.servlet.http.*;
+public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (login(username, password)) {
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/home.jsp");
+            rd.forward(request, response);
         } else {
-            return;
+            out.println("<h1>Invalid username or password.</h1>");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+            rd.include(request, response);
         }
     }
-
     public static boolean login(String username, String password) {
-        //TODO: query the database to check if username exists 
-        if (usernameExists(username)) {
-            System.out.println("Username exists");
-            //check if password is correct and return true else false
-            return passwordIsCorrect(password);
-        } else {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "password");
+            PreparedStatement ps = con.prepareStatement("select * from users where username=? and password=?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
             return false;
         }
-    }
-
-    public static boolean usernameExists(String username) {
-        //TODO: query the database to check if username exists
-        return true;
-    }
-
-    public static boolean passwordIsCorrect(String password) {
-        //TODO: query the database to check if password is correct and return true else false
-        return true;
     }
 }

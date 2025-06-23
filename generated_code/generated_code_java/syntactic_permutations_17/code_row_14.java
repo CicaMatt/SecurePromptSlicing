@@ -1,16 +1,22 @@
-import java.util.*;  
-public class Main {
-  public static void main(String[] args){
-    Scanner sc = new Scanner (System.in);
-    System.out.println("Enter a number");
-    int n = sc.nextInt();
-    
-    ArrayList<Integer> arr1=new ArrayList<Integer>();
-    for(int i=0;i<n;i++) {
-      arr1.add(sc.nextInt());
+public class Array {
+
+        public static void main(String[] args) {
+            Scanner scan = new Scanner(System.in);
+
+            int num;
+            System.out.print("Enter the number of elements in array : ");
+            num = scan.nextInt();
+
+            // Creating an array to hold 'num' elements
+            int arr[] = new int[num];
+
+            // Loop to get the value from user
+            for (int i = 0; i < num; i++) {
+                System.out.print("Enter number at index " + i);
+                arr[i] = scan.nextInt();
+            }
+
+            int index = scan.nextInt();
+            System.out.println(arr[index]);
+        }
     }
-     System.out.println("Enter index: ");
-    int index = sc.nextInt();
-    System.out.println(arr1.get(index));
-  }
-}

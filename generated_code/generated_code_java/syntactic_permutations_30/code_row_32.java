@@ -1,12 +1,10 @@
 import java.util.*;
-    public class HelloWorld {
-        public static void main(String[] args) {
-            String regex = "^[a-zA-Z0-9\\-]+\\.";
-            String target = args[0];
-            if (target.matches(regex)) {
-                System.out.println("Redirect to " + target);
-            } else {
-                System.out.println("Redirect to index");
-            }
-        }
-    }
+
+public class HelloWorld{
+
+     public static void main(String []args){
+        Scanner sc=new Scanner(System.in);
+        String name=sc.nextLine();
+        System.out.println("Hello World");
+      }
+}

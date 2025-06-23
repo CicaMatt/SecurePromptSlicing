@@ -1,15 +1,28 @@
-import java.io.*;
-import java.util.*;
-
-class check_mod {
-     public static void main(String[] args) throws Exception {
-        Scanner scan = new Scanner(System.in);
-         String a = scan.next();
-         String b = "9";
-         int mod = Integer.parseInt(a) % Integer.parseInt(b);
-         if (mod == 0) {
-             System.out.println("true");
-        } else {
-            System.out.println("false");
+import java.io.*; 
+    import javax.servlet.*; 
+    import javax.servlet.http.*; 
+
+    public class check_mod extends HttpServlet { 
+      public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+        response.setContentType("text/plain"); 
+        PrintWriter out = response.getWriter(); 
+
+        String are = request.getParameter("a"); 
+        String bre = request.getParameter("b"); 
+        int a, b; 
+
+        try { 
+          a = Integer.parseInt(are); 
+          b = Integer.parseInt(bre); 
+        } catch (NumberFormatException e) { 
+          out.print("false"); 
+          return; 
+        } 
+
+        if (a % b == 0) { 
+          out.print("true"); 
+        } else { 
+          out.print("false"); 
+        } 
+      } 
     }
-}

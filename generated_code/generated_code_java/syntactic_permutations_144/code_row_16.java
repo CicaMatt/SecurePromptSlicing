@@ -1,32 +1,29 @@
-import java.io.IOException;
-    import java.net.HttpURLConnection;
-    import java.net.URL;
+import java.lang.Math;
     
-    public class EmailChecker {
-        private static final String emailUrl = "http://example.com/email";
+    public class EmailCheck {
+        private boolean exists(String email) {
+            // Implement checking if the email already exists in the database.
+            return false;
+        }
+        
+        private int unsubscribeEmail(String email) {
+            // Implement the script that unsubscribes the email.
+            return 0;
+        }
     
-        public int checkEmail(String email) throws IOException {
-            if (existsInDatabase(email)) {
-                return unsubscribeFromMailingList(email);
-            } else {
+        public int checkEmail(String email) {
+            if (!exists(email)) {
                 return 0;
+            } else {
+                if (unsubscribeEmail(email) == 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
         }
     
-        private boolean existsInDatabase(String email) {
-            // Check if the email exists in the database.
-            throw new UnsupportedOperationException("Not implemented yet.");
-        }
-    
-        private int unsubscribeFromMailingList(String email) throws IOException {
-            URL url = new URL(emailUrl + "/" + email);
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            int responseCode = httpConn.getResponseCode();
-    
-            if (responseCode == 200) {
-                return 1;
-            } else {
-                return 0;
-            }
+        public static void main(String[] args) {
+            System.out.println(new EmailCheck().checkEmail("test@example.com"));
         }
     }

@@ -1,20 +1,17 @@
-import java.io.*;
-
-public class CheckMod {
-
-    public static void check_mod(String username, String password, String session) {
-        if (auth_mod(username, password)) {
-            System.out.println("You are a moderator!");
-        } else {
-            System.out.println("You are not a moderator.");
-        }
-    }
-    
-    public static boolean auth_mod(String username, String password) {
-        if (username.equals("admin") && password.equals("password")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class check_mod extends HttpServlet{
+  public void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException {
+   String username=request.getParameter("username");
+   String password=request.getParameter("password");
+   String session=request.getParameter("session");
+    boolean auth_mod=auth_mod(username, password, session);
+    if (auth_mod==true) {
+      response.getWriter().println("You are a moderator.");
+    }
+    else{
+      response.getWriter().println("You are not a moderator.");
+    }
+  }
 }

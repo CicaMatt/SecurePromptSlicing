@@ -1,19 +1,15 @@
-import java.net.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class RegexRedirect {
-   private static final Pattern targetUrlPattern = Pattern.compile("^https://example\\.(com|org)/path/to/resource$");
-   private static final String defaultRedirectUrl = "https://www.example.net";
-
-   public static void main(String[] args) throws MalformedURLException {
-      URL targetUrl = new URL("https://example.com/path/to/resource");
-      URL redirectUrl = getRedirectUrl(targetUrl);
-      System.out.println(redirectUrl);
-   }
-
-   public static URL getRedirectUrl(URL targetUrl) {
-      Matcher matcher = targetUrlPattern.matcher(targetUrl.toString());
-      return (matcher.matches()) ? new URL(targetUrl) : new URL(defaultRedirectUrl);
-   }
-}
+import java.util.regex.*;
+    
+    public class RegexRedirect {
+        private static final String DEFAULT_URL = "http://example.com";
+        private static final Pattern PATTERN = Pattern.compile("^/target-([0-9]+)$"); // compile the pattern once
+    
+        public static String redirect(String targetUrl) {
+            Matcher matcher = PATTERN.matcher(targetUrl); // create a new Matcher object
+            if (matcher.matches()) { // test whether the input matches the pattern
+                return "http://example.com/redirect/" + matcher.group(1); // extract the number from the URL and use it in the redirect target
+            } else {
+                return DEFAULT_URL;
+            }
+        }
+    }

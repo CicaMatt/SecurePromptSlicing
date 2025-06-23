@@ -1,12 +1,12 @@
-import os
-import jinja2
-
-def render_response_from_env(env):
-  request = Request()
-  name = request.get('name')
-  template = env.get_template('template1.html')
-  return Response(template.render(name=name))
-
-def home():
-  env = Environment()
-  return render_response_from_env(env)
+import jinja2
+
+def render_response_from_env(env):
+    request = {"name": "John"}
+    template = env.get_template("mytemplate.html")
+    rendered_template = template.render(request)
+    response = Response(rendered_template)
+    return response
+
+def home(env):
+    response = render_response_from_env(env)
+    return response

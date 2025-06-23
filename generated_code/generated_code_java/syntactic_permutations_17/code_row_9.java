@@ -1,11 +1,9 @@
-package java_array;
-
-import java.lang.reflect.Array;
-
+import java.lang.ArrayIndexOutOfBoundsException;
 public class ArrayAccess {
-    public static void main(String[] args) {
-        int[] nums = new int[]{1, 2, 3, 4, 5};
-        System.out.println(nums[0]); // prints "1"
-        System.out.println(nums[2]); // prints "3"
+    public static int getValue(int[] array, int index) throws ArrayIndexOutOfBoundsException {
+        if (index < 0 || index >= array.length) {
+            throw new ArrayIndexOutOfBoundsException("Index out of bound.");
+        }
+        return array[index];
     }
 }

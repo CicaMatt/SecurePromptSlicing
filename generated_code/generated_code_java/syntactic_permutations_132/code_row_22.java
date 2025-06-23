@@ -1,11 +1,12 @@
-import jinja2
-    from flask import Flask, render_template
-
-    app = Flask(__name__)
-
-    @app.route("/hello/<username>")
-    def hello(username):
-        return render_template("hello.html", username=username)
-
-    if __name__ == "__main__":
-        app.run()
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Hello extends HttpServlet{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        PrintWriter out = response.getWriter();
+        String username = request.getParameter("username");
+        RequestDispatcher view = request.getRequestDispatcher("hello.html");
+        view.forward(request,response);
+    }
+}

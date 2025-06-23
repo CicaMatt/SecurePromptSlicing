@@ -1,26 +1,30 @@
-import java.io.*;
+package com.mycompany;
+
+import java.net.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "MyServlet", urlPatterns = "/my-url")
+@WebServlet(name = "MyServlet", value = "/my-servlet")
 public class MyServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/plain");
-        
-        String urlParam = request.getParameter("url");
-        if (redirect_invalid_url(response, urlParam)) return;
-        
-        // Continue processing the URL as needed...
-    }
-    
-    private boolean redirect_invalid_url(HttpServletResponse response, String url) throws IOException {
-        if (!url.startsWith("http://example.com/")) {
-            response.setStatus(400);
-            response.getWriter().println("Invalid URL: " + url);
-            return true;
+        String urlString = request.getParameter("url");
+        URL url;
+        try {
+            url = new URL(urlString);
+            if (redirect_invalid_url(response, url)) return;
+            // do other stuff
+        } catch (MalformedURLException e) {
+            response.sendError(400, "Invalid URL");
+            return;
         }
-        return false;
+    }
+
+    private boolean redirect_invalid_url(HttpServletResponse response, URL url) throws IOException {
+        if (!url.getHost().equals("example.com")) {
+            response.sendError(403, "You cannot access that domain");
+            return true;
+        } else {
+            return false;
+        }
     }
 }

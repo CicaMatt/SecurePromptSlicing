@@ -1,16 +1,9 @@
-import java.io.File;  
-import java.io.FileNotFoundException;  
-import java.io.PrintWriter;  
-  
-public class App {  
- public static void main(String[] args) {  
-    try {  
-        File file = new File("important_config");  
-        PrintWriter writer = new PrintWriter(file);  
-        writer.print("important_config");  
-        writer.close();  
-    } catch (FileNotFoundException e) {  
-        e.printStackTrace();  
-    }  
-  }  
-}
+import java.io.*;
+    public class WriteToFile {
+        public static void main(String[] args) throws IOException {
+            String str = "important_config";
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                  new FileOutputStream("important_config"), "utf-8"))) {
+                writer.write(str);
+        }
+    }}

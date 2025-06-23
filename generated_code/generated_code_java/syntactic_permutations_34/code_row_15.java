@@ -1,33 +1,24 @@
-package com;
+package com.assignment;
 
-import java.util.*;
+    import java.util.*;
+    import java.io.*;
+    import java.net.*;
 
-public class Login {
-   public static void main(String[] args) {
-      Scanner scanner = new Scanner(System.in);
-      System.out.println("Enter username");
-      String userName = scanner.nextLine();
-      System.out.println("Enter password");
-      String passWord = scanner.nextLine();
-      
-      if (validateUser(userName,passWord)) {
-         redirectToDashboard();
-      } else {
-         redirectBackToLoginPage();
-      }
-   }
-   
-   public static boolean validateUser(String userName, String passWord) {
-      // Check in database
-      return false;
-   }
-   
-   public static void redirectToDashboard() {
-      System.out.println("Redirecting to dashboard page");
-      
-   }
-   
-   public static void redirectBackToLoginPage() {
-      System.out.println("Redirecting back to login page");
-   }
-}
+    public class Login {
+    
+        public static void main(String[] args){
+            String username = "admin";
+            String password = "password";
+            
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter Username: ");
+            String inputUsername = scanner.nextLine();
+            System.out.println("Enter Password: ");
+            String inputPassword = scanner.nextLine();
+            if (inputUsername.equals(username) && inputPassword.equals(password)) {
+                System.out.println("Logged in");
+            } else {
+                System.out.println("Invalid Credentials");
+            }
+        }
+    }

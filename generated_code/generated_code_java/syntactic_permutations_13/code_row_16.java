@@ -1,13 +1,11 @@
-import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int idx = sc.nextInt();
-        String [] arr = new String[]{"a", "b", "c"};
-        System.out.println(getValue(arr, idx));
-    }
-    
-    public static String getValue(String [] arr, int idx) {
-        return arr[idx];
-    }
+import java.util.Scanner;
+
+public class IndexValue {
+  public static void main(String[] args) {
+    int[] array = new int[]{1,2,3,4,5};
+    Scanner input = new Scanner(System.in);
+    System.out.print("Enter the index: ");
+    int index = input.nextInt();
+    System.out.println("Value at " + index + " is : " + array[index]);
+  }
 }

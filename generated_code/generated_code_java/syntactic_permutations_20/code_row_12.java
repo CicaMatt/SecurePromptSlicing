@@ -1,9 +1,9 @@
-import java.util.*;
-
-public class Code {
-    public static void main(String[] args) {
-        int x = Integer.parseInt(args[0]);
-        int y = 10;
-        System.out.println(x + y);
+import java.util.Scanner;
+    
+    public class Main {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int a = sc.nextInt();
+            System.out.println("Value from the command line " + (a + 10));
+        }
     }
-}

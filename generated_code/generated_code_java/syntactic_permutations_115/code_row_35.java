@@ -1,17 +1,16 @@
-import java.io.*;
-public class ExecuteCommand {
-    public static void main(String[] args) throws IOException {
-        String command = "ls";
-        executeCommand(command);
-    }
-    
-    public static void executeCommand(String command) throws IOException {
-        Process process = Runtime.getRuntime().exec(command);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-        
-    }
+import java.util.*;
+public class TestClass {
+    public static void main(String[] args) {
+        String s = "ls -l"; 
+        print(s);
+        executeCommand(s);
+    }
+    public static void executeCommand(String command){
+        Process p = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
 }

@@ -1,14 +1,19 @@
 import java.util.*;
-class Main {
-  public static void main(String[] args) {
-    int[] id_sequence = {1,2,3};
-    Scanner sc= new Scanner(System.in);
-     System.out.println("Enter the index value");
-    int input =sc.nextInt();
-    if (input<id_sequence.length && input>-1) {
-      System.out.println(id_sequence[input]);
-    } else{
-      System.out.println("Invalid index");
+
+    public class ReturnValue {
+        private static int[] id_sequence = { 0, 101, 203, 307, 458 };
+
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+
+            System.out.println("Please enter an index value: ");
+            int index = input.nextInt();
+            input.close();
+
+            if (index < id_sequence.length && index >= 0) {
+                System.out.println(id_sequence[index]);
+            } else {
+                System.out.println("Error: Invalid index");
+            }
+        }
     }
-  }
-}

@@ -1,19 +1,19 @@
 import java.sql.*;
-
-public class UsernameExists {
-    public static boolean executeQuery(String username) throws SQLException {
-        String query = "SELECT * FROM users WHERE username=?";
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost/users_database", "root", "password");
-
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, username);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
+public boolean isUsernameExist(String username){
+    String sql = "SELECT * FROM USERS WHERE username = ?";
+    Connection conn = null;
+    try {
+      conn = getConnection();
+      PreparedStatement ps= conn.prepareStatement(sql);
+      ps.setString(1,username);
+      ResultSet rs=ps.executeQuery();
+      if (rs.next())
             return true;
-        } else {
+        else
             return false;
-        }
+    } catch (SQLException e) {
+          // handle exception here
+          System.out.println("Error in isUsernameExist(): " + e);
+          return false;
     }
 }

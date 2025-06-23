@@ -1,17 +1,15 @@
 import java.util.*;
-
-public class ChunkCopy {
+public class Solution {
     public static void main(String[] args) {
-        byte[] bytes = new byte[10];
-        byte[] copyBytes = new byte[10];
-        for (int i = 0; i < bytes.length; i++) {
-            bytes[i] = (byte) i;
+        int size = 5;
+        Integer[] memory1 = new Integer[size];
+        for (int i = 0; i < size; ++i) {
+            memory1[i] = i * 2;
         }
-
-        System.arraycopy(bytes, 0, copyBytes, 0, bytes.length);
-
-        for (int i = 0; i < copyBytes.length; i++) {
-            System.out.println("copyBytes[" + i + "] = " + copyBytes[i]);
+        Integer[] memory2 = new Integer[size];
+        System.arraycopy(memory1, 0, memory2, 0, size);
+        for (int i : memory2) {
+            System.out.print(i + " ");
         }
     }
 }

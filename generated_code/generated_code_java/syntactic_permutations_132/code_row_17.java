@@ -1,12 +1,13 @@
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-public class HelloWorldDecorator{
-  @RequestMapping("/hello/{username}")
-  public ModelAndView hello(@PathVariable String username) {
-    return new ModelAndView("hello", "user", username);
-  }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class HelloDecorator implements Filter {
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    HttpServletRequest request = (HttpServletRequest)req;
+    HttpServletResponse response = (HttpServletResponse)res;
+    String username = request.getParameter("username");
+    RequestDispatcher dispatcher = req.getRequestDispatcher("/hello.html");
+    dispatcher.forward(request, response);
+  }
 }

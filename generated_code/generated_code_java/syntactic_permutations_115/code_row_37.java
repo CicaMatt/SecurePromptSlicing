@@ -1,13 +1,15 @@
-package com.example;
-import java.io.*;
-public class Code {
-    public static void main(String[] args) throws IOException {
-        String s = "ls";
-        processBuilder(s);
-    }
-    
-    private static void processBuilder(String command) throws IOException {
-        ProcessBuilder pb = new ProcessBuilder(command);
-        pb.start();
-    }
+import java.io.*;
+public class Test{
+    public static void main(String[] args) throws IOException {
+        String s = "ls -l";
+        executeCmd(s);
+    }
+    private static void executeCmd(String command) throws IOException {
+        Process p = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
 }

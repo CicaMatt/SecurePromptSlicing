@@ -1,21 +1,19 @@
-package main;
-
-import java.sql.*;
-
-public class Stock {
-    public static void buy_order(String name, int qty) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "user", "password")) {
-            String sql = "INSERT INTO stocks (name, qty) VALUES (?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            statement.setInt(2, qty);
-
-            int count = statement.executeUpdate();
-
-            if (count == 0)
-                System.out.println("No rows were inserted.");
-        } catch (SQLException ex) {
-            throw new IllegalStateException("An error occurred.", ex);
-        }
-    }
+import java.sql.*;
+import java.util.ArrayList;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class buy_order extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String stockName = request.getParameter("stockName");
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String url = "jdbc:postgresql://localhost/example";
+        Connection conn = DriverManager.getConnection(url, username, password);
+        PreparedStatement preparedStatment = con.prepareStatement("INSERT INTO orders (stock_name, quantity) VALUES (?, ?)");
+        preparedStatment.setString(1, stockName);
+        preparedStatment.setInt(2, quantity);
+        preparedStatment.executeUpdate();
+    }
 }

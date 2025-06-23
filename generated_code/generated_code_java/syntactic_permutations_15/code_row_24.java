@@ -1,12 +1,14 @@
-import java.util.*;
+import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) {
-        int[] id_sequence = new int[]{1, 2, 3, 4, 5};
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter index value");
-        int index = scanner.nextInt();
-        int result = id_sequence[index];
-        System.out.print("Value at given index is ");
-        System.out.println(result);
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int[] id_sequence = {1,2,3,4,5};
+    System.out.print("Enter index value: ");
+    int index = sc.nextInt();
+    if (index >= 0 && index < id_sequence.length) {
+      System.out.println(id_sequence[index]);
+    } else {
+      System.out.println("Index out of bounds!");
     }
+  }
 }

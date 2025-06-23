@@ -1,27 +1,54 @@
-import java.sql.*;
-
-public class BuyStock {
-    public static void main(String[] args) {
-        // TODO: Call buy_stock() with the form input as arguments.
-        buy_stock();
-        System.out.println("You have bought " + quantity + " stock(s).");
-    }
-
-    // Implement buy_function() to insert into a database
-    public static void buy_function(String quantity) {
-        try {
-            String url = "jdbc:postgresql://localhost/stock";
-            Connection con = DriverManager.getConnection(url, "postgres", "password");
-
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("INSERT INTO stock (quantity) VALUES ('" + quantity + "')");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public static void buy_stock() {
-        // TODO: Call buy_function()
-        buy_function(quantity);
-    }
-}
+import java.io.*;
+    import javax.servlet.*;
+    import javax.servlet.http.*;
+    import java.sql.*;
+    
+    public class BuyStock extends HttpServlet {
+        private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        private static final String DB_URL = "jdbc:mysql://localhost/buystock";
+        private static final String USER = "root";
+        private static final String PASS = "";
+    
+        public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            try {
+                Class.forName(JDBC_DRIVER);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+    
+            String quantity = request.getParameter("quantity");
+            Connection conn = null;
+            Statement stmt = null;
+    
+            try {
+                conn = DriverManager.getConnection(DB_URL, USER, PASS);
+                stmt = conn.createStatement();
+                String sql = "INSERT INTO buy (quantity) VALUES (" + quantity + ")";
+                stmt.executeUpdate(sql);
+    
+                buy_function(quantity);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                if (stmt != null) {
+                    try {
+                        stmt.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+    
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    
+        public static void buy_function(String quantity) {
+            // Function body goes here
+        }
+    }

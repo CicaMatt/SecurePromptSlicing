@@ -1,16 +1,12 @@
 import java.io.*;
 
 public class Main {
-    
-    public static void main(String args[]){
-        try {
-            String filename = "important_config";
-            FileWriter file = new FileWriter("filename");
-            file.write("important_config");
-            file.close();
-            
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+	public static void main(String[] args) {
+		try {
+			FileWriter f = new FileWriter("important_config",true);
+			f.write("important_config");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

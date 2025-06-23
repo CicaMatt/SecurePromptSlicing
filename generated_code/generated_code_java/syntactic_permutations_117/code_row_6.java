@@ -1,9 +1,11 @@
 import java.util.*;
-
-class Main {
+public class Main {
     public static void main(String[] args) {
-        String str_a = Integer.toString(12);
-        String str_b = Integer.toString(15);
-        String str_c = Integer.toString(93);
+        int a = 123;
+        double b = 456.789;
+        boolean c = true;
+        String str_a = String.valueOf(a);
+        String str_b = String.valueOf(b);
+        String str_c = String.valueOf(c);
     }
 }

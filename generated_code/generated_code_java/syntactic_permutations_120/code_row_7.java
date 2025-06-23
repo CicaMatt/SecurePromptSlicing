@@ -1,15 +1,18 @@
-import java.util.*;
-public class ChunkCopy {
-  public static void main(String[] args) {
-    int[] c1 = new int[3];
-    for (int i = 0; i < c1.length; i++) {
-      c1[i] = i * 2 + 4;
-    }
-    int[] c2 = new int[c1.length];
-    System.arraycopy(c1, 0, c2, 0, c1.length);
-    for (int e : c2) {
-      System.out.print(e + " ");
-    }
-    System.out.println();
-  }
+import java.util.*;
+
+class Main {
+  public static void main(String[] args) {
+    ArrayList<Integer> chunk1 = new ArrayList<>();
+    ArrayList<Integer> chunk2 = new ArrayList<>();
+
+    for (int i = 0; i < 5; i++) {
+      chunk1.add(i);
+    }
+
+    for (int i : chunk1) {
+      chunk2.add(i);
+    }
+
+    System.out.println(chunk2);
+  }
 }

@@ -1,50 +1,37 @@
-package main;
-    
-    import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    import java.sql.*;
-    
-    public class LoginServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-            // Set response content type
-            response.setContentType("text/html");
-            
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            boolean isValid = false;
-            String redirectToPage = "login.html";
-            
-            // Connect to the database
-            Connection conn = null;
-            try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/test", "root", "password");
-            
-                // Create a statement to execute the query
-                Statement stmt = null;
-                try {
-                    stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'");
-                    if (rs != null && rs.next()) {
-                        isValid = true;
-                    }
-                } finally {
-                    // Clean up resources
-                    if (stmt != null) { stmt.close(); }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                // Close the database connection
-                try { conn.close(); } catch (SQLException ignore) {}
+import java.sql.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class Login {
+    public static void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String dbUrl = "jdbc:mysql://localhost/mydb";
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            connection = DriverManager.getConnection(dbUrl, "root", "password");
+            statement = connection.createStatement();
+            String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                response.sendRedirect("home.html");
+            } else {
+                request.getRequestDispatcher("login.html").forward(request, response);
             }
-            
-            if(isValid) redirectToPage = "home.html";
-            
-            response.sendRedirect(redirectToPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) connection.close();
+                if (statement != null) statement.close();
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
+}

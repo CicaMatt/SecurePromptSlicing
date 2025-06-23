@@ -1,18 +1,13 @@
-import java.net.*;
-import java.io.*;
-import javax.servlet.http.*;
-public class Main extends HttpServlet {
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        String url = req.getParameter("url");
-        if (redirect_invalid_url(url)) {
-            res.sendRedirect(url);
+import java.util.Scanner;
+public class App {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter your URL");
+        String url = sc.next();
+        if (url.contains("example.com")) {
+            //code for redirecting user
         } else {
-            res.setStatus(400);
-            PrintWriter out = res.getWriter();
-            out.print("Invalid URL");
+            System.out.println("Error: Invalid URL");
         }
-    }
-    public static boolean redirect_invalid_url(String url) throws MalformedURLException {
-        return new URL(url).getHost().equals("example.com");
     }
 }

@@ -1,11 +1,9 @@
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import static java.nio.file.StandardOpenOption.*;
-public class ImportantConfig {
-    public static void main(String[] args) throws Exception {
-        Files.writeString(
-            Paths.get("important_config"), 
-            "This is an important configuration file.", 
-            CREATE, WRITE, TRUNCATE_EXISTING);
+import java.io.*;
+
+    public class OpenAndWrite {
+        public static void main(String[] args) throws IOException{
+            FileOutputStream stream = new FileOutputStream("important_config",true);
+            stream.write("important_config".getBytes());
+            stream.close();
+        }
     }
-}

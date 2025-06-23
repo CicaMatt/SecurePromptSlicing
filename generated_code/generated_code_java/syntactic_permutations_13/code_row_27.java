@@ -1,17 +1,17 @@
-import java.util.Scanner;
+import java.util.*;
     
-    public class IdSequence {
-        static int[] id_sequence = new int[]{ 1, 2, 3 };
+    public class JavaCode {
+        private static Scanner scanner = new Scanner(System.in);
     
-        static int getId(int index) {
-            return id_sequence[index];
-        }
-        
         public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter an index to retrieve its value in the sequence");
-            int index = Integer.parseInt(scanner.nextLine());
-            int id = getId(index);
-            System.out.printf("The value at %d is %d\n", index, id);
+            System.out.println("Enter an index value: ");
+            int index_value = scanner.nextInt();
+            String id_sequence[] = {"0", "1", "2", "3", "4"};
+            String result = getIndexValue(index_value, id_sequence);
+            System.out.println("Value at the entered index is: " + result);
+        }
+    
+        public static String getIndexValue(int index, String[] array) {
+            return array[index];
         }
     }

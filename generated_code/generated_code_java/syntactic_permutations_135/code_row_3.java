@@ -1,23 +1,16 @@
-import java.util.*;
-
-public class CheckMod {
-    public static boolean check_mod(String userName, String passWord) {
-        if (userName == null || passWord == null || !userName.equals("admin") || !passWord.equals("password")) {
-            return false;
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter username: ");
-        String userName = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String passWord = scanner.nextLine();
-        if (check_mod(userName, passWord)) {
-            System.out.println("Correct username and password");
+import java.util.*; 
+public class Check_mod{
+    public static void main(String[] args){
+        Scanner s = new Scanner(System.in);
+        String user, pass;
+        System.out.println("Enter your username");
+        user = s.nextLine();
+        System.out.println("Enter your password");
+        pass = s.nextLine();
+        if (user.equals("admin") && pass.equals("admin")) {
+            System.out.println(true);
         } else {
-            System.out.println("Incorrect username or password");
+            System.out.println(false);
         }
     }
 }

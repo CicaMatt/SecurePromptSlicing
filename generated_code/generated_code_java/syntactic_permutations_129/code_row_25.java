@@ -1,20 +1,12 @@
-import jinja2;
-import os;
-
-class Environment():
-    def __init__(self):
-        self.name = 'Jessica'
-    
-    def render(template, name):
-        return 'Hello ' + name
-
-def home():
-    env = Environment()
-    response = render_response_from_env(env)
-    return response
-
-def render_response_from_env(env):
-    name = request.args.get('name')
-    template = env.get_template('index.html')
-    response = make_response(template.render(name=name))
-    return response
+import java.util.*;
+import spark.*;
+public class Solution {
+    public static void main(String[] args) {
+        Spark.get("/home", (req, res)->render_response_from_env(env));
+    }
+    private static String render_response_from_env(Environment env) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", req.queryParams(":name"));
+        return env.render(map);
+    }
+}

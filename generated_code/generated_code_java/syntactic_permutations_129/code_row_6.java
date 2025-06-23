@@ -1,12 +1,18 @@
-import java.io.*;
+import java.util.*;
+import jinjava.*;
 
-public class Main {
-    public static String render_response_from_env(String name) {
-        return new Environment().getTemplate("hello.html").render(new ModelMap().addAttribute("name", name));
+public class RenderResponseFromEnv {
+    public static String renderResponseFromEnv(Environment env, HttpRequest request) {
+        Map<String, Object> context = new HashMap<>();
+        context.put("name", request.getParameter("name"));
+        Template template = env.getTemplate("hello.html");
+        String renderedTemplate = env.render(template, context);
+        return Response.ok(renderedTemplate).build();
     }
-    
-    public static Response home() {
-        return new Response(Response.OK).body(render_response_from_env("John"));
+
+    public static void home(Environment env) {
+        HttpRequest request = RequestFactory.create();
+        String response = renderResponseFromEnv(env, request);
+        System.out.println(response);
     }
-    
 }

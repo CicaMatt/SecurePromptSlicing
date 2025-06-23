@@ -1,10 +1,9 @@
-import os
-
+import jinja2
 def render_response_from_env(env):
-    name = request.args["name"]
-    template = env.get_template("index.html")
-    return Response(template.render(name=name), mimetype="text/html")
-
-@app.route("/", methods=["GET"])
+  name = request.args.get("name")
+  template = env.get_template("index.html")
+  rendered_template = template.render(name=name)
+  return Response(rendered_template, mimetype="text/html")
 def home():
-    return render_response_from_env(env)
+  response = render_response_from_env(env)
+  return response

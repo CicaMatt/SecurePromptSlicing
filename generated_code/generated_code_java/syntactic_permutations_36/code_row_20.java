@@ -1,79 +1,36 @@
-package com.company;
+import java.sql.\*;\
+import java.io.\*;
 
-    import java.sql.*;
-    import javax.swing.*;
-    import java.awt.*;
-    import java.awt.event.*;
-    
-    public class Login extends JFrame {
-        private static final long serialVersionUID = 1L;
-        private JTextField textFieldUsername;
-        private JPasswordField passwordField;
-        
-        /**
-         * Launch the application.
-         */
-        public static void main(String[] args) {
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Login frame = new Login();
-                        frame.setVisible(true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-    
-        /**
-         * Create the frame.
-         */
-        public Login() {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-    
-            JLabel lblUsername = new JLabel("Username");
-            textFieldUsername = new JTextField();
-    
-            JLabel lblPassword = new JLabel("Password");
-            passwordField = new JPasswordField();
-    
-            JButton btnLogin = new JButton("Login");
-            getContentPane().add(lblUsername);
-            getContentPane().add(textFieldUsername);
-            getContentPane().add(lblPassword);
-            getContentPane().add(passwordField);
-            getContentPane().add(btnLogin);
-    
-            pack();
-    
-            btnLogin.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String username = textFieldUsername.getText();
-                    char[] password = passwordField.getPassword();
-        
-                    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/database", "root", "password");
-                            Statement stmt = conn.createStatement();) {
-                        String sql = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
-                        ResultSet rs = stmt.executeQuery(sql);
-        
-                        if (rs.next()) {
-                            JOptionPane.showMessageDialog(null, "Login successful");
-                            dispose();
-                            new HomePage().setVisible(true);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Invalid login");
-                        }
-        
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            });
-    
-        }
-    
+public class Login {
+    private Connection conn = null;
+    public static void main(String\[\] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter username:");
+        String username = scanner.nextLine();
+        System.out.println("Enter password:");
+        String password = scanner.nextLine();
+        login(username, password);
     }
+
+    public static void login(String username, String password) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase","root", "");
+            Statement statement = conn.createStatement();
+            ResultSet resultset = statement.executeQuery("select * from users where username = '"+username+"' and password = '"+password+"'");
+            if (resultset.next()) {
+                System.out.println("Login successful");
+            } else {
+                System.out.println("Login failed");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}

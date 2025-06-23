@@ -1,13 +1,15 @@
-import java.util.*;
-public class Solution{
-    public static void main(String[] args){
-        String username = args[0];
-        try {
-            Process process = Runtime.getRuntime().exec("id " + username);
-            int exitStatus = process.waitFor();
-            System.out.println(exitStatus);
-        } catch (Exception e) {
-            e.printStackTrace();
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) throws Exception {
+        System.out.println("Enter Username");
+        Scanner sc = new Scanner(System.in);
+        String username = sc.nextLine();
+        Process p1 = Runtime.getRuntime().exec("id " + username);
+        int exitStatus = p1.waitFor();
+        if (exitStatus == 0) {
+            System.out.println("Exist Status is " + exitStatus);
+        } else {
+            System.out.println("Failed");
         }
     }
 }

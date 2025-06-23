@@ -1,21 +1,15 @@
-import java.util.Random;
+import java.lang.Math;
 
-public class MonthlySales {
-    public static void main(String[] args) {
-        int total = 0;
-        
-        for(int i = 1; i <= 12; i++) {
-            int sales = getMonthlySales();
-            total += sales;
-            
-            System.out.println("Total sales for month " + i + " : " + sales);
+public class MonthlySales{
+    public static void main(String[] args){
+        int sum = 0;
+        for (int i=1 ;i<=12; i++){
+            sum += getMonthlySales();
         }
-        
-        System.out.println("\nTotal yearly sales: " + total);
+        System.out.print("The total sales is: " + sum);
     }
     
-    public static int getMonthlySales() {
-        Random rnd = new Random();
-        return rnd.nextInt(100000) * 12;
+    public static int getMonthlySales(){
+        return (int) Math.random() * 100000;
     }
 }

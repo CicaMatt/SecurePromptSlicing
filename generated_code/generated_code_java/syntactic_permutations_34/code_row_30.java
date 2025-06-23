@@ -1,33 +1,16 @@
-package com.example;
+<html>
+    <head>
+        <title>Login Page</title>
+    </head>
 
-    import java.util.*;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
-
-    public class LoginController {
-        private static Map<String, String> credentials = new HashMap<>();
-    
-        public static void init(Map<String, Object> ctx) {
-            if (!credentials.isEmpty()) return;
-            credentials.put("admin", "password");
-            credentials.put("user1", "password1");
-        }
+    <body>
+        <h1>Login</h1>
         
-        public static String login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            if (credentials.containsKey(username)) {
-                String actualPassword = credentials.get(username);
-                if (actualPassword != null && actualPassword.equals(password)) {
-                    request.setAttribute("user", username);
-                    return "dashboard";
-                }
-            }
-            return "login";
-        }
-    
-        public static String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-            request.getSession().invalidate();
-            return "login";
-        }
-    }
+        <form action="dashboard.jsp" method="post">
+            Username: <input type="text" name="username"><br/>
+            Password: <input type="password" name="password"><br/>
+            
+            <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>

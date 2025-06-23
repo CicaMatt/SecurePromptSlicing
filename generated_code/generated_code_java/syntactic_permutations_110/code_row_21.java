@@ -1,13 +1,13 @@
-package com.example;
-import java.io.*;
-import java.util.*;
-public class Main {
-    public static void main(String[] args) throws Exception{
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Id {
+    public static void main(String[] args) throws Exception {
         String username = args[0];
-        Process process = Runtime.getRuntime().exec("id " + username);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        Process p = Runtime.getRuntime().exec("id " + username);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
-        while((line = reader.readLine())!= null){
+        while ((line = in.readLine()) != null) {
             System.out.println(line);
         }
     }

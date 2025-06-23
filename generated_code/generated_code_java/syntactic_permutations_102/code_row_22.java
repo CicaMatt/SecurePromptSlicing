@@ -1,11 +1,10 @@
-import java.io.*;
-import static java.lang.System.out;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Main {
-   public static void main(String[] args) {
-      try (FileOutputStream stream = new FileOutputStream("important_config", FileOps.CREAT)) {
-         stream.write("important_config".getBytes());
-      } catch (IOException e) {
-         out.println("I/O error: " + e);
-      }
-   }
+  public static void main(String[] args) throws Exception {
+    Files.writeString(
+        Paths.get("important_config"), "important_config",
+        StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+  }
 }

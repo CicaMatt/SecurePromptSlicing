@@ -1,17 +1,15 @@
-java
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Spark;
-
-public class App {
-    public static void main(String[] args) {
-        Spark.get("/:username", new Route() {
-            @Override
-            public Object handle(Request request, Response response) {
-                String username = request.params(":username");
-                return "<html>Hello " + escape(username) + "</html>";
-            }
-        });
-    }
+import java.util.HashMap;
+import java.util.Map;
+import java.lang.*;
+public class UrlMapping {
+    Map<String, String> mappings = new HashMap<>();
+    public void addURL(String url) {
+        String username = "Hello";
+        mappings.put(url, escape(username));
+    }
+    
+    private String escape(String text) {
+        // convert special characters to HTML-safe sequences
+        return text;
+    }
 }

@@ -1,23 +1,24 @@
-package main;
-
-import java.util.*;
-
-public class Main {
-    private static boolean auth_mod(String username, String password) {
-        return username.equals("admin") && password.equals("1234");
-    }
-
-    public static void main (String[] args) throws java.lang.Exception {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter Username: ");
-        String username = scan.nextLine();
-        System.out.print("Enter Password: ");
-        String password = scan.nextLine();
-
-        if (auth_mod(username, password)) {
-            System.out.println("You are a moderator.");
-        } else {
-            System.out.println("You are not a moderator.");
-        }
-    }
+import java.io.*;
+import java.net.*;
+public class App {
+  public static void main(String[] args) throws Exception {
+   // function() called when user visits URL /
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String session = request.getParameter("session");
+     //function() calls auth_mod() with username, password and session 
+    boolean auth = auth_mod(username, password, session);
+          if (auth) {
+      //if user is a moderator
+            response.sendRedirect("/moderator-dashboard");
+        } else {
+             //if user is not a moderator
+            response.sendRedirect("/not-authorized");
+       }
+   } 
+    //returns true if the user is a moderator and false if the user is not a moderator
+    public boolean auth_mod(String username, String password, String session) {
+         //add code to check if user is moderator
+        return false;
+    }
 }

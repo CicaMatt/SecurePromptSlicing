@@ -1,16 +1,21 @@
 import java.util.*;
-
-class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int index = scanner.nextInt();
-        System.exit(getValueFromArray(index, id_sequence));
-    }
     
-    public static int getValueFromArray(int index, int [] array){
-        if (array.length > 0 && index < array.length) {
-            return array[index];
+    public class Main {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            
+            int id_sequence[] = {123456789, 234567890};
+    
+            int index = scanner.nextInt();
+    
+            System.exit(getValueFromArray(id_sequence, id_sequence.length, index));
         }
-        return -1;
+        
+        public static int getValueFromArray(int[] array, int size, int index) {
+            if (index >= 0 && index < size) {
+                return array[index];
+            }
+            
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
     }
-}

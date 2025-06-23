@@ -1,16 +1,20 @@
-package webapp;
-    import java.net.*;
-    import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    public class HelloWorld extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-            String target = req.getParameter("target");
-            if (target == null || !target.matches(".*example.com.*")){
-                res.sendRedirect("/");
-            }else{
-                res.sendRedirect(target);
-            }
+import spark.Route;
+import static spark.Spark.*;
+import java.util.regex.Pattern;
+public class Main {
+  public static void main(String[] args) {
+    get("/", new Route() {
+      @Override
+      public Object handle(Request request, Response response) throws Exception {
+        String target = request.queryParams("target");
+        Pattern pattern = Pattern.compile(".+\\.example\\.com.*");
+        if (pattern.matcher(target).find()) {
+          response.redirect(target);
+        } else {
+          response.redirect("/");
         }
-    }
+        return null;
+      }
+    });
+  }
+}

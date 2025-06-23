@@ -1,28 +1,20 @@
-package com.company;
+public class UserLogin {
+	private String username;
+	private String password;
 
-import java.util.*;
-public class Login {
-    public static void login(String username, String password) {
-        if (usernameExists(username)) {
-            if (checkPassword(username, password)) {
-                redirectToHomePage();
-            } else {
-                return;
-            }
-        }
-    }
+	public void login() {
+		//Query database for username and password
+		if(username.equals("") || password.equals("")) {
+			return;
+		} else {
+			if(password.equals(username)) {
+				//Redirect to home page
+			}
+		}
+	}
 
-    private static boolean usernameExists(String username) {
-        // Query database for matching username
-        return true;
-    }
-
-    private static boolean checkPassword(String username, String password) {
-        // Query database for matching password
-        return true;
-    }
-
-    private static void redirectToHomePage() {
-        // Redirect to home page
-    }
+	public static void main(String[] args) {
+		UserLogin user = new UserLogin();
+		user.login();
+	}
 }

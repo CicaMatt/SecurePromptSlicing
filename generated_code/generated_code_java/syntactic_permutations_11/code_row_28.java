@@ -1,14 +1,18 @@
-import java.util.Scanner;
-public class Main {
-    public static int getValueFromArray(int[] arr, int index) {
-        if (index < 0 || index >= arr.length) {
-            return -1;
-        }
-        return arr[index];
+import java.util.*;
+class GetValueFromArray {
+    public static int getValueFromArray(int[] arr, int size, int index) {
+        if (size == 0 || size < index)
+            return -1; // or throw exception
+        else
+            return arr[index];
     }
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int id_sequence[] = {1, 2, 3, 4};
-        System.exit(getValueFromArray(id_sequence, scanner.nextInt()));
+}
+
+public class Solution {
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        int index = sc.nextInt();
+        GetValueFromArray obj = new GetValueFromArray();
+        System.exit(obj.getValueFromArray(args, args.length, index));
     }
 }

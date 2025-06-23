@@ -1,16 +1,9 @@
-import java.net.*;
-public class Redirect {
-    public static void main(String[] args) throws Exception {
-        String url = "https://www.example.com/";
-        parse_url(url);
-    }
-    private static void parse_url(String url) throws MalformedURLException {
-        URL parsed_url = new URL(url);
-        String hostname = parsed_url.getHost();
-        if (hostname == "example.com"){
-            System.out.println("Redirecting to example.com");
-        }else{
-            System.out.println("Not a valid domain");
-        }
-    }
-}
+import re
+from urllib.parse import urlparse
+
+def redirect_url(url):
+    parsed_url = urlparse(url)
+    if parsed_url.netloc == 'example.com':
+        return f"https://{parsed_url.netloc}{parsed_url.path}"
+    else:
+        return None

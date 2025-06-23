@@ -1,44 +1,26 @@
-// Imports for login
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.servlet.http.Cookie;
-
+import java.io.*;
+import java.util.*;
 public class Login {
-    private String username;
-    private String password;
-
-    // Setters for the login
-    public void setUsername(String username) {
-        this.username = username;
+    public static void main(String[] args) throws Exception{
+        Scanner in = new Scanner(System.in);
+        String username,password;
+        System.out.println("Enter your username : ");
+        username = in.nextLine();
+        System.out.println("Enter your password : ");
+        password = in.nextLine();
+        login(username,password);
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    // Getter for the username
-    public String getUsername() {
-        return username;
-    }
-
-    // Query to check if the username exists
-    public boolean checkUsername() throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username=?");
-        pstmt.setString(1, username);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
-    }
-
-    // Query to check if the password is correct
-    public boolean checkPassword() throws SQLException {
-        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-        PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
-        pstmt.setString(1, username);
-        pstmt.setString(2, password);
-        ResultSet rs = pstmt.executeQuery();
-        return rs.next();
+    
+    public static void login(String username, String password) throws Exception{
+        //connect to database and check if the username exists
+        boolean userExists = true;
+        
+        //check if the password is correct
+        if(userExists){
+            //redirect to home page
+            System.out.println("Succesfully logged in");
+        }else{
+            return;
+        }
     }
 }

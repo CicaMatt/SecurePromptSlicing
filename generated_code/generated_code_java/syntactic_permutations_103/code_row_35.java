@@ -1,16 +1,16 @@
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) throws Exception {
-        // Create a new file or open an existing file for writing only
-        RandomAccessFile raf = new RandomAccessFile("myFile", "rw");
-
-        // Write some data to the file
-        raf.writeBytes("Hello, world!\n");
-
-        // Close the file when finished
-        raf.close();
+import java.io.File;
+public class HelloWorld {
+    public static void main(String[] args) {
+        try {
+            File myfile = new File("test.txt");
+            RandomAccessFile raf = new RandomAccessFile (myfile, "rw");
+            if (!myfile.exists()) {
+                myfile.createNewFile();
+            } else {
+                throw new Exception("File already exists");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,23 +1,21 @@
-package com.dynatrace.example;
-    
-    import java.sql.*;
-    import java.util.*;
-    
-    public class Main {
-        private static final String DB_URL = "jdbc:postgresql://localhost/database";
-        private static final String USER = System.getenv("DB_USER");
-        private static final String PASSWORD = System.getenv("DB_PASSWORD");
-    
-        public static void main(String[] args) {
-            try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("SELECT is_moderator FROM users WHERE id=" + args[0]);
-    
-                while (result.next()) {
-                    System.out.println(result.getBoolean("is_moderator"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+import java.sql.*;
+
+public class CheckModerator {
+    public static void main(String[] args) throws SQLException {
+        String host = System.getenv("DB_HOST");
+        String port = System.getenv("DB_PORT");
+        String dbName = System.getenv("DB_NAME");
+        String username = System.getenv("DB_USER");
+        String password = System.getenv("DB_PASSWORD");
+        
+        Connection con = DriverManager.getConnection(host+":"+port+"/"+dbName, username, password);
+        Statement stmt = con.createStatement();
+
+        // Execute a query to check if user is moderator
+        String sql = "SELECT moderator FROM users WHERE id = 1";
+        ResultSet rs = stmt.executeQuery(sql);
+        rs.next();
+        boolean isModerator = rs.getBoolean("moderator");
+        System.out.println("Is user a moderator? "+isModerator);
     }
+}

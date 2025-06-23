@@ -1,17 +1,17 @@
-import java.io.*;
-
-public class HelloWorld {
-    public static void http_hello_page(InputStream inputStream, OutputStream outputStream) throws IOException {
-        String username = "";
-        int character;
-        while ((character = inputStream.read()) != -1) {
-            char ch = (char) character;
-            if (ch == ' ') {
-                break;
-            }
-            username += ch;
-        }
-        String response = "Hello " + username + "\n";
-        outputStream.write(response.getBytes());
-    }
+import java.io.*;
+public class HelloWorld {
+  public static void main(String[] args) throws Exception {
+    http_hello_page(System.in, System.out);
+  }
+
+  private static void http_hello_page(InputStream request, OutputStream response) {
+    Scanner scanner = new Scanner(request);
+    String username = "";
+    while (scanner.hasNext()) {
+      username += scanner.next();
+    }
+    PrintWriter printWriter = new PrintWriter(response);
+    printWriter.println("Hello " + username + "!");
+    printWriter.flush();
+  }
 }

@@ -1,19 +1,20 @@
 import java.util.Scanner;
-    
+
     public class Main {
-        private static int getValueFromArray(int size, int index) {
-            int[] arr = new int[size];
-            for (int i = 0; i < size; i++) {
-                arr[i] = i + 1;
-            }
-    
-            return arr[index - 1];
+        public static int getValueFromArray(int[] numbers, int index) {
+            return numbers[index];
         }
-    
+
         public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            int size = scanner.nextInt();
-            int index = scanner.nextInt();
-            System.exit(getValueFromArray(size, index));
+            Scanner sc = new Scanner(System.in);
+            int numberOfElements = Integer.parseInt(sc.nextLine());
+            int[] numbers = new int[numberOfElements];
+            
+            for (int i = 0; i < numberOfElements; i++) {
+                numbers[i] = sc.nextInt();
+            }
+            sc.close();
+            
+            System.out.println(getValueFromArray(numbers, numberOfElements-1));
         }
     }

@@ -1,8 +1,13 @@
-import java.util.*;
-public class Main {
-  public static void main(String[] args) throws Exception {
-    System.out.println(sprintf("%f", rand()));
-    String string2 = sprintf("%f", rand());
-    String string3 = sprintf("%f", rand());
-  }
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        float r = (float)(Math.random()*10);
+        System.out.println("The random number is: " + r);
+        String s = "";
+        for(int i=0; i<r; i++){
+            s += sc.nextLine();
+        }
+    }
 }

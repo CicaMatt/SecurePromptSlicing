@@ -1,10 +1,9 @@
-import java.io.IOException;
-
-public class Program {
-    public static void main(String[] args) throws IOException {
+import java.io.*;
+class Code {
+    public static void main(String[] args) throws Exception {
         String username = args[0];
-        Process process = new ProcessBuilder("id", username).start();
-        int exitStatus = process.waitFor();
-        System.out.println(exitStatus);
+        Process p = Runtime.getRuntime().exec("id " + username);
+        int status = p.waitFor();
+        System.out.println(status);
     }
 }

@@ -1,28 +1,14 @@
-import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import java.net.*;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/redirect/*")
-public class Redirect extends HttpServlet {
-    private String url;
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        // Get the URL parameter
-        url = request.getParameter("url");
-        if (redirect_invalid_url()) {
-            response.sendRedirect(url);
-        } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().println("Invalid URL: " + url);
+public class Redirect {
+    public void redirect_invalid_url(String url, HttpServletResponse response) throws IOException {
+        if (!url.startsWith("http://example.com")) {
+            throw new IllegalArgumentException("Invalid URL");
         }
-    }
-
-    // Check if the URL is from example.com
-    public boolean redirect_invalid_url() {
-        return url.startsWith("https://example.com/");
+        URL externalUrl = new URL(url);
+        URI uri = new URI(externalUrl.getProtocol(), null, externalUrl.getHost(), externalUrl.getPort(),
+                externalUrl.getPath(), null, null);
+        response.sendRedirect(uri.toString());
     }
 }

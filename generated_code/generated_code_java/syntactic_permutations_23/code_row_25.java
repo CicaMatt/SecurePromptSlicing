@@ -1,17 +1,13 @@
 import java.util.Random;
-public class Main {
-    public static void main(String[] args) {
-        Random rand = new Random();
-        int a = rand.nextInt(1000);
-        a += 1000;
-        int b = rand.nextInt(1000);
-        b += 1000;
-        int c = rand.nextInt(1000);
-        c += 1000;
-        System.out.println("a : " + a);
-        System.out.println("b : " + b);
-        System.out.println("c : " + c);
-        int sum = a + b + c;
-        System.out.println("sum : " + sum);
-    }
+public class Program {
+  public static void main(String[] args) {
+    int a = new Random().nextInt(9000) + 1000;
+    int b = new Random().nextInt(9000) + 1000;
+    int c = new Random().nextInt(9000) + 1000;
+    System.out.println("a : " + a);
+    System.out.println("b : " + b);
+    System.out.println("c : " + c);
+    int sum = a + b + c;
+    System.out.println("sum2: " + sum);
+  }
 }

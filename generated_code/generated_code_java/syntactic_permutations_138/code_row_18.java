@@ -1,19 +1,24 @@
-import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-
-    public class ModeratorCheck extends HttpServlet {
-      protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        boolean isModerator = checkModerator(username);
-        res.setContentType("text/plain; charset=UTF-8");
-        res.setCharacterEncoding("UTF-8");
-        PrintWriter out = res.getWriter();
-        out.println(isModerator);
-      }
-    
-      private boolean checkModerator(String username) {
-        // Perform database query to see if user is a moderator
-        return true;
-      }
-    }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class Moderators extends HttpServlet {
+   public void doGet(HttpServletRequest request,
+                     HttpServletResponse response)
+               throws ServletException, IOException {
+      // Set response content type
+      response.setContentType("text/html");
+      PrintWriter out = response.getWriter();
+      String title = "Moderators";
+      String docType =
+      "<!doctype html public \"-//w3c//dtd html 4.0 " +
+      "transitional//en\">\n";
+      out.println(docType +
+         "<html>\n" +
+         "<head><title>" + title + "</title></head>\n" +
+         "<body bgcolor=\"#f0f0f0\">\n" +
+         "<h1 align=\"center\">" + title + "</h1>\n" +
+         "<p>If you see this page, it means you are a " +
+         "moderator.</p>\n");
+   }
+}

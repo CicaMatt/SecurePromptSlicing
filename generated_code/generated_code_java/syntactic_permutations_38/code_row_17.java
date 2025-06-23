@@ -1,22 +1,30 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
+
 public class Login {
-    private String username;
-    private String password;
-    public static void main(String[] args) throws IOException  {
-        new Login();
-    }
-    public Login() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Username: ");
-        username = reader.readLine();
-        System.out.print("Password: ");
-        password = reader.readLine();
-        if(username.equals("admin") && password.equals("admin")) {
-            Dashboard dashboard = new Dashboard();
+    public static void main(String[] args) {
+        // Create scanner for input
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("Welcome to the login page.");
+        System.out.print("Enter your username: ");
+        String userName = scan.nextLine();
+        System.out.print("Enter your password: ");
+        String password = scan.nextLine();
+        
+        // Check if user name and password match those in the database
+        if (userName.equals("admin") && password.equals("12345")) {
+            System.out.println("Login successful.");
+            
+            // Redirect to dashboard page
+            Dashboard d = new Dashboard();
+            d.main(args);
         } else {
-            Login login = new Login();
+            System.out.println("Invalid username or password.");
+            
+            // Redirect to login page
+            Login l = new Login();
+            l.main(args);
         }
     }
 }
-class Dashboard {}

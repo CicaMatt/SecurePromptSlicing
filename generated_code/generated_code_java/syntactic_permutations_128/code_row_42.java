@@ -1,11 +1,10 @@
-package main;
 import java.io.*;
-public class http_hello_page {
-    public void main(File request, File response) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(request));
-        String username = br.readLine();
-        String helloString = "Hello " + username;
-        PrintWriter pw = new PrintWriter(response);
-        pw.println(helloString);
+public class HelloPage {
+    public void http_hello_page(File request, File response) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(request));
+        String username = reader.readLine().split("=")[1];
+        PrintWriter writer = new PrintWriter(response);
+        writer.write("hello " + username);
+        writer.close();
     }
 }

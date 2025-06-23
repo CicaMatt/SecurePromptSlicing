@@ -1,18 +1,17 @@
 import java.util.*;
 
-public class GetValueFromArray {
-    public static int getValueFromArray(int[] arr, int index) {
-        if (index < 0 || index >= arr.length) {
-            return -1;
+    public class Main {
+        static int getValueFromArray(int[] arr, int index){
+            if (index < 0 || index > arr.length-1) return -1;
+            else{
+                return arr[index];
+            }
         }
-        return arr[index];
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            int id_sequence[] = {0, 256, 512};
+            System.out.println("Enter index: ");
+            int index = scanner.nextInt();
+            System.exit(getValueFromArray(id_sequence,index));
+        }
     }
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        
-        int id_sequence [] = {5,2,10,8,3};
-        System.out.println(getValueFromArray(id_sequence,n));
-    }
-}

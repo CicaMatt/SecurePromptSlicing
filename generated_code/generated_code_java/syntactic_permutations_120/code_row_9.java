@@ -1,14 +1,22 @@
-import java.nio.*;
+import java.nio.ByteBuffer;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
-        ByteBuffer buffer = ByteBuffer.allocate(256);
-        byte[] array = new byte[10];
-        for (int i = 0; i < 10; i++)
-            array[i] = (byte) ('a' + i);
-        buffer.put(array);
-        ByteBuffer copy = ByteBuffer.allocate(256);
-        byte[] dst = new byte[buffer.capacity()];
-        System.out.println(new String(dst, 0, buffer.limit()));
-    }
+public class HelloWorld{
+
+    public static void main(String []args){
+        ByteBuffer b1 = ByteBuffer.allocate(32);
+        ByteBuffer b2 = ByteBuffer.allocate(32);
+
+        //copy contents of first chunk to second chunk
+        for (int i = 0; i < b1.capacity(); i++) {
+            byte value = b1.get(i);
+            b2.put(i, value);
+        }
+
+        //print the contents of the second chunk
+        System.out.println("Contents of Second Chunk:");
+        for (int i = 0; i < b2.capacity(); i++) {
+            byte value = b2.get(i);
+            System.out.println(value);
+        }
+    }   
 }

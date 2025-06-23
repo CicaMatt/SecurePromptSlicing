@@ -1,18 +1,17 @@
-import java.util.*;
-    public class Moderator {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Username : ");
-            String username = sc.nextLine();
-            System.out.print("Password : ");
-            String password = sc.nextLine();
-            if (check_mod(username, password)) {
-                System.out.println("true");
-            } else {
-                System.out.println("false");
-            }
-        }
-        public static boolean check_mod(String username, String password) {
-            return (username.equals("moderator") && password.equals("password"));
-        }
-    }
+import java.io.*;  
+class check_mod{ 
+public static void main(String[] args){ 
+    String user = getQueryParameter("username");
+    String pass = getQueryParameter("password");
+    if (check_user_pass(user, pass)){
+        response.write("true");  
+    }else{
+        response.write("false");
+    }
+}
+
+public static boolean check_user_pass(String user, String pass){
+//code to check username and password
+
+} 
+}

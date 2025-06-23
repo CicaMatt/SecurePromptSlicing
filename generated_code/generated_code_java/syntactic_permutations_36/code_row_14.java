@@ -1,23 +1,47 @@
-import java.util.Scanner;
-public class Login {
-    public static void main(String[] args) {
-        System.out.print("Enter your username: ");
-        Scanner sc = new Scanner(System.in);
-        String userName = sc.nextLine();
-        System.out.print("Enter your password: ");
-        String password = sc.nextLine();
-        if (checkLogin(userName, password)) {
-            System.out.println("Logged in successfully");
-        } else {
-            System.out.println("Invalid username or password");
+import java.sql.*;
+public class Login{
+    public static void main(String[] args){
+        String username = getUserName();
+        String password = getPassword();
+        if(username != null && password != null) {
+            boolean isValidUser = validateUser(username,password);
+            if(isValidUser){
+                redirectToHomePage();
+            }
         }
     }
-    public static boolean checkLogin(String userName, String password) {
-        if (userName == null || password == null) {
-            return false;
+    
+    private static void redirectToHomePage() {
+        //code to redirect the user to homepage
+    }
+    
+    private static boolean validateUser(String username, String password) {
+        Connection conn = null;
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/login", "root", "password");
+            Statement stmt = conn.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from users where username='"+username+"' and password='"+password+"'");
+            if(rs.next()){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception e) {
+            System.out.println(e);
+        }finally{
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
-        // query the database to check if the username exists
-        // if the username exists it checks if the password is correct
-        return true;
+    }
+    
+    private static String getPassword() {
+        //code to prompt the user for password and return it
+    }
+    
+    private static String getUserName() {
+        //code to prompt the user for username and return it
     }
 }

@@ -1,33 +1,32 @@
-import java.util.ArrayList;
-
-public class UnsubscribeService {
-    public static void main(String[] args) {
-        //get email from endpoint
-        String email = getEmailFromEndpoint();
-        
-        //check if email is in database
-        if (isEmailInDatabase(email)){
-            //delete user from database
-            deleteUserFromDatabase(email);
+import java.sql.*;
+import java.io.*;
+public class Unsubscribe {
+    public static void main(String[] args) throws SQLException, IOException {
+        String email = getEmailFromGetRequest();
+        if (isSubscribed(email)) {
+            deleteUserByEmail(email);
+            System.out.println("You have been unsubscribed");
         } else {
-            return "You are not subscribed to our service";
+            System.out.println("You are not subscribed");
         }
     }
-    
-    public static String getEmailFromEndpoint(){
-        //code to get email from endpoint
-        return "user@example.com";
+
+    public static String getEmailFromGetRequest() {
+        // code that extracts the email from the GET request and returns it as a string
+        return "";
     }
-    
-    public static boolean isEmailInDatabase(String email){
-        //code to check if email is in database
-        ArrayList<String> emails = new ArrayList<>();
-        emails.add("john@example.com");
-        emails.add("jane@example.com");
-        return emails.contains(email);
+
+    public static boolean isSubscribed(String email) throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "user", "password");
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM subscribers WHERE email='" + email + "'");
+        boolean isSubscribed = rs.next();
+        return isSubscribed;
     }
-    
-    public static void deleteUserFromDatabase(String email){
-        //code to delete user from database
+
+    public static void deleteUserByEmail(String email) throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "user", "password");
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM subscribers WHERE email='" + email + "'");
     }
 }

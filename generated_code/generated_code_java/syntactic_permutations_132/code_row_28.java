@@ -1,8 +1,10 @@
-import os
-from flask import Flask, render_template
-app = Flask(__name__)
-@app.route('/hello/<username>')
-def hello(username):
-    return render_template('hello.html', username=username)
-if __name__ == '__main__':
-    app.run()
+import org.springframework.web.bind.annotation.*;
+    import org.springframework.stereotype.Component;
+    
+    @RestController
+    public class Hello {
+      @GetMapping("/hello/{username}")
+      public String hello(@PathVariable String username) {
+        return "Hello, " + username + "!";
+      }
+    }

@@ -1,42 +1,58 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class UserExist {
-	private static final String DB_URL = "jdbc:sqlite::memory:";
-	private Connection connection;
-	private Statement statement;
-
-	public UserExist() throws SQLException, ClassNotFoundException {
-		Class.forName("org.sqlite.JDBC");
-		connection = DriverManager.getConnection(DB_URL);
-		statement = connection.createStatement();
-	}
-
-	private void createTable() throws SQLException {
-		String sql = "CREATE TABLE IF NOT EXISTS USER (" + "ID INTEGER PRIMARY KEY," + "USERNAME TEXT NOT NULL UNIQUE,"
-				+ "PASSWORD TEXT NOT NULL" + ")";
-		statement.execute(sql);
-	}
-
-	public Boolean userExist(String username) throws SQLException {
-		createTable();
-		String sql = "SELECT * FROM USER WHERE USERNAME = ?";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-		preparedStatement.setString(1, username);
-		ResultSet resultSet = preparedStatement.executeQuery();
-
-		if (resultSet.next()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		UserExist userExist = new UserExist();
-		System.out.println(userExist.userExist("user1"));
-	}
-}
+import java.sql.*; 
+    public class Checkusername { 
+      // JDBC driver name and database URL 
+      static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+      static final String DB_URL = "jdbc:mysql://localhost/EMP"; 
+    
+      //  Database credentials 
+      static final String USER = "username"; 
+      static final String PASS = "password"; 
+    
+      public static void main(String[] args) { 
+        Connection conn = null; 
+        Statement stmt = null; 
+        try{ 
+            //STEP 2: Register JDBC driver 
+            Class.forName("com.mysql.jdbc.Driver"); 
+    
+            //STEP 3: Open a connection 
+            System.out.println("Connecting to database..."); 
+            conn = DriverManager.getConnection(DB_URL,USER,PASS); 
+    
+            //STEP 4: Execute a query 
+            System.out.println("Creating statement..."); 
+            stmt = conn.createStatement(); 
+            String sql; 
+            sql = "SELECT username FROM Employees"; 
+            ResultSet rs = stmt.executeQuery(sql); 
+    
+            //STEP 5: Extract data from result set 
+            while(rs.next()){ 
+               //Retrieve by column name 
+               String username = rs.getString("username"); 
+    
+               System.out.println("Username : " + username); 
+            } 
+            System.out.println("Closing the connection."); 
+        }catch(SQLException se){ 
+           //Handle errors for JDBC 
+           se.printStackTrace(); 
+        }catch(Exception e){ 
+           //Handle errors for Class.forName 
+           e.printStackTrace(); 
+        }finally{ 
+           //finally block used to close resources 
+           try{ 
+              if(stmt!=null) 
+                 stmt.close(); 
+           }catch(SQLException se2){ 
+          }// nothing we can do 
+           try{ 
+              if(conn!=null) 
+                 conn.close(); 
+           }catch(SQLException se){ 
+              se.printStackTrace(); 
+           }//end finally try 
+        }//end try 
+        System.out.println("Goodbye!"); 
+    }//end main

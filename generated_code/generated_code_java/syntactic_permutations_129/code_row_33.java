@@ -1,1 +1,17 @@
-import jinja2\n\nenv = Environment(loader=FileSystemLoader('.'),autoescape=True,trim_blocks=True,lstrip_blocks=True)\n\ndef render_response_from_env(env):\n    name = request.args.get('name')\n    template = env.get_template('index.html')\n    return Response(template.render(name=name))\n\ndef home():\n    response = render_response_from_env(env)\n    return response
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+
+@WebServlet(name = "home", value = "/")
+public class Home extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        Template template = env.getTemplate("index.html");
+        String body = template.render(name);
+        resp.setContentType("text/html");
+        PrintWriter writer = resp.getWriter();
+        writer.println(body);
+    }
+}

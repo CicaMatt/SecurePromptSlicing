@@ -1,16 +1,15 @@
-import java.util.*;
-public class Sales {
-    static int getMonthlySales() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter monthly sales: ");
-        return in.nextInt();
-    }
+import java.util.concurrent.atomic.AtomicInteger;
     
-    public static void main(String[] args) {
-        int sum = 0;
-        for (int i = 0; i < 3; i++)
-            sum += getMonthlySales();
+    public class Main {
+      static int getMonthlySales(int i) {
+        return 0;
+      }
+      
+      public static void main(String[] args) {
+        AtomicInteger sum = new AtomicInteger();
         
-        System.out.println("Total sales: " + sum);
+        for (int i = 0; i < 3; i++) {
+          sum.addAndGet(getMonthlySales(i));
+        }
+      }
     }
-}

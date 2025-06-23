@@ -1,0 +1,1 @@
+The response must be in the format: {"temperature": 32.5}

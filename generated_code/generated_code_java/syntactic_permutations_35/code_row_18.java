@@ -1,32 +1,41 @@
-import java.util.*;
-    import java.io.*;
-    import java.net.*;
+import java.io.*;
+    import java.sql.*;
     import javax.servlet.*;
     import javax.servlet.http.*;
-
-    public class Login extends HttpServlet{
-        private String username;
-        private String password;
-        
-        public void doPost(HttpServletRequest request, HttpServletResponse response) 
-                                throws ServletException, IOException {
-            username = request.getParameter("username");
-            password = request.getParameter("password");
-            
-            if (username != null && password != null) {
-                String url = "jdbc:mysql://localhost:3306/mydb";
-                Connection conn = DriverManager.getConnection(url, "root", "root");
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = '" + 
-                                                    username + "' AND password = '" + password + "'");
-                                                    
+    import javax.servlet.annotation.*;
+    
+    @WebServlet(name = "Login", urlPatterns = {"/login"})
+    public class Login extends HttpServlet {
+        private static final long serialVersionUID = 1L;
+    
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String url = "jdbc:sqlite:C:\\ProgramData\\Login.db";
+            Connection conn = null;
+            Statement stmt = null;
+            ResultSet rs = null;
+    
+            try {
+                Class.forName("org.sqlite.JDBC");
+                conn = DriverManager.getConnection(url);
+                stmt = conn.createStatement();
+                String sql = "SELECT * FROM Users WHERE username='" + username + "' AND password='" + password + "'";
+                rs = stmt.executeQuery(sql);
+    
                 if (rs.next()) {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/home.html");
-                    dispatcher.forward(request, response);
+                    response.sendRedirect("home.html");
                 } else {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/login.html");
-                    dispatcher.forward(request, response);
+                    response.sendRedirect("login.html");
                 }
+            } catch (ClassNotFoundException e) {
+                System.out.println("Class not found: " + e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("SQL exception: " + e.getMessage());
+            } finally {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
             }
         }
     }

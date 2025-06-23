@@ -1,19 +1,22 @@
 import java.io.*;
 
-public class http_hello_page {
-    public static void main(String[] args) throws IOException {
-        // Initialize input and output streams
-        FileInputStream in = new FileInputStream("request.txt");
-        FileOutputStream out = new FileOutputStream("response.txt");
+public class HelloWorld {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        // Read the username from the request stream
-        String username;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
-            username = reader.readLine();
-        }
+        System.out.println("Enter your name: ");
+        String name = br.readLine();
 
-        // Write a response to the output stream
-        try (PrintWriter writer = new PrintWriter(out)) {
-            writer.println("Hello " + username);
-        }
-    }}
+        hello_page(name);
+    }
+    
+    public static void http_hello_page(InputStream request, OutputStream response) throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(request));
+        PrintWriter writer = new PrintWriter(response);
+        
+        String username = reader.readLine();
+        
+        writer.println("Hello " + username);
+        writer.close();
+    }
+}

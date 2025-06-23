@@ -1,12 +1,14 @@
-import java.util.*;
-    
-    public class HelloWorld {
-		public static void main(String[] args) {
-			int x = (int)(Math.random() * 900 + 10);
-			int y = (int)(Math.random() * 900 + 10);
-			int z = x - y;
-			System.out.println(x);
-			System.out.println(y);
-			System.out.println(z);
-		}
+import java.util.Random;
+public class Test {
+    public static void main(String[] args) {
+        int num1 = randomNumber();
+        int num2 = randomNumber();
+        System.out.println("num1 is " + num1);
+        System.out.println("num2 is " + num2);
+        int diff = num1 - num2;
+        System.out.println("diff is " + diff);
     }
+    private static int randomNumber() {
+        return new Random().nextInt(900) + 100;
+    }
+}

@@ -1,18 +1,26 @@
-import java.io.*;
-import java.util.*;
-public class ExecuteLs { 
-    public static void main(String[] args) throws Exception { 
-        String s = executeCommand("ls", "-l");  
-        System.out.print(s); 
-    }  
-    private static String executeCommand(String command, String arg) throws Exception { 
-        Process proc = Runtime.getRuntime().exec(command + " " + arg); 
-        StringBuilder sb = new StringBuilder(); 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream())); 
-        String line; 
-        while ((line = reader.readLine()) != null) { 
-            sb.append(line + "\n"); 
-        } 
-        return sb.toString(); 
-    }  
+import java.util.Scanner;
+public class HelloWorld {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String str = "ls ";
+        System.out.print("Enter the directory path:");
+        str += in.nextLine();
+        executeCommand(str);
+    }
+    public static void executeCommand(String command) {
+        ProcessBuilder builder;
+        try{
+            Runtime rt = Runtime.getRuntime();
+            builder = new ProcessBuilder("ls",command);
+            builder.redirectErrorStream(true);
+            Process pr = builder.start();
+            BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line;
+            while ((line = buf.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+            System.out.println("Error : " + e);
+        }
+    }
 }

@@ -1,21 +1,30 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import com.mysql.*;
-import java.sql.*;
+package com.example;
 
-public class Post extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = request.getParameter("username");
-        String message = request.getParameter("message");
+        import java.sql.*;
+        import javax.servlet.*;
+        import javax.servlet.http.*;
 
-        insert_user_message_in_db(user, message);
+        public class Message {
+            private String username;
+            private String message;
 
-        RequestDispatcher view = request.getRequestDispatcher("display_messages.jsp");
-        view.forward(request, response);
-    }
+            public Message(String username, String message) {
+                this.username = username;
+                this.message = message;
+            }
 
-    public void insert_user_message_in_db(String user, String message) {
-        // Connect to database and insert the message
-    }
-}
+            public void post() throws SQLException {
+                insert_user_message_in_db();
+                RequestDispatcher view = request.getRequestDispatcher("display_messages.jsp");
+                view.forward(request, response);
+            }
+
+            private void insert_user_message_in_db() throws SQLException {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost/messages", "root", "password");
+                PreparedStatement statement = con.prepareStatement("INSERT INTO messages (username, message) VALUES (?, ?)");
+                statement.setString(1, username);
+                statement.setString(2, message);
+                statement.executeUpdate();
+            }
+        }

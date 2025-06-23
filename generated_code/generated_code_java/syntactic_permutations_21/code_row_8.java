@@ -1,10 +1,10 @@
-import java.util.*;
-public class HelloWorld{
-     public static void main(String []args){
-        Scanner sc = new Scanner(System.in);
-        int number = sc.nextInt();
-	number += 1000;
-	System.out.println("Number is:" + number);
-	return 0;
-     }
+package main;
+
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        int input = Integer.parseInt(args[0]);
+        System.out.println("Output : "+ (input + 1000));
+    }
 }

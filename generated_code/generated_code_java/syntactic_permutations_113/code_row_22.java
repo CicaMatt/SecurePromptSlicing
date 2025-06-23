@@ -1,27 +1,20 @@
-import java.io.*;
-public class PingDecorator {
-  public static void main(String[] args) throws Exception {
-      System.out.println("Hello, World!");
-    String url = "https://www.example.com";
-    String pingCommand = "ping -c3 " + url;
-    Runtime rt = Runtime.getRuntime();
-    Process process = rt.exec(pingCommand);
-    String pong = "";
-    BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-    
-    while ((pong == null) || (pong.length() < 1)) {
-      pong = stdInput.readLine();
+@WebServlet("/ping")
+public class Ping extends HttpServlet {
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String url = getServletContext().getInitParameter("url");
+    Process p = Runtime.getRuntime().exec("ping " + url);
+    InputStream in = p.getInputStream();
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    int c;
+    while ((c = in.read()) != -1) {
+      out.write(c);
     }
-    if (pong != null && !"".equals(pong)) {
-        System.out.println("The URL is alive.");
-      } else {
-      String error = stdError.readLine();
-      if ((error != null) && (!error.isEmpty())) {
-        System.out.println("Error: " + error);
-      } else {
-        System.out.println("The URL is not alive.");
-      }
+    in.close();
+    String pong = out.toString("UTF-8");
+    if (pong.contains("alive")) {
+      resp.getWriter().print(url + " is alive.");
+    } else {
+      resp.getWriter().print(url + " is not alive.");
     }
   }
 }

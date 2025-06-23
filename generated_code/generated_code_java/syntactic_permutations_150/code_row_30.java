@@ -1,22 +1,30 @@
-package com.jashanjotsingh.codechef;
-import java.sql.*;
-import java.util.Date;
+import java.sql.Connection;
+    import java.sql.PreparedStatement;
+    import java.sql.ResultSet;
+    import java.util.HashMap;
+    import java.util.Map;
 
-public class PostMessage {
-    public static void post(String username, String message) throws SQLException, ClassNotFoundException {
-        insert_user_message_in_db(username, message);
+    import spark.ModelAndView;
+    import spark.template.handlebars.HandlebarsTemplateEngine;
+
+    public class Post {
+        private String username;
+        private String message;
+
+        public static ModelAndView post(Request request, Response response) {
+            Map<String, Object> model = new HashMap<>();
+            String inputUsername = request.queryParams("username");
+            String inputMessage = request.queryParams("message");
+
+            try (Connection connection = DB.sql2o.open()) {
+                String sql = "INSERT INTO messages (username, message) VALUES (:username, :message);";
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString("username", inputUsername);
+                ps.setString("message", inputMessage);
+                ps.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return new ModelAndView(model, "success.hbs");
+        }
     }
-    
-    public static void insert_user_message_in_db(String username, String message) throws SQLException, ClassNotFoundException {
-        //Create connection to database
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost/mydatabase", "username", "password");
-        
-        //Prepare statement for insertion
-        PreparedStatement ps = con.prepareStatement("INSERT INTO messages (username, message) VALUES(?, ?)");
-        ps.setString(1, username);
-        ps.setString(2, message);
-        ps.executeUpdate();
-    }
-}

@@ -1,17 +1,17 @@
-import java.util.Random;
+import java.util.*;
 
-public class Sales {
+public class Main {
     public static void main(String[] args) {
-        double totalSales = 0;
-        for (int i = 1; i <= 12; i++) {
-            double sales = getMonthlySales();
-            totalSales += sales;
-            System.out.println("Sales for month " + i + ": " + sales);
+        // call getMonthlySales function 12 times
+        int monthlySales = 0;
+        for (int i = 0; i < 12; i++) {
+            monthlySales += getMonthlySales();
         }
-        System.out.println("Total sales: " + totalSales);
+        System.out.println("Total sales: " + monthlySales);
     }
 
-    public static double getMonthlySales() {
-        return new Random().nextInt(100000) * 1.0;
+    public static int getMonthlySales() {
+        // returns a random number between 0 and 100000
+        return new Random().nextInt(100000);
     }
 }

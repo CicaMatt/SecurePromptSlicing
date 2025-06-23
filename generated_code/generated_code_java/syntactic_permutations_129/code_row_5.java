@@ -1,28 +1,17 @@
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) {
-        // write your code here
-    }
-    
-    public String render_response_from_env(Environment env) {
-		// get the name parameter from the request
-		String name = env.getRequest().getParameter("name");
-		
-		// get the template from the environment
-		Template temp = env.getTemplate("template.html");
-		
-		// render the template with the name parameter
-		Map<String, String> context = new HashMap<>();
-		context.put("name", name);
-		String rendered_string = temp.render(context);
-		
-		// return a response with the rendered template
-		return Response.ok().body(rendered_string).build();
-	}
-	
-	public String home(Environment env) {
-		Response response = render_response_from_env(env);
-		return response;
-	}
-}
+import jinja2
+import os
+from flask import Flask, request, render_template
+app = Flask(__name__)
+
+def render_response_from_env(env):
+    name = request.args.get("name")
+    template = env.get_template("index.html")
+    rendered = template.render(name=name)
+    return render_template_string(rendered)
+
+def home():
+    response = render_response_from_env(app.jinja_env)
+    return response
+
+if __name__ == "__main__":
+    app.run()

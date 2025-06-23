@@ -1,21 +1,26 @@
-import java.io.*; 
-    public class SecretInfo {
-        public static void main(String[] args) throws IOException{
-            String secret = "This is a super secret message!";
-            File file = new File("secret.txt");
-            BufferedWriter out = new BufferedWriter(new FileWriter(file));
-            out.write(secret);
-            out.close();
-            if (file.setReadable(true, true)) {
-                System.out.println("File permissions changed to read-only.");
-            } else {
-                System.out.println("File permissions could not be changed.");
-            }
-            
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line; 
-            while((line=br.readLine()) != null){
-               System.out.println(line);
-            }
-        }
-    }
+java
+import java.io.*;
+import java.nio.file.Paths;
+
+public class SecretInfo {
+    public static void main(String[] args) {
+        String secret = "I am a super secret string.";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("secret.txt"))) {
+            writer.write(secret);
+        } catch (IOException e) {
+            System.err.println("Failed to write secret file: " + e.getMessage());
+        }
+
+        Paths.get("secret.txt").toFile().setReadable(true, false);
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("secret.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to read secret file: " + e.getMessage());
+        }
+    }
+}

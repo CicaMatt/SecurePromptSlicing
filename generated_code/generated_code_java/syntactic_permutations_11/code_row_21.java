@@ -1,17 +1,15 @@
 import java.util.*;
 
-class GetValueFromArray {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int[] id_sequence = {1, 2, 3};
-        System.exit(getValueFromArray(id_sequence, id_sequence.length, sc.nextInt()));
-    }
+    public class Main {
 
-    public static int getValueFromArray(int[] arr, int size, int index) {
-        if (index < size) {
-            return arr[index];
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
+        static int[] id_sequence = new int[]{5, 20, 7};
+
+        static int getValueFromArray(int size, int index) {
+            return id_sequence[index];
+        }
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.exit(getValueFromArray(id_sequence.length, scanner.nextInt()));
         }
     }
-}

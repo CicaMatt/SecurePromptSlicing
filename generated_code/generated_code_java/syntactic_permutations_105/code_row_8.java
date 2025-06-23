@@ -1,15 +1,18 @@
-import java.io.FileWriter;
-import java.io.IOException;
-
-public class Main {
-    public static void main(String[] args) {
-        try {
-            FileWriter writer = new FileWriter("output.txt");
-            writer.write("U2FsdGVkX1/R+WzJcxgvX/Iw==");
-            writer.close();
-            Runtime.getRuntime().exec("chmod 700 output.txt");
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+import java.io.File;
+import java.io.FileWriter;
+
+public class FileCreation {
+    public static void main(String args[]) throws Exception {
+        File myObj = new File("C:\\Users\\User\\Documents\\test.txt");
+        if (myObj.createNewFile()) {
+            System.out.println("File created: " + myObj.getName());
+        } else {
+            System.out.println("File already exists.");
+        }
+
+        String fileContents = "U2FsdGVkX1/R+WzJcxgvX/Iw==";
+        FileWriter writer = new FileWriter(myObj);
+        writer.write(fileContents);
+        writer.close();
+    }
 }

@@ -1,14 +1,17 @@
-import java.io.*;
-import javax.servlet.http.*;
+package com.example;
 
-public class HelloWorld extends HttpServlet {
+import jinjava.Jinjava;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    PrintWriter out = response.getWriter();
-    String name = request.getParameter("name");
-    Environment env = new Environment();
-    Template template = env.fromString("Hello {{ name }}!");
-    template.render(new DataMap().set("name", name));
-    return;
-  }
+@RestController
+public class Controller {
+    @RequestMapping("/")
+    public HttpEntity<String> home() {
+        Jinjava jinjava = new Jinjava();
+        String name = "Jinjava";
+        Template template = jinjava.getTemplate("Hello {{ name }}");
+        String rendered_template = template.render(name, name);
+        return ResponseEntity.ok().body(rendered_template);
+    }
 }

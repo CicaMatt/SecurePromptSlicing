@@ -1,16 +1,15 @@
-package com.company;
-    
-    import java.io.IOException;
-    import java.net.InetSocketAddress;
-    
-    public class Main {
-        public static void main(String[] args) throws IOException {
-            http_hello_page(args[0],args[1]);
-        }
-        
-        private static void http_hello_page(String request, String response) throws IOException {
-            //read the username from the request.
-    	    //construct a response that says "Hello [username]".
-    	    //write the response to the response file stream.
-        }
-    }
+import java.io.*; 
+public class HelloPage { 
+   public static void http_hello_page(InputStream request, OutputStream response) throws IOException{ 
+      BufferedReader br = new BufferedReader(new InputStreamReader(request)); 
+      String username = ""; 
+      String req; 
+      while((req=br.readLine())!=null){ 
+         if (username == ""){ 
+            username = req; 
+         } 
+      } 
+      response.write("Hello ".getBytes()); 
+      response.write(username.getBytes()); 
+   } 
+}

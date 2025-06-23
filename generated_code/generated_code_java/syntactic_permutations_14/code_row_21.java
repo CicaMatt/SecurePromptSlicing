@@ -1,13 +1,16 @@
 import java.util.Scanner;
-
-    public class IndexedArray {
-      public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in);
-        
-        System.out.print("Enter an index from 0 to 9: ");
-        int index = Integer.parseInt(reader.nextLine());
-        
-        int id_sequence[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        System.out.println("Value at index " + index + ": " + id_sequence[index]);
-      }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int[] idSequence = {1, 2, 3};
+            System.out.println("Enter a number");
+            int index = sc.nextInt();
+            int result = getNumberAt(index, idSequence);
+            System.out.println("The value at that index in the array is " + result);
+        }
+    
+        public static int getNumberAt(int index, int[] id_sequence) {
+            return id_sequence[index];
+        }
     }

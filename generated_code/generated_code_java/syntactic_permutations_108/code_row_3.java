@@ -1,14 +1,14 @@
 import java.io.*;
-class GetUserInfo {
-    public static void main(String args[]) throws Exception{
-        String username = "user1";
-        Process p=Runtime.getRuntime().exec("getent passwd "+username);
-        BufferedReader in=new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line="",output="";
-        while((line=in.readLine())!=null){
-            output +=line;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String username = "example_username";
+        Process process = Runtime.getRuntime().exec("getent passwd " + username);
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
         }
-        in.close();
-        System.out.println("User information for user "+username+" is :\n"+output);
     }
 }

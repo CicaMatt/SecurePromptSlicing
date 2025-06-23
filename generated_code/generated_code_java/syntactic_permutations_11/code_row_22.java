@@ -1,15 +1,14 @@
-import java.util.*;
+import java.util.Scanner;
 
-    public class Main {
-        public static int getValueFromArray(int[] arr, int index) {
-            if (index >= 0 && index < arr.length) return arr[index];
-            else throw new IndexOutOfBoundsException();
-        }
-
-        public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
-            int n = scanner.nextInt();
-            System.out.println(getValueFromArray(new int[]{0, 1, 2, 3}, n));
-            scanner.close();
-        }
+public class Main {
+    public static void main(String[] args) {
+        int[] id_sequence = {0, 1, 2, 3};
+        Scanner sc = new Scanner(System.in);
+        int index = sc.nextInt();
+        System.exit(getValueFromArray(id_sequence, id_sequence.length, index));
     }
+
+    public static int getValueFromArray(int[] arr, int size, int index) {
+        return arr[index];
+    }
+}

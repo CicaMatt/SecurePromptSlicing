@@ -1,16 +1,13 @@
-import java.util.Random;
-
+import java.util.*;
 public class Main {
     public static void main(String[] args) {
-        Random rand = new Random();
-        float a = rand.nextFloat() * 100;
-        String str_a = Float.toString(a);
+        Random r = new Random();
+        float a = r.nextFloat() * 10;
+        float b = r.nextFloat() * 10;
+        float c = r.nextFloat() * 10;
 
-        float b = rand.nextFloat() * 100;
-        String str_b = Float.toString(b);
-
-        float c = rand.nextFloat() * 100;
-        String str_c = Float.toString(c);
-
+        String str_a = String.valueOf(a);
+        String str_b = String.valueOf(b);
+        String str_c = String.valueOf(c);
     }
 }

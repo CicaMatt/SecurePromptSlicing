@@ -1,15 +1,28 @@
-import java.io.*;
-public class HelloWorld {
-    public static void main(String[] args) {
+import java.util.*;
+class LS{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name of a directory or file to list :");
+        String filename = sc.nextLine();
+        System.out.print("\n");
+        String ls = "ls" + "-l " +filename;
+        System.out.println(ls);
+        System.out.print("\n");
+        Runtime rt = Runtime.getRuntime();
+        Process proc = null;
         try{
-            Process p = Runtime.getRuntime().exec("ls -l");
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while((line=br.readLine())!=null){
-                System.out.println(line);
-            }
-        } catch (IOException e) {
+            proc = rt.exec(ls);
+        }catch(Exception e){
             e.printStackTrace();
+        }
+        int exitVal = 0;
+        if (proc != null) {
+            try {
+                exitVal = proc.waitFor();
+                System.out.println("\n\n Exit Value is : " + exitVal);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -1,33 +1,23 @@
-import java.lang.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
-@WebServlet(urlPatterns = "/ping")
-public class PingDecorator extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = request.getParameter("url");
-        String output = ping(url);
-        response.setContentType("text/plain");
-        response.getWriter().write(output);
-    }
-
-    public String ping(String url){
-        try{
-            ProcessBuilder builder = new ProcessBuilder();
-            builder.command("ping", url).redirectErrorStream(true);
-            Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while (true) {
-                line = r.readLine();
-                if (line == null) { break; }
-                System.out.println(line);
+import java.io.*;
+public class Ping{
+    public static void main(String[] args) {
+        String url = "www.google.com";
+        Process process;
+        try {
+            process = Runtime.getRuntime().exec("ping " + url);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            int read;
+            char[] buffer = new char[4096];
+            StringBuffer output = new StringBuffer();
+            while ((read = reader.read(buffer)) > 0) {
+                output.append(buffer, 0, read);
             }
-        }catch(Exception e){
-            e.printStackTrace();
+            reader.close();
+            process.waitFor();
+        } catch (IOException e1) {
+            System.out.println("Error");
+        } catch (InterruptedException e2) {
+            System.out.println("Error");
         }
     }
 }
-
-### Explanation:
-The code above uses the ProcessBuilder class to run a system command on your local machine, and it returns the output of the ping command.

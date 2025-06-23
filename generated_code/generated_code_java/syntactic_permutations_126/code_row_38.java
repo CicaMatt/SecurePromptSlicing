@@ -1,35 +1,23 @@
-package main;
-
-import java.io.*;
-import java.util.*;
 import java.net.*;
-
-public class Main {
-  public static void http_hello_page(String username) throws Exception {
-    // Read request body (username)
-    InputStream is = System.in;
-    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-    String name = br.readLine();
-    
-    // Construct HTML page
-    StringBuilder sb = new StringBuilder();
-    sb.append("<!DOCTYPE html>");
-    sb.append("<html><head><title>Hello " + name + "</title></head>");
-    sb.append("<body><p style=\"color:red;\">Hello " + name + "</p></body>");
-    sb.append("</html>");
-    
-    // Write response body
-    OutputStream os = System.out;
-    Writer wr = new OutputStreamWriter(os);
-    wr.write(sb.toString());
-    wr.flush();
-    
-    // Close streams
-    br.close();
-    wr.close();
-  }
-  
-  public static void main(String[] args) throws Exception {
-    http_hello_page("Alice");
-  }
+import java.io.*;
+public class HelloWorld{
+    public static void main(String[] args) throws IOException {
+        ServerSocket ss = new ServerSocket(80);
+        while (true){
+            Socket s = ss.accept();
+            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            PrintWriter pw = new PrintWriter(s.getOutputStream(), true);
+            String request;
+            while (!(request = br.readLine()).isEmpty()){
+                if (request.startsWith("GET /hello")){
+                    System.out.println("Inside");
+                    int i = request.indexOf('=');
+                    String username = request.substring(i+1);
+                    pw.print("HTTP/1.1 200 OK\nContent-type:text/html\n\n<html><head><title>Welcome</title></head><body>");
+                    pw.print("<h1>Welcome, " + username + "</h1>");
+                    pw.print("</body></html>");
+                }
+            }
+        }
+    }
 }

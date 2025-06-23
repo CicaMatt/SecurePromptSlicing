@@ -1,38 +1,29 @@
-import java.io.*; 
-import java.util.*; 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*; 
-public class Login extends HttpServlet{
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        if(login(username, password)){
-            RequestDispatcher rd=request.getRequestDispatcher("/HomePage.jsp"); 
-            rd.forward(request,response); 
-        }else{
-            RequestDispatcher rd=request.getRequestDispatcher("/Login.html"); 
-            PrintWriter out = response.getWriter(); 
-            out.println("<font color=red>Either username or password is wrong.</font>"); 
-            rd.include(request,response);
-        }
-    }
-    public boolean login(String username, String password){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con= DriverManager.getConnection ("jdbc:mysql://localhost:3306/userdb","root","root");
-            PreparedStatement ps=con.prepareStatement("select * from users where username=? and password=?");
-            ps.setString(1,username);
-            ps.setString(2,password);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                return true;
-            }else{
-                return false;
+import java.sql.*;
+        public class Login {
+            private Connection conn;
+            private static String url = "jdbc:mysql://localhost";
+            private static String userName = "root";
+            private static String password = "password";
+            public Login() throws Exception{
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                conn = DriverManager.getConnection(url,userName,password);
             }
-        }catch(Exception e){
-            System.out.println(e);
+            public void login(String username,String password) throws Exception {
+                PreparedStatement ps=conn.prepareStatement("select * from users where username="+username);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()){
+                    String user_password=rs.getString("password");
+                    if(user_password.equals(password)){
+                        redirectToHomePage(username);
+                    }else{
+                        return;
+                    }
+                }else{
+                    return;
+                }
+            }
+            public void redirectToHomePage(String username) {
+                //logic to redirect the user to home page
+                System.out.println("Welcome "+username);
+            }
         }
-        return false;
-    }
-}

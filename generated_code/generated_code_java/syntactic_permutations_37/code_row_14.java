@@ -1,25 +1,29 @@
-package io.github.easymodeling.modeler.provider;
+import java.io.*;
+    import javax.servlet.http.*;
+    import javax.servlet.annotation.*;
     
-    import java.util.Optional;
+    @WebServlet("/")
+    public class Login extends HttpServlet {
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
     
-    public class LoginService {
-      private static final String SUCCESS = "success";
-      private static final String CANT_LOGIN = "cant_login";
-      private static final String INTERNAL_SERVER_ERROR = "internal_server_error";
+            if (username == null || password == null) {
+                response.sendRedirect("/internal_server_error");
+                return;
+            }
     
-      private UserRepository userRepository;
-      private LoginView view;
+            // Check the database for a matching username and password.
+            if (checkUser(username, password)) {
+                response.sendRedirect("/success");
+                return;
+            }
     
-      public void login(String username, String password) {
-        try {
-          Optional<User> optionalUser = userRepository.findByUsernameAndPassword(username, password);
-          if (optionalUser.isPresent()) {
-            view.redirect(SUCCESS);
-          } else {
-            view.redirect(CANT_LOGIN);
-          }
-        } catch (Exception e) {
-          view.redirect(INTERNAL_SERVER_ERROR);
+            response.sendRedirect("/cant_login");
         }
-      }
+    
+        private boolean checkUser(String username, String password) {
+            // Your implementation goes here.
+            return true;
+        }
     }

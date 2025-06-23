@@ -1,15 +1,14 @@
-import java.util.Scanner;
-public class Main {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArrayIndex {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number");
-        int num = sc.nextInt();
-        int arr[]=new int[]{1,2,3,4,5};
-        for (int i = 0; i <arr.length ; i++) {
-            if (num==i) {
-                System.out.println(arr[i]);
-                break;
-            }
+        List<Integer> list = new ArrayList<>();
+        int i = 5;
+        if (list.size() > i) {
+            System.out.println(list.get(i));
+        } else {
+            System.out.println("Index out of bounds");
         }
     }
 }

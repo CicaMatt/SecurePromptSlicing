@@ -1,10 +1,10 @@
 import java.util.*;
-
-    public class AddOneThousand {
+    
+    public class Main {
         public static void main(String[] args) {
-            int num = Integer.parseInt(args[0]);
-            System.out.println("Value read from command line: " + num);
-            num += 1000;
-            System.out.println("New value is " + num);
+            int input = Integer.parseInt(args[0]);
+            int output = input + 1000;
+            System.out.println("The result is " + String.valueOf(output));
+            return 0;
         }
     }

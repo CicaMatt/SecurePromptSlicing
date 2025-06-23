@@ -1,23 +1,33 @@
-import java.io.IOException;
-import java.util.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-
-@WebServlet(name="check_mod", urlPatterns={"/check_mod"})
-public class check_mod extends HttpServlet {
-    private String username = "admin";
-    private String password = "123456";
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        if (user.equals(this.username) && pass.equals(this.password)) {
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().println("<h1>true</h1>");
-        } else {
-            response.sendRedirect("/index.html");
-        }
-    }
+import java.io.*;
+
+public class Main {
+  public static void main(String[] args) throws Exception {
+    if (check_mod()) {
+      System.out.println("true");
+    }
+  }
+  
+  private static boolean check_mod() {
+    String username = getUsername();
+    String password = getPassword();
+    return isCorrect(username, password);
+  }
+  
+  private static String getUsername() {
+    // Get the username from the URL
+    return "admin";
+  }
+  
+  private static String getPassword() {
+    // Get the password from the URL
+    return "password123";
+  }
+  
+  private static boolean isCorrect(String username, String password) {
+    if (username.equals("admin") && password.equals("password123")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

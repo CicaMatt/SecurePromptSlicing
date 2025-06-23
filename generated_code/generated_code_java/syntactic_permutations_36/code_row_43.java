@@ -1,18 +1,25 @@
 import java.sql.*;
-class User {
-    private String name;
-    private String pass;
-    public boolean login() {
-        // Query database for username
-        if (db.exists(name)) {
-            // Check password
-            if (db.matchPassword(name, pass)) {
-                return true;
+    
+    public class Login {
+      static boolean login(String username, String password) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/userdb", "username", "password")) {
+          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username=?");
+          stmt.setString(1, username);
+          ResultSet resultSet = stmt.executeQuery();
+      
+          if (resultSet.next()) {
+            String dbpassword = resultSet.getString("password");
+            if (dbpassword.equals(password)) {
+              return true;
             } else {
-                return false;
+              return false;
             }
-        } else {
+          } else {
             return false;
+          }
+        } catch (SQLException ex) {
+          System.out.println(ex.getMessage());
+          return false;
         }
+      }
     }
-}

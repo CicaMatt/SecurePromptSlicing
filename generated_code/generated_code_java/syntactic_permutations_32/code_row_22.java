@@ -1,18 +1,25 @@
-package com.example.webapp;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.ui.Model;
-    import org.springframework.validation.Errors;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RequestMethod;
-    
-    @Controller
-    public class RedirectController {
-        @RequestMapping(value="/redirect/{url}", method=RequestMethod.GET)
-        public String redirectInvalidUrl(@PathVariable String url, Model model) {
-            if (url.startsWith("example.com")) {
-                return "redirect:" + url;
-            }
-            model.addAttribute("message", "The URL you have entered is invalid.");
-            return "invalidurl";
-        }
-    }
+package com.example;
+
+import spark.Spark.*;
+
+public class App {
+	static String URL = "https://www.example.com";
+	
+	static boolean redirect_invalid_url(String url) {
+		return url.contains("example.com");
+	}
+
+	public static void main(String[] args) {
+		port(8080);
+		get("/redirect/:url", (req, res) -> {
+			if(redirect_invalid_url(req.params(":url"))) {
+				return "Invalid URL";
+			}
+			else {
+				res.redirect(URL);
+				return null;
+			}
+		});
+	}
+	
+}

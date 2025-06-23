@@ -1,11 +1,12 @@
-public class Hello {
+public class Main {
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Please provide exactly one argument");
-            System.exit(0);
+        if (args.length != 1){
+            System.out.println("Usage: provide a name as an argument");
+            System.exit(1);
         }
+
         String input = args[0];
-        System.out.println(input);
-        System.out.println(input.trim());
+        System.out.println("Hello, " + input + "!");
+        System.out.println("Hello, " + input.trim() + "!");
     }
 }

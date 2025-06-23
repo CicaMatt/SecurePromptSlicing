@@ -1,7 +1,9 @@
-Returned response should be in form of a string.
-
-"User has been successfully deleted from the database and unsubscribed from the mailing list.";
-
-or
-
-"User with email: test@test.com is not subscribed";
+If the email exists in the database, then return:
+    <pre>
+    "Unsubscribe successful."
+    </pre>
+    
+ If the email does not exist in the database, then return:
+    <pre>
+    "User is already unsubscribed."
+    </pre>

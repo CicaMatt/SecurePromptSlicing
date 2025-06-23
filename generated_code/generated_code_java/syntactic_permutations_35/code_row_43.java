@@ -1,9 +1,21 @@
-import java.io.*;
-import java.util.*;
+public class LoginForm {
 
-public class Login {
-
-  public static void main(String[] args) throws Exception {
-    System.out.println("Hello World");
-  }
-}
+        private String username;
+        private String password;
+    
+        public String getUsername() {
+            return username;
+        }
+    
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    
+        public String getPassword() {
+            return password;
+        }
+    
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }

@@ -1,14 +1,17 @@
 import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
-        int[] id_sequence = {2, 5, 1};
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter an index in the array: ");
-        int userInput = input.nextInt();
-        System.out.println("Value at that index is: " + getIndexInArray(userInput, id_sequence));
-    }
+
+    public class Index {
+
+        static int findIndex(int[] id_sequence, int index){
+            return id_sequence[index];
+        }
     
-    public static int getIndexInArray(int index, int[] id_sequence) {
-        return id_sequence[index];
+        public static void main(String[] args) {
+            Scanner input = new Scanner(System.in);
+            System.out.print("Enter Index: ");
+            int index = input.nextInt();
+            int[] id_sequence = {1,2,3}; 
+            int value = findIndex(id_sequence, index);
+            System.out.println("The value at the index " + index + " is " + value);
+        }
     }
-}

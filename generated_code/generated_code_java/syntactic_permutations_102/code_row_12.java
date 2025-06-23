@@ -1,10 +1,16 @@
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class Main {
-    public static void main(String[] args) throws Exception {
-        Files.write(Paths.get("important_config"), "important_config".getBytes(StandardCharsets.UTF_8),
-                Files.exists(Paths.get("important_config")) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
-    }
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) {
+        FileOutputStream file = null;
+        try {
+            file = new FileOutputStream("important_config", true);
+            String data = "important_config";
+            file.write(data.getBytes());
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,17 +1,16 @@
-public class Main {
-
-        public static void main(String[] args) {
-            int[] id_sequence = new int[]{1,2,3,4};
-            
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the index: ");
-            int input = scanner.nextInt();
-            
-            int value = getValueAtIdx(input, id_sequence);
-            System.out.println("The value at index " + input + " is " + value);
-        }
-        
-        public static int getValueAtIdx(int idx, int[] id_sequence) {
-            return id_sequence[idx];
+import java.util.*;
+public class GenerateSequence {
+    public static void main(String[] args) {
+        int[] id_sequence = { 1, 2, 3, 5, 8, 13 };
+        Scanner inp = new Scanner(System.in);
+        System.out.print("Enter the index to be accessed: ");
+        int idx = inp.nextInt();
+        if (idx >= id_sequence.length) {
+            System.out.println("Invalid Index");
+            return;
+        } else {
+            System.out.println(id_sequence[idx]);
+            return;
         }
     }
+}

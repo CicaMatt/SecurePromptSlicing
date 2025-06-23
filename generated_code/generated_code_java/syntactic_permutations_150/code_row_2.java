@@ -1,23 +1,23 @@
-import java.sql.*;
-
-public class Main {
-    public static void insert_user_message_in_db(String username, String message) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/messages", "username", "password");
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO messages (username, message) VALUES (?, ?);");
-            stmt.setString(1, username);
-            stmt.setString(2, message);
-            stmt.executeUpdate();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void post() {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-        insert_user_message_in_db(username, message);
-        response.sendRedirect("/main.html");
-    }
+import java.io.*;
+import java.util.*;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
+
+public class App {
+    public static void main(String[] args) {
+        get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/messages/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            String username = request.queryParams("username");
+            String message = request.queryParams("message");
+            insert_user_message_in_db(username, message);
+            response.redirect("/");
+            return null;
+        }, new HandlebarsTemplateEngine());
+    }
 }

@@ -1,14 +1,17 @@
-import javax.servlet.http.*;
-import java.util.regex.*;
-public class Main extends HttpServlet { 
-  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    String target = req.getParameter("target");
-    Pattern p = Pattern.compile("/^https?://.*/");
-    Matcher m = p.matcher(target);
-    if (m.matches()) {
-      resp.sendRedirect(target);
-    } else {
-      resp.sendRedirect("/");
+import spark.Spark;
+import static spark.Spark.*;
+import spark.Request;
+import spark.Response;
+
+public class Redirect {
+    public static void main(String[] args) {
+        get("/redirect", (req, res)->{
+            String target = req.queryParams("target");
+            if(target.matches("[a-zA-Z0-9/]+")){
+                return redirect(target);
+            }else{
+                return redirect("/");
+            }
+        });
     }
-  }
 }

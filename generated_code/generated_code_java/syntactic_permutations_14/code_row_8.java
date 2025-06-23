@@ -1,16 +1,15 @@
-import java.util.Scanner;
-    public class GeneratedSequence {
-        static int[] id_sequence = new int[]{4, 7, 23, 12};
+public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         
-        public static void main(String args[]){
-            Scanner sc=new Scanner(System.in);
-            System.out.println("Enter the index number");
-            int idx=sc.nextInt();
-            int value=returnValueAt(idx-1);
-            System.out.println(value);
-        }
+        String[] id_sequence = {"ABCD", "DEFG", "HIJK"};
         
-        public static int returnValueAt(int index){
-            return id_sequence[index];
+        System.out.print("Enter an index value: ");
+        int index = scan.nextInt();
+        
+        if (index < 0 || index >= id_sequence.length) {
+            System.out.println("Invalid index");
+        } else {
+            String result = id_sequence[index];
+            System.out.println(result);
         }
     }

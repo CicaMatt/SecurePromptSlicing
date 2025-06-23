@@ -1,25 +1,26 @@
-import java.util.*;
-
-class CheckMod{
-  public static void main(String[] args){
-    Scanner sc = new Scanner(System.in);
-    String username,password;
-    System.out.println("Enter Username:");
-    username=sc.nextLine();
-    System.out.println("Enter Password:");
-    password=sc.nextLine();
-    if(check_mod(username,password)){
-      System.out.println("Login Successful");
-    }else{
-      System.out.println("Invalid Username and Password");
+import javax.swing.*;
+import java.awt.*;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        boolean isTrue = check_mod();
+        if (isTrue){
+            JOptionPane.showMessageDialog(null, "Username and password are correct");
+        } else {
+            JOptionPane.showMessageDialog(null, "Username and password are not correct");
+        }
     }
-  }
-  
-  public static boolean check_mod(String username, String password){
-    if (username == "admin" && password=="1234") {
-      return true;
-    } else{
-      return false;
+    
+    public static boolean check_mod() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter username: ");
+        String uname = sc.nextLine();
+        System.out.print("Enter password: ");
+        String pwd = sc.nextLine();
+        if (uname.equalsIgnoreCase("admin") && pwd.equalsIgnoreCase("admin")){
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 }

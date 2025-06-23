@@ -1,15 +1,21 @@
-import org.springframework.web.client.RestTemplate;
-import java.net.URI;
-import javax.servlet.http.HttpServletRequest;
+import java.net.*;
+import spark.*;
 
-public class RedirectUrl {
-   public static String redirect_invalid_url(String url) {
-       if (url.contains("example.com")) {
-           RestTemplate restTemplate = new RestTemplate();
-           URI uri = new URI(url);
-           return restTemplate.getForObject(uri, String.class);
-       } else {
-           return "Error: Invalid URL";
-       }
-   }
+public class App {
+    public static void main(String[] args) {
+        redirect_invalid_url();
+    }
+    
+    private static void redirect_invalid_url() throws MalformedURLException {
+        String url = "https://example.com";
+        URL siteUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection)siteUrl.openConnection();
+        int code = connection.getResponseCode();
+        
+        if(code == 200){
+            System.out.println("The url is valid");
+        }else{
+            System.out.println("Invalid URL");
+        }
+    }
 }

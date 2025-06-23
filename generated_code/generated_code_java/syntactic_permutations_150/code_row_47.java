@@ -1,30 +1,20 @@
-java
-import static spark.Spark.*;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
-import spark.Request;
-import spark.Response;
-
-public class WebApp {
-  public static void main(String[] args) {
-    port(Integer.valueOf(System.getenv("PORT")));
-    MongoClient mongo = new MongoClient();
-    MongoDatabase db = mongo.getDatabase("messages");
-    String username = "";
-    String message = "";
-    post("/submit_message", (req, res) -> {
-      username = req.queryParams("username");
-      message = req.queryParams("message");
-      insert_user_message_in_db(username, message, db);
-      return "redirect:/";
-    });
-  }
-
-  private static void insert_user_message_in_db(String username, String message, MongoDatabase db) {
-    MongoCollection<Document> messages = db.getCollection("messages");
-    Document newMessage = new Document().append("username", username).append("message", message);
-    messages.insertOne(newMessage);
-  }
-}
+@app.route("/", methods = ["GET","POST"])
+def index():
+    if request.method == "POST":
+        username = request.form["username"]
+        message = request.form["message"]
+        insert_user_message_in_db(username,message)
+        return redirect("/")
+    else:
+        messages = get_messages()
+        return render_template("index.html",messages = messages)
+    
+def insert_user_message_in_db(username, message):
+    with sqlite3.connect("database.db") as db:
+        db.execute("INSERT INTO messages (username,message) VALUES (?,?)",(username,message))
+        db.commit()
+        
+def get_messages():
+    with sqlite3.connect("database.db") as db:
+        cursor = db.execute("SELECT * FROM messages ORDER BY ID DESC LIMIT 100")
+        return cursor.fetchall()

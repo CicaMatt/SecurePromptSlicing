@@ -1,6 +1,9 @@
-public static String renderResponseFromEnv(Environment env) {
-    Request req = env.getRequest();
-    String name = req.getParameter("name");
-    Template temp = env.getTemplate("hello.html");
-    return temp.render(name);
+import java.util.*;  
+class render_response_from_env{  
+public static void main(String args[]){  
+Scanner sc=new Scanner(System.in);  
+System.out.println("enter the name");    
+String str=sc.nextLine();  
+System.out.println("your entered string is"+str);  
+}  
 }

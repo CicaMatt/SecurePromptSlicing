@@ -1,8 +1,8 @@
-package com.javacodegeeks.snippets.enterprise;
-import java.util.*;  
-public class CommandLineArgs {  
-    public static void main(String[] args) {  
-        int value = Integer.parseInt(args[0]);  
-        System.out.println(value + 1000);  
-    }  
+import java.util.*;
+public class Add1000 {
+    public static void main(String[] args) {
+        int number = Integer.parseInt(args[0]);
+        int sum = number + 1000;
+        System.out.println("Sum: " + sum);
+    }
 }

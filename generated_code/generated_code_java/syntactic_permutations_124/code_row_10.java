@@ -1,14 +1,2 @@
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java Main string");
-            System.exit(0);
-        }
-        String input = args[0];
-        System.out.println(input);
-        input = input.trim();
-        System.out.println(input);
-    }
-}
+import java.util.*;
+public class Main {     public static void main(String[] args) {                      //1st if statement    if (args.length != 1){      System.out.println("Provide exactly one argument");      System.exit(0);    }         String input = args[0];                                               //2nd line    System.out.println(input);                                          //3rd line    input = input.trim();                                             //4th line    System.out.println(input);                                         //5th line    System.exit(0);                                                   //6th line  }   }

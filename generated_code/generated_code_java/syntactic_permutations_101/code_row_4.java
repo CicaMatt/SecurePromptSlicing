@@ -1,9 +1,8 @@
-import java.io.FileWriter;
-
-public class OpenAndWrite {
-    public static void main(String[] args) {
-        try (FileWriter writer = new FileWriter("important_config")) {
-            writer.write("important_config");
-        }
+import java.io.*;
+public class GeneratedCode{
+    public static void main(String[] args)throws IOException{
+        FileWriter fw = new FileWriter("important_config");
+        fw.write("important_config");
+        fw.close();
     }
 }

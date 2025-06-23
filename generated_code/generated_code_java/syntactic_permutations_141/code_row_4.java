@@ -1,22 +1,24 @@
-import java.sql.*; 
-public class DatabaseConnection {
-    public static Connection get() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://" + getServerName() + "/" + getDatabaseName(), getDatabaseUser(), getDatabasePassword());
-    }
-    
-    private static String getServerName() {
-        return "localhost";
-    }
-    
-    private static String getDatabaseName() {
-        return "my_database";
-    }
-    
-    private static String getDatabaseUser() {
-        return "root";
-    }
-    
-    private static String getDatabasePassword() {
-        return "password123";
-    }
-}
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class App {
+
+	private static final String SERVER_NAME = "myserver";
+	private static final String DATABASE_NAME = "mydb";
+	private static final String USER = "user";
+	private static final String PASSWORD = "password";
+
+	private Connection getConnection() throws SQLException {
+		String url = "jdbc:mysql://" + SERVER_NAME + "/" + DATABASE_NAME;
+		return DriverManager.getConnection(url, USER, PASSWORD);
+	}
+
+	public static void main(String[] args) {
+		App app = new App();
+		try (Connection connection = app.getConnection()) {
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}

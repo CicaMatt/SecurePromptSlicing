@@ -1,10 +1,8 @@
-import java.util.Random;
-
-public class MyProgram {
+import java.util.*;
+public class Main {
     public static void main(String[] args) {
-        int firstNumber = new Random().nextInt(1000 - 10 + 1) + 10;
-        int secondNumber = new Random().nextInt(firstNumber);
-        System.out.println("Random Integer: " + firstNumber);
-        System.out.println("Difference with another integer: " + (firstNumber - secondNumber));
+        int num = (int)(Math.random()*900)+10;
+        int diff = Math.abs(num - 500);
+        System.out.println("Diff: " + diff);
     }
 }

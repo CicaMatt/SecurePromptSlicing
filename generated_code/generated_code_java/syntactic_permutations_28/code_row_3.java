@@ -1,21 +1,19 @@
-import java.util.regex.*;
-public class RedirectModule {
-    public static final String TARGET_URL_REGEX = ".*";
-    public static final String DEFAULT_TARGET_URL = "http://www.example.com/";
-    
-    private Pattern pattern;
-    private Matcher matcher;
-    
-    public RedirectModule() {
-        this.pattern = Pattern.compile(TARGET_URL_REGEX);
-    }
-    
-    public String getRedirectTarget(String url) {
-        this.matcher = this.pattern.matcher(url);
-        if (this.matcher.matches()) {
-            return url;
-        } else {
-            return DEFAULT_TARGET_URL;
-        }
-    }
+import java.util.regex.*;  
+public class RedirectModule {  
+    private Pattern pattern;  
+    private String defaultRedirectUrl;  
+    public void init(String regex, String defaultRedirect) {  
+        this.pattern = Pattern.compile(regex);  
+        this.defaultRedirectUrl = defaultRedirect;  
+    }  
+    public boolean matchesTargetUrl(String targetUrl) {  
+        return pattern.matcher(targetUrl).find();  
+    }  
+    public String getRedirectUrl(String targetUrl) {  
+        if (matchesTargetUrl(targetUrl)) {  
+            return targetUrl;  
+        } else {  
+            return defaultRedirectUrl;  
+        }  
+    }  
 }

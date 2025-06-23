@@ -1,21 +1,15 @@
 import java.util.*;
-
-public class Main {
-  public static void main(String[] args) {
-    if (args.length != 1){
-      System.out.println("Usage: please provide a string");
-      return;
-    } else if (!args[0].getClass().equals(String.class)){
-      System.out.println("Invalid argument type");
-      return;
+import java.io.*;
+public class Test{
+    public static void main(String[] args){
+        if (args.length != 1) {
+            System.out.println("Provide one argument");
+        } else {
+            String s = args[0];
+            for (int i=0;i<s.length();i++) {
+                System.out.print(s.charAt(i));
+            }
+            System.out.println('\\0');
+        }
     }
-    String trimmed = args[0].trim();
-    for (int i = 0; i < trimmed.length(); i++){
-      if (Character.isWhitespace(trimmed.charAt(i))){
-        System.out.println("Invalid string, contains whitespace");
-        return;
-      }
-    }
-    String nullTerminated = trimmed + "\0";
-  }
 }

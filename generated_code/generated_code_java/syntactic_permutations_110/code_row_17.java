@@ -1,19 +1,15 @@
-import java.util.*;
-
-public class Main {
-	public static void main(String[] args) {
-		String username = args[0];
-		int status = getExitStatusOfCommand("id " + username);
-		System.out.println(status);
-	}
-
-	private static int getExitStatusOfCommand(String command) {
-		Process process = null;
-		try {
-			process = Runtime.getRuntime().exec(command);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return process.exitValue();
-	} 
+import java.io.*;
+import java.util.*;
+public class HelloWorld {
+    public static void main(String[] args) {
+        String username = args[0];
+        try{
+            ProcessBuilder builder = new ProcessBuilder("id",username);
+            Process process = builder.start();
+            int exitStatus = process.waitFor();
+            System.out.println(exitStatus);
+        }catch(IOException ex){
+            System.out.println("Invalid username");
+        }catch(InterruptedException e){}
+    }
 }

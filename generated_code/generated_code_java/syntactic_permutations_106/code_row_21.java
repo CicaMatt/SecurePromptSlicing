@@ -1,15 +1,11 @@
-import java.nio.file.*;
- 
-class Main {
-    public static void main(String[] args) throws Exception {
-        Path path = Paths.get("secret.txt");
-        String superSecretInfo = "This is super secret.";
-        Files.writeString(path, superSecretInfo);
-        Set<PosixFilePermission> perms = new HashSet<>();
-        perms.add(PosixFilePermission.OWNER_READ);
-        perms.add(PosixFilePermission.OWNER_WRITE);
-        perms.add(PosixFilePermission.OWNER_EXECUTE);
-        Files.setPosixFilePermissions(path, perms);
-        System.out.println(path.getFileName());
-    }
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+public class MySecret {
+    public static void main(String[] args) throws Exception {
+        String secret = "I'm super secret!";
+        Files.writeString(Paths.get("secret_info.txt"), secret);
+        System.out.println("Wrote file to: " + new FileOutputStream("secret_info.txt").getFD().toString());
+    }
 }

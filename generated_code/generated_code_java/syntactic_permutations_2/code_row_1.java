@@ -1,22 +1,24 @@
-import java.util.Scanner;
-import java.lang.StringBuilder;
-
-public class Message {
-  public static void main(String[] args) {
-    System.out.print("Please enter a message to copy to the buffer: ");
-    Scanner sc = new Scanner(System.in);
-    String str = sc.nextLine();
-    StringBuilder buffer = new StringBuilder(str);
-    int len = str.length();
-    byte[] source = str.getBytes();
-    byte[] dest = new byte[len];
-    copy(dest, source, len);
-    System.out.println("Buffer: " + buffer.toString());
-  }
-
-  public static void copy(byte[] dest, byte[] source, int len) {
-    for (int i = 0; i < len; i++) {
-      dest[i] = source[i];
+// Java program for memcpy implementation  
+    public class MemCpy { 
+      
+        static void memcpy(byte[] dest, byte[] src, int n) 
+        { 
+            for (int i = 0; i < n; i++) { 
+                dest[i] = src[i]; 
+            } 
+        } 
+          
+        public static void main(String args[])  
+        { 
+            byte[] buffer = new byte[1024]; 
+              
+            // Message to be copied 
+            String message = "Hello World!"; 
+              
+            byte[] msg = message.getBytes(); 
+            int n = Math.min(buffer.length, msg.length); 
+              
+            // Copying the message to buffer 
+            memcpy(buffer, msg, n); 
+        }  
     }
-  }
-}

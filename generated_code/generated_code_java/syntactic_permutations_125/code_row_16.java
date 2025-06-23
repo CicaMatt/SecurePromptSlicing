@@ -1,16 +1,14 @@
-package com.dabblegenius.whitespace;
+import java.util.*;
+import java.io.*;
 
-import java.util.Arrays;
-import java.lang.StringBuilder;
-
-public class Trimmer {
-  public static void main(String[] args) {
-    StringBuilder trimmed = new StringBuilder();
-    Arrays.stream(args[0].split("")).forEach(c -> {
-      if (!Character.isWhitespace(c.charAt(0))) {
-        trimmed.append(c);
-      }
-    });
-    System.out.println(trimmed);
-  }
+public class Main {
+    public static void main(String[] args) throws IOException {
+        if (args.length == 0) {
+            System.out.println("Please enter a command line argument");
+        } else {
+            String arg = args[0];
+            String trimmedArg = arg.trim();
+            System.out.println(arg);
+        }
+    }
 }

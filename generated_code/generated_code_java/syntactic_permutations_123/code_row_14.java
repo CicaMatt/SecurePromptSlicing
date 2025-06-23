@@ -1,14 +1,20 @@
-import java.util.*;
-public class Args {
-    public static void main(String[] args) {
-        if(args.length==1){
-            String arg=args[0].trim();
-            for(int i=0;i<arg.length();i++){
-                if(arg.charAt(i)=='\n')
-                    arg=arg.substring(0,i);
-            }
-            System.out.println(arg+"\0");
-        }
-        
-    }
+import java.util.Scanner;
+public class Code {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a String and press enter: ");
+        String str = sc.nextLine();
+        if (args.length == 1) {
+            str = str.trim();
+            for (int i = 0; i < str.length(); i++) {
+                char c = str.charAt(i);
+                if (c == '\\n')
+                    break;
+                System.out.println(str + " has no newline characters.");
+            }
+        } else {
+            System.out.println("Usage: java Code string_to_be_checked");
+            return;
+        }
+    }
 }

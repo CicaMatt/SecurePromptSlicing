@@ -1,14 +1,16 @@
-public class Redirect {
-        public static void main(String[] args) throws Exception {
-            Spark.get("/redirect", (request, response) -> redirect_invalid_url(request.queryParams("url")));
-        }
-    
-        private static String redirect_invalid_url(String url) throws URISyntaxException {
-            URI uri = new URI(url);
-            if (uri.getHost().equalsIgnoreCase("example.com")) {
-                response.redirect(url, 301);
-            } else {
-                return "Invalid URL";
-            }
-        }
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class Servlet extends HttpServlet {
+  protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    String url = request.getParameter("url");
+    if (redirect_invalid_url(url)) {
+      response.sendRedirect(url);
+    } else {
+      response.getWriter().write("<h1>Invalid URL</h1>");
     }
+  }
+  private boolean redirect_invalid_url(String url) {
+    return (url == null || !url.startsWith("https://example.com"));
+  }
+}

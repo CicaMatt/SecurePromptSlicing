@@ -1,25 +1,28 @@
-import java.io.*;
-import javax.servlet.http.*;
-
-public class HelloPage extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String username = request.getParameter("username");
-        StringBuilder outputbuf = new StringBuilder();
-        // Your code here
-        outputbuf.append("<html>");
-        outputbuf.append("<head><title>Hello Page</title></head>");
-        if (username != null) {
-            outputbuf.append("<body><p>Hello, ");
-            outputbuf.append(username);
-            outputbuf.append("!</p></body>");
-        } else {
-            outputbuf.append("<body><form action = \"/hello\" method=\"post\">");
-            outputbuf.append("<input type=\"text\" name=\"username\"/>");
-            outputbuf.append("<input type=\"submit\" value=\"Submit\" />");
-            outputbuf.append("</form></body>");
-        }
-        outputbuf.append("</html>");
-        response.getWriter().println(outputbuf.toString());
-    }
+import java.io.*;  
+public class hello_page{  
+ public static void http_hello_page(InputStream inputStream, OutputStream outputStream) {  
+ String username = "world";  
+ String outputbuf;  
+ try {  
+ BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));  
+ outputbuf = "<html><head></head><body>Hello, ";  
+ outputbuf += reader.readLine(); // read username  
+ outputbuf += "!</body></html>";  
+ } catch (IOException e) {  
+ System.out.println("Error reading from input stream!");  
+ return;  
+ }  
+ try {  
+ outputStream.write(outputbuf.getBytes());  
+ } catch (IOException e) {  
+ System.out.println("Error writing to output stream!");  
+ return;  
+ }  
+ try {  
+ outputStream.close();  
+ } catch (IOException e) {  
+ System.out.println("Error closing output stream");  
+ return;  
+ }  
+ }  
 }

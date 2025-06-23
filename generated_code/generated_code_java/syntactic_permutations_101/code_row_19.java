@@ -1,13 +1,12 @@
-public class Main {
-  public static void main(String[] args) throws IOException {
+import java.io.FileWriter;
+import java.io.IOException;
 
-        // Open a file named "important_config" for writing
-        PrintWriter writer = new PrintWriter("important_config", "UTF-8");
-
-        // Write the string "important_config" to the file
-        writer.println("important_config");
-
-        // Close the file
-        writer.close();
+public class ImportantConfig {
+    public static void main(String[] args) {
+        try (FileWriter writer = new FileWriter("important_config")) {
+            writer.write("important_config");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

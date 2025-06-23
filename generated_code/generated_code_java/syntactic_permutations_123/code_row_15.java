@@ -1,17 +1,10 @@
-import java.util.Scanner;
-
-public class Code {
-    public static void main(String[] args) {
-        if (args.length == 1) {
-            String s = args[0].trim();
-            for (int i = s.length() - 1; i >= 0; i--) {
-                char c = s.charAt(i);
-                if (c != '\n') {
-                    s = s.substring(0, i + 1);
-                    break;
-                }
-            }
-            System.out.println(s);
-        }
-    }
-}
+import java.util.*;   
+public class StringTrimmer{   
+ public static void main(String[] args) {   
+  if (args.length == 1 && args[0] instanceof String){    
+   for (int i = 0;i < args[0].length();i++){    
+    for (int j = i + 1;j < args[0].length();j++){    
+     if(args[0].charAt(i) == ' ' && args[0].charAt(j) == '\n'){    
+      args[0] = args[0].substring(0, i);    
+      break;   }  }  }  } else {    
+   System.out.println("Wrong input");  }  } }

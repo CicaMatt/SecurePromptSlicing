@@ -1,8 +1,13 @@
-import urllib.parse 
-def redirect_url(url):
-    parsed_url = urllib.parse.urlparse(url)
-    network_location = parsed_url.netloc
-    if network_location == "example.com":
-        return url
-    else:
-        raise Exception("Invalid URL")
+import java.net.*;
+public class RedirectUrl{
+    public static void main(String[] args){
+        String url = "http://www.example.com";
+        URL parsed_url = new URL(url);
+        String domainName = parsed_url.getHost();
+        if(domainName == "example.com"){
+            System.out.print("Redirected");
+        }else{
+            System.out.print("Not Redirected");
+        }
+    }
+}

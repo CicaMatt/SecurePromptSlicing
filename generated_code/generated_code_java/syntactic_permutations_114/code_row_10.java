@@ -1,14 +1,16 @@
-import java.io.IOException;
-import java.util.*;
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        String output = "";
-        Process p = Runtime.getRuntime().exec("ls -l");
-        BufferedReader inputStream = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
-        while ((line = inputStream.readLine()) != null) {
-            output += line;
-        }
-        System.out.println(output);
-    }
+import java.io.*;  
+public class MyClass {  
+    public static void main(String args[]) {  
+      try{  
+        String[] cmd = {"/bin/sh","-c", "ls"};  
+        Process p = Runtime.getRuntime().exec(cmd);  
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));  
+        String line = null;  
+        while((line = in.readLine()) != null) {  
+          System.out.println(line);  
+        }  
+      } catch(Exception e){  
+        e.printStackTrace();  
+      }  
+    }  
 }

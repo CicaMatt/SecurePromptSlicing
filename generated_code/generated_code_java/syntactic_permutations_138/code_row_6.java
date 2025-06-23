@@ -1,20 +1,27 @@
-import express from 'express';
-import mongoose from 'mongoose';
-
-// Connect to the database before starting the app
-mongoose.connect('mongodb://localhost/forumDB', { useNewUrlParser: true });
-
-const User = require('./models/User');
-
-const router = express.Router();
-
-router.get('/isModerator/:username', (req, res) => {
-  const { username } = req.params;
-  User.findOne({ username }, (err, user) => {
-    if (err) return res.status(500).send('Server error');
-    if (!user) return res.status(404).send('User not found');
-    return res.send(user.isModerator);
-  });
-});
-
-module.exports = router;
+package com.example;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.sql.*;
+public class UserServlet extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        boolean isModerator;
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "username", "password")) {
+            Statement statement = connection.createStatement();
+            String query = "SELECT moderator FROM users WHERE id = " + userId;
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                isModerator = resultSet.getBoolean("moderator");
+            } else {
+                response.sendError(404, "User not found");
+                return;
+            }
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
+        response.setContentType("application/json");
+        response.getWriter().write("{\"isModerator\": " + isModerator + "}");
+    }
+}

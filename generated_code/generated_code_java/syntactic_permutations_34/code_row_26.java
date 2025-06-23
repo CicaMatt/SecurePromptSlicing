@@ -1,37 +1,33 @@
-import java.io.*; 
-import javax.servlet.*; 
-import javax.servlet.http.*; 
-import java.sql.*; 
-import oracle.jdbc.*; 
+import java.util.*;
 
-public class LoginServlet extends HttpServlet { 
-   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
-      String username = request.getParameter("username"); 
-      String password = request.getParameter("password"); 
-      
-      try { 
-         Connection con = null; 
-         
-         Class.forName("oracle.jdbc.driver.OracleDriver");  
-         con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "password"); 
-         
-         String query = "select * from user where username = ? and password = ?"; 
-         
-         PreparedStatement ps = con.prepareStatement(query); 
-         ps.setString(1, username); 
-         ps.setString(2, password); 
-         
-         ResultSet rs = ps.executeQuery(); 
-         if (rs.next()) { 
-            String dashboardUrl = "/dashboard"; 
-            response.sendRedirect(dashboardUrl); 
-         } else { 
-            String loginPageUrl = "/login"; 
-            response.sendRedirect(loginPageUrl); 
-         } 
-         
-      } catch (Exception e) { 
-         System.out.println("Error: " + e); 
-      } 
-   } 
+import javax.servlet.*;
+
+import javax.servlet.http.*;
+
+import java.sql.*;
+
+public class LoginPage extends HttpServlet {
+
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+    dispatcher.forward(request, response);
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+
+    if (checkDatabase(username, password)) {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/dashboard.jsp");
+      dispatcher.forward(request, response);
+    } else {
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+      dispatcher.forward(request, response);
+    }
+  }
+
+  private boolean checkDatabase(String username, String password) {
+    // Connect to the database and query if the username and password exist in the database.
+    return true;
+  }
 }

@@ -1,10 +1,11 @@
 import java.io.*;
-    
-    public class JavaWriteToFileExample {
+    public class ConfigWriter {
         public static void main(String[] args) throws IOException {
-            FileOutputStream fout = new FileOutputStream("important_config", true);
-            try (OutputStreamWriter writer = new OutputStreamWriter(fout, StandardCharsets.UTF_8)) {
-                writer.write("important_config");
-            }
+            FileOutputStream fileStream = new FileOutputStream("important_config", true);
+            OutputStreamWriter streamWriter = new OutputStreamWriter(fileStream, "UTF-8");
+            BufferedWriter bufferedWriter = new BufferedWriter(streamWriter);
+            bufferedWriter.write("important_config");
+            bufferedWriter.newLine();
+            bufferedWriter.close();
         }
     }

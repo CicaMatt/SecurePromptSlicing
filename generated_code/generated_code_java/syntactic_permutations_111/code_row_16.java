@@ -1,18 +1,15 @@
-import java.lang.*;
+import java.io.*;
 
-public class App {
-    public void ping(String url){
+public class ping_decorator {
+    public static void main(String[] args) throws IOException {
+        String url = "https://www.google.com/";
+        Process process = Runtime.getRuntime().exec("ping " + url);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String output = "";
-        try{
-            Process p = Runtime.getRuntime().exec("ping " + url);
-            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while((line=input.readLine())!=null){
-                output+=line;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            output += line + "\n";
         }
-        return output;
+        System.out.print(output);
     }
 }

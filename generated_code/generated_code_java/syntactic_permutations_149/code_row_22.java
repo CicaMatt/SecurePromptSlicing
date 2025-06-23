@@ -1,20 +1,21 @@
-import java.sql.*;   
-public class post {  
-    public static void main(String[] args) throws Exception{   
-        String username = request.queryParams("username");   
-        String message=request.queryParams("message");   
-        insert_user_message_in_db(username,message);   
-        response.redirect("/display_messages");
-    }  
-
-public static void insert_user_message_in_db(String username, String message) throws Exception{  
-    String url = "jdbc:sqlite:C:/users/admin/desktop/chatapp.db";   
-    Connection conn=DriverManager.getConnection(url);   
-    Statement stmt = conn.createStatement();   
-    String insertQuery="insert into messages (username,message) values (?,?)"  
-    PreparedStatement pstmt =conn.prepareStatement(insertQuery);   
-    pstmt.setString(1,username);   
-    pstmt.setString(2, message);   
-    pstmt.executeUpdate();   
-    conn.close();  
-}}
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
+import java.io.*;
+public class post extends HttpServlet{
+    public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
+        String username=request.getParameter("username");
+        String message=request.getParameter("message");
+        insert_user_message_in_db(username,message);
+        RequestDispatcher rd=request.getRequestDispatcher("/display");
+        rd.forward(request,response);    
+}
+public void doPost(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
+        String username=request.getParameter("username");
+        String message=request.getParameter("message");
+        insert_user_message_in_db(username,message);
+        RequestDispatcher rd=request.getRequestDispatcher("/display");
+        rd.forward(request,response);    
+}
+public void insert_user_message_in_db(String username,String message)throws ServletException,IOException{
+        //code to insert the user and message into a database
+}

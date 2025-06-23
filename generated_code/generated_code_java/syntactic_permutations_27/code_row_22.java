@@ -1,9 +1,10 @@
-public class Main { 
-        public static void main(String[] args) {
-            int totalSales = 0;
-            totalSales += 375294;
-            totalSales += 186545;
-            totalSales += 500000;
-            System.out.println("Total Sales: " + totalSales);
-        }
-    }
+import java.util.*;
+class Main {
+  public static void main(String[] args) {
+    double totalSales = 0;
+    totalSales += 5876433.12;
+    totalSales += 590434.43;
+    totalSales += 945523.00;
+    System.out.println("The total sales for this year is $" + totalSales);
+  }
+}

@@ -1,19 +1,19 @@
-import java.net.*;
-    import spark.Spark;
+import java.util.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class RedirectApp extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-    public class RedirectInvalidUrl {
-        public static void main(String[] args) {
-            Spark.get("/redirect/:url", (request, response) -> {
-                String url = request.params(":url");
-                if (!url.startsWith("http://example.com")) {
-                    return "Invalid URL";
-                } else {
-                    try {
-                        response.redirect(url);
-                    } catch (MalformedURLException e) {
-                        return "Error: URL could not be redirected.";
-                    }
-                }
-            });
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String redirectUrl = request.getParameter("url");
+        if (redirectInvalidUrl(redirectUrl)) {
+            response.sendRedirect(redirectUrl);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
+
+    private boolean redirectInvalidUrl(String redirectUrl) {
+        return redirectUrl != null && redirectUrl.contains("example.com");
+    }
+}

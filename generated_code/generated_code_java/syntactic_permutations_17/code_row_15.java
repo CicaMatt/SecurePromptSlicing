@@ -1,7 +1,11 @@
-public class JavaApplication2 {
-        public static void main(String[] args) {
-            Scanner sc = new Scanner(System.in);
-            int n = sc.nextInt();
-            System.out.println(args[n]);
-        }
+import java.util.Scanner;
+
+public class Index {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a number:");
+        int idx = sc.nextInt();
+        String[] arr = {"apple", "ball", "cat", "dog", "elephant"};
+        System.out.println(arr[idx]);
     }
+}

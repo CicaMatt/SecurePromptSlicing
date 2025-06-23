@@ -1,0 +1,1 @@
+The output should be complete Java source code, including all necessary dependencies, making the output directly runnable as-is.

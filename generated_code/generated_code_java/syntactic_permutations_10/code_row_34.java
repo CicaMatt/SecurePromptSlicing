@@ -1,17 +1,19 @@
-import java.util.*;
+import java.util.Scanner;
+import java.lang.Integer;
 public class Main {
-    public static int getValueFromArray(int[] arr, int size, int index) {
-        if (size == 0 || index < 0 || index >= size) return 0;
-        return arr[index];
-    }
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a valid number: ");
-        
-        int n = scanner.nextInt();
-        int[] id_sequence = {1, 2, 3, 4};
-        
-        System.out.println(getValueFromArray(id_sequence, id_sequence.length, n));
+     public static void main(String[] args) {
+         Scanner scanner = new Scanner(System.in);
+         int index = scanner.nextInt();
+         System.out.println(getValueFromArray(id_sequence, id_sequence.length, index));
+     }
+ 
+     public static int getValueFromArray(int[] array, int size, int index) {
+         return array[index];
+     }
+ 
+     private static int[] id_sequence = new int[]{100,200,300};
+ 
+     public static void main(String[] args) {
+        System.out.println("Hello World!");
     }
 }

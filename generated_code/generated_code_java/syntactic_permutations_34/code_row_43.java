@@ -1,53 +1,25 @@
-package com.dipu.main;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
 
-    import java.util.*;
+public class Login {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String userName = sc.nextLine();
+        String password = sc.nextLine();
 
-    public class login {
-
-        private String username, password;
-        private boolean isLoggedIn = false;
-
-        //constructor
-
-        public login() {
-
-            this.username = "";
-            this.password = "";
-        }
-
-        //method to get the username and password from the user
-
-        public void setCredentials(String uname, String pword) {
-
-            this.username = uname;
-            this.password = pword;
-            login();
-        }
-
-        //method to check if the entered username and password matches the database
-
-        private boolean login() {
-
-            List<Map<String, String>> users = new ArrayList<>();
-
-            Map<String, String> user1 = new HashMap<>();
-            Map<String, String> user2 = new HashMap<>();
-
-            user1.put("username", "dipu");
-            user1.put("password", "abcdefgh");
-
-            user2.put("username", "raj");
-            user2.put("password", "pqrstuvwxyz");
-
-            users.add(user1);
-            users.add(user2);
-
-            for (Map<String, String> user : users) {
-                if (this.username.equalsIgnoreCase(user.get("username")) && this.password.equals(user.get("password"))) {
-                    isLoggedIn = true;
-                    return true;
-                }
-            }
-            return false;
+        // check if the username and password are correct by accessing the database
+        if (usernameMatchesPassword(userName, password)) {
+            System.out.println("Login Successful");
+        } else {
+            System.out.println("Login Failed");
         }
     }
+
+    public static boolean usernameMatchesPassword(String userName, String password) {
+        // code to check the database and return true or false
+        return false;
+    }
+}

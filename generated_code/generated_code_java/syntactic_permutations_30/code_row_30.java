@@ -1,15 +1,15 @@
-import java.util.*;
-import java.lang.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-public class Main {
-  public static void main(String[] args) {
-    String pattern = "^[\\w-]+\\.[a-zA-Z0-9]{2,3}(?:[\\w-]+)?$";
-    Pattern r = Pattern.compile(pattern);
-    Matcher m = r.matcher("target");
-    if (m.find()) {
-      System.out.println("Match found");
-    } else {
-      System.out.println("Match not found");
+public class Redirect {
+    public static void main(String[] args) {
+        String str = "https://example.com/";
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]+$");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            System.out.println("Valid string");
+        } else {
+            System.out.println("Invalid string");
+        }
     }
-  }
 }

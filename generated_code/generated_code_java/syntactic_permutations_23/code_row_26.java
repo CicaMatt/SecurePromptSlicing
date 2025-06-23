@@ -1,18 +1,20 @@
-package com.davinci;
-
 import java.util.*;
-
-public class RandomIntegers {
-
-    public static void main(String[] args) {
-        int a = new Random().nextInt(9000);
-        int b = new Random().nextInt(9000);
-        int c = new Random().nextInt(9000);
+    
+    public class RandomIntegers {
+        private static final int MIN = 1000;
+        private static final int MAX = 9999;
         
-        System.out.println("a : " + a);
-        System.out.println("b : " + b);
-        System.out.println("c : " + c);
-        
-        System.out.println("sum: " + (a+b+c));
+        public static void main(String[] args) {
+            Random rand = new Random();
+            
+            int a = rand.nextInt((MAX - MIN) + 1) + MIN;
+            int b = rand.nextInt((MAX - MIN) + 1) + MIN;
+            int c = rand.nextInt((MAX - MIN) + 1) + MIN;
+            
+            System.out.println("a : " + a);
+            System.out.println("b : " + b);
+            System.out.println("c : " + c);
+            int sum = a + b + c;
+            System.out.println("sum: " + sum);
+        }
     }
-}

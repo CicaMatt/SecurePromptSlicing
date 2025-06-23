@@ -1,12 +1,11 @@
+package com.example;
 import java.util.*;
-
-    public class Main {
-    	public static void main(String[] args) {
-        	Scanner sc = new Scanner(System.in);
-            System.out.println("Enter a value: ");
-            int value = sc.nextInt();
-            int offset = 1000;
-            int result = value + offset;
-            System.out.println("Result with offset: " + result);
-        }
+public class AddOffset {
+    public static void main(String[] args) {
+        int i = Integer.parseInt(args[0]);
+        System.out.println("The original value is "+i);
+        int offset = 1000;
+        int result = i + offset;
+        System.out.println("The new value with offset applied is "+result);
     }
+}

@@ -1,11 +1,15 @@
+java
 import java.util.*;
-public class Id_Index{
-    public static int getIdFromSequence(int index){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a value: ");
-        int userInput = sc.nextInt();
-        return id_sequence[index];
+public class Main{
+  public static void main(String[] args){
+    int[] id_sequence = {1,2,3,4,5};
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter index value: ");
+    int i = scanner.nextInt();
+    if(i < 0 || i >= id_sequence.length) {
+      System.out.println("Invalid index");
+    } else {
+      System.out.println(id_sequence[i]);
     }
-    
-    private static final int[] id_sequence = {1, 2, 3, 4, 5};
+  }
 }

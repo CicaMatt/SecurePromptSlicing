@@ -1,18 +1,12 @@
-import java.io.*;
-public class FileCreate {
-    public static void main(String[] args) {
-        try{
-            //create a new file or truncate an existing one
-            RandomAccessFile raf = new RandomAccessFile("test.txt", "rw");
-            //write some data
-            raf.seek(0);
-            raf.write("Hello World".getBytes());
-        } catch (IOException e) {
-            System.out.println("IO Exception: " + e.getMessage());
-        } finally {
-            try{
-                raf.close();
-            } catch(Exception e){}
+import java.io.File;
+    import java.io.IOException;
+    import java.nio.file.Files;
+    import java.nio.file.StandardOpenOption;
+    
+    public class Main {
+        public static void main(String[] args) throws IOException {
+            File file = new File("test.txt");
+            Files.write(file.toPath(), "Hello World".getBytes(), StandardOpenOption.CREATE, 
+                StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
         }
     }
-}

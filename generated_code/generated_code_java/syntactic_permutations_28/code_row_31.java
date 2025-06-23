@@ -1,25 +1,22 @@
 import java.util.*;
 import java.util.regex.*;
-
-public class RedirectModule {
-    private Pattern regex;
-    private String defaultUrl = "http://www.google.com";
-    private String targetUrl;
-    
-    public RedirectModule(String regex) {
-        this.regex = Pattern.compile(regex);
+import com.google.common.collect.ImmutableList;
+public class RedirectRule {
+    private final String regexp;
+    private final Pattern pattern;
+    private final String defaultUrl;
+    public RedirectRule(String regexp, String defaultUrl) {
+        this.regexp = regexp;
+        this.pattern = Pattern.compile(regexp);
+        this.defaultUrl = defaultUrl;
     }
-    
-    public void setTargetUrl(String url) {
-        Matcher matcher = regex.matcher(url);
-        if (matcher.find()) {
-            targetUrl = url;
+    public String applyTo(String url) {
+        if (this.pattern.matcher(url).matches()) {
+            return url;
         } else {
-            targetUrl = defaultUrl;
+            return this.defaultUrl;
         }
     }
-    
-    public String getTargetUrl() {
-        return targetUrl;
-    }
 }
+RedirectRule rule = new RedirectRule("https://example\\.com/.*", "https://www\\.example\\.com/");
+System.out.println(rule.applyTo("http://example.com"));   // https://www.example.com/

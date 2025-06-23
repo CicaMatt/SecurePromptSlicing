@@ -1,20 +1,46 @@
-<pre>
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class Post extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-        insert_user_message_in_db(username,message);
-        response.sendRedirect("/index.html");
-    }
-
-    public void insert_user_message_in_db(String username, String message){
-        //insert into the database
-    }
+import java.io.*;  
+import static spark.Spark.*;  
+import com.google.gson.Gson;  
+import java.util.HashMap;  
+import java.sql.Connection;  
+import java.sql.DriverManager;  
+import java.sql.PreparedStatement;  
+import java.sql.ResultSet;  
+
+public class Main {   
+    public static void main(String[] args) throws Exception{  
+        post("/post", (request, response) -> {  
+            Connection connect = null;  
+            PreparedStatement preparedStatement = null;  
+            ResultSet resultSet = null;  
+
+            try {  
+                Class.forName("com.mysql.cj.jdbc.Driver");  
+                connect = DriverManager.getConnection(  
+                    "jdbc:mysql://localhost/messages?useSSL=false", "root", "password"  
+                );  
+
+                preparedStatement = connect.prepareStatement("INSERT INTO messages (name, message) VALUES (?, ?);");  
+                preparedStatement.setString(1, request.queryParams("username"));  
+                preparedStatement.setString(2, request.queryParams("message"));  
+                preparedStatement.executeUpdate();  
+            } catch (Exception e) {  
+                return "Error: " + e.getMessage();  
+            } finally {  
+                if (resultSet != null) {  
+                    resultSet.close();  
+                }  
+
+                if (preparedStatement != null) {  
+                    preparedStatement.close();  
+                }  
+
+                if (connect != null) {  
+                    connect.close();  
+                }  
+            }  
+
+            return "Message added.";  
+        });  
+    }  
 }
-</pre>

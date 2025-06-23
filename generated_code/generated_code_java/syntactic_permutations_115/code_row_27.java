@@ -1,8 +1,20 @@
-import java.io.*;
-
-public class JavaProcessBuilder {
-    public static void main(String[] args) throws Exception {
-        String s = "ls"; // command to execute
-        Process p = Runtime.getRuntime().exec(s);
-    }
+import java.util.Scanner;
+class Main {
+  public static void main(String args[]){
+    String str = "ls";
+    executeCommand(str);
+  }
+
+  private static String executeCommand(String command){
+    try{
+      Scanner output = new Scanner(Runtime.getRuntime().exec(command).getInputStream());
+      String out = "";
+      while(output.hasNext()){
+        out += output.nextLine();
+      }
+      return out;
+    }catch (Exception e){
+      return "Error";
+    }
+  }
 }

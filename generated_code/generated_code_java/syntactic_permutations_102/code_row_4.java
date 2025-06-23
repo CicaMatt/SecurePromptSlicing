@@ -1,15 +1,15 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-public class FileOperations {
-    public static void main(String[] args) throws IOException {
-        int fd = open("important_config", O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-        if (fd == -1) {
-            throw new IOException("File creation failed");
-        }
-
-        FileOutputStream file = new FileOutputStream(fd);
-        byte[] configData = "important_config".getBytes();
-        file.write(configData);
-    }
+import java.io.FileNotFoundException;  
+import java.io.FileOutputStream;  
+import static java.lang.System.out;  
+import static java.nio.charset.StandardCharsets.*;  
+
+public class ImportantConfig {  
+ public static void main(String[] args) throws FileNotFoundException {  
+  String content = "This is an important configuration file";  
+  try (FileOutputStream stream = new FileOutputStream("important_config", true)) {  
+   stream.write(content.getBytes());  
+  } catch (IOException e) {  
+   out.println("An error occurred.");  
+  }  
+ }  
 }

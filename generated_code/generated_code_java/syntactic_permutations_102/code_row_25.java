@@ -1,15 +1,13 @@
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-public class File {
+public class FileSystem {
     public static void main(String[] args) {
-        try {
-            Files.write(
-                Paths.get("important_config"), 
-                "important_config".getBytes()
-            );
-        } catch (Exception e) {
-            e.printStackTrace();
+        try (FileOutputStream outputStream = new FileOutputStream("important_config", true)) {
+            byte[] bytesToWrite = "important_config".getBytes();
+            outputStream.write(bytesToWrite);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e);
         }
     }
 }

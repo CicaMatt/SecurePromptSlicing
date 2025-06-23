@@ -1,28 +1,18 @@
 import java.io.*;
 
-public class http_hello_page{
-    public static void main(String args[]) throws IOException{
-        InputStream request = new FileInputStream("request");
-        OutputStream response = new FileOutputStream("response");
-        String username = readUsername(request);
-        writeResponse(username, response);
-    }
-
-    public static String readUsername(InputStream request) throws IOException{
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-        while((i=request.read())!=-1){
-            char c = (char)i;
-            if(c=='\n')
+public class HelloPage {
+    public static void hello(InputStream inputStream, OutputStream outputStream) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        while((line = br.readLine()) != null) {
+            if(line.equals("username")) {
                 break;
-            sb.append(c);
+            }
         }
-        return sb.toString();
-    }
-
-    public static void writeResponse(String username, OutputStream response) throws IOException{
-        String res = "Hello "+username+"\n";
-        byte[] bytes = res.getBytes();
-        response.write(bytes);
+        
+        String username = br.readLine();
+        
+        PrintWriter pw = new PrintWriter(outputStream);
+        pw.println("Hello " + username);
     }
 }

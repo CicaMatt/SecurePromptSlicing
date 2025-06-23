@@ -1,15 +1,17 @@
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
-public class Open {
-    public static void main(String[] args) {
-        try {
-            File file = new File("example.txt");
-            Files.write(Paths.get("example.txt"), "Hello World!".getBytes());
-        } catch (IOException e) {
-            System.out.println("File cannot be created or opened.");
-        }
-    }
+import java.io.*;
+
+public class FileOpen {
+    public static void main(String[] args) throws IOException {
+        try {
+            FileOutputStream fos = new FileOutputStream("file.txt", true);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            BufferedWriter bw = new BufferedWriter(osw);
+            // write to file
+            String str = "Hello World";
+            bw.write(str);
+            bw.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    }
 }

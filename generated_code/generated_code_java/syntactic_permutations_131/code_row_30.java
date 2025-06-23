@@ -1,17 +1,13 @@
-import java.util.*;
-
-public class Templates {
-  public static String renderResponseFromEnv(Environment env) {
-    Request request = env.getRequest();
-    String name = request.getParameter("name");
-    Template template = env.getTemplate("hello.html");
-    return template.render(name);
-  }
-
-  public static Response home() {
-    Environment env = new Environment();
-    Response response = new Response();
-    response.setContent(renderResponseFromEnv(env));
-    return response;
-  }
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class MyServlet extends HttpServlet {
+    
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        String name = request.getParameter("name");
+        PrintWriter out = response.getWriter();
+        out.print("<html><body>Hello " + name + "!</body></html>");
+    }
 }

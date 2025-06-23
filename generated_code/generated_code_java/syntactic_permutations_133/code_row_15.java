@@ -1,5 +1,9 @@
-import webapp2
-from webapp2 import Route
-def say_hello(request):
-    return "Hello, Web!"
-app = webapp2.WSGIApplication([Route('/', handler=say_hello)])
+from flask import Flask
+    app = Flask(__name__)
+
+    @app.route('/')
+    def index():
+        return 'Hello, world!'
+
+    if __name__ == "__main__":
+        app.run()

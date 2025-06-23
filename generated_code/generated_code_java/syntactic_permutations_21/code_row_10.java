@@ -1,10 +1,9 @@
 import java.util.Scanner;
-public class HelloWorld {
+
+public class Main {
     public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in);
-        int x = reader.nextInt();
-        int result = x + 1000;
-        System.out.println("result is: " + result);
-        
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        System.out.println(num + 1000);
     }
 }

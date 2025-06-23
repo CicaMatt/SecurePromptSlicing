@@ -1,27 +1,30 @@
-package io.github.cjstehno.stock;
-
-    import java.sql.Connection;
-    import java.sql.SQLException;
-
-    public class StockService {
-        private final Connection connection;
-        private final String stock_name;
-        private final int stock_quantity;
-        private final String username;
-
-        public StockService(Connection connection, String stock_name, int stock_quantity, String username) {
-            this.connection = connection;
-            this.stock_name = stock_name;
-            this.stock_quantity = stock_quantity;
-            this.username = username;
-        }
-
-        public void buyStock() throws SQLException {
-            var stmt = connection.prepareStatement("INSERT INTO Orders (username, ordertype, stockname, stockquantity) VALUES (?, ?, ?, ?)");
-            stmt.setString(1, username);
-            stmt.setString(2, "Buy");
-            stmt.setString(3, stock_name);
-            stmt.setInt(4, stock_quantity);
-            stmt.execute();
-        }
-    }
+<pre><code>import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+
+public class BuyOrder extends HttpServlet {
+    public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
+        String stock_name=request.getParameter("stock_name");
+        int stock_quantity=Integer.parseInt(request.getParameter("stock_quantity"));
+        String username=(String)request.getSession().getAttribute("username");
+
+        Connection con=null;
+        Statement statement=null;
+        ResultSet resultSet=null;
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            con=DriverManager.getConnection("jdbc:mysql://localhost/stockexchange","root","root");
+            statement=con.createStatement();
+
+            String query="insert into buyorder (username,stock_name,stock_quantity) values ('"+username+"','"+stock_name+"',"+stock_quantity+")";
+            int rowsAffected=statement.executeUpdate(query);
+
+            response.sendRedirect("profile.jsp");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>

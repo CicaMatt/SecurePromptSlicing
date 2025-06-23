@@ -1,19 +1,21 @@
 import java.io.*;
-import java.util.*;
-
-public class RandomFloat {
-    public static void main(String[] args) throws Exception {
-        String filename = "randomFloat.txt";
-        FileWriter writer = new FileWriter(filename);
-        
-        for (int i = 0; i < 3; i++) {
-            float num = (float) Math.random();
-            String stringNum = Float.toString(num);
-            writer.write(stringNum);
-            if (i != 2)
-                writer.write(".");
-        }
-
-        writer.close();
+import java.util.Random;
+public class FloatToString {
+    public static void main(String[] args) throws IOException {
+        String filename = "float_to_string.txt";
+        Random rand = new Random();
+        float f1 = rand.nextFloat();
+        float f2 = rand.nextFloat();
+        float f3 = rand.nextFloat();
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.valueOf(f1));
+        sb.append(" ");
+        sb.append(String.valueOf(f2));
+        sb.append(" ");
+        sb.append(String.valueOf(f3));
+        String content = sb.toString();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+        bw.write(content);
+        bw.close();
     }
 }

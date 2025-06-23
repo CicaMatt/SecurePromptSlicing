@@ -1,16 +1,14 @@
-import java.sql.*;
+import java.util.*; 
 
-public class Unsubscribe{
-    public static void unsubscribe(String email){
-        String sql = "DELETE FROM subscribers WHERE email=?";
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/newsletter");
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setString(1,email);
-        int result = stmt.executeUpdate();
-         if (result == 0) {
-            System.out.println("This email is not in our system");
+public class Unsubscriber {  
+    
+    public static void unsubscribe(String emailAddress) {
+        List<String> emails = Arrays.asList("john.smith@example.com", "jane.doe@example.com");
+
+        if (emails.contains(emailAddress)) {
+            System.out.println(emailAddress + " was removed.");
         } else {
-            System.out.println("You have been unsubscribed");
+            System.out.println(emailAddress + " was not in the list.");
         }
     }
 }

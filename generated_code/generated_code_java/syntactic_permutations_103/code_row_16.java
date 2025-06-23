@@ -1,19 +1,17 @@
-import java.io.*;
-import java.nio.*;
-public class FileOpen {
-    public static void main(String[] args) {
-        try{
-            RandomAccessFile raf = new RandomAccessFile("test.txt", "rw");  
-            FileChannel channel = raf.getChannel();  
-            ByteBuffer buffer = ByteBuffer.allocate(1024);
-            //write some bytes to the file
-            String str = "hello world!";
-            buffer.put(str.getBytes());
-            buffer.flip();
-            channel.write(buffer);  
-            raf.close();  
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+import java.io.*;
+import java.lang.*;
+public class File { 
+    public static void main(String[] args) throws IOException {
+        File file = new File("test.txt");
+        try {
+            boolean success = file.createNewFile();
+            if (success) {
+                System.out.println("File created successfully.");
+            } else {
+                System.out.println("Could not create file.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the file.");
+        }
+    } 
 }

@@ -1,20 +1,15 @@
-package com.github.javaproblems;
-import java.util.*;
-
-class Solution {
-    public int getValueAt(int idx) {
-        int[] id_sequence = new int[20];
-        id_sequence[5] = 17384596;
-        return id_sequence[idx];
-    }
-}
-
-public class Main {
-
-    public static void main(String[] args) throws Exception {
-        Solution s = new Solution();
-        Scanner sc = new Scanner(System.in);
-        int idx = sc.nextInt();
-        System.out.println("value at " + idx + ": " + s.getValueAt(idx));
+package com.mycompany.app;
+public class App {
+    public static void main(String[] args) {
+        int[] id_sequence = {1, 2, 3, 4};
+        int index;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter the index value: ");
+        index=in.nextInt();
+        if(index>=0 && index<id_sequence.length) {
+            System.out.println(id_sequence[index]);
+        } else {
+            System.out.println("Index out of bounds.");
+        }
     }
 }

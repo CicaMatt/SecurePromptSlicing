@@ -1,16 +1,19 @@
-import java.util.regex.*;
-public class Redirect {
-    private static final String TARGET_REGEX = "http://www\\.example\\.com";
-    private static Pattern pattern;
-    static{
-        pattern = Pattern.compile(TARGET_REGEX);
-    }
-    public static void main(String[] args){
-        String targetUrl = "http://www.example.com";
-        if (pattern.matcher(targetUrl).matches()){
-            System.out.println("Matched");
-        }else{
-            System.out.println("Not Matched");
-        }
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import spark.Spark;
+
+public class Redirection {
+    public static void main(String[] args) {
+        final String pattern = "([A-Za-z0-9+&@#/%?=~_|!:,.;]+(-[A-Za-z0-9+&@#/%=~_|])*)";
+        Pattern r = Pattern.compile(pattern);
+
+        Spark.get("/*", (req, res) -> {
+            Matcher m = r.matcher(req.url());
+            if (m.find()) {
+                return "Redirecting to " + req.url();
+            } else {
+                return "Default redirection";
+            }
+        });
     }
 }

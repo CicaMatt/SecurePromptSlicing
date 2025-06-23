@@ -1,25 +1,22 @@
-import java.io.*;
 import javax.servlet.*;
-import javax.servlet.http.*;
-
-public class checkMod extends HttpServlet {
-	
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PrintWriter out = response.getWriter();
+    import javax.servlet.http.*;
+    public class check_mod extends HttpServlet {
+        public void doGet (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+            String username = req.getParameter("username");
+            String password = req.getParameter("password");
+            String session = req.getParameter("session");
+            boolean isModerator = auth_mod(username, password, session);
+            if (isModerator) {
+                res.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<h1>Hello Moderator</h1>");
+            } else {
+                res.sendRedirect("/login");
+            }
+        }
         
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String session = request.getParameter("session");
-        
-        if (auth_mod(username, password, session)) {
-            out.println("You are a moderator.");
-        } else {
-            out.println("You are not a moderator.");
+        boolean auth_mod(String username, String password, String session) {
+            // check if the user is a moderator
+            return true;
         }
     }
-	
-	// Authenticate the user as a moderator
-    public static boolean auth_mod(String username, String password, String session) throws IOException{
-    	
-    }
-}

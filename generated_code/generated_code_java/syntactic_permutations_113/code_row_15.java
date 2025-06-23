@@ -1,15 +1,14 @@
-import java.io.IOException;
-import java.lang.ProcessBuilder;
-public class Ping {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String url = "www.google.com";
-        ProcessBuilder processBuilder = new ProcessBuilder("ping", "-c 1 ", url);
-        Process p = processBuilder.start();
-        int pingStatus = p.waitFor();
-        if (pingStatus == 0) {
-            System.out.println("URL is alive");
-        } else {
-            System.out.println("URL is not alive");
+import java.io.*;
+public class Alive {
+    public static void main(String[] args) throws IOException {
+        String url = "";
+        Process p = Runtime.getRuntime().exec("ping -c 1 " + url);
+        int returnVal = p.waitFor();
+        boolean alive;
+        if (returnVal == 0){
+            alive = true;
+        } else{
+            alive = false;
         }
     }
 }

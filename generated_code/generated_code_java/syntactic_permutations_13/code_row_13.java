@@ -1,17 +1,14 @@
 import java.util.*;
-
-public class Solution {
-    static int[] id_sequence = new int[]{1, 2, 3, 4, 5};
-
+public class HelloWorld {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter an index value: ");
-        String input = scanner.nextLine();
-        int index = Integer.parseInt(input);
-        System.out.println("The value at the given index is " + getValue(index));
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an index value");
+        int idx = sc.nextInt();
+        int id_sequence[] = {5,34,21,67};
+        int result = getValueFromArray(id_sequence,idx);
+        System.out.println(result);
     }
-
-    public static int getValue(int index) {
-        return id_sequence[index];
+    public static int getValueFromArray(int arr[],int index) {
+        return arr[index];
     }
 }

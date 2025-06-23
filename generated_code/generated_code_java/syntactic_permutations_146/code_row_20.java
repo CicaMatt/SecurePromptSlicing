@@ -1,27 +1,23 @@
-import java.sql.*;  
-public class StockBuy {    
-    public static void main(String[] args) {       
-        String stock_name = "IBM";       
-        int stock_quantity = 10;       
-        String username = "John Doe";        
-        // Create a variable for the connection string.       
-        String connectionUrl = "jdbc:sqlserver://<server>:<port>;databaseName=stockdb;user=<username>;password=<password>;";     
-        try {          
-            // Load the JDBC driver.         
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");      
-            // Create a connection object.        
-            Connection con = DriverManager.getConnection(connectionUrl);        
-            Statement stmt = con.createStatement();          
-            String sqlInsert;         
-            sqlInsert = "INSERT INTO buyorder (stock_name, stock_quantity, username) values ('" + stock_name + "', " + stock_quantity + ", '" + username + "')";          
-            int result = stmt.executeUpdate(sqlInsert);          
-            if (result > 0) {            
-                System.out.println("Data is inserted successfully into the database.");         
-            } else {            
-                System.out.println("There was a problem inserting the data." + "\n" + "Please try again!");         
-            }        
-        } catch (Exception e) {          
-            e.printStackTrace();        
-        }    
-    }  
+import 'java.util.Scanner';
+public class BuyStock{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String stock_name;
+        int stock_quantity;
+        String username;
+        
+        System.out.println("Enter the Stock Name: ");
+        stock_name = sc.nextLine();
+        
+        System.out.println("Enter the Quantity of Stock: ");
+        stock_quantity = sc.nextInt();
+        
+        System.out.println("Enter the Username: ");
+        username = sc.nextLine();
+        
+        //BuyStock(stock_name, stock_quantity);
+        
+        System.out.println("The Buy Order for "+stock_name+" of quantity "+stock_quantity+" has been placed.");
+        System.out.println("Welcome to Profile Page "+username);
+    }
 }

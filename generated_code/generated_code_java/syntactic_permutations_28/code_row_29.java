@@ -1,16 +1,26 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
- 
+import java.util.regex.*;
+
 public class Redirect {
-    private String pattern;
+    private static final String PATTERN = "http://example.com/path";
+    private static Pattern pattern;
+    private String redirectUrl;
     
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    public Redirect(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+        if (pattern == null) {
+            pattern = Pattern.compile(PATTERN);
+        }
     }
     
-    public boolean matches(String url) {
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(url);
-        return m.matches();
+    public boolean matchTargetUrl(String targetUrl) {
+        Matcher matcher = pattern.matcher(targetUrl);
+        return matcher.find();
+    }
+    
+    public String redirect() {
+        if (matchTargetUrl(redirectUrl)) {
+            return redirectUrl;
+        }
+        return "http://example.com";
     }
 }

@@ -1,10 +1,11 @@
-import java.util.*;
-    
-    public class Main {
-        public static void main(String[] args) {
-            String command = "ls";
-            System.out.print("Command: %s\n", command);
-            int status = system(command);
-            System.out.print("Return code: %d\n", status);
-        }
-    }
+import java.io.*;
+public class HelloWorld {
+  public static void main(String[] args) throws IOException{
+    Process process = Runtime.getRuntime().exec("ls");
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    String line = "";
+    while ((line = reader.readLine()) != null) {
+      System.out.println(line);
+    }
+  }
+}

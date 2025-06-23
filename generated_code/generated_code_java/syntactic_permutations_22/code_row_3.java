@@ -1,7 +1,8 @@
 import java.util.Random;
-public class GenerateCode {
+public class RandomNumber {
     public static void main(String[] args) {
-        int randomNum = new Random().nextInt(5000) + 1000;
-        System.out.println("The random number is:"+randomNum);
+        Random rand = new Random();
+        int number = rand.nextInt(9000);
+        System.out.println("The random number is: " + number);
     }
 }

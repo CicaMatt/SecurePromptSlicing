@@ -1,16 +1,12 @@
-import java.util.regex.Pattern;
-
+import java.util.regex.*;
 public class Redirect {
-    private Pattern pattern;
-    public Redirect(String regex) {
-        this.pattern = Pattern.compile(regex);
-    }
-
-    public void handleRequest(String target) {
-        if (this.pattern.matcher(target).matches()) {
-            // redirect to target URL
+    private Pattern regex = Pattern.compile("/(^[a-zA-Z0-9]+).*");
+    public String redirect (String target) {
+        Matcher matcher = regex.matcher(target);
+        if (matcher.find()) {
+            return "/" + matcher.group(1);
         } else {
-            // don't do anything
+            return null;
         }
     }
 }

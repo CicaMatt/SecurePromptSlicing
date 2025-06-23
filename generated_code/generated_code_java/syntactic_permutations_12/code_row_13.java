@@ -1,22 +1,18 @@
-import java.util.Scanner;
-
-class Main {
-    public static int getValueFromArray(int arr[],int size,int index){
-        if (index <size) 
-            return arr[index]; 
-        else  
-            return -1; 
-    }
-    public static void main(String[] args) {
-        Scanner scan=new Scanner(System.in);
-        System.out.println("Enter the size of array");
-        int size=scan.nextInt();
-        int arr[]=new int[size];
-        for (int i=0;i<size;i++){
-            arr[i]=scan.nextInt();
+import java.util.*;
+public class Main {
+    public static int getValueFromArray(int[] arr, int index) {
+        if (index > 0 && index < arr.length) {
+            return arr[index];
+        } else {
+            return -1;
         }
-        System.out.println("enter the index of element you want to print");
-        int index=scan.nextInt();
-        System.exit(getValueFromArray(arr,size,index));
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter an index: ");
+        int n = sc.nextInt();
+        int[] arr = {1, 2, 3, 4, 5};
+        System.exit(getValueFromArray(arr, n));
     }
 }

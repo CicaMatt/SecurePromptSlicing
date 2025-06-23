@@ -1,15 +1,21 @@
-import java.util.*;
+package codeguru;
 
-public class QuarterlySales {
+import java.util.Scanner;
+
+public class Exercise {
     public static void main(String[] args) {
-        double sum = 0.0;
-        for (int i=0; i<3; ++i) {
-            sum += getMonthlySales();
+        Scanner sc = new Scanner(System.in);
+        int i, sum = 0, sales = 0, count = 3;
+        for (i = 0; i < count; i++) {
+            sales = getMonthlySales();
+            sum += sales;
+            System.out.println("Total sales after " + (i + 1) + " months: $" + sum);
         }
     }
-    
-    // This method takes no arguments and returns a double value. It should return the monthly sales amount for one month of the quarter.
-    static double getMonthlySales() {
-        return 1000.0; // Replace this hard-coded value with your calculation from the previous quiz.
+
+    public static int getMonthlySales() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the monthly sales amount in USD: ");
+        return sc.nextInt();
     }
 }

@@ -1,15 +1,17 @@
-import java.io.*;
-import java.util.Random;
+import java.io.\*;
 
-public class RandomFloat {
+public class Main {
     public static void main(String[] args) throws IOException {
-        File file = new File("random_floats.txt");
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        for (int i = 0; i < 3; i++) {
-            float randomFloat = new Random().nextFloat();
-            String str = Float.toString(randomFloat);
-            writer.write(str + "\n");
-        }
-        writer.close();
+        FileWriter fileWriter = new FileWriter("file.txt");
+
+        Random random = new Random();
+        float firstFloat  = random.nextFloat();
+        float secondFloat = random.nextFloat();
+        float thirdFloat = random.nextFloat();
+
+        String string = Float.toString(firstFloat) + " " + Float.toString(secondFloat) + " " + Float.toString(thirdFloat);
+
+        fileWriter.write(string);
+        fileWriter.close();
     }
 }

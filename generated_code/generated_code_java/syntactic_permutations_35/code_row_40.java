@@ -1,40 +1,45 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+<body>
+<div class="container">
+    <form action="/login" method="post" id="login-form">
+        <label for="username">Username: </label>
+        <input type="text" name="username" required><br/>
+        <label for="password">Password: </label>
+        <input type="password" name="password" required><br/>
+        <button type="submit">Login</button>
+    </form>
+</div>
+<script src="/js/login.js"></script>
+</body>
+</html>
+
+
+
 import java.sql.*;
-
-public class Login extends HttpServlet{
-   @Override
-   public void doPost(HttpServletRequest request,HttpServletResponse response)
-      throws ServletException, IOException {
-
-      String username = request.getParameter("username");
-      String password = request.getParameter("password");
-      PrintWriter out = response.getWriter();
-
-      try{
-         Class.forName("com.mysql.cj.jdbc.Driver");
-         Connection con=DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/Servlet","root","root");
-
-         //Create prepared statement
-         PreparedStatement pst = con.prepareStatement(
-               "select * from user where username=? and password=?");
-         pst.setString(1,username);
-         pst.setString(2,password);
-         ResultSet rs;
-         rs = pst.executeQuery();
-
-         if(rs.next()){
-            //user successfully logged in
-            RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
-            rd.forward(request,response);
-         }else{
-            //user login failed
-            response.sendRedirect("login.html");
-         }
-      }catch(Exception e){
-         out.println("Something went wrong !! Please try again.");
-      }
-   }
+import java.util.*;
+public class Login {
+    public static void main(String[] args) throws Exception{
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdb", "root", "root");
+            Statement stmt=con.createStatement();
+            String query="select * from users where username = '"+username+"' and password = '"+password+"'";
+            ResultSet rs=stmt.executeQuery(query);
+            if(rs.next()){
+                response.sendRedirect("home.html");
+            } else {
+                response.sendRedirect("login.html");
+            }
+        } catch (Exception e){
+            out.println(e);
+        }
+    }
 }

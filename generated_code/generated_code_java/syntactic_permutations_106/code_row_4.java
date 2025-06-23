@@ -1,12 +1,24 @@
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
-public class SecretInfo {
-    public static void main(String[] args) throws IOException {
-        String secret = "Super Secret Information";
-        FileWriter writer = new FileWriter("secret.txt");
-        writer.write(secret);
-        writer.close();
-        Runtime.getRuntime().exec("chmod 400 secret.txt");
-        System.out.println("secret.txt");
+public class SuperSecret {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+        String supersecret = "I'm a secret agent";
+
+        File file = new File("supersecret.txt");
+        file.createNewFile();
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        bufferedWriter.write(supersecret);
+        bufferedWriter.close();
+
+        if (file.setReadOnly()) {
+            System.out.println("Wrote to " + file.getName());
+        } else {
+            System.out.println("Failed to write to " + file.getName());
+        }
     }
 }

@@ -1,12 +1,9 @@
 import java.util.*;
-class Main {
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1){
-            System.out.println("Please provide an argument.");
-            return;
-        }
-         int i = Integer.parseInt(args[0]);
-         i++;
-         System.out.print(i);
-    }
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+		int x = Integer.parseInt(args[0]);
+		int y = x + 5;
+		System.out.println("y: " + y);
+	}
 }

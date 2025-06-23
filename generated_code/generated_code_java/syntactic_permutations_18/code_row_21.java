@@ -1,12 +1,15 @@
-public class Solution {
-    public static void main(String[] args) {
-        //Test case 1
-        System.out.println(getArrayValue(new int[]{2,4},5));
-        //Test case 2
-        System.out.println(getArrayValue(new int[]{3,4,5},3));
-    }
+import java.util.*;
 
-    public static int getArrayValue(int[] array , int index){
-        return array[index];
+    public class Code {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter number");
+            int n = sc.nextInt();
+            String[] arr = {"one", "two", "three", "four", "five"};
+            for (int i = 0; i <arr.length ; i++) {
+                if(n == i){
+                    System.out.println(arr[i]);
+                }
+            }
+        }
     }
-}

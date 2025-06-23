@@ -1,33 +1,15 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
-import org.apache.tomcat.util.buf.MessageBytes;
-public class RedirectModule {
-  private Pattern pattern = null;
-  private String defaultRedirectUrl = "";
-  public RedirectModule(String regex, String redirectUrl) {
-    this.pattern = Pattern.compile(regex);
-    this.defaultRedirectUrl = redirectUrl;
-  }
-  public void service(Request request, Response response) {
-    String url = getRequestedUrl(request);
-    if (pattern.matcher(url).find()) {
-      response.sendRedirect(url);
-    } else {
-      response.sendRedirect(defaultRedirectUrl);
+import java.util.regex.*;
+ 
+public class Redirect {
+    private static final String REDIRECT_URL = "http://www.example.com/";
+    private static final Pattern REGEX_PATTERN = Pattern.compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
+ 
+    public static void main(String[] args) {
+        String url = "http://www.example.com/search?q=regex&btnG";
+        if (REGEX_PATTERN.matcher(url).matches()) {
+            url = REDIRECT_URL;
+        }
+ 
+        System.out.println(url);
     }
-  }
-  private String getRequestedUrl(HttpServletRequest request) {
-    MessageBytes mb = connector.getMessageBytes();
-    String url = null;
-    if (mb != null) {
-      url = mb.toString();
-    } else {
-      // handle the case where the url is not encoded in the connector
-      url = request.getRequestURI();
-    }
-    return url;
-  }
 }

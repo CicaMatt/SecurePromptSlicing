@@ -1,16 +1,25 @@
-import java.sql.*;
-    import java.util.*;
-    
-    public class Post {
-        public static void post(String username, String message) throws SQLException{
-            Connection connection = connect_to_database();
-            Statement stmt = connection.createStatement();
-            insert_user_message_in_db(username, message);
-            
-        }
-        private static Connection connect_to_database() throws SQLException {
-            String url = "jdbc:sqlite:messages_db";
-            return DriverManager.getConnection(url);
-        }
-        
-    }
+import java.io.IOException;
+import javax.servlet.http.*;
+import org.springframework.stereotype.*;
+
+@Controller
+public class Controller{
+	@RequestMapping("/")
+	String index(){
+		return "index";
+	}
+
+	@RequestMapping(value="/post",method=RequestMethod.POST)
+	@ResponseBody
+	String post(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String username = request.getParameter("username");
+		String message = request.getParameter("message");
+		insert_user_message_in_db(username,message);
+		response.sendRedirect("/index");
+	}
+
+	private void insert_user_message_in_db(String username, String message){
+		// your code to insert the message into database
+		return;
+	}
+}

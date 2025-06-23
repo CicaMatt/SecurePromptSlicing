@@ -1,26 +1,23 @@
+java
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Passwd {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        if (args.length != 1) {
-            System.out.println("Usage: java Passwd <username>");
-            return;
+public class UserInfo {
+    public static void main(String[] args) throws IOException {
+        String command = "cat /etc/passwd | grep ";
+        for (int i = 0; i < args.length; i++) {
+            command += args[i] + " ";
         }
-        
-        String username = args[0];
-        String[] cmd = {"cat", "/etc/passwd"};
-        
-        ProcessBuilder processBuilder = new ProcessBuilder(cmd);
-        Process process = processBuilder.start();
+        executeCommand(command);
+    }
+
+    public static void executeCommand(String command) throws IOException {
+        Process process = Runtime.getRuntime().exec(command);
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
-        while((line = reader.readLine()) != null) {
-            if (line.startsWith(username + ":")) {
-                System.out.println(line);
-                break;
-            }
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
         }
     }
 }

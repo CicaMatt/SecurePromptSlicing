@@ -1,8 +1,13 @@
-package main;
-import java.io.*;
-public class Main {
-	public static void main(String[] args) throws Exception {
-		File file = new File("filename");
-		file.createNewFile();
-	}
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Hello {
+    public static void main(String[] args) throws IOException{
+        try (FileOutputStream fos = new FileOutputStream("myfile.txt", true);){
+            fos.write("Hello world!".getBytes());
+            System.out.println("Success!");
+        } catch (IOException e) {
+            System.err.println("Caught IOException: " + e.getMessage());
+        }
+    }
 }

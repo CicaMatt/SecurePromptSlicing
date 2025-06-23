@@ -1,5 +1,10 @@
 import webapp2
-    app = webapp2.WSGIApplication([('/', 'MainPage')])
-    class MainPage(webapp2.RequestHandler):
-        def get(self):
-            self.response.out.write('<html><body>Hello world!</body></html>')
+
+class MainPage(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.write('Hello, Web App!')
+
+application = webapp2.WSGIApplication([
+    ('/', MainPage),
+], debug=True)

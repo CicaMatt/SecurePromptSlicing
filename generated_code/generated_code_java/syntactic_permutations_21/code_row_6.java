@@ -1,19 +1,11 @@
 import java.util.*;
-
-class Main {
-
-    public static void main(String[] args) {
-        int number = readNumber();
-        printNumber(number + 1000);
-        System.exit(0);
-    }
-
-    private static int readNumber() {
-        // Your code here
-        return 10;
-    }
-
-    private static void printNumber(int number) {
-        // Your code here
+public class AddNumber {
+    public static void main(String args[]){
+        int x;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the value");
+        x=sc.nextInt();
+        x+=1000;
+        System.out.println(x);
     }
 }

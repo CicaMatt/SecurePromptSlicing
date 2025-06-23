@@ -1,13 +1,13 @@
 import java.io.*;
+import java.net.*;
+import java.util.*;
 
 public class hello_page {
-    public static void http_hello_page(FileInputStream request, FileOutputStream response) throws IOException {
-        String username = "";
-        int character;
-        while((character=request.read())!=-1){
-            username += (char)character;
-        }
-        String output = "Hello "+username+"\n";
-        response.write(output.getBytes());
+    public static void http_hello_page(InputStream request, OutputStream response) throws Exception {
+        Scanner reader = new Scanner(request);
+        String username = reader.nextLine();
+        PrintWriter writer = new PrintWriter(response);
+        String responseString = "Hello " + username;
+        writer.println(responseString);
     }
 }

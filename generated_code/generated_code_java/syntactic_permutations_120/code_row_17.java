@@ -1,12 +1,14 @@
-import java.util.*;
-class CopyContents {
-    public static void main(String[] args) {
-        int size = 50;
-        byte[] bytes1 = new byte[size];
-        for (int i = 0; i < size; i++) {
-            bytes1[i] = (byte) i;
-        }
-        byte[] bytes2 = Arrays.copyOf(bytes1, size);
-        System.out.println(Arrays.toString(bytes2));
-    }
+import java.nio.*;
+
+public class ChunkCopy {
+    public static void main(String[] args) {
+        ByteBuffer buffer1 = ByteBuffer.allocateDirect(5);
+        buffer1.put((byte) 0xCA).put((byte) 0xFE).put((byte) 0xBA).put((byte) 0xBE).flip();
+
+        ByteBuffer buffer2 = ByteBuffer.allocateDirect(buffer1.limit());
+        while (buffer1.hasRemaining()) {
+            buffer2.put(buffer1);
+        }
+        System.out.println(buffer2.array().toString());
+    }
 }

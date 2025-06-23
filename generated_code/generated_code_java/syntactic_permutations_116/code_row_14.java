@@ -1,16 +1,11 @@
-package java;
-import java.io.*;
-class SystemExample1 {
-    public static void main(String args[]) {
-        try {
-            Process p = Runtime.getRuntime().exec("ls");
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = null;
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+import java.io.File;
+public class Main {
+    public static void main(String[] args) {
+        File file = new File("/path/to/directory");
+        String[] directories = file.list();
+        // Loop through all the files in the directory
+        for (String str : directories) {
+            System.out.println(str);
+        }
+    }
 }

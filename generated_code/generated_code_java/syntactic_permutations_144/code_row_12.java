@@ -1,33 +1,55 @@
-import java.sql.*;
-
-public class EmailValidation {
-    private String email; //email to validate
-    private Connection con; //database connection
-
-    public EmailValidation(String email) {
-        this.email = email;
-    }
-
-    public int validate() throws SQLException {
-        if (!checkEmailExists()) return 0;
-        unsubscribe();
-        return 1;
-    }
-
-    private boolean checkEmailExists() throws SQLException {
-        con = DriverManager.getConnection(database_url, username, password);
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE email='" + this.email + "'");
-        if (rs.next()) return true;
-
-        con.close();
-        return false;
-    }
-
-    private void unsubscribe() throws SQLException {
-        String query = "DELETE FROM subscriptions WHERE email='" + this.email + "'";
-        Statement stmt = con.createStatement();
-        stmt.executeUpdate(query);
-        con.close();
-    }
+import java.sql.*;
+public class UnsubscribeEmail {
+    public int checkIfEmailExists(String email) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "user", "password");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as count FROM email_list WHERE email = '" + email + "'");
+            if (resultSet != null && resultSet.next()) {
+                int count = resultSet.getInt("count");
+                if (count > 0) {
+                    return unsubscribeEmail(email);
+                } else {
+                    return 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw e;
+                }
+            }
+        }
+        return 0;
+    }
+    public int unsubscribeEmail(String email) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "user", "password");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) as count FROM email_list WHERE email = '" + email + "' AND status = 1");
+            if (resultSet != null && resultSet.next()) {
+                int count = resultSet.getInt("count");
+                if (count > 0) {
+                    statement.executeUpdate("UPDATE email_list SET status = 0 WHERE email = '" + email + "'");
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    throw e;
+                }
+            }
+        }
+        return 1;
+    }
 }

@@ -1,9 +1,14 @@
-import java.io.*;
-public class OpenFile {
-    public static void main(String[] args) throws Exception{
-        String filename = "file1.txt";
-        int flags =  O_CREAT | O_TRUNC | O_WRONLY | O_EXCL; 
-        File file = new File(filename);
-        RandomAccessFile raf = new RandomAccessFile(file,flags); 
-    }
+import java.io.FileOutputStream;
+
+public class FileOpen {
+    
+    public static void main(String[] args) {
+        try {
+            FileOutputStream myfile = new FileOutputStream("myfile.txt", true);
+            myfile.write("Hello World!".getBytes());
+            myfile.close();
+        } catch (Exception e) {
+            System.out.println("Error writing to file");
+        }
+    }
 }

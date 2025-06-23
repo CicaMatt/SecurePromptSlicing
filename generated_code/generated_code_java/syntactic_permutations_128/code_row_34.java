@@ -1,11 +1,21 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Scanner;
 
-public class HelloWorld {
-	public static void http_hello_page(InputStream request, OutputStream response) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request));
-		PrintWriter writer = new PrintWriter(response);
-		String username = reader.readLine();
-		writer.write("Hello " + username + "\n");
-		writer.flush();
-	}
+public class Hello {
+    
+    public static void http_hello_page(File request, File response) throws Exception {
+        Scanner sc = new Scanner(request);
+        String username = "";
+        while (sc.hasNext()) {
+            username = sc.nextLine();
+            if (username.contains(":"))
+                break;
+        }
+        if (!username.equals("")) {
+            FileWriter fw = new FileWriter(response);
+            fw.write("hello " + username.split(":")[1] + "\n");
+            fw.close();
+        }
+    }
 }

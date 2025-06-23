@@ -1,13 +1,33 @@
-import java.util.*;
-public class Unsubscriber {
-    public static void unsubscribe(String emailAddress) {
-        DatabaseConnection connection = new DatabaseConnection();
-        // check if email address is in the database
-        if (connection.isInDatabase(emailAddress)) {
-            connection.removeFromDatabase(emailAddress);
-            System.out.println("You have been unsubscribed");
-        } else {
-            System.out.println("You are not subscribed");
+import java.sql.*;
+
+    public class Unsubscribe {
+     public static void main(String[] args) throws Exception{
+         String email;
+         Scanner sc = new Scanner(System.in);
+         System.out.println("Enter your email address");
+         email=sc.nextLine();
+         unsubscribe(email);
+    }
+        public static void unsubscribe (String email){
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "password");
+                Statement stmt = conn.createStatement();
+                ResultSet rs=stmt.executeQuery("SELECT * FROM email");
+                boolean inDatabase=false;
+                while(rs.next()) {
+                    if (rs.getString(1).equalsIgnoreCase(email)) {
+                        System.out.println("You are already subscribed to our newsletter");
+                        inDatabase = true;
+                    }
+                }
+                if (!inDatabase) {
+                    System.out.println("You have been unsubscribed from our newsletter");
+                } else {
+                    stmt.executeUpdate("DELETE FROM email where email='" + email + "'");
+                }
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
-}

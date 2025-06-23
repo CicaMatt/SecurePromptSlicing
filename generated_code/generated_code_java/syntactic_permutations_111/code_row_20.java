@@ -1,15 +1,15 @@
-import java.lang.*;
+package com.mycompany;
 
-public class Ping {
-    public String ping(String url) throws Exception{
-        System.out.println("PING " + url);
-        Process process = Runtime.getRuntime().exec("ping -c 3 " + url);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String output;
-        StringBuilder sb = new StringBuilder();
-        while((output=reader.readLine())!=null){
-            sb.append(output+"\n");
-        }
-    return sb.toString();
-   }
+import java.io.*;
+import java.net.*;
+
+public class Pinger {
+	
+	@WebServlet(name="ping", urlPatterns = "/")
+	public void ping() throws IOException{
+		String output;
+		
+		URL url = new URL("http://www.google.com/");
+		output = System.exec("ping" + url);
+	}
 }

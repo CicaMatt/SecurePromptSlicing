@@ -1,5 +1,6 @@
-public class ArrayIndex {
-    public static int getValue(int[] arr, int index) {
-        return arr[index];
+public class IndexOfIntegerInArray {
+        public static void main(String[] args) {
+            int[] arr = new int[]{1,2,3,4,5};
+            System.out.println(arr[args[0]]);
+        }
     }
-}

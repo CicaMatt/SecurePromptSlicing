@@ -1,16 +1,11 @@
-package io.github.kigsmtua.java.file;
-
-import java.io.*;
-public class FileWriter {
-    public static void main(String[] args){
-        try {
-            String filename = "important_config";
-            FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.write("My important configurations");
-            fileWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+import java.io.*;
+
+    public class Main {
+        public static void main(String[] args) throws IOException {
+            String str = "This file is very important";
+            FileWriter fw = new FileWriter("important_config.txt");
+            try (BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(str);
+            }
+        }
     }
-}

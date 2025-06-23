@@ -1,15 +1,16 @@
-import java.io.*;
-
-public class FileCreate {
-    public static void main(String[] args) {
-        int fd = 0;
-        try {
-            //create a new file or opens an existing file
-            //O_CREAT flag tells open() to create if it doesn't exist
-            //O_TRUNC flag tells open() to truncate to 0 bytes if it already exists.
-            fd = open("file.txt", O_WRONLY | O_CREAT | O_EXCL);
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // Create file if it does not exist, and clear its content if it already exists.
+        FileOutputStream fos = new FileOutputStream("test_file", true);
+        // Open for writing only, fail if the file already exists.
+        int fd = open("test_file", O_WRONLY | O_CREAT | O_TRUNC | O_EXCL, 0644);
+        if (fd != -1) {
+            // do something with the file descriptor ...
+        } else {
+            System.out.println("Could not open test_file");
+        }
+    }
 }

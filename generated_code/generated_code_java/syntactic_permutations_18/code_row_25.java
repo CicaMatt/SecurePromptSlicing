@@ -1,11 +1,17 @@
 import java.util.*;
     
-    class ArrayIndex {
-        public static void main(String args[]) {
-            Scanner sc = new Scanner(System.in);
-            int n = sc.nextInt();
-            String[] arr = {"January", "February", "March", "April", "May", "June", 
-                        "July", "August", "September", "October", "November", "December"};
-            System.out.println(arr[n-1]);
+    public class Array_Index {
+        public static void main(String[] args) {
+            int[] array = new int[]{1,2,3,4,5};
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Enter the index of array you want to get: ");
+            
+            try{
+                int index = scan.nextInt();
+                System.out.println(array[index]);
+            }catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println("Please enter valid number.");
+                    return;
+            }
         }
     }

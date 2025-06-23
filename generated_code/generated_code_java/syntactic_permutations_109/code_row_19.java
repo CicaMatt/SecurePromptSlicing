@@ -1,24 +1,27 @@
-import java.io.*;
- 
-public class UserInfo {
-    public static void main(String[] args) throws IOException {
-        String cmd = "cat /etc/passwd | grep ";
-        String username = "";
-        if (args.length > 0) {
-            username = args[0];
-        } else {
-            System.out.println("No argument is provided");
-        }
-        executeCommand(cmd + username);
-    }
+import java.util.*;
     
-    public static void executeCommand(String command) throws IOException {
-        Process process = Runtime.getRuntime().exec(command);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+    public class CatPasswd {
+        public static void main(String[] args) {
+            String cmd = "cat /etc/passwd | grep ";
+            getCmdResult(cmd + args[0]);
         }
-        reader.close();
+    
+        public static String getCmdResult(String command) {
+            String result = "";
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            try {
+                processBuilder.command("sh","-c",command);
+                Process process = processBuilder.start();
+                BufferedReader reader = 
+                    new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result += line + "\n";
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+    
+            return result;
+        }
     }
-}

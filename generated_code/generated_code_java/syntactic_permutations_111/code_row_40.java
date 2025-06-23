@@ -1,25 +1,14 @@
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.lang.*;
 
-public class ping {
-    @Override
-    public String toString() {
-        try {
-            URL url = new URL(request.getRequestURL().toString());
-            Process process = Runtime.getRuntime().exec("ping -c 3 " + url.getHost());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
-                return getUrl();
-            } else {
-                //abnormal...
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+@WebServlet("/ping") 
+public class Ping extends HttpServlet{  
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String url = request.getParameter("url");
+        Process p = Runtime.getRuntime().exec("ping " + url);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.getWriter().println(inputLine);
+        } 
     }
 }

@@ -1,19 +1,18 @@
-import java.io.IOException; 
-public class PingDecorator { 
-private String url; 
-public void ping(String url) throws IOException { 
-this.url = url; 
-String[] cmd = {"ping", "-c 1", this.url}; 
-Process p = Runtime.getRuntime().exec(cmd); 
-p.waitFor(); 
-BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream())); 
-String line; 
-while ((line = reader.readLine()) != null) { 
-System.out.println(line); 
-} 
-} 
-
-public static void main(String[] args) throws IOException { 
-PingDecorator pd = new PingDecorator(); 
-pd.ping("www.google.com"); 
-} }
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.List;
+
+public class Ping {
+    public static void main(String[] args) throws Exception{
+        String url = "https://google.com";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+        // optional default is GET
+        con.setRequestMethod("GET");
+        //add request header
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+    }
+}

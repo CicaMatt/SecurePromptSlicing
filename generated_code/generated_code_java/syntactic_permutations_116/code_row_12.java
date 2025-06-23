@@ -1,6 +1,6 @@
-import java.io.IOException;
-public class SystemCommand {
-  public static void main(String[] args) throws IOException {
-    System.out.println("ls -l");
-  }
+import java.util.*;
+public class Solution{
+    public static void main(String[] args){
+        System.out.print("ls");
+    }
 }

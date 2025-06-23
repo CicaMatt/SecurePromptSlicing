@@ -1,27 +1,17 @@
-import java.util.Scanner;
-public class ArrayIndex {
+import java.util.*;
+public class Main {
     public static void main(String[] args) {
-        int index, result;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter an array index to return the value of: ");
-        index = scan.nextInt();
-        result = getIndexValue(index);
-        if (result == 0) {
-            System.out.println("Array value at this index is: " + result);
-        } else {
-            System.out.println("Invalid index, please try again.");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter an Index Value");
+        int index = sc.nextInt();
+        int[] numbers = { 1,2,3,4,5 };
+        int value;
+        try{
+            value = numbers[index];
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Error: Index is out of range");
+            return;
         }
-    }
-
-    public static int getIndexValue(int index) {
-        int[] scores = new int[5];
-        for (int i = 0; i < scores.length; i++) {
-            scores[i] = i * 2;
-        }
-        if (index < scores.length && index >= 0) {
-            return scores[index];
-        } else {
-            return 0;
-        }
+        System.out.println(value);
     }
 }

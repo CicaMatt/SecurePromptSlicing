@@ -1,30 +1,28 @@
-public class LoginServlet extends HttpServlet {  
-        private static final long serialVersionUID = 1L;  
-      
-        private String username;  
-        private String password;  
-        private boolean isValidUser;  
-      
-        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {  
-            // get the username and password from request parameters  
-            username = request.getParameter("username");  
-            password = request.getParameter("password");  
-      
-            // check if the user is valid by checking in database or other logic  
-            isValidUser = validateUser(username, password);  
-      
-            if (isValidUser) {  
-                // redirect to dashboard page  
-                response.sendRedirect("dashboard");  
-            } else {  
-                // redirect back to login page with error message  
-                request.setAttribute("error", "Invalid username or password.");  
-                request.getRequestDispatcher("login").forward(request, response);  
-            }  
-        }  
-      
-        private boolean validateUser(String username, String password) {  
-            // implement database query to check if the user is valid  
-            return true;  
-        }  
+import java.io.*; 
+    import javax.servlet.*; 
+    import javax.servlet.http.*; 
+    
+    public class LoginServlet extends HttpServlet { 
+        public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+            response.setContentType("text/html"); 
+            PrintWriter out=response.getWriter(); 
+            String username = request.getParameter("username"); 
+            String password = request.getParameter("password"); 
+            
+            if(username != null && password != null){ 
+                // check the database for valid credentials 
+                if(username.equals("admin") && password.equals("admin")){ 
+                    RequestDispatcher rd=request.getRequestDispatcher("DashboardServlet"); 
+                    rd.forward(request,response); 
+                }else{ 
+                    out.print("<p>Sorry username or password error</p>"); 
+                    RequestDispatcher rd=request.getRequestDispatcher("Login.html"); 
+                    rd.include(request,response); 
+                } 
+            } 
+        } 
+    
+        public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
+            doGet(request,response); 
+        } 
     }

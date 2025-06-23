@@ -1,17 +1,15 @@
 import java.nio.ByteBuffer;
 
-public class MemoryCopy {
+public class Code {
     public static void main(String[] args) {
-        // Create two chunks of memory
-        ByteBuffer buffer1 = ByteBuffer.allocateDirect(10);
-        ByteBuffer buffer2 = ByteBuffer.allocateDirect(10);
-
-        // Write some data into the first chunk
-        for (int i=0; i<5; i++) {
-            buffer1.put((byte)i);
+        ByteBuffer b1 = ByteBuffer.allocate(4);
+        ByteBuffer b2 = ByteBuffer.allocate(4);
+        byte[] bytes = new byte[4];
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = 0x1;
         }
-
-        // Copy the contents of the first chunk into the second chunk
-        buffer2.put(buffer1);
+        b1.put(bytes, 0, bytes.length);
+        b2.position(0);
+        b2.put(b1);
     }
 }

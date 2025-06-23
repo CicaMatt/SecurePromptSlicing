@@ -1,13 +1,12 @@
-import java.util.*;  // for Scanner
-public class Summation{
+import java.util.Scanner;
+public class ValueReader {
     public static void main(String[] args) {
-        int sum = 0;
-        Scanner s = new Scanner(System.in);
-        System.out.print("Enter an integer value: ");
-        while (s.hasNextInt()) { // hasNextInt() checks whether next token is an int.
-            sum += s.nextInt();    // If it is, get next int and add to the sum.
-            System.out.println(sum);// Print updated sum after each iteration.
+        if (args.length == 0) {
+            System.out.println("Please provide a value");
+            return;
         }
-        System.out.println("Program terminated.");
+
+        int val = Integer.parseInt(args[0]);
+        System.out.println("The value is " + val);
     }
 }

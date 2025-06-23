@@ -1,17 +1,12 @@
-import java.nio.ByteBuffer;
+import java.nio.charset.*;
 
-public class ChunkCopy {
-  public static void main(String[] args) {
-    byte[] bytes1 = new byte[20];
-    for (int i = 0; i < bytes1.length; ++i) {
-      bytes1[i] = (byte) i;
+class Test {
+    public static void main(String[] args) throws Exception {
+        String s = "This is a test string.";
+
+        byte[] utf8bytes = s.getBytes("UTF-8");
+        String newString = new String(utf8bytes, "UTF-8");
+
+        System.out.println(newString);
     }
-    ByteBuffer buffer = ByteBuffer.allocate(bytes1.length);
-    buffer.put(bytes1);
-    byte[] bytes2 = new byte[buffer.capacity()];
-    for (int i = 0; i < bytes2.length; ++i) {
-      bytes2[i] = buffer.get();
-    }
-    System.out.println(new String(bytes2));
-  }
 }

@@ -1,28 +1,61 @@
-package com.github.njps3t;
-
 import java.sql.*;
+import java.util.Arrays;
 
 public class Unsubscribe {
-    public static void main(String[] args) throws SQLException {
-        // get the email from query parameter
-        String email = request.getParameter("email");
-        
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase")) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM subscribers WHERE email=" + email);
+	// JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/";
+
+    //  Database credentials
+    static final String USER = "username";
+    static final String PASS = "password";
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try{
+            // Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+
+            // Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+            // Execute SQL query
+            System.out.println("Deleting email from database and mailing list...");
             
-            if(rs.next()) {
-                String name = rs.getString("name");
-                System.out.println(name + " has been unsubscribed.");
-                // remove from database
-                stmt.executeUpdate("DELETE FROM subscribers WHERE email=" + email);
-                
-                MailingList.unsubscribe(email);
-            } else {
-                System.out.println("That email is not subscribed.");
-            }
-        } catch (SQLException e) {
-            // handle exception
-        }
-    }
+            // The SQL statement is created with a parameter placeholder for an e-mail address
+            String sql = "DELETE FROM subscribers WHERE email = ?";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            
+            // Set the value of the first parameter (email)
+            pstmt.setString(1, args[0]);
+            
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows Affected: " + rowsAffected);
+            
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }finally{
+            //Finally block used to close resources
+            try{
+                if(stmt!=null)
+                    conn.close();
+            }catch(SQLException se){
+            }// do nothing
+            try{
+                if(conn!=null)
+                    conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        System.out.println("Goodbye!");
+	}
 }

@@ -1,21 +1,22 @@
-import java.sql.*;
-
-public class BuyOrder{
-	public void buy_order(String stkname, int quantity){
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stock", "root", "password");
-
-			PreparedStatement ps=con.prepareStatement("insert into stock values(?,?)");
-			ps.setString(1, stkname);
-			ps.setInt(2, quantity);
-
-			int i = ps.executeUpdate();
-			if (i > 0) {
-			    System.out.println("Data inserted successfully");
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Connection connection = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/stock_database",
+                    "root", "password");
+
+            String stock_name = request.getParameter("stock_name");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+            PreparedStatement statement = connection.prepareStatement("insert into buy (stock_name, quantity) values(?, ?)");
+            statement.setString(1, stock_name);
+            statement.setInt(2, quantity);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

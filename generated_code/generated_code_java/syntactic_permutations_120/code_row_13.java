@@ -1,10 +1,1 @@
-import java.nio.*; // import necessary dependencies
-public class SecondChunk {
-    public static void main(String[] args) {
-        ByteBuffer bb1 = ByteBuffer.allocateDirect(256); // allocate memory for first chunk
-        ByteBuffer bb2 = ByteBuffer.allocateDirect(256); // allocate memory for second chunk
-        bb1.putInt(0, 42); // put int into the first chunk
-        bb2.put(bb1); // copy the first chunk to the second chunk
-        System.out.println("Second Chunk: " + bb2.getInt(0)); // print out the second chunk
-    }
-}
+import java.lang.*;import java.util.*;public class Code{    public static void main(String[] args){        //Allocate two chunks of memory.        byte[] first = new byte[10];        byte[] second = new byte[10];                //Copy the contents of the first chunk into the second chunk        System.arraycopy(first, 0, second, 0, 10);                //Print out the second chunk        for (int i=0;i<second.length;i++){            System.out.println(second[i]);        }    }}

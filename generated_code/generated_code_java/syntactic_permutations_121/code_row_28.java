@@ -1,10 +1,8 @@
 import java.util.*;
-public class Main {
-    public static void main(String[] args) {
-        int x = 10;
-        int y = 20;
-        
-        System.out.println(x);
-        System.out.println(y);
-    }
+
+public class HelloWorld{
+	public static void main(String []args){
+		int[] a = new int[3];
+		System.out.println("Hello World");
+	}
 }

@@ -1,14 +1,13 @@
-package myFiles;  
-public class FileOperations {   
-    public static void main(String[] args) {  
-        try {
-            FileOutputStream out = new FileOutputStream("file.txt", true);  
-            String data = "Hello Java";  
-            byte[] bytes = data.getBytes();  
-            for (byte b : bytes)
-                out.write(b);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to open file");
-        }
-    }  
+import java.io.File;
+
+public class FileOpen {
+    public static void main(String[] args) throws Exception {
+        File f = new File("test.txt");
+        int fileDescriptor = open(f, O_CREAT | O_TRUNC | O_WRONLY | O_EXCL);
+        System.out.println(fileDescriptor);
+    }
+
+    static int open(File f, int flags) throws Exception {
+        return -1;
+    }
 }

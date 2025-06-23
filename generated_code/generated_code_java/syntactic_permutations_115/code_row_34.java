@@ -1,24 +1,16 @@
 import java.io.*;
-import java.util.*;
-
-public class ExecuteCommand {
-    public static void main(String[] args) throws Exception {
-        String command = "ls";
-        executeCommand(command);
-    }
-
-    public static void executeCommand(String command) throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("bash", "-c", command);
-        Process process = processBuilder.start();
-        print(process.getInputStream());
-    }
-
-    public static void print(InputStream inputStream) throws IOException, InterruptedException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
+public class Ls {
+    public static void main(String[] args) throws IOException{
+        String s = "";
+        for(int i=0;i<args.length;i++){
+            s += " " + args[i];
+        }
+        Runtime rt = Runtime.getRuntime();
+        Process pr = rt.exec("ls"+s);
+        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line=null;
+        while((line=input.readLine()) != null){    
+            System.out.println(line);    
         }
     }
 }

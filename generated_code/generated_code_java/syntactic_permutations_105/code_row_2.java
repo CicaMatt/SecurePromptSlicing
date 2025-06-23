@@ -1,18 +1,14 @@
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;  
+    import java.nio.file.Files;
+    import java.nio.file.Paths;
+    import java.nio.file.PosixFilePermissions;
+    import java.util.Set;
 
-public class Main {
-    
-    public static void main(String[] args) {
-        String content = "U2FsdGVkX1/R+WzJcxgvX/Iw=="; // Change me!
-        try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get("secret.txt"));
-            writer.write(content);    
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Could not write to file!");
+    public class Solution {
+        public static void main(String[] args) throws Exception{
+            String string = "U2FsdGVkX1/R+WzJcxgvX/Iw==";  
+            Files.write(Paths.get("secret.txt"), string.getBytes());
+            Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwx------");
+            Files.setPosixFilePermissions(Paths.get("secret.txt"), perms);    
         }
-
-    }
-}
+    }

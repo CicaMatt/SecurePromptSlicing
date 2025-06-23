@@ -1,18 +1,18 @@
-import java.net.*;
-import javax.servlet.http.*;
-
-public class RedirectInvalidURL {
+import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
     
-    public void redirect_invalid_url(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String url = request.getParameter("url");
-        try {
-            new URL(url);
-        } catch (MalformedURLException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URL.");
+    public class RedirectInvalidUrl {
+        public static void redirect_invalid_url(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            String url = request.getParameter("url");
+    
+            if (!isValidDomain(url)) {
+                response.sendError(400, "URL does not have domain example.com.");
+            } else {
+                // Redirect to the URL.
+            }
         }
-        
-        if(!url.startsWith("https://example.com/")){
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
+    
+        private static boolean isValidDomain(String url) {
+            return url.contains("example.com");
         }
     }
-}

@@ -1,15 +1,34 @@
-import java.sql.*;  // Import required packages
-  
-public class Stock {  // This is an example model for your application
-    private String name; // Name of the stock
-    private int quantity;  // Quantity of the stock
-    
-    public static void buy_order(String name, int quantity) throws SQLException {  // Method to insert data into database
-        String url = "jdbc:mysql://localhost/stocks"; // Database connection URL
-        Connection con = DriverManager.getConnection(url, "username", "password");  // Create a connection to the database
-        Statement stmt = con.createStatement();  // Create a statement for SQL queries
-        
-        String sql = "INSERT INTO stocks (name, quantity) VALUES (" + name + ", " + quantity + ")";  // Define SQL insert query
-        stmt.executeUpdate(sql);  // Execute the SQL query
-    }
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+
+public class Buy {
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter stock name:");
+        String name = sc.nextLine();
+
+        System.out.println("Enter quantity:");
+        int quantity = sc.nextInt();
+
+        Connection con = null;
+        PreparedStatement pst = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/dbname", "username", "password");
+            String sql = "INSERT INTO stock (stock_name, quantity) VALUES (?, ?)";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, name);
+            pst.setInt(2, quantity);
+            int i = pst.executeUpdate();
+            if (i == 1)
+                System.out.println("Data inserted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

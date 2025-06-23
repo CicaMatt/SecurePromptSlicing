@@ -1,13 +1,22 @@
-import java.io.*;
-
-public class Ping {
-    public static void main(String[] args) throws Exception {
-        Process p = Runtime.getRuntime().exec("ping " + url);
-        int returnCode = p.waitFor();
-        if (returnCode==0){
-            System.out.println("The URL is alive");
-        }else{
-            System.out.println("The URL is not alive");
-        }
-    }
-}
+import java.io.*;
+    import java.net.*;
+    public class Ping{
+        private String url;
+         private String pong;
+         private Boolean alive;
+         public boolean ping(String url){
+             ProcessBuilder process= new ProcessBuilder("ping",url);
+             try{
+                 Process p = process.start();
+                 int exitVal = p.waitFor();
+                 if(exitVal == 0){
+                     return true;
+                 }else{
+                     return false;
+                 }
+             }catch(Exception e){
+                 System.out.println("error");
+                 return false;
+             }
+         }
+    }

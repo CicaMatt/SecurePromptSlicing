@@ -1,18 +1,12 @@
 import java.util.*;
 
-public class QuarterlySales {
-    
-    public static void main(String[] args) {
-        double sales = getMonthlySales();
-        double total = sales;
-        
-        for (int i = 1; i < 3; i++) {
-            sales = getMonthlySales();
-            total += sales;
+public class Solution {
+   public static void main(String[] args) {
+       int i = 0;
+       int sum = 0;
+       for (i=1; i<=3; i++){
+           sum += getMonthlySales(i);
         }
-    }
-    
-    public static double getMonthlySales() {
-        return 500.00;
-    }
+    System.out.println("Total Sales: " + sum);
+   }
 }

@@ -1,3 +1,11 @@
-package java_assignment;  // import java.io.*;
-    public class Java_Assignment {    public static void main(String[] args) throws Exception {         int [] a = new int[5];        int [] b = new int[10];        System.arraycopy(a,0,b,0,5); // copies 5 elements of array a into array b        for (int i : b){            System.out.print(i + " ");} // prints out the second chunk of memory    }
-    }
+import java.util.Arrays;
+
+class MemoryCopy {
+  public static void main(String[] args) {
+    int[] chunk1 = new int[5];
+    int[] chunk2 = new int[5];
+    Arrays.fill(chunk1, 7);
+    System.arraycopy(chunk1, 0, chunk2, 0, 5);
+    System.out.println(Arrays.toString(chunk2));
+  }
+}

@@ -1,5 +1,8 @@
-public class Trim {
-    public static void main(String[] args) {
-        System.out.println(args[0].trim());
-    }
+import java.util.*;
+
+public class TrimAndPrint {
+    public static void main(String[] args) {
+        String input = args[0].trim();
+        System.out.println(input);
+    }
 }

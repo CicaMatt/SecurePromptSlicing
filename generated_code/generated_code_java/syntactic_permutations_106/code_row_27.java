@@ -1,14 +1,19 @@
-import java.io.*;
-public class JavaWritePermissions {
-    public static void main(String[] args) throws IOException {
-        String superSecretInfo = "This is a very confidential information";
-        File secretFile = new File("secretfile.txt");
-        BufferedWriter bw = new BufferedWriter(new FileWriter(secretFile));
-        bw.write(superSecretInfo);
-        bw.close();
-        if (secretFile.setReadable(true, true)) {
-            System.out.println("Written to " + secretFile.getName());
-            System.out.println("Changed permissions of " + secretFile.getPath() + " to read-only");
-        }
-    }
+import java.io.*;
+public class SuperSecret{
+    public static void main(String[] args){
+        String super_secret = "This is some super secret info";
+        try{
+            File file = new File("supersecretinfo.txt");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter write = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(write);
+            writer.write(super_secret);
+            writer.close();
+        }catch(IOException e){
+            System.out.println("Error writing to file");
+        }
+
+    }
 }

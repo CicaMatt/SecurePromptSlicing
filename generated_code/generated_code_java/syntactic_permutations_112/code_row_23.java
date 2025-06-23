@@ -1,20 +1,22 @@
-import java.io.*;
-import java.net.*;
+import java.lang.*;
 
-public class Ping {
-  private String url;
+@WebServlet(urlPatterns = {"/ping"})
+public class Ping extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private String url;
 
-  public Ping(String url) {
-    this.url = url;
-  }
-
-  public void ping() throws Exception {
-    Runtime rt = Runtime.getRuntime();
-    Process pr = rt.exec("ping " + url);
-    BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-    String inputLine;
-    while ((inputLine = in.readLine()) != null) {
-      System.out.println(inputLine);
+    public void init() {
+        url = System.getenv("URL");
     }
-  }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Runtime rt = Runtime.getRuntime();
+        Process pr = rt.exec("ping " + url);
+        InputStream is = pr.getInputStream();
+        OutputStream os = response.getOutputStream();
+        int i;
+        while((i=is.read()) != -1) {
+            os.write(i);
+        }
+    }
 }

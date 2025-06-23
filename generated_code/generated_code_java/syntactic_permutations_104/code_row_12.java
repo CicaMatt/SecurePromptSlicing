@@ -1,12 +1,10 @@
 import java.io.*;
 
-class FileOperations{
+public class Solution {
     public static void main(String[] args) throws IOException {
-        File myFile = new File("myConfigFile");
-        try (FileOutputStream fout = new FileOutputStream(myFile,true)) {
-            String important_config = "This is an important configuration";
-            byte[] configBytes = important_config.getBytes();
-            fout.write(configBytes);
-        }
+        FileOutputStream fs = new FileOutputStream("filename", true);
+        String important_config = "important config";
+        byte[] bytes = important_config.getBytes();
+        fs.write(bytes, 0, bytes.length);
     }
 }

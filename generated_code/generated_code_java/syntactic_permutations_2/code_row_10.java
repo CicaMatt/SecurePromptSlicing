@@ -1,15 +1,13 @@
-import java.util.*;
-class Copy {
+import java.io.*;
+
+public class CopyBuffer {
     public static void main(String[] args) {
-        byte[] buf = new byte[1024];
-        String msg="hello world";
-        copy(buf,msg.getBytes(),msg.length());
+        byte[] buffer = new byte[10];
+        byte[] message = "Hello".getBytes();
+        copy(buffer, message);
     }
-    
-    public static byte[] copy(byte[] dest, byte[] src, int n){
-        for (int i=0; i<n;i++){
-            dest[i]=src[i];
-        }
-        return dest;
+    public static void copy(byte[] dest, byte[] src) {
+        for (int i = 0; i < src.length; i++)
+            dest[i] = src[i];
     }
 }

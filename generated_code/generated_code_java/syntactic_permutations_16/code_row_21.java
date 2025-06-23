@@ -1,9 +1,9 @@
-import java.util.*;
-class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        String[] arr = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        System.out.println(arr[n]);
+public class ArrayIndex {
+    
+        public static void main(String[] args) {
+            int myInt = 4;
+            int[] nums = new int[]{1, 2, 3, 4, 5};
+        
+            System.out.println(nums[myInt]);
+        }
     }
-}

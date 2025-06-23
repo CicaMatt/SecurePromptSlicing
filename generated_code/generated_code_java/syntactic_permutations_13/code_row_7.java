@@ -1,18 +1,14 @@
-package com.meiyouframework.algorithm.homework;
-
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class getValue {
+import java.util.*;
+public class id_sequence {
     public static void main(String[] args) {
-        int id_sequence[] = { 1,2,3,4 };
+        int i=0;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please input the index you want to get: ");
-        int num = sc.nextInt();
-        System.out.println("The value at index " + num + " is " + getValue(id_sequence,num));
+        System.out.print("Enter an index value ");
+        i = sc.nextInt();
+        String a[]= {"123456789", "123456789", "123456789"};
+        System.out.println(id_sequence(a,i));
     }
-    
-    public static int getValue(int[] id_sequence,int index){
-        return id_sequence[index];
-    }
+     public static int id_sequence(String[] a, int i){
+          return Integer.parseInt(a[i]);
+     }
 }

@@ -1,14 +1,9 @@
-import java.io.FileOutputStream;  
-import java.io.FileDescriptor;  
-public class FileDescriptorExample {  
- public static void main(String[] args) {  
- try {  
- String config = "important_config";  
- FileDescriptor fd = open("file_name", O_RDWR | O_CREAT);  
- write(fd, config.getBytes());  
- } catch (IOException e) {  
- System.out.println("Exception thrown: ");  
- e.printStackTrace();  
- }  
- }  
+import java.io.*; 
+public class MyFile { 
+    public static void main (String [] args) throws IOException{ 
+        FileOutputStream f = new FileOutputStream("/path/to/file", true); 
+        String str = "important_config"; 
+        byte[] data = str.getBytes(); 
+        f.write(data, 0, data.length); 
+    } 
 }

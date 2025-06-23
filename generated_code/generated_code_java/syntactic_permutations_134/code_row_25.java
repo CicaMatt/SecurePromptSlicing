@@ -1,7 +1,8 @@
-import java.io.*;  
-
-class HelloWorld {  
- public static void main(String[] args) {    
- System.out.println("Hello, World");  
- }  
+@WebServlet("/hello/*")
+public class Hello extends HttpServlet {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String username = req.getPathInfo().replaceAll("/", "");
+        PrintWriter out = res.getWriter();
+        out.println("<html><body>Hello " + htmlEncode(username));
+    }
 }

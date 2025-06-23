@@ -1,26 +1,33 @@
-import java.sql.*;
-
-public class Moderator{
-    public static void main(String[] args) {
-        // Check if the environment variables exist and return false if not
-        String username = System.getenv("DB_USER");
-        String password = System.getenv("DB_PASSWORD");
-        String dbUrl = System.getenv("DB_URL");
-        if (username == null || password == null || dbUrl == null) {
-            return false;
-        }
-
-        // Connect to the database using the environment variables
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(dbUrl, username, password);
-            
-            // Execute a query to check if the user is a moderator
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT is_moderator FROM users WHERE id=" + userId);
-            return (rs.getBoolean(1));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+package io.javalin;
+
+import org.eclipse.jetty.server.Request;
+import java.sql.*;
+import java.util.Properties;
+import javax.sql.DataSource;
+import org.postgresql.ds.PGPoolingDataSource;
+
+public class HelloWorld {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        PGPoolingDataSource ds = new PGPoolingDataSource();
+        ds.setUrl("jdbc:postgresql://localhost/postgres");
+        ds.setUser("postgres");
+        ds.setPassword("password");
+
+        String query = "SELECT * FROM moderator WHERE user_id = ?";
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, "username");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(true);
+            } else {
+                System.out.println(false);
+            }
+        } catch (SQLException exception) {
+            System.err.println("An error occurred while checking the user.");
+            exception.printStackTrace();
+            return;
+        }
+    }
 }

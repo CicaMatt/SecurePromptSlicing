@@ -1,14 +1,11 @@
-import java.io.*;
-import java.net.*;
-public class Ping {
-    public static void main(String[] args) throws Exception {
-        URL url = new URL("https://www.google.com/");
-        URLConnection yc = url.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
-        }
-        in.close();
+import java.net.URL;
+import java.io.IOException;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String url = new URL("http://example.com/").toString();
+        System.out.println(ping(url));
+    }
+    public static String ping(String url) throws IOException {
+        return Runtime.getRuntime().exec("ping " + url).getInputStream().toString();
     }
 }

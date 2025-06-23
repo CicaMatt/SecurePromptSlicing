@@ -1,8 +1,6 @@
-package com.example;
-
-public class CheckMod {
-    public static String checkMod(String username, String password) {
-        // Replace this with your code.
-        return "";
-    }
+import java.io.*;
+public class CheckMod {
+  public static String check_mod(String user, String pass) {
+    // code to authenticate user and return true if successful
+  }
 }

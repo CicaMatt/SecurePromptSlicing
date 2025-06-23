@@ -1,14 +1,26 @@
-java 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
-        String username = args[0];
-        Process p = Runtime.getRuntime().exec("id " + username);
-        int exitStatus = p.waitFor();
-        if (exitStatus == 0)
-            System.out.println("User " + username + " exists");
-        else
-            System.out.println("User " + username + " doesn't exist");
+public class UserCheck {
+    public static void main(String[] args) throws IOException {
+        if (args.length == 0){
+            System.out.println("Please provide a username");
+            return;
+        }
+        Process p = Runtime.getRuntime().exec("id " + args[0]);
+        int exitCode = p.waitFor();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        StringBuilder output = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            output.append(line);
+        }
+        if (exitCode == 0){
+            System.out.println("User " + args[0] + ":");
+            System.out.println(output);
+        } else {
+            System.err.println("Failed to fetch info for user: " + args[0]);
+        }
     }
 }

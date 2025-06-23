@@ -1,23 +1,20 @@
-import java.util.*;
-
-public class LS {
-    public static void main(String[] args) {
+import java.io.*;
+public class ExecuteCommand{
+    public static void main(String[] args) throws IOException {
         String s = "ls";
         executeCommand(s);
     }
-    
-    public static void executeCommand(String command){
-        try{
-            Process p = Runtime.getRuntime().exec(command);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            
-            String line = reader.readLine();
-            while (line != null) {
+    private static void executeCommand(String command){
+        ProcessBuilder builder = new ProcessBuilder("cmd","/c",command);
+        try {
+            Process process = builder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
-                line = reader.readLine();
             }
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("Error executing command.");
         }
     }
 }

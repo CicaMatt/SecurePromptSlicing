@@ -1,18 +1,13 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.net.*;
-
-public class PingDecorator implements HttpServlet {
-    private String url;
-    public void init(ServletConfig config) throws ServletException {
-        //initialize the URL here
-    }
-    public void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws IOException {
-        //call ping() here
-    }
-    public void ping() {
-        //run the command "ping" with the url as argument here
-    }
+import java.net.*; 
+public class Decorator { 
+    public static void ping() throws IOException { 
+        String url = "www.example.com"; 
+        System.out.println("Pinging URL:" + url); 
+        String[] command = {"ping", "-c", "3", url}; 
+        ProcessBuilder probuilder = new ProcessBuilder(command); 
+        Process process = probuilder.start();  
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s); 
+    } 
 }

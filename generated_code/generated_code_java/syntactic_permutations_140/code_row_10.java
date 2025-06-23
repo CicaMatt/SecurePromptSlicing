@@ -1,19 +1,32 @@
-import java.sql.*;
-
-public class Database {
-    public static void main(String[] args) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "password");
-            Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM cities";
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                System.out.println("City: " + rs.getString("Name") + ", Country: " + rs.getString("CountryCode"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+import java.sql.*;  
+  
+public class App {  
+    public static void main(String[] args) throws Exception {  
+        String url = "jdbc:mysql://localhost:3306/demo";  
+        String user = "dbuser";  
+        String password = "password";  
+  
+        // open a connection  
+        Connection conn = DriverManager.getConnection(url, user, password);  
+  
+        // check if connection was successful  
+        if (conn == null) {  
+            System.out.println("Failed to make connection!");  
+        } else {  
+            System.out.println("Successfully made connection!");  
+        }  
+  
+        // create a statement  
+        Statement stmt = conn.createStatement();  
+        String query = "SELECT * FROM users";  
+  
+        // execute the query, store the results in ResultSet  
+        ResultSet rs = stmt.executeQuery(query);  
+  
+        while (rs.next()) {  
+            int id = rs.getInt("id");  
+            String name = rs.getString("name");  
+            System.out.println("ID: " + id + ", Name: " + name);  
+        }  
+    }  
 }

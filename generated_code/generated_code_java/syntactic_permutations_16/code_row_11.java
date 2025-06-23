@@ -1,4 +1,4 @@
-public static int getValue(int input) {
-        int[] myArray = new int[] {1, 2, 3, 4, 5};
-        return myArray[input];
-      }
+public static int getValue(int index){
+        String[] numbers = {"one", "two", "three","four"};
+        return numbers[index];
+    }

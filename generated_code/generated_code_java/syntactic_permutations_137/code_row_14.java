@@ -1,19 +1,16 @@
-import java.io.*;
-import javax.servlet.*;
-
-public class CheckMod extends HttpServlet {
-   public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-      if(auth_mod()) {
-         PrintWriter out = res.getWriter();
-         out.println("User is a moderator");
-      }
-      else {
-         PrintWriter out = res.getWriter();
-         out.println("User is not a moderator");
-      }
-   }
-}
-
-public boolean auth_mod() throws IOException, ServletException {
-    return true;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class check_mod extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        boolean isModerator = auth_mod();
+        if (isModerator == true){
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+            out.println("<p>You are a moderator.</p>");
+        } else {
+            response.sendRedirect("/error");
+        }
+    }
 }

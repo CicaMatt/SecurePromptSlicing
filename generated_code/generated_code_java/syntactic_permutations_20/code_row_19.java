@@ -1,10 +1,16 @@
-public class Offset {
-    public static final int OFFSET = 1000;
-        public static void main(String[] args) {
-            if (args.length < 1) {
-                throw new RuntimeException("Expected one command line argument");
+import java.io.*;
+public class Main {
+    public static void main(String[] args) throws IOException{
+        String str = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        while ((str = reader.readLine()) != null && !str.isEmpty()){
+            try{
+                int value = Integer.parseInt(str);
+                int offset = 1000;
+                System.out.println(value + offset);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid input: " + str);
             }
-    	int value = Integer.parseInt(args[0]);
-    	System.out.println(value + OFFSET);
         }
     }
+}

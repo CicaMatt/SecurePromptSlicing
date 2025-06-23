@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <form action="/login" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" /><br />
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" /><br />
-      <input type="submit" value="Submit" />
-    </form>
-  </body>
-</html>
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LoginServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (checkLogin(username, password)) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.html");
+            dispatcher.forward(request, response);
+        } else {
+            response.sendRedirect("/login.html");
+        }
+    }
+
+    private boolean checkLogin(String username, String password) {
+        // Replace with the actual login checking code
+        return true;
+    }
+}

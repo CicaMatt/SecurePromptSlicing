@@ -1,12 +1,19 @@
-import java.util.*;
 import java.io.*;
-import spark.*;
-import freemarker.template.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class HelloWorld {
-    public static String render_response_from_env(Environment env) throws Exception{
-        Map<String, Object> data = new HashMap<>();
-	data.put("name", "");
-	return FreeMarkerTemplateUtils.processTemplateIntoString(env.getTemplate("index.ftl"), data);
+@WebServlet(name="home", urlPatterns={"/home"})
+public class Home extends HttpServlet {
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        Template template = Environment.getTemplate("template.html");
+        String rendered = template.render(name);
+        response.setContentType("text/html");
+        response.getWriter().println(rendered);
     }
 }

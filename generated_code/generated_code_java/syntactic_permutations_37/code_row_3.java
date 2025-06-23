@@ -1,61 +1,77 @@
-public class Login {
-        private static String username;
-        private static String password;
-        
-        public void setUsername(String un)
-        {
-            username = un;
-        }
-        
-        public void setPassword(String pw)
-        {
-            password = pw;
-        }
-        
-        public void getUsername()
-        {
-            return username;
-        }
-        
-        public void getPassword()
-        {
-            return password;
-        }
-        
-        public void checkUser(String un, String pw) throws SQLException, ClassNotFoundException
-        {
-            if(username != null && password !=null)
-            {
-                try{
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost/login", "root", "root");
-                    
-                    PreparedStatement ps = con.prepareStatement("SELECT * FROM login WHERE username=? AND password=?");
-                    
-                    ps.setString(1, un);
-                    ps.setString(2, pw);
-                    
-                    ResultSet rs = ps.executeQuery();
-                    
-                    if(rs.next())
-                    {
-                        con.close();
-                        response.sendRedirect("success");
-                    }
-                    else 
-                    {
-                        con.close();
-                        response.sendRedirect("cant_login");
-                    }
-                }
-                catch(SQLException e)
-                {
-                    response.sendRedirect("internal_server_error");
-                }
-            }
-            
-        }
-        
-    }
+import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.ResultSet;
+    import java.sql.Statement;
     
-### Explanation:
-The code is a simple login page that takes a username and password and checks if the username and password are in the database. If they are; it redirects to success. If they are not it redirects to cant_login. If there is an error it redirects to internal_server_error.
+    public class Login {
+        // JDBC driver name and database URL
+        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+        static final String DB_URL = "jdbc:mysql://localhost/test";
+    
+        //  Database credentials
+        static final String USER = "root";
+        static final String PASS = "";
+    
+        public Login() {
+            Connection conn = null;
+            Statement stmt = null;
+            try{
+                //STEP 2: Register JDBC driver
+                Class.forName(JDBC_DRIVER);
+    
+                //STEP 3: Open a connection
+                System.out.println("Connecting to database...");
+                conn = DriverManager.getConnection(DB_URL, USER, PASS);
+    
+                //STEP 4: Execute a query
+                System.out.println("Creating statement...");
+                stmt = conn.createStatement();
+                String sql;
+                sql = "SELECT id, first, last, username, password FROM Login";
+                ResultSet rs = stmt.executeQuery(sql);
+    
+                //STEP 5: Extract data from result set
+                while(rs.next()){
+                    //Retrieve by column name
+                    int id  = rs.getInt("id");
+                    String first = rs.getString("first");
+                    String last = rs.getString("last");
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+    
+                    //Display values
+                    System.out.print("ID: " + id);
+                    System.out.print(", First: " + first);
+                    System.out.print(", Last: " + last);
+                    System.out.print(", Username: " + username);
+                    System.out.println(", Password: " + password);
+                }
+                //STEP 6: Clean-up environment
+                rs.close();
+                stmt.close();
+                conn.close();
+            }catch(SQLException se){
+                //Handle errors for JDBC
+                se.printStackTrace();
+            }catch(Exception e){
+                //Handle errors for Class.forName
+                e.printStackTrace();
+            }finally{
+                //finally block used to close resources
+                try{
+                    if(stmt!=null)
+                        stmt.close();
+                }catch(SQLException se2){
+                }// nothing we can do
+                try{
+                    if(conn!=null)
+                        conn.close();
+                }catch(SQLException se){
+                    se.printStackTrace();
+                }//end finally try
+            }//end try
+            System.out.println("Goodbye!");
+    
+        } // end main
+    
+    }

@@ -1,13 +1,17 @@
-package codegaming;
 import java.net.*;
-public class Redirect{
-    public static String redirect_url(String url){
-        URL parsed_url = new URL(url);
-        String domain_name = parsed_url.getHost();
-        if(domain_name.equals("example.com")){
-            return "redirect";
-        }else{
-            return "not redirected";
+public class Main{
+    public static void main(String[] args) {
+        String url = "http://example.com";
+        URL parsed_url;
+        try {
+            parsed_url=new URL(url);
+            if (parsed_url.getHost().endsWith(".example.com")){
+                System.out.println("redirecting...");
+            } else {
+                System.out.println("not redirecting...");
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 }

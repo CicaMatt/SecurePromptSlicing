@@ -1,21 +1,23 @@
-import java.io.*;
-    import java.util.*;
-
-    public class Solution {
-
-        // Returns the element at position index in the array
-        public static int getValueFromArray(int[] arr, int size, int index) {
-            return arr[index];
+import java.util.*;
+public class ArrayReturnMain{
+    public static int getValueFromArray(int[] array, int index){
+        if (index<0 || index>=array.length){
+            throw new IllegalArgumentException("Invalid Index");
         }
-
-        public static void main(String[] args) throws Exception{
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            // Get integer from user
-            System.out.print("Enter an integer: ");
-            int input = Integer.parseInt(br.readLine());
-            // Create array and call getValueFromArray function with it
-            int[] arr = {1, 2, 3, 4, 5};
-            int val = getValueFromArray(arr, arr.length, input);
-            System.out.println("The value at index " + input + " is: " + val);
+        return array[index];
+    }
+    public static void main(String args[]){
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter a number: ");
+        int input = in.nextInt();
+        //Create an Array of 5 integers
+        int[] myArray = {1,2,3,4,5};
+        try{
+            int output = getValueFromArray(myArray,input);
+            System.exit(output);
+        }catch(IllegalArgumentException e){
+            System.out.println("The index you have entered is not valid");
+            System.exit(1);
         }
     }
+}

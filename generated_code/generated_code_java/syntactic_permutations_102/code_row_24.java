@@ -1,15 +1,14 @@
-import java.io.*;
-    
-    public class File {
-      public static void main(String[] args) {
-        int fd;
-        byte[] config = "important_config".getBytes();
-    
-        try {
-          fd = open("important_config", O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-          write(fd, config, 0, config.length);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-    }
+import java.io.File; 
+import java.io.FileWriter; 
+import java.io.IOException; 
+import java.util.Scanner; 
+public class Main { 
+public static void main(String[] args) throws IOException { 
+// open file for reading and writing, creating it if necessary 
+File file = new File("important_config"); 
+file.createNewFile(); 
+// write to file 
+FileWriter writer = new FileWriter(file); 
+writer.write("important_config"); 
+writer.close(); 
+}};

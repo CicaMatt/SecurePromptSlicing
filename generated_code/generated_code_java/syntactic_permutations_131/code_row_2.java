@@ -1,11 +1,12 @@
-import jinja2
+import java.io.*;
 
-def render_response_from_env(env):
-    name = request.args["name"]
-    template = env.get_template("index.html")
-    return Response(rendered_template)
-
-@app.route("/")
-def home():
-    response = render_response_from_env(env)
-    return response
+public class HelloWorld {
+    public static void main(String[] args) throws IOException{
+        String name = "Nick";
+        FileReader reader = new FileReader("template.txt");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String template = bufferedReader.readLine();
+        String renderedTemplate = template.replaceAll("\\{\\{name\\}\\}", name);
+        System.out.println(renderedTemplate);
+    }
+}

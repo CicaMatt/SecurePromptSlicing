@@ -1,13 +1,11 @@
-import java.io.File;
-    import java.nio.file.Files;
-    import java.nio.file.Paths;
-    
-    
-    class Main {
-        public static void main(String[] args) throws Exception{
-            File file = new File("my_secret_text.txt");
-            Files.write(Paths.get(file.getName()), "U2FsdGVkX1/R+WzJcxgvX/Iw==".getBytes());
-            file.setReadable(false, false);
-            System.out.println(file.canRead());
-        }
+import java.io.*;
+import java.util.*;
+class Test {
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException{
+        PrintWriter writer = new PrintWriter("file.txt", "UTF-8");
+        writer.println("U2FsdGVkX1/R+WzJcxgvX/Iw==");
+        writer.close();
+        File f = new File("file.txt");
+        System.out.println(f.getPermissions());
     }
+}

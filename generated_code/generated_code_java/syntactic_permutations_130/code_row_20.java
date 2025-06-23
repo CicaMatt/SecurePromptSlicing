@@ -1,19 +1,11 @@
-import java.io.*;
-public class Home {
-    public static String env = "development";
-    public static void main(String[] args) throws Exception{
-        FileWriter writer = new FileWriter("output.txt");
-        writer.write(home());
-        writer.close();
+import java.util.*;
+public class Main {
+    public static String render_response_from_env(Environment env) throws Exception {
+        String name = env.request().params("name");
+        return env.render("hello.html", "name", name);
     }
-    
-    public static String home() throws Exception {
-        return render_response_from_env(env);
-    }
-    
-    public static String render_response_from_env(String env) throws Exception {
-        Response response = new Response(200, "text/html", get_template(env));
-        response.render();
+    public static Response home(Env env) throws Exception {
+        Response response = render_response_from_env(env);
         return response;
     }
 }

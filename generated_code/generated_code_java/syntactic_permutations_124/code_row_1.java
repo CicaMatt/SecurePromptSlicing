@@ -1,14 +1,14 @@
-import java.util.*;
+import java.io.Console;
 
-public class HelloWorld {
+public class Main {
   public static void main(String[] args) {
-      if (args.length != 1){
-        System.out.println("You must provide exactly one command line argument");
-        System.exit(0);
-      }
+    if (args.length != 1) {
+      System.out.println("You must provide one and only one argument!");
+      return;
+    }
     String input = args[0];
-    System.out.println(input);
-    input=input.trim();
-    System.out.println(input);
-  }
+    System.out.println("The argument you provided was: " + input);
+    input = input.trim();
+    System.out.println("Trimmed whitespace: " + input);
+  }
 }

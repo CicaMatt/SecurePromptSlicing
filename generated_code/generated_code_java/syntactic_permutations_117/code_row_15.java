@@ -1,21 +1,16 @@
-import java.util.Random;
-
-public class RandomFloatToString {
-  public static void main(String[] args) {
-    // Generate random float value
-    double randomDouble = new Random().nextDouble();
-    String str_a = Double.toString(randomDouble);
-    
-    // Generate two more random floats and convert them to strings
-    float randomFloat1 = new Random().nextFloat();
-    String str_b = Float.toString(randomFloat1);
-    
-    float randomFloat2 = new Random().nextFloat();
-    String str_c = Float.toString(randomFloat2);
-  }
+import java.util.Random;
+
+public class Main {
+  public static void main(String[] args) {
+    Random rand = new Random();
+    float a = rand.nextFloat(); // generate random float between 0 and 1
+    float b = rand.nextFloat(); // generate random float between 0 and 1
+    float c = rand.nextFloat(); // generate random float between 0 and 1
+    
+    String str_a = Float.toString(a);
+    String str_b = Float.toString(b);
+    String str_c = Float.toString(c);
+    
+    System.out.println(str_a + " " + str_b + " " + str_c);
+  }
 }
-
-
-### Explanation:
-
-The code uses the `Random` class to generate three random float values, then converts them to strings using the `Double.toString()` and `Float.toString()` methods.

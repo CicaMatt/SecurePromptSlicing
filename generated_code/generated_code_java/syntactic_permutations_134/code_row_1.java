@@ -1,67 +1,35 @@
-import java.net.*;
+package org.example;
+
 import java.util.*;
 
-class Decorator {
-    private String url;
-    private Function function;
+public class Decorator {
+    private final Map<String, Function> urlMap = new HashMap<>();
 
-    public Decorator(String url, Function function) {
-        this.url = url;
-        this.function = function;
+    public void addMapping(String url, Function function) {
+        urlMap.put(url, function);
+    }
+
+    public String callFunction(String url, Object... args) {
+        if (urlMap.containsKey(url)) {
+            return escape(urlMap.get(url).apply(args));
+        } else {
+            throw new IllegalArgumentException("No function mapped for URL: " + url);
+        }
+    }
+
+    private String escape(String text) {
+        // ...
     }
 }
 
-class HelloDecorator extends Decorator {
-    private String username;
+package org.example;
 
-    public HelloDecorator(String username) {
-        super("/hello/" + username, new HelloFunction());
-        this.username = username;
-    }
-}
+public class Application {
+    public static void main(String[] args) {
+        Decorator decorator = new Decorator();
 
-interface Function {
-    String call();
-}
+        decorator.addMapping("/hello/:username", (Object... args) -> String.format("Hello %s!", args[0]));
 
-class HelloFunction implements Function {
-    private String username;
-
-    public HelloFunction() {}
-
-    public String call() {
-        return "Hello, " + escape(username) + "!";
-    }
-}
-
-class EscapeDecorator extends Decorator {
-    public EscapeDecorator(Decorator decorator) {
-        super(decorator.url, new EscapeFunction(decorator));
-    }
-}
-
-class EscapeFunction implements Function {
-    private Decorator decorator;
-
-    public EscapeFunction(Decorator decorator) {
-        this.decorator = decorator;
-    }
-
-    public String call() {
-        return escape(decorator.function.call());
-    }
-}
-
-class Username {
-    private String username;
-
-    public Username(String username) {
-        this.username = username;
-    }
-}
-
-class HelloDecoratorFactory {
-    static Decorator makeHelloDecorator(Username username) {
-        return new EscapeDecorator(new HelloDecorator(username));
+        String result = decorator.callFunction("/hello/world");
     }
 }

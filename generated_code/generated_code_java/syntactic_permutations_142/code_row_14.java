@@ -1,39 +1,55 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.*;
+import java.util.*;
 
-public class EmailDatabase {
+public class Unsubscribe {
+    private static final String EMAIL = "email";
+    private static Map<String, Object> db;
     
-    private Connection conn = null;
-    private Statement stmt = null;
-    private ResultSet rs = null;
-
-    // constructor to establish a connection to the database
-    public EmailDatabase() throws SQLException {
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/test", "root", "root");
-            stmt = conn.createStatement();
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.print("Enter your email address: ");
+        String emailAddress = reader.readLine();
+        
+        if (db == null) {
+            db = readDatabase();
+        }
+        
+        if (db.containsKey(emailAddress)) {
+            db.remove(emailAddress);
+            System.out.println("You have been unsubscribed.");
+            
+            try (PrintWriter writer = new PrintWriter("database.txt")) {
+                for (String key : db.keySet()) {
+                    writer.println(key + ": " + db.get(key));
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Error: could not save database.");
+            }
+        } else {
+            System.out.println("You are already unsubscribed.");
         }
     }
-
-    // method to remove email address from the database
-    public void unsubscribe(String email){
-        try{
-            String sql = "DELETE FROM subscribers WHERE email = '" + email + "'";
-            rs = stmt.executeQuery(sql);
-
-            if(rs.next()){
-                System.out.println("Email address removed from database");
-            } else {
-                System.out.println("Email address not in the database");
+    
+    private static Map<String, Object> readDatabase() throws IOException {
+        Map<String, Object> db = new HashMap<>();
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader("database.txt"))) {
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(": ");
+                
+                if (parts[0].equals(EMAIL)) {
+                    db.put(parts[1], EMAIL);
+                } else {
+                    System.out.println("Error: invalid database format.");
+                }
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: could not read database file.");
         }
+        
+        return db;
     }
 }

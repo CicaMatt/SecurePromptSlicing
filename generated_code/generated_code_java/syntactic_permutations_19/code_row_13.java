@@ -1,6 +1,8 @@
-public class AddOne {
+import java.util.Scanner;
+public class AddOneThousand {
     public static void main(String[] args) {
-        int val = Integer.parseInt(args[0]);
-        System.out.println("The result is " + (val + 1000));
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        System.out.println(num + 1000);
     }
 }

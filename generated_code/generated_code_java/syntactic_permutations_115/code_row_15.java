@@ -1,43 +1,29 @@
-import java.util.Scanner;
-
-class Main {
-  public static void main(String[] args) {
-    String output = executeCommand("ls", "-l");
-    System.out.println(output);
-  }
-
-  private static String executeCommand(String command, String... arguments) {
-    ProcessBuilder processBuilder = new ProcessBuilder();
-    List<String> commandsWithArgs = new ArrayList<>();
-    commandsWithArgs.add(command);
-    for (String arg : arguments) {
-      commandsWithArgs.add(arg);
-    }
-    processBuilder.command(commandsWithArgs);
-
-    try {
-      Process process = processBuilder.start();
-
-      StringBuilder output = new StringBuilder();
-
-      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-      String line;
-      while ((line = reader.readLine()) != null) {
-        output.append(line + "\n");
-      }
-
-      int exitCode = process.waitFor();
-      if (exitCode == 0) {
-        return output.toString();
-      } else {
-        throw new RuntimeException("Command: " + command + " failed with error code: " + exitCode);
-      }
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-    } catch (InterruptedException e) {
-      System.out.println(e.getMessage());
-    }
-    return "";
-  }
+import java.io.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ls {
+
+    public static void main(String[] args) throws Exception{
+        System.out.println("Output: ");
+        runCommand("/bin/ls", "-a");
+    }
+    
+    private static void runCommand(String command, String... arguments) throws IOException, InterruptedException {
+        List<String> cmdList = new ArrayList<>();
+        cmdList.add(command);
+        
+        for (int i = 0; i < arguments.length; i++) {
+            cmdList.add(arguments[i]);
+        }
+        
+        String[] commandArray = cmdList.toArray(new String[cmdList.size()]);
+        Process process = Runtime.getRuntime().exec(commandArray);
+        
+        Scanner scanner = new Scanner(process.getInputStream());
+        while (scanner.hasNextLine()) {
+            System.out.println(scanner.nextLine());
+        }
+    }
 }

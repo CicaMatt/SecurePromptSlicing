@@ -1,19 +1,23 @@
 import java.util.regex.*;
-import spark.ModelAndView;
-import spark.Spark;
-import spark.template.freemarker.FreeMarkerEngine;
 
-public class Redirect {
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import static spark.Spark.*;
+
+public class App {
     public static void main(String[] args) {
-        Spark.get("/redirect/:target", (req, res) -> {
-            String target = req.params(":target");
-            Pattern p = Pattern.compile(".+example\\.com.*");
-            Matcher m = p.matcher(target);
-            if (m.matches()) {
-                return new ModelAndView(null, "redirect:/" + target);
-            } else {
-                return new ModelAndView(null, "redirect:/");
+        //TODO
+        get("/", new Route() {
+            @Override
+            public Object handle(Request req, Response resp){
+                String target = req.queryParams("target");
+                if (Pattern.matches(".+example\\.com$", target)){
+                    return redirect(target);
+                } else {
+                    return redirect("/");
+                }
             }
-        }, new FreeMarkerEngine());
+        });
     }
 }

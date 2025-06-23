@@ -1,24 +1,11 @@
 import java.util.HashMap;
-
-class UrlMapping {
-    private final HashMap<String, Function> urlMap = new HashMap<>();
-
-    public void map(String url, Function function) {
-        urlMap.put(url, function);
+import java.util.Map;
+public class Decorator {
+    private Map<String, String> mapping = new HashMap<>();
+    public void setURL(String url) {
+        this.mapping.put(url, "Hello");
     }
-
-    public String getResponse(String requestUrl) {
-        return escape(urlMap.get(requestUrl).call());
+    public String getURL(String url) {
+        return this.mapping.get(url);
     }
-}
-
-class HelloFunction implements Function {
-    @Override
-    public String call() {
-        return "Hello";
-    }
-}
-
-interface Function {
-    String call();
 }

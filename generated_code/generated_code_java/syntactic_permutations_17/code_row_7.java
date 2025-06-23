@@ -1,15 +1,13 @@
-package com.moringaschool.mywordcount;
+import java.util.*;
 
-import java.util.Scanner;
+public class Array{
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+        int size = scanner.nextInt();
+        scanner.close();
 
-public class Main {
+        String[] array = {"apple", "banana", "cherry"};
 
-    public static void main(String[] args) {
-        int[] myArr = new int[]{10, 20, 30, 40};
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a number: ");
-        int num = sc.nextInt();
-        int res = myArr[num];
-        System.out.println("Result is " + res);
+        System.out.println("The value at index " + size + " is: " + array[size]);
     }
 }

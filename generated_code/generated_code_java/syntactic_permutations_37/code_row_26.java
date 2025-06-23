@@ -1,35 +1,39 @@
 import java.io.*;
-    import javax.servlet.*;
-    import javax.servlet.http.*;
-    import java.sql.*;
-    
-    public class Login extends HttpServlet {
-        public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-        
-            Connection connection = null;
-            Statement statement = null;
-            ResultSet resultSet = null;
-        
-            try{
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/login","root","");
-                statement = connection.createStatement();
-                resultSet = statement.executeQuery("SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'");
-            
-                if(resultSet.next()){
-                    response.sendRedirect("success.jsp");
-                }else{
-                    response.sendRedirect("error.jsp");
-                }
-            }catch(Exception e){
-                System.out.println(e);
-                response.sendRedirect("internal_server_error.jsp");
-            }finally{
-                if(resultSet != null) resultSet.close();
-                if(statement != null) statement.close();
-                if(connection != null) connection.close();
-            }
-        }
+import java.util.*;
+import java.sql.*;
+
+public class Login {
+  public static void main(String[] args) {
+    Connection connection = null;
+    String username, password;
+    try {
+      Scanner scanner = new Scanner(System.in);
+      System.out.println("Enter your username: ");
+      username = scanner.nextLine();
+      System.out.println("Enter your password: ");
+      password = scanner.nextLine();
+      Class.forName("org.postgresql.Driver");
+      connection = DriverManager.getConnection(
+        "jdbc:postgresql://localhost/login", "username", "password"
+      );
+      String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+      PreparedStatement statement = connection.prepareStatement(query);
+      statement.setString(1, username);
+      statement.setString(2, password);
+      ResultSet result = statement.executeQuery();
+      if (result.next()) {
+        System.out.println("Welcome, " + username + "!");
+      } else {
+        System.out.println("Invalid username and/or password.");
+      }
+    } catch (ClassNotFoundException | SQLException e) {
+      System.out.println("Error: " + e);
+    } finally {
+      try {
+        connection.close();
+      } catch (SQLException e) {
+        System.out.println("Error closing the connection: " + e);
+      }
     }
+  }
+}

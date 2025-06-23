@@ -1,25 +1,19 @@
-import java.io.*;
-class PingDecorator {
-    public void decorate(String url) throws Exception{
-        Process p = Runtime.getRuntime().exec("ping -c 3 " + url);
-        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+public class ping_decorator {
+    public static boolean ping(String url){
+        String pong = "";
+        try{
+            ProcessBuilder builder = new ProcessBuilder("ping",url);
+            Process process = builder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while((pong=reader.readLine())!=null){
+                System.out.println(pong);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        in.close();
-        if (response.toString().contains(" 0% packet loss")){
-            System.out.println("URL is alive");
-        } else{
-            System.out.println("URL is not alive");
-        }
-    }
-}
-public class Main {
-    public static void main(String[] args) throws Exception{
-        String url = "google.com";
-        PingDecorator pd = new PingDecorator();
-        pd.decorate(url);
+        return pong.equals("0");
     }
 }

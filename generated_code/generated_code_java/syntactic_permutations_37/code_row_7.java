@@ -1,35 +1,42 @@
-package com.hackerrank;
-
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import java.security.*;
 
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String userName = scanner.next();
-        String password = scanner.next();
+@WebServlet(name = "Login", urlPatterns = { "/login" })
+public class Login extends HttpServlet {
+    private String tokenSecret = "<YOUR_TOKEN_SECRET>"; // Your secret here!
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            if (isValid(userName, password)) {
-                System.out.println("SUCCESS");
-            } else {
-                System.out.println("CANT_LOGIN");
+            String authorizationHeader = request.getHeader("Authorization");
+            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                response.sendRedirect("/cant_login?error=Not+logged+in.");
+                return;
             }
-        } catch (Exception e) {
-            System.err.println("INTERNAL SERVER ERROR");
-        }
-    }
 
-    private static boolean isValid(String userName, String password) throws IOException {
-        URL url = new URL("https://hackerrank.com/rest/auth?username=" + userName + "&password=" + password);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        int responseCode = connection.getResponseCode();
-        if (responseCode == 200) {
-            return true;
-        } else if (responseCode == 401) {
-            return false;
-        } else {
-            throw new IOException("Unexpected response code: " + responseCode);
+            String idToken = authorizationHeader.substring(7);
+            DecodedJWT jwt = JWT.decode(idToken);
+            if (jwt.getAlgorithm() != "HS256") {
+                throw new AlgorithmMismatchException("This token has an invalid algorithm.");
+            }
+            if (!jwt.verify(this.tokenSecret)) {
+                throw new SignatureVerificationException("Invalid token signature");
+            }
+            if (jwt.isExpired()) {
+                throw new TokenExpiredException("The specified token is expired.");
+            }
+
+            response.sendRedirect("/success");
+        } catch (AlgorithmMismatchException | SignatureVerificationException | TokenExpiredException ex) {
+            response.sendRedirect("/cant_login?error=" + ex.getMessage());
         }
     }
 }

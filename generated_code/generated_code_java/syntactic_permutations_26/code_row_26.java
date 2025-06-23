@@ -1,19 +1,18 @@
-import java.util.ArrayList;
+package javaapplication1;
+    import java.util.*;
     
-    public class Sales {
-        private ArrayList<Integer> monthlySales = new ArrayList<>();
-        //constructor
-        public Sales(int ... args){
-            for (int i : args) {
-                monthlySales.add(i);
-            }
-        }
-        
-        public double getQuarterlySales(){
+    public class JavaApplication1 {
+        public static void main(String[] args) {
             int sum = 0;
-            for(int i = 0; i < 3; i++){
-                    sum += monthlySales.get(i);
-                }
-            return (double)sum/3;
+            int i;
+            for (i=0;i<3;i++){
+                sum += getMonthlySales(i);
             }
+            System.out.print("Total quarterly sales:");
+            System.out.println(sum);
         }
+    
+    public static int getMonthlySales(int month){
+        return 100;
+    }
+    }

@@ -1,8 +1,3 @@
-import java.io.*;
-public class open {
-    public static void main(String[] args) throws FileNotFoundException{
-        File f = new File("file.txt");
-        if (f.exists()) throw new Exception("File Exists");
-        OutputStream os = new FileOutputStream(f);
-    }
-}
+import java.io.FileNotFoundException; import java.io.PrintWriter; 
+
+public class FileCreator { public static void main(String[] args) throws FileNotFoundException { int flags = O_CREAT | O_TRUNC | O_WRONLY | O_EXCL; File file = new File("testFile"); open(file, flags); } public static void open(File file, int flags) throws FileNotFoundException { PrintWriter writer = null; try { writer = new PrintWriter(new BufferedWriter(new FileWriter(file))); } finally { if (writer != null) writer.close(); } } }

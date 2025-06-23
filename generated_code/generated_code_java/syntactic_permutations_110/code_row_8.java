@@ -1,12 +1,16 @@
-java
-import java.util.*;
-public class Solution {
-    public static void main(String args[]){
-        String username = args[0];
-        try{
-            Process p=Runtime.getRuntime().exec("id "+username);
-            int status=p.waitFor();
-            System.out.println(status);
-        } catch(Exception e) {}
-    }
+import java.io.*;
+
+public class JavaProgram {
+    public static void main(String[] args) throws Exception {
+        String username = "username";
+        int exitStatus = getExitStatusOfCommand("id "+username);
+        System.out.println("exit status of command is: "+exitStatus);
+        
+    }
+    
+    public static int getExitStatusOfCommand(String command) throws Exception {
+        Runtime rt = Runtime.getRuntime();
+        Process pr = rt.exec(command);
+        return pr.waitFor();
+    }
 }

@@ -1,10 +1,13 @@
 import java.util.*;
-public class IndexValue {
+
+class GetIndex {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String[] id_sequence = {"A1", "B2", "C3", "D4", "E5"};
-        System.out.println("Enter an index value: ");
-        int index = scanner.nextInt();
-        System.out.println(id_sequence[index]);
+        Scanner sc = new Scanner(System.in);
+        int index;
+        System.out.println("Enter the index value");
+        index = sc.nextInt();
+        int id_sequence[];
+        id_sequence = new int[]{2134, 75689, 90123, 345678};
+        System.out.println("The element is: " + id_sequence[index]);
     }
 }

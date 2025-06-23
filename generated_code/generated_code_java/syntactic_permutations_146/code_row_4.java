@@ -1,38 +1,22 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.sql.*;
-
-public class BuyOrder extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String stock_name = request.getParameter("stock_name");
-        int stock_quantity = Integer.parseInt(request.getParameter("stock_quantity"));
-
-        Connection con = null;
-        Statement stmt = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/wallet", "root", "root");
-            stmt = con.createStatement();
-
-            String query = "INSERT INTO buy_orders (username, stock_name, stock_quantity) VALUES ('" + username + "', '" + stock_name + "', " + stock_quantity + ")";
-            int result = stmt.executeUpdate(query);
-            if (result > 0) {
-                response.sendRedirect("profile.jsp");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            try {
-                if (stmt != null)
-                    stmt.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-            }
-        }
-
-    }
+import java.util.*;
+import java.io.*;
+
+public class StockBuy {
+    private String username;
+    private String stock_name;
+    private int stock_quantity;
+    private Database db;
+    
+    public StockBuy(String username, String stock_name, int stock_quantity) {
+        this.username = username;
+        this.stock_name = stock_name;
+        this.stock_quantity = stock_quantity;
+        this.db = new Database();
+        
+    }
+    
+    public void buyStock() {
+        db.insertOrder(username, stock_name, stock_quantity);
+        System.out.println("You have successfully bought " + stock_quantity + " shares of " + stock_name + ". You can view your portfolio on the profile page.");
+    }
 }

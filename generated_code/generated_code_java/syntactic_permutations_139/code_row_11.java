@@ -1,21 +1,22 @@
 import java.sql.*;
-public class Database {
-    public boolean isModerator(String username, String password) {
-        // Connect to the database using the credentials stored in variables
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/forum", "root", "password")) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
-            statement.setString(1, username);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String userRole = resultSet.getString("role");
-                if (userRole != null && userRole.equals("moderator")) {
-                    return true;
-                }
+public class ModeratorCheck {
+    public static void main(String[] args) {
+        String username = "my_username";
+        String password = "my_password";
+        String dbUrl = "jdbc:postgresql://localhost:5432/mydb";
+        
+        try (Connection conn = DriverManager.getConnection(dbUrl, username, password); Statement stmt = conn.createStatement();) {
+            String sql = "SELECT is_moderator FROM users WHERE user_id=123";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            if (rs.next()) {
+                boolean isModerator = rs.getBoolean("is_moderator");
+                System.out.println(isModerator);
+            } else {
+                System.out.println("No user found with id 123");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return false;
     }
 }

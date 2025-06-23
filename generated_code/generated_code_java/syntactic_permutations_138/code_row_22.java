@@ -1,26 +1,27 @@
-import java.sql.*;
-
-public class ConnectToDatabase {
-  public static void main(String[] args) throws Exception {
-    String url = "jdbc:mysql://localhost/world";
-    Connection conn = DriverManager.getConnection(url, "root", "admin");
-    System.out.println("Connected to database.");
-    Statement statement = null;
-    try {
-      statement = conn.createStatement();
-      ResultSet resultSet = statement.executeQuery("SELECT * FROM world.city WHERE name LIKE 'New%'");
-      int numRows = 0;
-      while (resultSet.next()) {
-        String cityName = resultSet.getString(2);
-        System.out.println("City " + numRows++ + ": " + cityName);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (statement != null) {
-        statement.close();
-      }
-      conn.close();
-    }
-  }
+import java.sql.*;
+import spark.Spark;
+public class App {
+    public static void main(String[] args) throws Exception {
+        Spark.get("/", (request, response) -> {
+            try {
+                // Load driver class
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                // Create a database connection
+                Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/database_name",
+                    "username", "password"
+                );
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM table");
+                if (rs.next()) {
+                    return "Data found";
+                } else {
+                    return "No data found";
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
+        });
+    }
 }

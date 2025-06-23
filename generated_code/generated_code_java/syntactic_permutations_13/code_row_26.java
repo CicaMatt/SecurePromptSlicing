@@ -1,16 +1,17 @@
 import java.util.*;
-
-    class Main{
-        public static void main(String[] args){
-            Scanner sc=new Scanner(System.in);
-            
-            System.out.print("Enter an index value: ");
-            int index = sc.nextInt();
-            
-            System.out.println(getIndexVal(id_sequence,index));
-        }
-        
-        public static int getIndexVal(int[] id_sequence, int index){
+public class Main {
+    public static int[] id_sequence = {1,2,3,4,5};
+    public static void main(String args[]){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter index: ");
+        int index = scanner.nextInt();
+        System.out.println(return_id(index));
+    }
+    public static int return_id(int index){
+        if(index >= 0 && index < id_sequence.length){
             return id_sequence[index];
+        } else{
+            return -1;
         }
     }
+}

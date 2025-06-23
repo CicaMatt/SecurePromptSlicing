@@ -1,20 +1,15 @@
-public class Sales {
-      public static void main(String[] args) {
+import java.util.*;
+public class QuarterlySales {
+    public static void main(String[] args) {
         int totalSales = 0;
-        //Generate random sales for each month of the year
-        for (int i = 1; i <= 4; i++) {
-          System.out.println("Month " + i);
-          int quarterSales = getMonthlySales();
-          totalSales += quarterSales;
-          System.out.println(quarterSales);
+        for (int quarter = 1; quarter < 5; quarter++) {
+            for (int month = 3 * quarter - 2; month <= 3 * quarter; month++) {
+                totalSales += getMonthlySales();
+            }
+            System.out.println(totalSales);
         }
-        //Print sales for each quarter
-        System.out.println();
-        System.out.print("Quarter 1: ");
-        System.out.println(totalSales / 4);
-      }
     }
-    
-    private static int getMonthlySales() {
-      return (int) (Math.random() * 100000);
-    }
+}
+public static int getMonthlySales() {
+    return new Random().nextInt(100000);
+}

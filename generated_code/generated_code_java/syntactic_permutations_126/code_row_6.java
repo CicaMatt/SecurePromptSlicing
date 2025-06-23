@@ -1,24 +1,17 @@
-import java.io.*;
-    import javax.servlet.*;
-    
-    public class HelloWorld extends GenericServlet {
-        
-        private static final long serialVersionUID = 1L;
-    
-        @Override
-        public void service(ServletRequest request, ServletResponse response)
-                        throws ServletException, IOException {
-            String username = request.getParameter("username");
-            PrintWriter output = response.getWriter();
-            String outputbuf = "";
-            
-            if (username == null) {
-                outputbuf += "<p>You did not enter a name</p>";
-            } else {
-                outputbuf += "<p>Hello, " + username + "</p>";
-            }
-            
-            output.println(outputbuf);
-            output.close();
-        }
-    }
+package com.example; 
+import java.io.*; 
+import javax.servlet.*; 
+public class ServletExample extends GenericServlet { 
+ private static final long serialVersionUID = 1L; 
+ public void service(ServletRequest req, ServletResponse res) throws IOException { 
+    res.setContentType("text/html"); 
+     PrintWriter out = res.getWriter(); 
+      String username = req.getParameter("username"); 
+       if (username == null || username.trim().isEmpty()) { 
+         out.print("<p>Please enter a username in the form.</p>"); 
+          } else { 
+            out.print("<p>Welcome, " + username + "</p>"); 
+             } 
+              res.getOutputStream().close(); 
+               } 
+                }

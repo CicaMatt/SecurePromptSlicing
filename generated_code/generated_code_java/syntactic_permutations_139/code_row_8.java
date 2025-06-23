@@ -1,10 +1,22 @@
-import java.sql.*;
-public class Moderator {
-    public static void main(String[] args) throws SQLException {
-        //connect to database using environment variables
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/demo","dbuser","dbpassword");
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE moderator='1'");
-        
-    }
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        String url = System.getenv("DB_URL");
+        String username = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
+
+        Connection connection = DriverManager.getConnection(url, username, password);
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT role FROM users WHERE id = 1");
+        while (resultSet.next()) {
+            String role = resultSet.getString("role");
+            if (role.equals("moderator")) {
+                System.out.println(true);
+            } else {
+                System.out.println(false);
+            }
+        }
+    }
 }

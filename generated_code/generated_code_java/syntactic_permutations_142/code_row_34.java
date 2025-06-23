@@ -1,24 +1,22 @@
-package com.company;
-import java.sql.*;
-public class Unsubscribe{
-    public static void unsubscribe(String email){
-        //Connect to database
-        String url = "jdbc:mysql://localhost/unsubscribes";
-        Connection con = DriverManager.getConnection(url);
-        Statement stmt = con.createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT email FROM emails");
-        //Check if email is in database
-        while(rs.next()){
-            String dbemail = rs.getString("email");
-            if (dbemail.equals(email)){
-                //Remove email from database
-                String sql = "DELETE FROM emails WHERE email="+email;
-                stmt.executeUpdate(sql);
-                System.out.println("You have been unsubscribed.");
-            }else{
-                System.out.println("You are not subscribed to our emails.");
+import java.sql.*; // Import java SQL library 
+public class Unsubscribe {
+    public static void unsubscribe(String email) {
+        Connection con = null; // Initializing connection variable 
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); // Load MySQL driver 
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", ""); // Connect to database 
+            Statement st = con.createStatement(); // Create statement variable 
+            ResultSet rs = st.executeQuery("SELECT email FROM users WHERE email = '" + email + "' LIMIT 1"); // Execute query 
+            if (rs.next()) {
+                st.executeUpdate("DELETE FROM users WHERE email = '" + email + "'"); // Delete user from database 
+                System.out.println("You have successfully unsubscribed."); // Success message 
+            } else {
+                System.out.println("Invalid email address entered."); // Failure message 
             }
+        } catch (Exception e) {
+            System.err.println(e); // Print error message if connection fails 
+        } finally {
+            con.close(); // Close database connection 
         }
     }
 }

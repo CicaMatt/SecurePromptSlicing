@@ -1,30 +1,20 @@
 import java.sql.*;
 
-public class Unsubscribe {
-  public static void main(String[] args) {
-    String email = getEmail();
-    unsubscribeFromList(email);
-  }
-  
-  private static String getEmail() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Enter your email address:");
-    return scanner.nextLine();
-  }
-  
-  private static void unsubscribeFromList(String email) {
-    try {
-      Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/mydatabase", "user", "password");
-      PreparedStatement statement = conn.prepareStatement("DELETE FROM subscribers WHERE email = ?");
-      statement.setString(1, email);
-      int rowsDeleted = statement.executeUpdate();
-      if (rowsDeleted == 0) {
-        System.out.println("You are not in the database.");
-      } else {
-        System.out.println("You have been unsubscribed.");
+    public class Unsubscribe {
+      public void unsubscribe(String email) {
+        try {
+          Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/user_emails", "root", "password");
+          Statement stmt = conn.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT * FROM emails WHERE email='" + email + "'");
+
+          if (rs.next()) {
+            stmt.executeUpdate("DELETE FROM emails WHERE email='" + email + "'");
+            System.out.println(email + " has been removed from our mailing list.");
+          } else {
+            System.out.println("You are not subscribed to our mailing list.");
+          }
+        } catch (SQLException e) {
+          System.out.println("Error: " + e.getMessage());
+        }
       }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-  }
-}
+    }

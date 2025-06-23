@@ -1,23 +1,27 @@
 import java.io.*;
 
-public class Ping{
-    public static void main(String[] args){
-        String url = "www.google.com";
+public class Ping {
+    String url;
+    int pong;
+    public void bind(String url) {
+        this.url = url;
+    }
+    public void ping() {
+        pong = execute("ping " + url);
+        if (pong == 0) {
+            System.out.println("Alive");
+        } else {
+            System.out.println("Not Alive");
+        }
+    }
+    private int execute(String command) {
         try {
-            Process p = Runtime.getRuntime().exec("ping " + url);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String inputLine;
-            String pong = "";
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println(inputLine);
-            }
-            if (pong.contains("0 packets received")){
-                System.out.println(url + " is alive");
-            } else {
-                System.out.println(url + " is not alive");
-            }
+            Process p = Runtime.getRuntime().exec(command);
+            p.waitFor();
         } catch (IOException e) {
-            e.printStackTrace();
+            return -1;
+        } catch (InterruptedException e) {
+            return -1;
         }
     }
 }

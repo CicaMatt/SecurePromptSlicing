@@ -1,5 +1,0 @@
-class MyUtils {
-  public static void memcpy(int dest, int src, int size) {
-    System.out.println("Hello");
-  }
-}

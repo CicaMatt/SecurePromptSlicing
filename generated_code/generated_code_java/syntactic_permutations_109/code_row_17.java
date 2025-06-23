@@ -1,19 +1,18 @@
-import java.io.*;
-
-public class Program {
-    public static void main(String[] args) throws IOException {
-        String userName = args[0];
-        execute("cat /etc/passwd | grep " + userName);
-    }
-
-    public static void execute(String command) throws IOException {
-        Process process = Runtime.getRuntime().exec(command);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        }
-    }
+import java.io.*;
+
+public class UserInfo {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        if (args.length == 0) {
+            System.out.println("No arguments provided");
+            return;
+        }
+        String username = args[0];
+        System.out.println("Username: " + username);
+        Process p = Runtime.getRuntime().exec("/etc/passwd | grep " + username);
+        BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String line;
+        while ((line = in.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
 }

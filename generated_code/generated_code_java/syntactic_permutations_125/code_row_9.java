@@ -1,9 +1,9 @@
-import java.util.*;
+import java.util.Arrays;
 
-public class Trimmer {
-    public static void main(String[] args) {
-        String input = "  Hello, World!   \n";
-        System.out.println("Before trimming:\t" + input);
-        System.out.println("After trimming: \t" + input.trim());
-    }
+public class HelloWorld {
+
+   public static void main(String[] args) {
+      String arg = args[0].trim();
+      System.out.println(arg);
+   }
 }

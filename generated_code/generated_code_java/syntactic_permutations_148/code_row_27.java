@@ -1,35 +1,30 @@
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(description = "Post Message", urlPatterns = { "/post" })
-public class PostMessage extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
-    public PostMessage() {
-        super();
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.html");
-        dispatcher.forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String message = request.getParameter("message");
-        insert_user_message_in_db(username, message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("display");
-        dispatcher.forward(request, response);
-    }
-
-    private void insert_user_message_in_db(String username, String message) {
-        //TODO: Connect to DB
-        //TODO: Insert username and message into the database
-    }
+import java.sql.*;
+import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+@RestController
+public class Main{
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    
+    @GetMapping("/")
+    public String get(){
+        return "Hello World";
+    }
+    
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    public String post(@RequestParam Map<String, String> requestParams){
+        String username = requestParams.get("username");
+        String message = requestParams.get("message");
+        insert_user_message_in_db(username, message);
+        return "redirect:/display";
+    }
+    
+    private void insert_user_message_in_db(String username, String message){
+        String sql = "INSERT INTO messages (username, message) VALUES (?, ?)";
+        jdbcTemplate.update(sql, username, message);
+    }
 }

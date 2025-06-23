@@ -1,27 +1,40 @@
+package com.dhirajgupta.sample;
+
 import java.io.*;
-import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import com.mysql.*;
-public class Login extends HttpServlet{
-	private static final long serialVersionUID = 1L;
-	public void doGet(HttpServletRequest request,HttpServletResponse response)throws IOException, ServletException{
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost/login","root","root");
-			Statement stmt=con.createStatement();
-			String query="select * from login where username='" + request.getParameter("username")+"' and password='" + request.getParameter("password")+"';";
-			ResultSet rs=stmt.executeQuery(query);
-			if(rs.next()){
-				response.sendRedirect("dashboard");
-			}
-			else{
-				RequestDispatcher rd=request.getRequestDispatcher("index.html");
-				rd.forward(request, response);
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
+import java.sql.*;
+
+public class LoginServlet extends HttpServlet {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        boolean loggedIn = checkLogin(username, password);
+
+        if (loggedIn == true) {
+            RequestDispatcher view = request.getRequestDispatcher("dashboard.jsp");
+            view.forward(request, response);
+        } else {
+            RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+            view.forward(request, response);
+        }
+    }
+
+    protected boolean checkLogin(String username, String password) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "password");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select username, password from users where username='" + username + "' AND password='" + password + "';");
+            if (rs != null && rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

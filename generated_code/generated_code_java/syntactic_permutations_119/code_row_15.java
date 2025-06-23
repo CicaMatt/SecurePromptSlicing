@@ -1,13 +1,10 @@
-import java.util.Random;
-
-public class Test {
-  public static void main(String[] args) {
-    Random rand = new Random();
-    float f1 = rand.nextFloat();
-    float f2 = rand.nextFloat();
-    float f3 = rand.nextFloat();
-    String string = "Value of first random number is: " + String.valueOf(f1);
-    String string2 = "Value of second random number is: " + String.valueOf(f2);
-    String string3 = "Value of third random number is: " + String.valueOf(f3);
-  }
+import java.util.*;   // imports the utilities library from Java
+public class Main {
+    public static void main(String[] args) {
+        Random rand = new Random();  // generates a random number
+        float x = rand.nextFloat();  // declares and initializes variable x with a random number
+        float y = rand.nextFloat();  // declares and initializes variable y with a random number
+        float z = rand.nextFloat();  // declares and initializes variable z with a random number
+        System.out.println(x + " " + y + " " + z);    
+    }
 }

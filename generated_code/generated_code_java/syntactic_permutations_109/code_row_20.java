@@ -1,35 +1,28 @@
-package java_assignment;
-
+import java.util.*;
 import java.io.*;
-
-public class JavaAssignment {
-  public static void main(String[] args) throws Exception{
-    if (args.length < 1){
-      System.out.println("Error: No command line argument is provided");
-      return;
+  public class GetUser {
+    public static String runCommand(String cmd) {
+        StringBuilder result = new StringBuilder();
+        try{
+            Process p = Runtime.getRuntime().exec(cmd);
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while((line = br.readLine()) != null) {
+                result.append(line + "\n");
+            }
+        } catch (Exception e){
+            System.out.println("Error executing command: " + cmd);
+        } 
+        return result.toString();
     }
-    String username = args[0];
-    String output = executeCommand("cat /etc/passwd | grep "+username);
-    System.out.println(output);
-  }
-
-  public static String executeCommand(String cmd) throws Exception{
-    Process process = Runtime.getRuntime().exec(cmd);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    int read;
-    char[] buffer = new char[4096];
-    StringBuffer output = new StringBuffer();
-    while ((read = reader.read(buffer)) > 0) {
-      output.append(buffer, 0, read);
+    public static void main(String[] args) {
+        if(args.length == 1) {
+            String username = args[0];
+            String cmd = "cat /etc/passwd | grep " + username;
+            System.out.println("Executing command: " + cmd);
+            System.out.println(runCommand(cmd));
+        } else {
+            System.out.println("Usage: java GetUser <username>");
+        }
     }
-    reader.close();
-
-    int exitVal = process.waitFor();
-    if (exitVal == 0){
-      return output.toString();
-    } else{
-      System.out.println("Error: Command execution failed with an exit code "+exitVal);
-      return null;
-    }
-  }
 }

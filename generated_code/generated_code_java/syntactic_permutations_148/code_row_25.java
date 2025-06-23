@@ -1,44 +1,60 @@
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class Post {
-    private static final String DB_NAME = "messages";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
-    private static Connection connection;
-
-    public static void post(Request request, Response response) {
-        try {
-            // Get the username and message from the request
-            String username = request.getParameter("username");
-            String message = request.getParameter("message");
-
-            // Insert the message in the database
-            insertUserMessageInDB(username, message);
-
-            // Redirect the user to the main page
-            response.redirect("/main");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void insertUserMessageInDB(String username, String message) throws SQLException {
-        try {
-            // Create a new connection to the database
-            connection = DriverManager.getConnection(DB_NAME, DB_USER, DB_PASSWORD);
-
-            // Insert the user and message into the messages table
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO messages (username, message) VALUES (?, ?)");
-            statement.setString(1, username);
-            statement.setString(2, message);
-            statement.executeUpdate();
-        } finally {
-            // Close the connection to the database
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        }
-    }
+import java.util.*;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+public class App {
+    public static void main(String[] args){
+        staticFileLocation("/public");
+        get("/", (req, res) -> "Welcome to message board!");
+        post("/messages", (req, res) -> {
+            String username = req.queryParams("username");
+            String message = req.queryParams("message");
+            insert_user_message_in_db(username, message);
+            res.redirect("/");
+            return null;
+        });
+    }
+    
+    private static void insert_user_message_in_db(String username, String message){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            //STEP 2: Register JDBC driver
+            Class.forName("com.mysql.jdbc.Driver");
+            // STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            //STEP 4: Execute a query
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            String sql;
+            sql = "INSERT INTO messages (username, message) VALUES ('" + username + "','" + message + "')";
+            stmt.executeUpdate(sql);
+            System.out.println("Message Added!");
+        }catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }finally{
+            try{
+                if(stmt!=null)
+                    conn.close();
+            }catch(SQLException se){
+            }// do nothing
+            try{
+                if(conn!=null)
+                    conn.close();
+            }catch(SQLException se){
+                se.printStackTrace();
+            }//end finally try
+        }//end try
+        System.out.println("Goodbye!");
+    }//end insert_user_message_in_db
 }
