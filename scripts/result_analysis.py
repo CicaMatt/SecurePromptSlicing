@@ -674,11 +674,11 @@ def compare_metric_counters(base_counters, result_counters, output_path=None):
             print(f"  {val}: {result_val} / {base_val} → {percent}")
 
             all_results.append({
-                "Categoria": key,
-                "Valore": val,
+                "Category": key,
+                "Value": val,
                 "Base": base_val,
                 "Result": result_val,
-                "Percentuale": percent
+                "Frequency": percent
             })
 
         print("\n")
@@ -686,7 +686,7 @@ def compare_metric_counters(base_counters, result_counters, output_path=None):
     if output_path:
         try:
             with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ["Categoria", "Valore", "Base", "Result", "Percentuale"]
+                fieldnames = ["Category", "Value", "Base", "Result", "Frequency"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
                 writer.writeheader()
@@ -736,13 +736,13 @@ def compare_cwe_counters(base_counters, result_counters, output_path=None):
             "CWE": cwe,
             "Base": base_val,
             "Result": result_val,
-            "Percentuale": percent
+            "Frequency": percent
         })
 
     if output_path:
         try:
             with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ["CWE", "Base", "Result", "Percentuale"]
+                fieldnames = ["CWE", "Base", "Result", "Frequency"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
                 writer.writeheader()
@@ -884,7 +884,8 @@ results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline
 results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
 
 comparison_metrics = f'results/comparison/comparison_metrics_{language_identifier}.csv'
-comparison_cwes = f'results/comparison/comparison_cwes_{language_identifier}.csv'
+comparison_baseline_cwes = f'results/comparison/comparison_baseline_cwes_{language_identifier}.csv'
+comparison_permutations_cwes = f'results/comparison/comparison_permutations_cwes_{language_identifier}.csv'
 
 
 #result_py_complete = 'results/permutations/results_py_standardpack.csv'
@@ -976,7 +977,7 @@ class CWEComparison:
     def __init__(self):
         #print("\nBaseline CWEs Stats:")
         #print("\n---------------------------------------")
-        #baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
+        baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
         #print("\nPermutation CWEs Stats:")
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
         #print("\n---------------------------------------")
@@ -986,10 +987,10 @@ class CWEComparison:
 
         # These values show how many of the detected vulnerabilities over the baseline are present over the results
         print("\nBaseline - Results --- Metrics CWE Stats:")
-        #compare_cwe_counters(result_cwes, baseline_cwes)
+        compare_cwe_counters(result_cwes, baseline_cwes, comparison_baseline_cwes)
         # These values show how security scenarios covered over the permutations yielded a vulnerability based on the results
         print("\nPermutations - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(permutations_cwes, result_cwes, comparison_cwes)
+        compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
 
 
 BaselineCsvBuilder()
