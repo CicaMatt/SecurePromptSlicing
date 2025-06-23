@@ -23,10 +23,8 @@ def run_sh_commands(commands):
             print(f"Error: {str(e)}\n")
 
 
-def organize_java_snippets(code_path:str=None, output_path:str=None):
-    if os.path.exists(output_path) and os.path.isdir(output_path):
-        shutil.rmtree(output_path)
 
+def organize_java_snippets(code_path: str = None, output_path: str = None, nested: bool = True):
     if code_path is None:
         code_path = Path.cwd()
     else:
@@ -35,49 +33,66 @@ def organize_java_snippets(code_path:str=None, output_path:str=None):
     if output_path is None:
         raise ValueError("È necessario specificare un 'output_path'.")
     output_path = Path(output_path)
+
+    if output_path.exists() and output_path.is_dir():
+        shutil.rmtree(output_path)
     output_path.mkdir(parents=True, exist_ok=True)
 
     aggregators_created = set()
+    java_files = list(code_path.rglob("*.java") if nested else code_path.glob("*.java"))
 
-    for java_file in code_path.rglob("*.java"):
-        relative_path = java_file.relative_to(code_path).parent
+    for java_file in java_files:
+        relative_path = java_file.relative_to(code_path).parent if nested else Path()
         basename = java_file.stem
 
-        # Genera un nome univoco per il modulo usando il percorso + nome file
-        module_name = f"{relative_path.as_posix().replace('/', '-')}-{basename}" if relative_path.parts else basename
+        module_name = f"{relative_path.as_posix().replace('/', '-')}-{basename}" if nested and relative_path.parts else basename
 
-        # Nuova directory con struttura relativa
-        new_dir = output_path / relative_path / basename
+        new_dir = output_path / relative_path / basename if nested else output_path / basename
         dest_dir = new_dir / "src/main/java"
+        dest_dir.mkdir(parents=True, exist_ok=True)
 
         print(f"Elaboro: {java_file} -> {dest_dir}")
-
-        # Crea la struttura
-        dest_dir.mkdir(parents=True, exist_ok=True)
         shutil.copy2(java_file, dest_dir / java_file.name)
 
-        # Crea pom.xml del modulo
+        parent_artifact_id = (
+            'aggregator-root' if not nested else new_dir.parent.name + '-parent'
+        )
+
         module_pom = new_dir / "pom.xml"
-        pom_content = f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
+        module_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.example</groupId>
-    <artifactId>{new_dir.parent.name}-parent</artifactId>
+    <artifactId>{parent_artifact_id}</artifactId>
     <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>{module_name}</artifactId>
-</project>'''
-        module_pom.write_text(pom_content)
 
-        # Crea POM aggregatore nella cartella superiore, se non già creato
-        aggregator_dir = new_dir.parent
-        aggregator_pom = aggregator_dir / "pom.xml"
-        if aggregator_dir not in aggregators_created:
-            aggregator_artifact_id = f"{aggregator_dir.name}-parent"
-            aggregator_content = f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>''')
+
+        if nested:
+            aggregator_dir = new_dir.parent
+            aggregator_pom = aggregator_dir / "pom.xml"
+            if aggregator_dir not in aggregators_created:
+                aggregator_artifact_id = f"{aggregator_dir.name}-parent"
+                aggregator_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -89,18 +104,28 @@ def organize_java_snippets(code_path:str=None, output_path:str=None):
   <modules>
     <module>{basename}</module>
   </modules>
-</project>'''
-            aggregator_pom.write_text(aggregator_content)
-            aggregators_created.add(aggregator_dir)
+</project>''')
+                aggregators_created.add(aggregator_dir)
+            else:
+                text = aggregator_pom.read_text()
+                if f"<module>{basename}</module>" not in text:
+                    text = text.replace("</modules>", f"    <module>{basename}</module>\n  </modules>")
+                    aggregator_pom.write_text(text)
         else:
-            # Aggiungi il modulo se già esiste il pom aggregatore
-            text = aggregator_pom.read_text()
-            if f"<module>{basename}</module>" not in text:
-                text = text.replace("</modules>", f"    <module>{basename}</module>\n  </modules>")
-                aggregator_pom.write_text(text)
+            aggregators_created.add(new_dir)
 
-    # === CREA POM AGGREGATORE GLOBALE ===
-    global_modules = [str(p.relative_to(output_path)) for p in aggregators_created]
+    # CREA POM AGGREGATORE GLOBALE
+    if nested:
+        global_modules = [
+            str(p.relative_to(output_path))
+            for p in aggregators_created
+        ]
+    else:
+        global_modules = sorted([
+            d.name
+            for d in output_path.iterdir()
+            if d.is_dir() and (d / "pom.xml").exists()
+        ])
 
     global_pom_content = f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -114,7 +139,7 @@ def organize_java_snippets(code_path:str=None, output_path:str=None):
   <modules>
 '''
 
-    for module_path in sorted(global_modules):
+    for module_path in global_modules:
         global_pom_content += f"    <module>{module_path}</module>\n"
 
     global_pom_content += '''  </modules>
@@ -281,12 +306,15 @@ class SecurityAnalysis:
 
 
 class JavaPreprocessing:
-    def __init__(self):
+    def __init__(self, folder1, folder2, nested):
+        self.folder1 = folder1
+        self.folder2 = folder2
+        self.nested = nested
         # Struttura la cartella con i vari pom.xml per ogni singolo file, per ogni gruppo di permutazioni e per tutta la folder
-        organize_java_snippets(java_folder, java_folder_formatted)
+        organize_java_snippets(folder1, folder2, nested)
         # Scansiona ricorsivamente i file .java, estrae il nome della prima classe e rinomina il file di conseguenza evitando nomi duplicati (incapsula anche codici vuoti in classi wrapper)
-        process_java_files(java_folder_formatted)
-        #find_errors_java(java_folder_formatted)
+        process_java_files(folder2)
+        #find_errors_java(folder2)
 
 
 example_commands = [
@@ -320,7 +348,7 @@ command_set_baseline_analysis_py = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=baseline_code_py --overwrite',
+    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=generated_code/baseline_code_py --overwrite',
 
     # Query update and configuration
     r'cd CodeQL/Queries/py_complete && codeql pack install',
@@ -336,7 +364,7 @@ command_set_result_analysis_py = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code_py --overwrite',
+    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code/generated_code_py --overwrite',
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries',
@@ -365,12 +393,12 @@ command_set_custom_queries_py = [
 """
 
 
-command_set_result_baseline_java = [
+command_set_baseline_analysis_java = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries',
@@ -385,7 +413,7 @@ command_set_result_analysis_java = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code/generated_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries',
@@ -413,12 +441,12 @@ command_set_result_analysis_java = [
     ''',
 """
 
-command_set_result_baseline_c = [
+command_set_baseline_analysis_c = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code_c --command="../scripts/c_build.sh" --overwrite',
+    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c --command="../../scripts/c_build.sh" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
@@ -433,7 +461,7 @@ command_set_result_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code_c --command="../scripts/c_build.sh" --overwrite',
+    r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/generated_code_c --command="../../scripts/c_build.sh" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
@@ -442,15 +470,23 @@ command_set_result_analysis_c = [
     r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
 ]
 
-
+java_baseline_folder = "generated_code/baseline_code_java"
+java_baseline_folder_formatted = "generated_code/baseline_code_java_formatted"
 java_folder = "generated_code/generated_code_java"
 java_folder_formatted = "generated_code/generated_code_java_formatted"
 
-JavaPreprocessing()
+
 
 #SecurityAnalysis(example_commands)
-#SecurityAnalysis(command_set_standard_queries_py)
 #SecurityAnalysis(command_set_custom_queries_py)
+
 #SecurityAnalysis(command_set_baseline_analysis_py)
-#SecurityAnalysis(command_set_result_analysis_java)
+#SecurityAnalysis(command_set_result_analysis_py)
+
+#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
+
+#SecurityAnalysis(command_set_baseline_analysis_c)
 #SecurityAnalysis(command_set_result_analysis_c)

@@ -871,7 +871,7 @@ def total_permutations_over_baseline(cartella):
 
 ##################################################################################################################
 
-language_identifier = "c"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -992,12 +992,12 @@ class CWEComparison:
         compare_cwe_counters(permutations_cwes, result_cwes, comparison_cwes)
 
 
-#BaselineCsvBuilder()
+BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
-#BaselineStats()
-#PermutationsStats()
+BaselineStats()
+PermutationsStats()
 ResultStats()
-#BaselineComparison()
+BaselineComparison()
 MetricsComparison()
 CWEComparison()
