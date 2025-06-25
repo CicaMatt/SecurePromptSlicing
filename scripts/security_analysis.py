@@ -2,8 +2,11 @@ import os
 import re
 import shutil
 import subprocess
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from pathlib import Path
+from textwrap import dedent
+
+from transformers.trainer_pt_utils import nested_detach
 
 
 def run_sh_commands(commands):
@@ -297,6 +300,58 @@ def find_errors_java(folder):
     return errors
 
 
+
+def build_c_project(src_dir, build_dir="build", nested=True):
+    object_files = []
+
+    # 1. Crea directory di build pulita
+    if os.path.exists(build_dir):
+        shutil.rmtree(build_dir)
+    os.makedirs(build_dir, exist_ok=True)
+
+    if nested:
+        # Modalità innestata: cerca sottocartelle in src_dir
+        for subdir in next(os.walk(src_dir))[1]:
+            sub_src = os.path.join(src_dir, subdir)
+            for dirpath, _, filenames in os.walk(sub_src):
+                for filename in filenames:
+                    if filename.endswith(".c"):
+                        src_file = os.path.join(dirpath, filename)
+                        rel_path = os.path.relpath(src_file, src_dir)
+                        dest_file = os.path.join(build_dir, rel_path)
+                        os.makedirs(os.path.dirname(dest_file), exist_ok=True)
+                        shutil.copy2(src_file, dest_file)
+
+                        obj_file = os.path.splitext(rel_path)[0] + ".o"
+                        object_files.append(obj_file.replace("\\", "/"))
+    else:
+        # Modalità normale: cerca direttamente i .c in src_dir
+        for dirpath, _, filenames in os.walk(src_dir):
+            for filename in filenames:
+                if filename.endswith(".c"):
+                    src_file = os.path.join(dirpath, filename)
+                    rel_path = os.path.relpath(src_file, src_dir)
+                    dest_file = os.path.join(build_dir, rel_path)
+                    os.makedirs(os.path.dirname(dest_file), exist_ok=True)
+                    shutil.copy2(src_file, dest_file)
+
+                    obj_file = os.path.splitext(rel_path)[0] + ".o"
+                    object_files.append(obj_file.replace("\\", "/"))
+
+    # 3. Genera Makefile
+    makefile_path = os.path.join(build_dir, "Makefile")
+    with open(makefile_path, "w") as mf:
+        mf.write("CC = gcc\n")
+        mf.write("CFLAGS = -Wall -I.\n\n")
+        mf.write("all: " + " ".join(object_files) + "\n\n")
+        for obj in object_files:
+            src = obj.replace(".o", ".c")
+            mf.write(f"{obj}: {src}\n\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")
+        mf.write("clean:\n\trm -f " + " ".join(object_files) + "\n")
+
+    print(f"✅ Ambiente generato in '{build_dir}/'. Esegui ora:\n  cd {build_dir} && make")
+
+
 ###################################################################################################################
 
 
@@ -315,6 +370,15 @@ class JavaPreprocessing:
         # Scansiona ricorsivamente i file .java, estrae il nome della prima classe e rinomina il file di conseguenza evitando nomi duplicati (incapsula anche codici vuoti in classi wrapper)
         process_java_files(folder2)
         #find_errors_java(folder2)
+
+
+class CPreprocessing:
+    def __init__(self, folder1, folder2, nested):
+        self.folder1 = folder1
+        self.folder2 = folder2
+        self.nested = nested
+        build_c_project(folder1, folder2, nested)
+
 
 
 example_commands = [
@@ -446,7 +510,7 @@ command_set_baseline_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c --command="../../scripts/c_build.sh" --overwrite',
+    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c_formatted --command="make" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
@@ -470,11 +534,16 @@ command_set_result_analysis_c = [
     r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
 ]
 
+
 java_baseline_folder = "generated_code/baseline_code_java"
 java_baseline_folder_formatted = "generated_code/baseline_code_java_formatted"
 java_folder = "generated_code/generated_code_java"
 java_folder_formatted = "generated_code/generated_code_java_formatted"
 
+c_baseline_folder = "generated_code/baseline_code_c"
+c_baseline_folder_formatted = "generated_code/baseline_code_c_formatted"
+c_folder = "generated_code/generated_code_c"
+c_folder_formatted = "generated_code/generated_code_c_formatted"
 
 
 #SecurityAnalysis(example_commands)
@@ -485,8 +554,10 @@ java_folder_formatted = "generated_code/generated_code_java_formatted"
 
 #JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_java)
-JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_java)
+#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_java)
 
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
-#SecurityAnalysis(command_set_result_analysis_c)
+CPreprocessing(c_folder, c_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_c)
