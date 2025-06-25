@@ -349,7 +349,80 @@ def build_c_project(src_dir, build_dir="build", nested=True):
             mf.write(f"{obj}: {src}\n\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")
         mf.write("clean:\n\trm -f " + " ".join(object_files) + "\n")
 
-    print(f"✅ Ambiente generato in '{build_dir}/'. Esegui ora:\n  cd {build_dir} && make")
+
+def prepare_directory_for_codeql(source_dir, destination_dir):
+    src_path = Path(source_dir).resolve()
+    dst_path = Path(destination_dir).resolve()
+    stub_dir = dst_path / "__stubs__"
+
+    if dst_path.exists():
+        shutil.rmtree(dst_path)
+    shutil.copytree(src_path, dst_path)
+    stub_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"[✓] Copiata directory: {src_path} → {dst_path}")
+
+    c_files = list(dst_path.glob("*.c"))
+    func_decl = re.compile(r'\b\w[\w\d_]*\s+\**\s*(\w[\w\d_]*)\s*\([^;]*\)\s*\{')  # funzioni implementate
+    func_call = re.compile(r'\b(\w[\w\d_]*)\s*\(')  # chiamate funzione
+    type_use = re.compile(r'\b([A-Z][A-Za-z0-9_]+)\b')  # tipi usati
+    type_decl = re.compile(r'typedef\s+struct\s+([A-Za-z_][A-Za-z0-9_]*)')
+
+    makefile_lines = [
+        "CC = gcc",
+        "CFLAGS = -Wall -Wextra",
+        "",
+        "all:"
+    ]
+
+    object_files = []
+
+    for cfile in c_files:
+        name = cfile.stem
+        stub_path = stub_dir / f"{name}_stub.h"
+        obj_name = cfile.with_suffix(".o").name
+        object_files.append(obj_name)
+
+        content = cfile.read_text(encoding="utf-8", errors="ignore")
+
+        # funzioni chiamate e definite
+        calls = set(func_call.findall(content))
+        defs = set(func_decl.findall(content))
+
+        # tipi usati e dichiarati
+        used_types = set(type_use.findall(content))
+        defined_types = set(type_decl.findall(content))
+
+        keywords = {"int", "char", "void", "main", "return", "if", "while", "for", "switch", "sizeof"}
+        calls -= defs
+        calls = {f for f in calls if f not in keywords}
+        types = {t for t in used_types if t not in defined_types and t not in keywords}
+
+        # genera stub per questo file
+        guard = f"{name.upper()}_STUB_H"
+        lines = [f"#ifndef {guard}", f"#define {guard}", ""]
+        for t in sorted(types):
+            lines.append(f"typedef struct {t} {{ int dummy; }} {t};")
+        lines.append("")
+        for f in sorted(calls):
+            lines.append(f"int {f}();")
+        lines.append("\n#endif")
+
+        # se non c'è nulla da stubbare, salta la creazione
+        if not types and not calls:
+            makefile_lines.append(f"\n{obj_name}: {cfile.name}")
+            makefile_lines.append(f"\t-$(CC) $(CFLAGS) -c {cfile.name} -o {obj_name}")
+        else:
+            stub_path.write_text("\n".join(lines))
+            makefile_lines.append(f"\n{obj_name}: {cfile.name}")
+            makefile_lines.append(
+                f"\t-$(CC) $(CFLAGS) -I__stubs__ -include __stubs__/{name}_stub.h -c {cfile.name} -o {obj_name}")
+
+    makefile_lines.append("\nall: " + " ".join(object_files))
+
+    (dst_path / "Makefile").write_text("\n".join(makefile_lines))
+    print(f"[✓] Stub creati per {len(c_files)} file")
+    print(f"[✓] Makefile pronto in {dst_path/'Makefile'}")
 
 
 ###################################################################################################################
@@ -378,6 +451,7 @@ class CPreprocessing:
         self.folder2 = folder2
         self.nested = nested
         build_c_project(folder1, folder2, nested)
+        #prepare_directory_for_codeql(folder1, folder2)
 
 
 
@@ -510,7 +584,7 @@ command_set_baseline_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c_formatted --command="make" --overwrite',
+    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
@@ -557,7 +631,7 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_c)
-CPreprocessing(c_folder, c_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_c)
+CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_c)
+#CPreprocessing(c_folder, c_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_c)
