@@ -116,7 +116,7 @@ def add_cwe_id(csv_path, original_column):
     df.to_csv(csv_path, index=False)
 
 
-def add_slicing_info(input_csv_path, lookup_dir):
+def add_slicing_info(input_csv_path, lookup_dir, language):
     # Legge il CSV iniziale
     df = pd.read_csv(input_csv_path)
 
@@ -176,12 +176,18 @@ def add_slicing_info(input_csv_path, lookup_dir):
             if row_number < len(lookup_df):
                 row = lookup_df.iloc[row_number]
 
-                sliced_prompts.append(row.get("Final Prompt", None))
+                resulting_prompt = row.get("Resulting Prompt", None)
+                if pd.notna(resulting_prompt):
+                    replaced_prompt = resulting_prompt.replace("<language>", language)
+                else:
+                    replaced_prompt = None
+
+                sliced_prompts.append(replaced_prompt)
                 original_sentences.append(row.get("Original Sentence", None))
                 removed_parts.append(row.get("Removed Part", None))
                 syntagm_types.append(row.get("Type", None))
                 granularities.append(row.get("Granularity", None))
-                resulting_prompts.append(row.get("Resulting Prompt", None))
+                resulting_prompts.append(resulting_prompt)
                 sentence_indices.append(row.get("Sentence Index", None))
             else:
                 sliced_prompts.append(None)
@@ -212,6 +218,25 @@ def add_slicing_info(input_csv_path, lookup_dir):
 
     # Scrive il risultato nel file CSV
     df.to_csv(input_csv_path, index=False)
+
+
+def add_prompt_info(csv1_path, csv2_path):
+    # Leggi i CSV
+    df1 = pd.read_csv(csv1_path)
+    df2 = pd.read_csv(csv2_path)
+
+    # Verifica colonne richieste
+    if 'Dataset ID' not in df1.columns or 'ID' not in df2.columns or 'Manually-fixed NL Prompt' not in df2.columns:
+        raise ValueError("CSV1 deve avere 'Dataset ID'; CSV2 deve avere 'ID' e 'Manually-fixed NL Prompt'.")
+
+    # Crea dizionario: ID → Prompt
+    id_to_prompt = dict(zip(df2['ID'], df2['Manually-fixed NL Prompt']))
+
+    # Aggiungi la colonna 'Prompt' a df1 (nome desiderato)
+    df1['Prompt'] = df1['Dataset ID'].map(id_to_prompt)
+
+    # Sovrascrivi il file originale
+    df1.to_csv(csv1_path, index=False)
 
 
 def snippets_count(folder):
@@ -871,7 +896,8 @@ def total_permutations_over_baseline(cartella):
 
 ##################################################################################################################
 
-language_identifier = "py"
+language = "C"
+language_identifier = "c"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -900,6 +926,7 @@ class BaselineCsvBuilder:
         add_prompt_id(results_baseline, prompt_dataset, "Baseline")
         add_cwe_id(results_baseline, "Prompt ID")
         check_and_remove_duplicates(results_baseline, remove_duplicates=False)
+        add_prompt_info(results_baseline, prompt_dataset)
 
 
 class PermutationCsvsBuilder:
@@ -913,7 +940,7 @@ class ResultsCsvBuilder:
         add_labels(results_codeql)
         add_prompt_id(results_codeql, prompt_dataset, "Results")
         add_cwe_id(results_codeql, "Prompt ID")
-        add_slicing_info(results_codeql, permutations_folder)
+        add_slicing_info(results_codeql, permutations_folder, language)
         #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
