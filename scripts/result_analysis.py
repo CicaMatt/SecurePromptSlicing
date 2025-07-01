@@ -6,6 +6,8 @@ import shutil
 from collections import Counter
 import pandas as pd
 import warnings
+import matplotlib.pyplot as plt
+
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
@@ -440,7 +442,7 @@ def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
     return {cwe_column: sorted_counter}
 
 
-def permutations_values_count_total(folder, verbose=True):
+def permutations_values_count(folder, verbose=True):
     # Inizializza contatori per ogni colonna
     type_counter = Counter()
     granularity_counter = Counter()
@@ -785,35 +787,35 @@ def enhance_permutations_csvs(folder_path, mapping_file):
 
     # Itera su ogni riga del file di mapping
     for index, row in df_mapping.iterrows():
-        nome_csv = f"syntactic_permutations_{index + 1}.csv"
-        percorso_csv = os.path.join(folder_path, nome_csv)
+        csv_name = f"syntactic_permutations_{index + 1}.csv"
+        csv_path = os.path.join(folder_path, csv_name)
 
-        if not os.path.exists(percorso_csv):
-            print(f"File non trovato: {percorso_csv}")
+        if not os.path.exists(csv_path):
+            print(f"File non trovato: {csv_path}")
             continue
 
         # Carica il CSV corrispondente
-        df = pd.read_csv(percorso_csv)
+        df = pd.read_csv(csv_path)
 
         # Controlla se le colonne esistono già
-        colonne_da_aggiungere = {
+        columns_to_add = {
             "ID": row.get("ID", ""),
             "Prompt ID": row.get("Prompt ID", ""),
             "CWE ID": row.get("Prompt ID", "").split("_")[0] if "_" in row.get("Prompt ID", "") else ""
         }
 
-        modificato = False
+        modified = False
 
-        for colonna, valore in colonne_da_aggiungere.items():
-            if colonna not in df.columns:
-                df[colonna] = valore
-                modificato = True
+        for column, value in columns_to_add.items():
+            if column not in df.columns:
+                df[column] = value
+                modified = True
 
-        if modificato:
-            df.to_csv(percorso_csv, index=False)
-            print(f"Aggiornato: {percorso_csv}")
-        else:
-            print(f"Nessuna modifica necessaria: {percorso_csv}")
+        if modified:
+            df.to_csv(csv_path, index=False)
+            print(f"Aggiornato: {csv_path}")
+        #else:
+            #print(f"Nessuna modifica necessaria: {csv_path}")
 
 r"""
 can be deleted
@@ -860,38 +862,138 @@ def result_cwe_stats_from_folder(folder_path, cwe_column="CWE ID", verbose=True)
 
 
 def total_permutations_over_baseline(cartella):
-    risultati = []
+    results = []
 
     for filename in os.listdir(cartella):
         if filename.endswith(".csv"):
-            percorso_file = os.path.join(cartella, filename)
+            filepath = os.path.join(cartella, filename)
             try:
-                df = pd.read_csv(percorso_file)
+                df = pd.read_csv(filepath)
 
                 if {"ID", "CWE ID", "Prompt ID"}.issubset(df.columns):
                     id_val = df["ID"].iloc[0]
                     cwe_id_val = df["CWE ID"].iloc[0]
                     prompt_id_val = df["Prompt ID"].iloc[0]
-                    num_righe = len(df)
+                    n_rows = len(df)
 
-                    risultati.append((int(id_val), cwe_id_val, prompt_id_val, num_righe))
+                    results.append((int(id_val), cwe_id_val, prompt_id_val, n_rows))
                 else:
-                    risultati.append((None, None, None, f"{filename} | Colonne mancanti"))
+                    results.append((None, None, None, f"{filename} | Colonne mancanti"))
             except Exception as e:
-                risultati.append((None, None, None, f"{filename} | Errore: {e}"))
+                results.append((None, None, None, f"{filename} | Errore: {e}"))
 
     # Filtra e ordina solo i risultati validi per ID numerico
-    validi = [r for r in risultati if r[0] is not None]
-    validi.sort(key=lambda x: x[0])  # Ordine numerico
+    valid = [r for r in results if r[0] is not None]
+    valid.sort(key=lambda x: x[0])  # Ordine numerico
 
     # Stampa ordinata
-    for id_val, cwe_id_val, prompt_id_val, num_righe in validi:
-        print(f"ID: {id_val} | CWE: {cwe_id_val} | Prompt: {prompt_id_val} | Righe: {num_righe}")
+    for id_val, cwe_id_val, prompt_id_val, n_rows in valid:
+        print(f"ID: {id_val} | CWE: {cwe_id_val} | Prompt: {prompt_id_val} | Righe: {n_rows}")
 
     # Stampa eventuali errori
-    errori = [r[3] for r in risultati if r[0] is None]
-    for msg in errori:
+    errors = [r[3] for r in results if r[0] is None]
+    for msg in errors:
         print(msg)
+
+
+def plot_cwe_comparison(base_counters, result_counters, title, mode="Frequency", frequency=False):
+    """
+    Generates a bar chart comparing 'result' values to 'base' values for each CWE entry.
+
+    Parameters:
+    - base_counters: dict with structure {"CWE ID": Counter({"CWE-XX": count, ...})}
+    - result_counters: same structure as base_counters
+    - title: string used in the plot title
+    - mode: "frequency" (default) for percentage, "count" for raw result values
+    """
+    if "CWE ID" not in base_counters or "CWE ID" not in result_counters:
+        print("❌ Error: One or both dictionaries lack the 'CWE ID' key.")
+        return
+
+    base_counter = base_counters["CWE ID"]
+    result_counter = result_counters["CWE ID"]
+
+    cwe_ids = sorted(set(base_counter) | set(result_counter), key=lambda x: int(x.replace("CWE-", "")))
+
+    labels = []
+    values = []
+
+    for cwe in cwe_ids:
+        base = base_counter.get(cwe, 0)
+        result = result_counter.get(cwe, 0)
+        if mode == "Frequency":
+            val = (result / base) * 100 if base > 0 else 0.0
+        else:  # "count"
+            val = result
+        labels.append(cwe)
+        values.append(val)
+
+    # Determine title
+    if mode == "Frequency":
+        plot_title = f"{title} – CWE Frequency (% of Base)"
+    else:
+        plot_title = f"{title} – CWE Raw Result Counts"
+
+    # Plot
+    plt.figure(figsize=(12, 6))
+    plt.bar(labels, values)
+    plt.xticks(rotation=45, ha='right')
+    plt.xlabel("CWE ID")
+    plt.ylabel("Frequency (%)" if mode == "Frequency" else "Result Count")
+    plt.title(plot_title)
+    if frequency:
+        if mode == "Frequency":
+            plt.ylim(0, 100)
+    plt.tight_layout()
+    plt.grid(axis='y')
+    plt.show()
+
+
+def plot_metric_comparison(base_counters, result_counters, category_name, mode="Frequency", frequency=False):
+    """
+    Plots comparison for a specific category (e.g., 'Type', 'Granularity').
+
+    Parameters:
+    - base_counters, result_counters: dicts with Counter objects for each category
+    - category_name: which category to plot (e.g., 'Type')
+    - mode: "frequency" (default) or "count"
+    """
+    if category_name not in base_counters or category_name not in result_counters:
+        print(f"❌ '{category_name}' non trovato in uno dei dizionari.")
+        return
+
+    base_counter = base_counters[category_name]
+    result_counter = result_counters[category_name]
+
+    keys = sorted(set(base_counter) | set(result_counter))
+    values = []
+    labels = []
+
+    for k in keys:
+        base = base_counter.get(k, 0)
+        result = result_counter.get(k, 0)
+        if mode == "Frequency":
+            if base > 0:
+                val = (result / base) * 100
+            else:
+                val = 0.0
+        else:  # mode == "count"
+            val = result
+        labels.append(str(k))
+        values.append(val)
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(labels, values)
+    plt.xticks(rotation=45, ha='right')
+    plt.xlabel(category_name)
+    plt.ylabel("Frequency (%)" if mode == "Frequency" else "Result Count")
+    plt.title(f"Comparison of {category_name} - {'Frequency' if mode == 'Frequency' else 'Raw Count'}")
+    if frequency:
+        if mode == "Frequency":
+            plt.ylim(0, 100)
+    plt.tight_layout()
+    plt.grid(axis='y')
+    plt.show()
 
 
 ##################################################################################################################
@@ -925,8 +1027,8 @@ class BaselineCsvBuilder:
         add_labels(results_baseline)
         add_prompt_id(results_baseline, prompt_dataset, "Baseline")
         add_cwe_id(results_baseline, "Prompt ID")
-        check_and_remove_duplicates(results_baseline, remove_duplicates=False)
         add_prompt_info(results_baseline, prompt_dataset)
+        #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
 class PermutationCsvsBuilder:
@@ -988,15 +1090,20 @@ class BaselineComparison:
 class MetricsComparison:
     def __init__(self):
         #print("\nPermutations Metrics Stats")
-        #base_metrics = permutations_values_count_clean(permutations_folder, snippets_folder, verbose=False)
-        base_metrics = permutations_values_count_total(permutations_folder, verbose=False)
+        #permutation_metrics = permutations_values_count_clean(permutations_folder, snippets_folder, verbose=False)
+        permutation_metrics = permutations_values_count(permutations_folder, verbose=False)
         #print("\n---------------------------------------")
         #print("\nResult Stats:")
         result_metrics = result_values_count(results_codeql, verbose=False)
         #print("\n---------------------------------------")
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nMetrics Comparison Stats:")
-        compare_metric_counters(base_metrics, result_metrics, comparison_metrics)
+        compare_metric_counters(permutation_metrics, result_metrics, comparison_metrics)
+
+        plot_metric_comparison(permutation_metrics, result_metrics, "Type", "Frequency", True)
+        plot_metric_comparison(permutation_metrics, result_metrics, "Granularity", "Frequency", True)
+        plot_metric_comparison(permutation_metrics, result_metrics, "Sentence Index", "Frequency", True)
+
 
 
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
@@ -1012,12 +1119,17 @@ class CWEComparison:
         result_cwes = cwe_stats(results_codeql, "CWE ID", verbose=False)
         #print("\n---------------------------------------")
 
-        # These values show how many of the detected vulnerabilities over the baseline are present over the results
+        # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
         print("\nBaseline - Results --- Metrics CWE Stats:")
         compare_cwe_counters(result_cwes, baseline_cwes, comparison_baseline_cwes)
-        # These values show how security scenarios covered over the permutations yielded a vulnerability based on the results
+        # These values compare the total security scenario over the permutations with those that are vulnerable
         print("\nPermutations - Results --- Metrics CWE Stats:")
         compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
+
+        plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
+        plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
+
+
 
 
 BaselineCsvBuilder()
