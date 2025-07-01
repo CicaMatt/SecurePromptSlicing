@@ -4,10 +4,12 @@ import os
 import re
 import shutil
 from collections import Counter
+from itertools import combinations
+
 import pandas as pd
 import warnings
 import matplotlib.pyplot as plt
-
+from dask.delayed import single_key
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
@@ -283,12 +285,12 @@ def covered_cwe_types_stats(csv_path, original_column):
     unique_cwe = sorted(df["CWE ID"].unique(), key=lambda x: int(x.replace("CWE-", "")))
 
     # Stampa ciascun tipo unico di CWE
-    print("Tipi unici di CWE presenti nella colonna:")
+    #print("Tipi unici di CWE presenti nella colonna:")
     for cwe in unique_cwe:
         print(cwe)
 
     # Stampa il numero totale di CWE unici
-    print(f"\nNumero totale di CWE unici: {len(unique_cwe)}")
+    print(f"\nUnique CWEs: {len(unique_cwe)}")
 
 
 def cwe_stats(csv_path, cwe_column, verbose=True):
@@ -442,7 +444,7 @@ def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
     return {cwe_column: sorted_counter}
 
 
-def permutations_metrics_stats(folder, verbose=True):
+def permutations_single_metrics_stats(folder, verbose=True):
     # Inizializza contatori per ogni colonna
     type_counter = Counter()
     granularity_counter = Counter()
@@ -450,7 +452,7 @@ def permutations_metrics_stats(folder, verbose=True):
 
     total_rows = 0  # Nuovo contatore per il totale delle righe
 
-    # Scorri tutti i file nella cartella
+    # Scorri tutti i file nella folder
     for filename in os.listdir(folder):
         if filename.endswith(".csv"):
             filepath = os.path.join(folder, filename)
@@ -470,9 +472,9 @@ def permutations_metrics_stats(folder, verbose=True):
                     print(f"Errore nella lettura di {filename}: {e}")
 
     if verbose:
-        print(f"Totale righe lette da tutti i CSV: {total_rows}\n")
+        print(f"Total permutations: {total_rows}\n")
 
-        print(f" - Type: {len(type_counter)} unique values")
+        print(f" - Syntagm Type: {len(type_counter)} unique values")
         for val, count in type_counter.items():
             print(f"    {val}: {count}")
 
@@ -486,146 +488,57 @@ def permutations_metrics_stats(folder, verbose=True):
 
     # Ritorna i contatori in un dizionario
     return {
-        'Type': type_counter,
+        'Syntagm Type': type_counter,
         'Granularity': granularity_counter,
         'Sentence Index': sentence_index_counter,
     }
 
 
+def permutations_combined_metrics_stats(folder, verbose=True):
+    # Inizializza contatore per le combinazioni
+    combinations_counter = Counter()
+    total_rows = 0
 
-def analyze_snippets(filepath):
-    total_files = 0
-    total_txt = 0
-    total_py = 0
-    errors = []
-
-    for root, dirs, files in os.walk(filepath):
-        # Esclude cartelle nascoste
-        dirs[:] = [d for d in dirs if not d.startswith('.')]
-        for filename in files:
-            if filename.startswith('.') or filename.endswith('.pyc'):
-                continue
-
-            complete_path = os.path.join(root, filename)
-            total_files += 1
-
-            if filename.endswith('.txt'):
-                total_txt += 1
-            elif filename.endswith('.py'):
-                total_py += 1
-                try:
-                    with open(complete_path, 'r', encoding='utf-8') as f:
-                        source = f.read()
-                        ast.parse(source, filename=complete_path)
-                except (SyntaxError, UnicodeDecodeError) as e:
-                    errors.append((complete_path, str(e)))
-
-    print(f"Totale file: {total_files}")
-    print(f"File file .txt: {total_txt}")
-    print(f"File file .py: {total_py}")
-    print(f"Snippet con errori: {len(errors)}")
-    print(f"Snippet corretti: {total_py - len(errors)}")
-    #print(f"\nScript Python con errori di sintassi:")
-    #for path, error in errors:
-    #    print(f" - {path}: {error}")
-
-
-def permutations_values_count_clean(csv_folder, code_folder, verbose=True):
-    type_counter = Counter()
-    granularity_counter = Counter()
-    sentence_index_counter = Counter()
-
-    valid_snippets = 0
-    invalid_snippets = 0
-    total_checked = 0
-    total_txt = 0
-    total_py = 0
-    errors = []
-
-    for filename in os.listdir(csv_folder):
-        if not filename.endswith(".csv"):
-            continue
-
-        csv_path = os.path.join(csv_folder, filename)
-        base_name = os.path.splitext(filename)[0]
-        code_subfolder = os.path.join(code_folder, base_name)
-
-        try:
-            df = pd.read_csv(csv_path)
-        except Exception as e:
-            if verbose:
-                print(f"Errore nella lettura di {filename}: {e}")
-            continue
-
-        for idx, row in df.iterrows():
-            txt_path = os.path.join(code_subfolder, f"code_row_{idx}.txt")
-            py_path = os.path.join(code_subfolder, f"code_row_{idx}.py")
-
-            if os.path.exists(txt_path):
-                total_txt += 1
-                continue
-
-            total_checked += 1
-            total_py += 1
-
-            if not os.path.exists(py_path):
-                invalid_snippets += 1
-                errors.append((py_path, "File .py mancante"))
-                continue
-
+    # Scorri tutti i file nella folder
+    for filename in os.listdir(folder):
+        if filename.endswith(".csv"):
+            filepath = os.path.join(folder, filename)
             try:
-                with open(py_path, 'r', encoding='utf-8') as code_file:
-                    code = code_file.read()
-                    ast.parse(code)
-            except (SyntaxError, UnicodeDecodeError, FileNotFoundError) as e:
-                invalid_snippets += 1
-                errors.append((py_path, str(e)))
-                continue
+                df = pd.read_csv(filepath)
+                total_rows += len(df)
 
-            valid_snippets += 1
+                # Verifica che le colonne esistano
+                cols_present = [col for col in ['Type', 'Granularity', 'Sentence Index'] if col in df.columns]
+                if len(cols_present) < 2:
+                    continue  # Servono almeno due colonne per creare una combinazione
 
-            if 'Type' in df.columns:
-                val = row.get('Type')
-                if pd.notna(val): type_counter[val] += 1
+                # Itera sulle righe e calcola combinazioni
+                for _, row in df[cols_present].dropna().iterrows():
+                    row_data = {}
+                    for col in cols_present:
+                        key = 'Syntagm Type' if col == 'Type' else col
+                        row_data[key] = row[col]
 
-            if 'Granularity' in df.columns:
-                val = row.get('Granularity')
-                if pd.notna(val): granularity_counter[val] += 1
+                    for r in range(2, len(row_data) + 1):  # Solo coppie e terne
+                        for combo in combinations(row_data.items(), r):
+                            combo_key = tuple(sorted(combo))  # Ordina per coerenza
+                            combinations_counter[combo_key] += 1
 
-            if 'Sentence Index' in df.columns:
-                val = row.get('Sentence Index')
-                if pd.notna(val): sentence_index_counter[val] += 1
+            except Exception as e:
+                if verbose:
+                    print(f"Errore nella lettura di {filename}: {e}")
 
     if verbose:
-        print(f"Totale snippet associati a righe CSV: {total_checked + total_txt}")
-        print(f"File .txt ignorati: {total_txt}")
-        print(f"File .py analizzati: {total_py}")
-        print(f"Snippet validi (parsabili): {valid_snippets}")
-        print(f"Snippet scartati per errori: {invalid_snippets}")
-        print(f"Snippet corretti: {valid_snippets}")
+        print(f"Total rows processed: {total_rows}")
+        print(f"Unique combinations (length ≥ 2): {len(combinations_counter)}")
+        for combo, count in combinations_counter.items():
+            combo_str = ', '.join([f"{k}={v}" for k, v in combo])
+            print(f"  ({combo_str}): {count}")
 
-        print("\nStatistiche SOLO sui validi:\n")
-
-        print(f" - Type: {len(type_counter)} valori unici")
-        for val, count in type_counter.items():
-            print(f"    {val}: {count}")
-
-        print(f" - Granularity: {len(granularity_counter)} valori unici")
-        for val, count in granularity_counter.items():
-            print(f"    {val}: {count}")
-
-        print(f" - Sentence Index: {len(sentence_index_counter)} valori unici")
-        for val, count in sentence_index_counter.items():
-            print(f"    '{val}': {count}")
-
-    return {
-        'Type': type_counter,
-        'Granularity': granularity_counter,
-        'Sentence Index': sentence_index_counter,
-    }
+    return combinations_counter
 
 
-def result_metrics_stats(filepath, verbose=True):
+def single_metrics_stats(filepath, verbose=True):
     syntagm_type_counter = Counter()
     granularity_counter = Counter()
     sentence_index_counter = Counter()
@@ -664,13 +577,50 @@ def result_metrics_stats(filepath, verbose=True):
             print(f"    '{val}': {count}")
 
     return {
-        'Type': syntagm_type_counter,
+        'Syntagm Type': syntagm_type_counter,
         'Granularity': granularity_counter,
         'Sentence Index': sentence_index_counter,
     }
 
+def combined_metrics_stats(filepath, verbose=True):
+    combinations_counter = Counter()
+    total_rows = 0
 
-def compare_metric_counters(base_counters, result_counters, output_path=None):
+    try:
+        df = pd.read_csv(filepath)
+        total_rows = len(df)
+
+        # Verifica quali colonne esistono tra le tre target
+        cols_present = [col for col in ['Syntagm Type', 'Granularity', 'Sentence Index'] if col in df.columns]
+        if len(cols_present) < 2:
+            if verbose:
+                print("Non ci sono almeno due colonne tra 'Syntagm Type', 'Granularity', 'Sentence Index'.")
+            return
+
+        # Itera sulle righe e calcola combinazioni
+        for _, row in df[cols_present].dropna().iterrows():
+            row_data = {col: row[col] for col in cols_present}
+            for r in range(2, len(row_data) + 1):
+                for combo in combinations(row_data.items(), r):
+                    combo_key = tuple(sorted(combo))  # Ordina per uniformità
+                    combinations_counter[combo_key] += 1
+
+    except Exception as e:
+        if verbose:
+            print(f"Errore nella lettura del file {filepath}: {e}")
+        return
+
+    if verbose:
+        #print(f"Total rows processed: {total_rows}")
+        print(f"Unique combinations (length ≥ 2): {len(combinations_counter)}")
+        for combo, count in combinations_counter.items():
+            combo_str = ', '.join([f"{k}={v}" for k, v in combo])
+            print(f"  ({combo_str}): {count}")
+
+    return combinations_counter
+
+
+def compare_single_metric(base_counters, result_counters, output_path=None):
     """
     Confronta due dizionari contenenti metriche:
     base_counters e result_counters devono avere le stesse chiavi:
@@ -678,11 +628,11 @@ def compare_metric_counters(base_counters, result_counters, output_path=None):
 
     Se specificato, salva i risultati in un CSV in output_path.
     """
-    print("CONFRONTO TRA METRICHE (Percentuale delle seconde sulle prime)\n")
+    #print("CONFRONTO TRA METRICHE (Percentuale delle seconde sulle prime)\n")
 
     all_results = []
 
-    for key in ['Type', 'Granularity', 'Sentence Index']:
+    for key in ['Syntagm Type', 'Granularity', 'Sentence Index']:
         base_counter = base_counters.get(key, Counter())
         result_counter = result_counters.get(key, Counter())
 
@@ -720,7 +670,75 @@ def compare_metric_counters(base_counters, result_counters, output_path=None):
                 for row in all_results:
                     writer.writerow(row)
 
-            print(f"✅ Risultati salvati in: {output_path}")
+            #print(f"✅ Risultati salvati in: {output_path}")
+        except Exception as e:
+            print(f"❌ Errore durante il salvataggio del file CSV: {e}")
+
+
+def compare_combined_metrics(base_counter: Counter, result_counter: Counter, output_path=None):
+    """
+    Confronta due Counter contenenti combinazioni di feature (tuple di coppie chiave-valore).
+    Stampa le percentuali di presenza dei risultati rispetto alla base.
+
+    Se specificato, salva i risultati in un CSV in output_path, includendo i dettagli delle singole feature.
+    """
+    all_combos = set(base_counter) | set(result_counter)
+    all_results = []
+
+    print("CONFRONTO TRA COMBINAZIONI (Percentuale delle seconde sulle prime)\n")
+
+    # Raccoglie tutti i nomi unici delle feature usate
+    all_feature_names = set()
+    for combo in all_combos:
+        for key, _ in combo:
+            all_feature_names.add(key)
+    all_feature_names = sorted(all_feature_names)
+
+    for combo in sorted(all_combos):
+        base_val = base_counter.get(combo, 0)
+        result_val = result_counter.get(combo, 0)
+
+        if base_val == 0:
+            percent = "N/A (non presente nei base)"
+        else:
+            percent = f"{(result_val / base_val) * 100:.2f}%"
+
+        combo_str = ', '.join(f"{k}={v}" for k, v in combo)
+        print(f"  ({combo_str}): {result_val} / {base_val} → {percent}")
+
+        # Crea la riga con ordine richiesto: Combination → Num Features → [Feature columns] → Base → Result → Frequency
+        row = {
+            "Combination": combo_str,
+            "Num Features": len(combo),
+        }
+
+        # Inserisce le singole feature
+        for key in all_feature_names:
+            row[key] = next((v for k, v in combo if k == key), "")
+
+        # Valori aggregati finali
+        row.update({
+            "Base": base_val,
+            "Result": result_val,
+            "Frequency": percent,
+        })
+
+        all_results.append(row)
+
+    if output_path:
+        try:
+            with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
+                fieldnames = (
+                    ["Combination", "Num Features"] + all_feature_names +
+                    ["Base", "Result", "Frequency"]
+                )
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                writer.writeheader()
+                for row in all_results:
+                    writer.writerow(row)
+
+            print(f"\n✅ Risultati salvati in: {output_path}")
         except Exception as e:
             print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
@@ -742,7 +760,7 @@ def compare_cwe_counters(base_counters, result_counters, output_path=None):
     base_counter = base_counters["CWE ID"]
     result_counter = result_counters["CWE ID"]
 
-    print("\n--- CONFRONTO CWE (CWE ID) ---\n")
+    #print("\n--- CONFRONTO CWE (CWE ID) ---\n")
 
     all_keys = set(base_counter) | set(result_counter)
 
@@ -776,7 +794,7 @@ def compare_cwe_counters(base_counters, result_counters, output_path=None):
                 for row in results:
                     writer.writerow(row)
 
-            print(f"\n✅ Risultati salvati in: {output_path}")
+            #print(f"\n✅ Risultati salvati in: {output_path}")
         except Exception as e:
             print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
@@ -817,56 +835,13 @@ def enhance_permutations_csvs(folder_path, mapping_file):
         #else:
             #print(f"Nessuna modifica necessaria: {csv_path}")
 
-r"""
-can be deleted
-def result_cwe_stats_from_folder(folder_path, cwe_column="CWE ID", verbose=True):
-    aggregate_counter = Counter()
-    total_rows = 0
-    files_processed = 0
 
-    for filename in os.listdir(folder_path):
-        if filename.lower().endswith(".csv"):
-            file_path = os.path.join(folder_path, filename)
-            try:
-                df = pd.read_csv(file_path)
-
-                if cwe_column not in df.columns:
-                    if verbose:
-                        print(f"⚠️  Colonna '{cwe_column}' non trovata in '{filename}' - ignorato.")
-                    continue
-
-                current_counter = Counter(df[cwe_column].dropna().astype(str))
-                aggregate_counter.update(current_counter)
-                total_rows += len(df)
-                files_processed += 1
-
-            except Exception as e:
-                if verbose:
-                    print(f"❌ Errore nella lettura di '{filename}': {e}")
-
-    # Ordina per ID numerico (es. "CWE-502" -> 502)
-    sorted_aggregate = dict(sorted(
-        aggregate_counter.items(),
-        key=lambda x: int(x[0].replace("CWE-", "")) if x[0].startswith("CWE-") else float('inf')
-    ))
-
-    if verbose:
-        print(f"\n📁 Totale file letti: {files_processed}")
-        print(f"📄 Totale righe lette: {total_rows}")
-        print(f"🔢 CWE unici trovati: {len(sorted_aggregate)}\n")
-        for cwe, count in sorted_aggregate.items():
-            print(f"  {cwe}: {count}")
-
-    return Counter(sorted_aggregate)
-"""
-
-
-def total_permutations_over_baseline(cartella):
+def total_permutations_over_baseline(folder):
     results = []
 
-    for filename in os.listdir(cartella):
+    for filename in os.listdir(folder):
         if filename.endswith(".csv"):
-            filepath = os.path.join(cartella, filename)
+            filepath = os.path.join(folder, filename)
             try:
                 df = pd.read_csv(filepath)
 
@@ -1011,7 +986,8 @@ results_codeql = f'results/permutations/results_{language_identifier}_complete.c
 results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline.csv'
 results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
 
-comparison_metrics = f'results/comparison/comparison_metrics_{language_identifier}.csv'
+comparison_single_metrics = f'results/comparison/comparison_single_metrics_{language_identifier}.csv'
+comparison_combined_metrics = f'results/comparison/comparison_combined_metrics_{language_identifier}.csv'
 comparison_baseline_cwes = f'results/comparison/comparison_baseline_cwes_{language_identifier}.csv'
 comparison_permutations_cwes = f'results/comparison/comparison_permutations_cwes_{language_identifier}.csv'
 
@@ -1048,61 +1024,79 @@ class ResultsCsvBuilder:
 
 class BaselineStats:
     def __init__(self):
+        print("***BASELINE STATS***\n")
         print("Baseline Covered CWEs (Security Scenarios):")
         covered_cwe_types_stats(prompt_dataset, "Prompt ID")
         print("\n---------------------------------------")
         print("\nBaseline CWEs Stats (Baseline Analysis on Default Prompts):")
         cwe_stats(results_baseline, "CWE ID", verbose=True)
+        print("\n----------------------------------------------------------------\n")
 
 
 class PermutationsStats:
     def __init__(self):
-        print("Permutations Stats - All")
-        permutations_metrics_stats(permutations_folder)
-        print("\n---------------------------------------")
+        print("***PERMUTATIONS STATS***\n")
+        print("Total permutations over baseline:")
+        total_permutations_over_baseline(permutations_folder)
+        print("\n---------------------------------------\n")
+
+        permutations_single_metrics_stats(permutations_folder, verbose=True)
+        print("\n---------------------------------------\n")
+
+        permutations_combined_metrics_stats(permutations_folder, verbose=True)
+        print("\n---------------------------------------\n")
+
         print("\nPermutation CWEs Stats:")
         permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
-
+        print("\n----------------------------------------------------------------\n")
 
 
 class ResultStats:
     def __init__(self):
+        print("***RESULT STATS***\n")
         #snippets_count(snippets_folder)
         row_counter(results_codeql)
-        #print("\nResult Stats:")
-        result_metrics_stats(results_codeql)
-        #print("\n---------------------------------------")
+        print("\nResult Stats:")
+        single_metrics_stats(results_codeql, verbose=True)
+        print("\n---------------------------------------\n")
+
+        combined_metrics_stats(results_codeql, verbose=True)
+        print("\n---------------------------------------\n")
+
         print("\nResult CWEs Stats:")
         cwe_stats(results_codeql, "CWE ID", verbose=True)
-
-
-# Print the total permutations for each baseline prompt
-class BaselineComparison:
-    def __init__(self):
-        print("Total permutations over baseline:")
-        total_permutations_over_baseline(permutations_folder)
+        print("\n----------------------------------------------------------------\n")
 
 
 # Comparison between slicing features from baseline to detected vulnerabilities
 class MetricsComparison:
     def __init__(self):
-        permutation_metrics = permutations_metrics_stats(permutations_folder, verbose=False)
-        result_metrics = result_metrics_stats(results_codeql, verbose=False)
+        print("***METRICS COMPARISON***\n")
+        permutation_single_metrics = permutations_single_metrics_stats(permutations_folder, verbose=False)
+        result_single_metrics = single_metrics_stats(results_codeql, verbose=False)
+
+        permutation_combined_metrics = permutations_combined_metrics_stats(permutations_folder, verbose=False)
+        result_combined_metrics = combined_metrics_stats(results_codeql, verbose=False)
 
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
-        print("\nMetrics Comparison Stats:")
-        compare_metric_counters(permutation_metrics, result_metrics, comparison_metrics)
+        print("\nSingle Metrics Comparison Stats:")
+        compare_single_metric(permutation_single_metrics, result_single_metrics, comparison_single_metrics)
+
+        print("\nCombined Metrics Comparison Stats:")
+        compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
 
         # Plotting data
-        plot_metric_comparison(permutation_metrics, result_metrics, "Type", "Frequency", True)
-        plot_metric_comparison(permutation_metrics, result_metrics, "Granularity", "Frequency", True)
-        plot_metric_comparison(permutation_metrics, result_metrics, "Sentence Index", "Frequency", True)
+        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
+        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
+        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
+        print("\n----------------------------------------------------------------\n")
 
 
 
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
+        print("***CWE COMPARISON***\n")
         baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
         result_cwes = cwe_stats(results_codeql, "CWE ID", verbose=False)
@@ -1117,6 +1111,7 @@ class CWEComparison:
         # Plotting data
         plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
         plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
+        print("\n----------------------------------------------------------------\n")
 
 
 
@@ -1127,6 +1122,5 @@ ResultsCsvBuilder()
 BaselineStats()
 PermutationsStats()
 ResultStats()
-BaselineComparison()
 MetricsComparison()
 CWEComparison()
