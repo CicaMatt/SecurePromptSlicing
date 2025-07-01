@@ -442,7 +442,7 @@ def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
     return {cwe_column: sorted_counter}
 
 
-def permutations_values_count(folder, verbose=True):
+def permutations_metrics_stats(folder, verbose=True):
     # Inizializza contatori per ogni colonna
     type_counter = Counter()
     granularity_counter = Counter()
@@ -625,7 +625,7 @@ def permutations_values_count_clean(csv_folder, code_folder, verbose=True):
     }
 
 
-def result_values_count(filepath, verbose=True):
+def result_metrics_stats(filepath, verbose=True):
     syntagm_type_counter = Counter()
     granularity_counter = Counter()
     sentence_index_counter = Counter()
@@ -1057,12 +1057,9 @@ class BaselineStats:
 
 class PermutationsStats:
     def __init__(self):
-        #print("Permutations Stats - All")
-        #permutations_values_count_total(permutations_folder)
-        #analyze_snippets(snippets_folder)
-        #print("\n---------------------------------------")
-        #print("\nPermutations Stats - Correct Snippets:")
-        permutations_values_count_clean(permutations_folder, snippets_folder)
+        print("Permutations Stats - All")
+        permutations_metrics_stats(permutations_folder)
+        print("\n---------------------------------------")
         print("\nPermutation CWEs Stats:")
         permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
 
@@ -1073,7 +1070,7 @@ class ResultStats:
         #snippets_count(snippets_folder)
         row_counter(results_codeql)
         #print("\nResult Stats:")
-        result_values_count(results_codeql)
+        result_metrics_stats(results_codeql)
         #print("\n---------------------------------------")
         print("\nResult CWEs Stats:")
         cwe_stats(results_codeql, "CWE ID", verbose=True)
@@ -1089,17 +1086,14 @@ class BaselineComparison:
 # Comparison between slicing features from baseline to detected vulnerabilities
 class MetricsComparison:
     def __init__(self):
-        #print("\nPermutations Metrics Stats")
-        #permutation_metrics = permutations_values_count_clean(permutations_folder, snippets_folder, verbose=False)
-        permutation_metrics = permutations_values_count(permutations_folder, verbose=False)
-        #print("\n---------------------------------------")
-        #print("\nResult Stats:")
-        result_metrics = result_values_count(results_codeql, verbose=False)
-        #print("\n---------------------------------------")
+        permutation_metrics = permutations_metrics_stats(permutations_folder, verbose=False)
+        result_metrics = result_metrics_stats(results_codeql, verbose=False)
+
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nMetrics Comparison Stats:")
         compare_metric_counters(permutation_metrics, result_metrics, comparison_metrics)
 
+        # Plotting data
         plot_metric_comparison(permutation_metrics, result_metrics, "Type", "Frequency", True)
         plot_metric_comparison(permutation_metrics, result_metrics, "Granularity", "Frequency", True)
         plot_metric_comparison(permutation_metrics, result_metrics, "Sentence Index", "Frequency", True)
@@ -1109,15 +1103,9 @@ class MetricsComparison:
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
-        #print("\nBaseline CWEs Stats:")
-        #print("\n---------------------------------------")
         baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
-        #print("\nPermutation CWEs Stats:")
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
-        #print("\n---------------------------------------")
-        #print("\nResult CWEs Stats:")
         result_cwes = cwe_stats(results_codeql, "CWE ID", verbose=False)
-        #print("\n---------------------------------------")
 
         # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
         print("\nBaseline - Results --- Metrics CWE Stats:")
@@ -1126,6 +1114,7 @@ class CWEComparison:
         print("\nPermutations - Results --- Metrics CWE Stats:")
         compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
 
+        # Plotting data
         plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
         plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
 
