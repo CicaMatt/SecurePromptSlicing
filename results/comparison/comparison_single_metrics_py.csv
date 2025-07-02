@@ -1,16 +1,16 @@
 Category,Value,Base,Result,Frequency
-Type,ADJP,50,7,14.00%
-Type,ADVP,54,16,29.63%
-Type,CONJP,1,1,100.00%
-Type,INTJ,2,0,0.00%
-Type,NP,2446,468,19.13%
-Type,PP,657,105,15.98%
-Type,PRT,23,7,30.43%
-Type,QP,6,0,0.00%
-Type,SBAR,287,51,17.77%
-Type,VP,676,144,21.30%
-Type,WHADVP,27,8,29.63%
-Type,WHNP,91,20,21.98%
+Syntagm Type,ADJP,50,7,14.00%
+Syntagm Type,ADVP,54,16,29.63%
+Syntagm Type,CONJP,1,1,100.00%
+Syntagm Type,INTJ,2,0,0.00%
+Syntagm Type,NP,2446,468,19.13%
+Syntagm Type,PP,657,105,15.98%
+Syntagm Type,PRT,23,7,30.43%
+Syntagm Type,QP,6,0,0.00%
+Syntagm Type,SBAR,287,51,17.77%
+Syntagm Type,VP,676,144,21.30%
+Syntagm Type,WHADVP,27,8,29.63%
+Syntagm Type,WHNP,91,20,21.98%
 Granularity,chunk,1613,290,17.98%
 Granularity,clause,72,10,13.89%
 Granularity,minimal,2635,527,20.00%
