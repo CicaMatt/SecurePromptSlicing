@@ -16,20 +16,24 @@ warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 def add_labels(input_csv_path):
     column_labels = [
-        "Name",  # Query name
+        "Name",         # Query name
         "Description",  # Query description
-        "Severity",  # Severità
-        "Message",  # Messaggio di avviso
-        "Path",  # Percorso del file
-        "StartLine",  # Riga di inizio
+        "Severity",     # Severità
+        "Message",      # Messaggio di avviso
+        "Path",         # Percorso del file
+        "StartLine",    # Riga di inizio
         "StartColumn",  # Colonna di inizio
-        "EndLine",  # Riga di fine
-        "EndColumn"  # Colonna di fine
+        "EndLine",      # Riga di fine
+        "EndColumn"     # Colonna di fine
     ]
 
-    df = pd.read_csv(input_csv_path, header=None)
-    df.columns = column_labels
-    df.to_csv(input_csv_path, index=False)
+    if os.path.getsize(input_csv_path) == 0:
+        # If the file is empty, just write the headers
+        pd.DataFrame(columns=column_labels).to_csv(input_csv_path, index=False)
+    else:
+        df = pd.read_csv(input_csv_path, header=None)
+        df.columns = column_labels
+        df.to_csv(input_csv_path, index=False)
 
 
 def check_and_remove_duplicates(csv_path, remove_duplicates=False):
