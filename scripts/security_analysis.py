@@ -619,6 +619,35 @@ def add_missing_includes(root_dir, standard_c_functions):
                     print(f"Nessun include mancante in: {filepath}")
 
 
+def find_unique_includes(directory, standard_headers_map=None, exclude_standard=False):
+    include_pattern = re.compile(r'^\s*#\s*include\s+[<"]([^>"]+)[>"]')
+    unique_includes = set()
+
+    # Se viene fornito il mapping, crea un set dei nomi degli header standard
+    standard_headers = set(standard_headers_map.keys()) if standard_headers_map else set()
+
+    for root, _, files in os.walk(directory):
+        for filename in files:
+            if filename.endswith(('.c', '.h')):
+                full_path = os.path.join(root, filename)
+                try:
+                    with open(full_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        for line in f:
+                            match = include_pattern.match(line)
+                            if match:
+                                header_file = match.group(1).strip()
+                                # Escludi se è standard e la modalità lo richiede
+                                if exclude_standard and header_file in standard_headers:
+                                    continue
+                                unique_includes.add(f'#include <{header_file}>')
+                except Exception as e:
+                    print(f"Error reading {full_path}: {e}")
+
+    print("Unique #include directives found:")
+    for include in sorted(unique_includes):
+        print(include)
+
+
 ###################################################################################################################
 
 
@@ -713,6 +742,8 @@ class CPreprocessing:
         # Copia ricorsiva della cartella sorgente nella destinazione
         shutil.copytree(folder1, folder2)
 
+        find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
+
         add_missing_includes(folder2, STANDARD_C_FUNCTIONS)
         build_c_project(folder2, nested)
 
@@ -756,10 +787,10 @@ command_set_baseline_analysis_py = [
     r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=generated_code/baseline_code_py --overwrite',
 
     # Query update and configuration
-    r'cd CodeQL/Queries/py_complete && codeql pack install',
+    r'codeql pack download codeql/python-queries@1.6.0',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/baseline/results_py_baseline.csv codeql/python-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/baseline/results_py_baseline.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
     # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
 ]
 
@@ -797,19 +828,19 @@ command_set_custom_queries_py = [
 ]
 """
 
-
+# 1.6.0 last pack version
 command_set_baseline_analysis_java = [
     # Databases folder creation (if not exists)
-    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+    #r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+    #r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
 
     # Query download and installation for Java
-    r'codeql pack download codeql/java-queries',
+    r'codeql pack download codeql/java-queries@1.5.2',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/baseline/results_java_baseline.csv codeql/java-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
 
@@ -854,10 +885,10 @@ command_set_baseline_analysis_c = [
     r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
-    r'codeql pack download codeql/cpp-queries',
+    r'codeql pack download codeql/cpp-queries@1.4.3',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/baseline/results_c_baseline.csv codeql/cpp-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/baseline/results_c_baseline.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
 ]
 
 
@@ -869,10 +900,10 @@ command_set_result_analysis_c = [
     r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/generated_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
-    r'codeql pack download codeql/cpp-queries',
+    r'codeql pack download codeql/cpp-queries@1.4.3',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
 ]
 
 
@@ -896,12 +927,12 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #SecurityAnalysis(command_set_baseline_analysis_py)
 #SecurityAnalysis(command_set_result_analysis_py)
 
-JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_java)
+#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_java)
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_c)
+CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
