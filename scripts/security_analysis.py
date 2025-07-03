@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 import shutil
@@ -153,7 +154,7 @@ def organize_java_snippets(code_path: str = None, output_path: str = None, neste
 
 def process_java_files(folder, wrap_if_no_class=True):
     """
-    Scansiona ricorsivamente la cartella, cerca i file .java,
+    Scansiona ricorsivamente la folder, cerca i file .java,
     estrae il nome della prima classe e rinomina il file di conseguenza,
     evitando nomi duplicati.
 
@@ -301,13 +302,8 @@ def find_errors_java(folder):
 
 
 
-def build_c_project(src_dir, build_dir="build", nested=True):
+def build_c_project(src_dir, nested=True):
     object_files = []
-
-    # 1. Crea directory di build pulita
-    if os.path.exists(build_dir):
-        shutil.rmtree(build_dir)
-    os.makedirs(build_dir, exist_ok=True)
 
     if nested:
         # Modalità innestata: cerca sottocartelle in src_dir
@@ -318,9 +314,6 @@ def build_c_project(src_dir, build_dir="build", nested=True):
                     if filename.endswith(".c"):
                         src_file = os.path.join(dirpath, filename)
                         rel_path = os.path.relpath(src_file, src_dir)
-                        dest_file = os.path.join(build_dir, rel_path)
-                        os.makedirs(os.path.dirname(dest_file), exist_ok=True)
-                        shutil.copy2(src_file, dest_file)
 
                         obj_file = os.path.splitext(rel_path)[0] + ".o"
                         object_files.append(obj_file.replace("\\", "/"))
@@ -331,15 +324,12 @@ def build_c_project(src_dir, build_dir="build", nested=True):
                 if filename.endswith(".c"):
                     src_file = os.path.join(dirpath, filename)
                     rel_path = os.path.relpath(src_file, src_dir)
-                    dest_file = os.path.join(build_dir, rel_path)
-                    os.makedirs(os.path.dirname(dest_file), exist_ok=True)
-                    shutil.copy2(src_file, dest_file)
 
                     obj_file = os.path.splitext(rel_path)[0] + ".o"
                     object_files.append(obj_file.replace("\\", "/"))
 
-    # 3. Genera Makefile
-    makefile_path = os.path.join(build_dir, "Makefile")
+    # Genera Makefile direttamente nella src_dir
+    makefile_path = os.path.join(src_dir, "Makefile")
     with open(makefile_path, "w") as mf:
         mf.write("CC = gcc\n")
         mf.write("CFLAGS = -Wall -I.\n\n")
@@ -348,6 +338,7 @@ def build_c_project(src_dir, build_dir="build", nested=True):
             src = obj.replace(".o", ".c")
             mf.write(f"{obj}: {src}\n\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")
         mf.write("clean:\n\trm -f " + " ".join(object_files) + "\n")
+
 
 
 def prepare_directory_for_codeql(source_dir, destination_dir):
@@ -363,10 +354,27 @@ def prepare_directory_for_codeql(source_dir, destination_dir):
     print(f"[✓] Copiata directory: {src_path} → {dst_path}")
 
     c_files = list(dst_path.glob("*.c"))
-    func_decl = re.compile(r'\b\w[\w\d_]*\s+\**\s*(\w[\w\d_]*)\s*\([^;]*\)\s*\{')  # funzioni implementate
-    func_call = re.compile(r'\b(\w[\w\d_]*)\s*\(')  # chiamate funzione
-    type_use = re.compile(r'\b([A-Z][A-Za-z0-9_]+)\b')  # tipi usati
+
+    # Regex
+    func_decl = re.compile(r'\b\w[\w\d_]*\s+\**\s*(\w[\w\d_]*)\s*\([^;]*\)\s*\{')
+    func_call = re.compile(r'\b(\w[\w\d_]*)\s*\(')
+    type_use = re.compile(r'\b([A-Z][A-Za-z0-9_]+)\b')
     type_decl = re.compile(r'typedef\s+struct\s+([A-Za-z_][A-Za-z0-9_]*)')
+    field_access = re.compile(r'\b([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*)')
+
+    STANDARD_FUNCTIONS = {
+        "printf", "fprintf", "sprintf", "snprintf", "perror", "puts", "fputs", "fgets", "fgetc", "fputc",
+        "malloc", "calloc", "realloc", "free", "exit", "system", "atoi", "atof", "strtol", "rand", "srand",
+        "strlen", "strcpy", "strncpy", "strcat", "strcmp", "strncmp", "memcpy", "memset", "memmove",
+        "sqrt", "pow", "fabs", "sin", "cos", "tan", "log", "exp",
+        "read", "write", "close", "sleep", "usleep", "getpid",
+        "time", "difftime", "clock", "strftime",
+    }
+    STANDARD_TYPES = {
+        "FILE", "size_t", "time_t", "clock_t"
+    }
+
+    keywords = {"int", "char", "void", "main", "return", "if", "while", "for", "switch", "sizeof"}
 
     makefile_lines = [
         "CC = gcc",
@@ -381,48 +389,234 @@ def prepare_directory_for_codeql(source_dir, destination_dir):
         name = cfile.stem
         stub_path = stub_dir / f"{name}_stub.h"
         obj_name = cfile.with_suffix(".o").name
-        object_files.append(obj_name)
-
         content = cfile.read_text(encoding="utf-8", errors="ignore")
 
-        # funzioni chiamate e definite
+        # FUNZIONI
         calls = set(func_call.findall(content))
         defs = set(func_decl.findall(content))
+        calls = {f for f in calls if f not in defs and f not in STANDARD_FUNCTIONS and f not in keywords}
 
-        # tipi usati e dichiarati
+        # TIPI
         used_types = set(type_use.findall(content))
         defined_types = set(type_decl.findall(content))
+        types = {t for t in used_types if t not in defined_types and t not in STANDARD_TYPES and t not in keywords}
 
-        keywords = {"int", "char", "void", "main", "return", "if", "while", "for", "switch", "sizeof"}
-        calls -= defs
-        calls = {f for f in calls if f not in keywords}
-        types = {t for t in used_types if t not in defined_types and t not in keywords}
+        # CAMPI STRUCT
+        field_matches = field_access.findall(content)
+        struct_fields = defaultdict(set)
+        for var, field in field_matches:
+            for t in types:
+                if var.lower().startswith(t[0].lower()):
+                    struct_fields[t].add(field)
 
-        # genera stub per questo file
+        # SKIP file che non usa simboli esterni
+        if not calls and not types and "#include <" in content:
+            makefile_lines.append(f"\n{obj_name}: {cfile.name}")
+            makefile_lines.append(f"\t-$(CC) $(CFLAGS) -c {cfile.name} -o {obj_name}")
+            continue
+
+        # COSTRUISCI HEADER
         guard = f"{name.upper()}_STUB_H"
         lines = [f"#ifndef {guard}", f"#define {guard}", ""]
+
         for t in sorted(types):
-            lines.append(f"typedef struct {t} {{ int dummy; }} {t};")
+            fields = struct_fields.get(t)
+            if fields:
+                lines.append(f"typedef struct {t} {{")
+                for f in sorted(fields):
+                    lines.append(f"    int {f};")
+                lines.append(f"}} {t};")
+            else:
+                lines.append(f"typedef struct {t} {t};")
+
         lines.append("")
         for f in sorted(calls):
             lines.append(f"int {f}();")
         lines.append("\n#endif")
 
-        # se non c'è nulla da stubbare, salta la creazione
-        if not types and not calls:
-            makefile_lines.append(f"\n{obj_name}: {cfile.name}")
-            makefile_lines.append(f"\t-$(CC) $(CFLAGS) -c {cfile.name} -o {obj_name}")
-        else:
-            stub_path.write_text("\n".join(lines))
-            makefile_lines.append(f"\n{obj_name}: {cfile.name}")
-            makefile_lines.append(
-                f"\t-$(CC) $(CFLAGS) -I__stubs__ -include __stubs__/{name}_stub.h -c {cfile.name} -o {obj_name}")
+        stub_path.write_text("\n".join(lines))
+
+        # MAKEFILE
+        makefile_lines.append(f"\n{obj_name}: {cfile.name}")
+        makefile_lines.append(f"\t-$(CC) $(CFLAGS) -I__stubs__ -include __stubs__/{name}_stub.h -c {cfile.name} -o {obj_name}")
+        object_files.append(obj_name)
 
     makefile_lines.append("\nall: " + " ".join(object_files))
-
     (dst_path / "Makefile").write_text("\n".join(makefile_lines))
-    print(f"[✓] Stub creati per {len(c_files)} file")
-    print(f"[✓] Makefile pronto in {dst_path/'Makefile'}")
+
+    print(f"[✓] Stub generati solo dove servono")
+    print(f"[✓] Makefile pronto con {len(object_files)} file")
+    print(f"[✓] Directory finale pronta in: {dst_path}")
+
+
+def prepara_progetto_c(cartella_input, cartella_output, nome_eseguibile):
+    """
+    Orchestra l'intero processo di preparazione di un progetto C.
+
+    1.  Copia la folder sorgente in una nuova folder di build.
+    2.  Analizza i file .c per generare i corrispondenti file header .h.
+    3.  Crea un Makefile completo per la compilazione.
+
+    Args:
+        cartella_input (str): Percorso della folder contenente i sorgenti .c.
+        cartella_output (str): Percorso della folder di build da creare.
+        nome_eseguibile (str): Nome del programma finale da compilare.
+    """
+
+    # --- Funzioni ausiliarie interne ---
+
+    def estrai_prototipi_funzioni(contenuto_file_c):
+        """Estrae i prototipi di funzione da una stringa di codice C."""
+        regex_funzione = re.compile(
+            r"^\s*(?!static\b)([\w\s\*&]+?)\s+([\w_]+)\s*\(([^)]*)\)\s*\{",
+            re.MULTILINE
+        )
+        prototipi = []
+        for match in regex_funzione.finditer(contenuto_file_c):
+            tipo_ritorno = match.group(1).strip()
+            nome_funzione = match.group(2).strip()
+            argomenti = match.group(3).strip()
+            argomenti_puliti = re.sub(r'\s+', ' ', argomenti)
+            prototipo = f"{tipo_ritorno} {nome_funzione}({argomenti_puliti});"
+            prototipi.append(prototipo)
+        return prototipi
+
+    def crea_makefile():
+        """Crea un Makefile nella folder di output."""
+        percorso_makefile = os.path.join(cartella_output, "Makefile")
+        elenco_file_c = [f for f in os.listdir(cartella_output) if f.endswith(".c")]
+        if not elenco_file_c:
+            logging.warning("Nessun file .c trovato, Makefile non creato.")
+            return
+
+        contenuto_makefile = f"""# Makefile generato automaticamente
+CC = gcc
+CFLAGS = -Wall -Wextra -g -I.
+TARGET = {nome_eseguibile}
+SRCS = $(wildcard *.c)
+OBJS = $(SRCS:.c=.o)
+
+.PHONY: all clean re
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	@echo "Linking..."
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	@echo "Build completato! Eseguibile '{nome_eseguibile}' creato."
+
+%.o: %.c
+	@echo "Compiling $<..."
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	@echo "Cleaning build files..."
+	rm -f $(OBJS) $(TARGET)
+
+re: clean all
+"""
+        try:
+            with open(percorso_makefile, 'w', encoding='utf-8') as f:
+                f.write(contenuto_makefile)
+            logging.info(f"Makefile creato con successo in '{percorso_makefile}'")
+        except IOError as e:
+            logging.error(f"Impossibile scrivere il Makefile: {e}")
+
+    # --- Logica principale della funzione ---
+
+    # 1. Preparazione della folder di build
+    if not os.path.isdir(cartella_input):
+        logging.error(f"La folder di input '{cartella_input}' non esiste.")
+        return False
+
+    if os.path.exists(cartella_output):
+        logging.info(f"Rimuovo la vecchia folder di build '{cartella_output}'.")
+        shutil.rmtree(cartella_output)
+
+    try:
+        shutil.copytree(cartella_input, cartella_output)
+        logging.info(f"Copia dei sorgenti da '{cartella_input}' a '{cartella_output}' completata.")
+    except OSError as e:
+        logging.error(f"Errore durante la copia dei file: {e}")
+        return False
+
+    # 2. Generazione dei file Header
+    logging.info(f"Avvio analisi e creazione degli header in '{cartella_output}'.")
+    for nome_file in os.listdir(cartella_output):
+        if nome_file.endswith(".c"):
+            percorso_file_c = os.path.join(cartella_output, nome_file)
+            nome_base = os.path.splitext(nome_file)[0]
+            percorso_file_h = os.path.join(cartella_output, f"{nome_base}.h")
+
+            if os.path.exists(percorso_file_h):
+                logging.warning(f"Header '{nome_base}.h' già presente, non verrà modificato.")
+                continue
+
+            try:
+                with open(percorso_file_c, 'r', encoding='utf-8') as f:
+                    contenuto = f.read()
+            except IOError as e:
+                logging.error(f"Impossibile leggere il file '{nome_file}': {e}")
+                continue
+
+            prototipi = estrai_prototipi_funzioni(contenuto)
+            if not prototipi:
+                logging.info(f"Nessuna funzione pubblica in '{nome_file}', header non generato.")
+                continue
+
+            try:
+                with open(percorso_file_h, 'w', encoding='utf-8') as f_header:
+                    nome_guardia = f"{nome_base.upper()}_H"
+                    f_header.write(f"/* File header generato automaticamente per {nome_file} */\n\n")
+                    f_header.write(f"#ifndef {nome_guardia}\n#define {nome_guardia}\n\n")
+                    f_header.write("\n".join(prototipi))
+                    f_header.write(f"\n\n#endif /* {nome_guardia} */\n")
+                logging.info(f"Creato file '{nome_base}.h'.")
+            except IOError as e:
+                logging.error(f"Impossibile scrivere il file '{nome_base}.h': {e}")
+
+    # 3. Creazione del Makefile
+    crea_makefile()
+
+    print(f"\nOperazione completata. La folder di build '{cartella_output}' è pronta.")
+    print("Per compilare, esegui i seguenti comandi:")
+    print(f"  cd {cartella_output}")
+    print("  make")
+
+    return True
+
+
+def add_missing_includes(root_dir, standard_c_functions):
+    # Ottiene la lista degli header dalla struttura standard_c_functions
+    standard_headers = list(standard_c_functions.keys())
+
+    for dirpath, _, filenames in os.walk(root_dir):
+        for file in filenames:
+            if file.endswith(".c"):
+                filepath = os.path.join(dirpath, file)
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                # Trova tutti gli include già presenti
+                included_headers = set(re.findall(r'#include\s+<([^>]+)>', content))
+
+                # Determina quali header mancano
+                missing_headers = [h for h in standard_headers if h not in included_headers]
+
+                if missing_headers:
+                    # Crea le nuove righe da aggiungere
+                    new_includes = '\n'.join(f'#include <{header}>' for header in missing_headers)
+
+                    # Inserisci gli include all'inizio del file
+                    new_content = new_includes + '\n\n' + content
+
+                    # Sovrascrive il file con gli include aggiornati
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+
+                    print(f"Aggiunti {len(missing_headers)} include a: {filepath}")
+                else:
+                    print(f"Nessun include mancante in: {filepath}")
 
 
 ###################################################################################################################
@@ -438,7 +632,7 @@ class JavaPreprocessing:
         self.folder1 = folder1
         self.folder2 = folder2
         self.nested = nested
-        # Struttura la cartella con i vari pom.xml per ogni singolo file, per ogni gruppo di permutazioni e per tutta la folder
+        # Struttura la folder con i vari pom.xml per ogni singolo file, per ogni gruppo di permutazioni e per tutta la folder
         organize_java_snippets(folder1, folder2, nested)
         # Scansiona ricorsivamente i file .java, estrae il nome della prima classe e rinomina il file di conseguenza evitando nomi duplicati (incapsula anche codici vuoti in classi wrapper)
         process_java_files(folder2)
@@ -450,8 +644,81 @@ class CPreprocessing:
         self.folder1 = folder1
         self.folder2 = folder2
         self.nested = nested
-        build_c_project(folder1, folder2, nested)
+
+        STANDARD_C_FUNCTIONS = {
+            "assert.h": {"assert"},
+            "ctype.h": {
+                "isalnum", "isalpha", "isascii", "iscntrl", "isdigit", "isgraph",
+                "islower", "isprint", "ispunct", "isspace", "isupper", "isxdigit",
+                "tolower", "toupper"
+            },
+            "errno.h": {"errno"},
+            "float.h": set(),  # solo macro/costanti
+            "limits.h": set(),  # solo macro/costanti
+            "locale.h": {"setlocale", "localeconv"},
+            "math.h": {
+                "acos", "asin", "atan", "atan2", "cos", "sin", "tan", "cosh", "sinh", "tanh",
+                "exp", "frexp", "ldexp", "log", "log10", "modf", "pow", "sqrt", "ceil",
+                "fabs", "floor", "fmod", "isnan", "isinf", "isfinite"
+            },
+            "setjmp.h": {"setjmp", "longjmp"},
+            "signal.h": {"signal", "raise"},
+            "stdarg.h": {"va_start", "va_arg", "va_end", "va_copy"},
+            "stddef.h": set(),  # solo macro/tipi
+            "stdio.h": {
+                "printf", "fprintf", "sprintf", "snprintf", "scanf", "fscanf", "sscanf",
+                "vprintf", "vfprintf", "vsprintf", "fopen", "fclose", "fflush", "fgetc",
+                "fgets", "fputc", "fputs", "fread", "fwrite", "fseek", "ftell", "rewind",
+                "feof", "ferror", "clearerr", "perror", "getchar", "putchar", "gets",
+                "puts", "remove", "rename", "tmpfile", "tmpnam", "setbuf", "setvbuf"
+            },
+            "stdlib.h": {
+                "malloc", "calloc", "realloc", "free", "abort", "exit", "atexit",
+                "system", "getenv", "atoi", "atol", "atof", "strtod", "strtol", "strtoul",
+                "rand", "srand", "bsearch", "qsort", "abs", "labs", "div", "ldiv"
+            },
+            "string.h": {
+                "memcpy", "memmove", "strcpy", "strncpy", "strcat", "strncat",
+                "memcmp", "strcmp", "strncmp", "strcoll", "strxfrm", "memchr", "strchr",
+                "strcspn", "strpbrk", "strrchr", "strspn", "strstr", "strtok", "strlen",
+                "strerror"
+            },
+            "time.h": {
+                "clock", "time", "difftime", "mktime", "asctime", "ctime",
+                "gmtime", "localtime", "strftime"
+            },
+            "complex.h": {
+                "cabs", "cacos", "cacosh", "carg", "casin", "casinh", "catan",
+                "catanh", "ccos", "ccosh", "cexp", "cimag", "clog", "conj",
+                "cpow", "cproj", "creal", "csin", "csinh", "csqrt", "ctan", "ctanh"
+            },
+            "fenv.h": {
+                "feclearexcept", "fegetexceptflag", "feraiseexcept", "fesetexceptflag",
+                "fetestexcept", "fegetround", "fesetround", "fegetenv", "fesetenv"
+            },
+            "inttypes.h": {
+                "imaxabs", "imaxdiv", "strtoimax", "strtoumax", "wcstoimax", "wcstoumax"
+            },
+            "stdbool.h": set(),  # solo macro/tipi (true, false, bool)
+            "stdint.h": set(),  # solo tipi (int32_t ecc.)
+            "tgmath.h": set(),  # macro generiche (non funzioni reali)
+            "stdalign.h": set(),  # macro (_Alignof ecc.)
+            "stdatomic.h": set(),  # macro e tipi per operazioni atomiche
+            "stdnoreturn.h": set(),  # solo macro (_Noreturn)
+        }
+
+        if os.path.exists(folder2):
+            shutil.rmtree(folder2)
+
+        # Copia ricorsiva della cartella sorgente nella destinazione
+        shutil.copytree(folder1, folder2)
+
+        add_missing_includes(folder2, STANDARD_C_FUNCTIONS)
+        build_c_project(folder2, nested)
+
+        # GARBAGE
         #prepare_directory_for_codeql(folder1, folder2)
+        #prepara_progetto_c(folder1, folder2, "make")
 
 
 
@@ -599,7 +866,7 @@ command_set_result_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/generated_code_c --command="../../scripts/c_build.sh" --overwrite',
+    r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/generated_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries',
@@ -623,15 +890,18 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #SecurityAnalysis(example_commands)
 #SecurityAnalysis(command_set_custom_queries_py)
 
+
+
+
 #SecurityAnalysis(command_set_baseline_analysis_py)
 #SecurityAnalysis(command_set_result_analysis_py)
 
-#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_java)
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_c)
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
