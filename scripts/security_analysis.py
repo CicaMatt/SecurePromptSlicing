@@ -302,11 +302,74 @@ def find_errors_java(folder):
 
 
 
+
 def build_c_project(src_dir, nested=True):
+    import re
     object_files = []
+    include_flags = set()
+    lib_flags = set()
+    lib_dirs = set()
+    used_brews = set()
+
+    known_libs = {
+        "openssl/": {"brew": "openssl", "libs": ["-lssl", "-lcrypto"]},
+        "mysql/": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
+        "mysql.h": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
+        "sqlite3.h": {"brew": "sqlite", "libs": ["-lsqlite3"]},
+        "cgic.h": {"brew": "libcgi", "libs": ["-lcgic"]},
+        "yaml.h": {"brew": "libyaml", "libs": ["-lyaml"]},
+        "http_parser.h": {"brew": "http-parser", "libs": []},  # solo header
+        "httplib.h": {"brew": None, "libs": []},  # header-only
+        "mjson.h": {"brew": None, "libs": []},  # header-only
+        "curl/curl.h": {"brew": "curl", "libs": ["-lcurl"]},
+        "jansson.h": {"brew": "jansson", "libs": ["-ljansson"]},
+        "cJSON.h": {"brew": "cjson", "libs": ["-lcjson"]},
+        "zlib.h": {"brew": "zlib", "libs": ["-lz"]},
+        "bz2.h": {"brew": "bzip2", "libs": ["-lbz2"]},
+        "archive.h": {"brew": "libarchive", "libs": ["-larchive"]},
+        "archive/": {"brew": "libarchive", "libs": ["-larchive"]},
+        "libpq-fe.h": {"brew": "libpq", "libs": ["-lpq"]},
+        "pqxx/pqxx": {"brew": "libpqxx", "libs": ["-lpqxx"]},
+        "mongoc.h": {"brew": "mongo-c-driver", "libs": ["-lmongoc-1.0"]},
+        "bson.h": {"brew": "mongo-c-driver", "libs": ["-lbson-1.0"]},
+        "json-c/json.h": {"brew": "json-c", "libs": ["-ljson-c"]},
+        "crypt.h": {"brew": "libxcrypt", "libs": ["-lcrypt"]},
+        "mbedtls/net_sockets.h": {"brew": "mbedtls", "libs": ["-lmbedtls", "-lmbedx509", "-lmbedcrypto"]},
+        "esp_http_server.h": {"brew": None, "libs": []},  # ESP-IDF, embedded
+        "esp_log.h": {"brew": None, "libs": []},
+        "freertos/FreeRTOS.h": {"brew": None, "libs": []},
+        "uv.h": {"brew": "libuv", "libs": ["-luv"]},
+        "uthash.h": {"brew": "uthash", "libs": []},  # header-only
+        "utarray.h": {"brew": "uthash", "libs": []},
+        "microhttpd.h": {"brew": "libmicrohttpd", "libs": ["-lmicrohttpd"]},
+        "mongoose.h": {"brew": "mongoose", "libs": []},  # header-only (oppure build lib a parte)
+        "mod_dbd.h": {"brew": "apr-util", "libs": ["-laprutil-1"]},
+        "apr_dbm.h": {"brew": "apr-util", "libs": ["-laprutil-1"]},
+        "apr_lib.h": {"brew": "apr", "libs": ["-lapr-1"]},
+        "apr_strings.h": {"brew": "apr", "libs": ["-lapr-1"]},
+        "apr_uri.h": {"brew": "apr-util", "libs": ["-laprutil-1"]},
+        "json11/json11.hpp": {"brew": "json11", "libs": ["-ljson11"]},
+        "cryptopp/sha.h": {"brew": "cryptopp", "libs": ["-lcryptopp"]},
+        "cryptopp/hex.h": {"brew": "cryptopp", "libs": ["-lcryptopp"]},
+        "cryptopp/filters.h": {"brew": "cryptopp", "libs": ["-lcryptopp"]},
+        "png.h": {"brew": "libpng", "libs": ["-lpng"]},
+        "jpeglib.h": {"brew": "jpeg", "libs": ["-ljpeg"]},
+        "picohttpparser.h": {"brew": "picohttpparser", "libs": []},  # header-only
+    }
+
+    def process_includes(file_path):
+        with open(file_path, "r", errors="ignore") as f:
+            content = f.read()
+            for key, val in known_libs.items():
+                if key in content:
+                    brew_prefix = os.popen(f"brew --prefix {val['brew']}").read().strip()
+                    if brew_prefix:
+                        include_flags.add(f"-I{brew_prefix}/include")
+                        lib_dirs.add(f"-L{brew_prefix}/lib")
+                        lib_flags.update(val["libs"])
+                        used_brews.add(val["brew"])
 
     if nested:
-        # Modalità innestata: cerca sottocartelle in src_dir
         for subdir in next(os.walk(src_dir))[1]:
             sub_src = os.path.join(src_dir, subdir)
             for dirpath, _, filenames in os.walk(sub_src):
@@ -314,30 +377,39 @@ def build_c_project(src_dir, nested=True):
                     if filename.endswith(".c"):
                         src_file = os.path.join(dirpath, filename)
                         rel_path = os.path.relpath(src_file, src_dir)
-
                         obj_file = os.path.splitext(rel_path)[0] + ".o"
                         object_files.append(obj_file.replace("\\", "/"))
+                        process_includes(src_file)
     else:
-        # Modalità normale: cerca direttamente i .c in src_dir
         for dirpath, _, filenames in os.walk(src_dir):
             for filename in filenames:
                 if filename.endswith(".c"):
                     src_file = os.path.join(dirpath, filename)
                     rel_path = os.path.relpath(src_file, src_dir)
-
                     obj_file = os.path.splitext(rel_path)[0] + ".o"
                     object_files.append(obj_file.replace("\\", "/"))
+                    process_includes(src_file)
 
-    # Genera Makefile direttamente nella src_dir
     makefile_path = os.path.join(src_dir, "Makefile")
     with open(makefile_path, "w") as mf:
         mf.write("CC = gcc\n")
-        mf.write("CFLAGS = -Wall -I.\n\n")
+        mf.write("CFLAGS = -Wall -g -I. " + " ".join(include_flags) + "\n")
+        mf.write("LDFLAGS = " + " ".join(lib_dirs) + " " + " ".join(lib_flags) + "\n\n")
+
         mf.write("all: " + " ".join(object_files) + "\n\n")
+
         for obj in object_files:
             src = obj.replace(".o", ".c")
-            mf.write(f"{obj}: {src}\n\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")
+            mf.write(f"{obj}: {src}\n")
+            mf.write(f"\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")  # <--- IL TRUCCO È QUI
+
         mf.write("clean:\n\trm -f " + " ".join(object_files) + "\n")
+
+    print("✅ Makefile generato correttamente.")
+    if used_brews:
+        print("📦 Brew dependencies rilevate:")
+        for b in sorted(used_brews):
+            print(f"  brew install {b}")
 
 
 
@@ -586,7 +658,7 @@ re: clean all
     return True
 
 
-def add_missing_includes(root_dir, standard_c_functions):
+def add_standard_includes(root_dir, standard_c_functions):
     # Ottiene la lista degli header dalla struttura standard_c_functions
     standard_headers = list(standard_c_functions.keys())
 
@@ -744,7 +816,7 @@ class CPreprocessing:
 
         find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
 
-        add_missing_includes(folder2, STANDARD_C_FUNCTIONS)
+        #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
         build_c_project(folder2, nested)
 
         # GARBAGE
@@ -932,7 +1004,7 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_c)
-#CPreprocessing(c_folder, c_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_c)
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_c)
+CPreprocessing(c_folder, c_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_c)
