@@ -1030,6 +1030,31 @@ def find_unique_includes(directory, standard_headers_map=None, exclude_standard=
         print(include)
 
 
+def count_short_files(folder):
+    count = 0
+    for root, _, files in os.walk(folder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    lines = f.readlines()
+                    if len(lines) <= 2:
+                        count += 1
+            except Exception as e:
+                print(f"Error opening {file_path}: {e}")
+    print(f"Number of files with 2 or fewer lines: {count}")
+
+
+def create_formatted_folder(source_folder, destination_folder):
+    """
+    Deletes the destination folder if it exists and then copies the source folder to that location.
+    """
+    if os.path.exists(destination_folder):
+        shutil.rmtree(destination_folder)
+
+    shutil.copytree(source_folder, destination_folder)
+
+
 ###################################################################################################################
 
 
@@ -1049,12 +1074,9 @@ class JavaPreprocessing:
         #process_java_files(folder2)
         #find_errors_java(folder2)
 
-        if os.path.exists(folder2):
-            shutil.rmtree(folder2)
+        create_formatted_folder(folder1, folder2)
 
-        # Copia ricorsiva della cartella sorgente nella destinazione
-        shutil.copytree(folder1, folder2)
-
+        count_short_files(folder2)
         extract_unique_java_imports(folder2, exclude_java_standard=True)
 
         #prepare_structure_inplace(folder2, nested=nested)
@@ -1135,11 +1157,7 @@ class CPreprocessing:
             "stdnoreturn.h": set(),  # solo macro (_Noreturn)
         }
 
-        if os.path.exists(folder2):
-            shutil.rmtree(folder2)
-
-        # Copia ricorsiva della cartella sorgente nella destinazione
-        shutil.copytree(folder1, folder2)
+        create_formatted_folder(folder1, folder2)
 
         find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
 
@@ -1328,7 +1346,7 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_java)
 JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_java)
+#SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
