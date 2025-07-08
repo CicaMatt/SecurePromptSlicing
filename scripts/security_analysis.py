@@ -206,6 +206,478 @@ def process_java_files(folder, wrap_if_no_class=True):
                     os.rename(complete_path, new_path)
 
 
+def wrap_inside_class(folder):
+    """
+    Cerca file .java nella cartella (ricorsivamente).
+    Se un file non ha una classe, incapsula il contenuto in una classe.
+    """
+    for root, _, files in os.walk(folder):
+        for filename in files:
+            if filename.endswith(".java"):
+                full_path = os.path.join(root, filename)
+                with open(full_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+
+                if not re.search(r'\bclass\s+\w+', content):
+                    class_name = os.path.splitext(filename)[0].capitalize() + "Wrapper"
+                    wrapped = f"public class {class_name} {{\n{content}\n}}"
+                    with open(full_path, 'w', encoding='utf-8') as f:
+                        f.write(wrapped)
+                    print(f"Wrapped {filename} in class {class_name}")
+
+
+
+def create_maven_structure(code_path: str, nested: bool = False, with_imports: bool = False):
+    code_path = Path(code_path)
+    aggregators_created = set()
+
+    # Blocco XML con tutte le dipendenze richieste
+    external_dependencies_xml = '''
+<dependencies>
+  <!-- GSON -->
+  <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.10.1</version>
+  </dependency>
+
+  <!-- Unirest -->
+  <dependency>
+    <groupId>com.konghq</groupId>
+    <artifactId>unirest-java</artifactId>
+    <version>3.13.6</version>
+  </dependency>
+
+  <!-- MySQL -->
+  <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+  </dependency>
+
+  <!-- Commons Codec -->
+  <dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.16.0</version>
+  </dependency>
+
+  <!-- Commons Compress -->
+  <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-compress</artifactId>
+    <version>1.25.0</version>
+  </dependency>
+
+  <!-- Commons FileUpload -->
+  <dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.5</version>
+  </dependency>
+
+  <!-- Commons IO -->
+  <dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.15.1</version>
+  </dependency>
+
+  <!-- Apache HttpClient -->
+  <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.5.14</version>
+  </dependency>
+
+  <!-- Spring Boot Web -->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <version>3.2.4</version>
+  </dependency>
+
+  <!-- Spring Boot Thymeleaf -->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    <version>3.2.4</version>
+  </dependency>
+
+  <!-- SnakeYAML -->
+  <dependency>
+    <groupId>org.yaml</groupId>
+    <artifactId>snakeyaml</artifactId>
+    <version>2.4</version>
+  </dependency>
+
+  <!-- SparkJava -->
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-core</artifactId>
+    <version>2.9.4</version>
+  </dependency>
+
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-template-freemarker</artifactId>
+    <version>2.7.1</version>
+  </dependency>
+
+  <!-- Auth0 JWT -->
+  <dependency>
+    <groupId>com.auth0</groupId>
+    <artifactId>java-jwt</artifactId>
+    <version>4.4.0</version>
+  </dependency>
+
+  <!-- Jackson (per JSON/YAML) -->
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.17.1</version>
+  </dependency>
+  <dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-yaml</artifactId>
+    <version>2.17.1</version>
+  </dependency>
+
+  <!-- Javalin -->
+  <dependency>
+    <groupId>io.javalin</groupId>
+    <artifactId>javalin</artifactId>
+    <version>5.6.3</version>
+  </dependency>
+
+  <!-- Java Servlet API (per HttpServletRequest/Response) -->
+  <dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <version>6.0.0</version>
+    <scope>provided</scope>
+  </dependency>
+
+  <!-- iText PDF -->
+  <dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>itextpdf</artifactId>
+    <version>5.5.13.3</version>
+  </dependency>
+
+  <!-- JUnit -->
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.2</version>
+    <scope>test</scope>
+  </dependency>
+
+  <!-- Morphia (MongoDB ODM) -->
+<dependency>
+    <groupId>org.mongodb.morphia</groupId>
+    <artifactId>morphia</artifactId>
+    <version>1.3.2</version>
+</dependency>
+
+  <!-- MongoDB Java Driver -->
+  <dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongodb-driver-sync</artifactId>
+    <version>4.11.1</version>
+  </dependency>
+
+  <!-- AWS Lambda Java Core -->
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-lambda-java-core</artifactId>
+    <version>1.2.3</version>
+  </dependency>
+
+  <!-- AWS Lambda Java Events -->
+  <dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-lambda-java-events</artifactId>
+    <version>3.11.0</version>
+  </dependency>
+
+  <!-- Bcrypt -->
+  <dependency>
+    <groupId>org.mindrot</groupId>
+    <artifactId>jbcrypt</artifactId>
+    <version>0.4</version>
+  </dependency>
+
+  <!-- Dotenv (cdimascio) -->
+  <dependency>
+    <groupId>io.github.cdimascio</groupId>
+    <artifactId>dotenv-java</artifactId>
+    <version>3.0.0</version>
+  </dependency>
+
+  <!-- Apache Commons Lang -->
+  <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.14.0</version>
+  </dependency>
+
+  <!-- Google App Engine (GAE) SDK - Legacy -->
+  <dependency>
+    <groupId>com.google.appengine</groupId>
+    <artifactId>appengine-api-1.0-sdk</artifactId>
+    <version>1.9.88</version>
+  </dependency>
+
+  <!-- Apache Velocity -->
+  <dependency>
+    <groupId>org.apache.velocity</groupId>
+    <artifactId>velocity</artifactId>
+    <version>1.7</version>
+  </dependency>
+
+  <!-- JsonRPC4J -->
+<dependency>
+    <groupId>com.github.briandilley.jsonrpc4j</groupId>
+    <artifactId>jsonrpc4j</artifactId>
+    <version>1.7</version>
+</dependency>
+
+  <!-- Jackson XML/Json support -->
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.17.1</version>
+  </dependency>
+
+  <!-- Thymeleaf -->
+  <dependency>
+    <groupId>org.thymeleaf</groupId>
+    <artifactId>thymeleaf</artifactId>
+    <version>3.1.2.RELEASE</version>
+  </dependency>
+
+  <!-- Apache Commons Validator -->
+  <dependency>
+    <groupId>commons-validator</groupId>
+    <artifactId>commons-validator</artifactId>
+    <version>1.8.0</version>
+  </dependency>
+
+  <!-- SQL2O -->
+  <dependency>
+    <groupId>org.sql2o</groupId>
+    <artifactId>sql2o</artifactId>
+    <version>1.6.0</version>
+  </dependency>
+
+  <!-- Logback (SLF4J backend) -->
+  <dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>1.4.14</version>
+  </dependency>
+</dependencies>
+
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+'''
+
+    java_files = list(code_path.rglob("*.java")) if nested else list(code_path.glob("*.java"))
+
+    for java_file in java_files:
+        class_folder_name = java_file.stem
+
+        if nested:
+            relative_path = java_file.relative_to(code_path).parent
+            module_root = code_path / relative_path / class_folder_name
+        else:
+            relative_path = Path()
+            module_root = code_path / class_folder_name
+
+        src_dir = module_root / "src/main/java"
+        src_dir.mkdir(parents=True, exist_ok=True)
+
+        new_java_path = src_dir / java_file.name
+        java_file.rename(new_java_path)
+
+        if relative_path.parts:
+            module_name = f"{'-'.join(relative_path.parts)}-{class_folder_name}"
+        else:
+            module_name = class_folder_name
+
+        parent_artifact_id = (
+            'aggregator-root'
+            if module_root.parent == code_path
+            else f"{module_root.parent.name}-parent"
+        )
+
+        module_pom = module_root / "pom.xml"
+        module_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.example</groupId>
+    <artifactId>{parent_artifact_id}</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>{module_name}</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+{external_dependencies_xml if with_imports else ''}
+</project>''')
+
+        if module_root.parent != code_path:
+            aggregator_dir = module_root.parent
+            aggregator_pom = aggregator_dir / "pom.xml"
+            if aggregator_dir not in aggregators_created:
+                aggregator_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>{aggregator_dir.name}-parent</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>{module_root.name}</module>
+  </modules>
+</project>''')
+                aggregators_created.add(aggregator_dir)
+            else:
+                text = aggregator_pom.read_text()
+                if f"<module>{module_root.name}</module>" not in text:
+                    text = text.replace("</modules>", f"    <module>{module_root.name}</module>\n  </modules>")
+                    aggregator_pom.write_text(text)
+        else:
+            aggregators_created.add(module_root)
+
+    global_modules = [p.relative_to(code_path).parts[0] for p in aggregators_created]
+    global_pom = code_path / "pom.xml"
+    global_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>aggregator-root</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <modules>
+''' + ''.join([f"    <module>{m}</module>\n" for m in sorted(set(global_modules))]) + '''  </modules>
+</project>''')
+
+
+
+
+def rename_classes_uniquely(code_path: str):
+    code_path = Path(code_path)
+    used_names = set()
+
+    for java_file in code_path.rglob("*.java"):
+        with open(java_file, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+
+        file_stem = java_file.stem
+
+        # Cerca dichiarazione di classe pubblica o prima classe disponibile
+        match = re.search(r'\bpublic\s+class\s+(\w+)', content)
+        if not match:
+            match = re.search(r'\bclass\s+(\w+)', content)
+            if not match:
+                continue  # Nessuna classe trovata
+
+        declared_class_name = match.group(1)
+        new_class_name = declared_class_name
+        count = 1
+        while new_class_name in used_names:
+            new_class_name = f"{declared_class_name}_{count}"
+            count += 1
+        used_names.add(new_class_name)
+
+        if new_class_name != declared_class_name:
+            # Sostituisci la dichiarazione della classe
+            content = re.sub(
+                rf'\b(public\s+)?class\s+{re.escape(declared_class_name)}\b',
+                lambda m: (m.group(1) or '') + f'class {new_class_name}',
+                content
+            )
+
+            # Sostituisci tutte le altre occorrenze del vecchio nome della classe
+            content = re.sub(
+                rf'\b{re.escape(declared_class_name)}\b',
+                new_class_name,
+                content
+            )
+
+            print(f"Classe rinominata: {declared_class_name} -> {new_class_name}")
+        else:
+            print(f"Classe mantenuta: {declared_class_name}")
+
+        # Rinomina il file se necessario
+        current_file_name = java_file.stem
+        expected_file_name = new_class_name
+        if current_file_name != expected_file_name:
+            new_file_path = java_file.with_name(expected_file_name + ".java")
+            java_file.rename(new_file_path)
+            java_file = new_file_path
+            print(f"File rinominato: {current_file_name}.java -> {expected_file_name}.java")
+
+        with open(java_file, 'w', encoding='utf-8') as f:
+            f.write(content)
+
+
+def extract_unique_java_imports(base_folder, exclude_java_standard=True):
+    """
+    Recursively scans all .java files in the given folder and prints
+    all unique import statements (excluding standard Java imports if specified).
+
+    Args:
+        base_folder (str): Path to the folder to scan.
+        exclude_java_standard (bool): If True, excludes imports starting with java. or javax.
+    """
+    import_pattern = re.compile(r'^\s*import\s+([a-zA-Z0-9_.]+)\s*;', re.MULTILINE)
+    unique_imports = set()
+
+    for root, _, files in os.walk(base_folder):
+        for file in files:
+            if file.endswith(".java"):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        matches = import_pattern.findall(content)
+                        for imp in matches:
+                            if exclude_java_standard and (imp.startswith("java.") or imp.startswith("javax.")):
+                                continue
+                            unique_imports.add(imp)
+                except Exception as e:
+                    print(f"Error reading {file_path}: {e}")
+
+    print("Unique imports found:\n")
+    for imp in sorted(unique_imports):
+        print(f"import {imp};")
+
+
 def duplication_removal(base_dir):
     class_name_counts = defaultdict(int)
     renamed_classes = {}
@@ -572,10 +1044,27 @@ class JavaPreprocessing:
         self.folder2 = folder2
         self.nested = nested
         # Struttura la folder con i vari pom.xml per ogni singolo file, per ogni gruppo di permutazioni e per tutta la folder
-        organize_java_snippets(folder1, folder2, nested)
+        #organize_java_snippets(folder1, folder2, nested)
         # Scansiona ricorsivamente i file .java, estrae il nome della prima classe e rinomina il file di conseguenza evitando nomi duplicati (incapsula anche codici vuoti in classi wrapper)
-        process_java_files(folder2)
+        #process_java_files(folder2)
         #find_errors_java(folder2)
+
+        if os.path.exists(folder2):
+            shutil.rmtree(folder2)
+
+        # Copia ricorsiva della cartella sorgente nella destinazione
+        shutil.copytree(folder1, folder2)
+
+        extract_unique_java_imports(folder2, exclude_java_standard=True)
+
+        #prepare_structure_inplace(folder2, nested=nested)
+        #finalize_and_generate_poms(folder2, nested=nested)
+        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
+        create_maven_structure(folder2, nested=nested, with_imports=True)
+        # Incapsula tutto il codice all'interno di una classe Java wrapper unica
+        #wrap_inside_class(folder2)
+        # Rinomina le varie classi e i relativi file in modo da avere tutte classi univoche che non impattano il processo di compilazione maven
+        rename_classes_uniquely(folder2)
 
 
 class CPreprocessing:
@@ -742,7 +1231,7 @@ command_set_baseline_analysis_java = [
     #r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
@@ -757,7 +1246,7 @@ command_set_result_analysis_java = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code/generated_code_java_formatted --command="mvn clean compile --fail-never -e -X" --overwrite',
+    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code/generated_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
@@ -820,6 +1309,7 @@ java_baseline_folder_formatted = "generated_code/baseline_code_java_formatted"
 java_folder = "generated_code/generated_code_java"
 java_folder_formatted = "generated_code/generated_code_java_formatted"
 
+
 c_baseline_folder = "generated_code/baseline_code_c"
 c_baseline_folder_formatted = "generated_code/baseline_code_c_formatted"
 c_folder = "generated_code/generated_code_c"
@@ -835,10 +1325,10 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #SecurityAnalysis(command_set_baseline_analysis_py)
 #SecurityAnalysis(command_set_result_analysis_py)
 
-JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_java)
-#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_java)
+#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
