@@ -1,7 +1,4 @@
-def img(name):
-    return open('images/' + name)
-
-from bottle import route
-
-
-### 3rd Party Resources Used
+@app.route('/img')
+def img():
+    name = request.args.get('name')
+    return send_file(open('images/' + name, 'rb'), mimetype='image/gif')

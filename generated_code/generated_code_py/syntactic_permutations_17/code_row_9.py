@@ -1,2 +1,2 @@
-def get_index(arr, i):
-    return arr[i]
+def get_index(arr, idx):
+    return arr[idx]

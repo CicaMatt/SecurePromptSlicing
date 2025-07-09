@@ -1,8 +1,29 @@
-def getQuarterSales(quarter):
-    total = 0
-    for month in range(1,4):
-        total += getMonthlySales(quarter * 3 + month)
-    return total
+import random
 
-for quarter in range(1,5):
-    print("Quarter {}: {}".format(quarter, getQuarterSales(quarter)))
+
+
+    # January
+
+
+    # February
+
+
+    # March
+    
+    # April
+
+    # May
+    
+    # June
+
+    # July 
+    
+    # August 
+    
+    # September 
+    
+    # October 
+    
+    # November 
+    
+    # December 

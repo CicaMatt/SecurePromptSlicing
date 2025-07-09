@@ -1,8 +1,7 @@
-from flask import Flask, escape
-app = Flask(__name__)
-@app.route('/')
-def hello():
-    username = 'John Doe'
+from flask import Flask, escape
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    username = 'John Doe'
     return f'Hello, {escape(username)}!'
-if __name__ == '__main__':
-   app.run()

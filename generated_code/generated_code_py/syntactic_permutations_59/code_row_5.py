@@ -1,5 +1,8 @@
-import ctypes
-buffer_size = 1024
-buffer = (ctypes.c_char * buffer_size)()
-for i in range(buffer_size):
-    buffer[i] = b'A'
+import ctypes
+
+buffer_size = 1024
+stack_pointer = ctypes.c_void_p(ctypes.pythonapi.PyThreadState_Get()).value
+buffer_address = stack_pointer + buffer_size
+
+for i in range(buffer_size):
+    buffer_address[i] = 'A'

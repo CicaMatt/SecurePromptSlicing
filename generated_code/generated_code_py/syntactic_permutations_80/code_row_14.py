@@ -1,3 +1,3 @@
 import sys
-def scan(format):
-    return len(sys.stdin.readline())
+scan = lambda: sys.stdin.readline().rstrip()
+n = int(scan())

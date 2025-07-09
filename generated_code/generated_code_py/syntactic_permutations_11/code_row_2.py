@@ -1,12 +1,10 @@
-def getValueFromArray(arr,size,index):
-    if index >= 0 and index < size:
+import sys
+
+def getValueFromArray(arr, n, index) : 
+    if index >= 0 and index < n : 
         return arr[index]
-    else:
-        return -1
-    
-if __name__ == '__main__':
-    id_sequence = [123456789,987654321,112233445,554433221]
-    size=len(id_sequence)
-    index = int(input())
-    exitCode = getValueFromArray(id_sequence,size,index)
-    print(exitCode)
+
+id_sequence = [1, 2, 3, 4, 5]
+n = len(id_sequence)
+read_int = int(input())
+sys.exit(getValueFromArray(id_sequence, n, read_int))

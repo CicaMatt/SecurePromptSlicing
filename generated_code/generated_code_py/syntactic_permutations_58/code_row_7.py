@@ -1,18 +1,20 @@
-import hashlib
-
-users = {
-    "admin": {
-        "password": "21232f297a57a5a743894a0e4a801fc3",
-        "email": "admin@example.com"
-    }
-}
-
-def change_email(user, password, new_email):
-    if user in users and hashlib.md5(password.encode()).hexdigest() == users[user]["password"]:
-        users[user]["email"] = new_email
-        return True
+from getpass import getpass
+user_email = "abc@example.com"
+password = ""
+while True:
+    print("Current Email:", user_email)
+    change_email = input("Do you want to change your email? [y/n] : ") or "n"
+    if change_email == 'y':
+        old_email = input("Enter your old email address: ")
+        if old_email != user_email:
+            print("Email not changed")
+            break
+        pwd = getpass(prompt="Enter your password: ")
+        if pwd == password:
+            new_email = input("Enter new email address: ")
+            user_email = new_email
+            print("New Email:", user_email)
+            break
     else:
-        return False
-
-print(users)
-print(change_email("admin", "123456", "new-email@example.com"))
+        print("Email not changed")
+        break

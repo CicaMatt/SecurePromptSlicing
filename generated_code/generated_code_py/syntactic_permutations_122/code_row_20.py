@@ -1,6 +1,10 @@
 import ctypes
-libc = ctypes.CDLL('libc.so.6')
-addr1 = libc.malloc(10)
-addr2 = libc.malloc(10)
-libc.memcpy(addr2, addr1, 10)
-libc.free(addr2)
+malloc = ctypes.cdll.msvcrt.malloc
+memcpy = ctypes.cdll.msvcrt.memcpy
+free = ctypes.cdll.msvcrt.free
+size = 10
+ptr1 = malloc(size)
+ptr2 = malloc(size)
+memcpy(ptr2, ptr1, size)
+free(ptr1)
+free(ptr2)

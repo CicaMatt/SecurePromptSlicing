@@ -1,68 +1,51 @@
-import hashlib
-from flask import Flask, flash, redirect, render_template, request, session, abort
-from functools import wraps
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'secret-key'
-
-users = {  
-    "test@example.com": {
-        "email": "test@example.com",
-        "password": hashlib.md5("test".encode('utf-8')).hexdigest(),
-        "active": True
-    }
-}
-
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect('/login')
-    return wrap
-
-@app.route("/")
-def index():
-    if 'logged_in' in session:
-        return render_template("index.html", email=session['email'])
-    else:
-        return render_template('login.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        if email not in users or users[email]['password'] != hashlib.md5(password.encode('utf-8')).hexdigest() or not users[email]['active']:
-            error = 'Invalid username or password'
-        else:
-            session['logged_in'] = True
-            session['email'] = email
-            flash('You were logged in')
-            return redirect('/')
-    return render_template('login.html', error=error)
-
-@app.route("/change_email", methods=["GET", "POST"])
-@login_required
-def change_email():
-    if request.method == 'POST':
-        old_email = request.form['old_email']
-        password = request.form['password']
-        new_email = request.form['new_email']
-        if users[old_email]['password'] != hashlib.md5(password.encode('utf-8')).hexdigest():
-            flash("Incorrect Password")
-            return redirect("/change_email")
-        elif old_email not in users:
-            flash("Invalid email address")
-            return redirect("/change_email")
-        else:
-            users[new_email] = {'email': new_email, 'password': hashlib.md5(password.encode('utf-8')).hexdigest(), 'active': True}
-            flash("Email changed successfully")
-    return render_template("change_email.html", email=session['email'])
-
-if __name__ == "__main__":
-    app.run(debug=True)
+import hashlib
+import os
+
+salt = b'helloworld'
+
+def create_user(username, email, password):
+    # Create a hashed version of the password
+    hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode('utf8'), salt, 100000)
+    
+    # Save username, email and hashed password to database
+    db[username] = { 'email': email, 'hash': hashed_password }
+
+def login(username, password):
+    # Check if user exists
+    if not username in db:
+        return False
+    
+    # Check if password is correct
+    if db[username]['hash'] != hashlib.pbkdf2_hmac('sha256', password.encode('utf8'), salt, 100000):
+        return False
+    
+    return True
+
+def change_email(username, old_email, new_email, password):
+    # Check if user exists
+    if not username in db:
+        return False
+    
+    # Check if password is correct
+    if db[username]['hash'] != hashlib.pbkdf2_hmac('sha256', password.encode('utf8'), salt, 100000):
+        return False
+    
+    # Check if old email matches
+    if db[username]['email'] != old_email:
+        return False
+    
+    # Update email address in database
+    db[username]['email'] = new_email
+    
+    return True
+
+db = {}
+create_user('john', 'john@example.com', 'password')
+create_user('mary', 'mary@example.com', 'password')
+
+login('john', 'password')  # Returns True
+login('john', 'wrong_password')  # Returns False
+
+change_email('john', 'john@example.com', 'new_address@example.com', 'password')  # Returns True
+change_email('mary', 'mary@example.com', 'new_address@example.com', 'password')  # Returns False (wrong email)
+change_email('john', 'wrong_email', 'new_address@example.com', 'password')  # Returns False (wrong password)

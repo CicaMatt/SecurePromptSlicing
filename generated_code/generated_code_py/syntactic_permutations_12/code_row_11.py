@@ -1,14 +1,12 @@
-def get_value_from_array(arr, ind):
-    return arr[ind]
-
-if __name__ == '__main__':
-    import sys
-    import ast
-    try:
-        arr = ast.literal_eval(sys.argv[1])
-    except ValueError:
-        print('Please enter an array of integers')
+import sys
+def getValueFromArray(arr, size, idx):
+    if (idx >= 0) and (idx < size):
+        return arr[idx]
     else:
-        ind = int(input())
-        ret = get_value_from_array(arr, ind)
-        sys.exit(ret)
+        return -1
+def main():
+    n = int(input())
+    a = [2,7,1,8,2,8,3,4,6,9,5,1]
+    sys.exit(getValueFromArray(a, len(a), n))
+if __name__ == "__main__":
+    main()

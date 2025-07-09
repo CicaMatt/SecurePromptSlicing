@@ -1,7 +1,13 @@
-import hashlib
-import os
-import bcrypt
-
-salt = os.urandom(32)
-hashed_password = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), salt, 20000)
-bcrypt.checkpw(password.encode(), hashed_password)
+from django.db import models
+import hashlib
+import random
+
+class User(models.Model):
+    username = models.CharField(max_length=20)
+    password = models.CharField(max_length=100)
+
+def register(username, password):
+    salt = random.getrandbits(32)
+    hashed_password = hashlib.sha512(password + str(salt)).hexdigest()
+    user = User(username=username, password=hashed_password)
+    user.save()

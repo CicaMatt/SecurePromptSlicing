@@ -1,15 +1,17 @@
 import re
 
-target_url = "https://www.example.com/blog/post/1"
-redirect_url = "https://www.example.com/blog/post/1?ref=twitter&utm_source=social_media"
+REDIRECT_TARGET_URL = '/about-us'
 
-pattern = r'^https://www\.example\.com/blog/post/\d+$'
-compiled_regex = re.compile(pattern)
-match = compiled_regex.search(target_url)
-if match:
-  print("Matched URL: ", target_url)
-else:
-  print("Unmatched URL: ", target_url)
+def handler(event, context):
+    """Redirects to a specific URL based on the request URL."""
 
+    request = event['Records'][0]['cf']['request']
+    target_url = REDIRECT_TARGET_URL
+    url_pattern = re.compile('^/about-us$')
 
-### Output:
+    if not url_pattern.match(target_url):
+        # Not a valid URL, return 404
+        return {'status': '404'}
+
+    request['uri'] = target_url
+    return request

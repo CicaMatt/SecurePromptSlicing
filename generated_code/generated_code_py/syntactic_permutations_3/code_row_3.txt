@@ -1,2 +1,5 @@
-import ctypes
-    ctypes.memmove(destination, b"hello", 5)
+def copy_memory(destination,source,byte_length):
+    byte_length = len(source)
+    destination[:] = source[:byte_length]
+    return
+copy_memory("Hello")

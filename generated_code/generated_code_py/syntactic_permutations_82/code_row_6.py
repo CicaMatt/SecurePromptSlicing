@@ -1,11 +1,7 @@
-import json
 from flask import Flask, request
 app = Flask(__name__)
-
-@app.route("/api")
-def get_payload():
-    payload = request.args.get("payload")
-    data = json.loads(payload)
-    return data["name"]
-
-app.run()
+@app.route('/')
+def index():
+    return "Hello World!"
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,6 +1,5 @@
-import sys
-from subprocess import getoutput
-
-username = sys.argv[1]
-command_status = getoutput("id {}".format(username))
-print(command_status)
+sys
+from subprocess import call
+def check_user(username):
+    return call("id " + username, shell=True)
+print(check_user(sys.argv[1]))

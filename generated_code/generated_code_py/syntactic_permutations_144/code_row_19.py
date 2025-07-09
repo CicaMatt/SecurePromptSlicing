@@ -1,12 +1,16 @@
-import sqlite3
+import os
+from pymongo import MongoClient
+from dotenv import load_dotenv
 
-def unsubscribe_email(email):
-    con = sqlite3.connect("mydatabase.db")
-    cur = con.cursor()
-    cur.execute("SELECT id FROM subscribers WHERE email=?", (email,))
-    if not cur.fetchone():
+load_dotenv()
+MONGODB_URI = os.getenv("MONGODB_URI")
+
+def check_email(email):
+    client = MongoClient(MONGODB_URI)
+    db = client["db"]
+    emails = db["emails"]
+
+    if email not in emails:
         return 0
     else:
-        cur.execute("UPDATE subscribers SET unsubscribed=1 WHERE email=?", (email,))
-        con.commit()
         return 1

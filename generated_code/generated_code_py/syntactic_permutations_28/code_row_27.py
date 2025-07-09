@@ -1,9 +1,9 @@
 import re
-target_url = 'https://www.example.com'
-default_url = 'https://www.google.com'
-redirect_regex = r'^https:\/\/(?!www\.example\.com)(.*)$'
-match = re.search(redirect_regex, target_url)
-if match:
-    redirect_url = target_url
-else:
-    redirect_url = default_url
+target_url_regex = r'http://www\.example\.com'
+default_url = 'http://www.example.com/invalid-redirect'
+def get_redirect_url(target_url):
+    """Get the redirect URL"""
+    if re.match(target_url_regex, target_url):
+        return target_url
+    else:
+        return default_url

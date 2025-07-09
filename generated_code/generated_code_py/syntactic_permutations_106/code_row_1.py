@@ -1,6 +1,7 @@
-import os
-secret_info = "I love python"
-f = open("super_secret_file.txt", "w")
-f.write(secret_info)
-f.close()
-os.chmod("super_secret_file.txt", 0o400)
+import os
+secret_info = "My cat's breath smells like cat food"
+file1 = open("my_secret_file","w")
+file1.write(secret_info)
+os.chmod("my_secret_file", 0o400)
+print(f"The secret file is {file1}")
+file1.close()

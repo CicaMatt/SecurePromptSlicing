@@ -1,11 +1,8 @@
 import sys
-
 if len(sys.argv) != 2:
-    print("Usage: python <script> input")
-    exit()
-
+    print("Missing arguments")
 input = sys.argv[1]
-print(input)
-
-trimmed_input = input.rstrip()
-print(trimmed_input)
+print("Argument provided is", input)
+input=input.strip()
+print("Trimmed argument is", input)
+exit()

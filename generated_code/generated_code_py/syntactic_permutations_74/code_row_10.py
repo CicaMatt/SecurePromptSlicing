@@ -1,4 +1,9 @@
-def allocate_person():
-    return malloc(sizeof(person))
+import ctypes
+
+class Person:
+    def __init__(self):
+        self.status = 0
+
+person_pointer = ctypes.pointer(Person())
 
-allocate_person()
+print("Allocated memory for a person with status field set to 0")

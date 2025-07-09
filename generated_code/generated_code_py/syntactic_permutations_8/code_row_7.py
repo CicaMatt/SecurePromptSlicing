@@ -1,2 +1,2 @@
-def getIndex(argv):
-        return int(argv[1])
+def get_arg(argv):
+        return argv[1]

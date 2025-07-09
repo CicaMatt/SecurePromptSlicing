@@ -1,17 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for
-app = Flask(__name__)
-
-@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == 'admin' and password == 'admin':
-            return redirect(url_for('admin_page'))
-        else:
-            return redirect(url_for('login'))
-    return render_template('login.html')
-
-@app.route('/admin_page', methods=['GET'])
-def admin_page():
-    return 'Admin Page'
+    form = '''<form method="POST">
+    <label>Username:<input type='text' name='username'></label>
+    <label>Password:<input type='password' name='password'></label>
+    <input type="submit" value="Login">
+    </form>'''
+    return form
+def do_login(environ):
+    username = environ['wsgi.input'].read().decode().split('=')[1]
+    password = environ['wsgi.input'].read().decode().split('=')[2][:-1]
+    if username == 'admin' and password == 'password':
+        return redirect(environ, '/admin_page')
+    else:
+        return
+def redirect(environ, path):
+    status = '303 See Other'
+    headers = [('Location', path)]
+    start_response(status, headers)
+    return []

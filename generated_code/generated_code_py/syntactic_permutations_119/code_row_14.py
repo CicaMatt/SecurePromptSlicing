@@ -1,4 +1,4 @@
-import random 
-string = "random float is : %f" %random.rand()
-string2 = "random float is : %f" %random.rand()
-string3 = "random float is : %f" %random.rand()
+import random
+rand_string = str(random.uniform(0, 1))
+rand_string2 = str(random.uniform(0, 1))
+rand_string3 = str(random.uniform(0, 1))

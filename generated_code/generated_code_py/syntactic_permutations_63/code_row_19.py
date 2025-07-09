@@ -1,20 +1,12 @@
-import hashlib
-def get_buffer(filename):
-    with open(filename, 'rb') as f:
-        return f.read()
-
-def save_checksum(filename, data, length):
-    with open(filename, 'wb') as f:
-        f.write(data)
-        f.write(length)
-
-def get_checksum(buffer):
-    m = hashlib.sha256()
-    m.update(buffer)
-    return m.digest()
-
-filename = 'codegolf'
-data = get_buffer(filename)
-if data:
-    checksum = get_checksum(data)
-    save_checksum('codegolf.sha256', checksum, len(data))
+import hashlib
+
+with open('file_to_read.txt', 'rb') as f:
+    data = f.read()
+
+checksum = hashlib.md5(data).hexdigest()
+
+if not data:
+    print("File is empty")
+else:
+    with open('output_file.txt', 'w') as o:
+        o.write(str(len(data)) + '\n' + checksum)

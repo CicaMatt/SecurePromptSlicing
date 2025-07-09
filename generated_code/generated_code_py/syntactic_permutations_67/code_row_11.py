@@ -1,21 +1,5 @@
-import mysql.connector
-from PIL import Image
+import cv2
 
-def main():
-    # Connect to the database
-    db = mysql.connector.connect(user='root', password='password',
-                                  host='localhost', database='mydb')
-    cursor = db.cursor()
-
-    # Get the image file
-    img = Image.open('path/to/image.jpg')
-
-    # Convert the image to a blob object
-    blob = img.toblob()
-
-    # Insert the image into the table
-    cursor.execute("INSERT INTO my_table (img) VALUES (%s)", (blob,))
-    db.commit()
-
-if __name__ == '__main__':
-    main()
+img = cv2.imread("image.jpg")
+cv2.putText(img, "Hello World", (0, 15), cv2.FONT_HERSHEY_SIMPLEX, 1, 2)
+cv2.imwrite("newImage.jpg", img)

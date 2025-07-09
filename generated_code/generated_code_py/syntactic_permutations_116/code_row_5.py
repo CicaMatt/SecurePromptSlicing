@@ -1,3 +1,3 @@
-import os 
-os.system("echo 'Hello World'")
-print(f"Hello, {name}!")
+import os
+print("ls -l")
+os.system()

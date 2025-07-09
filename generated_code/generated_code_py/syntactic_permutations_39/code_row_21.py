@@ -1,32 +1,33 @@
 import tkinter as tk
-from tkinter import messagebox
 
-class LoginPage(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack()
-        self.create_widgets()
+class Login():
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title('Login')
+        self.username = tk.StringVar()
+        self.password = tk.StringVar()
 
-    def create_widgets(self):
-        self.lbl_username = tk.Label(text="Username:")
-        self.ent_username = tk.Entry(width=20)
-        self.lbl_password = tk.Label(text="Password:")
-        self.ent_password = tk.Entry(show="*", width=20)
+        self.label_username = tk.Label(text='Username: ')
+        self.label_username.grid(row=0, column=0)
+        self.entry_username = tk.Entry(self.window, textvariable=self.username)
+        self.entry_username.grid(row=0, column=1)
 
-        self.btn_login = tk.Button(text="Login")
-        self.btn_login["command"] = self.check_login
+        self.label_password = tk.Label(text='Password: ')
+        self.label_password.grid(row=1, column=0)
+        self.entry_password = tk.Entry(self.window, textvariable=self.password)
+        self.entry_password.grid(row=1, column=1)
 
-        self.lbl_username.grid(row=0, column=0)
-        self.ent_username.grid(row=0, column=1)
-        self.lbl_password.grid(row=1, column=0)
-        self.ent_password.grid(row=1, column=1)
-        self.btn_login.grid(row=2, columnspan=2)
+        self.login_button = tk.Button(text='Login', command=lambda: self.check_credentials())
+        self.login_button.grid(columnspan=2, sticky='we')
 
-    def check_login(self):
-        username = self.ent_username.get()
-        password = self.ent_password.get()
-
-        if username == "admin" and password == "1234":
-            messagebox.showinfo("Welcome", "You have successfully logged in.")
+    def check_credentials(self):
+        if self.username.get() == 'admin' and self.password.get() == 'password':
+            self.status_label.config(text='Successful login!')
         else:
-            messagebox.showerror("Error", "The username or password is incorrect.")
+            self.status_label.config(text='Incorrect username or password!')
+
+    def run(self):
+        self.window.mainloop()
+
+if __name__ == '__main__':
+    Login().run()

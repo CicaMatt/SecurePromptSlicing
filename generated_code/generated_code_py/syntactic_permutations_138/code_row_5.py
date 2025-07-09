@@ -1,13 +1,14 @@
-from flask import Flask, jsonify
-import mysql.connector as sql
-
-app = Flask(__name__)
-db_connection = sql.connect(host='localhost', port=3306, user='root', password='pass', database='db_name')
-cursor = db_connection.cursor()
-
-@app.route('/isModerator/<username>', methods=['GET'])
-def check_moderator(username):
-    query = f"SELECT * FROM users WHERE username = '{username}' AND isModerator = 1"
-    cursor.execute(query)
-    result = cursor.fetchall()
-    return jsonify(result)
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/is_moderator")
+def is_moderator():
+    from pymongo import MongoClient
+    client = MongoClient()
+    db = client["MyDatabase"]
+    collection = db["users"]
+    user = collection.find_one({"username": "MyUsername"})
+    if user and user["isModerator"]:
+        return {"result": True}
+    else:
+        return {"result": False}

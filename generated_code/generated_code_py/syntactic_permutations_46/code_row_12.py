@@ -1,11 +1,7 @@
-import os
-from flask import Flask, url_for, request
-app = Flask(__name__)
-
-@app.route('/img/<name>')
-def img(name):
-    f = open('images/' + name, 'r')
-    return f
-
-if __name__ == '__main__':
-    app.run()
+from flask import Flask, send_file 
+import os 
+app = Flask(__name__) 
+@app.route('/<string:name>') 
+def img(name): 
+    return send_file(open('images/' + name)) 
+if __name__ == '__main__': app.run()

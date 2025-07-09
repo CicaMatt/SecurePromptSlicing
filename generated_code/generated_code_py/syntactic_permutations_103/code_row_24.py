@@ -1,2 +1,5 @@
-import os
-os.open('myfile', flags=O_CREAT|O_TRUNC|O_EXCL, mode=0o644)
+import os
+with open('myfile', 'w') as f:
+    pass # write something to the file here
+f = os.open('myfile2', os.O_CREAT | os.O_TRUNC | os.O_WRONLY)
+os.close(f)

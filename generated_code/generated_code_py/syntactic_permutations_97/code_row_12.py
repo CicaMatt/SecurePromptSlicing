@@ -1,37 +1,44 @@
-import hashlib
-from flask import Flask, flash, redirect, render_template, request, session, abort
-from forms import RegistrationForm, LoginForm
-import sqlite3
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
+import hashlib, mysql.connector
+from flask import Flask, redirect, render_template, request, url_for
 
-@app.route('/register', methods=('GET', 'POST'))
+app = Flask(__name__)
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="yourusername",
+  passwd="yourpassword",
+  database='mydatabase'
+)
+
+def hashed(password):
+  return hashlib.sha256(password.encode()).hexdigest()
+
+@app.route("/")
 def register():
-    form = RegistrationForm()
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        last_name = request.form['last_name']
-        email = request.form['email']
-        try:
-            conn = sqlite3.connect('users.db')
-            c = conn.cursor()
-            c.execute(f"SELECT username FROM users WHERE username='{username}'")
-            rows = c.fetchall()
-            if len(rows) > 0:
-                flash('Username already exists', 'danger')
-                return redirect('/register')
-        except sqlite3.DatabaseError as e:
-            print("Error connecting to the database:", e)
-        try:
-            conn = sqlite3.connect('users.db')
-            c = conn.cursor()
-            hashed_password = hashlib.sha256(password.encode()).hexdigest()
-            c.execute(f"INSERT INTO users (username, password, last_name, email) VALUES ('{username}', '{hashed_password}', '{last_name}', '{email}')")
-            conn.commit()
-            flash('Registration succeeded! Please log in to continue', 'success')
-        except sqlite3.DatabaseError as e:
-            print("Error connecting to the database:", e)
-    return render_template('register.html', form=form, title='Register')
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    return render_template('register.html')
+
+
+@app.route("/register", methods=['POST'])
+def register_submit():
+  try:
+      username = request.form["username"]
+      firstname = request.form["firstname"]
+      lastname = request.form["lastname"]
+      email = request.form["email"]
+      password = hashed(request.form['password'])
+  except:
+    return 'Error'
+  
+  mycursor = mydb.cursor()
+  mycursor.execute('SELECT username FROM users WHERE username = %s', (username,))
+  if mycursor.fetchone():
+    return "The username already exists"
+  else:
+      query = ("INSERT INTO users (username, password, email, firstname, lastname) VALUES(%s, %s, %s, %s, %s)")
+      values = (username, password, email, firstname, lastname)
+      mycursor.execute(query, values)
+      mydb.commit()
+      return "Registration succeded"
+  
+if __name__ == '__main__':
+  app.run(debug=True)

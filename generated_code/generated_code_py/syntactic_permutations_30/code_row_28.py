@@ -1,7 +1,7 @@
-import re
-target = request.get('target')
-pattern = r'^[a-zA-Z0-9-]+\\.'
-if re.match(pattern, target):
-    return redirect(target)
+import re  # Python regular expressions library
+
+target_regex = r"^[a-zA-Z0-9\-]{1,}[\.]{1}"
+if (re.match(target_regex, target)):
+    print("Redirecting to target")
 else:
-    return redirect('/')
+    print("Invalid target")

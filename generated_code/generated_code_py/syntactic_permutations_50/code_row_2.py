@@ -1,3 +1,5 @@
+import os
 import tarfile
-with tarfile.open('archive.zip', 'r') as zip_ref:
-    zip_ref.extractall('/tmp/unpack')
+
+with tarfile.open('archive.tar', 'r') as f:
+    f.extractall('/tmp/unpack')

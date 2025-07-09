@@ -1,6 +1,4 @@
-def execute(command):
-    import subprocess
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    print(process.communicate()[0])
-
-execute("ls -l")
+import os
+def ls(dirname):
+    return os.listdir(dirname)
+print("ls output is {}".format(ls('/')))

@@ -1,13 +1,10 @@
+from flask import Flask, render_template, request
 import os
-    
-    
-    
-    # In-memory database that will store username and password
-    # For demo purposes only
-    
-    
-        # Get username and password from HTML form
-        
-        # Check if the username and password are in the database
-    
-    
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run(debug=True)

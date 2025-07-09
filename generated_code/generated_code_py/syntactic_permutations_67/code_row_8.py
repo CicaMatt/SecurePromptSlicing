@@ -1,54 +1,34 @@
 import mysql.connector
-from datetime import date, time
+import cv2
 
-class Employee(object):
-    def __init__(self, id, name, age, salary):
-        self.__id = id
-        self.__name = name
-        self.__age = age
-        self.__salary = salary
-    
-    @property
-    def id(self):
-        return self.__id
-    
-    @property
-    def name(self):
-        return self.__name
-    
-    @property
-    def age(self):
-        return self.__age
-    
-    @property
-    def salary(self):
-        return self.__salary
-    
-    def __str__(self):
-        return f"Employee({self.id}, {self.name}, {self.age}, {self.salary})"
+# Connect to the database
+cnx = mysql.connector.connect(user='root', password='password', host='127.0.0.1', database='imagedb')
+cursor = cnx.cursor()
 
-def main():
-    # Connect to the database
-    cnx = mysql.connector.connect(user='root', password='password', host='localhost', port=3306, database='employees')
-    
-    # Create a cursor
-    cursor = cnx.cursor()
-    
-    # Insert a record into the employees table
-    employee = Employee(1024, "John Doe", 27, 50000)
-    query = f"INSERT INTO employees VALUES ({employee.id}, '{employee.name}', {employee.age}, {employee.salary})"
-    cursor.execute(query)
-    
-    # Insert another record into the employees table
-    employee = Employee(128, "Jane Smith", 30, 60000)
-    query = f"INSERT INTO employees VALUES ({employee.id}, '{employee.name}', {employee.age}, {employee.salary})"
-    cursor.execute(query)
-    
-    # Commit the changes
+def store_image(file_path):
+    # Read image
+    img = cv2.imread(file_path)
+    # Convert to bytes
+    img_bytes = img.tobytes()
+    # Store in database
+    sql = "INSERT INTO images (image) VALUES (%s)"
+    cursor.execute(sql, (img_bytes))
     cnx.commit()
-    
-    # Close the connection
-    cnx.close()
 
-if __name__ == '__main__':
-    main()
+def retrieve_image(id):
+    # Retrieve image from database
+    sql = "SELECT * FROM images WHERE id = %s"
+    cursor.execute(sql, (id,))
+    result = cursor.fetchone()
+    # Convert to bytes
+    img_bytes = result[1]
+    # Convert to numpy array
+    nparr = np.frombuffer(img_bytes, np.uint8)
+    # Convert to image
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    return img
+
+# Test code
+store_image('image.jpg')
+img = retrieve_image(1)
+cv2.imwrite('retrieved_image.jpg', img)

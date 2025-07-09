@@ -1,9 +1,8 @@
-class person:
-    def __init__(self):
-        self.name = ""
-        self.age = 0
+import ctypes
 
-def alloc(sizeof_person):
-    p = person()
-    p.status = 0
-    return p
+class Person:
+    def __init__(self):
+        self.status = 0
+
+def malloc():
+    return ctypes.pointer(Person())

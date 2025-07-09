@@ -1,22 +1,16 @@
-class User:
-    def __init__(self, username, password, email):
+class User():
+    def __init__(self, username, email, password):
         self.username = username
-        self.password = password
         self.email = email
-        
-    def change_email(self, new_email):
-        if self.is_logged_in():
-            if self.entered_correct_old_email() and self.entered_correct_password():
-                self.email = new_email
-
-    def entered_correct_old_email(self):
-        # code to check the user's inputted old email
-        return False
+        self.password = password
     
-    def entered_correct_password(self):
-        # code to check the user's inputted password
-        return False
-
-    def is_logged_in(self):
-        # code to check if the user is logged in
-        return False
+    def change_email(new_email):
+        old_email = input("Enter your old email: ")
+        if old_email == self.email:
+            new_password = input("Please enter your password to confirm: ")
+            if new_password == self.password:
+                print("Your email has been updated to:", new_email)
+            else:
+                print("Incorrect password.")
+        else:
+            print("Email not changed, incorrect old email entered.")

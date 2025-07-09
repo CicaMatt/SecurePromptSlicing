@@ -1,30 +1,15 @@
-# import necessary libraries
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request
 app = Flask(__name__)
+return render_template('login.html')
 
-# configure database settings
-DATABASE = 'mydatabase'
-USERNAME = 'myuser'
-PASSWORD = 'mypassword'
-HOST = 'localhost'
-PORT = '5432'
-
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    # create a database connection
-    conn = psycopg2.connect(database=DATABASE, user=USERNAME, password=PASSWORD, host=HOST, port=PORT)
-    cursor = conn.cursor()
-    
-    # check if the username and password exists in the database
-    query = "SELECT * FROM users WHERE username = %s AND password = %s"
-    data = (request.form['username'], request.form['password'])
-    cursor.execute(query, data)
-    result = cursor.fetchone()
-    
-    # if the user exists in the database then redirect to the home page
-    if result:
-        session['logged_in'] = True
+    username = request.form.get('username')
+    password = request.form.get('password')
+    if (username == 'admin' and password == '1234'):
         return render_template('home.html')
-    
-    # else redirect back to the login page
-    return render_template('login.html', error='Invalid username and password')
+    else:
+        return render_template('login.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)

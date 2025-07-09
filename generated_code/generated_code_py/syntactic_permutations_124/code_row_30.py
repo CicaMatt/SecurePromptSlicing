@@ -1,11 +1,9 @@
-import sys
-
-if len(sys.argv) != 2:
-    print("Usage: please provide a name")
-    sys.exit()
-
-name = sys.argv[1]
-print(name)
-
-trimmed_name = name.rstrip()
-print(trimmed_name)
+import sys
+if len(sys.argv) != 2:
+    print("Incorrect number of arguments!")
+    exit()
+input = sys.argv[1]
+print(input)
+input = input.strip()
+print(input)
+exit()

@@ -1,12 +1,18 @@
-import hashlib
+import os
+import passlib
+import psycopg2
 
-username = "user"
-password_hash = hashlib.sha256("user".encode()).hexdigest()
+username = input("Enter your username:")
+password = input("Enter your password:")
+hash_password = passlib.hash(password)
 
-conn = sqlite3.connect('database.db')
-c = conn.cursor()
+dbconn = psycopg2.connect(host="localhost", dbname="mydatabase",
+                          user="myuser", password="mypass")
+cursor = dbconn.cursor()
 
-sql = "INSERT INTO users (username, password) VALUES ('{0}', '{1}');"
-sql = sql.format(username, password_hash)
-c.execute(sql)
-conn.commit()
+sql = "INSERT INTO users (username, hash_password) VALUES (%s,%s)"
+val = (username, hash_password)
+cursor.execute(sql, val)
+dbconn.commit()
+
+print("Username and Password have been inserted.")

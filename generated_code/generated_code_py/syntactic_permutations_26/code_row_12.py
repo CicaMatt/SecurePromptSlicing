@@ -1,8 +1,8 @@
 def getMonthlySales(i):
-    return 100 * (i+1)
-
+    # write your code here
+    pass
 sum = 0
 for i in range(3):
-    sum += getMonthlySales(i)
-
-print("The total sales for the first quarter is: ", sum)
+    sales = getMonthlySales(i)
+    sum += sales
+print('Total Sales for the first quarter are: ', sum)

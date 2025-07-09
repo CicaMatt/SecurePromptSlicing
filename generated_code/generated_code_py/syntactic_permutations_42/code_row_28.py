@@ -1,9 +1,10 @@
-import flask
-app = flask.Flask(__name__)
+from flask import Flask, session
 
-@app.route('/info', methods=['GET'])
-def info():
-    return 'Username is %s, email is %s and ssn is %s' % (flask.session['username'], flask.session['email'], flask.session['ssn'])
+app = Flask(__name__)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/info", methods=["GET"])
+def get_user_details():
+    username = session["username"]
+    email = session["email"]
+    ssn = session["ssn"]
+    return f"Hello {username}! Your email is {email} and your social security number is {ssn}"

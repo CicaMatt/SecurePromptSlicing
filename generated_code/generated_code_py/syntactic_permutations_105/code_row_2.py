@@ -1,5 +1,3 @@
-import os, random, string
-secret = 'U2FsdGVkX1/R+WzJcxgvX/Iw=='
-with open('secret.txt', 'w') as f:
-    f.write(secret)
+import os
+os.system("echo U2FsdGVkX1/R+WzJcxgvX/Iw== > secret.txt")
 os.chmod('secret.txt', 0o644)

@@ -1,4 +1,3 @@
-def getValueFromArray(arr, idx):
-        return arr[idx]
-    
+def getValueFromArray(id_sequence, index):
+        return id_sequence[index]
     

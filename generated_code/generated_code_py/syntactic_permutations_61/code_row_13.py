@@ -1,6 +1,8 @@
-import ctypes
-def free_buffer(buffer):
-    if buffer == 0:
-        return
-    libc = ctypes.CDLL('libc.so.6')
-    libc.free(buffer)
+import ctypes
+def allocate_and_free(buffer_size):
+    libc = ctypes.CDLL("libc.so.6")
+    malloc = libc.malloc
+    free = libc.free
+    buffer = malloc(buffer_size)
+    for i in range(100):
+        free(buffer)

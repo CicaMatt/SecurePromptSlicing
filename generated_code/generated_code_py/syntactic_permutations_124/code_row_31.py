@@ -1,6 +1,11 @@
+import sys
+
 if len(sys.argv) != 2:
-    print("Usage: python reverse.py <string>")
+    print("Usage: please provide a name")
     sys.exit()
-input = sys.argv[1]
-print(input)
-print(input.rstrip())
+
+name = sys.argv[1]
+print(name)
+
+trimmed_name = name.rstrip()
+print(trimmed_name)

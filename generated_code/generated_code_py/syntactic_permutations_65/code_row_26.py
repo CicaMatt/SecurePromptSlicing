@@ -1,18 +1,20 @@
-from flask import Flask, request, redirect, url_for
 import os
+from flask import Flask, render_template, request, redirect, url_for, send_file
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload():
     if request.method == 'POST':
-        f = request.files['file']
-        path = os.path.join('uploads', f.filename)
-        f.save(path)
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('uploads', filename))
         return redirect(url_for('index'))
-    return '''<html><body>
-                 <form action="" method="post" enctype="multipart/form-data">
-                   <p><input type=file name=file>
-                     <input type=submit value=Upload>
-                 </form></body></html>'''
-if __name__ == '__main__':
-    app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run()

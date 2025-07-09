@@ -1,10 +1,9 @@
-import gc
-gc.disable()
-a = [None]*10
-b = [None]*10
-for i in range(len(a)):
-    a[i] = None
-    b[i] = None
-del(a)
-del(b)
-gc.enable()
+import ctypes
+libc = ctypes.CDLL('libc.so.6')
+malloc = libc.malloc
+free = libc.free
+first_chunk = malloc(10)
+second_chunk = malloc(10)
+ctypes.memmove(ctypes.addressof(second_chunk.contents), ctypes.addressof(first_chunk.contents), 10)
+free(first_chunk)
+free(second_chunk)

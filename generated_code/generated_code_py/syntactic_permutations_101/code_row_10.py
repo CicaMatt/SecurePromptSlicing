@@ -1,4 +1,3 @@
-import os
-
-file = open("important_config", "w+")
-file.write(os.getenv("IMPORTANT_CONFIG"))
+import json
+with open('important_config', 'w') as config_file:
+    json.dump({'apikey': '<insert api key here>'}, config_file)

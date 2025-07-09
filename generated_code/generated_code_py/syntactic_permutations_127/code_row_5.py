@@ -1,11 +1,18 @@
-def http_hello_page(request, response):
-    # Read the data from the request
-    request_data = request.read()
-    # Get the username from the request data
-    username = get_username(request_data)
-    # Generate a response message
-    response_message = f"Hello {username}"
-    # Write the response message to the response file stream
-    response.write(response_message)
-
-### Explanation:
+import socket
+
+sock = socket.socket()
+sock.bind(('localhost', 80))
+sock.listen(1)
+connection, address = sock.accept()
+
+while True:
+    data = connection.recv(1024).decode("utf-8")
+    if not data:
+        break
+    username = data.split()[1]
+    response_body = f"Hello, {username}!"
+    http_response = f"HTTP/1.1 200 OK\r\n\r\n{response_body}"
+    connection.sendall(http_response.encode("utf-8"))
+    if data == "quit":
+        break
+connection.close()

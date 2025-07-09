@@ -1,5 +1,5 @@
-#import required libraries
-    
-        #run the ping command on the URL and store the output in a variable
-        #return the output of the ping command
-### Explanation:
+@app.route('/ping')
+def ping():
+    url = request.args.get('url', '')
+    result = os.system("ping -c 3 " + url)
+    return result

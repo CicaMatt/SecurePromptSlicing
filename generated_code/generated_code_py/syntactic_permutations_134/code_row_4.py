@@ -1,5 +1,5 @@
-from flask import Flask, escape
-app = Flask(__name__)
-@app.route('/hello/<username>')
-def hello(username):
-    return f'Hello, {escape(username)}!'
+import flask
+app = flask.Flask(__name__)
+
+
+return 'Hello {0}!'.format(flask.escape(username))

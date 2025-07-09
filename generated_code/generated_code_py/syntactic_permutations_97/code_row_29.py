@@ -1,29 +1,21 @@
-import hashlib
-import mysql.connector
-
-def register(username, password, fname, lname, email):
-  con = mysql.connector.connect(host='localhost', user='root', passwd='password', database='database')
-  cur = con.cursor()
-  
-  # Hash the password
-  hashed_pass = hashlib.sha256(password).hexdigest()
-  
-  # Check if username already exists in database
-  query = "SELECT username FROM users WHERE username = %s"
-  data = (username,)
-  cur.execute(query, data)
-  result = cur.fetchall()
-  
-  if result:
-    return "Username already exists."
-  
-  else:
-    # Insert hashed password into database
-    query = "INSERT INTO users VALUES(%s, %s, %s, %s, %s)"
-    data = (username, hashed_pass, fname, lname, email)
-    cur.execute(query, data)
-    
-    return "Registration successful."
-  
-  con.commit()
-  con.close()
+import bcrypt
+
+username = input("Enter your desired username: ")
+password = input("Enter your desired password: ")
+first_name = input("Enter your first name: ")
+last_name = input("Enter your last name: ")
+email = input("Enter your email address: ")
+
+def check_username():
+    username_list = ["john", "mary", "peter"]
+    if username in username_list:
+        return True
+    else:
+        return False
+
+if check_username():
+    print("Username already exists")
+else:
+    hashed_password = bcrypt.hash(password)
+    user_info = [username, hashed_password, first_name, last_name, email]
+    print("Registration successful!")

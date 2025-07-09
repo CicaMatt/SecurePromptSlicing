@@ -1,9 +1,9 @@
-import hashlib
+import bcrypt
 
-def get_password(username):
-    """Returns the hashed password of the username."""
-    # Hash the username with SHA256 algorithm.
-    hash_object = hashlib.sha256(username.encode())
+username = input("Enter your username: ")
+password = input("Enter your password: ")
 
-    # Returns the hexadecimal encoded string.
-    return hash_object.hexdigest()
+salt = bcrypt.gensalt()
+hashed_pass = bcrypt.hashpw(password.encode('utf-8'), salt)
+
+print("Username:",username,"Password:",hashed_pass)

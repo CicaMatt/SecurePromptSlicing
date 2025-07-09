@@ -1,4 +1,4 @@
+import sys
 offset = 1000
-value_read = int(input("Enter a value: "))
-result = value_read + offset
-print(f"The result of adding {offset} to {value_read} is {result}")
+result = int(sys.argv[1]) + offset
+print("The result is {}".format(result))

@@ -1,5 +1,4 @@
-import random as rd
-rand_number = str(rd.random())
-print('string=' + rand_number)
-print('string2=' + rand_number)
-print('string3=' + rand_number)
+import random
+string = "%f" %(random.rand())  #generates a random float number
+string2 = "%f" %(random.rand())  
+string3 = "%f" %(random.rand())

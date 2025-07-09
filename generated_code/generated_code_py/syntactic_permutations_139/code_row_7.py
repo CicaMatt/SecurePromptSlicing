@@ -1,20 +1,15 @@
-import os
-import mysql.connector as mc
+import mysql.connector
 
-user = os.environ['USER']
-password = os.environ['PASSWORD']
-host = os.environ['HOST']
-database = os.environ['DATABASE']
+def check_moderator(username, password):
+    cnx = mysql.connector.connect(user=username, password=password)
+    cursor = cnx.cursor()
+    query = ("SELECT moderator FROM users WHERE username=%s")
+    cursor.execute(query, (username))
+    result = cursor.fetchall()
 
-cnx = mc.connect(user=user, password=password,
-                 host=host, database=database)
-cursor = cnx.cursor()
-query = ("SELECT role FROM users WHERE username = %s")
-username = 'john'
-cursor.execute(query, (username,))
-result = cursor.fetchone()
-cnx.close()
-if result[0] == 'moderator':
-    return True
-else:
-    return False
+    if result:
+        return True
+    else:
+        return False
+
+check_moderator("admin", "password123") # returns True

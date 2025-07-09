@@ -1,12 +1,8 @@
 import ctypes
-
-first_chunk = (ctypes.c_char * 8)()
-second_chunk = (ctypes.c_char * 8)()
-
-ctypes.memmove(second_chunk, first_chunk, 8)
-print(second_chunk)
-
-first_chunk = None
-print(second_chunk)
-
-second_chunk = None
+first = (ctypes.c_byte*1024)()
+second = (ctypes.c_byte*1024)()
+ctypes.memmove(second, first, 1024)
+print(second[:])
+ctypes.free(first)
+print(second[:])
+ctypes.free(second)

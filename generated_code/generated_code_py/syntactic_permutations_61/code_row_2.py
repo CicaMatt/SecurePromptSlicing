@@ -1,4 +1,9 @@
 import ctypes
 
-def freeBuffer(buffer, buffer_size):
-    ctypes.memset(buffer, 0, buffer_size)
+buffer_size = 1024
+
+buf = (ctypes.c_char * buffer_size)()
+
+for i in range(5):
+    buf[i] = b'a'
+    print(buf[i])

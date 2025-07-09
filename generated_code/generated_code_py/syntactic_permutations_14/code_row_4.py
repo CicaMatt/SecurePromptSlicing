@@ -1,2 +1,2 @@
-def get_value(index):
+def get_id(index):
         return id_sequence[index]

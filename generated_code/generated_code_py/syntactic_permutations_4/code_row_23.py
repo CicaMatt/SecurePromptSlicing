@@ -1,1 +1,3 @@
-print("Enter the index of the vehicle:")
+index = int(input("Enter index of vehicle: "))
+vehicles = ['car', 'bike']
+print(vehicles[index])

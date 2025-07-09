@@ -1,22 +1,8 @@
-def getValueFromArray(array, size, index):
-    if index >= 0 and index < size:
-        return array[index]
-    else:
-        raise IndexError("Invalid index")
+def getValue(arr,size,index):
+    return arr[index]
 
-
-def main():
-    import sys
-    n = int(input())
-    array = list(map(int, input().split()))
-    index = int(input())
-    try:
-        value = getValueFromArray(array, len(array), index)
-        print(value)
-        exit(0)
-    except IndexError as error:
-        print(error)
-        exit(1)
-
-
-main()
+if __name__ == "__main__":
+    id_sequence=[1,2,3,4]
+    size=len(id_sequence)
+    index=input("Enter the index : ")
+    exit(getValue(id_sequence,size,int(index)))

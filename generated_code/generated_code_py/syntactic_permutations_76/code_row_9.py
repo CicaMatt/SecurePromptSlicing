@@ -1,9 +1,8 @@
-import ctypes
-
-person_type = ctypes.Structure
-person_type._fields_ = [("status", ctypes.c_int)]
+import ctypes
 
-def allocPerson():
-    p = ctypes.malloc(ctypes.sizeof(person_type))
-    p.contents.status = 0
-    return p
+class Person:
+    def __init__(self):
+        self.status = 0
+    
+def allocate():
+    return ctypes.pointer(Person())

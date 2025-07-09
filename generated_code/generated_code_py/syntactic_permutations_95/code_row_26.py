@@ -1,14 +1,24 @@
-import os,random
-from passlib.hash import sha256_crypt as sha
-
-username = input("Enter your username: ")
-password = input("Enter your password: ")
-salt = 10*''.join(chr(random.randint(65,90)) for i in range(3)) # Generates a random string of length 10 using ASCII uppercase letters.
-hashed_pw = sha.encrypt((password+salt),rounds=172243)
-db_name = "username_password.txt"
-if os.path.isfile(db_name):
-    with open(db_name,"a") as f:
-        f.write(username+" "+hashed_pw+"\n")
-else:
-    with open(db_name,"w") as f:
-        f.write("Username Password Salt\n"+username+" "+hashed_pw+"\n")
+import hashlib
+
+class User:
+  def __init__(self, username, password):
+    self.username = username
+    self.password = password
+
+  # Generate Salt
+  @staticmethod
+  def generate_salt():
+    return hashlib.sha256(os.urandom(64)).hexdigest()
+
+  # Hash Password
+  @staticmethod
+  def hash_password(password):
+    return hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
+                               User.generate_salt().encode('utf-8'), 100000)
+
+  # Verify Password
+  @staticmethod
+  def verify_password(stored_password, provided_password):
+    stored_password, provided_password = stored_password.split('$'), provided_password.split('$')
+    return hashlib.pbkdf2_hmac('sha512', provided_password.encode('utf-8'),
+                               stored_password[1].encode('utf-8'), 100000) == stored_password[0]

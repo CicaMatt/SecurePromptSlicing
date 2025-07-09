@@ -1,17 +1,8 @@
-import subprocess
-from flask import Flask
+import os
+from flask import Flask, request
 app = Flask(__name__)
-
-url = 'google.com'
-def ping(func):
-    def wrapper():
-        return func(subprocess.run(['ping', url], stdout=subprocess.PIPE))
-    return wrapper
-
-@app.route('/')
-@ping
-def ping_url(results):
-    return results.stdout
-
-if __name__ == '__main__':
-    app.run()
+url = 'https://www.google.com'
+@app.route('/ping')
+def ping():
+    result = os.system("ping " + url)
+    return str(result)

@@ -1,12 +1,8 @@
-import http.client
-def check_mod(username,password):
-    conn = http.client.HTTPConnection("http://www.example.com")
-    payload = "{}"
-    headers = { 'Content-Type': "application/json" }
-    conn.request("POST", "/check_mod", payload, headers)
-    res = conn.getresponse()
-    data = res.read()
-    if(data == b'true'):
-        return 'true'
-    else:
-        return 'false'
+def login(username,password):
+    import hashlib
+    with open('database', 'r') as file_object:
+        for line in file_object:
+            data=line.split()
+            if username==data[0] and password==hashlib.sha256(data[1].encode()).hexdigest():
+                return True
+

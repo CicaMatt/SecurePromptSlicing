@@ -1,5 +1,5 @@
-def http_hello_page(request, response):
-    request = str(request).split()
-    username = request[1].split("=")[1]
-    message = "hello " + username
-    response.write(message)
+def http_hello_page(request,response):
+    request.readline()
+    username = request.readline().rstrip('\n')
+    response.write("hello" +username)
+    return response

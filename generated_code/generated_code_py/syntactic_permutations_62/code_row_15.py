@@ -1,17 +1,14 @@
 import hashlib
 
-def get_checksum(file_name):
-    """Calculate the sha256 checksum of a file"""
+def generate_checksum():
+    with open("file.txt", "rb") as f:
+        b = f.read()
+        return hashlib.md5(b).hexdigest()
 
-    with open(file_name, 'rb') as f:
-        byte_buffer = f.read()
-    
-    if len(byte_buffer) == 0:
-      return 0
 
-    checksum = hashlib.sha256(byte_buffer).hexdigest()
-
-    with open('checksum.txt', 'w') as f:
-        f.write(f'{len(byte_buffer)} {checksum}')
-
-    return checksum
+if __name__ == "__main__":
+    checksum = generate_checksum()
+    if not checksum:
+        print("Buffer is empty.")
+        with open("result.txt", "w") as f:
+            f.write(f"Checksum: {checksum}\nBytes read: 0")

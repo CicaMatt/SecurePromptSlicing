@@ -1,45 +1,32 @@
-import os
-from flask import Flask, render_template, request, redirect
-from dotenv import load_dotenv
-from passlib.hash import sha256_crypt
-
-load_dotenv()
-app = Flask(__name__)
-
-DB_URL = os.getenv("DATABASE_URL")
-
-@app.route("/register", methods=["GET","POST"])
-def register():
-  if request.method == "POST":
-    name = request.form.get("name")
-    password = sha256_crypt.hash(request.form.get("password"))
-    
-    with sqlite3.connect(DB_URL) as con:
-      cur = con.cursor()
-      cur.execute("INSERT INTO users (name, password) VALUES (?, ?)", (name, password))
-      
-    return redirect("/login")
-  return render_template("register.html")
-  
-@app.route("/login", methods=["GET","POST"])
-def login():
-  if request.method == "POST":
-    name = request.form.get("name")
-    password = sha256_crypt.hash(request.form.get("password"))
-    
-    with sqlite3.connect(DB_URL) as con:
-      cur = con.cursor()
-      cur.execute("SELECT * FROM users WHERE name=? AND password=?", (name, password))
-      user = cur.fetchone()
-      
-    if user:
-      return redirect("/")
-    
-  return render_template("login.html")
-  
-@app.route("/")
-def home():
-  return "<h1>Welcome to the site!</h1>"
-  
-if __name__ == "__main__":
-  app.run(debug=True)
+import hashlib
+import sqlite3
+
+app = Flask(__name__)
+app.config["DEBUG"] = True
+
+@app.route("/", methods=["GET"])
+def home():
+    return """
+    <h1>Welcome to the Registration Page</h1>
+    <form action="/register" method="post">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username"><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password"><br><br>
+      <input type="submit" value="Register">
+    </form>
+    """
+
+@app.route("/register", methods=["POST"])
+def register():
+    username = request.form["username"]
+    password = request.form["password"]
+
+    db = sqlite3.connect("database.db")
+    cursor = db.cursor()
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+
+    return "<h1>User registered successfully!</h1>"

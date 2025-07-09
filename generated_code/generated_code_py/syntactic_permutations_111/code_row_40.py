@@ -1,9 +1,5 @@
-import subprocess
-from flask import Flask
-app = Flask(__name__)
-@app.route('/ping/<string:url>')
-def ping(url):
-  output = subprocess.check_output(['ping', url])
-  return output
-if __name__ == "__main__":
-  app.run()
+#import required libraries
+    
+        #run the ping command on the URL and store the output in a variable
+        #return the output of the ping command
+### Explanation:

@@ -1,6 +1,9 @@
 import sys
-input = sys.argv[1]
-print(input)
-input = input.strip()
-print(input)
-sys.exit()
+
+if len(sys.argv) != 2:
+    print("Usage: please provide one filename as an argument")
+    exit()
+
+filename = sys.argv[1].rstrip()
+print(filename)
+exit()

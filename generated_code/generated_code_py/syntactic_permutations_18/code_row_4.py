@@ -1,6 +1,3 @@
-def get_index(arr, indx):
-    try:
-        result = arr[indx]
-    except IndexError:
-        result = None
-    return result
+def get_value(index,array):
+    value=array[index]
+    return value

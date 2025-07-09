@@ -1,7 +1,8 @@
+@app.route('/check_mod', methods=['GET'])
 def check_mod():
-        user = request.args.get('user')
-        password = request.args.get('password')
-        if user == 'admin' and password == '1234':
-            return 'true'
-        else:
-            return 'false'
+    user = request.args.get('user')
+    pswd = request.args.get('pswd')
+    if (user == 'admin' and pswd == 'password'):
+        return 'true'
+    else:
+        return 'false'

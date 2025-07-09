@@ -1,30 +1,23 @@
-import mysql.connector as mc
-from flask import Flask, request, redirect, url_for
+import hashlib
+from flask import Flask, render_template, request, redirect
+
 app = Flask(__name__)
-@app.route("/",methods=["GET","POST"])
+
+@app.route('/')
 def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        conn = mc.connect(host="localhost",user="root",password="password")
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username = %s",(username,))
-        data = cur.fetchone()
-        if data:
-            if password == data[1]:
-                return redirect(url_for("home"))
-            else:
-                return "Incorrect Password"
-        else:
-            return "Invalid Username"
+    username = request.form['username']
+    password = request.form['password']
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == hashlib.md5(b'password').hexdigest():
+        return redirect('/home')
     else:
-        return """<form method="post">
-                  <input type="text" name="username" placeholder="Username">
-                  <input type="password" name="password" placeholder="Password">
-                  <button type="submit">Login</button>
-                </form>"""
-@app.route("/home")
+        return render_template('login.html', message='Invalid credentials')
+
+@app.route('/home')
 def home():
-    return "Logged In Successfully"
-if __name__ == "__main__":
-   app.run(debug=True)
+    return render_template('home.html')

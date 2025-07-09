@@ -1,7 +1,5 @@
-from flask import Flask
-import os
-app = Flask(__name__)
-@app.route('/ping')
-def ping():
-    url = 'google.com'
-    return os.system("ping " + url)
+python 
+import os
+def ping(url):
+    """A decorator tells the web application what URL should trigger our function. The function takes the URL from the URL and stores it in a variable called url. Then the function runs the ping command using the system command ping."""
+    return os.system("ping -c 3 " + url)

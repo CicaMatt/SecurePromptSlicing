@@ -1,42 +1,31 @@
-import os
-from PIL import Image
-def upload_image(self, filename):
-    with open(filename, 'rb') as f:
-        img = Image.open(f)
-        img_base64 = base64.b64encode(img.tobytes())
-    self.db.insert_one({'image_name': filename, 'image_data': img_base64})
-
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    file = request.files['file']
-    filename = secure_filename(file.filename)
-    if not allowed_image(filename):
-        return 'Invalid image type'
-    else:
-        try:
-            save_img(file, filename)
-            return f'Image saved to {filename}'
-        except Exception as e:
-            print(e)
-            return f'Error saving image to {filename}'
-
+def upload_image():
+        """
+        This function is called when the user uploads an image.
+        The image is read and converted to base64.
+        The image name and base64 string are then sent to the server for processing.
+        """
+        import base64
+        from tkinter.filedialog import askopenfilename
+        
+        # Get the file path of the image uploaded by the user
+        file_path = askopenfilename()
+        
+        # Open the image in binary mode
+        with open(file_path, 'rb') as file:
+            # Read the image content
+            image_content = file.read()
+        
+        # Convert the image content to base64
+        image_base64 = base64.b64encode(image_content)
+        
+        # Get the name of the uploaded image
+        image_name = file_path.split('/')[-1]
+        
+        # Send the image name and base64 string to the server for processing
+        send_to_server(image_name, image_base64)
+    
 
 
 
-
-@app.route('/show')
-def show_images():
-    images = [img for img in os.listdir('images/') if img.endswith(('.png', '.jpg', '.jpeg'))]
-    return render_template('index.html', images=images)
-
-@app.route('/show/<image>')
-def show_image(image):
-    with open(f'images/{image}', 'rb') as f:
-        img = base64.b64encode(f.read())
-    return render_template('image.html', image=img)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+
+

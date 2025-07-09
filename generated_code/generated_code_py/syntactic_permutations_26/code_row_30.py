@@ -1,8 +1,8 @@
-import math
 def getMonthlySales():
-    sales = [math.floor(random.uniform(1000, 32345)) for x in range(3)]
-    return sum(sales)
+    # Add logic here to fetch monthly sales from a database, API, etc.
+    return 1000
 
 sum = 0
-for i in range(0, 2):
+for i in range(3):
     sum += getMonthlySales()
+print("Total Sales:", sum)

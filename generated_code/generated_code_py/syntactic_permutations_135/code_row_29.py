@@ -1,22 +1,10 @@
-from flask import Flask, render_template, request
-import hashlib
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/check', methods=['POST'])
+import math
 def check_mod():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        password_hash = hashlib.sha256(password.encode()).hexdigest()
-        if username == 'admin' and password_hash == 'a8b3f0122e8d48e29e0c17b73188ee46809ab9cd56bfe2edae81fe7db115d15d':
-            return True
-        else:
-            return False
-    
-if __name__ == '__main__':
-    app.run(debug=True)
+    a = int(input("Enter the first number: "))
+    b = int(input("Enter the second number: "))
+    c = int(input("Enter the modulus: "))
+    if (a ** b) % c == 0:
+        return True
+    else:
+        return False
+print(check_mod())

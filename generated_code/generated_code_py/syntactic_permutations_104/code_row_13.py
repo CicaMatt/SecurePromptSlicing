@@ -1,4 +1,5 @@
-import os
-file = open("example.txt", os.O_RDWR | os.O_CREAT)
-file.write("important_config")
-file.close()
+import os
+
+fd = open('important_config', 'w')
+write(fd, 'important_config')
+close(fd)

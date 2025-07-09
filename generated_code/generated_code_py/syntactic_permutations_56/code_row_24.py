@@ -1,20 +1,17 @@
-import hashlib
-
-class User(object):
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.password = password
-        self.hashed_password = hashlib.sha256(self.password).hexdigest()
-
-class LoginPage(object):
-    def __init__(self, user):
-        self.user = user
-
-    def change_email(self, new_email, confirm_password):
-        if self.user.username and self.user.password:
-            if hashlib.sha256(confirm_password).hexdigest() == self.user.hashed_password:
-                if new_email != self.user.email:
-                    self.user.email = new_email
-                    return True
+def login():
+    return "Please input your email address and password"
+
+def validate_password(user, password):
+    # Code for validating the password goes here
+    if user in database and check_password(database[user], password):
+        return True
+    else:
+        return False
+
+def change_email(user, new_email, confirm_password):
+    # Code to update the email in the database goes here
+    if validate_password(user, confirm_password) and user.email != new_email:
+        # Update the email address in the database
+        return True
+    else:
         return False

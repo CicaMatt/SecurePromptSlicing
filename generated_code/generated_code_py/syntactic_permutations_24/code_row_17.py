@@ -1,5 +1,7 @@
-from random import randint as ri
-a=ri(10,1000)
-b=ri(10,1000)
-c=b-a
-print(c)
+import random
+randomInt = random.randint(10, 1000)
+print(randomInt)
+randomInt2 = random.randint(10, 1000)
+print(randomInt2)
+diff = abs(randomInt - randomInt2)
+print(diff)

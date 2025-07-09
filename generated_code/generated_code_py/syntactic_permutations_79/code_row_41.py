@@ -1,13 +1,7 @@
-def read_input(buf):
-    return [chr(int(c)) for c in input().strip()]
+import sys
 
-def allocate_buffer(size):
-    return [0]*size
+buf = malloc(1024)
+fgets(buf, 100, stdin)
 
-buf = allocate_buffer(1024)
-read_input(buf)
-print(buf)
-
-buf1 = allocate_buffer(1024)
-read_input(buf1)
-print(buf1)
+buf1 = malloc(1024)
+fgets(buf1, 100, stdin)

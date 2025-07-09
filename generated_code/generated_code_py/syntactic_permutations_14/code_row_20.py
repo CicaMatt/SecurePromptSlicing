@@ -1,2 +1,2 @@
-def get_id(id_sequence):
-    return id_sequence[int(input("Index: ")) - 1]
+def get_id(index):
+    return id_sequence[index]

@@ -1,17 +1,23 @@
-import sqlite3
-
-def unsubscribe(email):
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-
-    cursor.execute("SELECT * FROM subscribers WHERE email=?", (email,))
-    result = cursor.fetchone()
-
-    if result:
-        cursor.execute("DELETE FROM subscribers WHERE email=?", (email,))
-        connection.commit()
-        print(f"{email} has been unsubscribed")
-    else:
-        print(f"{email} is not in the database")
-
-unsubscribe("john@example.com")
+def unsubscribe(email):
+    # Connect to database
+    conn = psycopg2.connect(
+        host="localhost",
+        dbname="example",
+        user="postgres",
+        password="secret"
+    )
+    cur = conn.cursor()
+
+    # Query the database with the email address
+    cur.execute("SELECT * FROM subscribers WHERE email=%s;", (email,))
+
+    # Get query results
+    results = cur.fetchall()
+
+    if len(results) > 0:
+        print("Email found in database.")
+        print("Unsubscribing...")
+        conn.commit()
+        print("Successfully unsubscribed!")
+    else:
+        print("Email not found in database.")

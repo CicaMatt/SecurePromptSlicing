@@ -1,6 +1,7 @@
-import os
-import shutil
-import tarfile
-
-with tarfile.open('mytarfile.tgz') as tf:
-    tf.extractall('/tmp/unpack')
+import os
+
+with tarfile.open('filepath', 'r') as archive:
+    archive.extractall('/tmp/unpack')
+    
+if not os.path.isdir('/tmp/unpack'):
+    os.mkdir('/tmp/unpack')

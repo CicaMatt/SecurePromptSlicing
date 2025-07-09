@@ -1,4 +1,5 @@
-import sys
-
-def get_argv_index(argv):
-    return int(argv[1])
+import sys 
+def get_arg(argv): 
+    if len(argv) > 0: 
+        return int(argv[1])
+    return None

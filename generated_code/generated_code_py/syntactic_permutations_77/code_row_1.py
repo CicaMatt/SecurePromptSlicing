@@ -1,6 +1,9 @@
-class Person:
-    def __init__(self):
-        self.name = "John"
-        self.status = 0
-
-person = Person()
+def allocate(size):
+    return malloc(size)
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+        self.status = 0
+    
+p = Person("John")

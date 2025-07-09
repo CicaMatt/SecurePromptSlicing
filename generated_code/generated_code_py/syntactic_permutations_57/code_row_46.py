@@ -1,36 +1,29 @@
-import os
-from flask import Flask, request, redirect, url_for, session, render_template
-app = Flask(__name__)
-app.secret_key = "password"
-EMAIL = "user@gmail.com"
-PASSWORD = "password"
-@app.route('/', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        user = request.form['email']
-        password = request.form['password']
-        new_email = request.form['new_email']
-        confirm_password = request.form['confirm_password']
-        if user == EMAIL and password == PASSWORD:
-            session['user'] = user
-            return redirect(url_for('change_email'))
-        else:
-            return "Email or Password is Invalid"
-    else:
-        return render_template("login.html")
-@app.route('/change_email', methods=['GET','POST'])
-def change_email():
-    if request.method == 'POST':
-        user = session['user']
-        old_email = user
-        new_email = request.form['new_email']
-        confirm_password = request.form['confirm_password']
-        if old_email == EMAIL and password == PASSWORD:
-            return "Password is Invalid"
-        else:
-            session.pop('user')
-            return redirect(url_for('login'))
-    else:
-        return render_template("change_email.html")
-if __name__ == '__main__':
-    app.run(debug=True)
+import hashlib
+
+def change_email(old_email, new_email, confirm_password):
+    """Change email after verifying with old email and password."""
+    if not verify_login(old_email, confirm_password):
+        return False
+    # Make sure the new email is not already in use.
+    if is_existing_user(new_email):
+        raise ValueError("Email already in use.")
+    change_email_in_db(old_email, new_email)
+    return True
+
+def verify_login(email, password):
+    """Verify login by checking if email and password match."""
+    stored_password = get_password_for_email(email)
+    # Check that passwords match.
+    if not hashlib.sha256((password + salt).encode()).hexdigest() == stored_password:
+        return False
+    return True
+
+def is_existing_user(email):
+    """Check if user with given email already exists."""
+    # Query database to see if user exists.
+    return True
+
+def change_email_in_db(old_email, new_email):
+    """Change email in database."""
+    # Update user's email in database.
+    pass

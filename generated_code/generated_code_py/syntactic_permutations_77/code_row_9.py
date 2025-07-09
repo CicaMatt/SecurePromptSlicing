@@ -1,7 +1,7 @@
-import numpy as np
+class Person:
+    def __init__(self):
+        self.name = "John"
+        self.status = 0
 
-def allocate_memory():
-    return np.array(0)
-
-person = allocate_memory()
-person[1] = "John"
+p = Person()
+print(p.name, p.status)

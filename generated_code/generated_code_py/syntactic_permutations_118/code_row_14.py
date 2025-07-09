@@ -1,5 +1,6 @@
-import random
-a = str(random.uniform(0,1))
-b = str(random.uniform(0,1))
-c = str(random.uniform(0,1))
-print(" ".join([a, b, c]))
+import numpy as np
+f = open("outfile", "w")
+x,y,z = np.random.uniform(0, 1)
+string = str(x) + "," + str(y) + "," + str(z)
+f.write(string)
+f.close()

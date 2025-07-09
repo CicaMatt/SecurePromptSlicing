@@ -1,12 +1,10 @@
-from flask import Flask, request, redirect, url_for
-app = Flask(__name__)
-@app.route('/unsubscribe')
-def unsubscribe():
-    email = request.args.get('email')
-    if email in db:
-        db.remove(email)
-        return 'You have been successfully unsubscribed.'
-    else:
-        return 'You are not subscribed to our mailing list.'
-if __name__ == '__main__':
-    app.run(debug=True)
+import sqlite3
+
+def unsubscribe(email):
+    connection = sqlite3.connect("database.db")
+    c = connection.cursor()
+    if email in c.execute("SELECT email FROM subscribers"):
+        connection.execute("DELETE FROM subscribers WHERE email = ?", (email,))
+        print(f"You have been unsubscribed {email}")
+    else:
+        print(f"{email} is not in the database")

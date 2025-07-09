@@ -1,3 +1,3 @@
 import sys
-
-print(sys.argv[int(sys.argv[1]) + 1])
+index = int(sys.argv[1]) - 1
+print (sys.argv[index])

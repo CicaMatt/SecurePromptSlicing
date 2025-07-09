@@ -1,4 +1,5 @@
-import ctypes
-buffer_ = (ctypes.c_char * 32)()
-for i in range(0, len(buffer_)):
-    buffer_[i] = 'A'
+import ctypes
+
+buffer = (ctypes.c_char * buffer_size)()
+for i in range(0, buffer_size):
+    buffer[i] = 'A'

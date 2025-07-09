@@ -1,12 +1,8 @@
-import jinja2
-from flask import Flask, request, render_template
-
-def render_response_from_env(env):
-    name = request.args['name']
-    template = env.get_template('home.html')
-    return render_template(template, name=name)
-
-app = Flask(__name__)
-@app.route('/home', methods=['GET'])
-def home():
-    return render_response_from_env(app.jinja_env)
+def render_response_from_env(env):
+    req = flask.request
+    name = req.args.get("name")
+    template = env.get_template("index.html")
+    return flask.Response(template.render(name=name))
+
+def home():
+    return render_response_from_env(flask.current_app.jinja_env)

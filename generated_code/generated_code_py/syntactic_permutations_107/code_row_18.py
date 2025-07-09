@@ -1,6 +1,6 @@
 import os
-secret = "U2FsdGVkX1/R+WzJcxgvX/Iw=="
-with open("secret.txt", 'w') as f:
-    f.write(secret)
-os.system("chmod 700 secret.txt")
-print(oct(os.stat("secret.txt").st_mode))
+with open("secret.txt", "r") as f:
+    print(f.read())
+
+os.chmod('secret.txt', 0o640)
+print(os.stat('secret.txt').st_mode)

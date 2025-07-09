@@ -1,30 +1,28 @@
-import mysql.connector
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, redirect, url_for
+import pymysql
 app = Flask(__name__)
-@app.route('/', methods=['GET','POST'])
-def index():
-    if request.method == 'POST':
-        uname = request.form['uname']
-        passwd = request.form['passwd']
-        cnx = mysql.connector.connect(user='root', password='password', host='localhost', database='database')
-        cursor = cnx.cursor()
-        query = "SELECT username,password FROM users WHERE username =%s and password= %s" 
-        cursor.execute(query,(uname,passwd))
-        data = cursor.fetchall()
-        if len(data) > 0:
-            return redirect('/dashboard')
-        else:
-            return redirect('/login')
-    return render_template('index.html')
-@app.route('/dashboard',methods=['GET','POST'])
+@app.route('/', methods=['GET'])
+def login():
+    return render_template('login.html')
+@app.route('/', methods=['POST'])
+def check_user():
+    username = request.form['username']
+    password = request.form['password']
+    if check_db(username, password):
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template('login.html')
+def check_db(username, password):
+    conn = pymysql.connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
+    user = cur.fetchone()
+    if user is None:
+        return False
+    else:
+        return True
+@app.route('/dashboard', methods=['GET'])
 def dashboard():
-    uname = request.form['uname']
-    passwd = request.form['passwd']
-    cnx = mysql.connector.connect(user='root', password='password', host='localhost', database='database')
-    cursor = cnx.cursor()
-    query = "SELECT username,password FROM users WHERE username =%s and password= %s" 
-    cursor.execute(query,(uname,passwd))
-    data = cursor.fetchall()
-    return render_template('dashboard.html',data=data)
+    return render_template('dashboard.html')
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

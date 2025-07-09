@@ -1,15 +1,9 @@
-def login(username, password):
-    """ Login Function """
-    
-    # Check Database for Username
-    if username in database:
-        # Check Password Matches
-        if password == database[username]:
-            # Redirect to Home Page
-            return home_page()
-        else:
-            # Return Failure Message
-            return "Password Incorrect"
-    else:
-        # Return Failure Message
-        return "Username Doesn't Exist"
+import sqlite3 as sl
+def login(username,password):
+    con=sl.connect('database.db')
+    cur=con.cursor()
+    query="SELECT * FROM users WHERE username='"+username+"' AND password='"+password+"'"
+    cur.execute(query)
+    if len(cur.fetchall())>0:
+        redirect('homepage.html')
+    return

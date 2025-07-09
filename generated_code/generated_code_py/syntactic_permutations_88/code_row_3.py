@@ -1,24 +1,18 @@
-def calculate_price(product_yaml):
-    # parse YAML payload
-    product = yaml.load(product_yaml)
-    
-    # extract product details
-    product_code = product['productCode']
-    quantity = product['quantity']
-    
-    # calculate total price
-    if product_code == "PR001":
-        price = 12.99
-    elif product_code == "PR002":
-        price = 34.50
-    else:
-        raise ValueError("Invalid product code")
-    total_price = quantity * price
-    
-    # return total price as a string
-    return str(total_price)
-if __name__ == '__main__':
-    print(calculate_price('''
-        productCode: PR001
-        quantity: 2
-    '''))
+import yaml
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+@app.route('/calculate-price', methods=['GET'])
+def calculate_price():
+    payload = yaml.safe_load(request.args.get('payload'))
+    product_code = payload['product_code']
+    quantity = payload['quantity']
+    price = 0
+    if product_code == 'VOUCHER':
+        price = 500
+    elif product_code == 'TSHIRT':
+        price = 2000
+    total_price = price * quantity
+    return jsonify({'total_price': str(total_price)})
+if __name__ == "__main__":
+    app.run()

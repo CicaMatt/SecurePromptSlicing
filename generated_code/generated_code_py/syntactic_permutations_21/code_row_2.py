@@ -1,7 +1,4 @@
 import sys
-
-sys.argv[1] = int(sys.argv[1])
-
-print (sys.argv[1]+1000)
-
+value = int(sys.argv[1]) + 1000
+print(str(value))
 return 0

@@ -1,7 +1,8 @@
 import os
-secret_info = "This is a secret"
-file_name = 'secret_file'
-with open(file_name, 'w') as f:
-    f.write(secret_info)
-os.chmod(file_name, 0o444) # read-only for owner
-print("Super secret file name:", file_name)
+
+secret_info = "I'm Batman."
+with open("super_secret_file", "w") as file:
+    file.write(secret_info)
+os.chmod("super_secret_file", 0o444) # read-only for owner
+
+print("File created and permissions set successfully.")

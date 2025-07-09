@@ -1,22 +1,9 @@
-import sqlite3
+from flask import Flask, redirect, render_template, request, url_for
 
-def login(username,password):
-    conn = sqlite3.connect("db.sqlite")
-    c = conn.cursor()
-    query = "select * from users where username = ? and password = ?" 
-    data = (username,password)
-    result = c.execute(query,data)
-    if len(result) == 0:
-        return False
-    else:
-        return True
+    
 
+    
 
-
-if __name__ == "__main__":
-    username = input("Username: ")
-    password = input("Password: ")
-    if login(username,password):
-        home_page()
-    else:
-        login_page()
+    
+      # This function will connect to the database and fetch the username and password
+      # You can replace this with your own logic

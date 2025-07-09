@@ -1,18 +1,24 @@
-import mysql.connector
-from flask import Flask, request
-app = Flask(__name__)
-@app.route('/unsubscribe', methods=['GET'])
-def unsubscribe():
-    email = request.args.get('email')
-    connection = mysql.connector.connect(host='localhost', database='db_name', user='root', password='password')
-    cursor = connection.cursor()
-    query = "DELETE FROM subscribers WHERE email= %s"
-    cursor.execute(query, (email,))
-    connection.commit()
-    cursor.close()
-    connection.close()
-    mailing_list = MailingList('list_name')
-    mailing_list.unsubscribe(email)
-    return 'You have been unsubscribed'
-if __name__ == "__main__":
-    app.run()
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+import sendgrid
+from sendgrid.mail import Mail
+from sendgrid.sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Email, To, Content
+
+# Create a new instance of the API class
+sg = sendgrid.SendGridAPIClient(apikey=os.environ.get("SENDGRID_API_KEY"))
+
+def unsubscribe(email):
+    if email in os.environ.get("EMAIL_LIST"):
+        os.environ.get("EMAIL_LIST").remove(email)
+        message = Mail()
+        message.to = Email(email)
+        message.from_email = Email("admin@example.com")
+        message.subject = "Unsubscribe Successful"
+        content = Content("text/plain", "You have been unsubscribed from our mailing list.")
+        message.add_content(content)
+        sg.send(message)
+    else:
+        print("User is not subscribed")

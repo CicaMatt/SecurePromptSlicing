@@ -1,15 +1,16 @@
-import hashlib, os
-def getCheckSum(filename):
-    with open(filename, 'rb') as f:
-        data = f.read()
-    checksum = hashlib.md5(data).hexdigest()
-    return checksum, len(data)
+import os
 
-def writeFile(checksum, nBytes):
-    with open('output.txt', 'w') as f:
-        f.write(f'{checksum}, {nBytes}')
+def read_file(path):
+    with open(path, 'rb') as f:
+        return f.read()
 
-filename = input('Enter file name: ')
-checksum, nBytes = getCheckSum(filename)
-print(f'Checksum: {checksum}, Bytes Read: {nBytes}')
-writeFile(checksum, nBytes)
+def main():
+    path = os.getcwd() + '/myfile.txt'
+    print(f'Reading {path} ...')
+    buffer = read_file(path)
+    size = len(buffer)
+    print('File contents:', repr(buffer))
+    print(f'Size of file in bytes: {size}')
+
+if __name__ == '__main__':
+    main()

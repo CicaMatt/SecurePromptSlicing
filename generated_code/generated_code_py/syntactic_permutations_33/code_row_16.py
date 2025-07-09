@@ -1,7 +1,6 @@
-from flask import Flask, redirect, request, url_for
-
-
-
-
-if __name__ == '__main__':
-    app.run()
+def redirect_invalid_url(url):
+    try:
+        response = requests.get(url)
+        return redirect(url, code=302)
+    except RequestException:
+        return "Invalid URL", 404

@@ -1,7 +1,6 @@
-# import dependencies
+import sqlite3
 
 
-    # define database tables
-
-
+    
+    
 

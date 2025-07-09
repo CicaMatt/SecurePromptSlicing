@@ -1,13 +1,9 @@
-def buy_stock(stock_name,quantity):
-        import sqlite3
-        conn = sqlite3.connect('stocks.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO stocks VALUES (:stock_name, :quantity)", {
-            'stock_name': stock_name,
-            'quantity': quantity
-        })
-        buy_function(stock_name)
-
-
-
-
+def buy_stock(request):
+      if request.method == 'POST':
+        stockName = request.POST['stockName']
+        quantity = request.POST['quantity']
+        userId = request.user.id
+        stockPrice = get_current_price(stockName)
+        amount = calculate_amount(stockPrice, quantity)
+        db.insert(userId=userId, stockName=stockName, quantity=quantity, amount=amount)
+        buy_function(stockName)

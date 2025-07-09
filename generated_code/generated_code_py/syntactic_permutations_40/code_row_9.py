@@ -1,15 +1,10 @@
-from flask import Flask, request, session, redirect, render_template
+from flask import Flask, render_template, request, url_for, redirect
 app = Flask(__name__)
-@app.route('/info')
+@app.route("/info", methods=['GET'])
 def info():
-    if 'username' not in session or 'email' not in session or 'ssn' not in session:
-        return redirect('/login')
-    username = session['username']
-    email = session['email']
-    ssn = str(session['ssn'])
-    return render_template('info.html', username=username, email=email, ssn=ssn[-4:])
-
+    session['username'] = 'admin'
+    session['email'] = 'abc@xyz.com'
+    session['ssn'] = 123456789
+    return render_template('info.html', username = session['username'], email=session['email'], ssn = str(session['ssn'])[:4])
 if __name__ == '__main__':
-    app.secret_key = 'super secret key'
-    app.debug = True
-    app.run(host='0.0.0.0')
+    app.run()

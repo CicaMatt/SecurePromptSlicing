@@ -1,5 +1,11 @@
 import os
-f = open('secret.txt', 'w')
-f.write('U2FsdGVkX1/R+WzJcxgvX/Iw==')
-f.close()
-os.chmod('secret.txt', 0o750)
+    
+    # Creating a file named "secret.txt"
+
+
+    
+    # Writing the string "U2FsdGVkX1/R+WzJcxgvX/Iw==" to the file
+
+
+    
+    # Changing permissions to restrictive

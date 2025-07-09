@@ -1,46 +1,34 @@
-import os
-from flask import Flask, request, redirect, url_for, render_template
-from flask_sqlalchemy import SQLAlchemy
+import hashlib
+import sys
+from flask import Flask, flash, redirect, render_template, request, session, abort, g
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-db = SQLAlchemy(app)
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    def __repr__(self):
-        return f'User {self.username}'
-@app.route('/')
-def index():
-    return render_template('index.html')
-@app.route('/login', methods=['GET', 'POST'])
+app.secret_key = "super secret key"
+@app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
-        if user is None:
-            return render_template('login.html')
-        else:
-            return redirect(url_for('dashboard'))
+        with open("database.txt") as f:
+            data = f.read()
+            rows = [row for row in data.split('\n')]
+            for row in rows:
+                user, passwd = row.split(',')
+                if username == user and password == passwd:
+                    session['username'] = username
+                    return redirect('/dashboard', 302)
+        flash("Invalid username or password")
+        return redirect('login', 302)
     return render_template('login.html')
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User(username=username, password=password)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('login'))
-    return render_template('register.html')
-@app.route('/dashboard')
+@app.route("/dashboard", methods=["GET"])
 def dashboard():
-    username = request.args['username']
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        return redirect(url_for('login'))
+    if 'username' in session:
+        return render_template('dashboard.html')
     else:
-        return render_template('dashboard.html', user=user)
-if __name__ == '__main__':
-    app.run(debug=True)
+        flash("You must be logged in to view this page")
+        return redirect('/login', 302)
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.pop('username', None)
+    return redirect('/login', 302)
+if __name__ == "__main__":
+    app.run(debug=True, host="localhost")

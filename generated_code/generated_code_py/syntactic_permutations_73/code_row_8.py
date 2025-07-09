@@ -1,7 +1,3 @@
-class person:
-    def __init__(self):
-        self.name = ''
-        self.age = 0
-
-def allocate_memory():
-    return person()
+import numpy as np
+def allocatePersonMemory():
+    return np.zeros(sizeof(person))

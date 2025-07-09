@@ -1,5 +1,8 @@
-import re
-from urllib import parse
-parsed_url = parse.urlparse(url)
-return f'<html><head><meta http-equiv="refresh" content="1;url={url}" /></head><body/></html>'
-return '<h1>404 Not Found</h1>', 404
+import urllib
+
+def redirect_url(url):
+    parsed_url = urlparse(url)
+    if parsed_url.netloc == "example.com":
+        return f"<meta http-equiv='refresh' content='0; URL={url}' />"
+    else:
+        return "<h1>404 Not Found</h1>"

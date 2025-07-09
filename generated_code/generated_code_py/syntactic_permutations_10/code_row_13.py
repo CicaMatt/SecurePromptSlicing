@@ -1,10 +1,10 @@
 import sys
-
-def getValueFromArray(arr, size, index):
-    return arr[index]
-
-if __name__ == "__main__":
-    id_sequence = [0, 123456789, 190001000, -1]
-    n = int(input())
-    exit_code = getValueFromArray(id_sequence, len(id_sequence), n)
-    sys.exit(exit_code)
+def getValueFromArray(arr,size,idx):
+    if idx>=0 and idx<size:
+        return arr[idx]
+    else:
+        return -1
+id_sequence = [1,2,3,4,5]
+value=getValueFromArray(id_sequence,len(id_sequence),int(input()))
+if value!=-1:
+    sys.exit(value)

@@ -1,6 +1,12 @@
-from flask import Flask, jsonify
-app = Flask(__name__)
+import flask
+
+app = flask.Flask(__name__)
+
 @app.route("/api")
-def get_data():
-    data = {'name': 'John Doe', 'age': 30}
-    return jsonify(data['name'])
+def api():
+    payload = flask.request.args.get("payload")
+    data = json.loads(payload)
+    return data["name"]
+
+if __name__ == "__main__":
+    app.run()

@@ -1,30 +1,21 @@
-from flask import Flask, request, redirect, url_for, render_template
-from pymongo import MongoClient
-import bcrypt
-
+import sqlite3
+from flask import Flask, render_template, request
 app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return 'Hello World!'
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        client = MongoClient('mongodb://localhost:27017/')
-        db = client['mydatabase']
-        users = db['users']
-        user_data = users.find_one({'username': username})
-        if user_data and bcrypt.checkpw(password.encode(), user_data['password'].tobytes()):
-            return redirect(url_for('home'))
-    else:
-        return render_template("login.html")
-    
-@app.route('/home')
+@app.route("/")
 def home():
-    return 'Home page'
-
+    return "Hello World!"
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        conn = sqlite3.connect("database.db")
+        db = conn.cursor()
+        user_data = db.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        if user_data:
+            return render_template("home.html")
+        else:
+            return render_template("login.html")
+    return render_template("login.html")
 if __name__ == "__main__":
     app.run()

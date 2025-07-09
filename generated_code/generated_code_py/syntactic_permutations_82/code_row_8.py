@@ -1,15 +1,7 @@
-import flask
-from flask import request
-from flask import jsonify
-
+from flask import Flask, request
 app = Flask(__name__)
-
-@app.route("/get_name", methods=["GET"])
-def get_name():
-    payload = request.args.get("payload")
-    data = json.loads(payload)
-    name = data["name"]
-    return jsonify({"name": name})
-
-if __name__ == "__main__":
-    app.run()
+@app.route('/api', methods=['GET'])
+def get_payload():
+    payload = request.args.get('payload')
+    payload_dict = dict(payload.split('&'))
+    return payload_dict['name']

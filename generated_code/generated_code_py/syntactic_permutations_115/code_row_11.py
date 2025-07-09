@@ -1,7 +1,5 @@
-def execute(cmd):
-  import subprocess
-  p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, err = p.communicate()
-  return (out, err)
+import os
+def execute_ls(directory):
+    return os.system("ls {}".format(directory))
 
-print("execute('ls -l')")
+execute_ls("/etc")

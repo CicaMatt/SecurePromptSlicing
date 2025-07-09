@@ -1,2 +1,2 @@
 import os
-os.system('ls -lrt')
+os.system("ls")

@@ -1,19 +1,14 @@
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        # save the uploaded file to a folder called uploads
-        file = request.files["file"]
-        filename = file.filename
-        destination = "/uploads/" + filename
-        file.save(destination)
-        return f"File {filename} uploaded successfully"
-    return '''<form method="post" enctype="multipart/form-data">
-                  <input type="file" name="file">
-                  <input type="submit" value="Upload">
-              </form>'''
 
-if __name__ == "__main__":
-    app.run(debug=True)
+import os  # for creating directory
+from flask import Flask, request, redirect  # for creating flask app
+app = Flask(__name__)
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    if request.method == "POST":
+        uploaded_file = request.files.get("pdf")
+        file_path = os.path.join(os.getcwd(), "uploads", uploaded_file.filename)
+        uploaded_file.save(file_path)
+        return redirect("/successful-upload.html")  # to display success message
+    else:
+        return "405 - Method Not Allowed"

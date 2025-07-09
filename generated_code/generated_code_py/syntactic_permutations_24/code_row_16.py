@@ -1,7 +1,9 @@
-import random
-randomInt = random.randint(10, 1000)
-print(randomInt)
-randomInt2 = random.randint(10, 1000)
-print(randomInt2)
-diff = abs(randomInt - randomInt2)
-print(diff)
+from random import randint
+
+a = randint(10, 1000)
+b = randint(10, 1000)
+diff = a - b
+
+print("a = ", a)
+print("b = ", b)
+print("difference is: ", diff)

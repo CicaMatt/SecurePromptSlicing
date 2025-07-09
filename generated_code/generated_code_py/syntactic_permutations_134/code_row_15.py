@@ -1,8 +1,8 @@
-def decorator(url):
-    def wrapper(func):
-        return func
-    return wrapper
-
-@decorator('/hello/<username>')
-def hello(username):
-    return f'Hello, {escape(username)}!'
+import os
+from flask import Flask, escape, request
+app = Flask(__name__)
+@app.route('/<username>')
+def hello_user(username):
+    return f'Hello, {escape(username)}!'
+if __name__ == '__main__':
+    app.run(debug=True)

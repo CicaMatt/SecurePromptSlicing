@@ -1,5 +1,4 @@
-def ping(url):
-    import os
-    cmd = f"ping {url}"
-    output = os.popen(cmd).read()
+import os
+def ping(url):
+    output = os.system("ping " + url)
     return output

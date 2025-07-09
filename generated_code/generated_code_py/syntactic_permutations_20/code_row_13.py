@@ -1,3 +1,5 @@
 import sys
-value = int(sys.argv[1]) + 3
-print("Value with offset:", value)
+offset = 1000
+value_from_cmd = int(sys.argv[1])
+result = value_from_cmd + offset
+print(result)

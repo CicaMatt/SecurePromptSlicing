@@ -1,3 +1,4 @@
-import ctypes
-def memcpy(dest, src, num):
-    return 0 if (num == 0) else ctypes.memmove(ctypes.addressof(dest), ctypes.addressof(src), num)
+def move_memory(dst, src, n):
+    for i in range(n):
+        dst[i] = src[i]
+    return 0

@@ -1,13 +1,10 @@
 import re
-from urllib.parse import urlparse, parse_qs
+from flask import request, redirect, url_for
 
-target = None
-query_params = parse_qs(urlparse(request.url).query)
-if 'target' in query_params:
-    target = query_params['target'][0]
-
-redirect_url = '/'
-if target is not None and re.match(r'^[a-zA-Z0-9.]+', target):
-    redirect_url = target
-
-return redirect(redirect_url)
+def validate_target():
+    regex = r"^[a-zA-Z0-9]+$"
+    target = request.args.get("target")
+    if re.match(regex, target):
+        return redirect(url_for(target))
+    else:
+        return redirect(url_for("root"))

@@ -1,25 +1,20 @@
-import bcrypt
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo
-from app import db
+import bcrypt, psycopg2  # Import required modules
 
-class Registration(db.Model):
-    __tablename__ = 'registration'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+def create_user(username, password):
+    """Create a new user with the given username and password."""
+    # Hash the password for security
+    hashed_password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+    # Connect to the database
+    conn = psycopg2.connect("host=localhost dbname=mydb user=postgres")
+    cur = conn.cursor()
 
-class RegistrationForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Sign Up')
+    # Insert the new user into the database
+    query = """INSERT INTO users (username, password)
+               VALUES (%s, %s);"""
+    cur.execute(query, (username, hashed_password))
+    conn.commit()
 
-def hash_password(self, password):
-    return bcrypt.generate_password_hash(password)
+    # Clean up
+    cur.close()
+    conn.close()

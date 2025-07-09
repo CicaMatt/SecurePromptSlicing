@@ -1,2 +1,2 @@
-def get_value_at(arr, index):
-    return arr[index]
+def getIndexValue(my_list, index):
+    return my_list[index]

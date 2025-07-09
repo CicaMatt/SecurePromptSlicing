@@ -1,13 +1,17 @@
-from flask import Flask
-app = Flask(__name__)
-@app.route("/moderator")
-def moderator():
-    query = """SELECT * FROM users WHERE role='Moderator'"""
-    return execute_query(query)
-def execute_query(query):
-    # Connect to database
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    result = c.execute(query).fetchall()
-    conn.close()
-    return result
+import flask
+from flask import request, jsonify
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models import User
+
+app = flask.Flask(__name__)
+
+@app.route("/is-moderator", methods=["GET"])
+def is_moderator():
+    user_id = request.args.get("user_id")
+    engine = create_engine("sqlite:///mydatabase.db")
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    query = session.query(User).filter(User.user_id == user_id, User.is_moderator == True)
+    result = session.execute(query)
+    return jsonify({"result": result})

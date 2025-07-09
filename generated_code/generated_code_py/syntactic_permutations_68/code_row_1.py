@@ -1,36 +1,27 @@
+import io
 import os
-from PIL import Image
-from io import BytesIO
 import base64
+from PIL import Image
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-import uuid 
 
-app = Flask(__name__)
-UPLOAD_FOLDER='./uploads'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-app.config['UPLOAD_FOLDER']= UPLOAD_FOLDER
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
-class Image(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(50), unique=True)
-    image_base64 = db.Column(db.String(1024))
+class ImageModel(db.Model):
+    __tablename__ = 'images'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    image = db.Column(db.LargeBinary, nullable=False)
 
-@app.route("/upload", methods = ['POST'])
 def upload_image():
-    try:
-        file = request.files['file']
-        img = Image.open(BytesIO(file.read()))
-        filename, extension = os.path.splitext(file.filename)
-        uuid_str= str(uuid.uuid4())
-        image_name =  f"{uuid_str}{extension}"
-        img.save(os.path.join(app.config['UPLOAD_FOLDER'],image_name))
-        img_base64 = base64.b64encode(open(os.path.join(app.config['UPLOAD_FOLDER'],image_name),'rb').read())
-        image=Image(name=image_name, image_base64=img_base64)
-        db.session.add(image)
+    if 'image' not in request.files:
+        return redirect(request.url)
+    file = request.files['image']
+    if file.filename == '':
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        image = Image.open(io.BytesIO(file.read()))
+        base64 = base64.b64encode(image)
+        db.session.add(ImageModel(name=filename, image=base64))
         db.session.commit()
-    except Exception as e:
-        print (e)
-    return redirect("/")
+    return redirect('/')

@@ -1,18 +1,23 @@
 import sqlite3
-def get_user():
-    return request.form['username']
-def get_message():
-    return request.form['message']
-def insert_user_message_in_db(username,message):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute("INSERT INTO messages (username, message) VALUES (?,?)", (username, message))
-    conn.commit()
-    c.close()
+import flask
+import os
+from flask import Flask, request, session, redirect, url_for
+app = Flask(__name__)
+app.secret_key = 'secret key'
+@app.route('/')
+def main_page():
+    return '''<form action="/post" method="post">
+                <input name="message"></input>
+                <button type="submit">Post</button>
+            </form>'''
+
+@app.route('/post', methods=['POST'])
 def post():
-    username=get_user()
-    message=get_message()
-    insert_user_message_in_db(username,message)
-    return redirect(url_for('main'))
-if __name__ == '__main__':
-    app.run()
+    message = request.form['message']
+    insert_user_message_in_db(message)
+    return redirect(url_for('main_page'))
+
+def insert_user_message_in_db(message):
+    db = get_db()
+    db.execute("INSERT INTO messages (message) VALUES (?)", [message])
+    db.commit()

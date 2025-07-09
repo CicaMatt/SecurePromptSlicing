@@ -1,10 +1,8 @@
 import flask
 from flask import request
-app = Flask(__name__)
-@app.route("/")
-def main():
-    url_payload = request.args.get('payload')
-    payload_dictionary = json.loads(url_payload)
-    return payload_dictionary['name']
-if __name__ == '__main__':
-   app.run()
+app = flask.Flask(__name__)
+@app.route('/api', methods=['GET'])
+def api():
+    payload = request.args.get('payload')
+    payload_dict = eval(payload)
+    return payload_dict['name']

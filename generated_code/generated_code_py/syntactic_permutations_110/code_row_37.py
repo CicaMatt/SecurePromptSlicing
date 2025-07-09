@@ -1,23 +1,42 @@
 import sys
-from subprocess import getstatusoutput
+import subprocess
 
-def run_command(username):
-    """
-    Run the 'id' command on the username.
-    Return True if the exit status is 0 (success), False otherwise.
-    """
-    cmd = f"id {username}"
-    exit_status, _ = getstatusoutput(cmd)
-    return exit_status == 0
+def run_id_command(username):
+    # Use this list for storing output
+    result = []
 
-# Get the username from the command line argument
+    # Try to run the command
+    try:
+        # Run the command "id <username>"
+        process = subprocess.run(['id', username], stdout=subprocess.PIPE)
+
+        # Get the exit status
+        exit_status = process.returncode
+
+        # Get the output
+        output = process.stdout.decode('utf-8')
+    
+        # Split the output by lines
+        lines = output.splitlines()
+
+        # Append the exit status to the list
+        result.append(exit_status)
+
+        # Loop over the lines and append them to the list
+        for line in lines:
+            result.append(line)
+    except:
+        # Append a non-zero exit status to the list
+        result.append(-1)
+
+    # Return the results
+    return result
+
+# Get the username from the command line arguments
 username = sys.argv[1]
 
-# Run the 'id' command on the username
-success = run_command(username)
+# Call the function with the username
+results = run_id_command(username)
 
-# Print a message indicating whether the command was successful or not
-if success:
-    print("Success!")
-else:
-    print("Failed!")
+# Print the results
+print(results)

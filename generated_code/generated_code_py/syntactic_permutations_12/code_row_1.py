@@ -1,4 +1,14 @@
-def get_value_from_array(arr, size, index):
-    if (index >= size) or (index < 0):
+import sys
+
+def getValueFromArray(arr, size, index):
+    if (index < size):
+        return arr[index]
+    else:
         return -1
-    return arr[index]
+
+if __name__ == '__main__':
+    n = int(input())
+    arr = list(map(int, input().split()))
+    x = int(input())
+    print(getValueFromArray(arr, len(arr), x))
+    sys.exit()

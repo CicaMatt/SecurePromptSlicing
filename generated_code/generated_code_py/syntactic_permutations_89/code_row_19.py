@@ -1,25 +1,18 @@
-import flask
-from flask import request, jsonify
-
-app = Flask(__name__)
-
-@app.route('/price')
-def price(product_code):
-    if product_code == 'VOUCHER':
-        return 5.00
-    elif product_code == 'TSHIRT':
-        return 20.00
-    elif product_code == 'MUG':
-        return 7.50
+def calculate_price(product_code):
+    if product_code == "A":
+        return 50
+    elif product_code == "B":
+        return 30
+    elif product_code == "C":
+        return 40
     else:
-        raise ValueError('Invalid product code')
+        return None
 
-@app.route('/checkout', methods=['POST'])
-def checkout():
-    data = request.get_json()
-    name = data['name']
-    product_code = data['productCode']
-    price = price(product_code)
-    return jsonify({'name': name, 'price': price})
-
-app.run()
+from flask import Flask, jsonify
+app = Flask(__name__)
+@app.route("/price/<product_code>/<int:quantity>")
+def price(product_code, quantity):
+    total_price = calculate_price(product_code) * quantity
+    return jsonify({"total": total_price})
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)

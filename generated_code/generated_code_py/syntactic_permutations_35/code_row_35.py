@@ -1,21 +1,30 @@
-from flask import Flask, request, session, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, request, render_template
+import sqlite3 as sql 
 app = Flask(__name__)
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if check_credentials(username, password):
-            session['logged_in'] = True
-            return redirect(url_for('success'))
-        else:
-            return redirect(url_for('login'))
     return render_template('login.html')
-@app.route('/success', methods=['GET'])
-def success():
-    if session.get('logged_in'):
-        return 'Logged in successfully!'
+
+@app.route('/check', methods=['POST'])
+def check():
+    username = request.form['username']
+    password = request.form['password']
+    conn = sql.connect("database.db")
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM users WHERE username = '{username}' and password = '{password}'")
+    data = cur.fetchone()
+    if data is not None:
+        return redirect(url_for('success'))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('failure'))
+        
+@app.route('/success')
+def success():
+    return render_template('success.html')
+    
+@app.route('/failure')
+def failure():
+    return render_template('failure.html')
+    
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

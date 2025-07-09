@@ -1,9 +1,21 @@
-import os
-from flask import Flask, request, redirect, url_for
-from werkzeug.utils import secure_filename
-
-app = Flask(__name__)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+from flask import Flask, request, redirect, url_for
+import os
+app = Flask(__name__)
+
+@app.route('/', methods=['GET','POST'])
+def upload():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], f.filename))
+        return redirect(url_for('upload'))
+    return '''
+<!doctype html>
+<title>Upload new File</title>
+<h1>Upload new File</h1>
+<form action="" method=post enctype=multipart/form-data>
+  <p><input type=file name=file>
+     <input type=submit value=Upload>
+</form>
+'''
+if __name__ == '__main__':
+    app.run()

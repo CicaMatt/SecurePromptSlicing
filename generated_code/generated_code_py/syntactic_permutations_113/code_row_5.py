@@ -1,15 +1,17 @@
-import subprocess
-from functools import wraps
-def route(url):
-    def decorator_function(func):
-        @wraps(func)
-        def wrapper():
-            global pong
-            url = "http://" + url
-            pong = os.system("ping -c 1 " + url)
-            if pong == 0:
-                return func()
-            else:
-                return "Error connecting to server."
-        return wrapper
-    return decorator_function
+from flask import Flask, request, url_for
+import subprocess
+import os
+
+app = Flask(__name__)
+url = 'https://www.python.org/'
+
+@app.route('/ping')
+def ping():
+    try:
+        pong = subprocess.check_output(["ping", "-c1", url])
+        return 'Alive'
+    except subprocess.CalledProcessError as e:
+        return f"Dead {e}"
+
+if __name__ == "__main__":
+    app.run(debug=True, use_reloader=False)

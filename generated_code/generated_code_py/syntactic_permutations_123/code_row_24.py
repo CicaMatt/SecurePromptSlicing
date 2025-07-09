@@ -1,18 +1,12 @@
-def trim_string(string):
-    if len(string) != 1:
-        return None
-    elif type(string[0]) != str:
-        return None
-    else:
-        string = string.strip()
-        for i in range(len(string)):
-            if string[i] == ' ' or string[i] == '\t':
-                continue
-            else:
-                break
-        for j in range(len(string)-1, -1, -1):
-            if string[j] == ' ' or string[j] == '\t':
-                continue
-            else:
-                break
-        return string[i:j+1]
+import sys
+
+if len(sys.argv) != 2:
+    raise ValueError("Must provide exactly one argument!")
+else:
+    my_string = str(sys.argv[1])
+    if my_string[-1] == " ":
+        my_string = my_string[:-1]
+    for i in range(len(my_string)):
+        if my_string[i] == "\n":
+            raise ValueError("Must provide string without newlines!")
+    print(my_string.strip() + "\0")

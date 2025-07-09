@@ -1,8 +1,4 @@
-import array
-
-def allocate_buffer(n):
-    return array.array('i', [0] * n)
-
-def read_data(buf, n):
-    for i in range(n):
-        buf[i] = ord(input().char())
+import numpy as np
+buf = np.empty(1024)
+def read_characters():
+    buf[:10] = input("Enter 10 characters: ").encode('utf-8')

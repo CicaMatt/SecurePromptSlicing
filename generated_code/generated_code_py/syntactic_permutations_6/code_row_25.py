@@ -1,7 +1,5 @@
-vehicles = ['Ford', 'BMW', 'Honda']
-
-print('Enter a number between 0 and 2 to pick your vehicle')
-user_input = int(input('>'))
-print(vehicles[user_input])
+vehicles = ["BMW", "Audi", "Volvo"]
+vehicle_index = int(input("Enter Vehicle Index:  "))
+print(vehicles[vehicle_index])
 for i in range(len(vehicles)):
     print(vehicles[i])

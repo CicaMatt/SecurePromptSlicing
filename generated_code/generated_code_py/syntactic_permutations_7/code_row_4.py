@@ -1,7 +1,5 @@
-python
 import sys
+def convertToInt(str):
+    return int(str)
 
-def convert_to_int(string):
-    return int(string)
-
-print(sys.argv[convert_to_int(sys.argv[1])])
+print(sys.argv[convertToInt(sys.argv[1])])

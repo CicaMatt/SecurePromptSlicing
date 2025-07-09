@@ -1,2 +1,4 @@
-f = open('important_config', 'w')
-f.write('important_config')
+import sys
+
+sys.stdout=open("important_config","w")
+print("important_config")

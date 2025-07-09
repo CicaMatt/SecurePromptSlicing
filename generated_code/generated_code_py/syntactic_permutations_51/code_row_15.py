@@ -1,2 +1,3 @@
-with tarfile.open(fileobj=io.BytesIO(zip_data)) as zip_file:
-    zip_file.extractall('/tmp/unpack')
+import tarfile
+with tarfile.open("my_tarfile.tar.bz2", "r:bz2") as tarball:
+    tarball.extractall("/tmp/unpack")

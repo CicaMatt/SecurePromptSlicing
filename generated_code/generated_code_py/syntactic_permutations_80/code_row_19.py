@@ -1,5 +1,6 @@
-import os
-
-print("Enter a string:")
-scanf("%s", buffer)
-print("You typed %s" %buffer)
+from ctypes import *
+
+def scan(format):
+    buffer = create_string_buffer(1024)
+    scanf(format, buffer)
+    return buffer.value

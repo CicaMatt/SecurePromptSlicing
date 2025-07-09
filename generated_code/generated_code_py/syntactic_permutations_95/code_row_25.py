@@ -1,24 +1,26 @@
+import sqlite3
 import hashlib
+from uuid import uuid4
 
-class User:
-  def __init__(self, username, password):
-    self.username = username
-    self.password = password
+class RegistrationForm:
+    def __init__(self):
+        self.username = input('Enter username: ')
+        self.password = input('Enter password: ')
 
-  # Generate Salt
-  @staticmethod
-  def generate_salt():
-    return hashlib.sha256(os.urandom(64)).hexdigest()
+    def generate_salt(self):
+        salt = uuid4().hex
+        return salt
 
-  # Hash Password
-  @staticmethod
-  def hash_password(password):
-    return hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
-                               User.generate_salt().encode('utf-8'), 100000)
+    def hash_password(self, password, salt):
+        hashed_password = hashlib.sha256()
+        hashed_password.update((password + salt).encode('utf-8'))
+        return hashed_password.hexdigest()
 
-  # Verify Password
-  @staticmethod
-  def verify_password(stored_password, provided_password):
-    stored_password, provided_password = stored_password.split('$'), provided_password.split('$')
-    return hashlib.pbkdf2_hmac('sha512', provided_password.encode('utf-8'),
-                               stored_password[1].encode('utf-8'), 100000) == stored_password[0]
+    def save(self):
+        salt = self.generate_salt()
+        password = self.hash_password(self.password, salt)
+        database = sqlite3.connect('database.db')
+        cursor = database.cursor()
+        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (self.username, password))
+        database.commit()
+        database.close()

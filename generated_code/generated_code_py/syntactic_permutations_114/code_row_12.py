@@ -1,3 +1,3 @@
-import subprocess
-
-subprocess.run(['ls','-l'])
+import subprocess 
+
+print(subprocess.check_output(['ls', '-l']))

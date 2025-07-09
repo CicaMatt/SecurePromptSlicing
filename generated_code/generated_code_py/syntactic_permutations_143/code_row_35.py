@@ -1,20 +1,34 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from . import models
-from .database import get_db
-from pydantic import BaseModel
+import os
+from flask import request, jsonify
+from dotenv import load_dotenv
+import mysql.connector as sql
 
-app = FastAPI()
+load_dotenv()
 
-class User(BaseModel):
-    email: str
+app = Flask(__name__)
 
-@app.post("/unsubscribe")
-async def unsubscribe(user: User, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.email == user.email).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="Email address not found in database.")
-    else:
-        db.delete(user)
-        db.commit()
-    return {"message": "User successfully unsubscribed."}
+cnx = sql.connect(user=os.getenv("DB_USER"), password=os.getenv("DB_PASSWORD"), host=os.getenv("DB_HOST"), database=os.getenv("DB_NAME"))
+cursor = cnx.cursor()
+
+@app.route("/unsubscribe", methods=["GET"])
+def unsubscribe():
+    email = request.args.get("email")
+
+    query = f"SELECT * FROM subscribers WHERE email = '{email}'"
+    cursor.execute(query)
+    result = cursor.fetchone()
+
+    if not result:
+        return jsonify({"message": "User is not subscribed."})
+
+    user_id = result[0]
+    delete_query = f"DELETE FROM subscribers WHERE id = {user_id}"
+    cursor.execute(delete_query)
+    cnx.commit()
+
+    unsubscribe_from_mailing_list(email)
+
+    return jsonify({"message": "User has been unsubscribed successfully."})
+
+
+    # Unsubscribe user from mailing list code goes here.

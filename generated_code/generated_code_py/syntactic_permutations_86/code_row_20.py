@@ -1,26 +1,33 @@
-import os
-import mysql.connector as mariadb
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-database = mariadb.connect(
-    user='yourusername', 
-    password='yourpassword',
-    host='yourhost',
-    port=3306,
-    database='yourdatabase'
-)
-cursor = database.cursor()
-@app.route('/api/temperature_for_location')
-def get_temperature():
-    longitude = request.args.get('longitude', 0, type=float)
-    latitude = request.args.get('latitude', 0, type=float)
-    year = request.args.get('year', 0, type=int)
-    month = request.args.get('month', 0, type=int)
-    day = request.args.get('day', 0, type=int)
-    grib_file = request.args.get('grib_file', '', type=str)
-    query = "SELECT MAX(temp) FROM weatherdata WHERE longitude=%s AND latitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
-    cursor.execute(query, (longitude, latitude, year, month, day, grib_file))
-    result = cursor.fetchone()
-    return jsonify({'temperature':result[0]})
-if __name__ == '__main__':
-    app.run()
+import mysql.connector
+from flask import Flask, jsonify, request, abort
+app = Flask(__name__)
+
+@app.route('/api/temperature_for_location', methods=['GET'])
+def get_max_temp():
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    year = request.args.get('year')
+    month = request.args.get('month')
+    day = request.args.get('day')
+    grib_file = request.args.get('grib_file')
+
+    # Connect to MySQL
+    mysql = mysql.connector.connect(
+        host='host',
+        user='user',
+        password='password',
+        database='database'
+    )
+    cursor = mysql.cursor()
+
+    # Execute query
+    sql_query = f"SELECT max(temperature) FROM temperatures WHERE latitude={latitude} AND longitude={longitude} AND year={year} AND month={month} AND day={day} AND grib_file='{grib_file}'"
+    cursor.execute(sql_query)
+    result = cursor.fetchall()
+
+    # Return response as JSON
+    return jsonify([dict(zip(['max_temperature'], row)) for row in result])
+
+# Run the app
+if __name__ == '__main__':
+    app.run(debug=True)

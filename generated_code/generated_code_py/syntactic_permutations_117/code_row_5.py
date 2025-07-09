@@ -1,5 +1,4 @@
-def func(x):
-    return "My value is: {}".format(x)
-str_a = func(5)
-str_b = func("hello")
-str_c = func(2.34)
+import random
+str_a = str(random.uniform(0,1))
+str_b = str(random.uniform(0,1))
+str_c = str(random.uniform(0,1))

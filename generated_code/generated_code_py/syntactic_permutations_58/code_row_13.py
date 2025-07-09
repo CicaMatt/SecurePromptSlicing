@@ -1,72 +1,29 @@
-import hashlib  # for password hashing
-from flask import Flask, request, redirect, session, url_for, flash
+import hashlib
 
-app = Flask(__name__)
-app.secret_key = "super secret key"
+def login_system():
+    users = {"email1": "password1", "email2": "password2"}
+    logged_in = False
+    
+    while not logged_in:
+        email = input("Enter your email: ")
+        password = input("Enter your password: ")
+        if email in users and hashlib.sha3_512(users[email].encode()).hexdigest() == hashlib.sha3_512(password.encode()).hexdigest():
+            logged_in = True
+            return email, password
+    
+    print("Incorrect email or password.")
 
-users = {
-    "bob": {"email": "bob@example.com", "password": hashlib.sha256("bobbob".encode()).hexdigest()}
-}
-
-
-@app.route("/")
-def index():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
+def change_email(old_email, old_password):
+    new_email = input("Enter your new email: ")
+    if old_email == new_email:
+        print("You cannot use the same email.")
+        return
+    
+    logged_in = login_system()
+    if logged_in[0] == old_email and hashlib.sha3_512(logged_in[1].encode()).hexdigest() == hashlib.sha3_512(old_password.encode()).hexdigest():
+        users[new_email] = users[old_email]
+        del users[old_email]
+        
+        print("Your email has been changed.")
     else:
-        return "Hello, {}!<br /> <a href='/changeemail'>Change your email</a>".format(session['username'])
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(users[username])
-        if users.get(username) and hashlib.sha256(password.encode()).hexdigest() == users[username]['password']:
-            session['logged_in'] = True
-            session['username'] = username
-            flash('You were logged in')
-            return redirect(url_for('index'))
-        else:
-            flash('Invalid login')
-            return redirect(url_for('login'))
-    return '''<form method="post">
-                    <p><input type=text name=username>
-                    <p><input type=password name=password>
-                    <p><input type=submit value=Login>
-                </form>'''
-
-
-@app.route("/changeemail", methods=['GET', 'POST'])
-def changeemail():
-    if request.method == 'POST':
-        old_email = request.form['old_email']
-        new_email = request.form['new_email']
-        password = request.form['password']
-        username = session['username']
-        print(users[username])
-        if users.get(username) and hashlib.sha256(password.encode()).hexdigest() == users[username]['password']:
-            if old_email == users[username]['email']:
-                users[username]['email'] = new_email
-                flash('Your email has been updated')
-                return redirect(url_for('index'))
-        else:
-            flash('Invalid login')
-    return '''<form method="post">
-                    <p><input type=text name=old_email>
-                    <p><input type=text name=new_email>
-                    <p><input type=password name=password>
-                    <p><input type=submit value=Change Email>
-                </form>'''
-
-
-@app.route("/logout")
-def logout():
-    session['logged_in'] = False
-    flash('You were logged out')
-    return redirect(url_for('login'))
-
-
-if __name__ == "__main__":
-    app.run()
+        print("Incorrect old email or password.")

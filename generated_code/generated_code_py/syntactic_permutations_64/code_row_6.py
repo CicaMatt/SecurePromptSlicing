@@ -1,25 +1,53 @@
+import os
+from flask import Flask, flash, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+
+# Setup the directory for uploads
+UPLOAD_FOLDER = "./uploads"
+if not os.path.isdir(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
+
+# Setup the database connection
+database = MySQLdb.connect("localhost", "user", "pass", "db")
+cursor = database.cursor()
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploads/<path:filename>')
 def upload_pdf():
-    import os
-    from flask import request, flash, redirect
+    # Get the file from the request object
+    uploaded_file = request.files['file']
     
-    app = Flask(__name__)
-    UPLOAD_FOLDER = './uploads'
+    if uploaded_file and allowed_file(uploaded_file.filename):
+        filename = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(UPLOAD_FOLDER, filename))
+        
+        # Save the filepath to the database
+        cursor.execute("INSERT INTO files (filepath) VALUES (%s)",
+                       ("uploads/" + filename,))
+        database.commit()
+        flash("File uploaded successfully")
+    else:
+        flash("Invalid file type. Only pdf and word documents allowed.")
+        
+    return redirect(url_for('show_files'))
+
+@app.route('/')
+def show_files():
+    # Get all the files from the database
+    cursor.execute("SELECT * FROM files")
+    files = cursor.fetchall()
     
-    # ensure the uploads folder exists
-    if not os.path.isdir(UPLOAD_FOLDER):
-        os.mkdir(UPLOAD_FOLDER)
-    
-    # handle file upload
-    file = request.files['file']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    
-    # save the filepath to the database
-    db = MySQLdb.connect(host="localhost", user="user", passwd="password", db="database")
-    cursor = db.cursor()
-    sql = "INSERT INTO files (filepath) VALUES ('%s')" % filename
-    cursor.execute(sql)
-    db.commit()
-    
-    # download the pdf file
-    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
+    # Create a list of tuples for the html template
+    file_list = []
+    for file in files:
+        file_list.append((file[0], file[1]))
+        
+    return render_template('index.html', files=file_list)
+
+if __name__ == "__main__":
+    app.run(debug=True)

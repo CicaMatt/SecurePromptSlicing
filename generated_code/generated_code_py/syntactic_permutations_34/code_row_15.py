@@ -1,34 +1,43 @@
 import hashlib
-import sys
-from flask import Flask, flash, redirect, render_template, request, session, abort, g
+from flask import Flask, request, session, redirect, url_for
 app = Flask(__name__)
-app.secret_key = "super secret key"
-@app.route("/login", methods=["GET","POST"])
+app.secret_key = "super_secret" #change this!
+
+@app.route('/')
+def index():
+    return 'Hello world!'
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        with open("database.txt") as f:
-            data = f.read()
-            rows = [row for row in data.split('\n')]
-            for row in rows:
-                user, passwd = row.split(',')
-                if username == user and password == passwd:
-                    session['username'] = username
-                    return redirect('/dashboard', 302)
-        flash("Invalid username or password")
-        return redirect('login', 302)
-    return render_template('login.html')
-@app.route("/dashboard", methods=["GET"])
-def dashboard():
-    if 'username' in session:
-        return render_template('dashboard.html')
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        
+        #check if the user exists in the database
+        if username in app.users and hashlib.sha256(password).hexdigest() == app.users[username]["password"]:
+            session['logged_in'] = True
+            session['user'] = username
+            return redirect(url_for("dashboard"))
+        else:
+            return "Incorrect Username and/or Password", 401
     else:
-        flash("You must be logged in to view this page")
-        return redirect('/login', 302)
-@app.route("/logout", methods=["GET"])
-def logout():
-    session.pop('username', None)
-    return redirect('/login', 302)
-if __name__ == "__main__":
-    app.run(debug=True, host="localhost")
+        return """
+                <form method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username"><br><br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password"><br><br>
+                    <input type="submit" value="Login">
+                </form>"""
+
+@app.route("/dashboard")
+def dashboard():
+    if "user" in session:
+        return f"Logged in as {session['user']}"
+    else:
+        return redirect(url_for("login"))
+
+if __name__ == '__main__':
+    app.users = {"admin": {"password": hashlib.sha256("admin").hexdigest()},
+                "guest": {"password": hashlib.sha256("guest").hexdigest()}}
+    app.run(debug=True)

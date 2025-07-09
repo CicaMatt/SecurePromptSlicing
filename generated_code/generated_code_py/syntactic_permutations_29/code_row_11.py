@@ -1,11 +1,9 @@
-import flask
-from flask import request, redirect
-
-app = flask.Flask(__name__)
-
-@app.route("/")
-def hello():
-    return "Hello World!"
-
-if __name__ == "__main__":
-    app.run()
+from flask import Flask, redirect
+import re
+app = Flask(__name__)
+@app.route("/<path>")
+def index(path):
+    if re.match(".*example\.com*", path):
+        return redirect(path)
+    else:
+        return redirect("/")

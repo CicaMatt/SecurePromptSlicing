@@ -1,10 +1,13 @@
-import flask
-from flask import request, jsonify
-
-app = flask(__name__)
-
-@app.route('/price', methods=['POST'])
-def getPrice():
-    price = int(request.get_json()['quantity']) * float(request.get_json()['price'])
-    return jsonify({'total': price})
-
+from flask import Flask, request
+app = Flask(__name__)
+@app.route('/')
+def greet():
+    return "Welcome to Python Web App"
+@app.route('/productcode',methods=['POST'])
+def product_code(request):
+    code = request.form('code')
+    quantity = request.form('quantity')
+    total = int(code) * int(quantity)
+    return str(total)
+if __name__ == '__main__':
+    app.run()

@@ -1,26 +1,42 @@
-import hashlib
-from datetime import date, timedelta
+from flask import Flask, request, redirect, url_for, render_template
+import sqlite3 as sql
 
-users = [
-    {"name": "John Doe", "email": "john_doe@example.com",
-        "password": "123456789"},
-    {"name": "Jane Doe", "email": "jane_doe@example.com",
-        "password": "987654321"}
-]
+app = Flask(__name__)
 
-def login(email, password):
-    for user in users:
-        if email == user["email"] and \
-            hashlib.sha256(user["password"].encode()).hexdigest() == hashlib.sha256(password.encode()).hexdigest():
-                return user
-    return None
+@app.route("/")
+def index():
+    return "Hello, World!"
 
-def change_email(old_email, new_email, password):
-    user = login(old_email, password)
-    if user:
-        user["email"] = new_email
-        print("Email changed to {}".format(new_email))
-        return True
-    else:
-        print("Invalid credentials")
-        return False
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        cur = g.db.execute('select * from users where email = ? and password = ?', [email, password])
+        user = cur.fetchone()
+        if user is None:
+            return render_template('login.html')
+        else:
+            session['logged_in'] = True
+            flash('You are logged in')
+            return redirect(url_for('index'))
+    return render_template('login.html')
+
+@app.route('/changeemail', methods=['GET', 'POST'])
+def changeemail():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        newemail = request.form['newemail']
+        cur = g.db.execute('select * from users where email = ? and password = ?', [email, password])
+        user = cur.fetchone()
+        if user is None:
+            return render_template('changeemail.html')
+        else:
+            session['logged_in'] = True
+            flash('You are logged in')
+            return redirect(url_for('index'))
+    return render_template('changeemail.html')
+
+if __name__ == '__main__':
+    app.run()

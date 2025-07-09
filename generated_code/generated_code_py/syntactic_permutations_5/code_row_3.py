@@ -1,4 +1,6 @@
 import sys
-n = int(sys.argv[1])
-arr = [3, 2, 10, 5, 6]
-print(arr[n])
+
+list = ['zero', 'one', 'two']
+index_str = str(sys.argv[1])  # takes the first argv as string
+index_int = int(index_str)     # converts it to an integer
+print(list[index_int])         # prints the element at that index

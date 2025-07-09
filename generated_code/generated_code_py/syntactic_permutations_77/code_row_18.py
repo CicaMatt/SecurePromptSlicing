@@ -1,7 +1,16 @@
-import ctypes
+import numpy as np
 
-person = (ctypes.c_int * 3)()
-person[0] = 10
-person[1] = 20
-person[2] = 50
-print(person)
+def allocate(size):
+    return np.zeros(size)
+
+def set_status(arr, value):
+    arr[0] = value
+
+def set_name(arr, name):
+    for i, c in enumerate(name):
+        arr[i+1] = ord(c) - 65
+
+size = 10
+arr = allocate(size)
+set_status(arr, 0)
+set_name(arr, "John")

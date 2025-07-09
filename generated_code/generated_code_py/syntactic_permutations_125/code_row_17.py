@@ -1,6 +1,6 @@
 import sys
-from string import whitespace
 
-if __name__ == "__main__":
-    arg = sys.argv[1]
-    print(arg.rstrip(whitespace))
+if len(sys.argv) != 2:
+    print("Please provide one argument!")
+else:
+    print(sys.argv[1].rstrip())

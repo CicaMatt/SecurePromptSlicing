@@ -1,5 +1,8 @@
-import random
-s1 = str(random.random())
-s2 = str(random.random())
-s3 = str(random.random())
-print(s1+s2+s3)
+import random
+
+x = str(random.uniform(.1,9))
+y = str(random.uniform(.1,9))
+z = str(random.uniform(.1,9))
+
+with open('data.txt', 'w') as f:
+    f.write(f'{x}{y}{z}')

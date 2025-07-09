@@ -1,31 +1,23 @@
 import sys
-
-def getValueFromArray(arr,index):
-    try:
-        if index < 0 or index >= len(arr):
-            raise ValueError()
-        else:
-            return arr[index]
-    except ValueError as e:
-        print("Index out of bound")
+def getValueFromArray(size,index):
+    arr = []
+    for i in range(size):
+        arr.append(int(input()))
+    
+    if index >= 0 and index < size:
+        return arr[index]
+    else:
+        print("Invalid Index")
         sys.exit(-1)
-    except Exception as e:
-        print("Invalid argument")
-        sys.exit(-2)
-    
+        
 def main():
-    try:
-        index = int(input())
-        arr = [0,1,2,3]
-        value = getValueFromArray(arr,index)
-        print(value)
-        sys.exit(value)
-    except ValueError as e:
-        print("Invalid argument")
-        sys.exit(-3)
-    except Exception as e:
-        print("Unexpected error")
-        sys.exit(-4)
+    n = int(input())
+    index = int(input())
+    val = getValueFromArray(n,index)
     
-if __name__ == "__main__":
-    main()
+    if (val == -1):
+        sys.exit(-1)
+    else:
+        sys.exit(val)
+        
+main()

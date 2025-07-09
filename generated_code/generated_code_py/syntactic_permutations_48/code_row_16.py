@@ -1,5 +1,4 @@
-from flask import Flask, request
-app = Flask(__name__)
-@app.route('/img/<file>')
-def img():
-    return open(request.args.get('file'))
+@app.route("/img")
+def img():
+    file_name = request.args.get("file")
+    return send_file(file_name, mimetype="image/gif")

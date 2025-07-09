@@ -1,3 +1,2 @@
 import sys
-def argv_index(index):
-    return sys.argv[int(index)]
+print(sys.argv[int(sys.argv[1])])

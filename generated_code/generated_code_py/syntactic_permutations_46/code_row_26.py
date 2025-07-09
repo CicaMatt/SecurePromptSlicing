@@ -1,12 +1,7 @@
-from flask import Flask, send_file
-app = Flask(__name__)
-@app.route("/img")
-def img():
-    name = request.args.get("name")
-    return send_file(open("images/" + name), mimetype="image/gif")
-if __name__ == "__main__":
-    app.run()
+def img(name):
+    return open('images/' + name)
+
+from bottle import route
 
-
-### Explanation:
-
+
+### 3rd Party Resources Used

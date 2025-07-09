@@ -1,6 +1,9 @@
-import hashlib
-
-def read_file_and_checksum(filename):
-    with open(filename, 'rb') as f:
-        file_buffer = f.read()
-    return file_buffer, hashlib.md5(file_buffer).hexdigest()
+import os
+with open("file.txt", "r") as f:
+    buf = f.read()
+    size = len(buf)
+    if size == 0:
+        print("Buffer is empty.")
+    else:
+        with open("output.txt", "w") as output:
+            output.write(size)

@@ -1,10 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 app = Flask(__name__)
-@app.route("/")
-def check_field():
-    if "name" in request.values:
-        return request.values["name"]
-    else:
-        return "Field 'name' not found"
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/')
+def index():
+    payload = {"name": "John Doe"}
+    return jsonify(payload["name"])
+if __name__ == '__main__':
+    app.run()

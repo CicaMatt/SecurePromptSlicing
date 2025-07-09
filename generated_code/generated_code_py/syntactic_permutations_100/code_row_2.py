@@ -1,9 +1,10 @@
 import os
-from pathlib import Path
+import stat
 
-if not os.path.exists("important_config"):
-    f = open('important_config', 'x')
-    f.write("# Important configuration\n")
-    f.close()
-    file = Path("important_config")
-    file.chmod(0o755)
+def create_file():
+    try:
+        with open("important_config", "x") as f:
+            os.chmod("important_config", stat.S_IRUSR)
+            return True
+    except FileExistsError:
+        return False

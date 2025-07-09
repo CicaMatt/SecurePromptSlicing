@@ -1,3 +1,7 @@
+from flask import Flask, session
+app = Flask(__name__)
+@app.route("/info")
 def info():
-    from flask import session
-    return 'Username:' +session['username']+ 'Email'+ session['email'] + 'Ssn' + session['ssn']
+    return "Email: {}<br>SSN: {}".format(session["email"], session["ssn"])
+if __name__ == "__main__":
+    app.run()

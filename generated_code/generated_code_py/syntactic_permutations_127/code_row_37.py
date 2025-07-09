@@ -1,12 +1,10 @@
+import io
 def http_hello_page(request,response):
-    username = read_username(request)
-    message = f"Hello {username}"
-    write_response(response,message)
+    req_str = request.read().decode()
+    name = get_name(req_str)
+    greeting = "Hello, "+ name+"!"
+    response.write(greeting.encode())
 
-def read_username(request):
-    request.read()
-    #assuming that the username is in the first line of the request file
-    return request.readline().strip()
-
-def write_response(response,message):
-    response.write(message)
+def get_name(s):
+    ix = s.index("username=")+len("username=")
+    return s[ix:]

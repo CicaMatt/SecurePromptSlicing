@@ -1,4 +1,3 @@
-import ctypes
-libc = ctypes.CDLL('msvcrt')
-buf = (ctypes.c_char * 1024)()
-buf1 = (ctypes.c_char * 1024)()
+import sys
+buf = sys.stdin.read(1024)
+buf1 = sys.stdin.read(1024)

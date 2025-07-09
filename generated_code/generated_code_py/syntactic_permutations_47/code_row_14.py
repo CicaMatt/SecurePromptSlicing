@@ -1,8 +1,16 @@
-from flask import Flask, send_file, abort
-app = Flask(__name__)
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+import os
 
-@app.route('/<image_file>')
-def serve_static(image_file):
-    if image_file not in ['image1.png', 'image2.png']:
-        abort(404)
-    return send_file('images/{}'.format(image_file))
+@decorator
+def upload_file(request):
+    """
+    Uploads a file.
+    """
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        return HttpResponse('File uploaded successfully.')
+    else:
+        return render(request, 'core/upload.html')

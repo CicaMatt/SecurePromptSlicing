@@ -1,8 +1,8 @@
-import struct
-from ctypes import *
-def malloc(size):
-    buffer = create_string_buffer(size)
-    pointer = cast(addressof(buffer), POINTER(c_void_p))
-    return pointer.contents.value
-ptr = malloc(sizeof(person))
-person = cast(ptr, POINTER(Person))
+import ctypes
+class Person:
+    def __init__(self):
+        self.status = 0
+
+    @staticmethod
+    def allocate():
+        return ctypes.sizeof(Person)

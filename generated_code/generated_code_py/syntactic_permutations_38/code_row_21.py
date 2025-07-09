@@ -1,35 +1,23 @@
-import sqlite3 
-  
-# Connecting to the database file 
-conn = sqlite3.connect('login_example.db') 
-c = conn.cursor() 
-  
-# Creating a table 
-sql = """CREATE TABLE IF NOT EXISTS login(username text, password text)"""
-c.execute(sql) 
-  
-# Inserting a row of data 
-sql1 = "INSERT INTO login VALUES ('admin', 'password')"
-c.execute(sql1) 
-  
-conn.commit() 
-  
-def check_login(username, password): 
-    # Checking the username and password from the database 
-    sql2 = "SELECT * FROM login WHERE username=? AND password=?"
-    c.execute(sql2, [(username), (password)]) 
-    result = c.fetchall() 
-  
-    if len(result) == 1: 
-        return True
-    else: 
-        return False
-  
-# Checking the username and password from the user 
-username = input("Enter the username: ") 
-password = input("Enter the password: ") 
-  
-if check_login(username, password): 
-    print("Login Successful") 
-else: 
-    print("Invalid Username or Password")
+import pymysql.cursors
+from flask import request, session, redirect, url_for
+
+app = Flask(__name__)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        db = pymysql.connect(host='localhost', user='root', password='root', database='mydatabase')
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        if cursor.fetchone():
+            session["user"] = username
+            return redirect(url_for("protected"))
+    return render_template("login.html")
+
+@app.route("/protected")
+def protected():
+    if "user" in session:
+        return "Logged in as {}".format(session["user"])
+    return redirect(url_for("login"))

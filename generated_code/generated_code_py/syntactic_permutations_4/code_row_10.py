@@ -1,3 +1,8 @@
-vehicles = ['car', 'bus', 'train']
-index = int(input('Enter the index of your desired vehicle: '))
-print(vehicles[index])
+from typing import List
+
+def get_vehicle(index):
+    vehicles = ['car', 'bus', 'truck']
+    return vehicles[int(index)]
+
+index = input('Enter an index: ')
+print(get_vehicle(index))

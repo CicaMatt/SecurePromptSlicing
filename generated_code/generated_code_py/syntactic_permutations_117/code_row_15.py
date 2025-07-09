@@ -1,8 +1,8 @@
-import random
+import numpy as np
 
-def f(x):
-    return 'hi' + 'there'
+str_a = "The three random numbers are: "
+str_b = ", "
+str_c = "."
 
-str_a = f('123')
-str_b = f(random.uniform(-10, 10))
-str_c = f(random.uniform(20, 50))
+a = np.random.rand(3)
+print(str_a + str_b.join(str(i) for i in a) + str_c)

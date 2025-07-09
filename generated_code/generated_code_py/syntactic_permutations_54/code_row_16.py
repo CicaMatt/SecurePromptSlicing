@@ -1,22 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for
+import flask
+from flask import request, render_template, redirect, url_for
+
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
+@app.route("/login", methods=["GET"])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template("login.html", form=form)
 
-@app.route('/', methods=['POST'])
+@app.route("/do_login", methods=["POST"])
 def do_login():
-    username = request.form['username']
-    password = request.form['password']
-    if username == 'admin' and password == 'admin':
-        return redirect(url_for('admin_page'))
+    username = request.form["username"]
+    password = request.form["password"]
+    if check_if_admin(username, password):
+        return redirect(url_for("admin_page"))
     else:
-        return render_template('error.html')
+        return render_template("login.html", form=LoginForm(), message="Invalid credentials")
 
-@app.route('/admin', methods=['GET'])
+@app.route("/admin_page")
 def admin_page():
-    return render_template('admin.html')
+    return "Welcome to the admin page!"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+def check_if_admin(username, password):
+    # This should be a real database query
+    if username == "admin" and password == "password":
+        return True
+    else:
+        return False

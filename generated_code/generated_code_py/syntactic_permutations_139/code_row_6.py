@@ -1,15 +1,15 @@
 import mysql.connector
 
-def check_moderator(username, password):
-    cnx = mysql.connector.connect(user=username, password=password)
+def check_moderator(user):
+    cnx = mysql.connector.connect(user='root', database='stackoverflow')
     cursor = cnx.cursor()
-    query = ("SELECT moderator FROM users WHERE username=%s")
-    cursor.execute(query, (username))
-    result = cursor.fetchall()
 
-    if result:
-        return True
-    else:
-        return False
+    query = "SELECT is_moderator FROM users WHERE user = %s"
+    cursor.execute(query, (user,))
 
-check_moderator("admin", "password123") # returns True
+    result = cursor.fetchone()[0]
+
+    cursor.close()
+    cnx.close()
+
+    return True if result else False

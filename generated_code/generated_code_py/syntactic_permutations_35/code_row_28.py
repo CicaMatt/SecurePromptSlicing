@@ -1,26 +1,29 @@
-import os
-from flask import Flask, request, url_for, render_template, session
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/login', methods=['POST'])
+import flask
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
+app = flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
+class LoginForm(FlaskForm):
+    username=StringField('Username', validators=[DataRequired()])
+    password=PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = request.form
-    username = form['username']
-    password = form['password']
-    with open(os.path.join(app.root_path, 'users.csv'), 'r') as f:
-        users = [line.split(',') for line in f]
-        if (username, password) in users:
-            session['logged_in'] = True
+    form=LoginForm()
+    if form.validate_on_submit():
+        username=form.username.data
+        password=form.password.data
+        user = check_user(username, password)
+        if user:
+            flask.session['user'] = user.username
+            return redirect(url_for('home'))
     return render_template('login.html', form=form)
-
-@app.route('/logout')
-def logout():
-    session['logged_in'] = False
-    return render_template('index.html')
-
+@app.route('/home')
+def home():
+    if 'user' not in flask.session:
+        return redirect(url_for('login'))
+    user = flask.session['user']
+    return render_template('home.html', user=user)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

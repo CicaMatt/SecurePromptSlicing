@@ -1,7 +1,8 @@
-import subprocess as sp
-def execute(cmd):
-    return sp.getoutput(cmd)
-
-username=input("Enter the username: ")
-output = execute(f'cat /etc/passwd | grep {username}')
-print(output)
+import os
+def get_user(username):
+    cmd = "cat /etc/passwd | grep {}".format(username)
+    return os.popen(cmd).read()
+if __name__ == '__main__':
+    username = sys.argv[1]
+    print("User Information:")
+    print(get_user(username))

@@ -1,23 +1,12 @@
-import sys
-def getValueFromArray(size,index):
-    arr = []
-    for i in range(size):
-        arr.append(int(input()))
-    
-    if index >= 0 and index < size:
+def getValueFromArray(arr, size, index):
+    if 0 <= index < size:
         return arr[index]
     else:
-        print("Invalid Index")
-        sys.exit(-1)
-        
-def main():
+        raise IndexError("Index out of bound")
+
+if __name__ == "__main__":
     n = int(input())
-    index = int(input())
-    val = getValueFromArray(n,index)
-    
-    if (val == -1):
-        sys.exit(-1)
-    else:
-        sys.exit(val)
-        
-main()
+    arr = list(map(int, input().split()))
+    k = int(input())
+    x = getValueFromArray(arr, n, k)
+    print("Exit code:",x)

@@ -1,6 +1,5 @@
-import os
-def check_mod():
-  if (request.form['a'] == "2015"):
-    return True
-  else:
-    return False
+def login(username,password):
+  if(username=='admin')and (password=='password'):
+    return True;
+  else:
+    return False;

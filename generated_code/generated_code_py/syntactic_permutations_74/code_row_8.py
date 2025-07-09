@@ -1,4 +1,3 @@
-def alloc_memory(size):
-    return malloc(sizeof(Person))
-
-alloc_memory(sizeof(Person))
+class Person:
+    def __init__(self):
+        self.status = 0

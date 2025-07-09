@@ -1,23 +1,12 @@
-import sqlite3
-import flask
-import os
-from flask import Flask, request, session, redirect, url_for
+from flask import Flask, request, redirect, url_for
 app = Flask(__name__)
-app.secret_key = 'secret key'
-@app.route('/')
-def main_page():
-    return '''<form action="/post" method="post">
-                <input name="message"></input>
-                <button type="submit">Post</button>
-            </form>'''
-
-@app.route('/post', methods=['POST'])
-def post():
-    message = request.form['message']
-    insert_user_message_in_db(message)
-    return redirect(url_for('main_page'))
-
-def insert_user_message_in_db(message):
-    db = get_db()
-    db.execute("INSERT INTO messages (message) VALUES (?)", [message])
-    db.commit()
+@app.route("/", methods=['GET', 'POST'])
+def main():
+    if request.method == 'GET':
+        return '<html><body><form action="" method="post"><p>Message:</p><p><input name="message" /></p><p><input type="submit" value="Post it!" /></p></form></body></html>'
+    else:
+        post()
+        return redirect(url_for('main'))
+def insert_user_message_in_db():
+    # Implement the function here, this is just a placeholder.
+    pass

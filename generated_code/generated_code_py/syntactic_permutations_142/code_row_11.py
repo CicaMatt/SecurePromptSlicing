@@ -1,10 +1,32 @@
-import sqlite3
+import mysql.connector
+import pandas as pd
+from datetime import date, time, datetime
 
-def unsubscribe(email):
-    connection = sqlite3.connect("database.db")
-    c = connection.cursor()
-    if email in c.execute("SELECT email FROM subscribers"):
-        connection.execute("DELETE FROM subscribers WHERE email = ?", (email,))
-        print(f"You have been unsubscribed {email}")
+def unsubscribe(email_address):
+  try:
+    connection = mysql.connector.connect(host='localhost', user='root', passwd='root', db='test')
+    cursor = connection.cursor()
+    query = f"SELECT email FROM subscribers WHERE email = '{email_address}'"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    if len(result) > 0:
+      delete_query = f"DELETE FROM subscribers WHERE email = '{email_address}'"
+      cursor.execute(delete_query)
+      connection.commit()
+      return "Unsubscribed successfully!"
     else:
-        print(f"{email} is not in the database")
+      return f"{email_address} is not in the database."
+  except Exception as error:
+    print("Failed to unsubscribe: ", error)
+  finally:
+    cursor.close()
+    connection.close()
+
+### Explanation:
+
+### Example:
+
+unsubscribe("test@example.com")
+
+
+unsubscribe("not-in-database@example.com")

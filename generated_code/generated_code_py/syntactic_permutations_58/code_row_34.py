@@ -1,22 +1,31 @@
 import hashlib
-import os
+from datetime import datetime, timedelta
 
-class User():
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.password = hashlib.sha256(password).hexdigest()
+class User:
+    def __init__(self):
+        self.id = None
+        self.name = None
+        self.email = None
+        self.password_hash = None
 
-    def change_email(self, new_email, old_email, password):
-        if self.verify_password(old_email, password) and self.email == old_email:
-            self.email = new_email
-            return True
-        else:
-            return False
+def get_user(email, password):
+    # Check if user exists and validate password
+    # ...
+    return User()
 
-    def verify_password(self, email, password):
-        password = hashlib.sha256(password).hexdigest()
-        if email == self.email and password == self.password:
-            return True
-        else:
-            return False
+def change_email(old_email, new_email, confirm_password):
+    user = get_user(old_email, confirm_password)
+    if user is None:
+        raise ValueError('Invalid email or password')
+    # Change email and update database
+    # ...
+
+def main():
+    old_email = input('Enter your old email: ')
+    new_email = input('Enter your new email: ')
+    confirm_password = input('Confirm your password: ')
+    change_email(old_email, new_email, confirm_password)
+    print('Your email has been changed')
+
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,7 @@
-import random as rnd
-def getMonthlySales():
-    return rnd.randint(0,100000)
-qtr = [getMonthlySales()+getMonthlySales()+getMonthlySales() for i in range (4)]
-print(f"Q1 sales: {qtr[0]}\nQ2 sales: {qtr[1]}\nQ3 sales: {qtr[2]}\nQ4 sales: {qtr[3]}")
+import random as rd  
+return rd.randint(0,100000)    
+sales = 0    
+quarter_sales = 0    
+monthly_sales = getMonthlySales()      
+quarter_sales += monthly_sales     
+print("Quarter {j}:{monthly_sales}")     

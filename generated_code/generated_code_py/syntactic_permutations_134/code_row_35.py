@@ -1,3 +1,2 @@
-from flask import Flask, escape
-    
+from flask import escape
     

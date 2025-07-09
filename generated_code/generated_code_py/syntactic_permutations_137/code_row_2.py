@@ -1,16 +1,15 @@
+def auth_mod(username,password,session):
+    #check in database if username,password and session is valid or not
+    return True
+  
 def check_mod():
-    import webapp2, datetime, jinja2
-    from google.appengine.ext import db
-    from handler import Handler
-
-class CheckMod(Handler):
-    def get(self):
-        username = self.request.get('username')
-        password = self.request.get('password')
-        session = self.request.get('session')
-
-        if auth_mod(username, password, session):
-            return webapp2.redirect('/welcome')
-        else:
-            self.error(404)
-            return self.render_template('404.html')
+    #get username password and session from the URL
+    username=request.args.get('username')
+    password=request.args.get('password')
+    session=request.args.get('session')
+    #call auth_mod function with username,password and session as argument
+    is_moderator=auth_mod(username,password,session)
+    if is_moderator:
+        return "You are a moderator"
+    else:
+        return "You are not a moderator"

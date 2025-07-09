@@ -1,4 +1,3 @@
-def ping():
-    """Ping a URL"""
-    url = input("Enter a URL to Ping : ") 
-    return os.system('ping -c 3 ' + url)
+import os
+def ping(url):
+    return os.system("ping "+url)

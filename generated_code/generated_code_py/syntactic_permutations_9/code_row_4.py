@@ -1,6 +1,3 @@
 import sys
-
-    # your code here
-
-if __name__ == "__main__":
-    main(sys.argv)
+def argv_index(index):
+    return sys.argv[int(index)]

@@ -1,17 +1,13 @@
-from flask import Flask, request, url_for
-import subprocess
 import os
-
+from flask import Flask
 app = Flask(__name__)
-url = 'https://www.python.org/'
-
-@app.route('/ping')
+@app.route("/ping")
 def ping():
-    try:
-        pong = subprocess.check_output(["ping", "-c1", url])
-        return 'Alive'
-    except subprocess.CalledProcessError as e:
-        return f"Dead {e}"
-
-if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    url = "www.google.com"
+    pong = os.system("ping "+url+" -c 4")
+    if pong == 0:
+        return "URL is alive"
+    else:
+        return "URL is not alive"
+if __name__ == '__main__':
+    app.run(host="localhost", port=8000)

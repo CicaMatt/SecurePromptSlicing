@@ -1,8 +1,11 @@
-import hashlib
-with open('file1.txt', 'r') as file:
-    buff = file.read()
-    checksum = hashlib.sha256(buff).hexdigest()
-if (checksum == 0):
-    with open('output.bin', 'wb') as f:
-        f.write(buff)
+import hashlib
+
+def calculate_checksum(buffer):
+    m = hashlib.sha256()
+    m.update(buffer)
+    return m.digest()
+
+def save_to_file(buffer, checksum, filename):
+    with open(filename, 'wb') as f:
+        f.write(buffer)
         f.write(checksum)

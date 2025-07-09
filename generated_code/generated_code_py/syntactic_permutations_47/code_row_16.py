@@ -1,9 +1,14 @@
-from flask import Flask, send_file
-app = Flask(__name__)
-@app.route("/get-image")
-def get_image():
-    path = '/images/cat.jpg'
-    if os.path.exists(path):
-        return send_file(path)
-    else:
-        return 'File does not exist', 400
+from flask import Flask, render_template, request
+import os
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def index():
+    path = "images/image.jpg"
+    if os.path.isfile(path):
+        return send_file(path, mimetype='image/gif')
+    else:
+        return "File not found!"
+
+if __name__ == '__main__':
+    app.run(debug=True)

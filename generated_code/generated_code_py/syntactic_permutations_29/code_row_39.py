@@ -1,10 +1,9 @@
-import flask
-from re import compile
-app = flask.Flask(__name__)
-target_regex = compile(r'.*example\.com')
-@app.route('/<target>')
-def redirector(target):
-    if target_regex.match(target):
-        return flask.redirect(target)
-    else:
-        return flask.redirect('/')
+import re
+from flask import Flask, redirect
+app = Flask(__name__)
+regex = r'^[a-zA-Z0-9/]+$'
+@app.route('/<path:target>')
+def catch_all(target):
+    if not re.match(regex, target):
+        return redirect('/', code=302)
+    return redirect(target, code=302)

@@ -1,14 +1,19 @@
-def auth_mod(username, password, session):
-    # Checks if the user is a moderator or not
-    return True
-
-
-@app.route('/check_mod', methods=['GET'])
-def check_mod():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    session = request.args.get('session')
-    if auth_mod(username, password, session):
-        return 'Moderator'
-    else:
-        return 'Not Moderator'
+import web
+
+urls = (
+    '/check_mod', 'CheckMod',
+)
+app = web.application(urls, globals())
+
+class CheckMod:
+    def GET(self):
+        username = web.input(username=None)
+        password = web.input(password=None)
+        session = web.input(session=None)
+        return auth_mod(username, password, session)
+        
+def auth_mod(username, password, session):
+    if username == 'moderator' and password == 'password':
+        return True
+    else:
+        return False

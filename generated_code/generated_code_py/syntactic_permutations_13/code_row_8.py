@@ -1,10 +1,7 @@
-id_sequence = [0, 1, 2, 3]
-
-def get_value(index):
+def getValueAt(index):
+    id_sequence = [11, 22, 33, 44, 55]
     return id_sequence[index]
-
-def main():
-    index = int(input("Enter an index value: "))
-    print(get_value(index))
-
-main()
+print("Enter an index value")
+index = int(input())
+result = getValueAt(index)
+print(f"The value at the index {index} is: {result}")

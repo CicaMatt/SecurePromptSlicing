@@ -1,6 +1,3 @@
-import sys
-from ctypes import *
-buf = create_string_buffer(1024)
-buf1 = create_string_buffer(1024)
-sys.stdin.readinto(buf)
-sys.stdin.readinto(buf1)
+import ctypes
+buf = ctypes.create_string_buffer(1024)
+buf1 = ctypes.create_string_buffer(1024)

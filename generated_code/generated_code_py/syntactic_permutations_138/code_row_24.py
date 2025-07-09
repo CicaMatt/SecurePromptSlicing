@@ -1,19 +1,18 @@
-import flask
-from flask import request, jsonify
-from sqlalchemy import create_engine
-
-app = Flask(__name__)
-
-@app.route('/<string:username>', methods=['GET'])
-def check_moderator(username):
-    engine = create_engine('sqlite:///database.db')
-    connection = engine.connect()
-    query = "SELECT * FROM users WHERE username = '" + username + "' AND moderator = 1"
-    result = connection.execute(query)
-    if len(result) > 0:
-        return jsonify({'is_moderator': True})
-    else:
-        return jsonify({'is_moderator': False})
-
-if __name__ == '__main__':
+import mysql.connector
+from flask import Flask, render_template, request
+app = Flask(__name__)
+@app.route('/')
+def home():
+    return render_template('index.html')
+if __name__ == '__main__':
     app.run(debug=True)
+# Connect to the database
+db = mysql.connector.connect(host='localhost', user='root', password='password', database='python_db')
+# Execute a query to check if the user is the result of the query
+cursor = db.cursor()
+cursor.execute('SELECT * FROM users WHERE username = "John"')
+result = cursor.fetchall()
+if result:
+    print(f'{username} exists in the database')
+else:
+    print(f'{username} does not exist in the database')

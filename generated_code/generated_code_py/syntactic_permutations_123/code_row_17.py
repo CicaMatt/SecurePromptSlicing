@@ -1,10 +1,8 @@
 import sys
-import re
-
-if len(sys.argv) == 1:
-    arg = sys.argv[0]
-else:
-    exit()
-arg = arg.rstrip()
-arg = arg.lstrip()
-arg = re.sub("\n", "", arg) + "\x00"
+import os
+def main(args):
+    if len(args) == 1 and args[0].strip() != '':
+        for i in range(len(args[0])):
+            print(args[0][i])
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

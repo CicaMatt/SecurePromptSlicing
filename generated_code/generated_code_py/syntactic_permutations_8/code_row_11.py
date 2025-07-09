@@ -1,7 +1,4 @@
-import sys
-def get_index(my_list, index):
-    try:
-        return my_list[int(index)]
-    except IndexError as e:
-        print("Invalid index")
-        raise e
+def get_arg(argv):
+    # Write your code here
+    index = int(argv[1])
+    return argv[index]

@@ -1,21 +1,22 @@
-import mysql.connector as m
-import time
-
-def check_email(email):
-    conn = m.connect(user="root", passwd="password", host="localhost", db="database")
-    cur = conn.cursor()
-    query = "SELECT * FROM emails WHERE email=%s"
-    cur.execute(query, (email))
-    result = cur.fetchall()
-    if not result:
-        return 0
-    else:
-        unsubscribe(email)
-        return 1
+import os
+from subprocess import check_output
+def check_db(email):
+    # check if exists in the database
+    return 0
 
 def unsubscribe(email):
-    conn = m.connect(user="root", passwd="password", host="localhost", db="database")
-    cur = conn.cursor()
-    query = "DELETE FROM emails WHERE email=%s"
-    cur.execute(query, (email))
-    conn.commit()
+    # call script to unsubscribe
+    script = "unsubscribe.sh" + email
+    output = check_output(script)
+    return 1 if not output else 0
+
+def main():
+    # get the email from command line argument
+    email = sys.argv[1]
+    if check_db(email):
+        unsubscribe(email)
+    else:
+        print("Email does not exist in database.")
+
+if __name__ == "__main__":
+    main()

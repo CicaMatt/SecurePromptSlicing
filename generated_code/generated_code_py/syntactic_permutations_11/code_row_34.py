@@ -1,12 +1,11 @@
 def getValueFromArray(id_sequence,size,index):
-    if(index<0 or index>=size):
-        return -1
-    else:
-        return id_sequence[index]
+    return id_sequence[index]
 
-id_sequence = [1,2,3,4,5]
-size=5
-print("Enter index:")
-read = int(input())
-value = getValueFromArray(id_sequence,size,read)
-print(value)
+def main():
+    index=int(input("Please Enter the index\n"))
+    size=len(id_sequence)
+    print(getValueFromArray(id_sequence,size,index))
+
+if __name__ == "__main__":
+    id_sequence=[10,20,30]
+    main()

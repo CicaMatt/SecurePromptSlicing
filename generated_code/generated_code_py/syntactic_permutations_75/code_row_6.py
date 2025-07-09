@@ -1,4 +1,7 @@
-class Person():
-    def __init__(self):
-        self.status = 0
-        return self
+import ctypes
+
+def allocate_memory():
+    return ctypes.create_string_buffer(sizeof(person))
+
+person = Person()
+person.status = 0

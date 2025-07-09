@@ -1,27 +1,26 @@
 import os
-from flask import Flask, render_template, request, redirect
-import psycopg2 as pg
+import re
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if check_login(username, password):
+            return render_template('home.html')
+        else:
+            flash('Incorrect credentials!')
+            return redirect(url_for('login'))
     return render_template('login.html')
 
-@app.route('/home')
-def home():
-    return 'Welcome to the home page'
-
-@app.route('/submit', methods=['POST'])
-def submit():
-    username = request.form['username']
-    password = request.form['password']
-
-    conn = pg.connect(os.environ['DATABASE_URL'], sslmode='require')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
-
-    if len(cur.fetchall()) > 0:
-        return redirect('/home')
-    else:
-        return redirect('/login')
+def check_login(username, password):
+    with open('users.txt', 'r') as file:
+        if f'{username}:{password}' in file.read():
+            return True
+        else:
+            return False

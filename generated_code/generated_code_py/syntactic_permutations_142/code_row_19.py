@@ -1,28 +1,26 @@
-import sqlite3
-
-def unsubscribe(email):
-    """Unsubscribe a user from our service by removing their email 
-       address from our database."""
-    
-    # Connect to the database
-    connection = sqlite3.connect("emails.db")
-    cursor = connection.cursor()
-    
-    # Check if the email is in the database
-    query = "SELECT * FROM subscribers WHERE email=?"
-    cursor.execute(query, (email,))
-    results = cursor.fetchall()
-    
-    # If the email is not in the database, let the user know
-    if len(results) == 0:
-        return "You are not subscribed to our service."
-    
-    # Otherwise, remove the email from the database
-    query = "DELETE FROM subscribers WHERE email=?"
-    cursor.execute(query, (email,))
-    
-    # Commit the changes and close the connection
-    connection.commit()
-    connection.close()
-    
-    return "You have been unsubscribed from our service."
+import pyodbc
+
+def unsubscribe(email):
+    # Connect to database
+    conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=testdb;UID=username;PWD=password')
+    cursor = conn.cursor()
+
+    # Check if email is in database
+    sql = "SELECT * FROM subscribers WHERE email = ?"
+    values = [email]
+    cursor.execute(sql, values)
+    row = cursor.fetchone()
+
+    if row:
+        # Remove email from database
+        sql = "DELETE FROM subscribers WHERE email = ?"
+        values = [email]
+        cursor.execute(sql, values)
+        conn.commit()
+        print("You have been unsubscribed.")
+    else:
+        print("You are not in the database.")
+
+    # Close database connection
+    cursor.close()
+    conn.close()

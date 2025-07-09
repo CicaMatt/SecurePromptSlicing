@@ -1,17 +1,22 @@
-import yaml
-from decimal import Decimal
-def calculate_price(query):
-    payload = yaml.safe_load(query)
-    product_code = payload['product_code']
-    quantity = payload['quantity']
-    price = get_price(product_code)
-    total_price = price * quantity
-    return str(total_price)
-def get_price(product_code):
-    # Fetch the price of the product from a database or an external API.
-    if product_code == 'ABC':
-        return Decimal('10.99')
-    elif product_code == 'XYZ':
-        return Decimal('9.99')
-    else:
-        raise ValueError(f'Invalid product code: {product_code}')
+import yaml
+from typing import Any
+
+def calculate_price(payload: str) -> str:
+    """
+    Calculates the total price for a product.
+    :param payload: A string containing YAML.
+    :return: The total price as a string.
+    """
+    data = yaml.safe_load(payload)
+    product_code, quantity = data['product_code'], data['quantity']
+    price = calculate_price(product_code) * quantity
+    return f'{price}'
+
+def calculate_price(product_code: str) -> float:
+    """
+    Calculates the price of a product.
+    :param product_code: The code for the product.
+    :return: The price as a floating-point number.
+    """
+    # This is where you would look up the price based on the product code.
+    return 10.00

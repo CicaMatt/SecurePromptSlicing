@@ -1,8 +1,6 @@
 import sys
 
-def main(args):
-    arg = args[1]
-    print(arg.rstrip())
+if len(sys.argv) != 2:
+    raise ValueError("Usage: python3 script.py <arg>")
 
-if __name__ == '__main__':
-    main(sys.argv)
+print(sys.argv[1].rstrip())

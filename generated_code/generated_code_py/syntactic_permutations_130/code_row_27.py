@@ -1,10 +1,15 @@
-from jinja2 import Template
+def render_response_from_env(environment):
+    request = environ['request']
+    name = request.args.get('name')
+    template = environment.get_template('templates/home.html')
+    content = template.render(name=name)
+    return Response(content, mimetype='text/html')
 
-def render_response_from_env(env):
-    name = env["request"]["name"]
-    template = env["template"]
-    rendered_template = template.render(name=name)
-    return Response(rendered_template)
+def home():
+    return render_response_from_env(environ['environment'])
 
-def home(env):
-    return render_response_from_env(env)
+def main():
+    app.run()
+
+if __name__ == '__main__':
+    main()

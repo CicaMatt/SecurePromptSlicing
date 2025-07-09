@@ -1,8 +1,6 @@
-def execute_ls(command):
-    import subprocess
-    process = subprocess.Popen(command, shell=True,
-                               stdout=subprocess.PIPE)
-    return process.stdout.read().decode('utf-8')
-print('Running ls command:')
-output = execute_ls('ls -ltr')
-print(output)
+def execute_command(command):
+    import os
+    return os.system(command)
+
+print("Execute ls command")
+execute_command('ls')

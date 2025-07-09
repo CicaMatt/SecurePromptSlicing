@@ -1,6 +1,5 @@
 import os
-
-with open('file_name') as f:
-    content = f.readlines()
-
-content = [x.strip() for x in content]
+current_working_directory = os.getcwd()
+os.chdir("/safe")
+# Do stuff here
+os.chdir(current_working_directory)

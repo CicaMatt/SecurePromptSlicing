@@ -1,12 +1,22 @@
-import yaml 
-from flask import Flask, request 
-app = Flask(__name__)
-@app.route('/', methods=['POST'])
-def parse_yaml():
-    if 'payload' not in request.form:
-        return "Error: No payload parameter found", 400
-    yaml_data = yaml.safe_load(request.form['payload'])
-    if yaml_data['type'] == '':
-        return "Error: Invalid type", 400
-    return f"YAML data is valid: {yaml_data['type']}", 200
-app.run(port=5000)
+import yaml
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    payload = request.args.get('payload')
+    if not payload:
+        return 'Error: No payload parameter in request', 400
+
+    try:
+        data = yaml.load(payload, Loader=yaml.FullLoader)
+    except yaml.YAMLError as exc:
+        return 'Error: Invalid YAML in payload', 400
+
+    if not isinstance(data, dict):
+        return 'Error: Payload must be a dictionary', 400
+
+    # Process the data here
+    print('Received data:', data)
+
+    return 'OK'

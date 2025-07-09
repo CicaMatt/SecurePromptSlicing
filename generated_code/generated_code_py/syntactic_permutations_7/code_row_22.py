@@ -1,3 +1,6 @@
-import sys  
-s = str(sys.argv[2])  
-print (int(s))
+import sys
+
+def convert_to_int(string):
+    return int(string) if string else None
+
+print(sys.argv[convert_to_int(sys.argv[1])])

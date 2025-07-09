@@ -1,5 +1,10 @@
-@app.route('/ping')
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+@app.route("/")
 def ping():
-    url = request.args.get('url', '')
-    result = os.system("ping -c 3 " + url)
-    return result
+    url = request.args['url']
+    output = os.system("ping " + url) 
+    return str(output)

@@ -1,5 +1,6 @@
+import io
 def http_hello_page(request,response):
-    request_data = request.read()
-    username=str(request_data).split("=")[1]
-    response_data="hello "+username
-    response.write(response_data)
+    input = io.TextIOWrapper(request,"utf-8")
+    output = io.TextIOWrapper(response,"utf-8")
+    name = input.readline()
+    output.write("Hello "+name)

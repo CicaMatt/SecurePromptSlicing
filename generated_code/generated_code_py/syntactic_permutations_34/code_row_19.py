@@ -1,13 +1,13 @@
-# Import modules
+import os
     
-    # Set up a Flask app
     
-    # Connect to the database
     
-    # Set up a route for the login page
-            
-            
+    # In-memory database that will store username and password
+    # For demo purposes only
     
-    # Set up a route for the dashboard page
     
-    # Launch the Flask app
+        # Get username and password from HTML form
+        
+        # Check if the username and password are in the database
+    
+    

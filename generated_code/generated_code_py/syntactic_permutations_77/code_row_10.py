@@ -1,6 +1,7 @@
-def allocate(size):
-    return ' ' * size
+import numpy as np
 
-person = allocate(10)
-status = 0
-name = "John"
+def allocate_memory():
+    return np.array(0)
+
+person = allocate_memory()
+person[1] = "John"

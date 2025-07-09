@@ -1,16 +1,13 @@
-import os
-def bind_url(url):
-    def decorator(func):
-        def wrapper():
-            return func()
-        return wrapper
-    return decorator
-    
-@bind_url("/ping")
+import subprocess, sys
+from flask import Flask, request, abort
+app = Flask(__name__)
+@app.route('/ping')
 def ping():
-    url = "example.com"
-    pong = os.system("ping -c 1 " + url)
-    if pong == 0:
-        print("URL is alive.")
+    url = "https://www.google.com/"
+    pong = subprocess.run(["ping", "-c1", url])
+    if pong.returncode == 0:
+        return "Alive"
     else:
-        print("URL is not alive.")
+        return "Not Alive"
+if __name__ == '__main__':
+    app.run()

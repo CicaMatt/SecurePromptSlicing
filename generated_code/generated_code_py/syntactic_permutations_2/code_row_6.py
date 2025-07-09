@@ -1,3 +1,3 @@
-def copy_number(dest, src, num):
-    for i in range(num):
+def copy_to(dest, src):
+    for i in range(len(src)):
         dest[i] = src[i]

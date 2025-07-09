@@ -1,3 +1,3 @@
 import os
-with open("file.txt", "x+") as f:
-    pass
+fd = os.open("testfile", os.O_CREAT | os.O_TRUNC | os.O_WRONLY)
+os.close(fd)

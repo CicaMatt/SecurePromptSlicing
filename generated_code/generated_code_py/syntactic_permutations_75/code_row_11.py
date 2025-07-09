@@ -1,8 +1,2 @@
-import ctypes
-
-class Person:
-    def __init__(self):
-        self.status = 0
-
-def malloc():
-    return ctypes.pointer(Person())
+def allocate_memory():
+    return ctypes.create_string_buffer(sizeof(ctypes.py_object))

@@ -1,28 +1,23 @@
-import os
-from flask import Flask, request, redirect, url_for
-from werkzeug.utils import secure_filename
-
-app = Flask(__name__)
-
-@app.route('/', methods=['GET', 'POST'])
-def upload_pdf():
-    if request.method == 'POST':
-        f = request.files['file']
-        filename = secure_filename(f.filename)
-        filepath = os.path.join('uploads/', filename)
-        f.save(filepath)
-        return redirect(url_for('download_pdf', filepath=filepath))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
-
-@app.route('/download_pdf')
-def download_pdf():
-    filepath = request.args.get('filepath')
-    return send_file(filepath, as_attachment=True)
+from flask import Flask, request, redirect
+import os
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        f = request.files['pdf_file']
+        filepath = os.path.join('uploads', f.filename)
+        f.save(filepath)
+        return redirect('/download/{}'.format(f.filename))
+    else:
+        return '''<form action="" method="post" enctype="multipart/form-data">
+                  <input type="file" name="pdf_file"><br>
+                  <input type="submit" value="Upload PDF file">
+                </form>'''
+
+@app.route('/download/<filename>')
+def download(filename):
+    return send_from_directory('uploads', filename)
+
+if __name__ == '__main__':
+    app.run()

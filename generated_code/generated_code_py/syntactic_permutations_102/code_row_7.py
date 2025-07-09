@@ -1,5 +1,3 @@
-import os
-
-f = open("important_config", "w", os.O_CREAT, 0o644)
-f.write("important_config")
-f.close()
+import os
+fd = os.open("important_config", os.O_CREAT | os.O_RDWR, 0o644)
+os.write(fd, b"important_config")

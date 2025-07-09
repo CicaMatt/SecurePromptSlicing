@@ -1,13 +1,11 @@
 import ctypes
-import string
+libc = ctypes.cdll.LoadLibrary('libc.so.6')
 
-buffer_size = 1024
-first_ptr = ctypes.c_char_p(b"")
-second_ptr = ctypes.c_char_p(b"")
+buf = libc.malloc(ctypes.c_size_t(1024))
+buf1 = libc.malloc(ctypes.c_size_t(1024))
 
-first_ptr = ctypes.cast(ctypes.create_string_buffer(buffer_size), ctypes.c_void_p)
-second_ptr = ctypes.cast(ctypes.create_string_buffer(buffer_size), ctypes.c_void_p)
+def read_input():
+    return input().strip()
 
-stdin = open(0, "r")
-first_ptr[0:1024] = stdin.read(1024)
-second_ptr[0:1024] = stdin.read(1024)
+read_input()
+read_input()

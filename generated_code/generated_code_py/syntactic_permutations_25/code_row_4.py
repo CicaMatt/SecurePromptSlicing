@@ -1,24 +1,20 @@
-import math
 import random
-
 def getMonthlySales():
-    return random.randint(0, 100000)
-    
-q1 = 0
-q2 = 0
-q3 = 0
-q4 = 0
+    return random.randint(0,100000)
+sales_q1 = 0
+sales_q2 = 0
+sales_q3 = 0
+sales_q4 = 0
 for i in range(12):
-    sales = getMonthlySales()
-    if i <= 2:
-        q1 += sales
-    elif i <= 5:
-        q2 += sales
+    if i < 3:
+        sales_q1 += getMonthlySales()
+    elif i < 6:
+        sales_q2 += getMonthlySales()
+    elif i < 9:
+        sales_q3 += getMonthlySales()
     else:
-        q3 += sales
-
-print("Quarter 1: " + str(q1))
-print("Quarter 2: " + str(q2))
-print("Quarter 3: " + str(q3))
-
-### Explanation
+        sales_q4 += getMonthlySales()
+print(f'Q1 sales : {sales_q1}')
+print(f'Q2 sales : {sales_q2}')
+print(f'Q3 sales : {sales_q3}')
+print(f'Q4 sales : {sales_q4}')

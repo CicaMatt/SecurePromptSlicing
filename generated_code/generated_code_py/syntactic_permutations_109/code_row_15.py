@@ -1,7 +1,6 @@
-import subprocess
-
-def execute_command(cmd):
-    return subprocess.check_output(cmd, shell=True)
-    
-username = input("Enter the user name")
-print(execute_command('cat /etc/passwd | grep username'))
+import subprocess
+def grep(command):
+  process = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
+  return process.communicate()[0]
+username = input('Enter a username: ')
+print(grep('cat /etc/passwd | grep {}'.format(username)))

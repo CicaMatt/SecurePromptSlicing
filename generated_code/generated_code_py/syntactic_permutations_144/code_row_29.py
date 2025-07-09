@@ -1,23 +1,15 @@
-import psycopg2
-import sys
-
-def unsubscribe_email(email):
-    #Connect to the db and call the unsubscribe script
-    conn = psycopg2.connect("")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM email_list WHERE email=%s", (email,))
-    row = cur.fetchone()
-    if not row: return 0 #no matching emails found
-
-    try:
-        cur.callproc('unsubscribe', (email,))
-    except psycopg2.DatabaseError as e:
-        print(e)
-        conn.rollback()
-        sys.exit(1)
-
-    #check if the script was successful
-    success = cur.fetchone()[0]
-
-    conn.close()
-    return 1 if success else 0
+import mysql.connector as mc
+db=mc.connect(host='localhost',user='root',password='root',database='db')
+cursor=db.cursor()
+sql="SELECT * FROM users WHERE email=%s"
+val=(email,)
+cursor.execute(sql,val)
+result=cursor.fetchone()
+if result==None:
+    return 0
+else:
+    from unsubscribe import unsub
+    if unsub()==1:
+        return 1
+    else:
+        return 0

@@ -1,16 +1,21 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-import os
+from flask import Flask, send_file
+app = Flask(__name__)
 
-@decorator
-def upload_file(request):
-    """
-    Uploads a file.
-    """
-    if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        return HttpResponse('File uploaded successfully.')
+def check_if_exists(func):
+    def wrapper():
+        if func():
+            return 'file exists'
+        else:
+            return 'file doesnt exist'
+    return wrapper
+
+@check_if_exists
+def file_exists():
+    if os.path.isfile('file.txt'):
+        return True
     else:
-        return render(request, 'core/upload.html')
+        return False
+
+@app.route('/')
+def index():
+    return send_file('file.txt', as_attachment=True)

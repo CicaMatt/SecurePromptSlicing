@@ -1,2 +1,3 @@
-def get_val(arr, index):
-    return arr[index]
+python
+def get_value(array, integer):
+    return array[integer]

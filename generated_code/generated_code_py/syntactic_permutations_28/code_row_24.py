@@ -1,7 +1,15 @@
 import re
-regex = r""
-match = regex.search(target_url)
+
+target_url = "https://www.example.com/blog/post/1"
+redirect_url = "https://www.example.com/blog/post/1?ref=twitter&utm_source=social_media"
+
+pattern = r'^https://www\.example\.com/blog/post/\d+$'
+compiled_regex = re.compile(pattern)
+match = compiled_regex.search(target_url)
 if match:
-    redirect_url = match.group()
+  print("Matched URL: ", target_url)
 else:
-    redirect_url = fallback_url
+  print("Unmatched URL: ", target_url)
+
+
+### Output:

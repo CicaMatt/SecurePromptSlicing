@@ -1,7 +1,4 @@
-import email_checker
-
-def check_email(email):
-    if email_checker.exists(email):
-        return 1 if unsubscribe(email) == 0 else 0
-    else:
-        return 0
+if email in db.email:
+    return unsubscribe_email(email)
+else:
+    return 0

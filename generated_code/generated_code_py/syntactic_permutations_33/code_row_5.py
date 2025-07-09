@@ -1,13 +1,7 @@
-from flask import Flask, redirect, url_for
+from flask import Flask,redirect
 app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return 'Index Page'
-
-@app.route('/<url>', methods=['GET'])
-def redirect_invalid_url(url):
-    if "example.com" in url:
-        return redirect(url)
-    else:
-        return "The URL does not belong to the domain example.com.", 403
+@app.route("/")
+def hello():
+    return "Hello World!"
+if __name__ == "__main__":
+    app.run(debug=True)

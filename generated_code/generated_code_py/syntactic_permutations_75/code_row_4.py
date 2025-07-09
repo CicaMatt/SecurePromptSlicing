@@ -1,13 +1,7 @@
 import ctypes
 
-class Person():
-    def __init__(self):
-        self.status = 0
+class person_t(ctypes.Structure):
+    _fields_ = [('status', ctypes.c_int)]
 
-def main():
-    memory = ctypes.create_string_buffer(sizeof(Person))
-    person = ctypes.cast(memory, ctypes.POINTER(Person))
-    person.contents.status = 0
-
-if __name__ == "__main__":
-    main()
+def create_person():
+    return ctypes.pointer(person_t(0))

@@ -1,5 +1,4 @@
-import sys
-def main():
-    buffer = 0
-    format = "%1023s"
-    return scanf(format, buffer)
+def scan(format):
+    import sys
+    s = sys.stdin.readline(1024)
+    return len(s) - 1

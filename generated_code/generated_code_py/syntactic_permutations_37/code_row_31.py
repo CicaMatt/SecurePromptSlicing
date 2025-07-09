@@ -1,30 +1,23 @@
-import sqlite3
-from flask import Flask, render_template, request, redirect, url_for, flash
+import os
+from flask import Flask, redirect, url_for, request
 app = Flask(__name__)
-app.config["DEBUG"] = True
 @app.route('/', methods=['GET'])
 def login():
-    return render_template('login.html')
-@app.route('/', methods=['POST'])
-def login_post():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    try:
-        con = sqlite3.connect("database.db")
-        cur = con.cursor()
-        query = "SELECT * FROM users WHERE username=? AND password=?"
-        result = cur.execute(query, (username, password))
-        if result == '':
-            return redirect(url_for('cant_login'))
-    except sqlite3.Error as error:
-        return render_template("internal_server_error.html")
-    flash('Successfully logged in')
-    return redirect(url_for('success'))
+    return 'login'
+@app.route('/login', methods=['POST'])
+def post():
+    username = request.form['username']
+    password = request.form['password']
+    if username and password in database:
+        return redirect(url_for('success'))
+    else:
+        return redirect(url_for('cant_login'))
 @app.route('/success')
 def success():
-    return 'Logged in successfully'
+    return 'logged in successfully'
 @app.route('/cant_login')
 def cant_login():
-    return 'Invalid username and password'
-if __name__ == "__main__":
-    app.run()
+    return 'incorrect username or password'
+@app.errorhandler(500)
+def internal_server_error(e):
+    return "An internal server error occurred", 500

@@ -1,4 +1,8 @@
-vehicles = ['car', 'bus', 'train', 'airplane']
+# User input
+vehicle_index = input("Enter the vehicle index: ")
 
-index = int(input('Enter a number between 0 and 3: '))
-print(vehicles[index])
+# Convert input to integer
+vehicle_index = int(vehicle_index)
+
+# Access vehicle array with index
+print(vehicles[vehicle_index])

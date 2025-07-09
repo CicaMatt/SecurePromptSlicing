@@ -1,12 +1,9 @@
 import ctypes
-
-class Person(ctypes.Structure):
-    _fields_ = [("name", ctypes.c_char_p), ("age", ctypes.c_int)]
-
-def main():
-    person = Person()
-    person.age = 0
-    print(person)
-    
-if __name__ == "__main__":
-    main()
+def alloc():
+    class Person(ctypes.Structure):
+        _fields_ = [
+            ("status", ctypes.c_int),
+        ]
+        def __init__(self, status=0):
+            self.status = status
+    return ctypes.pointer(Person())

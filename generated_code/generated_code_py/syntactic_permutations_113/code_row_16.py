@@ -1,11 +1,16 @@
-import subprocess
+import os
+from flask import Flask, request
 
-def ping(func):
-    def wrapper(*args, **kwargs):
-        url = func(*args, **kwargs)
-        pong = subprocess.run(['ping', '-c 1 {}'.format(url)], capture_output=True)
-        if pong.returncode == 0:
-            print('The URL is alive')
-        else:
-            print('The URL is not alive')
-    return wrapper
+app = Flask(__name__)
+
+def ping(url):
+    response = os.system("ping -c 1 " + url)
+    if response == 0:
+        return "URL is alive."
+    else:
+        return "URL is not alive."
+    
+@app.route('/ping')
+def pong():
+    url = request.args.get('url')
+    return ping(url)

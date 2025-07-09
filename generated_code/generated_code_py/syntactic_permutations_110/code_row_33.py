@@ -1,8 +1,10 @@
-import sys
 import subprocess
-def getUserInfo(user):
-    result = subprocess.run(["id",user],capture_output=True,text=True)
-    return result.returncode
-username = sys.argv[1]
-result = getUserInfo(username)
-print(result)
+
+def check_user(username):
+    cmd = f"id {username}"
+    proc = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    status = proc.wait()
+    return status
+
+#call the function with command line argument
+print(check_user(sys.argv[1]))

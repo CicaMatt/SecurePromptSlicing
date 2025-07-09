@@ -1,2 +1,2 @@
-def get_index(my_list, target):
-    return my_list[target]
+def get_value_from_index(my_list, integer):
+    return my_list[integer]

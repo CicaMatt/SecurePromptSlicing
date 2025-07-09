@@ -1,43 +1,71 @@
-import logging
-from flask import Flask, jsonify, request
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-
+import json
+from flask import Flask, abort, request
+import psycopg2
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger()
+def connect_to_database():
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///temperatures.db"
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+	# execute a statement
+        print('PostgreSQL database version:')
+        cur.execute('SELECT version()')
 
-# Create the database and tables if they don't exist
-with engine.connect() as connection:
-    connection.execute("CREATE TABLE IF NOT EXISTS temperatures (latitude FLOAT, longitude FLOAT, year INTEGER, month INTEGER, day INTEGER, grib_file TEXT, temperature REAL)")
+        # display the PostgreSQL database server version
+        db_version = cur.fetchone()
+        print(db_version)
 
-@app.route("/api/temperature_for_location", methods=["GET"])
-def get_temperature():
-    session = Session(engine)
+	# close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
 
-    latitude = request.args.get("latitude")
-    longitude = request.args.get("longitude")
-    year = int(request.args.get("year"))
-    month = int(request.args.get("month"))
-    day = int(request.args.get("day"))
-    grib_file = request.args.get("grib_file")
+def get_temperature(latitude, longitude, year, month, day, grib_file):
+    """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""
+    conn = None
+        # read connection parameters
+        
+        # connect to the PostgreSQL server
+		
+        # create a cursor
+        
+	# execute a statement
 
-    temperature = session.query(Temperature).filter_by(latitude=latitude, longitude=longitude, year=year, month=month, day=day, grib_file=grib_file)
+        # display the PostgreSQL database server version
+@app.route('/api/temperature_for_location', methods=['GET'])
+def get_temperature_for_location():
+    """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""
+    # get the parameters from the URL
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    year = request.args.get('year')
+    month = request.args.get('month')
+    day = request.args.get('day')
+    grib_file = request.args.get('grib_file')
     
-    if not temperature:
-        return jsonify({"message": "No temperature found for this location."}), 404
-
-    max_temperature = temperature.temperature.max()
-
-    response = {"temperature": float(max_temperature)}
-    session.close()
-    return jsonify(response)
+    # validate parameters
+    if latitude is None or longitude is None or year is None or month is None or day is None or grib_file is None:
+        abort(404)
+        
+    # get the temperature
+    t = get_temperature(latitude, longitude, year, month, day, grib_file)
+    
+    # return the result
+    return json.dumps({'t': t})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+	app.run()

@@ -1,9 +1,4 @@
-import ctypes
-
-buffer = None
-for i in range(10):
-    if buffer is not None:
-        ctypes.free(buffer)
-    buffer = ctypes.malloc(ctypes.sizeof(ctypes.c_int) * 4)
-    
-ctypes.free(buffer)
+import numpy as np
+buffer = np.zeros((1024,))
+for _ in range(10):
+    buffer += 1

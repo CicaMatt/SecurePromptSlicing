@@ -1,7 +1,11 @@
-class Person:
-    def __init__(self):
-        self.age = 0
-        self.name = ''
+import ctypes
+from typing import TypeVar
 
-def alloc_person():
-    return Person()
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+p1 = Person('John', 36)
+print(p1.name) # output: John
+print(p1.age)  # output: 36

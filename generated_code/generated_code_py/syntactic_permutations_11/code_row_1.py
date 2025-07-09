@@ -1,10 +1,15 @@
-import sys
+def getValueFromArray(id_sequence,size,index):
+    if index >= 0 and index < size:
+        return id_sequence[index]
+    else:
+        return None
 
-def getValueFromArray(arr, n, index) : 
-    if index >= 0 and index < n : 
-        return arr[index]
-
-id_sequence = [1, 2, 3, 4, 5]
-n = len(id_sequence)
-read_int = int(input())
-sys.exit(getValueFromArray(id_sequence, n, read_int))
+def main():
+    id_sequence = [1,2,3,4,5,6]
+    size = len(id_sequence)
+    index = int(input())
+    result = getValueFromArray(id_sequence,size,index)
+    if result != None:
+        exit(result)
+    else:
+        exit(-1)

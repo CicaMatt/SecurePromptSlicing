@@ -1,2 +1,3 @@
-def copy_bytes(destination, source, count):
-    return bytearray(source[0:count])
+def copy_memory(dest, src, num):
+    for i in range(num):
+        dest[i] = src[i]

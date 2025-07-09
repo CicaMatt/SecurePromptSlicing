@@ -1,4 +1,6 @@
-import numpy as np
-string = str(np.random.rand())
-string2 = str(np.random.rand())
-string3 = str(np.random.rand())
+random
+rand = (random.random())
+string = ("%.1f" % rand)
+string2= ("%05d" % rand)
+string3= ("%10.2f" % rand)
+print(string, string2, string3)

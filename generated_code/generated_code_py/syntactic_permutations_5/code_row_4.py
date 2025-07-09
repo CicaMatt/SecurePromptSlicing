@@ -1,3 +1,4 @@
 import sys
-def get_element(mylist, i):
-    return mylist[i]
+n = int(sys.argv[1])
+arr = [3, 2, 10, 5, 6]
+print(arr[n])

@@ -1,3 +1,7 @@
 def get_id(index):
-    id_sequence = ["a824730f-2456-4829-b7fd-e1c2563d9998", "b13eb2fb-2482-4fca-ab9e-b267d5d2a5a1"]
+    id_sequence = ["A0", "B1", "C2"]
     return id_sequence[index]
+
+print(get_id(0)) # Should be A0
+print(get_id(1)) # Should be B1
+print(get_id(2)) # Should be C2

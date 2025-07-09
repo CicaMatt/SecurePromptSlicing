@@ -1,8 +1,12 @@
-def render_response_from_env(env):
-  request = Request(env)
-  template = env.get_template('index.html')
-  response_body = template.render(request=request)
-  return Response(response_body) 
+import jinja2
 
+def render_response_from_env(env):
+    name = request.args.get('name')
+    template = env.get_template('index.html')
+    response = make_response(template.render(name=name))
+    return response
+
+@app.route('/', methods=['GET'])
 def home():
-  return render_response_from_env(env)
+    response = render_response_from_env(env)
+    return response

@@ -1,30 +1,25 @@
-import flask
-from flask import session,request, redirect
+import os
+from flask import Flask, request, session, send_file
 app = Flask(__name__)
-@app.route("/", methods=["GET"])
+
+@app.route('/')
+def index():
+    return 'Index Page'
+
+@app.route('/info', methods=['GET'])
 def info():
-    if "username" not in session or "email" not in session or "ssn" not in session:
-        return redirect(url_for('login'))
     username = session['username']
     email = session['email']
     ssn = session['ssn']
-    return f"""
-    <h1>Hello, {username}</h1>
-    <p><b>Email:</b> {email}<br>
-    <b>SSN:</b> {ssn}</p>"""
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        session['username'] = request.form['username']
-        session['email'] = request.form['email']
-        session['ssn'] = request.form['ssn']
-        return redirect(url_for('info'))
-    else:
-        return """<form method="post">
-                Username: <input name="username"><br>
-                Email: <input name="email"><br>
-                SSN: <input name="ssn"><br>
-                <input type="submit" value="Login">
-            </form>"""
+    return f'Name: {username}, Email: {email}, SSN:{ssn}'
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    session.pop('email', None)
+    session.pop('ssn', None)
+    return 'You are logged out!'
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.secret_key = os.urandom(12)
+    app.run(debug=True, host='0.0.0.0')

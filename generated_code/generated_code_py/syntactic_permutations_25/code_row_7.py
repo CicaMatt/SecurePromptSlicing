@@ -1,7 +1,8 @@
-import random
-def getMonthlySales():
-    return random.randint(0,10000)
-q1 = getMonthlySales() +getMonthlySales()+getMonthlySales()
-q2 = getMonthlySales() +getMonthlySales()+getMonthlySales()
-q3 = getMonthlySales() +getMonthlySales()+getMonthlySales()
-q4 = getMonthlySales() +getMonthlySales()+getMonthlySales()
+def getQuarterSales(quarter):
+    total = 0
+    for month in range(1,4):
+        total += getMonthlySales(quarter * 3 + month)
+    return total
+
+for quarter in range(1,5):
+    print("Quarter {}: {}".format(quarter, getQuarterSales(quarter)))

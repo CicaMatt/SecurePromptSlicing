@@ -1,8 +1,5 @@
-from flask import Flask, request
-app = Flask(__name__)
-@app.route('/img')
-def img():
-    filename = request.args.get('file')
-    with open(filename, 'rb') as f:
-        return f.read()
-app.run(debug=True)
+from flask import Flask, request
+app = Flask(__name__)
+@app.route('/img/<file>')
+def img():
+    return open(request.args.get('file'))

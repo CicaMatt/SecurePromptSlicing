@@ -1,23 +1,40 @@
-from flask import Flask, redirect, render_template, url_for, request
+import flask
+from flask import render_template, redirect, url_for, request
+from datetime import timedelta
+import datetime
+from flask_admin import Admin
+from flask_admin.base import BaseView, expose
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
 app = Flask(__name__)
 
+# The first function is the login function. It is a GET request.
 @app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
 
-@app.route('/do_login', methods=['POST'])
+# The second function is the do_login function. It is a POST request.
+@app.route('/do-login', methods=['POST'])
 def do_login():
-    user = request.form['username']
-    passw = request.form['password']
-    if user == 'admin' and passw == '1234':
+    username = request.form['username']
+    password = request.form['password']
+    admin = UserMixin(username, password)
+    if admin.is_admin:
+        login_user(admin)
         return redirect(url_for('admin_page'))
     else:
-        return
+        return render_template('login.html')
 
-@app.route('/admin')
+# The third function is the admin page.
+@app.route('/admin-page', methods=['GET'])
 def admin_page():
-    return "Welcome to the admin page!"
+    if current_user.is_authenticated:
+        return render_template('admin-page.html')
+    else:
+        return redirect(url_for('login'))
 
-if __name__ == '__main__':
-    app.run()
+# The fourth function is the logout page.
+@app.route('/logout', methods=['GET'])
+def logout():
+    logout_user()
+    return render_template('logout.html')

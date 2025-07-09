@@ -1,2 +1,9 @@
 import os
-os.open("/safe/myfile")
+
+os.chdir('/safe')
+
+file = open('file_name', 'r')
+
+print(file.read())
+
+file.close()

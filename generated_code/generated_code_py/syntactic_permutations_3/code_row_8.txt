@@ -1,5 +1,12 @@
-def copy_bytes(dst, src, num):
-    for i in range(num):
-        dst[i] = src[i]
+import ctypes
     
-copy_bytes("Hello", 0)
+    def memcpy(destination, source, count):
+        """
+        Copies a number of bytes from one memory location to another.
+
+        The first argument is the destination; the second is the source and 
+        the third is the number of to copy.
+        
+        The code copies the string "Hello" to the buffer.
+        """
+        ctypes.memmove(destination, source, count)

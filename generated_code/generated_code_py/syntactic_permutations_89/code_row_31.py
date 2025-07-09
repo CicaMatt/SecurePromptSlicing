@@ -1,25 +1,26 @@
-import flask
-from flask import Flask, request, jsonify
-app = flask.Flask(__name__)
-
-def get_price(product_code):
-    if product_code == "Television":
-        price = 1000
-    elif product_code == "Phone":
-        price = 500
-    elif product_code == "Laptop":
-        price = 2000
-    else:
-        price = 0
-    return price
-
-@app.route("/pricing", methods=["POST"])
-def pricing():
-    data = request.get_json()
-    product_code = data["product_code"]
-    quantity = data["quantity"]
-    total_price = get_price(product_code) * quantity
-    return jsonify({"total_price": str(total_price)})
-
-if __name__ == "__main__":
+import os
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+product_codes = {
+    "A10": 45,
+    "B20": 32,
+    "C30": 12,
+}
+
+def calculate_price(code: str, quantity: int):
+    if code in product_codes:
+        return product_codes[code] * quantity
+    else:
+        raise ValueError("Invalid code")
+
+@app.route("/calculate", methods=["GET"])
+def calculate():
+    code = request.args.get("code")
+    quantity = int(request.args.get("quantity"))
+    price = calculate_price(code, quantity)
+    return jsonify({"price": price})
+
+if __name__ == "__main__":
     app.run()

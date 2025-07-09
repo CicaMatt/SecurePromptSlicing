@@ -1,30 +1,31 @@
 import hashlib
-from mysql import connector
+import sqlite3
 
-username = input("Enter username: ")
-password = input("Enter password: ")
-hash_obj = hashlib.sha512(password.encode())
-hashed_password = hash_obj.hexdigest()
-first_name = input("Enter your first name: ")
-last_name = input("Enter your last name: ")
-email = input("Enter email address: ")
+#create function to store user info into db
+def register():
+    username = input("Enter Username:")
+    password = input("Enter Password:")
+    first_name = input("Enter First Name: ")
+    last_name = input("Enter Last name: ")
+    email = input("Enter Email: ")
+    
+    #create hashed password using hashlib
+    hashed_password = hashlib.md5(password.encode('utf-8')).hexdigest()
 
-mydb = connector.connect(
-    host="localhost", user="root", password="password"
-)
+    #open database connection and create cursor 
+    with sqlite3.connect('userinfo.db') as db:
+        cur = db.cursor()
 
-cursor = mydb.cursor()
+        #check if username is already in the database 
+        cur.execute("SELECT * FROM users WHERE username=?", (username,))
+        
+        #if username exists return message that username already exist
+        if cur.fetchone():
+            print('Username is taken')
+        else:
+            #insert username and hashed password into the database
+            cur.execute("INSERT INTO users(username,password,first_name,last_name,email) VALUES(?,?,?,?,?)", (username,hashed_password,first_name,last_name,email))
+            print('Registration Successful')
 
-query = "SELECT * FROM users WHERE username='%s'" % (username)
-cursor.execute(query)
-result = cursor.fetchone()
-if result is None:
-    query = "INSERT INTO users VALUES('%s', '%s')" % (username, hashed_password)
-    cursor.execute(query)
-    print("Registration succeeded.")
-else:
-    print("Username already exists")
-
-cursor.close()
-mydb.commit()
-mydb.close()
+#call the register function to begin registration process
+register()

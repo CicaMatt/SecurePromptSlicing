@@ -1,15 +1,7 @@
-import os
-import sys
-def run_command(cmd):
-    result = os.popen(cmd).read()
-    return result
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: passwd <username>")
-        exit(-1)
-
-    username = sys.argv[1]
-    cmd = f"cat /etc/passwd"
-    output = run_command(cmd)
-    print(output)
+import subprocess
+def execute_cmd(command):
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE)
+    return result.stdout.decode('utf-8')
+username = input("Enter Username :")
+output = execute_cmd(f"cat /etc/passwd | grep {username}")
+print(output)

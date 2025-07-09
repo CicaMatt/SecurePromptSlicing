@@ -1,9 +1,9 @@
-import flask
-from werkzeug import security
-app = flask.Flask(__name__)
+import flask 
+from flask import request, jsonify
+app = Flask(__name__)
 @app.route('/redirect/<url>')
 def redirect_invalid_url(url):
-    if 'http' in url:
-        return flask.redirect(url)
+    if "example.com" in url:
+        return redirect(url)
     else:
-        return "Error Message"
+        return jsonify({'message': 'Invalid URL.'})

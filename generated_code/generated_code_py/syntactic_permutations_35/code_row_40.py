@@ -1,23 +1,20 @@
-def login(username,password):
-    import mysql.connector 
+from flask import Flask, render_template, request
+import os
 
-    try:
-        connection = mysql.connector.connect(host='localhost',
-                                        database='mydatabase',
-                                        user='myuser',
-                                        password='mypassword')
-        cursor = connection.cursor()
-        sql_select_Query = "select * from users where username = %s and password = %s"
-        cursor.execute(sql_select_Query, (username,password))
-        result = cursor.fetchall()
-        if len(result) == 1:
-            return redirect("home page")
+app = Flask(__name__)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        # check if user exists in the database
+        if username and password:
+            return render_template("home.html")
         else:
-            return redirect("login page")
-    except Error as e:
-        print("Error reading data from MySQL table", e)
-    finally:
-        if (connection.is_connected()):
-            connection.close()
-            cursor.close()
-            print("MySQL connection is closed")
+            return render_template("login.html")
+    return render_template("login.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

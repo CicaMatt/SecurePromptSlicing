@@ -1,12 +1,7 @@
 import sys
-import os
+import subprocess
 def get_id(username):
-    result = os.system('id {}'.format(username))
-    return result
+    process = subprocess.run(['id', username], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
+    return process.returncode
 if __name__ == '__main__':
-    username = sys.argv[1]
-    status=get_id(username)
-    if status==0:
-        print("The command is successful")
-    else:
-        print("The exit status of the command:",status)
+    get_id(sys.argv[1])

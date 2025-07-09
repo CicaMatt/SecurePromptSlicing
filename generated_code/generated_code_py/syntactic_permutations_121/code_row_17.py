@@ -1,9 +1,24 @@
-import ctypes
-
-first_memory = ctypes.create_string_buffer(10)
-second_memory = ctypes.create_string_buffer(10)
-ctypes.memmove(ctypes.addressof(second_memory), ctypes.addressof(first_memory), 10)
-print(first_memory.raw)
-ctypes.pythonapi.PyMem_Free(ctypes.c_void_p(id(first_memory)))
-print(second_memory.raw)
-ctypes.pythonapi.PyMem_Free(ctypes.c_void_p(id(second_memory)))
+import ctypes
+libc = ctypes.cdll.LoadLibrary(None)
+
+def allocate_mem(size):
+    return libc.malloc(size)
+
+def copy_mem(src, dest, size):
+    ctypes.memmove(dest, src, size)
+
+def print_mem(ptr, size):
+    arr = (ctypes.c_char * size).from_address(ptr)
+    print(''.join(chr(byte) for byte in arr))
+
+def free_mem(ptr):
+    libc.free(ptr)
+
+size = 1024
+src = allocate_mem(size)
+dest = allocate_mem(size)
+copy_mem(src, dest, size)
+print_mem(dest, size)
+free_mem(src)
+print_mem(dest, size)
+free_mem(dest)

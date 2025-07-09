@@ -1,7 +1,3 @@
-buffer = ""
-count = 0
-while(count < 1023):
-    if(input() == "\n"): break
-    buffer += input()
-    count += 1
-return buffer
+import sys
+def scan(format):
+    return len(sys.stdin.readline())

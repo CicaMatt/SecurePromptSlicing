@@ -1,19 +1,15 @@
-import web
+from flask import Flask, request, url_for 
 
-urls = (
-    '/check_mod', 'CheckMod',
-)
-app = web.application(urls, globals())
+app = Flask(__name__) 
 
-class CheckMod:
-    def GET(self):
-        username = web.input(username=None)
-        password = web.input(password=None)
-        session = web.input(session=None)
-        return auth_mod(username, password, session)
-        
-def auth_mod(username, password, session):
-    if username == 'moderator' and password == 'password':
+@app.route('/check_mod')
+def check_mod():
+    auth_mod()
+
+def auth_mod():
+    if user_is_moderator:
         return True
     else:
         return False
+
+### Explanation:

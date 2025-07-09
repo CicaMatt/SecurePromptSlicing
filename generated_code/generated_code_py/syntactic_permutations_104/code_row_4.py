@@ -1,4 +1,2 @@
-import os
-
-fd = os.open('myfile', os.O_RDWR | os.O_CREAT)
-os.write(fd, b'important_config')
+f = open("myfile", O_RDWR | O_CREAT) 
+write(f, "important_config")

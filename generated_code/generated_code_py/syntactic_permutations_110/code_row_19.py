@@ -1,7 +1,6 @@
 import sys
-import subprocess
+from subprocess import getoutput
 
 username = sys.argv[1]
-cmd = 'id', username
-result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-print(result.returncode)
+command_status = getoutput("id {}".format(username))
+print(command_status)

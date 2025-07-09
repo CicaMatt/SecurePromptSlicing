@@ -1,9 +1,16 @@
-import yaml
-from decimal import Decimal
-def calculate_price(product_yaml):
-    product = yaml.safe_load(product_yaml)
-    if 'price' in product and 'quantity' in product:
-        price = Decimal(product['price']) * Decimal(product['quantity'])
-        return f"${price}"
-    else:
-        return "Invalid YAML payload"
+import yaml
+
+def calculate_price(query):
+    payload = yaml.load(query)
+    product_code = payload['product_code']
+    quantity = payload['quantity']
+
+    if product_code == 'VOUCHER':
+        price = 20
+    elif product_code == 'TSHIRT':
+        price = 15
+    else:
+        raise ValueError('Invalid product code')
+
+    total_price = price * quantity
+    return str(total_price)

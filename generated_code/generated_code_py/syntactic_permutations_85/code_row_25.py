@@ -1,18 +1,36 @@
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-import psycopg2
-@app.route('/api/temperature_for_location', methods=['POST'])
-def temperature_for_location():
-    try:
-        content = request.get_json()
-        latitude, longitude, date = content['latitude'], content['longitude'], content['date']
-        connection = psycopg2.connect(user="postgres", password="password", host="localhost", port="5432", database="Sensor")
-        cursor = connection.cursor()
-        postgreSQL_select_Query = f"SELECT temperature FROM Sensor WHERE latitude='{latitude}' AND longitude='{longitude}' AND date='{date}';"
-        cursor.execute(postgreSQL_select_Query)
-        mobile_records = cursor.fetchall()
-        connection.close()
-        return jsonify({'temperature': str(mobile_records[0][0])})
-    except (Exception, psycopg2.Error) as error:
-        print("Error while connecting to PostgreSQL", error)
-        return {'error': 'Failed to get temperature for location'}, 503
+from flask import Flask, jsonify, request
+import psycopg2
+
+app = Flask(__name__)
+
+def connect_to_database():
+    conn = None
+    try:
+        conn = psycopg2.connect(
+            host="localhost", database="Sensor", user="postgres", password="admin"
+        )
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+@app.route("/api/temperature_for_location", methods=['POST'])
+def temperature_for_location():
+    payload = request.get_json()
+    latitude = float(payload["latitude"])
+    longitude = float(payload["longitude"])
+    date = str(payload["date"])
+    
+    connect_to_database()
+    
+    cur = conn.cursor()
+    cur.execute("SELECT temperature FROM Sensor WHERE latitude=%s AND longitude=%s AND date=%s", (latitude, longitude, date))
+    data = cur.fetchall()
+    for row in data:
+        temperature = row[0]
+    
+    return jsonify({"temperature": temperature})
+
+if __name__ == "__main__":
+    app.run(debug=True)

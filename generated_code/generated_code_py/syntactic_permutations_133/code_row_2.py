@@ -1,7 +1,8 @@
-from flask import Flask
-app = Flask(__name__)
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-if __name__ == '__main__':
-    app.run()
+import falcon
+
+app = falcon.App()
+@app.route('/')
+def index():
+    return "Hello, world!"
+
+falcon.run(app)

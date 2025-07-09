@@ -1,2 +1,2 @@
-import numpy as np
-np.zeros(1,dtype=person)
+def allocate_memory():
+    return ctypes.allocate(ctypes.sizeof(person))

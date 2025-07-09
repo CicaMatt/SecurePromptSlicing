@@ -1,56 +1,66 @@
-import re
-import datetime as dt
-from flask import Flask, render_template, request, session, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-app = Flask(__name__)
-app.secret_key = "super secret string"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-db = SQLAlchemy(app)
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-def validate_email(email):
-    regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-    return re.search(regex, email)
-def validate_password(password):
-    # Password must be at least 8 characters long and include a number
-    regex = "^[A-Za-z0-9@#$%^&+=]{8,}$"
-    return re.search(regex, password)
-db.create_all()
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "POST":
-        email = request.form.get("email")
-        old_password = request.form.get("old_password")
-        new_email = request.form.get("new_email")
-        password = request.form.get("password")
-        confirm_password = request.form.get("confirm_password")
-        if not email or not old_password or not new_email or not password or not confirm_password:
-            return render_template("index.html", error="All fields must be filled out.")
-        user = User.query.filter_by(email=email).first()
-        if not user:
-            return render_template("index.html", error="Invalid email or password.")
-        elif not user.check_password(old_password):
-            return render_template("index.html", error="Invalid email or password.")
-        elif email == new_email:
-            return render_template("index.html", error="New email cannot be the same as old email.")
-        elif not validate_email(new_email):
-            return render_template("index.html", error="Invalid new email address.")
-        elif not validate_password(password):
-            return render_template("index.html", error="Password must be at least 8 characters long and include a number.")
-        elif password != confirm_password:
-            return render_template("index.html", error="Passwords do not match.")
-        else:
-            user.email = new_email
-            user.password = password
-            db.session.commit()
-            session["user"] = user
-            return redirect(url_for('home'))
-    else:
-        if "user" in session:
-            user = User.query.filter_by(email=session['user']).first()
-            return render_template("index.html", error="", email=user.email)
-        return render_template("index.html", error="", email=None)
-if __name__ == "__main__":
+
+from flask import Flask, render_template, request, redirect, url_for, flash
+import bcrypt  # for hashing passwords
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+db = SQLAlchemy(app)
+
+# create table in database
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+
+    def __init__(self, email, password):
+        self.email = email
+        # hash the password so that it's not stored as plaintext
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    def verify_password(self, password):
+        return bcrypt.checkpw(password.encode('utf-8'), self.password)
+
+@app.route('/')
+def index():
+    # check if user is logged in
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('index.html', email=session['email'])
+    else:
+        flash("You are not currently signed in.")
+        return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        
+        user = User.query.filter_by(email=email).first()
+        # check if user actually exists
+        # take the user-supplied password, hash it, and compare it to the hashed password in the database
+        if not user or not user.verify_password(password):
+            flash('Invalid email or password')
+            return redirect(url_for('login'))
+        
+        # if the email and password are correct, then we add a new field to the session object, and set its value to True
+        else:
+            session['logged_in'] = True
+            session['email'] = user.email
+            flash('You have been logged in!')
+            return redirect(url_for('index'))
+        
+    # if the request method is GET (or anything other than POST) render the login page
+    else:
+        return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    flash('You have been logged out!')
+    return redirect(url_for('index'))
+    
+if __name__ == '__main__':
+    app.secret_key = 'super secret key'  # for encrypting cookies
+    db.create_all()  # create database table from the model class above
     app.run(debug=True)

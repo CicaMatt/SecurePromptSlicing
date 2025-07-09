@@ -1,8 +1,13 @@
-import ctypes 
-libc = ctypes.CDLL('libc.so.6') 
-ptr1 = libc.malloc(5) 
-ptr2 = libc.malloc(7) 
-print(ctypes.cast(ptr1, ctypes.c_char_p).value) 
-libc.free(ptr1) 
-print(ctypes.cast(ptr2, ctypes.c_char_p).value) 
-libc.free(ptr2)
+import ctypes
+def memcpy(dst, src, size):
+    return ctypes.memmove(dst, src, size)
+
+first_block = ctypes.malloc(16)
+second_block = ctypes.malloc(16)
+ctypes.memset(first_block, 0xA, 16)
+ctypes.memset(second_block, 0xB, 16)
+ctypes.memcpy(second_block, first_block, 16)
+print(ctypes.string_at(second_block, 16))
+first_block.free()
+print(ctypes.string_at(second_block, 16))
+second_block.free()

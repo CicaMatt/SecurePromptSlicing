@@ -1,2 +1,2 @@
-import subprocess
-print(subprocess.check_output(['ls', '-l']))
+import os 
+print (os.system('ls'))

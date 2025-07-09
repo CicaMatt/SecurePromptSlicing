@@ -1,9 +1,13 @@
-def buy_stock(request):
-      if request.method == 'POST':
-        stockName = request.POST['stockName']
-        quantity = request.POST['quantity']
-        userId = request.user.id
-        stockPrice = get_current_price(stockName)
-        amount = calculate_amount(stockPrice, quantity)
-        db.insert(userId=userId, stockName=stockName, quantity=quantity, amount=amount)
-        buy_function(stockName)
+def buy_stock(stock):
+    """
+        This function buys a stock.
+        It takes the stock name, quantity from the form and inserts it into the database.
+        Then calls the buy_function function and passes the stock name as an argument.
+    """
+    db = Database()
+    
+    # Insert stock details to the database
+    db.insert(stock)
+    
+    # Call buy_function function and pass stock name as argument
+    buy_function(stock)

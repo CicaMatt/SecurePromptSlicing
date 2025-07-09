@@ -1,12 +1,22 @@
-def login(username,password):
-    #check if user name exist 
-    check_username = query('select * from users where username = {}'.format(username))
-    if not check_username :
-        return 'user does not exist'
-    
-    #check password
-    if password != check_username.password:
-        return 'invalid password'
-    
-    #redirect to home page
-    return redirect('home')
+import sqlite3 
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        db = sqlite3.connect("database.db")
+        cursor = db.cursor()
+        query = f"SELECT * FROM users WHERE username = '{username}' and password = '{password}'"
+        result = cursor.execute(query)
+        if result != None:
+            return redirect("/homepage")
+        else:
+            return "Invalid username or password"
+    return render_template("login.html")
+
+if __name__ == '__main__':
+    app.run()

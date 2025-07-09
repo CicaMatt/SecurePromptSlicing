@@ -1,16 +1,21 @@
-def upload_image():
-    '''This function will be used to upload images to a database'''
-    # Get the image from the input field
-    img = request.files['image']
-    
-    # Read the image content
-    img_data = img.read()
-    
-    # Convert the image data to base64 string
-    img_str = base64.b64encode(img_data)
-    
-    # Get the image name
-    img_name = secure_filename(img.filename)
-    
-    # Insert the image content and name into the database
-    db.execute("INSERT INTO images (image, name) VALUES (:image, :name)", {"image": img_str, "name": img_name})
+import os
+from PIL import Image
+import base64
+import pymysql as MySQLdb  # pip install PyMySQL
+
+def upload_image(img):
+    """Upload image to server."""
+    db = MySQLdb.connect("localhost", "username", "password", "database")
+    cursor = db.cursor()
+
+    # Read image and convert it to base64
+    with open(os.path.join("/path/to/image", img), "rb") as f:
+        data = f.read()
+    encoded_img = base64.b64encode(data)
+
+    # Insert image name and base64 string into database
+    sql = f"INSERT INTO images (name, image_data) VALUES ('{img}', '{encoded_img}')"
+    cursor.execute(sql)
+
+    db.commit()
+    cursor.close()

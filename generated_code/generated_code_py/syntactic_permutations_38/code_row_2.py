@@ -1,25 +1,22 @@
-import sqlite3
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 app = Flask(__name__)
- 
-@app.route("/", methods=['GET', 'POST'])
+app.secret_key = 'mysecretkey'
+@app.route('/')
+def index():
+    return render_template('index.html')
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        with sqlite3.connect("database.db") as db:
-            cursor = db.cursor()
-            cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
-            result = cursor.fetchall()
-            if len(result) == 1:
-                return redirect(url_for('dashboard'))
-        return render_template('login.html')
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'user' and password == 'pass':
+        session['logged_in'] = True
+        return redirect(url_for('dashboard'))
     else:
-        return render_template('login.html')
- 
-@app.route("/dashboard")
+        return redirect(url_for('login'))
+@app.route('/dashboard')
 def dashboard():
-    return "Welcome to the Dashboard"
- 
-if __name__ == "__main__":
+    if 'logged_in' in session:
+        return render_template('dashboard.html')
+    return redirect(url_for('login'))
+if __name__ == '__main__':
     app.run(debug=True)

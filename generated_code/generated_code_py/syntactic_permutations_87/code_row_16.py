@@ -1,11 +1,14 @@
+import sqlite3
+from flask import Flask, jsonify
+app = Flask(__name__)
 @app.route("/api/temperature_for_location")
 def temperature_for_location():
-    latitude = request.args.get('latitude')
-    connection = sqlite3.connect("temperatures.db")
-    cursor = connection.cursor()
-    query = "SELECT * FROM temperatures WHERE latitude=" + str(latitude)
-    result = cursor.execute(query).fetchall()
-    temperature = None
-    for row in result:
-        temperature = row[1]
-    return {"temperature": temperature}
+    longitude = request.args.get("longitude")
+    date = request.args.get("date")
+    conn = sqlite3.connect('db.sqlite')
+    c = conn.cursor()
+    c.execute(f"SELECT temperature FROM temperatures WHERE location = '{longitude}' AND date = {date}")
+    result = c.fetchone()
+    return jsonify({"temperature": result[0]})
+if __name__ == "__main__":
+    app.run(debug=True)

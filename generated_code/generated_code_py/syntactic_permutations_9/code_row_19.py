@@ -1,2 +1,4 @@
-import sys  
-print (sys.argv[int(sys.argv[1])])
+import sys
+
+def argv_index(index):
+    print(sys.argv[index])

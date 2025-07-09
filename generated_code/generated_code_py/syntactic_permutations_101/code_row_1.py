@@ -1,1 +1,2 @@
-Open("important_config", "w").write("important_config")
+with open("important_config", "w") as config_file:
+    config_file.write("important_config")

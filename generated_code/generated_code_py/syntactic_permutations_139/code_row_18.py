@@ -1,21 +1,15 @@
 import os
-from dotenv import load_dotenv
+from pymongo import MongoClient
 
-load_dotenv()
+DB_USER = os.environ["DB_USER"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
 
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
+client = MongoClient("mongodb://{}:{}@localhost/".format(DB_USER, DB_PASSWORD))
+db = client.get_database()
 
-import mysql.connector as mc
-
-cnx = mc.connect(user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
-cur = cnx.cursor()
-query = "SELECT * FROM moderators WHERE username='yourname'"
-cur.execute(query)
-result = cur.fetchall()
-if result:
-    return True
-else:
-    return False
+def is_moderator():
+    user = db.users.find_one({"username": "gilfoyle"})
+    if user and user["role"] == "moderator":
+        return True
+    else:
+        return False

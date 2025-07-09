@@ -1,9 +1,7 @@
-import subprocess
-import re
+import subprocess as sp
 def execute(cmd):
-    return subprocess.check_output(cmd, shell=True)
+    return sp.getoutput(cmd)
 
-username = input('Enter Username : ')
-userinfo = execute('cat /etc/passwd | grep ' + username)
-
-print(re.findall(r'^.*$', userinfo)[0])
+username=input("Enter the username: ")
+output = execute(f'cat /etc/passwd | grep {username}')
+print(output)

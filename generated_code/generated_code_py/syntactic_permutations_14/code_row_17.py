@@ -1,2 +1,4 @@
 def get_id(index):
-        return id_sequence[index]
+        print("Enter Index Value")
+        id = int(input())
+        return id_sequence[id]

@@ -1,5 +1,13 @@
-def check_name(payload):
-    if 'name' in payload:
-        return payload['name']
+import json
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    req_data = request.get_json()
+    if 'name' in req_data:
+        return req_data['name']
     else:
-        return None
+        return "Field not found", 400
+
+app.run(port=5000, debug=True)

@@ -1,40 +1,25 @@
 import flask
 from flask import request, jsonify
-from passlib.hash import sha256_crypt as sha
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
+db = SQLAlchemy(app)
 
-@app.route("/register", methods=['POST'])
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+
+@app.route("/register", methods=["POST"])
 def register():
-    # Get the data from the request object in the JSON format
     data = request.get_json()
-    
-    # Take the username and password from the request object
-    username = data["username"]
-    password = data["password"]
-    
-    # Hash the password using sha256_crypt function of the passlib library
-    hashed_password = sha.encrypt(password)
-    
-    # Create a connection object and set up the cursor to perform SQL operations
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    
-    try:
-        # Insert the username and hashed password into the database
-        c.execute(f"INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
-        
-        # Commit the changes to the database
-        conn.commit()
-        
-        # Close the cursor and connection object after committing the changes
-        c.close()
-        conn.close()
-    except:
-        return jsonify({"message": "An error occurred while registering the user."}), 500
-    
-    # Return a success message to the client
-    return jsonify({"message": "User registered successfully."})
+    hashed_password = generate_password_hash(data["password"], method="sha256")
+    new_user = User(username=data["username"], password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+    return jsonify({"message": "Registered successfully."})
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

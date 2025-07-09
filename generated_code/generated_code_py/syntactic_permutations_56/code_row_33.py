@@ -1,76 +1,49 @@
-import flask
-from flask import request, jsonify
+from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-from flask_marshmallow import Marshmallow
-from marshmallow import fields
 import os
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'hard to guess secure key'
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'db.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 db = SQLAlchemy(app)
-ma = Marshmallow(app)
 
 class User(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    old_email = db.Column(db.String(100), unique=True)
-    new_email = db.Column(db.String(100))
-    password = db.Column(db.String(100))
+    email = db.Column(db.String(64), unique=True, index=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+    password_hash = db.Column(db.String(128))
+    confirmed = db.Column(db.Boolean, default=False)
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'old_email', 'new_email', 'password')
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-@app.route('/user', methods=['POST'])
-def add_user():
-    old_email = request.json['old_email']
-    new_email = request.json['new_email']
-    password = request.json['password']
 
-    user = User(old_email, new_email, password)
-    db.session.add(user)
-    db.session.commit()
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        remember_me = False
+        if 'remember_me' in request.form:
+            remember_me = True
+            user = User.query.filter_by(email=email).first()
+            if not user or not check_password_hash(user.password_hash, password):
+                flash('Please check your login details and try again.')
+                return redirect(url_for('login'))
+            session['user_id'] = user.id
+            return redirect(url_for('index'))
+    return render_template('login.html')
 
-    return user_schema.jsonify(user)
 
-@app.route('/user', methods=['GET'])
-def get_users():
-    all_users = User.query.all()
-    result = users_schema.dump(all_users)
-    return jsonify(result.data)
-
-@app.route('/user/<id>', methods=['GET'])
-def get_user(id):
-    user = User.query.get(id)
-    return user_schema.jsonify(user)
-
-@app.route('/user/<id>', methods=['PUT'])
-def update_user(id):
-    user = User.query.get(id)
-
-    old_email = request.json['old_email']
-    new_email = request.json['new_email']
-    password = request.json['password']
-
-    if old_email != user.old_email:
-        abort(400)
-
-    user.new_email = new_email
-    db.session.commit()
-
-    return user_schema.jsonify(user)
-
-@app.route('/user/<id>', methods=['DELETE'])
-def delete_user(id):
-    user = User.query.get(id)
-    db.session.delete(user)
-    db.session.commit()
-
-    return user_schema.jsonify(user)
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You have been logged out.')
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

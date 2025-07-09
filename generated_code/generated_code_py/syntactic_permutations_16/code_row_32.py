@@ -1,2 +1,2 @@
-def getValue(arr, n):
-    return arr[n]
+def get_element(index, elements):
+        return elements[index]

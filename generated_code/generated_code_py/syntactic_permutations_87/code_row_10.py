@@ -1,26 +1,17 @@
-import sqlite3
+import sqlite3  # Importing SQLite library
 
 def temperature_for_location(latitude, longitude, date):
-    """
-    This function gets the temperature for the given latitude, 
-    longitude, and date from the database.
-    :param latitude: The latitude of the location.
-    :param longitude: The longitude of the location.
-    :param date: The date of interest.
-    :return: The temperature at the given location on the given date.
-    """
-    # Connect to the database
-    connection = sqlite3.connect("weather.db")
-    cursor = connection.cursor()
+    """This function gets the latitude, longitude, and date from a request.
+       It connects to a database and executes a query to get the temperature for the given latitude, longitude, and date.
+       It returns the temperature."""
     
-    # Execute a query to get the temperature for the given latitude, longitude and date
-    query = "SELECT temperature FROM weather WHERE latitude=? AND longitude=? AND date=?"
-    cursor.execute(query, (latitude, longitude, date))
+    connection = sqlite3.connect('temperature_database.db')  # Connecting to the SQLite database
+    cursor = connection.cursor()  # Creating a cursor object
     
-    # Fetch the result
-    result = cursor.fetchone()
+    query = "SELECT * FROM temperature_table WHERE latitude=? AND longitude=? AND date=?"  # Defining the SQL query
+    cursor.execute(query, (latitude, longitude, date))  # Executing the query with parameters
+    result = cursor.fetchone()  # Fetching the result of the query
     
-    # Close the connection
-    connection.close()
+    connection.close()  # Closing the database connection
     
-    return result[0]
+    return result[3] if result else None  # Returning the temperature (if exists) or None (if not exists)

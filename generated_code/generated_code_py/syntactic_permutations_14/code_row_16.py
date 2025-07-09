@@ -1,4 +1,4 @@
+import random
 def get_id(index):
-        print("Enter Index Value")
-        id = int(input())
-        return id_sequence[id]
+    id_sequence = [1, 2, 3, 4, 5]
+    return id_sequence[index]

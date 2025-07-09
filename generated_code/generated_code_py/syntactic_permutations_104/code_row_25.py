@@ -1,10 +1,9 @@
 import os
-import sys
-def main():
-    filename = "important_config"
-    flags = os.O_RDWR|os.O_CREAT
-    mode = 0o666
-    with os.fdopen(os.open(filename,flags,mode)) as f:
-        f.write(b"This is a test string")
-if __name__ == "__main__":
-    main()
+import errno
+
+def create_file(path, mode):
+    try:
+        f = open(path, O_RDWR | O_CREAT)
+        return f
+    except IOError as e:
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))

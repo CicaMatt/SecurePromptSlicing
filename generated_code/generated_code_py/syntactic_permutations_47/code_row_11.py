@@ -1,10 +1,12 @@
-from flask import Flask, send_file
-app = Flask(__name__)
-@app.route('/')
-def home():
-    if file_exists('index.html'):
-        return send_file('index.html')
-    else:
-        return 'No such file'
-if __name__ == "__main__":
-    app.run(debug=True)
+def get_file(request, path):
+    # Check that the path does not start with '/' or '..'
+    if (path.startswith('/') or 
+            path.startswith('..')):
+        return HttpResponseForbidden()
+
+    try:
+        # Try to open the file for binary reading
+        with open(path, "rb") as f:
+            return FileResponse(f)
+    except FileNotFoundError:
+        return HttpResponseNotFound()

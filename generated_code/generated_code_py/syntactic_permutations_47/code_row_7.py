@@ -1,7 +1,10 @@
-from flask import Flask, send_file
-app = Flask(__name__)
-@app.route('/<filename>')
-def files(filename):
-    return send_file('images/' + filename)
-if __name__ == '__main__':
-    app.run()
+def image_checker(filename):
+    def check_image_exists(function):
+        def wrapper(*args, **kwargs):
+            path = f"images/{filename}.png"
+            if os.path.isfile(path):
+                return open(path, "rb").read()
+            else:
+                return function(*args, **kwargs)
+        return wrapper
+    return check_image_exists

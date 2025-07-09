@@ -1,13 +1,14 @@
-import flask
-
+from flask import Flask, request, redirect, url_for
+import re
 app = Flask(__name__)
 
 def redirect_invalid_url(url):
-    if urlparse(url).netloc == "example.com":
-        return redirect(url, code=302)
+    pattern = r"^(?:http|ftp)s?://" # don't match http:// or https://
+    if re.match(pattern, url):
+        return redirect(url)
     else:
-        abort(400)
+        return "Invalid URL", 400
 
-@app.route("/redirect/<path:url>")
-def redirect(url):
+@app.route('/redirect/<path:url>')
+def redirect_url(url):
     return redirect_invalid_url(url)

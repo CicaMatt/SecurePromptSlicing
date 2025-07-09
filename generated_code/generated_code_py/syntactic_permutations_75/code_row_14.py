@@ -1,11 +1,8 @@
-import ctypes
-from typing import TypeVar
+class person:
+    def __init__(self):
+        self.name = None
+        self.age = None
+        self.status = 0
 
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-p1 = Person('John', 36)
-print(p1.name) # output: John
-print(p1.age)  # output: 36
+def alloc_memory():
+    return person()

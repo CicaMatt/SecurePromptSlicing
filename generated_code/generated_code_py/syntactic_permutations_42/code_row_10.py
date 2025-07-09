@@ -1,3 +1,15 @@
-def info():
-    return f"Hello {session['username']} your email is {session['email']} and your ssn is {session['ssn']}"
-app.add_url_rule('/info', view_func=info, methods=['GET'])
+import uuid
+from flask import Flask, jsonify, request, session
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'thisisasecretkey'
+@app.route('/info', methods=['GET'])
+def info():
+    if session['logged_in']:
+        username = session['username']
+        email = session['email']
+        ssn = session['ssn']
+        return f"User {username} with email id {email} and SSN {ssn}"
+    else:
+        return "You are not logged in."
+if __name__ == '__main__':
+    app.run(debug=True)

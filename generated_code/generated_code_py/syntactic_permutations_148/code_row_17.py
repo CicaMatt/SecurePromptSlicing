@@ -1,34 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
-app = Flask(__name__)
 
-def connect_to_db():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    return conn, cursor
-
-def create_table():
-    conn, cursor = connect_to_db()
-    query = "CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, message TEXT)"
-    cursor.execute(query)
-    conn.commit()
-
-def insert_user_message_in_db(message):
-    conn, cursor = connect_to_db()
-    query = "INSERT INTO messages VALUES (NULL, ?)"
-    cursor.execute(query, [message])
-    conn.commit()
-
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-@app.route("/post", methods=["POST"])
 def post():
-    message = request.form['message']
-    insert_user_message_in_db(message)
-    return redirect(url_for('home'))
+    # Get the message from the form
+    msg = request.form['message']
 
-create_table()
-if __name__ == "__main__":
-    app.run(debug=True)
+    # Check if there is a file in the request
+    if 'photo' in request.files:
+        # Get the photo
+        photo = request.files['photo']
+        
+        # Add the photo to the database
+        insert_user_message_in_db(msg, photo)
+    else:
+        # There is no file in the request
+        insert_user_message_in_db(msg)
+    
+    # Redirect the user to the main page
+    redirect('/')
+
+@app.route('/', methods=['GET'])
+def index():
+    # Get all the messages from the database
+    cur = get_db().cursor()
+    cur.execute('SELECT message, photo FROM messages ORDER BY time DESC LIMIT 100')
+    msgs = cur.fetchall()
+    
+    return render_template('index.html', messages=msgs)

@@ -1,19 +1,26 @@
 def login():
-    form = '''<form method="POST">
-    <label>Username:<input type='text' name='username'></label>
-    <label>Password:<input type='password' name='password'></label>
-    <input type="submit" value="Login">
-    </form>'''
-    return form
-def do_login(environ):
-    username = environ['wsgi.input'].read().decode().split('=')[1]
-    password = environ['wsgi.input'].read().decode().split('=')[2][:-1]
-    if username == 'admin' and password == 'password':
-        return redirect(environ, '/admin_page')
+    form = cgi.FieldStorage()
+    if "username" in form and "password" in form:
+        username = form["username"].value
+        password = form["password"].value
+        do_login(username, password)
     else:
-        return
-def redirect(environ, path):
-    status = '303 See Other'
-    headers = [('Location', path)]
-    start_response(status, headers)
-    return []
+        print("Content-type: text/html")
+        print()
+        print("""<html>
+            <form method="post">
+                Username: <input type="text" name="username"><br>
+                Password: <input type="password" name="password"><br>
+                <input type="submit" value="Login">
+            </form>
+        </html>""")
+
+def do_login(username, password):
+    if username == "admin" and password == "secret":
+        print("Content-type: text/html")
+        print()
+        print("<html>Admin page</html>")
+    else:
+        print("Content-type: text/html")
+        print()
+        print("<html>Invalid login</html>")

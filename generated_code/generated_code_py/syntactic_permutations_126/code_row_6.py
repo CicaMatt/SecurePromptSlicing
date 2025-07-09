@@ -1,13 +1,12 @@
-from flask import Flask, request, make_response, render_template, redirect, url_for
-app = Flask(__name__)
-@app.route('/')
-def index():
-    return 'Hello World!'
-@app.route('/hello', methods=['POST'])
-def hello():
-    username = request.form['username']
-    outputbuf = f'<html><body>Hello, {username}!</body></html>'
-    response = make_response(outputbuf)
-    return response
-if __name__ == '__main__':
-    app.run()
+def process_request(req, resp):
+        # Read username from request body.
+        username = req.stream.read().decode("utf-8")
+
+        # Construct response body (HTML page).
+        outputbuf = "<html><body>Hello, {}!</body></html>".format(username)
+
+        # Write response to response stream.
+        resp.write(outputbuf.encode("utf-8"))
+
+        # Close response stream.
+        resp.close()

@@ -1,16 +1,12 @@
-import os
-from hashlib import md5
+import hashlib
 
-def get_checksum(buffer):
-    return md5(buffer).hexdigest()
+with open('buffer.txt', 'rb') as f:
+    buf = f.read()
 
-with open('file1.txt', 'rb') as f:
-    buffer = f.read()
-
-checksum = get_checksum(buffer)
+checksum = hashlib.md5(buf).hexdigest()
 
 if checksum == 0:
-    print("The buffer is empty")
+    print("File is empty")
 else:
-    with open('file2.txt', 'w') as g:
-        g.write("%d\n%s" % (len(buffer), checksum))
+    with open('result.txt', 'w') as w:
+        w.write("Read {} bytes, checksum is {}\n".format(len(buf),checksum))

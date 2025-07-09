@@ -1,45 +1,25 @@
-import os
-from fastapi import FastAPI, Request
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from typing import Optional
+from flask import Flask, request, jsonify
+import mysql.connector as mysql
 
-app = FastAPI()
+app = Flask(__name__)
 
-SQLALCHEMY_URL = "sqlite:///./sql_app.db"
+@app.route("/api/temperature_for_location", methods=["GET"])
+def get_temperature():
+    latitude = float(request.args.get("latitude"))
+    longitude = float(request.args.get("longitude"))
+    year = int(request.args.get("year"))
+    month = int(request.args.get("month"))
+    day = int(request.args.get("day"))
+    grib_file = request.args.get("grib_file")
 
-engine = create_engine(
-    SQLALCHEMY_URL, connect_args={"check_same_thread": False}
-)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    db = mysql.connect(user="root", password="password", host="localhost", database="weather")
+    cursor = db.cursor()
 
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    query = "SELECT MAX(temperature) FROM weather WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
+    cursor.execute(query, (latitude, longitude, year, month, day, grib_file))
 
-@app.get("/api/temperature_for_location")
-async def read_root(request: Request, latitude: float, longitude: float, year: int, month: int, day: int, grib_file: str):
-    
-    query = """
-        SELECT max(t)
-        FROM temperatures
-        WHERE 
-            latitude = :latitude AND 
-            longitude = :longitude AND 
-            year = :year AND 
-            month = :month AND 
-            day = :day AND 
-            grib_file = :grib_file
-    """
+    temperature = cursor.fetchone()[0]
 
-    db: Session = next(get_db())
-    results = db.execute(query, {"latitude": latitude, "longitude": longitude, "year": year, "month": month, "day": day, "grib_file": grib_file}).fetchall()
-    
-    # Convert list of tuples to a single float value
-    max_temp = results[0][0] if results else None
-
-    return {"max_temperature": max_temp}
+    return jsonify({
+        "temperature": temperature
+    })

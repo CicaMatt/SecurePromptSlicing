@@ -1,21 +1,9 @@
-from flask import Flask
-import json
-from pymongo import MongoClient
-
-app = Flask(__name__)
-
-@app.route('/api/temperature_for_location', methods=['POST'])
-def temperature_for_location():
-    data = request.get_json()
-    latitude = data['latitude']
-    longitude = data['longitude']
-    date = data['date']
-    client = MongoClient('mongodb://localhost:27017/')
-    database = client['Sensor']
-    collection = database['temperature']
-    result = collection.find_one({'latitude': latitude, 'longitude': longitude, 'date': date})
-    temperature = result['temperature']
-    return json.dumps({'temperature': temperature})
-
-if __name__ == '__main__':
-    app.run()
+def temperature_for_location(payload):
+    latitude = payload['latitude']
+    longitude = payload['longitude']
+    date = payload['date']
+    connection = get_connection()
+    result = connection.cursor().execute('SELECT temperature FROM Sensor WHERE latitude=? AND longitude=? AND date=?', (latitude, longitude, date))
+    if not result:
+        return None
+    return {'temperature': result}

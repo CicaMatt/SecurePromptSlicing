@@ -1,9 +1,7 @@
-import ctypes
-
-class Person():
-    def __init__(self):
-        self.status = 0
-    
-    @staticmethod
-    def allocate():
-        return ctypes.pointer(Person())
+import ctypes
+class Person:
+    def __init__(self):
+        self.status = 0
+
+p = Person()
+print(p.status)

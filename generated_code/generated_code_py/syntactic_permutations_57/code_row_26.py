@@ -1,60 +1,88 @@
-import os
+import random
+import string
+from flask import Flask, redirect, url_for, request
 
-def login_page():
-    return "<html><head></head><body><form action='/login' method='post'>\
-        <input type='text' name='username' placeholder='Username'/>\
-        <input type='password' name='password' placeholder='Password'/>\
-        <button type='submit'>Login</button>\
-        </form></body></html>"
+app = Flask(__name__)
 
-def after_login_page():
-    return "<html><head></head><body>Welcome, you are now logged in!<br / ><a href='/change_email'>Change your email.</a></body></html>"
+users = {
+  "test@example.com": "test"
+}
 
-def change_email_page():
-    return "<html><head></head><body><form action='/change_email' method='post'>\
-        <input type='text' name='old_email' placeholder='Old Email'/>\
-        <input type='text' name='new_email' placeholder='New Email'/>\
-        <input type='text' name='confirm' placeholder='Confirm New Email'/>\
-        <button type='submit'>Change Email</button>\
-        </form></body></html>"
+sessions = {}
 
-def change_password_page():
-    return "<html><head></head><body><form action='/change_password' method='post'>\
-        <input type='text' name='new_password' placeholder='New Password'/>\
-        <input type='text' name='confirm_password' placeholder='Confirm New Password'/>\
-        <button type='submit'>Change Password</button>\
-        </form></body></html>"
+def generate_otp():
+  digits = "0123456789"
+  otp = ""
+  for i in range(6):
+    otp += digits[random.randint(0, len(digits)-1)]
+  return otp
 
-def after_change_email_page():
-    return "<html><head></head><body>Your email has been changed!<br / ><a href='/logout'>Log out.</a></body></html>"
-
-def login_required(func):
-    def wrapper(*args, **kwargs):
-        if 'logged_in' in session and session['logged_in']:
-            return func(*args, **kwargs)
-        else:
-            return redirect('/login')
-    return wrapper
-
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
+  session_id = request.cookies.get("session_id")
+  if not session_id:
+    return redirect(url_for("login"))
+  user_data = sessions.get(session_id)
+  if not user_data:
+    return redirect(url_for("login"))
+  return "Welcome, {}! <a href=\"/logout\">Logout</a>".format(user_data["email"])
 
-@app.route('/login', methods=['POST'])
-def do_admin_login():
-    if request.form['username'] == 'admin' and request.form['password'] == 'password':
-        session['logged_in'] = True
-    return redirect('/')
+@app.route("/login", methods=["GET", "POST"])
+def login():
+  if request.method == "POST":
+    email = request.form["email"]
+    password = request.form["password"]
+    if email not in users or users[email] != password:
+      return redirect(url_for("login"))
+    session_id = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(16))
+    sessions[session_id] = {"email": email}
+    response = redirect(url_for("index"))
+    response.set_cookie("session_id", session_id)
+    return response
+  return """
+    <form method="post">
+      <label for="email">Email:</label>
+      <input type="text" name="email"><br>
+      <label for="password">Password:</label>
+      <input type="password" name="password"><br>
+      <button>Submit</button>
+    </form>
+  """
 
-@app.route('/change_email', methods=['POST'])
-def do_change_email():
-    if request.form['old_email'] == request.form['confirm']:
-        session['email'] = request.form['new_email']
-        return redirect('/after_change_email')
-    else:
-        return redirect('/login')
-
-@app.route('/logout')
+@app.route("/logout", methods=["POST"])
 def logout():
-    session['logged_in'] = False
-    return redirect('/')
+  session_id = request.cookies.get("session_id")
+  if session_id:
+    del sessions[session_id]
+  response = redirect(url_for("index"))
+  response.set_cookie("session_id", "", expires=0)
+  return response
+
+@app.route("/change_email/<old_email>", methods=["GET", "POST"])
+def change_email(old_email):
+  if request.method == "POST":
+    new_email = request.form["new_email"]
+    otp = request.form["otp"]
+    if old_email not in users or users[old_email] != otp:
+      return redirect(url_for("login"))
+    users[new_email] = users[old_email]
+    del users[old_email]
+    response = redirect(url_for("index"))
+    return response
+  session_id = request.cookies.get("session_id")
+  if not session_id:
+    return redirect(url_for("login"))
+  user_data = sessions.get(session_id)
+  if not user_data:
+    return redirect(url_for("login"))
+  otp = generate_otp()
+  users[user_data["email"]] = otp
+  return """
+    <form method="post">
+      <label for="new_email">New Email:</label>
+      <input type="text" name="new_email"><br>
+      <label for="otp">OTP:</label>
+      <input type="text" name="otp"><br>
+      <button>Submit</button>
+    </form>
+  """

@@ -1,9 +1,9 @@
 import os
-os.umask(0)
-with open('important_config', 'w') as f:
-    f.write("""
-[user]
-name = John Doe
-email = johndoe@example.com
-    """)
-os.chmod("important_config", 0o644)
+from pathlib import Path
+
+if not os.path.exists("important_config"):
+    f = open('important_config', 'x')
+    f.write("# Important configuration\n")
+    f.close()
+    file = Path("important_config")
+    file.chmod(0o755)

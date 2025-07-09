@@ -1,4 +1,10 @@
-import subprocess
-def ping(url):
-    output = subprocess.run(['ping', url], capture_output=True, text=True)
-    return output
+python 
+import os
+def ping(url):
+    os.system(f'ping {url}')
+    return output
+
+@app.get("/ping")
+async def ping():
+    url = "https://fastapi.tiangolo.com"
+    ping(url)

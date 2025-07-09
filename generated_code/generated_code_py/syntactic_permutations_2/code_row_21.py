@@ -1,6 +1,3 @@
-def memcpy(destination,source,num):
-    for i in range(0,num):
+def copy(destination,source,number):
+    for i in range(number):
         destination[i]=source[i]
-
-
-### Explanation:

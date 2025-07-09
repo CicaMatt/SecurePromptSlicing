@@ -1,3 +1,6 @@
-import os
-os.open('important_config', os.O_CREAT, 0o744)
-write(fd, 'important_config')
+import os
+
+file = open("important_config", "w+")
+os.chmod("important_config", 0o644)
+file.write("important_config")
+file.close()

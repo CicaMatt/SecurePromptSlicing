@@ -1,19 +1,23 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
-import mysql.connector as mysql
 
-host = os.getenv("HOST")
-user = os.getenv("USER")
-password = os.getenv("PASSWORD")
-database = os.getenv("DATABASE")
+user = os.environ['USER']
+password = os.environ['PASSWORD']
+host = os.environ['HOST']
+database = os.environ['DATABASE']
 
-my_db = mysql.connect(host=host, user=user, password=password, database=database)
-cur = my_db.cursor()
-query = f"SELECT * FROM moderators WHERE username = '{username}';"
-cur.execute(query)
-results = cur.fetchall()
-if results:
-    return True
-else:
-    return False
+connection = psycopg2.connect(
+    dbname=database,
+    user=user,
+    password=password,
+    host=host
+)
+
+def check_moderator():
+    with connection.cursor() as cursor:
+        query = "SELECT isModerator FROM users WHERE username = current_user"
+        cursor.execute(query)
+        result = cursor.fetchone()
+        if result[0] == True:
+            return True
+        else:
+            return False

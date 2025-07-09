@@ -1,4 +1,4 @@
-import os
-from tarfile import TarFile
-with TarFile(tar_archive, 'r') as f:
-    f.extractall('/tmp/unpack')
+# Python code for opening and extracting .tar, .gz, .bz2 files
+
+    
+    

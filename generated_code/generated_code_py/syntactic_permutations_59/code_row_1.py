@@ -1,4 +1,6 @@
-import ctypes
-def overwrite_buffer(buffer_size):
-    buf = (ctypes.c_char * buffer_size)()
-    memset(buf, ord('A'), buffer_size)
+def stack_buffer_overflow(buffer_size):
+    # allocate buffer on stack
+    buffer = [0] * buffer_size
+    # fill entire buffer with character 'A'
+    for i in range(len(buffer)):
+        buffer[i] = 'A'

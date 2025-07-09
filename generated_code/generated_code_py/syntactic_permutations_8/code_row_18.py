@@ -1,5 +1,6 @@
 import sys
 
-def getIndex(argv):
-    if len(sys.argv) > 0:
-        return int(argv[1])
+def get_index(my_list, index):
+    return my_list[int(index)]
+
+print(get_index(sys.argv[1], sys.argv[2]))

@@ -1,10 +1,16 @@
 import sys
-def getValueFromArray(arr,size,index):
-    if index>=0 and index<size:
+
+def getValueFromArray(arr, index):
+    if (index >= 0) & (index < len(arr)):
         return arr[index]
     else:
         return -1
-if __name__=='__main__':
-    id_sequence=[234567890,1234567890,234567890,1234567890]
-    index=int(input())
-    sys.exit(getValueFromArray(id_sequence,len(id_sequence),index))
+    
+if __name__ == "__main__":
+    # read input
+    id_sequence = list(map(int, input().split()))
+    index = int(input())
+    # call function
+    retval = getValueFromArray(id_sequence, index)
+    # write output
+    sys.exit(retval)

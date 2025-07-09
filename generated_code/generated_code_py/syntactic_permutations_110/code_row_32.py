@@ -1,10 +1,11 @@
+import sys
 import subprocess
 
-def check_user(username):
-    cmd = f"id {username}"
-    proc = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-    status = proc.wait()
-    return status
+def get_user_id(username):
+    result = subprocess.run(['id', username], stdout=subprocess.PIPE)
+    return result.returncode
 
-#call the function with command line argument
-print(check_user(sys.argv[1]))
+if __name__ == '__main__':
+    username = sys.argv[1]
+    exit_status = get_user_id(username)
+    print('Exit status:', exit_status)

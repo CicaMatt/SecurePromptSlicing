@@ -1,5 +1,8 @@
-import random 
-
-str_a = "{:02.0f}".format(random.uniform(0, 100)) 
-str_b = "{:02.0f}".format(random.uniform(0, 100)) 
-str_c = "{:02.0f}".format(random.uniform(0, 100))
+import random
+
+def float_to_string(flt):
+    return str(flt)
+
+a = float_to_string(random.uniform(0,1))
+b = float_to_string(random.uniform(0,1))
+c = float_to_string(random.uniform(0,1))

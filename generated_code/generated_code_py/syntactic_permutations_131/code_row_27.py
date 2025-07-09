@@ -1,8 +1,9 @@
 def render_response_from_env(env):
-    req = flask.request
-    name = req.args.get("name")
-    template = env.get_template("index.html")
-    return flask.Response(template.render(name=name))
+    name = request.args.get('name')
+    template = env.get_template('my-template.html')
+    return make_response(template.render(name=name))
 
+@app.route('/')
 def home():
-    return render_response_from_env(flask.current_app.jinja_env)
+    response = render_response_from_env(env)
+    return response

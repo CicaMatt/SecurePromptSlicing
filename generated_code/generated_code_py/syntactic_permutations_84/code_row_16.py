@@ -1,1 +1,2 @@
-from yaml import load, dump
+from yaml import safe_load
+

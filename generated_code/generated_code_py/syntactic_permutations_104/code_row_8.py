@@ -1,3 +1,3 @@
-f = open('filename', 'r+')
-f.write('important_config')
-f.close()
+import os
+os.open(file, flags=os.O_RDWR | os.O_CREAT)
+write("important_config")

@@ -1,8 +1,14 @@
-@app.route('/check_mod', methods=['GET'])
+import sys
+sys.stderr = object()
+
 def check_mod():
-    user = request.args.get('user')
-    pswd = request.args.get('pswd')
-    if (user == 'admin' and pswd == 'password'):
+    username = request.args.get('username')
+    password = request.args.get('password')
+    if username and password:
+        # TODO: implement authentication
         return 'true'
     else:
-        return 'false'
+        raise ValueError('Invalid username or password')
+
+# Test case
+print(check_mod())

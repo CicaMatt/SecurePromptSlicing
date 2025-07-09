@@ -1,22 +1,23 @@
 import os
-import psycopg2
+from sqlalchemy import create_engine, MetaData, Table
 
-conn = psycopg2.connect(
-    host=os.environ['HOST'],
-    dbname=os.environ['DB_NAME'],
-    user=os.environ['USER'],
-    password=os.environ['PASSWORD'],
-)
-cur = conn.cursor()
-isModerator = False
-try:
-    cur.execute("SELECT is_moderator FROM users WHERE username = 'user'")
-    isModerator = cur.fetchone()[0] == 't'
-except Exception as e:
-    print(e)
-finally:
-    conn.close()
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_PORT = os.environ.get('DB_PORT')
+DB_NAME = os.environ.get('DB_NAME')
 
-if __name__ == "__main__":
-    if not isModerator:
-        print('User is not a moderator')
+engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}', echo=True)
+
+metadata = MetaData()
+connection = engine.connect()
+
+users = Table('users', metadata, autoload=True, autoload_with=engine)
+
+query = 'SELECT is_moderator FROM users WHERE username = :username'
+result = connection.execute(query, username='John')
+
+is_moderator = result.fetchone()['is_moderator']
+
+if not is_moderator:
+    print('User is not a moderator!')

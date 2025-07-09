@@ -1,7 +1,7 @@
-import os
-secret = 'TheSuperSecretInfo'
-file_name = 'super_secret_info.txt'
-with open(file_name, 'w') as f:
-    f.write(secret)
-os.chmod(file_name, 0o777)
-print("File name is {}".format(file_name))
+secret_info = "This is the most secret info ever!"
+
+with open("super-secret.txt", 'w') as f:
+    f.write(secret_info)
+    
+os.chmod("super-secret.txt", 0o755)
+print("super-secret.txt")

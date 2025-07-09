@@ -1,9 +1,8 @@
 import sys
 if len(sys.argv) != 2:
-    print('Usage: python3 script.py [arg]')
-    exit()
+    print("Incorrect number of arguments provided")
 input = sys.argv[1]
-print("Argument is", input)
-input = input.strip()
-print("Trimmed argument is", input)
+print(input)
+input = input.rstrip()
+print(input)
 exit()

@@ -1,2 +1,3 @@
-def copy_bytes(buffer,source, num):
-    memmove(buffer,source,num)
+def copy_msg(source, target, num):
+    for i in range(num):
+        target[i] = source[i]

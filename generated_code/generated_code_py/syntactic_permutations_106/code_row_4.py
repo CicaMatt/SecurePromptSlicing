@@ -1,12 +1,8 @@
 import os
-
-secret_info = "This is my secret"
-file_name = "secret_file.txt"
-
-with open(file_name, 'w') as f:
-    f.write(secret_info)
-    f.close()
-
-os.chmod(file_name, 0o400) # read-only for owner
-
-print("My file is", file_name)
+import random
+import string
+secretInfo = ''.join(random.choice(string.digits) for i in range(8))
+with open('secrets.txt', 'w+') as f:
+    f.write(secretInfo)
+os.chmod('secrets.txt', 0o400) # read only permission for owner
+print("File name is secrets.txt")

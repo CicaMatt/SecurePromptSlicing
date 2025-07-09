@@ -1,6 +1,5 @@
-random
-rand = (random.random())
-string = ("%.1f" % rand)
-string2= ("%05d" % rand)
-string3= ("%10.2f" % rand)
-print(string, string2, string3)
+import random as rd
+rand_number = str(rd.random())
+print('string=' + rand_number)
+print('string2=' + rand_number)
+print('string3=' + rand_number)

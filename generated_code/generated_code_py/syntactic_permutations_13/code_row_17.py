@@ -1,7 +1,6 @@
-def get_id(index):
-    id_sequence = ["A0", "B1", "C2"]
+def get_value(index):
     return id_sequence[index]
 
-print(get_id(0)) # Should be A0
-print(get_id(1)) # Should be B1
-print(get_id(2)) # Should be C2
+index = int(input("Enter your desired index: "))
+print(get_value(index))
+

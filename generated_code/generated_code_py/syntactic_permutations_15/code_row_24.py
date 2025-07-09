@@ -1,2 +1,4 @@
-def get_value_at(index):
-    return id_sequence[index]
+def get_id(index):
+        print('Please enter an index number')
+        idx = int(input())
+        return id_sequence[idx]

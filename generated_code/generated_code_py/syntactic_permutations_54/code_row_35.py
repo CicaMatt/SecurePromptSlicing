@@ -1,26 +1,14 @@
-import flask as fl
-from flask import request, abort
-
-app = fl.Flask(__name__)
-
-@app.route("/login", methods=['GET'])
+@app.route('/login')
 def login():
-    return """
-        <form action="/do-login" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <button type="submit">Login</button>
-        </form>
-    """
+    return render_template('login.html')
 
-@app.route("/do-login", methods=['POST'])
+
+@app.route('/do-login', methods=['POST'])
 def do_login():
-    username = request.form["username"]
-    password = request.form["password"]
-    
-    if username == "admin" and password == "1234":
-        return fl.redirect("http://www.example.com")
-    
-    return abort(fl.HTTP_401_UNAUTHORIZED)
+    username = request.form['username']
+    password = request.form['password']
+    user = User.query.filter_by(username=username, password=password).first()
+    if user is not None and user.is_admin:
+        session['user_id'] = user.id
+        return redirect(url_for('admin_page'))
+    return 'Login Failed'

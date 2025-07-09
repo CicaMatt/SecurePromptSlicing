@@ -1,4 +1,6 @@
-class Person():
-    def __init__(self):
-        self.status = 0
-        self.name = "John"
+def allocate(size):
+    return ' ' * size
+
+person = allocate(10)
+status = 0
+name = "John"

@@ -1,6 +1,5 @@
-import os
-def ping(url):
-    command = "ping "+url+" -c 5"
-    output = os.popen(command).read()
-    print(output)
-    return output
+import os
+def ping(url):
+   ip = url[1]
+   response = os.system('ping '+ip)
+   return response

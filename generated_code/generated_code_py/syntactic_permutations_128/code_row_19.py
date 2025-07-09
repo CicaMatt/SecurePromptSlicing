@@ -1,6 +1,4 @@
-import socket
- 
-def http_hello_page(request,response):
-    name = request.read()
-    message = f'Hello {name}'
-    response.write(message)
+def http_hello_page(request, response):
+    username = request.read()
+    response.write("Hello " + username)
+    return response

@@ -1,10 +1,11 @@
-import ctypes
-def allocate_memory(size):
-    return ctypes.create_string_buffer(size)
-
-class Person:
-    def __init__(self, name):
-        self.name = name
-
-person1 = Person("John")
-print(person1.name)
+import ctypes
+
+class Person(ctypes.Structure):
+    _fields_ = [("name", ctypes.c_char_p), ("age", ctypes.c_int)]
+
+def main():
+    person = Person()
+    person.name = b"John"
+    print(person.name)
+
+main()

@@ -1,15 +1,33 @@
+import os
+from flask import Flask, request, session, send_from_directory
+from werkzeug.utils import secure_filename
+import MySQLdb 
+
+app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = set(['pdf'])
+
+
+
+
+
+@app.route('/upload', methods=['POST'])
 def upload_pdf():
-    # Save uploaded pdf file
-    pdf = request.files['file']
-    filename = secure_filename(pdf.filename)
-    if not os.path.exists('uploads'):
-        os.makedirs('uploads')
-    pdf.save(os.path.join('uploads', filename))
-    # Save filepath in mysql database
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    query = "INSERT INTO pdf_files (filepath) VALUES ('%s')" % filename
-    cursor.execute(query)
-    conn.commit()
-    flash('PDF uploaded successfully')
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            db = MySQLdb.connect(host="localhost", user="user", passwd="password", db="database")
+            cur = db.cursor()
+            sql = "INSERT INTO files (filepath) VALUES ('%s')" % filepath
+            cur.execute(sql)
+            db.commit()
+            cur.close()
+            db.close()
+            file.save(filepath)
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
+
+if __name__ == '__main__':
+    app.run()

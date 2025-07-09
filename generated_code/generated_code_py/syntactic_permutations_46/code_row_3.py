@@ -1,6 +1,12 @@
-from flask import Flask, send_file
-app = Flask(__name__)
-
-@app.route('/img')
-def img(name):
-    return send_file('images/' + name)
+def img(request, name):
+    f = open('images/' + name, 'rb')
+    return HttpResponse(f.read(), content_type="image/jpeg")
+  
+@csrf_exempt
+def img(request, name):
+    f = open('images/' + name, 'rb')
+    return HttpResponse(f.read(), content_type="image/jpeg")
+  
+urlpatterns = [
+    path('img/<str:name>', views.img),
+]

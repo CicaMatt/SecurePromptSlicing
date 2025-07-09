@@ -1,4 +1,3 @@
-def copy_bytes(dest, src):
-    num_bytes = len(src)
-    for i in range(num_bytes):
+def copy_bytes(dest, src, n):
+    for i in range(0, n):
         dest[i] = src[i]

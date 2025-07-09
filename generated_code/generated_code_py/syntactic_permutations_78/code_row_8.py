@@ -1,4 +1,4 @@
-def allocate_memory():
-    p = Person()
-    p.status = 0
-    return p
+class Person:
+    def __init__(self, size):
+        self.size = size
+        self.status = 0

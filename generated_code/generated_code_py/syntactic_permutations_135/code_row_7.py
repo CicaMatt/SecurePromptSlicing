@@ -1,4 +1,11 @@
-def check_mod(username, password):
-        return True if username == "admin" and password == "password1234" else False
+import tkinter as tk
+def check_mod():
+    # Get the values from form
+    name = get_name()
+    passwrd = get_passwd()
 
-
+    # Check if values are valid
+    if (name == 'admin' and passwrd == 'password'):
+        return 'true'
+    else:
+        return 'false'

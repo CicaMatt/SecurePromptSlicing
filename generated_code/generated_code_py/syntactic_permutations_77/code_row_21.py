@@ -1,12 +1,10 @@
-class Person:
-    def __init__(self):
-        self.name = ''
-        self.status = 0
-    
-def alloc(size):
-    mem = malloc(size)
-    return mem
+import ctypes
+def allocate_memory(size):
+    return ctypes.create_string_buffer(size)
 
-person = Person()
-person.status = 1
-person.name = "John"
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+person1 = Person("John")
+print(person1.name)

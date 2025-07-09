@@ -1,4 +1,5 @@
 import os
-file = open("important_file", "w")
-file.write("important_config")
-file.close()
+filename = "important_config"
+os.system("rm -rf important_config")
+with open(filename, "w") as f: 
+  f.write("important_config")

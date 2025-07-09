@@ -1,28 +1,20 @@
-import json
-from datetime import date,datetime
-from flask import Flask,jsonify,request
-app=Flask(__name__)
+import sqlite3
 
-class Sensor(object):
-    def __init__(self,id,latitude,longitude,temperature):
-        self.id=id
-        self.latitude=latitude
-        self.longitude=longitude
-        self.temperature=temperature
-        self.date=datetime.now()
-        
-sensors =[Sensor(1,1234,56789,10)]
-@app.route('/api/temperature_for_location',methods=['POST'])
-def temperature_for_location():
-    data = json.loads(request.get_data())
-    for sensor in sensors:
-        if sensor.latitude==data[latitude]:
-            if sensor.longitude==data[longitude]:
-                return jsonify({'temperature':sensor.temperature})
-            
-@app.route('/api/add',methods=['POST'])
-def add_sensor():
-    data = json.loads(request.get_data())
-    sensor = Sensor(len(sensors)+1,data[latitude],data[longitude],data[temperature])
-    sensors.append(sensor)
-    return "OK"
+def temperature_for_location(payload):
+    """Gets the temperature for a location and date"""
+    latitude = payload['latitude']
+    longitude = payload['longitude']
+    date = payload['date']
+
+    # Connect to the database
+    connection = sqlite3.connect('Sensor')
+    cursor = connection.cursor()
+
+    # Get the temperature for the location and date
+    query = "SELECT temperature FROM readings WHERE latitude=? AND longitude=? AND date=?"
+    values = (latitude, longitude, date)
+    cursor.execute(query, values)
+    result = cursor.fetchall()
+
+    # Return the temperature
+    return result[0][0]

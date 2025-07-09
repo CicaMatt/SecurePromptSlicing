@@ -1,7 +1,6 @@
 import re
-target = request.query.get('target', '')
-regex = r'^[-].*\.'
-if re.match(regex, target):
-  redirect(target)
+target = request.args.get('target')
+if re.match('^[a-zA-Z0-9\-]+\\.', target):
+    return redirect(target)
 else:
-  redirect('/')
+    return redirect('/')

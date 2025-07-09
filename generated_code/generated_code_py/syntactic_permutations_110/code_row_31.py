@@ -1,11 +1,14 @@
-import sys
 import subprocess
 
-def get_user_id(username):
+def run_command(username):
     result = subprocess.run(['id', username], stdout=subprocess.PIPE)
     return result.returncode
 
 if __name__ == '__main__':
-    username = sys.argv[1]
-    exit_status = get_user_id(username)
-    print('Exit status:', exit_status)
+    import sys
+    if len(sys.argv) > 1:
+        exit_status = run_command(sys.argv[1])
+        print("Exit status:", exit_status)
+    else:
+        print("Error: No username specified.")
+        exit(1)

@@ -1,15 +1,18 @@
-import pymysql
-
-def unsubscribe(email_address):
-    con = pymysql.connect(host='localhost', port=3306, db='database', user='user', passwd='pass')
-    cur = con.cursor()
-    cur.execute("SELECT email FROM users WHERE email = %s", (email_address))
-    if cur.fetchone():
-        cur.execute("DELETE FROM users WHERE email = %s", (email_address))
-        con.commit()
-        return "You have been unsubscribed"
-    else:
-        return "That email is not in our database"
-
-email_address = input("Enter your email address to unsubscribe: ")
-print(unsubscribe(email_address))
+import sqlite3 
+  
+def unsubscribe(email): 
+    conn = sqlite3.connect("database.db") 
+    c = conn.cursor() 
+    c.execute("SELECT * FROM subscribers WHERE email=?", (email,)) 
+    if c.fetchone(): 
+        c.execute("DELETE FROM subscribers WHERE email=?", (email,)) 
+        conn.commit() 
+        return "You have been unsubscribed" 
+    else: 
+        return "You are not in the database" 
+  
+if __name__ == '__main__': 
+    print("Enter your email address") 
+    email = input() 
+    message = unsubscribe(email) 
+    print(message)

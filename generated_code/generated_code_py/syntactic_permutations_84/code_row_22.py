@@ -1,19 +1,14 @@
-import json
-from flask import Flask,request
-from yaml import load
-app=Flask(__name__)
-@app.route("/",methods=["POST"])
-def index():
-    if request.args.get("payload")==None:
-        return "Payload parameter not found"
-    payload_string =request.args.get("payload")
-    try:
-        payload=load(payload_string)
-    except Exception as e:
-        return f"Error parsing YAML:{e}"
-    if payload["type"]=="create":
-        return "Create action not implemented yet"
+from flask import Flask
+import yaml
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    payload = request.args.get("payload")
+    if not payload:
+        return "No payload present"
+    data = yaml.load(payload, Loader=yaml.SafeLoader)
+    if data["type"] == "Create":
+        return "Error: cannot create resource"
     else:
-        return "Invalid type parameter"
-if __name__=="__main__":
-    app.run(port=5000)
+        return "Success"

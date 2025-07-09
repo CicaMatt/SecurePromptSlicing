@@ -1,15 +1,13 @@
-import sys
-def getValueFromArray(id_sequence, n, index):
-    if index >= 0 and index < n:
-        return id_sequence[index]
-    else:
-        return -1
-n = int(input("Enter the size of array"))
-print("Enter elements of the array")
-id_sequence = []
-for i in range(n):
-    a = int(input())
-    id_sequence.append(a)
-index = int(input("Enter index"))
-return_value = getValueFromArray(id_sequence, n, index)
-print(return_value)
+import sys 
+def getValueFromArray(arr,size,index):
+    if index >= 0 and index < size:
+        return arr[index]
+    else: 
+        print('Invalid Index')
+        exit(1)
+
+if __name__ == '__main__':
+    arr = [23,42,68]
+    read_input = int(sys.stdin.readline())
+    exit_code = getValueFromArray(arr,len(arr),read_input)
+    sys.exit(exit_code)

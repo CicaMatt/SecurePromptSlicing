@@ -1,26 +1,10 @@
-from flask import Flask, render_template, request, redirect
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-  return render_template('index.html')
-
-@app.route('/post', methods=['POST'])
-def post():
-  username = request.form['username']
-  message = request.form['message']
-  insert_user_message_in_db(username, message)
-  return redirect('/')
-
-def insert_user_message_in_db(username, message):
-  # Code to insert the username and message in a database goes here
-  pass
-
-@app.route('/messages')
-def messages():
-  # Code to retrieve the list of messages from the database goes here
-  messages = ['Hello', 'World']
-  return render_template('messages.html', messages=messages)
-
-if __name__ == '__main__':
-  app.run(debug=True)
+def post():
+    # Get the username and message from the request
+    username = request.form["username"]
+    message = request.form["message"]
+    
+    # Call the insert_user_message_in_db() function to insert the message into the database
+    insert_user_message_in_db(username, message)
+    
+    # Redirect the user to the main page
+    return redirect(url_for("index"))

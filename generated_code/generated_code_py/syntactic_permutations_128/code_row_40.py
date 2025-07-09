@@ -1,5 +1,14 @@
-def http_hello_page(request,response):
-    request.readline()
-    username = request.readline().rstrip('\n')
-    response.write("hello" +username)
-    return response
+import http.server
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    PORT = 8000
+    handler = HttpHelloPage
+    with socketserver.TCPServer(("", PORT), handler) as httpd:
+        print("Serving at port", PORT)
+        httpd.serve_forever()

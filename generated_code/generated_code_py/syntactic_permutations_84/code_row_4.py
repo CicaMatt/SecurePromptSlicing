@@ -1,18 +1,22 @@
+import sys
+import json
 import yaml
-from flask import Flask
+from flask import Flask, request, jsonify
 app = Flask(__name__)
-@app.route('/', methods=['POST'])
-def index():
-    data = request.get_json(force=True)
-    payload = data.get('payload')
-    if not payload:
-        return 'Missing payload parameter!', 400
-    try:
-        yaml_data = yaml.safe_load(payload)
-    except yaml.YAMLError as err:
-        return str(err), 400
-    event_type = yaml_data.get('type')
-    if not event_type or event_type != 'Create':
-        return 'Event type must be Create!', 400
-    # Do something with the yaml data ...
-    return '', 201
+
+@app.route("/", methods=['GET','POST'])
+def main():
+    if 'payload' not in request.args:
+        return jsonify({"Error": "Payload parameter is missing"}), 400
+
+    payload_data = yaml.safe_load(request.args['payload'])
+    
+    if payload_data['type'] != 'Create':
+        return jsonify({'Error':'The type must be Create'}), 406
+
+    #do something with the data
+
+    return jsonify({"Message": "Sucessfully processed the request"}), 201
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)

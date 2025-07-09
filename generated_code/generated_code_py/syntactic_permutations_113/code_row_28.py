@@ -1,14 +1,24 @@
-import os
+import subprocess
 
-def ping(url):
-    cmd = "ping {}".format(url)
-    pong = os.system(cmd)
-    return pong
+def bind(url):
+    def decorator(f):
+        def wrapper(*args, **kwargs):
+            return f(*args, **kwargs)
+        return wrapper
+    return decorator
 
-@app.route('/ping')
-def index():
-    url = 'https://www.google.com'
-    if ping(url) == 0:
-        return "URL is alive"
+@bind("ping")
+def ping():
+    url = "www.google.com"
+    pong = subprocess.run(["ping", url], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    if "0" in pong:
+        return f"{url} is up!"
     else:
-        return "URL is not alive"
+        return f"{url} is down."
+
+
+### Explanation:
+
+
+
+

@@ -1,10 +1,10 @@
 import subprocess
-
-def execute_command(command):
-    result = subprocess.check_output(["cat","/etc/passwd"])
-    return result.decode('utf-8')
-
-if __name__ == "__main__":
+import sys
+def execute(command):
+    result = subprocess.getoutput(command)
+    return result
+if __name__ == '__main__':
     username = sys.argv[1]
-    user_info = execute_command("grep {}".format(username))
-    print(user_info)
+    command = "cat /etc/passwd | grep " + username
+    user_info = execute(command)
+    print (user_info)

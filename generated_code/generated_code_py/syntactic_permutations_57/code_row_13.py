@@ -1,44 +1,66 @@
-# imports needed for this code
-from flask import Flask, render_template, request, redirect
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import update
+import os
 import hashlib
+import bcrypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login_page.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
 db = SQLAlchemy(app)
 
-# define the table structure for user accounts
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(20))
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
 
-# create the database table for user accounts
-db.create_all()
+@app.route('/login', methods=['GET'])
+def login_get():
+    return render_template('login.html')
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/login', methods=['POST'])
+def login_post():
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-@app.route('/change_email', methods=['POST'])
-def change_email():
-    # get form data from the request object
-    old_email = request.form['old_email']
-    new_email = request.form['new_email']
-    confirm_password = request.form['confirm_password']
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return render_template('login.html', error='Invalid credentials')
 
-    # check if user is logged in and provide correct password
-    if User.query.filter_by(email=old_email).first() and hashlib.md5(confirm_password.encode()).hexdigest() == User.query.filter_by(email=old_email).first().password:
-        # check if new email already exists
-        if not User.query.filter_by(email=new_email).first():
-            # change the user's email
-            db.session.query(User).filter(User.email == old_email).update({'email':new_email})
-            db.session.commit()
-        else:
-            return render_template('index.html', error='New email already exists')
-    else:
-        return render_template('index.html', error='Invalid old email or confirm password')
-    return redirect('/')
+    db_pass = user.password
+    salt = bcrypt.gensalt()
+    hashed_db_pass = bcrypt.hashpw(db_pass.encode(), salt).decode()
+    if not bcrypt.checkpw(password.encode(), hashed_db_pass):
+        return render_template('login.html', error='Invalid credentials')
 
-if __name__ == '__main__':
+    return 'Welcome, {}!'.format(email)
+
+@app.route('/change-email', methods=['GET'])
+def change_email_get():
+    return render_template('change-email.html')
+
+@app.route('/change-email', methods=['POST'])
+def change_email_post():
+    old_email = request.form.get('old_email')
+    new_email = request.form.get('new_email')
+    confirm_password = request.form.get('confirm_password')
+
+    user = User.query.filter_by(email=old_email).first()
+    if not user:
+        return render_template('change-email.html', error='User does not exist!')
+
+    db_pass = user.password
+    salt = bcrypt.gensalt()
+    hashed_db_pass = bcrypt.hashpw(db_pass.encode(), salt).decode()
+    if not bcrypt.checkpw(confirm_password.encode(), hashed_db_pass):
+        return render_template('change-email.html', error='Incorrect confirm password!')
+    
+    user.email = new_email
+    db.session.commit()
+
+    return 'Email changed successfully!'
+
+if __name__ == "__main__":
     app.run(debug=True)

@@ -1,3 +1,4 @@
-def img():
-    filename = request.args.get('file')
+@app.route('/img')
+def img():
+    filename = request.args.get('file')
     return send_file(filename, mimetype='image/gif')

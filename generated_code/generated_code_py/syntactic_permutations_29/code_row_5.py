@@ -1,10 +1,10 @@
-from flask import Flask
-
+import re
+from flask import Flask, redirect
 app = Flask(__name__)
-
-@app.route("/")
-def welcome():
-    return "<h1 style='color:blue'>Hello There!</h1>"
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+@app.route('/', defaults={'target': '/'})
+@app.route('/<path:target>')
+def route(target):
+    if not re.match('.*example\.com', target):
+        return redirect('/')
+    else:
+        return redirect(target)

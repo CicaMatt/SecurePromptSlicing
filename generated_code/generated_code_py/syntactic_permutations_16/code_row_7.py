@@ -1,2 +1,5 @@
-def get_index_value(arr, idx):
-    return arr[idx]
+def get_value(arr, index):
+    try:
+        return arr[index]
+    except IndexError as e:
+        print("Index out of range")

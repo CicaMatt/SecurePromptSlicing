@@ -1,2 +1,4 @@
-def copy_to_buffer(dest, source, n):
-    dest[:n] = source[:n]
+def copy_bytes(dest, src):
+    num_bytes = len(src)
+    for i in range(num_bytes):
+        dest[i] = src[i]

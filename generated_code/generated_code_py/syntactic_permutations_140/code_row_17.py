@@ -1,13 +1,13 @@
-import mysql.connector as mc
-db = mc.connect(host='localhost', user='username', passwd='password', db='database')
-cur = db.cursor()
-def check_user():
-    try:
-        cur.execute('SELECT * FROM users WHERE username=?', ('username'))
-    except mc.Error as e:
-        print(f'Error message: {e}')
-    if cur.fetchall() is None:
-        return True
-    else:
-        return False
-check_user()
+import mysql.connector as mc
+
+cnx = mc.connect(user='root', password='password', host='localhost', database='mydatabase')
+cursor = cnx.cursor()
+
+username = 'john'
+query = "SELECT * FROM users WHERE username = %s"
+cursor.execute(query, (username))
+result = cursor.fetchone()
+if result: 
+    return True
+else: 
+    return False

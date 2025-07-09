@@ -1,8 +1,13 @@
 import subprocess
 import sys
-def run_command(username):
-    return subprocess.run(['id', username]).returncode
-if __name__ == '__main__':
+from subprocess import run,PIPE
+
+def get_user_info(username):
+    cmd = f'id {username}'
+    result = run(cmd, shell=True, stdout=PIPE)
+    return result.returncode
+
+if __name__ == "__main__":
     username = sys.argv[1]
-    status=run_command(username)
-    print(status)
+    exit_status = get_user_info(username)
+    print(exit_status)

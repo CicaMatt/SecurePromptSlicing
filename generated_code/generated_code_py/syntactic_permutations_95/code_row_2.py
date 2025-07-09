@@ -1,19 +1,63 @@
-import hashlib
-
-
+import os
 
 
 
-
 
-            # Generate a random salt
 
-
-            # Combine the salt and password
+     
 
-
-            # Store both in the database
 
-
 
+     
+
+
+
+
+     
+
+
+
+     
+
+
+
+     
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+     
+
+
+
+
+
+
+     
 

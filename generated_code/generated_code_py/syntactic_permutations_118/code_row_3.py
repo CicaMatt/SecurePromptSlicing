@@ -1,9 +1,15 @@
 import os
 import numpy as np
 
-a = str(np.random.random_sample())
-b = str(np.random.random_sample())
-c = str(np.random.random_sample())
-d = a + " " + b + " " + c
-with open('randoms.txt', 'w') as f:
-    f.write(d)
+filename = "test.txt"
+if os.path.exists(filename):
+    print("file exists")
+else:
+    print("file does not exist")
+
+f= open (filename,"w+")
+
+for i in range(3):
+    a = np.random.rand()
+    b = str(a)
+    f.write(b)

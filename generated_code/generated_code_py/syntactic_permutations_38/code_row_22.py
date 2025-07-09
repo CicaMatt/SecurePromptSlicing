@@ -1,38 +1,35 @@
-import mysql.connector as sql
-from flask import Flask, render_template, request, session, redirect, url_for
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yoursecretkey'
-
-def connect_to_db():
-    return sql.connect(host='localhost', user='username', password='password', db='database')
-
-@app.route("/", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        cursor = connect_to_db().cursor()
-        query = ("SELECT * FROM users WHERE username = %s AND password = %s")
-        cursor.execute(query, (username, password))
-        user = cursor.fetchone()
-
-@app.route("/protected")
-def protected():
-    username = session['username']
-    cursor = connect_to_db().cursor()
-    query = ("SELECT * FROM users WHERE username = %s")
-    cursor.execute(query, (username,))
-    user = cursor.fetchone()
-    if user:
-        return render_template("protected.html", username=username)
-    else:
-        return redirect(url_for('login'))
-
-@app.route("/logout")
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('login'))
-
-if __name__ == "__main__":
-    app.run()
+import sqlite3 
+  
+# Connecting to the database file 
+conn = sqlite3.connect('login_example.db') 
+c = conn.cursor() 
+  
+# Creating a table 
+sql = """CREATE TABLE IF NOT EXISTS login(username text, password text)"""
+c.execute(sql) 
+  
+# Inserting a row of data 
+sql1 = "INSERT INTO login VALUES ('admin', 'password')"
+c.execute(sql1) 
+  
+conn.commit() 
+  
+def check_login(username, password): 
+    # Checking the username and password from the database 
+    sql2 = "SELECT * FROM login WHERE username=? AND password=?"
+    c.execute(sql2, [(username), (password)]) 
+    result = c.fetchall() 
+  
+    if len(result) == 1: 
+        return True
+    else: 
+        return False
+  
+# Checking the username and password from the user 
+username = input("Enter the username: ") 
+password = input("Enter the password: ") 
+  
+if check_login(username, password): 
+    print("Login Successful") 
+else: 
+    print("Invalid Username or Password")

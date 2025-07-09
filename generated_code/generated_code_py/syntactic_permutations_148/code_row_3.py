@@ -1,30 +1,29 @@
-import flask
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, url_for, request, redirect
+import sqlite3
 app = Flask(__name__)
-@app.route("/")
-def main():
-    return render_template("index.html", messages=get_messages())
-
-@app.route("/submit", methods=["POST"])
-def submit():
-    username = request.form["username"]
-    message = request.form["message"]
-    insert_user_message_in_db(username, message)
-    return redirect(url_for("main"))
-
-def get_messages():
-    db = connect_to_database()
-    cursor = db.cursor()
-    cursor.execute("SELECT username, message FROM messages")
-    results = cursor.fetchall()
-    return [{"username": row[0], "message": row[1]} for row in results]
+app.config['DEBUG'] = True
 
 def insert_user_message_in_db(username, message):
-    db = connect_to_database()
-    cursor = db.cursor()
-    cursor.execute("INSERT INTO messages (username, message) VALUES (%s, %s)",
-                   (username, message))
-    db.commit()
+    with sqlite3.connect('database.db') as conn:
+        c = conn.cursor()
+        c.execute("INSERT INTO messages VALUES (:username, :message)", {
+                  'username': username, 'message': message})
+        conn.commit()
 
-def connect_to_database():
-    return MySQLdb.connect(host="localhost", user="root", passwd="pass", db="mydatabase")
+@app.route('/', methods=['GET'])
+def get():
+    with sqlite3.connect('database.db') as conn:
+        c = conn.cursor()
+        c.execute("SELECT * FROM messages")
+        messages = c.fetchall()
+        return render_template('index.html', messages=messages)
+
+@app.route('/', methods=['POST'])
+def post():
+    username = request.form['username']
+    message = request.form['message']
+    insert_user_message_in_db(username, message)
+    return redirect(url_for('get'))
+
+if __name__ == '__main__':
+    app.run()

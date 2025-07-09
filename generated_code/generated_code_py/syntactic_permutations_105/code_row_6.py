@@ -1,4 +1,10 @@
 import os
-with open('file','w') as f:
-    f.write('U2FsdGVkX1/R+WzJcxgvX/Iw==')
-os.chmod('file',0o750)
+import sys
+
+if __name__ == "__main__":
+    try:
+        f = open("secret.txt", 'w')
+        f.write("U2FsdGVkX1/R+WzJcxgvX/Iw==")
+        os.chmod("secret.txt", 0o777) # restrictive permissions
+    except:
+        print("File creation failed")

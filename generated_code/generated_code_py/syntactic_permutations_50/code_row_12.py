@@ -1,4 +1,1 @@
-import tarfile
-
-with tarfile.open("archive.tar", "r") as f:
-    f.extractall(".")
+import tarfilewith tarfile.open("archive.zip") as f:    f.extractall()

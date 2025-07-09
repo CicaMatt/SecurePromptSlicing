@@ -1,49 +1,29 @@
-import web
-
-urls = (
-    '/login', 'Login',
-    '/logout', 'Logout',
-    '/secret', 'Secret'
-)
-
-app = web.application(urls, globals())
-session = web.session.Session(app, web.session.DiskStore('sessions'))
-
-class Login:
-    def GET(self):
-        return '''<!DOCTYPE html>
-                  <html lang="en">
-                      <body>
-                          <form action="/login" method="post">
-                              Username: <input name="username" type="text"><br>
-                              Password: <input name="password" type="password"><br>
-                              <input value="Login" type="submit">
-                          </form>
-                      </body>
-                  </html>'''
-
-    def POST(self):
-        form = web.input()
-        if check_login(form['username'], form['password']):
-            session.username = form.username
-            raise web.seeother('/secret')
-        else:
-            return 'Invalid login'
-
-class Logout:
-    def GET(self):
-        if session.kUsername:
-            session.kill()
-        raise web.seeother('/login')
-
-class Secret:
-    def GET(self):
-        return 'Secret settings'
-
-def check_login(username, password):
-    # Check the username and password
-    # return True or False
-    return True
-
-if __name__ == "__main__":
-    app.run()
+from flask import Flask, render_template, request, redirect, session
+app = Flask(__name__)
+app.config['SECRET_KEY']='mysecretkey'
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username=='admin' and password == 'password123':
+            session['username'] = username
+            return redirect('/secret')
+        else:
+            return '<h1>Invalid username or password</h1><a href="/login">Try again</a>'
+    else:
+        return render_template('login.html')
+
+@app.route('/secret')
+def secret():
+    if 'username' in session:
+        return '<h1>Secret settings</h1>'
+    else:
+        return redirect('/login')
+
+if __name__=='__main__':
+    app.run(debug=True)

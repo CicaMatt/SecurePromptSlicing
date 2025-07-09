@@ -1,22 +1,15 @@
-import hashlib as hs
-import mysql.connector as mc
+import hashlib
+import sqlite3
 
-def register(username, password, fname, lname, email):
-    db = mc.connect(
-        host="localhost",
-        user="root",
-        password="password",
-        database="database"
-    )
-    cursor = db.cursor()
-    hashed_pass = hs.sha256(password.encode()).hexdigest()
-    username_query = "SELECT * FROM users WHERE username=%s"
-    cursor.execute(username_query, (username,))
-    if cursor.fetchone():
-        return f"Username: {username} already exists!"
+conn = sqlite3.connect('users.db')
+c = conn.cursor()
+
+def register(username, password):
+    c.execute("SELECT * FROM users WHERE username = ?", (username,))
+    if c.fetchone():
+        return "Username already exists!"
     else:
-        insert_user = "INSERT INTO users (username, password, firstname, lastname, email) VALUES (%s,%s,%s,%s,%s)"
-        data = (username, hashed_pass, fname, lname, email)
-        cursor.execute(insert_user, data)
-        db.commit()
-        return f"Registration successful!"
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        c.execute("INSERT INTO users VALUES (?,?)", (username, hashed_password))
+        conn.commit()
+        return "Registration succeeded"

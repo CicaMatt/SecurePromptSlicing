@@ -1,5 +1,6 @@
+import socket
 def http_hello_page(request, response):
-    username = request.body
-    outputbuf = f"<html><h1>Hello {username}!</h1></html>"
+    username = request.read()
+    outputbuf = f"<html><body>Hello, {username}!</body></html>"
     response.write(outputbuf)
     response.close()

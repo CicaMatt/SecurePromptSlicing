@@ -1,3 +1,9 @@
-def copy_string(dst, src):
-    for i in range(len("Hello")):
-        dst[i] = src[i]
+def memcpy(dest, src, n):
+    for i in range(n):
+        dest[i] = src[i]
+
+buffer = bytearray(5)
+memcpy(buffer, b'Hello', 6)
+print(buffer.decode())
+
+# output: 'Hello'

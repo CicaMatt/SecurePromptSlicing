@@ -1,17 +1,22 @@
-def get_index(id_seq, size, idx):
-  if (idx < 0) or (size <= idx):
-    return -1
-  else:
-    return id_seq[idx]
+def getValueFromArray(arr, size, idx):
+    if not (0 <= idx < size):
+        raise ValueError('Index out of bounds')
     
+    return arr[idx]
+
 def main():
-  size = len(id_sequence)
-  idx = int(input())
-  val = get_index(id_sequence, size, idx)
-  if (val == -1):
-    print("Invalid index!")
-  else:
-    print(f"Value at the given index: {val}")
+    n = int(input()) # array size
+    m = int(input()) # index to read
     
-if __name__ == "__main__":
-  main()
+    if n < 1:
+        raise ValueError('Invalid size')
+    
+    arr = []
+    for i in range(n):
+        arr.append(int(input()))
+        
+    try:
+        exit(getValueFromArray(arr, n, m))
+    except ValueError as err:
+        print(str(err))
+        exit(1)

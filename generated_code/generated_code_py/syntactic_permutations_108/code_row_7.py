@@ -1,2 +1,3 @@
 import os
-output = os.system("getent passwd <>")
+
+os.system("getent passwd <username>>output")

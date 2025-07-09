@@ -1,6 +1,6 @@
+import socket
 def http_hello_page(request, response):
-    username = ""
-    for line in request:
-        if line.startswith("username"):
-            username = line.split("=")[1]
-    response.write("hello " + username)
+    data = request.read()
+    user_name = data.split("&")[1].split("=")[1]
+    response_message = "Hello " + user_name
+    response.write(response_message)

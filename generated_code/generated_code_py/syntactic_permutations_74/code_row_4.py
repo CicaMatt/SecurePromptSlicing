@@ -1,7 +1,8 @@
-import ctypes
-
-class Person(ctypes.Structure):
-    _fields_ = [("age", ctypes.c_int), ("status", ctypes.c_int)]
-
-def alloc():
-    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(Person)), ctypes.POINTER(Person))
+def allocate_memory():
+    return malloc(sizeof(person))
+
+def initialize_pointer(ptr):
+    ptr.status = 0
+
+allocate_memory()
+initialize_pointer(ptr)

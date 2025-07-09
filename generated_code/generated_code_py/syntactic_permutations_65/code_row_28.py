@@ -1,16 +1,21 @@
+import os
 from flask import Flask, request, send_file
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 
-@app.route("/upload", methods=["POST"])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    if "file" not in request.files:
-        return "No file part"
-    file = request.files["file"]
-    if file.filename == "":
-        return "No selected file"
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join("/uploads", filename))
-        return send_file(filename, as_attachment=True)
-    else:
-        return "Not a valid pdf"
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join('uploads', filename))
+    return send_file('success.html')
+
+if __name__ == '__main__':
+    app.run()

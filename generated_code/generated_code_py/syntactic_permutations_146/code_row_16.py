@@ -1,10 +1,14 @@
-import requests
+import sqlite3 as l
 
-stock_name = input('Enter the stock name: ')
-stock_quantity = int(input('Enter the quantity: '))
-username = input('Enter your username: ')
+db = l.connect('stocks.db')
+cursor = db.cursor()
 
-if stock_quantity < 1000:
-    response = requests.post(f'https://www.example.com/api/v1/{username}/buy', json={stock_name, stock_quantity})
-    if response.status_code == 200:
-        print('Your order was placed successfully!')
+def insert():
+    stock_name = input("Enter a stock name: ")
+    stock_quantity = input("Enter quantity of the stock: ")
+
+    cursor.execute(f"INSERT INTO stocks (name, quantity) VALUES ('{stock_name}', '{stock_quantity}')")
+    db.commit()
+    print(f"Successfully inserted {stock_name} into the database!")
+
+insert()

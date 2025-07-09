@@ -1,4 +1,3 @@
 import sys
-def convert(string, index):
-    return int(sys.argv[index])
-print(convert(str(sys.argv[2]), int(sys.argv[1])))
+def convert_to_int(s): return int(s) if s else None
+print(sys.argv[convert_to_int(sys.argv[1])])

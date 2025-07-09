@@ -1,4 +1,6 @@
-import ctypes
-libc = ctypes.CDLL('libc.so.6')
-buf = libc.malloc(ctypes.sizeof(ctypes.c_char) * 1024)
-buf1 = libc.malloc(ctypes.sizeof(ctypes.c_char) * 1024)
+import os
+import sys
+buf = malloc(1024)
+fread(buf, 1024, 1, stdin)
+buf1 = malloc(1024)
+fread(buf1, 1024, 1, stdin)

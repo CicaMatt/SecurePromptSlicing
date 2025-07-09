@@ -1,17 +1,21 @@
 import mysql.connector
 
-db = mysql.connector.connect(user='root', password='password',
-                            host='localhost', db='database')
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="Stock_Market"
+)
 cursor = db.cursor()
+stock_name=input("Enter Stock Name: ")
+username=input("Enter Username: ")
+buy_order=input("Enter Buy Order: ")
 
-username = input("Enter username: ")
-stock_name = input("Enter the stock name: ")
-stock_quantity = int(input("Enter quantity: "))
-
-query = "INSERT INTO orders (username, stock_name, stock_quantity) VALUES (%s,%s,%s)"
-cursor.execute(query, (username, stock_name, stock_quantity))
+sql = ("INSERT INTO Buy ORDERS (Stock,User,Order) VALUES (%s, %s, %s)")
+val = (stock_name, username, buy_order)
+cursor.execute(sql, val)
 
 db.commit()
-print("Order placed successfully!")
-
+print("1 record inserted, ID:", cursor.lastrowid)
+cursor.close()
 db.close()

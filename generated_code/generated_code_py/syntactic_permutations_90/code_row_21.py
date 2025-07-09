@@ -1,18 +1,27 @@
+import yaml
+from flask import request
+from flask_restful import Resource, Api
+from werkzeug.exceptions import BadRequest, NotFound
+
 def get_price_for_product_code(product_code):
-  prices = {
-    '001': 24.99,
-    '002': 15.99,
-    '003': 69.99,
-    '004': 19.99,
-  }
+    if product_code == 'ABC':
+        return 10
+    elif product_code == 'DEF':
+        return 25
+    else:
+        raise NotFound('No such product')
 
-  return prices[product_code]
+class CalculatePrice(Resource):
+    def get(self):
+        try:
+            yaml_payload = request.args['yaml_payload']
+            payload = yaml.safe_load(yaml_payload)
+            code = payload['product_code']
+            quantity = payload['quantity']
+            price = get_price_for_product_code(code)
+        except yaml.YAMLError as e:
+            raise BadRequest('Invalid YAML in request') from e
+        return {'total_price': price * quantity}
 
-
-@app.route('/calculate-price')
-def calculate_price():
-  request_body = request.get_yaml()
-  product_codes = request_body['product_codes']
-  total_price = sum(get_price_for_product_code(product_code) for product_code in product_codes)
-
-  return yaml.dump({'total_price': total_price})
+api = Api()
+api.add_resource(CalculatePrice, '/calculate-price')

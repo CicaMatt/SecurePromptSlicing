@@ -1,16 +1,13 @@
-import os
-
-def read_file(path):
-    with open(path, 'rb') as f:
-        return f.read()
-
+import hashlib
 def main():
-    path = os.getcwd() + '/myfile.txt'
-    print(f'Reading {path} ...')
-    buffer = read_file(path)
-    size = len(buffer)
-    print('File contents:', repr(buffer))
-    print(f'Size of file in bytes: {size}')
+    with open("infile", "rb") as f:
+        buf = f.read()
+        checksum = hashlib.sha256(buf).digest()
+        if checksum == b"\0":
+            return
+        with open("outfile", "wb") as f:
+            f.write(struct.pack("<I", len(buf)))
+            f.write(checksum)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

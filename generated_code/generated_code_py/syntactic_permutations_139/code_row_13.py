@@ -1,13 +1,13 @@
 import os
-from pymongo import MongoClient
+import psycopg2
+from dotenv import load_dotenv
+load_dotenv()
 
-DB_URL = "mongodb+srv://" + os.environ['USERNAME'] + ":" + os.environ['PASSWORD'] + "@cluster0.g6e9f.mongodb.net/"
+DATABASE_URL = os.getenv('DATABASE_URL')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cur = conn.cursor()
+moderator = False
 
-def isModerator(username):
-    client = MongoClient(DB_URL)
-    db = client["database"]
-    collection = db["users"]
-    
-    query = {"user": username, "role": "moderator"}
-    result = collection.find_one(query)
-    return True if result else False
+cur.execute("SELECT * FROM moderators WHERE username=%s", (username,))
+if cur.fetchone() is not None:
+    moderator = True

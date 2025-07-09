@@ -1,9 +1,10 @@
-from flask import request, render_template, make_response
-env = ...
 def render_response_from_env(env):
-    name = request.args['name']
-    template = env.get_template('index.html')
-    response = make_response(render_template('index.html', name=name))
-    return response
+    name = request.name
+    template = env.get_template("template")
+    rendered_template = template.render(name=name)
+    return make_response(rendered_template, 200)
+
+@app.route("/home", methods=["GET"])
 def home():
-    return render_response_from_env(env)
+    response = render_response_from_env(env)
+    return response

@@ -1,19 +1,16 @@
-import yaml
-from flask import Flask, request
+def get_price_for_product_code(product_code):
+    prices = {
+        '001': 50,
+        '002': 100,
+        '003': 150
+    }
+    return prices[product_code]
 
-app = Flask(__name__)
-
-def calculate_price(product_code):
-    return 10 # For simplicity we just hardcode the price here
-
-@app.route("/")
-def index():
-    yaml_payload = request.args.get("yaml_payload")
-    data = yaml.load(yaml_payload, Loader=yaml.FullLoader)
-    product_code = data["product_code"]
-    quantity = data["quantity"]
-    total_price = calculate_price(product_code) * quantity
-    return yaml.dump({"total_price": total_price})
-
-if __name__ == "__main__":
-    app.run()
+@app.route('/calculate-price', methods=['POST'])
+def calculate_price():
+    payload = request.get_json()
+    product_code = payload['product_code']
+    quantity = int(payload['quantity'])
+    price = get_price_for_product_code(product_code)
+    total_price = price * quantity
+    return yaml.dump({'total_price': total_price})

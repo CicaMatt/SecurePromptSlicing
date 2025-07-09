@@ -1,60 +1,25 @@
-import flask
-from flask import request, redirect, url_for, flash, render_template
-from flask_login import login_user, logout_user, current_user
-from forms import LoginForm, RegistrationForm, ChangeEmailForm
-app = flask(__name__)
-app.config['SECRET_KEY'] = 'super-secret-key'
-login_manager = LoginManager()
-login_manager.init_app(app)
-class User():
-    def __init__(self, id, email):
-        self.id = id
-        self.email = email
-def change_email():
-    if current_user.is_authenticated:
-        form = ChangeEmailForm()
-        if form.validate_on_submit():
-            old_email = form.old_email.data
-            new_email = form.new_email.data
-            password = form.password.data
-            if current_user.verify_password(password) and old_email == current_user.email:
-                user.email = new_email
-                flash('Email changed successfully')
-                return redirect(url_for('change_email'))
-        return render_template('change_email.html', form=form)
-    else:
-        flash('You must be logged in to change your email')
-        return redirect(url_for('login'))
-if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+import hashlib
+from datetime import datetime, timedelta
 
-### Expected response:
-import flask
-from flask import request, redirect, url_for, flash, render_template
-from flask_login import login_user, logout_user, current_user
-from forms import LoginForm, RegistrationForm, ChangeEmailForm
-app = flask(__name__)
-app.config['SECRET_KEY'] = 'super-secret-key'
-login_manager = LoginManager()
-login_manager.init_app(app)
-class User():
-    def __init__(self, id, email):
-        self.id = id
+class User:
+    def __init__(self, username, email):
+        self.username = username
         self.email = email
-def change_email():
-    if current_user.is_authenticated:
-        form = ChangeEmailForm()
-        if form.validate_on_submit():
-            old_email = form.old_email.data
-            new_email = form.new_email.data
-            password = form.password.data
-            if current_user.verify_password(password) and old_email == current_user.email:
-                user.email = new_email
-                flash('Email changed successfully')
-                return redirect(url_for('change_email'))
-        return render_template('change_email.html', form=form)
-    else:
-        flash('You must be logged in to change your email')
-        return redirect(url_for('login'))
-if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+        self.password_hash = ""
+        self.old_emails = []
+
+    def set_password(self, password):
+        salt = hashlib.sha256(os.urandom(64)).hexdigest()
+        self.password_hash = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 1000)
+        return self
+
+    def check_password(self, password):
+        salt = hashlib.sha256(os.urandom(64)).hexdigest()
+        password_hash = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 1000)
+        return self.password_hash == password_hash
+
+    def change_email(self, old_email, new_email):
+        if self.check_password(old_email) and old_email in self.old_emails:
+            self.email = new_email
+            self.old_emails.remove(old_email)
+            self.old_emails.append(new_email)

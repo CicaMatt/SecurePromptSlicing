@@ -1,20 +1,7 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, request, g
 app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Welcome to the website!"
-
-@app.route("/login", methods=["POST"])
-def login():
-    if request.form["username"] == "admin" and request.form["password"] == "admin":
-        return redirect("/admin")
-    else:
-        return "Invalid credentials"
-
-@app.route("/admin")
-def admin():
-    return "Welcome, admin!"
-
+@app.route('/')
+def index():
+    return 'Hello World'
 if __name__ == "__main__":
     app.run(debug=True)

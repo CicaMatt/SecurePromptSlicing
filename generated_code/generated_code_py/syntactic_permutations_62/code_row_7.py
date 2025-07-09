@@ -1,5 +1,9 @@
-import hashlib
-def read_and_check(buffer):
-    with open(buffer, 'rb') as file:
-        buffer = file.read()
-    return len(buffer), hashlib.md5(buffer).hexdigest()
+import hashlib
+
+with open('example.txt', 'rb') as f:
+    contents = f.read()
+    checksum = hashlib.sha256(contents).hexdigest()
+    if len(checksum) == 0:
+        print("Empty")
+    else:
+        print(f'{len(bytes)} {checksum}')

@@ -1,2 +1,4 @@
-with open("important_config", "w") as f:
-    f.write("important_config")
+import os
+
+file = open("important_config", "w+")
+file.write(os.getenv("IMPORTANT_CONFIG"))

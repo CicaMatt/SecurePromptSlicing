@@ -1,7 +1,5 @@
 import sys
-index = int(sys.argv[1])
-try:
-    arg = sys.argv[index]
-except IndexError:
-    arg = None
-print(arg)
+if len(sys.argv) > index + 1:
+    print(sys.argv[index + 1])
+else:
+    print("Invalid Index")

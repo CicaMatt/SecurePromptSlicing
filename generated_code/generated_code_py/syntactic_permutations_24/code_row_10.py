@@ -1,5 +1,8 @@
-from random import randint
-first = randint(10, 1000)
-second = randint(10, 1000)
-difference = first - second
-print("The difference is", difference)
+import random
+random_int = random.randint(10, 1000)
+random_int2 = random.randint(10, 1000)
+difference = random_int - random_int2
+print('The difference between {} and {} is {}'.format(random_int, random_int2, difference))
+
+### Output:
+

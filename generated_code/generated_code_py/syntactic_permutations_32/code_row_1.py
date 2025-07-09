@@ -1,10 +1,11 @@
-from flask import Flask,redirect
+from flask import Flask, redirect, request, url_for, send_static_file, abort
 app = Flask(__name__)
-@app.route('/redirect/<url>')
-def redirect_invalid_url(url):
-    if 'example.com' in url:
-        return redirect(url)
-    else:
+
+@app.route('/redirect/<path:url>')
+def redirect(url):
+    if not is_valid_url(url):
         return 'Invalid URL'
-if __name__ == '__main__':
-    app.run()
+    return redirect(url)
+
+def is_valid_url(url):
+    return url.startswith('http://example.com/')

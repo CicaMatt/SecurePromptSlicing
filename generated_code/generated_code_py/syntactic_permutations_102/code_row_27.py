@@ -1,4 +1,3 @@
 import os
-
-with open("important_config", "w+") as f:
-    f.write("important_config")
+with open('important_config', 'w', os.O_CREAT) as file:
+    file.write('important_config')

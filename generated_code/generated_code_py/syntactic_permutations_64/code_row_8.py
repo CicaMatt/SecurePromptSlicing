@@ -1,53 +1,48 @@
-def upload_pdf():
-    """Upload PDF function"""
-    import os
-    from flask import Flask, request, redirect, url_for
-    from werkzeug import secure_filename
-    from flask_mysqldb import MySQL
-
-    # set up database credentials
-    app = Flask(__name__)
-    app.config['MYSQL_HOST'] = 'localhost'
-    app.config['MYSQL_USER'] = 'root'
-    app.config['MYSQL_PASSWORD'] = 'rootpassword'
-    app.config['MYSQL_DB'] = 'pdf_db'
-    mysql = MySQL(app)
-
-    # define function to save filepath in database
-    def save_filepath():
-        cursor = mysql.connection.cursor()
-        filename = secure_filename(request.files['file'].filename)
-        filepath = 'uploads/' + filename
-        cursor.execute("INSERT INTO pdfs (filepath) VALUES (%s)", (filepath,))
-        mysql.connection.commit()
-        return redirect(url_for('success'))
-
-    # define function to download pdf file from filepath in database
-    def download_pdf():
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM pdfs")
-        result = cursor.fetchone()
-        return send_file(result[1], as_attachment=True)
-
-    # define upload route for pdf file
-    @app.route('/upload', methods=['GET', 'POST'])
-    def upload():
-        if request.method == 'POST':
-            save_filepath()
-        return '''
-            <!doctype html>
-            <title>Upload new File</title>
-            <h1>Upload new File</h1>
-            <form action="" method=post enctype=multipart/form-data>
-              <p><input type=file name=file>
-                 <input type=submit value=Upload>
-            </form>
-        '''
-
-    # define success route after uploading pdf file
-    @app.route('/success')
-    def success():
-        return 'File successfully uploaded'
-
-    if __name__ == '__main__':
-        app.run(debug=True)
+import os
+from flask import Flask, request, send_file
+from werkzeug.utils import secure_filename
+from db import connect, execute
+
+app = Flask(__name__)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_pdf():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return 'No file found.'
+        file = request.files['file']
+        # if user does not select file, browser also submit a empty part without filename
+        if file.filename == '':
+            return 'No selected file.'
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join('uploads', filename)
+            file.save(filepath)
+            # save the filepath in mysql database
+            conn = connect()
+            execute(conn, "INSERT INTO pdfs (filepath) VALUES ('%s')" % filepath)
+            return 'File uploaded successfully.'
+    return '''
+        <!doctype html>
+        <title>Upload new File</title>
+        <h1>Upload new File</h1>
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file>
+          <input type=submit value=Upload>
+        </form>
+    '''
+
+@app.route('/download', methods=['GET'])
+def download_pdf():
+    # get the filepath from mysql database
+    conn = connect()
+    results = execute(conn, "SELECT * FROM pdfs")
+    pdf_filepath = None
+    for result in results:
+        pdf_filepath = result[0]
+    if pdf_filepath is not None:
+        return send_file(pdf_filepath)

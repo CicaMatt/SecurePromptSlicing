@@ -1,9 +1,7 @@
-import ctypes
-libc = ctypes.CDLL('libc.so.6')
-malloc = libc.malloc
-free = libc.free
-first_chunk = malloc(10)
-second_chunk = malloc(10)
-ctypes.memmove(ctypes.addressof(second_chunk.contents), ctypes.addressof(first_chunk.contents), 10)
-free(first_chunk)
-free(second_chunk)
+import ctypes;
+memory_allocate = lambda: ctypes.c_char*10;
+first_chunk = memory_allocate();
+second_chunk = memory_allocate();
+ctypes.memmove(second_chunk, first_chunk, 10);
+ctypes.free(first_chunk);
+ctypes.free(second_chunk);

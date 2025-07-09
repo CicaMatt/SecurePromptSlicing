@@ -1,2 +1,4 @@
-def memcpy(dest, src, n) :
-    return bytearray(n),bytearray(src[:n])
+import ctypes
+
+def memcpy(destination, source, num):
+    ctypes.memmove(destination, source, num)

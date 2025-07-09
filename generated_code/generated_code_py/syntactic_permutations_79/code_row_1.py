@@ -1,3 +1,5 @@
-import sys
-buf = sys.stdin.read(1024)
-buf1 = sys.stdin.read(1024)
+import os
+def memory_allocation():
+    buf = os.getcwd()
+    buf1 = os.path.abspath(os.getcwd())
+    return (buf, buf1)

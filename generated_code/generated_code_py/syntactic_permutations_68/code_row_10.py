@@ -1,40 +1,27 @@
-import os
+import base64
 from PIL import Image
-import pytesseract
-import mysql.connector as connector
-from datetime import datetime
+import os, sys
 
-def upload_image():
-    # Get file from HTML form
-    file = request.files['file']
-    
-    # Save the file to disk
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    
-    # Open the image using Pillow
-    img = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    
-    # Convert the image to base64 string
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    img_str = "data:image/png;base64," + base64.b64encode(buffered.getvalue()).decode("utf-8")
-    
-    # OCR the image using Tesseract
-    result = pytesseract.image_to_string(img)
-    
-    # Save the image and result to the database
-    db = connector.connect(
-        host="localhost",
-        user="username",
-        password="password",
-        database="database_name"
-    )
-    cursor = db.cursor()
-    query = "INSERT INTO images (image, result, upload_date) VALUES (%s, %s, %s)"
-    cursor.execute(query, (img_str, result, datetime.now()))
-    db.commit()
-    
-    # Redirect to the homepage
-    return redirect(url_for('index'))
+def upload_image(request):
+    if request.method == 'POST':
+        image = request.FILES['image']
+        fs = FileSystemStorage()
+        filename = fs.save(image.name, image)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    else:
+        return HttpResponseBadRequest("Only POST method is allowed")
+
+def read_image(path):
+    with open(path, "rb") as imageFile:
+        base64string = base64.b64encode(imageFile.read())
+        return base64string
+
+def convert_to_base64(path):
+    img = Image.open(path)
+    img_io = BytesIO()
+    img.save(img_io, 'PNG')
+    img_io.seek(0)
+    return base64.b64encode(img_io.read())

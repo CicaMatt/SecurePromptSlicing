@@ -1,31 +1,30 @@
-import flask
-from flask import request, redirect
-app = flask.Flask(__name__)
-@app.route("/", methods=['GET', 'POST'])
+import mysql.connector
+from flask import Flask, render_template, request, url_for, redirect
+app = Flask(__name__)
+@app.route('/', methods=['GET','POST'])
 def index():
-    error = None
     if request.method == 'POST':
-        if valid_login(request.form['username'], request.form['password']):
+        uname = request.form['uname']
+        passwd = request.form['passwd']
+        cnx = mysql.connector.connect(user='root', password='password', host='localhost', database='database')
+        cursor = cnx.cursor()
+        query = "SELECT username,password FROM users WHERE username =%s and password= %s" 
+        cursor.execute(query,(uname,passwd))
+        data = cursor.fetchall()
+        if len(data) > 0:
             return redirect('/dashboard')
         else:
-            error = 'Invalid credentials'
-    return '''
-  <html>
-    <body>
-      <h1>Login</h1>
-      %s<br>
-      <form method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Login">
-      </form>
-    </body>
-  </html>
-  ''' % (error if error else '')
-def valid_login(username, password):
-    #This is where the actual authentication would happen
-    return username == 'admin' and password == 'password'
-if __name__ == "__main__":
+            return redirect('/login')
+    return render_template('index.html')
+@app.route('/dashboard',methods=['GET','POST'])
+def dashboard():
+    uname = request.form['uname']
+    passwd = request.form['passwd']
+    cnx = mysql.connector.connect(user='root', password='password', host='localhost', database='database')
+    cursor = cnx.cursor()
+    query = "SELECT username,password FROM users WHERE username =%s and password= %s" 
+    cursor.execute(query,(uname,passwd))
+    data = cursor.fetchall()
+    return render_template('dashboard.html',data=data)
+if __name__ == '__main__':
     app.run()

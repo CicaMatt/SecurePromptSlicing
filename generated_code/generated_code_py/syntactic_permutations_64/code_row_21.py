@@ -1,21 +1,28 @@
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
 def upload_pdf():
-    # Imports required for the function to work
-    from flask import request, redirect, url_for
-    from werkzeug.utils import secure_filename
-    from app import db
-    
-    # Only accept files with .pdf extension
-    if 'file' not in request.files:
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    
-        # Save the pdf file to mysql database
-        db.execute("INSERT INTO pdfs (name, data) VALUES (?, ?)",
-                  [filename, file.read()])
-        db.commit()
-    return redirect(url_for('list_pdfs'))
+    if request.method == 'POST':
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+        filepath = os.path.join('uploads/', filename)
+        f.save(filepath)
+        return redirect(url_for('download_pdf', filepath=filepath))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
+
+@app.route('/download_pdf')
+def download_pdf():
+    filepath = request.args.get('filepath')
+    return send_file(filepath, as_attachment=True)

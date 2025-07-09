@@ -1,12 +1,8 @@
-import math
 def getMonthlySales(i):
-    if i == 0:
-        return 15000
-    elif i == 1:
-        return 25000
-    else:
-        return 30000
+    return 100 * (i+1)
+
 sum = 0
-for i in range(0, 2):
+for i in range(3):
     sum += getMonthlySales(i)
-print(f"Quarterly Sales: {sum}")
+
+print("The total sales for the first quarter is: ", sum)

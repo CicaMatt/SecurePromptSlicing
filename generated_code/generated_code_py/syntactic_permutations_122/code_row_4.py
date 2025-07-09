@@ -1,7 +1,10 @@
-import ctypes;
-memory_allocate = lambda: ctypes.c_char*10;
-first_chunk = memory_allocate();
-second_chunk = memory_allocate();
-ctypes.memmove(second_chunk, first_chunk, 10);
-ctypes.free(first_chunk);
-ctypes.free(second_chunk);
+import ctypes
+libc = CDLL('libc.so.6')
+malloc = libc.malloc
+free = libc.free
+size = 10
+ptr1 = malloc(size)
+ptr2 = malloc(size)
+memcpy(ptr2, ptr1, size)
+free(ptr1)
+free(ptr2)

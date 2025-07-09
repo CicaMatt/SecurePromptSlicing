@@ -1,4 +1,4 @@
 import sys
-elements = ["a", "b", "c"]
+arr = [1,2,3]
 index = int(sys.argv[1])
-print(elements[index])
+print (arr[index])

@@ -1,13 +1,9 @@
-from flask import Flask, request
-app = Flask(__name__)
-
-def calculate_price(code, qty):
-    return code*qty
-
-@app.route("/price")
-def price():
-    product_code = request.args.get("product_code")
-    quantity = int(request.args.get("quantity"))
-    return calculate_price(product_code, quantity)
+import flask
+from flask import request
+app = flask.Flask(__name__)
+def calculate_price(code, quantity):
+    price = {"PEN": 10, "PAPER": 50, "TOY": 200, "GAME": 75}
+    return int(quantity) * price[str.upper(code)]
+app.add_url_rule("/calculate-price", methods=["GET"], view_func=calculate_price)
 if __name__ == "__main__":
-    app.run()
+    app.run("0.0.0.0", 5000)

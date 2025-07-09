@@ -1,75 +1,44 @@
-from flask import Flask, redirect, url_for, request
-import os
+from flask import Flask, request, redirect, url_for, render_template, session, flash, jsonify
+from flask_sqlalchemy import SQLAlchemy
+import datetime
+import uuid
 app = Flask(__name__)
-users = {'admin': 'password'}
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/login"
+db = SQLAlchemy(app)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(128), nullable=False)
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 @app.route("/")
 def login():
-    return """
-    <html>
-        <head>
-            <title>Login Page</title>
-        </head>
-        <body>
-            <h1> Login Here </h1>
-            <form action = "/login" method="post">
-                <label for ="username">Username:</label>
-                <input type ="text" id ="username" name ="username"><br><br>
-                <label for ="password">Password:</label>
-                <input type ="password" id ="password" name ="password"><br><br>
-                <input type="submit" value="login">
-            </form>
-        </body>
-    </html>
-    """
-@app.route("/login", methods = ["POST"])
-def login_post():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        if username in users and password == users[username]:
-            return redirect(url_for("success"))
-        else:
-            return redirect(url_for("cant_login"))
+    return render_template("login.html")
+@app.route("/", methods=["POST"])
+def check_user():
+    username = request.form["username"]
+    password = request.form["password"]
+    user = User.query.filter_by(username=username, password=password).first()
+    if user:
+        session["loggedin"] = True
+        session["id"] = user.id
+        session["username"] = user.username
+        return redirect(url_for("success"))
     else:
-        try:
-            return redirect(url_for("internal_server_error"))
-        except Exception as e:
-            print(e)
+        flash("Invalid username or password", "error")
+        return redirect(url_for("login"))
+@app.route("/success")
 def success():
-    return """
-    <html>
-        <head>
-            <title>Success Page</title>
-        </head>
-        <body>
-            <h1> Login Successful </h1>
-            <p> Welcome to the page!</p>
-        </body>
-    </html>
-    """
+    if not session.get("loggedin"):
+        return redirect(url_for("login"))
+    return render_template("index.html", username=session["username"])
+@app.route("/cant_login")
 def cant_login():
-    return """
-    <html>
-        <head>
-            <title>Cannot Log in Page</title>
-        </head>
-        <body>
-            <h1> Cannot login </h1>
-            <p> Sorry, you cannot log in. </p>
-        </body>
-    </html>
-    """
+    flash("Invalid username or password", "error")
+    return redirect(url_for("login"))
+@app.route("/internal_server_error")
 def internal_server_error():
-    return """
-    <html>
-        <head>
-            <title>Internal Server Error Page</title>
-        </head>
-        <body>
-            <h1> Internal Server Error </h1>
-            <p> Sorry, there is an error. </p>
-        </body>
-    </html>
-    """
+    return render_template("500.html"), 500
 if __name__ == "__main__":
     app.run()

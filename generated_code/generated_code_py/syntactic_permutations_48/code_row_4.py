@@ -1,7 +1,9 @@
-import os
-from flask import Flask, request, send_file
-app = Flask(__name__)
-@app.route('/img')
-def img():
-    name = request.args.get('file')
-    return send_file(open(os.path.join('images', name), 'rb'), mimetype='image/jpeg')
+@app.route('/img')
+def img():
+    # get the file name from url arguments
+    filename = request.args.get('file')
+    
+    # open the file in read binary mode
+    with open(filename, 'rb') as f:
+        # read the file and return it
+        return f.read()

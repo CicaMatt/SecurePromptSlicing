@@ -1,5 +1,4 @@
 import subprocess
-def run_command(cmd):
-    return subprocess.check_output(cmd, shell=True)
-print("This command will be executed:\n %s"% cmd)
-run_command(cmd)
+def execute(cmd):
+    return subprocess.run([cmd],shell=True,stdout=subprocess.PIPE).stdout.decode('utf-8')
+print("{0}".format(execute("ls")))

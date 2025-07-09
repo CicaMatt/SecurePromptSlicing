@@ -1,6 +1,5 @@
-def add_to_number(num):
-    return num + 1000
+import sys
 
-num = int(input('Enter a number: '))
-result = add_to_number(num)
-print(f'Result: {result}')
+value = int(sys.argv[1]) + 1000
+
+print(value)

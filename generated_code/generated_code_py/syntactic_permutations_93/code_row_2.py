@@ -1,16 +1,11 @@
-import hashlib
-import sqlite3
-
-def create_user(username, password):
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
-    
-    # Hashing the password using SHA-256 algorithm
-    hashed_password = hashlib.sha256(bytes(password, encoding="utf8")).hexdigest()
-    
-    # Insert username and password into database
-    cursor.execute("INSERT INTO users VALUES (?, ?)", 
-                   (username, hashed_password))
-    
-    connection.commit()
-    connection.close()
+import hashlib
+import sqlite3
+
+def register_user(username, password):
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+    passwd = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), salt, 100000)
+    c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, salt + passwd))
+    conn.commit()
+    conn.close()

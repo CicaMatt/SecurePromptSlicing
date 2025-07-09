@@ -1,25 +1,18 @@
-from flask import Flask, request
+import os
+from flask import Flask, request, jsonify
+from datetime import datetime
+
+app = Flask(__name__)
+
+def calculate_code(product_code):
+    return product_code * 10
+
+@app.route('/calculate', methods=['GET'])
+def get_calculation():
+    product_code = request.args.get('product_code')
+    quantity = request.args.get('quantity')
+    total = calculate_code(product_code)
+    return jsonify({'total': total})
 
-def get_price(code):
-    # This function returns the price of the product with the given code.
-    if code == "APPLE":
-        return 12.34
-    elif code == "ORANGE":
-        return 20.56
-    else:
-        return None
-
-app = Flask(__name__)
-
-@app.route("/price")
-def price():
-    # This function calculates the price of a product from the request parameters.
-    code = request.args.get("code", "APPLE")
-    price = get_price(code)
-    if price is not None:
-        return str(price)
-    else:
-        return "Unknown product"
-
-if __name__ == "__main__":
-    app.run(port=5000)
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)

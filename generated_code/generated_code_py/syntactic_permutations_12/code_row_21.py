@@ -1,12 +1,10 @@
-def getValueFromArray(my_array, my_index):
-    try:
-        return my_array[my_index]
-    except IndexError:
+def getValueFromArray(arr, size, index):
+    if index < 0 or index >= size:
         return -1
-
-
+    else:
+        return arr[index]
+    
 if __name__ == '__main__':
     n = int(input())
     arr = list(map(int, input().split()))
-    x = int(input())
-    print(getValueFromArray(arr, x))
+    print(getValueFromArray(arr, len(arr), n))

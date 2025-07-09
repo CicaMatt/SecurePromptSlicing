@@ -1,9 +1,15 @@
-import sys
-import subprocess
-
-def get_id(username):
-    proc = subprocess.run(['id', username], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return proc.returncode
-
-username = sys.argv[1]
-print('Exit status: ', get_id(username))
+import subprocess
+
+def run_command(username):
+    try:
+        result = subprocess.run(['id', username], stdout=subprocess.PIPE)
+        return result.returncode
+    except FileNotFoundError:
+        return -1
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Provide a valid username")
+    else:
+        exit_status = run_command(sys.argv[1])
+        print(exit_status)

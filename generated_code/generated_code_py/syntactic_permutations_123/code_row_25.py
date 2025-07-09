@@ -1,16 +1,18 @@
-import sys
-
-if len(sys.argv) != 2:
-    raise ValueError("Please provide one argument.")
-string_argument = sys.argv[1]
-if type(string_argument) is not str:
-    raise TypeError("Argument must be a string")
-for i in range(len(string_argument)):
-    if string_argument[i].isspace():
-        string_argument = string_argument[:i]
-        break
-for i in range(len(string_argument)-1, 0, -1):
-    if string_argument[i].isspace():
-        string_argument = string_argument[i+1:]
-        break
-print(string_argument)
+def trim_string(string):
+    if len(string) != 1:
+        return None
+    elif type(string[0]) != str:
+        return None
+    else:
+        string = string.strip()
+        for i in range(len(string)):
+            if string[i] == ' ' or string[i] == '\t':
+                continue
+            else:
+                break
+        for j in range(len(string)-1, -1, -1):
+            if string[j] == ' ' or string[j] == '\t':
+                continue
+            else:
+                break
+        return string[i:j+1]

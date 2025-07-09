@@ -1,6 +1,10 @@
-import hashlib
-        
-        
-        #Connect to database and query username 
-    
-        #connect to database and insert the values into the table
+import hashlib 
+from flask import Flask, request, jsonify 
+from flaskext.mysql import MySQL 
+  
+app = Flask(__name__)
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
+app.config['MYSQL_DATABASE_DB'] = 'db' 
+  

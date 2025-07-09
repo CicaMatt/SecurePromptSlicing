@@ -1,13 +1,14 @@
-import os
-import psycopg2
-from dotenv import load_dotenv
-load_dotenv()
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cur = conn.cursor()
-moderator = False
-
-cur.execute("SELECT * FROM moderators WHERE username=%s", (username,))
-if cur.fetchone() is not None:
-    moderator = True
+import os
+from flask import g
+
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.ext.declarative import declarative_base
+
+def check_moderator(username):
+    engine = create_engine('sqlite:///users.db')
+    metadata = MetaData(bind=engine)
+    users = Table("user", metadata, autoload=True)
+    with engine.connect() as conn:
+        statement = select([func.count(users.c.id)]).where(users.c.username == username and users.c.is_moderator == True)
+        result = conn.execute(statement).scalar()
+        return result > 0

@@ -1,5 +1,5 @@
-def check_mod(username,password):
-        if username == "admin" and password == "123":
-            return True
-        else:
-            return False
+def check_mod(username, password):
+    if username == 'admin' and password == 'password':
+        return True
+    else:
+        return False

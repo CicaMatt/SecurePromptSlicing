@@ -1,11 +1,13 @@
-def getValueFromArray(arr, n, index):
-    if arr[index] % 2 == 0:
-        return arr[index] * 3
-    else:
-        return -1 * arr[index]
-
-def main():
-    id_sequence = [1, 4, 7, 9]
-    index = int(input("Please enter the index of the element you want to retrieve from id_sequence: "))
-    if len(id_sequence) > index >= 0:
-        return getValueFromArray(id_sequence, len(id_sequence), index)
+import sys 
+def get_index(id_seq, arr_len, index): 
+    if (index < 0 or index >= arr_len): 
+        print("Index out of range!")
+        return -1
+    else: 
+        return id_seq[index] 
+if __name__ == '__main__': 
+    n = int(input()) 
+    arr_len = len(id_sequence) 
+    result = get_index(id_sequence, arr_len, n) 
+    print(result) 
+    sys.exit(result)

@@ -1,86 +1,54 @@
-from flask import Flask, request, session
-import requests
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    if not 'user_id' in session:
-        return redirect(url_for('login'))
-    if check_if_admin(session['user_id']):
-        return redirect(url_for('admin_page'))
-    return "Hello, World!"
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials. Please try again.'
-        else:
-            session['user_id'] = 1
-            return redirect(url_for('index'))
-    return render_template('login.html', error=error)
-
-@app.route('/admin')
-def admin_page():
-    if not check_if_admin(session['user_id']):
-        abort(401)
-    return 'Admin Page'
-
-def check_if_admin(user_id):
-    r = requests.get(f'https://example.com/api/users/{user_id}')
-    data = r.json()
-    if data['role'] == 'admin':
-        return True
-    return False
+python
+import flask
+from flask import request, redirect, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
 
-### Code:
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
 
-from flask import Flask, request, session
-import requests
-
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    if not 'user_id' in session:
-        return redirect(url_for('login'))
-    if check_if_admin(session['user_id']):
-        return redirect(url_for('admin_page'))
-    return "Hello, World!"
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials. Please try again.'
-        else:
-            session['user_id'] = 1
-            return redirect(url_for('index'))
-    return render_template('login.html', error=error)
-
-@app.route('/admin')
-def admin_page():
-    if not check_if_admin(session['user_id']):
-        abort(401)
-    return 'Admin Page'
-
-def check_if_admin(user_id):
-    r = requests.get(f'https://example.com/api/users/{user_id}')
-    data = r.json()
-    if data['role'] == 'admin':
-        return True
-    return False
+@app.route('/', methods=['GET'])
+def index():
+    return 'Hello World'
 
-### Explanation:
+@app.route('/login', methods=['POST','GET'])
+def login():
+    error = None
+    if request.method == "POST":
+        if valid_login(request.form["username"], request.form["password"]):
+            return redirect(url_for('user'))
+        else:
+            error = 'Invalid credentials, Try again.'
+    return render_template('login.html', error=error)
 
+@app.route('/signup', methods=['POST','GET'])
+def signup():
+    if request.method == "POST":
+        db = get_db()
+        cursor = db.cursor()
+        hashed_password = generate_password_hash(request.form["password"], method='sha256')
+        add_user = ("INSERT INTO users (username, email, password) VALUES (?, ?, ?)")
+        cursor.execute(add_user, [request.form["username"], request.form["email"], hashed_password])
+        db.commit()
+        return redirect(url_for('login'))
+    return render_template('signup.html')
 
+@app.route('/user', methods=['GET'])
+def user():
+    return 'Welcome User!'
 
+@app.route('/admin', methods=['GET'])
+def admin():
+    return 'Welcome Admin!'
 
-
-
-
-
-### Note:
+def valid_login(username, password):
+    db = get_db()
+    cursor = db.cursor()
+    get_user = ("SELECT * FROM users WHERE username = ?")
+    cursor.execute(get_user, [username])
+    user = cursor.fetchone()
+    if user is None:
+        return False
+    if check_password_hash(user["password"], password):
+        return True
+    else:
+        return False

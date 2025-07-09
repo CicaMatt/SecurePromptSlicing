@@ -1,2 +1,3 @@
-def memcpy(dest, src, num):  
-    return "".join(map(chr, src))[0:num]
+import ctypes
+def memcpy(destination, source, num):
+    ctypes.memmove(destination, source, num)

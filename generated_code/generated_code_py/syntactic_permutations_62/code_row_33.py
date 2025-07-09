@@ -1,11 +1,6 @@
 import hashlib
-buffer = bytearray(256)
-num_bytes_read = sys.stdin.readinto(buffer)
-if num_bytes_read == 0:
-    print("Buffer is empty")
-else:
-    checksum = hashlib.crc32(buffer[:num_bytes_read])
-    if checksum == 0:
-        print("Checksum is zero")
-    else:
-        print("Checksum is non-zero")
+
+def read_file():
+    with open("file.txt") as f:
+        contents = f.read()
+        return contents, len(contents), hashlib.sha256(contents).hexdigest()

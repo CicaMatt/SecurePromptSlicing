@@ -1,7 +1,8 @@
-import sys
-size=sys.argv[1]
-buffer = b' ' * int(size)
-print("Buffer allocated successfully")
+import sys
 
-### Explanation: 
+def main(buffer_size):
+    buffer = 'a' * int(buffer_size)
+    print(buffer)
 
+if __name__ == "__main__":
+    main(sys.argv[1])

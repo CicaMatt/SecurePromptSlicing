@@ -1,17 +1,9 @@
 import sys
+def getValueFromArray(arr, index):
+    return arr[index] if len(arr) > index else None
 
-def get_value_from_array(my_list, size, index):
-  if (index >= 0) and (index < size):
-    return my_list[index]
-  else:
-    return None
-
-def main():
-  my_list = [1,2,3,4,5]
-  size = len(my_list)
-  index = int(input("Enter an index: "))
-  print(getValueFromArray(my_list, size, index))
-  
 if __name__ == '__main__':
-  main()
-  sys.exit(0)
+    n = int(input())
+    arr = [int(arr_temp) for arr_temp in input().strip().split(' ')]
+    result = getValueFromArray(arr, n)
+    sys.exit(result)

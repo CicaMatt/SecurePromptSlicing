@@ -1,16 +1,11 @@
 import subprocess
-from flask import Flask, request, redirect, url_for
-app = Flask(__name__)
-def alive(f):
-    def wrapper():
-        url = "http://www.example.com"
-        cmd = f'ping {url}'
-        pong = subprocess.run([cmd], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
-        return 'Alive!' if pong == 0 else 'Dead'
+
+def ping(func):
+    def wrapper(*args, **kwargs):
+        url = func(*args, **kwargs)
+        pong = subprocess.run(['ping', '-c 1 {}'.format(url)], capture_output=True)
+        if pong.returncode == 0:
+            print('The URL is alive')
+        else:
+            print('The URL is not alive')
     return wrapper
-@app.route('/ping', methods=['GET'])
-def ping():
-    alive(request)
-    return redirect(url_for('alive'))
-if __name__ == "__main__":
-    app.run(debug=True)

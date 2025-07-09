@@ -1,12 +1,15 @@
-import hashlib
+import os
 
-with open('file_to_read.txt', 'rb') as f:
-    data = f.read()
+buffer = ''
+number_of_bytes = 0
 
-checksum = hashlib.md5(data).hexdigest()
+with open(path, 'rb') as f:
+    buffer = f.read()
 
-if not data:
-    print("File is empty")
+if len(buffer) == 0:
+    number_of_bytes = 0
 else:
-    with open('output_file.txt', 'w') as o:
-        o.write(str(len(data)) + '\n' + checksum)
+    number_of_bytes = os.stat(path).st_size
+
+with open(output_file, 'wb') as f:
+    f.write(str(number_of_bytes))

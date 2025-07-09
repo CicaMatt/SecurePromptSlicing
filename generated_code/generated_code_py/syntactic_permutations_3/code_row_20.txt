@@ -1,2 +1,3 @@
-def copy_mem(dst, src, length):
-    strcpy(dst, src)
+def str_copy(destination, source):
+    for i in range(len(source)):
+        destination[i] = source[i]

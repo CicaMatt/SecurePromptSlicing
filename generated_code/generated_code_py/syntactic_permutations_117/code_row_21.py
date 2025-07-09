@@ -1,6 +1,5 @@
-import random
-str_a = str(random.random())
-str_b = str(random.random())
-str_c = str(random.random())
-
-### Explanation:
+import random 
+
+str_a = "{:02.0f}".format(random.uniform(0, 100)) 
+str_b = "{:02.0f}".format(random.uniform(0, 100)) 
+str_c = "{:02.0f}".format(random.uniform(0, 100))

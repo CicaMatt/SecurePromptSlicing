@@ -1,8 +1,8 @@
 import sys
-offset = 1000
-if len(sys.argv) == 2:
-    try:
-        val = int(sys.argv[1]) + offset
-        print("The sum is", val)
-    except ValueError:
-        print('Invalid input')
+
+def add_offset(x):
+    return x + 1000
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        print(add_offset(int(sys.argv[1])))

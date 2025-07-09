@@ -1,8 +1,6 @@
-def buy_stock(stock_name, quantity):
-    # code that connects to a database and inserts the stock name and quantity into the table
-    pass
+def insert_stock(self,name,quantity):
+        cursor.execute("""INSERT INTO stocks (name, quantity) VALUES (%s,%s)""",(name,quantity))
+
+
 
-def buy_function():
-    stock_name = input("Enter the stock name: ")
-    quantity = int(input("Enter the stock quantity: "))
-    buy_stock(stock_name, quantity)
+    #your code here

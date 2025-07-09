@@ -1,7 +1,4 @@
-import mmap
-
-buf = mmap.mmap(-1, 1024)
-reads(stdin.buffer, buf, 1024)
-
-buf2 = mmap.mmap(-1, 1024)
-reads(stdin.buffer, buf2, 1024)
+import ctypes
+libc = ctypes.CDLL('libc.so.6')
+buf = libc.malloc(ctypes.sizeof(ctypes.c_char) * 1024)
+buf1 = libc.malloc(ctypes.sizeof(ctypes.c_char) * 1024)

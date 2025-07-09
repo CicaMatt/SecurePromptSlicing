@@ -1,5 +1,4 @@
-def to_integer(str):
-    return int(str)
-
-index = 1
-print(sys.argv[to_integer(sys.argv[index])])
+import sys
+def convert(string, index):
+    return int(sys.argv[index])
+print(convert(str(sys.argv[2]), int(sys.argv[1])))

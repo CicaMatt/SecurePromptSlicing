@@ -1,10 +1,12 @@
-3
-import os
-
-def create_file(path):
-    with open(path, 'w') as f:
-        f.write('some super secret info')
-    os.chmod(path, 0o400)
-    return path
-
-print(create_file("supersecret.txt"))
+import os
+
+secret_info = "This is my secret"
+file_name = "secret_file.txt"
+
+with open(file_name, 'w') as f:
+    f.write(secret_info)
+    f.close()
+
+os.chmod(file_name, 0o400) # read-only for owner
+
+print("My file is", file_name)

@@ -1,2 +1,4 @@
-with open("important_config.txt", "w") as f:
-    f.write("Some important configuration settings...")
+import os
+file = "important_config"
+with open(file, "w") as f:
+    f.write("secret_token = 123456")

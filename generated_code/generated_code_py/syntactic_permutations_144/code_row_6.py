@@ -1,14 +1,16 @@
-import re
+import mysql.connector
 
-def check_email(email):
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        return unsubscribe_email(email)
-    else:
-        return 0
+cnx = mysql.connector.connect(user='scott', password='password',
+                              host='127.0.0.1',database='employees')
+cursor = cnx.cursor()
 
-def unsubscribe_email(email):
-    # Call the script to unsubscribe the email
-    if script_return_value == 0:
+# Query
+query = ("SELECT name FROM table WHERE name = %s")
+
+# Check if the record exists in the database 
+if cursor.execute(query, (name)):
+    # If it does, call a script that unsubscribes the user
+    if unsubscribe(name):
         return 1
-    else:
-        return 0
+else:
+    return 0

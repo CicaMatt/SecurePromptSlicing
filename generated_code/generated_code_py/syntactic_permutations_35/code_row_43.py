@@ -1,29 +1,28 @@
 from flask import Flask, render_template, request
-import os
 
 app = Flask(__name__)
 
-@app.route('/login', methods=['GET'])
-def get_login():
-    return render_template('login.html')
+users = {
+    "user1": "pass1",
+    "user2": "pass2"
+}
 
-@app.route('/login', methods=['POST'])
-def post_login():
-    username = request.form['username']
-    password = request.form['password']
-    
-    with open('users.txt', 'r') as file:
-        users = []
-        for line in file:
-            user, pwd = line.split(',')
-            users.append(user)
-            users.append(pwd)
+@app.route("/")
+def home():
+    return render_template("home.html")
 
-    if username and password in users:
-        return render_template('home.html', username=username)
-    
-    else:
-        return render_template('login.html')
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username and password in users:
+            return render_template("home.html")
+    return render_template("login.html")
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+@app.route("/logout")
+def logout():
+    return render_template("login.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

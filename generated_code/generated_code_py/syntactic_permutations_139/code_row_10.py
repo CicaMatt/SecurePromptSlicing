@@ -1,22 +1,12 @@
-import psycopg2
-
-def is_moderator(username):
-    try:
-        connection = psycopg2.connect(
-            user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT, database=DB_NAME)
-        cursor = connection.cursor()
-
-        query = "SELECT is_moderator FROM users WHERE username=%s"
-
-        cursor.execute(query, (username,))
-
-        result = cursor.fetchone()[0]
-
-    except Exception as error:
-        print("Failed to fetch data from database", error)
+import psycopg2
+
+def is_moderator(user):
+    conn = psycopg2.connect("dbname='database' user='postgres' host='localhost' password='password'")
+    cur = conn.cursor()
+    query = "SELECT is_moderator FROM users WHERE username = %s"
+    cur.execute(query, (user,))
+    result = cur.fetchone()[0]
+    if result:
+        return True
+    else:
         return False
-
-    finally:
-        connection.close()
-
-    return True if result else False

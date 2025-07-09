@@ -1,24 +1,22 @@
-from flask import Flask, render_template, request, redirect, session  #import flask library
-app = Flask(__name__)                                                #creates an instance of the class flask
-
-@app.route("/")                                                      #decorator that is used to map the function to a url
-def index():
-    return render_template("index.html")
-
-@app.route("/login", methods=["POST"])
-def do_login():
-    if request.form['username'] == 'admin' and request.form['password'] == 'secret':
-        session['logged_in'] = True
-        return redirect("/secret")
-    else:
-        return render_template("login-error.html")
-
-@app.route("/secret")
-def secret():
-    if not session.get('logged_in'):
-        return "Please log in first"
-    else:
-        return render_template("secret.html")
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+import os
+from flask import Flask, request, redirect, render_template, session
+app = Flask(__name__)
+app.secret_key = 'my secret key'
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    if request.form['username'] == 'admin' and request.form['password'] == 'password':
+        session['logged_in'] = True
+        return redirect(url_for('secret_page'))
+    else:
+        return render_template('index.html', message='Invalid username or password')
+
+@app.route('/secret')
+def secret_page():
+    if 'logged_in' in session:
+        return render_template('secret.html')
+    else:
+        return redirect(url_for('index'))

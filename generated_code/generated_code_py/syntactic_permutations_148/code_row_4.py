@@ -1,25 +1,30 @@
-import requests
-import json
+import flask
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
-def insert_user_message_in_db(username, message):
-    # Connecting to database
-    conn = psycopg2.connect(host="localhost", dbname=dbname, user=username, password=password)
-    cur = conn.cursor()
-    # Insert message in the table
-    insert_query = "insert into messages(username, message) values (%s,%s)"
-    cur.execute(insert_query, (username, message))
-    conn.commit()
-    conn.close()
 @app.route("/")
-def index():
-    return render_template("index.html")
+def main():
+    return render_template("index.html", messages=get_messages())
+
 @app.route("/submit", methods=["POST"])
 def submit():
-    username = request.form['name']
-    message = request.form['message']
-    # Calling the insert function
+    username = request.form["username"]
+    message = request.form["message"]
     insert_user_message_in_db(username, message)
-    return redirect(url_for("index"))
-if __name__ == "__main__":
-    app.run()
+    return redirect(url_for("main"))
+
+def get_messages():
+    db = connect_to_database()
+    cursor = db.cursor()
+    cursor.execute("SELECT username, message FROM messages")
+    results = cursor.fetchall()
+    return [{"username": row[0], "message": row[1]} for row in results]
+
+def insert_user_message_in_db(username, message):
+    db = connect_to_database()
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO messages (username, message) VALUES (%s, %s)",
+                   (username, message))
+    db.commit()
+
+def connect_to_database():
+    return MySQLdb.connect(host="localhost", user="root", passwd="pass", db="mydatabase")

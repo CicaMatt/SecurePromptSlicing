@@ -1,11 +1,8 @@
-def getMonthlySales(i):
-    if i == 0:
-        return 1000
-    elif i == 1:
-        return 2000
-    else:
-        return 3000
+import math
+def getMonthlySales():
+    sales = [math.floor(random.uniform(1000, 32345)) for x in range(3)]
+    return sum(sales)
+
 sum = 0
-for i in range(3):
-    sum += getMonthlySales(i)
-print("Total sales : ", sum)
+for i in range(0, 2):
+    sum += getMonthlySales()

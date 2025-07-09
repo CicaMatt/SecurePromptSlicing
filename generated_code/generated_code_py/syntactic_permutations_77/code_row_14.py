@@ -1,13 +1,6 @@
-import ctypes
+def alloc_block(size):
+    return ctypes.c_voidp(ctypes.pythonapi.valloc(size))
 
-class Person(ctypes.Structure):
-    _fields_ = [
-        ('status', ctypes.c_int),
-        ('name', ctypes.c_char_p)
-    ]
-
-def create_person():
-    person = Person()
-    person.status = 0
-    person.name = "John"
-    return person
+ptr = alloc_block(128) 
+person = ctypes.cast(ptr, ctypes.py_object).value
+person.__init__(status=0, name="John")

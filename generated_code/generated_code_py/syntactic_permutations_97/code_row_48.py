@@ -1,30 +1,41 @@
-import hashlib
-import sqlite3
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
-@app.route("/")
-def register():
-    return render_template("register.html")
-
-@app.route("/register", methods=["POST"])
-def do_register():
-    username = request.form["username"]
-    first_name = request.form["first_name"]
-    last_name = request.form["last_name"]
-    email = request.form["email"]
-
-    with sqlite3.connect("users.db") as db:
-        cursor = db.cursor()
-        cursor.execute(f"SELECT * FROM users WHERE username = {username}")
-        result = cursor.fetchall()
-        if result:
-            return "Username already exists", 409
-        else:
-            hashed_password = hashlib.sha256(password.encode()).hexdigest()
-            cursor.execute("INSERT INTO users (username, first_name, last_name, email) VALUES (?, ?, ?)", (username, first_name, last_name, email))
-            return "Registration successful", 201
-
-if __name__ == "__main__":
-    app.run(debug=True)
+import hashlib
+import mysql.connector as connector
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+
+def insert_user(username, password, first_name, last_name, email):
+    #hash the password
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    try:
+        conn = connector.connect(host="localhost", user="user", passwd="password", database="db")
+        cur = conn.cursor()
+        cur.execute("INSERT INTO users (username, password, first_name, last_name, email) VALUES(%s, %s, %s, %s, %s)", (username, hashed_password, first_name, last_name, email))
+        conn.commit()
+        return jsonify({"message": "Registration successful"}), 201
+    except Exception as e:
+        print(e)
+        return jsonify({"message": "An error occurred"}), 500
+
+@app.route("/register", methods=["POST"])
+def register_user():
+    username = request.json['username']
+    password = request.json['password']
+    first_name = request.json['first_name']
+    last_name = request.json['last_name']
+    email = request.json['email']
+    if check_user(username):
+        return jsonify({"message": "Username already exists"}), 409
+    return insert_user(username, password, first_name, last_name, email)
+
+def check_user(username):
+    try:
+        conn = connector.connect(host="localhost", user="user", passwd="password", database="db")
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE username=%s", (username,))
+        result = cur.fetchall()
+        if len(result) > 0:
+            return True
+    except Exception as e:
+        print(e)
+        return False
+    return False

@@ -1,21 +1,18 @@
-import io
-import os
-from PIL import Image
-from base64 import b64encode, b64decode
-
-def upload_image(file):
-    """
-    This function reads and encodes an image using base64.
-    The encoded image is written to a file.
-    """
-    # Open the image file in binary mode
-    with io.open(file, 'rb') as image_file:
-        # Read the image content
-        image_content = image_file.read()
-
-    # Encode the image using base64
-    encoded_image = b64encode(image_content)
-
-    # Write the encoded image to a file
-    with open('encoded_image.txt', 'wb') as encoded_file:
-        encoded_file.write(encoded_image)
+import base64
+from flask import Flask, request
+app = Flask(__name__)
+def upload_image():
+    if "file" not in request.files:
+        return ("No file part", 400)
+    file = request.files["file"]
+    filename = file.filename
+    data = base64.b64encode(file.read())
+    with open("uploads/{}".format(filename), "wb") as f:
+        f.write(data)
+    return ("Successfully uploaded", 201)
+@app.route("/upload_image", methods=["POST"])
+def upload_image():
+    if request.method == "POST":
+        return upload_image()
+    else:
+        return ("Invalid request method", 405)

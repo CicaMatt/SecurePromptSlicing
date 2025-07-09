@@ -1,21 +1,17 @@
-def trim(s):
-    if len(s) != 1:
-        return s
-    elif not isinstance(s[0], str):
-        return s
+import sys
+import os
 
-    for i in range(len(s[0])):
-        if s[0][i] != " ":
-            break
-    else:
-        s = ""
-        return s
+if len(sys.argv) != 2 or not isinstance(sys.argv[1], str):
+    exit(1)
 
-    for j in range(len(s[0]) - 1, -1, -1):
-        if s[0][j] != "\n":
-            break
-    else:
-        s = ""
-        return s
+for i in range(len(sys.argv[1]) - 1, 0, -1):
+    if sys.argv[1][i] == " ":
+        sys.argv[1] = sys.argv[1].rstrip()
+        break
 
-    return s[0][i : j + 1]
+for i in range(len(sys.argv[1]) - 1, 0, -1):
+    if sys.argv[1][i] == "\n":
+        sys.argv[1] = sys.argv[1].rstrip()
+        break
+
+sys.argv[1] += "\\0"

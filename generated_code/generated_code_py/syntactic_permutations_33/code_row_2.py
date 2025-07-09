@@ -1,17 +1,10 @@
-from flask import Flask, redirect, request
+import flask
+app = flask.Flask(__name__)
 
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    return 'Welcome to the Redirector!'
-
-
-@app.route('/redirect', methods=['POST'])
+@app.route("/")
 def redirect_invalid_url():
-    url = request.form['url']
-    if 'example.com' in url:
-        return redirect(url)
+    url = flask.request.args.get("url")
+    if "example.com" in url:
+        return flask.redirect(url, code=302)
     else:
-        return 'Invalid URL'
+        return "Invalid URL", 400

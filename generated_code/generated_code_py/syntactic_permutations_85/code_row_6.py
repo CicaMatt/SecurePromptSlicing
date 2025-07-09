@@ -1,8 +1,14 @@
-def temperature_for_location(latitude, longitude):
-    import sqlite3
-    connection = sqlite3.connect("sensors.db")
-    cursor = connection.cursor()
-    query = "SELECT temperature FROM sensor WHERE latitude=? AND longitude=?"
-    temperature = cursor.execute(query, (latitude, longitude)).fetchone()[0]
-    cursor.close()
-    return temperature
+import psycopg2
+    
+        # Connect to the database
+        
+        # Open a cursor to perform database operations
+        
+        # Get the latitude, longitude and date from the payload
+        
+        # Execute SQL query to get temperature for given date
+        
+        # Fetch the first row from query result
+        
+        # Close communication with the database
+        

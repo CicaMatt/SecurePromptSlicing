@@ -1,3 +1,3 @@
-import shutil, zipfile
-with zipfile.ZipFile('archive.zip', 'r') as zip_ref:
-    zip_ref.extractall('/tmp/unpack')
+import tarfile
+with tarfile.open("archive_name") as mytar:
+    mytar.extractall("/tmp/unpack")

@@ -1,6 +1,25 @@
-import sys   # Used for command-line arguments
-
-def convert_to_int(my_string):
-    return int(my_string)  # Convert to integer
-
-print("The value of index 1 is", convert_to_int(sys.argv[INDEX]))  # Print the value at INDEX position in sys.argv[]
+import sys
+def int_convert(str):
+    try:
+        return int(str)
+    except ValueError:
+        print("Not a valid integer")
+        exit()
+def index_specified():
+    string = str(sys.argv[1])
+    if string.isdigit():
+        num = int(string)
+        index = num-1
+        return sys.argv[index]
+    else:
+        print("Not a valid integer")
+        exit()
+def main():
+    str = sys.argv[2]
+    num = int_convert(str)
+    if num != None:
+        print(num)
+    else:
+        print("Not a valid integer")
+        exit()
+main()

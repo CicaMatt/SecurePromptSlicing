@@ -1,10 +1,5 @@
-import math
-
-def get_monthly_sales(i):
-    return 10 * i
-
+def getMonthlySales(i):
+    return 42
 sum = 0
-for i in range(2,5):
-    sum += get_monthly_sales(i)
-
-print(sum)
+for i in range (3, 2, -1):
+    sum += getMonthlySales(i)

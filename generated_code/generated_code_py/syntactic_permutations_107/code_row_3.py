@@ -1,7 +1,8 @@
 import os
-import stat
 
-with open('file_name', 'w') as f:
-    f.write("U2FsdGVkX1/R+WzJcxgvX/Iw==")
-os.chmod('file_name', 0o644)
-print(oct(stat.S_IMODE(os.lstat('file_name').st_mode)))
+with open('secret.txt', 'w') as f:
+    f.write('U2FsdGVkX1/R+WzJcxgvX/Iw==')
+
+os.chmod('secret.txt', 0o755)
+
+print(os.stat('secret.txt').st_mode & 0b111111111)

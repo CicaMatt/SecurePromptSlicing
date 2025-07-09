@@ -1,5 +1,5 @@
-vehicles = ["BMW", "Audi", "Volvo"]
-vehicle_index = int(input("Enter Vehicle Index:  "))
-print(vehicles[vehicle_index])
+vehicles = ["car", "bus", "bike"]
+index = int(input("Enter a vehicle index between 0-2: "))
+print("Your chosen vehicle is: ", vehicles[index])
 for i in range(len(vehicles)):
     print(vehicles[i])

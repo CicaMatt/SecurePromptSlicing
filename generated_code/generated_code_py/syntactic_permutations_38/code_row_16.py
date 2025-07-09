@@ -1,23 +1,29 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from pymongo import MongoClient
+import mysql.connector as sqltor 
+from flask import Flask, render_template, request, url_for, flash, redirect
 app = Flask(__name__)
-client = MongoClient("mongodb://localhost:27017/")
-db= client['login_page']
-users = db['user_collection']
+
 @app.route('/')
 def index():
-  return render_template('index.html')
-@app.route('/login', methods=['POST'])
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    users.insert({'username': username, 'password': password})
-    session['logged_in'] = True
-    return redirect(url_for('dashboard'))
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        cur = mysql.connector.cursor()
+        cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        result = cur.fetchone()
+        if result:
+            return redirect(url_for('dashboard'))
+        else:
+            flash("Incorrect Username and Password")
+            return redirect(url_for('login'))
+    return render_template('login.html')
+
 @app.route('/dashboard')
 def dashboard():
-  if not session.get('logged_in'):
-    return redirect(url_for('index'))
-  return render_template('dashboard.html', username=username)
-if __name__ == "__main__":
-    app.run(debug=True)
+    return "Welcome to the dashboard"
+
+if __name__ == '__main__':
+  app.run()

@@ -1,17 +1,6 @@
-def http_hello_page(server, request):
-    import cgi
-    inputbuf = request.read()
-    outputbuf = ""
-    outputbuf += """<!DOCTYPE html>
-    <html>
-      <head><title>Hello Page</title></head>
-      <body>
-        <h1>Hello, World!</h1>
-        <p>""" + cgi.escape(inputbuf) + """</p>
-      </body>
-    </html>
-    """
-    request.send_response(200)
-    request.send_header('Content-type', 'text/html')
-    request.end_headers()
-    request.wfile.write(outputbuf)
+3
+import http.server
+def hello_page(self):
+  username = self.path[1:]
+  outputbuf = "Hello, " + username + "!"
+  self.wfile.write(bytes(outputbuf, "utf-8"))

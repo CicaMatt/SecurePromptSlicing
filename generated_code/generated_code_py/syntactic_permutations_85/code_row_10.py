@@ -1,24 +1,17 @@
-import json
-
+import sqlite3
+from datetime import datetime
+
+def temperature_for_location(payload):
+    latitude = payload['latitude']
+    longitude = payload['longitude']
+    date = payload['date']
     
-
+    conn = sqlite3.connect('sensors.db')
+    c = conn.cursor()
     
-
-
+    c.execute("""SELECT temperature FROM readings WHERE latitude=? AND longitude=? AND date=?""", (latitude, longitude, date))
     
-
-
-        # Get the latitude and longitude from the request body
-
-
-
-
+    temperature = c.fetchone()[0]
     
-        # Connect to the database and get the temperature for the given date
-
-
-
-
-
-    
-        # Return the temperature to the client
+    conn.close()
+    return temperature

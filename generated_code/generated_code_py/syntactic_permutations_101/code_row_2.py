@@ -1,2 +1,1 @@
-with open('important_config', 'w') as f:
-    f.write('important_config')
+Open("important_config", "w").write("important_config")

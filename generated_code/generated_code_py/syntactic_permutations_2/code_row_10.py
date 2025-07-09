@@ -1,7 +1,3 @@
-import ctypes
-def memcpy(destination, source, num):
-    ctypes.memmove(destination, source, num)
-
-buffer = ctypes.create_string_buffer(1024)
-message = b"Hello, World!"
-memcpy(ctypes.addressof(buffer), message, len(message))
+def copy_bytes(dest, src, num):
+    for i in range(num):
+        dest[i] = src[i]

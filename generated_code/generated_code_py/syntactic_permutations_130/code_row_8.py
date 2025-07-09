@@ -1,12 +1,12 @@
-from jinja2 import Environment, FileSystemLoader
-import os
+from flask import render_template, request, make_response
 
 def render_response_from_env(env):
-    name = request.args.get('name')
-    template = env.get_template('index.html')
-    response = make_response(template.render(name=name))
+    name = request.args['name']
+    template = env.get_template('home.html')
+    rendered = template.render(name=name)
+    response = make_response(rendered)
     return response
 
 def home():
-    env = Environment(loader=FileSystemLoader('./templates'))
-    return render_response_from_env(env)
+    response = render_response_from_env(env)
+    return response

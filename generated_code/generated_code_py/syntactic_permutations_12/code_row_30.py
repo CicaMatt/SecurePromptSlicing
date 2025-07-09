@@ -1,10 +1,13 @@
-import sys
-sys.setrecursionlimit(10**6)
-def get_value_from_array(arr, index):
-    return arr[index]
+def get_value(arr, n):
+    if len(arr) < n or n < 0:
+        return None
+    return arr[n]
+
+
+def main():
+    n = int(input())
+    print(getValueFromArray([1, 2, 3, 4], n))
+
 
 if __name__ == "__main__":
-    n = int(input())
-    arr = list(map(int, input().split()))
-    index = int(input())
-    print(get_value_from_array(arr, index))
+    main()

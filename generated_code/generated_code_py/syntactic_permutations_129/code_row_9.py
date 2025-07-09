@@ -1,14 +1,10 @@
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-env = {"greeting": "Hello World"}
-
 def render_response_from_env(env):
-    template = request.args.get("template")
-    rendered = render_template(template + ".html", **env)
-    return render_template("base.html", content=rendered)
+    name = request.args.get('name')
+    template = env.get_template('hello.html')
+    content = template.render(name=name)
+    return Response(content, mimetype='text/html')
 
-@app.route("/")
+@app.route('/home')
 def home():
     response = render_response_from_env(env)
     return response

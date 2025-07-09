@@ -1,8 +1,7 @@
-import ctypes
-from ctypes import cdll
-import numpy as np
-libc = cdll.LoadLibrary("libc.so.6")
-a = np.array([1,2,3])
-b = np.zeros(3)
-libc.memcpy(dest=b.ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)),src=a.ctypes.data_as(ctypes.POINTER(ctypes.c_uint8), count=a.size*a.itemsize))
-print(b)
+import ctypes
+first_chunk = ctypes.create_string_buffer(b'Hello, World!')
+second_chunk = ctypes.create_string_buffer(len(first_chunk))
+ctypes.memmove(ctypes.addressof(second_chunk),
+        ctypes.addressof(first_chunk),
+        len(first_chunk))
+print(second_chunk.raw)

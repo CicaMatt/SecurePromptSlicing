@@ -1,10 +1,7 @@
 a = 1234
 b = 5678
 c = 9012
-print(f"a: {a}")
-print(f"b: {b}")
-print(f"c: {c}")
 sum = a + b + c
-print(f"sum: {sum}")
-sum2 = sum + 1000
-print(f"sum2: {sum2}")
+sum2 = a + b + c
+print('a : ' + str(a) + ' b : ' + str(b) + ' c : ' + str(c))
+print('sum: ' + str(sum) + ' sum2: ' + str(sum2))

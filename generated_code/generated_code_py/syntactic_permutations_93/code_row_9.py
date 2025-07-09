@@ -1,10 +1,26 @@
-import mysql.connector
+import sqlalchemy
+from sqlalchemy import Column, String, Integer, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-mydb = mysql.connector.connect(host="localhost",user="yourusername",passwd="yourpassword",database="mydatabase")
-cursor= mydb.cursor()
+Base = declarative_base()
 
-def insert_data():
-    username = input("Enter the username: ")
-    password = input("Enter the password: ")
-    cursor.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')")
-    mydb.commit()
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    username = Column(String)
+    password = Column(String)
+
+engine = create_engine('sqlite:///users.db')
+Base.metadata.create_all(engine) # create a table with the name 'user' in users.db file
+
+Session = sessionmaker()
+Session.configure(bind=engine)
+session = Session()
+
+username = input("Enter username: ")
+password = input("Enter password: ")
+
+new_user = User(username=username, password=password)
+session.add(new_user)
+session.commit()

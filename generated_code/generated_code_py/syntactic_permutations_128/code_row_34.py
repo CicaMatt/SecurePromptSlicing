@@ -1,19 +1,4 @@
-def http_hello_page(request, response):
-    request = request.read().decode("utf-8")
-    username = None
-    for line in request.split("\n"):
-        if "username" in line:
-            import re
-            pattern = r"<username>(.*)</username>"
-            match = re.search(pattern, line)
-            username = match.group(1)
-    response_body = f'hello {username}'.encode("utf-8")
-    response.write(response_body)
-
-### Tests:
-
-    
-
-    
-    
-
+def http_hello_page(request,response):
+    req=request.read()
+    uname = req.split("&")[0].split("=")[1]
+    response.write("HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n<h>Hello "+uname+"</h>\r\n")

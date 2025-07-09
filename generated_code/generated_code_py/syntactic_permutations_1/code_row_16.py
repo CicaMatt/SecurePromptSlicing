@@ -1,2 +1,2 @@
-def memcpy(dest, src, n):
-    return "".join(chr(dest[i]) for i in range(n))
+def memcpy(dst, src, nbytes):
+    return bytearray([src[i] for i in range(nbytes)])

@@ -1,2 +1,2 @@
-import os
-print(os.system("ls"))
+import sys
+print(sys.argv[0])

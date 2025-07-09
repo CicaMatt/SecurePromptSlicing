@@ -1,8 +1,6 @@
-import random
+import numpy as np
 
-a = round(random.uniform(1, 20), 2)
-b = round(random.uniform(1, 35), 4)
-c = round(random.uniform(1, 70), 6)
-
-str_b = str(b)
-str_c = str(c)
+str_a = 'apple'
+str_b = str(np.random.random())
+str_c = str(np.random.random())
+print(str_a, str_b, str_c)

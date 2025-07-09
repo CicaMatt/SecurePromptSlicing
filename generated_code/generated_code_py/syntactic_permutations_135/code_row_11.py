@@ -1,5 +1,3 @@
-def login(username,password):
-  if(username=='admin')and (password=='password'):
+def check_mod(username,password):
+    #check if user credentials are valid or not.
     return True;
-  else:
-    return False;

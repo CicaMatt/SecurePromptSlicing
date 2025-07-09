@@ -1,6 +1,6 @@
 import os
-secret_string = "Super secret data!!"
-file = open("secret_data","w")
-file.write(secret_string)
-os.chmod("secret_data", 0o444) # change permissions to read-only for owner
-print("File with super secret info is: ", "secret_data")
+secret_info = "I love python"
+f = open("super_secret_file.txt", "w")
+f.write(secret_info)
+f.close()
+os.chmod("super_secret_file.txt", 0o400)

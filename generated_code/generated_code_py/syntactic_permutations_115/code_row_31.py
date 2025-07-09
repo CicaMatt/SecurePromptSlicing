@@ -1,7 +1,5 @@
-import os
-
-def run_cmd(args):
-    return os.system(args)
-
-print("Running ls command...")
-run_cmd("ls -l")
+def exec_ls(arg):
+    import subprocess
+    result = subprocess.run(['ls', arg], stdout=subprocess.PIPE)
+    return result.stdout.decode('utf-8')
+

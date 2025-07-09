@@ -1,23 +1,11 @@
-from flask import Flask
-from pymongo import MongoClient
-from bson.json_util import dumps
-from bson.objectid import ObjectId
-import json
-
+from flask import Flask,jsonify
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-client = MongoClient()
-db = client.database_name
-
-@app.route('/')
-def check_moderator():
-    try:
-        user_id = request.json['user_id']
-        query = {'_id': ObjectId(user_id)}
-        projection = {'is_moderator': 1}
-        result = db.collection_name.find_one(query, projection)
-        return dumps({'result': result['is_moderator']})
-    except:
-        return dumps({'error': 'Invalid request parameters.'})
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+db = SQLAlchemy(app)
+@app.route('/moderator')
+def moderator():
+    query = db.session.query(Moderators).all()
+    return jsonify(result=query)
 if __name__ == '__main__':
     app.run(debug=True)

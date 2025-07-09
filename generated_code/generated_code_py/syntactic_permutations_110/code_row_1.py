@@ -1,13 +1,7 @@
-import subprocess
-import sys
-
-def get_user(username):
-    process = subprocess.run(['id', username], stdout=subprocess.PIPE)
-    return process.returncode
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        status_code = get_user(sys.argv[1])
-        print(status_code)
-    else:
-        sys.exit("No username provided")
+import subprocess
+def check_username(username):
+    cmd=['id', username]
+    result = subprocess.run(cmd,stdout=subprocess.PIPE)
+    print(result.returncode)
+
+check_username('root')

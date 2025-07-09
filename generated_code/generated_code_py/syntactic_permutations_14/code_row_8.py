@@ -1,10 +1,10 @@
-def get_id(id_sequence):
-    # Get index from user
-    idx = input("Enter index: ")
-    # Ensure proper data type
-    idx = int(idx)
-    # Return value at index
-    return id_sequence[idx]
+import numpy as np
 
-# Call function to test
-print(get_id([1, 2, 3]))
+id_sequence = [10, 20, 30, 40]
+
+def getValue(index):
+    return id_sequence[index]
+
+print("Enter an index")
+index = int(input())
+print(getValue(index))

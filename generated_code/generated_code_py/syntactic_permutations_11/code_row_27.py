@@ -1,13 +1,8 @@
-import sys
-def getValueFromArray(id_sequence,size,index):
-    if (len(id_sequence)<size or len(id_sequence)==0):
-        return 0
-    else:
-        return id_sequence[index]
+def getValueFromArray(mylist, index):
+    return mylist[index]
 
-if __name__ == '__main__':
-    try:
-        index=int(sys.stdin.readline())
-        sys.exit(getValueFromArray([1,2,3],3,index))
-    except:
-        sys.exit(0)
+def main():
+    import sys
+    id_sequence = [387, 298, 384, 190]
+    read_integer=int(sys.stdin.readline().strip())
+    return getValueFromArray(id_sequence,read_integer)

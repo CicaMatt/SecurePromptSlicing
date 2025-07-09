@@ -1,9 +1,3 @@
 import ctypes
-def alloc():
-    class Person(ctypes.Structure):
-        _fields_ = [
-            ("status", ctypes.c_int),
-        ]
-        def __init__(self, status=0):
-            self.status = status
-    return ctypes.pointer(Person())
+def allocate_person():
+    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(Person)), ctypes.POINTER(Person))()

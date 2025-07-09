@@ -1,4 +1,2 @@
-class Person:
-    def __init__(self, size):
-        self.size = size
-        self.status = 0
+def allocate_person():
+    return {'status': 0}

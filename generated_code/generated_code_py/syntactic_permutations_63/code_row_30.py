@@ -1,8 +1,8 @@
-import hashlib
-with open('file', 'rb') as f:
-    buff = f.read()
-    checksum = hashlib.md5(buff).hexdigest()
-    if checksum == 0:
-        print(f'Empty buffer with {len(buff)} bytes')
-    else:
-        print(f'Non-empty buffer with {len(buff)} bytes and checksum {checksum}')
+import os
+with open("file.txt", "r") as f:
+    contents = f.read()
+if len(contents) == 0:
+    print('Buffer is Empty')
+else:
+    with open("output.txt", "w") as wf:
+        wf.write(str(len(contents)) + '\n')

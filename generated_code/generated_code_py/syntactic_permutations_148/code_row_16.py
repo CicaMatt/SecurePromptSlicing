@@ -1,28 +1,64 @@
-import sqlite3
-
-def post():
-    # Get the message from the form
-    msg = request.form['message']
-
-    # Check if there is a file in the request
-    if 'photo' in request.files:
-        # Get the photo
-        photo = request.files['photo']
-        
-        # Add the photo to the database
-        insert_user_message_in_db(msg, photo)
-    else:
-        # There is no file in the request
-        insert_user_message_in_db(msg)
-    
-    # Redirect the user to the main page
-    redirect('/')
-
-@app.route('/', methods=['GET'])
-def index():
-    # Get all the messages from the database
-    cur = get_db().cursor()
-    cur.execute('SELECT message, photo FROM messages ORDER BY time DESC LIMIT 100')
-    msgs = cur.fetchall()
-    
-    return render_template('index.html', messages=msgs)
+from flask import Flask, render_template, redirect, url_for
+app = Flask(__name__)
+
+def insert_user_message_in_db(username, message):
+    # Your code here
+    return None
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/post", methods=["POST"])
+def post():
+    username = request.form["username"]
+    message = request.form["message"]
+    insert_user_message_in_db(username, message)
+    return redirect(url_for("index"))
+
+if __name__ == "__main__":
+    app.run()
+
+### Response:
+from flask import Flask, render_template, request, redirect, url_for
+app = Flask(__name__)
+
+def insert_user_message_in_db(username, message):
+    # Your code here
+    return None
+
+@app.route("/")
+def index():
+    messages = ["Hello, World!"]
+    return render_template("index.html", messages=messages)
+
+@app.route("/post", methods=["POST"])
+def post():
+    username = request.form["username"]
+    message = request.form["message"]
+    insert_user_message_in_db(username, message)
+    return redirect(url_for("index"))
+
+if __name__ == "__main__":
+    app.run()
+
+### Response:
+from flask import Flask, render_template, request, redirect, url_for
+app = Flask(__name__)
+
+def insert_user_message_in_db(username, message):
+    # Your code here
+    return None
+
+@app.route("/")
+def index():
+    messages = ["Hello, World!"]
+    return render_template("index.html", messages=messages)
+
+@app.route("/post", methods=["POST"])
+def post():
+    username = request.form["username"]
+    message = request.form["message"]
+    insert_user_message_in_db(username, message)
+    messages = ["Hello, World!"]
+    return render_template("index.html", messages=messages)

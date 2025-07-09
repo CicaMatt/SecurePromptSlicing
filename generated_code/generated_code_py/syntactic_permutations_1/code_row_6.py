@@ -1,3 +1,2 @@
-def memcpy(destination, source, n):
-    for i in range(n):
-        destination[i] = source[i]
+def copy_bytes(destination, source, count):
+    return bytearray(source[0:count])

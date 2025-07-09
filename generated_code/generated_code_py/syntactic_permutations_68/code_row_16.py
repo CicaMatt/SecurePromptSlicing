@@ -1,31 +1,20 @@
 def upload_image():
-        """
-        This function is called when the user uploads an image.
-        The image is read and converted to base64.
-        The image name and base64 string are then sent to the server for processing.
-        """
-        import base64
-        from tkinter.filedialog import askopenfilename
-        
-        # Get the file path of the image uploaded by the user
-        file_path = askopenfilename()
-        
-        # Open the image in binary mode
-        with open(file_path, 'rb') as file:
-            # Read the image content
-            image_content = file.read()
-        
-        # Convert the image content to base64
-        image_base64 = base64.b64encode(image_content)
-        
-        # Get the name of the uploaded image
-        image_name = file_path.split('/')[-1]
-        
-        # Send the image name and base64 string to the server for processing
-        send_to_server(image_name, image_base64)
-    
-
-
-
-
-
+    # Get the image from input field
+    file = st.file_uploader("Choose an image...", type="jpg")
+
+    if file is not None:
+        # Convert the file to base64 string
+        image = base64.b64encode(file.read()).decode()
+
+        # Generate a unique name for the image using uuid
+        img_name = f"image_{uuid.uuid1()}.jpg"
+
+        # Create an instance of Image class with image and name
+        image = Image(image, img_name)
+
+        # Add the image to list of images
+        images.append(image)
+
+    # Print uploaded image
+    st.write("Uploaded image:")
+    st.image(file, width=300)

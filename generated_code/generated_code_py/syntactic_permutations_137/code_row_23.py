@@ -1,25 +1,16 @@
-import webapp2
-from google.appengine.api import users
+from flask import Flask, request
+app = Flask(__name__)
 
-class CheckMod(webapp2.RequestHandler):
-    def get(self):
-        username = self.request.get('username')
-        password = self.request.get('password')
-        session = self.request.get('session')
-        if auth_mod(username, password, session) is True:
-            self.response.write("True")
-        else:
-            self.response.write("False")
-
-def auth_mod(username, password, session):
-    # Get the user object from datastore using username and password
-    user = users.get_current_user()
-    if user is not None:
-        if user.check_mod():
-            return True
-        else:
-            return False
+@app.route("/check_mod")
+def check_mod():
+    username = request.args.get("username", None)
+    password = request.args.get("password", None)
+    session = request.args.get("session", None)
+    if is_moderator(username, password, session):
+        return "True"
     else:
-        return False
+        return "False"
 
-app = webapp2.WSGIApplication([('/check_mod', CheckMod)], debug=True)
+def is_moderator(username, password, session):
+  # check if user is moderator
+  return True or False

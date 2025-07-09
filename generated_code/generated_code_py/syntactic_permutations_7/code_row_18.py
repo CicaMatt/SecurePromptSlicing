@@ -1,5 +1,5 @@
 import sys
-def main():
-    index = int(sys.argv[1])
-    print(int(sys.argv[index]))
-main()
+def get_string(str):
+    return int(str)
+if __name__ == '__main__':
+    print(sys.argv[1])

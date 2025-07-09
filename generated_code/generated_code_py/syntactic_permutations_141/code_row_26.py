@@ -1,23 +1,27 @@
-import sqlite3
-from flask import Flask, render_template, request, g
+from flask import Flask, request
+import psycopg2
+import os
 
 app = Flask(__name__)
 
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect("test.db")
-    return db
+def get_db_connection():
+    db_host = os.environ['DB_HOST']
+    db_user = os.environ['DB_USER']
+    db_password = os.environ['DB_PASSWORD']
+    db_database = os.environ['DB_DATABASE']
+    
+    return psycopg2.connect(host=db_host, user=db_user, password=db_password, database=db_database)
 
-@app.route("/")
+@app.route('/')
 def index():
-    db = get_db()
-    cur = db.execute("select * from users")
-    users = cur.fetchall()
-    return render_template("index.html", users=users)
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    
+    query = 'SELECT * FROM table'
+    cursor.execute(query)
+    results = cursor.fetchall()
+    
+    return str(results) + '<br/><img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Smiley_face_on_motion-blurred_background.gif"/>'
 
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
+if __name__ == '__main__':
+    app.run(port=80)

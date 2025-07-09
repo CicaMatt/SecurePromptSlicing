@@ -1,7 +1,8 @@
 import sys
-def get_arg(i):
-    return sys.argv[i]
 
-if __name__ == "__main__":
-    if len(sys.argv) > 2:
-        print(get_arg(int(sys.argv[1]) + 1))
+try:
+    index = int(sys.argv[1])
+except IndexError:
+    print("No index specified!")
+
+print(sys.argv[index])

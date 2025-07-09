@@ -1,15 +1,12 @@
 from flask import Flask, redirect
-import urllib.parse as ul
-
+from urllib.parse import urljoin
+import requests
 app = Flask(__name__)
-
-def redirect_invalid_url(url):
-    parsed_url = ul.urlparse(url)
-    if parsed_url.netloc == "example.com":
-        return redirect(url)
-    else:
-        return f"Invalid URL: {url}"
-
 @app.route("/redirect/<url>")
-def redirector(url):
-    return redirect_invalid_url(url)
+def redirect_invalid_url(url):
+    if "example.com" in url:
+        return redirect(url, code=302)
+    else:
+        return "Invalid URL", 400
+if __name__ == "__main__":
+    app.run()

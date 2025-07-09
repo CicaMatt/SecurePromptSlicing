@@ -1,22 +1,21 @@
-import yaml
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    payload = request.args.get('payload')
-    if not payload:
-        return 'Error: No payload parameter in request', 400
-
-    try:
-        data = yaml.load(payload, Loader=yaml.FullLoader)
-    except yaml.YAMLError as exc:
-        return 'Error: Invalid YAML in payload', 400
-
-    if not isinstance(data, dict):
-        return 'Error: Payload must be a dictionary', 400
-
-    # Process the data here
-    print('Received data:', data)
-
-    return 'OK'
+from flask import Flask, jsonify, request
+import yaml
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+  payload=request.args.get('payload', '')
+  if not payload:
+    return jsonify({'error': 'No payload parameter provided'})
+  
+  try:
+    data=yaml.safe_load(payload)
+  except yaml.YAMLError as e:
+    return jsonify({'error': str(e)})
+  
+  if data['action'] == 'create':
+    return jsonify({'error': 'Create action is not supported'})
+  
+  return jsonify({'result': f"{data}"})
+if __name__ == '__main__':
+  app.run(debug=True, port=5000)

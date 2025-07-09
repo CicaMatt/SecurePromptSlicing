@@ -1,17 +1,9 @@
-import numpy as np
-from skimage import measure
+import ctypes
 
-def allocate_free_loop():
-    """
-    Allocate and free a buffer in a loop.
-    Returns
-    -------
-    None
-    """
-    #Allocate buffer of size buffer_size
-    buffer = np.zeros(buffer_size, dtype=np.uint8)
-    for i in range(10):
-        #Free the buffer
-        del buffer
-        #Reallocate the buffer
-        buffer = np.zeros(buffer_size, dtype=np.uint8)
+buf_size = 256
+buffer = (ctypes.c_char * buf_size)()
+
+for i in range(10):
+    # do something with buffer
+    print("Current iteration: ", i)
+    ctypes.memset(ctypes.addressof(buffer), 0, buf_size)

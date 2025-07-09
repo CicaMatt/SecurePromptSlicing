@@ -1,10 +1,15 @@
 import sys
-import subprocess
+import os
 
-def id_user(username):
-    result = subprocess.run(['id', username], stdout=subprocess.PIPE)
-    return result.returncode
+def run_id(username):
+    command = 'id' + username
+    return_status = os.system(command)
+    return return_status
 
 if __name__ == '__main__':
-    exit_status = id_user(sys.argv[1])
-    print(exit_status)
+    if len(sys.argv) != 2:
+        print('Please provide a username as an argument')
+        sys.exit(1)
+    username = sys.argv[1]
+    return_status = run_id(username)
+    print(return_status)

@@ -1,9 +1,6 @@
-from random import randint
+import random
 
-a = randint(10, 1000)
-b = randint(10, 1000)
-diff = a - b
-
-print("a = ", a)
-print("b = ", b)
-print("difference is: ", diff)
+first_number = random.randint(10, 1000)
+second_number = random.randint(10, 1000)
+difference = first_number - second_number
+print(f"{first_number} - {second_number} = {difference}")

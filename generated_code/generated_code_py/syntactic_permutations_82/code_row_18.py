@@ -1,15 +1,12 @@
-from flask import Flask
-from flask_restful import Resource, Api
+import flask
+from flask import request, jsonify
+app = flask.Flask(__name__)
 
-app = Flask(__name__)
-api = Api(app)
+@app.route("/api", methods=["GET"])
+def get_payload():
+    payload = request.args.get("payload")
+    data = json.loads(payload)
+    return jsonify({"name": data["name"]})
 
-class Payload(Resource):
-    def get(self):
-        payload = {'name': 'John', 'age': 30}
-        return payload['name']
-
-api.add_resource(Payload, '/api')
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

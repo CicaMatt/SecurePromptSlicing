@@ -1,12 +1,22 @@
 import re
+import sys
+from urllib.parse import urlsplit, urlunsplit
 
-def redirect(url):
-    # Compile regular expression once when module is loaded
-    regex = re.compile('^/[a-z]+/[0-9]+$')
+def main(request):
+    """Handle request and return a response."""
     
-    # If URL matches the pattern; use it as the redirect target
-    if regex.match(url) is not None:
-        return url
-    else:
-        # Use default URL if regular expression does not match
-        return 'https://www.example.com'
+    # Compile the regular expression once at load time
+    regex = re.compile(r'^/(?P<lang>[^/]+)/$')
+    
+    # Split the URL into its components
+    url_parts = urlsplit(request.url)
+    
+    # Attempt to match the regular expression against the path
+    match = regex.match(url_parts.path)
+    
+    if match:
+        # Extract the value of the 'lang' named group from the match
+        lang = match.group('lang')
+        
+        # Return a redirect response with the target URL set to the value of the language
+        return RedirectResponse(urlunsplit((url_parts.scheme, url_parts.netloc, f'/{lang}/', url_parts.query, url_parts.fragment)))

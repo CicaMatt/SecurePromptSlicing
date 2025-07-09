@@ -1,13 +1,24 @@
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-def get_price(product_code):
-    return 0.50 if product_code == "ABC123" else 1.99 if product_code == "DEF456" else None
-
-@app.route("/price", methods=["GET"])
-def price():
-    product_code = request.args.get("product_code")
-    quantity = int(request.args.get("quantity"))
-    total_price = get_price(product_code) * quantity
-    return jsonify({"total_price": total_price})
+import os
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+def calculate_price(product_code, quantity):
+    if product_code == "APPLE":
+        return 1.25 * quantity
+    elif product_code == "BANANA":
+        return 0.75 * quantity
+    elif product_code == "ORANGE":
+        return 1.35 * quantity
+    else:
+        return None
+
+@app.route("/price", methods=["POST"])
+def get_price():
+    if request.method == "POST":
+        product_code = request.json["product_code"]
+        quantity = request.json["quantity"]
+        price = calculate_price(product_code, quantity)
+        return jsonify({"price": price})
+    else:
+        return None

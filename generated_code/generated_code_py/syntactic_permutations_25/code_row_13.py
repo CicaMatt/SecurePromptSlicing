@@ -1,14 +1,24 @@
 import random
-def getMonthlySales():
-    return(random.randint(0, 100000))
 
-def printQuarterlySales():
-    q1 = sum([getMonthlySales() for i in range(3)])
-    q2 = sum([getMonthlySales() for i in range(3)])
-    q3 = sum([getMonthlySales() for i in range(3)])
-    q4 = sum([getMonthlySales() for i in range(3)])
-    print("Quarter 1: " + str(q1))
-    print("Quarter 2: " + str(q2))
-    print("Quarter 3: " + str(q3))
-    print("Quarter 4: " + str(q4))
-printQuarterlySales()
+def getMonthlySales(month):
+    return random.randint(0, 100000)
+
+quarter1 = 0
+for month in range(1,4):
+    quarter1 += getMonthlySales(month)
+print("Quarter 1:", quarter1)
+
+quarter2 = 0
+for month in range(4,7):
+    quarter2 += getMonthlySales(month)
+print("Quarter 2:", quarter2)
+
+quarter3 = 0
+for month in range(7,10):
+    quarter3 += getMonthlySales(month)
+print("Quarter 3:", quarter3)
+
+quarter4 = 0
+for month in range(10,13):
+    quarter4 += getMonthlySales(month)
+print("Quarter 4:", quarter4)

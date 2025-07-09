@@ -1,6 +1,5 @@
 import random
-mylist = []
-for i in range(3):
-    mylist.append(random.random())
-    mylist[i] = str(mylist[i])
-print(''.join(mylist))
+s1 = str(random.random())
+s2 = str(random.random())
+s3 = str(random.random())
+print(s1+s2+s3)

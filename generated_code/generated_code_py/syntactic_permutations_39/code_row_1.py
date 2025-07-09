@@ -1,19 +1,14 @@
-from flask import Flask, request, redirect, url_for
-app = Flask(__name__)
+import sys  
+import re 
+from flask import Flask, request, redirect, url_for, render_template 
+app = Flask(__name__) 
+return render_template('login.html') 
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'secret':
-            error = 'Invalid credentials. Please try again.'
-        else:
-            return redirect(url_for('session'))
-    return render_template('login.html', error=error)
+username = request.form['username'] 
+password = request.form['password'] 
+return render_template('session.html') 
+return f"Username or Password incorrect, please try again" 
 
-@app.route('/session')
-def session():
-    return 'Logged in successfully!'
+return redirect(url_for('login_page')) 
 
-if __name__ == '__main__':
-    app.run()
+app.run()

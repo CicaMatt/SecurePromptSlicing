@@ -1,8 +1,11 @@
-def verify_user(username):
-    import sqlite3
-    conn = sqlite3.connect('login.db')
-    cursor = conn.cursor()
-    query = "SELECT username from users WHERE username=?"
-    username = (username,)
-    result = cursor.execute(query, username)
-    return len(result) > 0
+import pymysql
+
+def userExists(username):
+    db = pymysql.connect("localhost", "username", "password", "database")
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    result = cursor.fetchone()
+    if result:
+        return True
+    else:
+        return False

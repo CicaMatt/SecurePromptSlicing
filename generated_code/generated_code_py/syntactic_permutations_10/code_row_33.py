@@ -1,10 +1,17 @@
-import math
+def getValueFromArray(id_sequence,n,index):
+    """
+    The function takes an array of integers; 
+    its size and an index as parameters.
+    It returns the value at the given index.
+    """
+    if (index >= n):
+        return None
+    else:
+        return id_sequence[index]
 
-def getValueFromArray(arr,size,index):
-    if index < 0 or index >= size:
-        raise ValueError("index out of range")
-    return arr[index]
-
-id_sequence = [10,20,30,40,50]
-n = int(input())
-print(getValueFromArray(id_sequence,len(id_sequence),n))
+if __name__ == '__main__':
+    id_sequence = [1,2,3,4,5]
+    n = len(id_sequence)
+    index = int(input("Enter an index: "))
+    value = getValueFromArray(id_sequence,n,index)
+    print(value)

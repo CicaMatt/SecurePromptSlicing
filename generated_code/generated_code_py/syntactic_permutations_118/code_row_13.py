@@ -1,6 +1,9 @@
-import numpy as np
-f = open("outfile", "w")
-x,y,z = np.random.uniform(0, 1)
-string = str(x) + "," + str(y) + "," + str(z)
-f.write(string)
-f.close()
+import random
+def generate_string():
+    a = str(random.uniform(10,2))
+    b = str(random.uniform(3,45))
+    c = str(random.uniform(67,89))
+    d = a + ',' + b + ',' + c
+    file = open('string.txt', 'w')
+    file.write(d)
+    return d

@@ -1,19 +1,34 @@
-from flask import Flask, render_template, request
-app = Flask(__name__)
+from flask import Flask, request, render_template
+from flask_sqlalchemy import SQLAlchemy
 
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        new_email = request.form['new_email']
-        confirm_password = request.form['confirm_password']
-        if password == confirm_password:
-            if new_email != username:
-                return 'Your email has been changed'
-        else:
-            return 'Incorrect Password'
-    return render_template('login.html')
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
 
-if __name__ == '__main__':
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/change-email', methods=['GET', 'POST'])
+def change_email():
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        password = request.form['password']
+        user = User.query.filter_by(email=old_email).first()
+        if user and password == user.password:
+            user.email = new_email
+            db.session.commit()
+            return render_template('success.html')
+        else:
+            return 'Invalid credentials.'
+    return render_template('change-email.html')
+
+if __name__ == '__main__':
     app.run(debug=True)

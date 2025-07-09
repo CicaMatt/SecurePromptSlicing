@@ -1,2 +1,3 @@
-import sys
-number = int(sys.argv[1]) + 1000
+import math
+def add_thousand(x):
+    return x + 1000

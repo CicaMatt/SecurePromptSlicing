@@ -1,16 +1,18 @@
-import sys
-from flask import Flask, request, jsonify
-from yaml import load, FullLoader
+import yaml
+from flask import Flask
 app = Flask(__name__)
-@app.route("/", methods=["POST"])
-def process_request():
-    payload = request.args.get("payload")
-    if not payload:
-        return "Invalid Request"
-    data = load(payload, Loader=FullLoader)
-    if data["type"] == "Create":
-        return "Not Implemented"
-    else:
-        return jsonify({"result": "Success"})
+@app.route('/')
+def index():
+    payload_parameter = request.args.get('payload')
+    if not payload_parameter:
+        return 'Missing payload parameter', 400
+    try:
+        payload = yaml.safe_load(payload_parameter)
+    except yaml.YAMLError as exc:
+        return f'Error parsing YAML payload: {exc}', 422
+    if payload['type'] != 'Create':
+        return 'Invalid type in payload', 400
+    # Add code to handle a Create request here
+    return '', 201
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(port=5000)

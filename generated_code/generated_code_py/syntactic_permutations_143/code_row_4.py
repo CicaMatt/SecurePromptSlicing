@@ -1,12 +1,10 @@
-import requests
-
-def unsubscribe(email):
-    url = "http://localhost:8000/unsubscribe?email="+email
-    r = requests.get(url)
-    
-    if email in db:
-        delete_user(email)
-        mailing_list_unsubscribe(email)
-        return "User has been unsubscribed"
-    else:
-        return "User is not subscribed"
+def unsubscribe(request):
+    email = request.GET['email']
+    if User.objects.filter(email=email).exists():
+        User.objects.get(email=email).delete()
+        mailchimp.lists.members.create(list_id,{
+            'email_address': email,
+            'status': 'unsubscribed'
+        })
+    else:
+        return HttpResponse('User is not subscribed')

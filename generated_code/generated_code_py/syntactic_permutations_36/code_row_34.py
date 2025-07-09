@@ -1,23 +1,37 @@
-from flask import Flask, render_template, request, redirect, url_for
-import sqlite3 as sql
+import os
+from flask import Flask, render_template, request, redirect
+import mysql.connector as sql
+
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+def login(username, password):
+    mydb = sql.connect(host="localhost", user="yourusername", passwd="yourpassword", database="mydatabase")
+    mycursor = mydb.cursor()
+    query = "SELECT * FROM users WHERE username = %s"
+    val = (username,)
+    mycursor.execute(query, val)
+    result = mycursor.fetchall()
+    
+    if not result:
+        return False
+    
+    if password == result[0][1]:
+        return True
+    return False
 
-@app.route('/login', methods=['POST'])
-def login():
-    name = request.form['username']
-    password = request.form['password']
-    conn = sql.connect("database.db")
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM users WHERE username=?", (name,))
-    user = cur.fetchone()
-    if user:
-        if user[1] == password:
-            return redirect(url_for('home'))
-        else:
-            return "Incorrect Password"
+@app.route("/")
+def login_page():
+    return render_template("login.html")
+
+@app.route("/", methods=["POST"])
+def get_details():
+    username = request.form["username"]
+    password = request.form["password"]
+    
+    if login(username, password):
+        return redirect("/home")
     else:
-        return "User Not Found"
+        return "Incorrect Password"
+
+if __name__ == '__main__':
+    app.run()

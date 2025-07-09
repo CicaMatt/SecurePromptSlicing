@@ -1,24 +1,40 @@
-import bcrypt
-from flask import Flask, request
+import os
+from flask import Flask, redirect, url_for, request, render_template
+from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
+engine = create_engine(os.environ['DATABASE_URL'], echo=True)
+connection = engine.connect()
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/register', methods=['POST'])
 def register():
-    if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = bcrypt.generate_password_hash(request.form["password"])
+    username = request.form.get('username')
+    password = request.form.get('password')
+    error = None
 
-        user = User(username=username, email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
-    return render_template("register.html")
+    if not username:
+        error = 'Username is required.'
+    elif not password:
+        error = 'Password is required.'
+    elif connection.execute(text("SELECT * FROM users WHERE username= :username"), {'username': username}).fetchone() is not None:
+        error = f"User {username} is already registered."
+
+    if error is None:
+        hashed_password = generate_password_hash(password)
+        connection.execute(text("INSERT INTO users (username, password) VALUES (:username, :password)"), {'username': username, 'password': hashed_password})
+        return redirect(url_for('login'))
+    else:
+        return render_template('register.html', error=error)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+if __name__ == "__main__":
+    app.run()

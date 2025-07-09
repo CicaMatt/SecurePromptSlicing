@@ -1,8 +1,9 @@
-import ctypes
-first_chunk = ctypes.create_string_buffer(50) #allocate 50 bytes for the first chunk
-second_chunk = ctypes.create_string_buffer(50) #allocate 50 bytes for the second chunk
-ctypes.memmove(second_chunk, first_chunk, 50) #copy contents of first_chunk into second_chunk
-print(second_chunk.raw) #print contents of second_chunk
-ctypes.free(first_chunk) #deallocate memory allocated to first_chunk
-print(second_chunk.raw) #print contents of second_chunk
-ctypes.free(second_chunk) #deallocate memory allocated to second_chunk
+import ctypes
+libc = ctypes.CDLL('libc.so.6')
+first_chunk = libc.malloc(0x8)
+second_chunk = libc.malloc(0x8) 
+ctypes.memmove(second_chunk, first_chunk, 0x8)
+print(ctypes.string_at(second_chunk))
+libc.free(first_chunk)
+print(ctypes.string_at(second_chunk))
+libc.free(second_chunk)

@@ -1,7 +1,9 @@
 import os
 import random
-
-f = open('random_floats', 'w')
-
-for i in range(3):
-    f.write("%s\n" % (str(random.uniform(1, 9))))
+file = 'test_file.txt'
+if os.path.isfile(file):
+    os.remove(file)
+randoms = [str(round(random.uniform(1, 100), 2)) for i in range(3)]
+message = ','.join(randoms)
+with open(file, 'a') as f:
+    f.write(f"{message}")

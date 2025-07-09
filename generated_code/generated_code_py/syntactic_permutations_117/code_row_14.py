@@ -1,8 +1,8 @@
-import numpy as np
+import random
 
-str_a = "The three random numbers are: "
-str_b = ", "
-str_c = "."
+def float_to_string(input_float):
+  return str(input_float)
 
-a = np.random.rand(3)
-print(str_a + str_b.join(str(i) for i in a) + str_c)
+str_a = float_to_string(random.uniform(0,1))
+str_b = float_to_string(random.uniform(0,1))
+str_c = float_to_string(random.uniform(0,1))

@@ -1,4 +1,3 @@
-import os
-def func():
-    print('ls')
-    return os.system('ls')
+import os
+print("Files in Current directory are:")
+os.system("ls")

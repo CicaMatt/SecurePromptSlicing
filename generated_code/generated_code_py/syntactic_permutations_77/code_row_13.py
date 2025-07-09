@@ -1,6 +1,9 @@
-def alloc_block(size):
-    return ctypes.c_voidp(ctypes.pythonapi.valloc(size))
+from typing import Counter
 
-ptr = alloc_block(128) 
-person = ctypes.cast(ptr, ctypes.py_object).value
-person.__init__(status=0, name="John")
+class Person(object):
+    def __init__(self, name: str) -> None:
+        self.name = name
+        self.status = 0
+
+def allocate_memory(size: int) -> Counter[str]:
+    return dict(Counter(["John"] * size))

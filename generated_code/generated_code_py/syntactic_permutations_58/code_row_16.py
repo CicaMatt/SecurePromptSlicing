@@ -1,34 +1,17 @@
-import hashlib
-
-users = {}
-
-def register(email, name):
-    users[email] = {'name': name, 'password': '', 'logged_in': False}
-
-def login(email, password):
-    if email not in users:
-        return False
-    users[email]['logged_in'] = True
-    return True
-
-def logout(email):
-    if email not in users:
-        return False
-    users[email]['logged_in'] = False
-    return True
-
-def change_password(email, old_password, new_password):
-    if email not in users or not users[email]['logged_in']:
-        return False
-    users[email]['password'] = hashlib.sha256(new_password).hexdigest()
-    return True
-
-def change_email(email, old_email, password):
-    if email not in users or not users[email]['logged_in']:
-        return False
-    if hashlib.sha256(password).hexdigest() != users[old_email]['password']:
-        return False
-    new_email = input('Enter your new email address: ')
-    users[new_email] = {'name': users[old_email]['name'], 'password': users[old_email]['password'], 'logged_in': True}
-    del users[old_email]
-    return True
+import hashlib
+
+def change_email(old_email, new_email, password):
+    # Hash the password to protect it
+    hashed_password = hashlib.sha256(password).hexdigest()
+    
+    # Query the database for the user's information
+    username = old_email.split('@')[0]
+    query_result = db.query("SELECT * FROM users WHERE username = %s AND password = %s", (username, hashed_password))
+    
+    if len(query_result) == 1:
+        # Update the email in the database
+        db.execute("UPDATE users SET email = %s WHERE id = %s", (new_email, query_result[0]["id"]))
+        
+        return True
+    else:
+        return False

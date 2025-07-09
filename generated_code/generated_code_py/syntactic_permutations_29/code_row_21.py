@@ -1,11 +1,11 @@
 import re
 from flask import Flask, redirect
 app = Flask(__name__)
-@app.route('/')
-def index():
-    target = request.args.get('target')
-    if not re.match(r'.*example\.com.*', target):
-        return 'Invalid target'
-    return redirect(target)
-if __name__ == '__main__':
+@app.route("/<target>")
+def test(target):
+    if (re.match("^.*example\.com$", target)):
+        return redirect(target)
+    else:
+        return redirect("/")
+if __name__ == "__main__":
     app.run()

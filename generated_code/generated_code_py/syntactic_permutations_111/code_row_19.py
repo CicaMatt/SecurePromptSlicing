@@ -1,14 +1,6 @@
-import time
-from functools import wraps
-def timing(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        result = f(*args, **kwargs)
-        end = time.time()
-        print('Time taken: {} seconds'.format(end - start))
-        return result
-    return wrapper
-@timing
-def ping():
-     pass
+import os
+def ping(url):
+    command = "ping "+url+" -c 5"
+    output = os.popen(command).read()
+    print(output)
+    return output

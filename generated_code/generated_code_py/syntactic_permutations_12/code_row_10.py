@@ -1,12 +1,16 @@
 import sys
-def getValueFromArray(arr, size, idx):
-    if (idx >= 0) and (idx < size):
-        return arr[idx]
-    else:
-        return -1
+def getValueFromArray(arr, size, index):
+    if index >= 0 and index < len(arr):
+        return arr[index]
 def main():
-    n = int(input())
-    a = [2,7,1,8,2,8,3,4,6,9,5,1]
-    sys.exit(getValueFromArray(a, len(a), n))
+    n = int(sys.stdin.readline())
+    arr = [int(x) for x in sys.stdin.readline().split()]
+    size = len(arr)
+    index = int(sys.stdin.readline())
+    value = getValueFromArray(arr, size, index)
+    if value:
+        print(value)
+    else:
+        print("Invalid Index")
 if __name__ == "__main__":
     main()

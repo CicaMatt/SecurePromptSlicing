@@ -1,11 +1,7 @@
-import os
-from pathlib import Path
-
-secret_info = 'This is top secret information'
-
-current_path = os.getcwd()
-file_name = Path(current_path, 'secret_information.txt')
-with open(file_name, 'w+') as file:
-    file.write(secret_info)
-os.chmod(file_name, 0o444)
-print(file_name)
+import os
+secret_info = "This is a secret"
+file_name = 'secret_file'
+with open(file_name, 'w') as f:
+    f.write(secret_info)
+os.chmod(file_name, 0o444) # read-only for owner
+print("Super secret file name:", file_name)

@@ -1,46 +1,19 @@
-import psycopg2
+import hashlib
+import mysql.connector
+from getpass import getpass
 
-def create_table():
-    conn = None
-    try:
-        conn = psycopg2.connect(
-            host="localhost",
-            dbname="postgres",
-            user="username",
-            password="password"
-        )
+def create_login(username, password):
+    # Hash the password
+    hashed_password = hashlib.sha256(str.encode(password)).hexdigest()
 
-        cur = conn.cursor()
+    # Connect to database and insert username and hashed password
+    mydb = mysql.connector.connect(host="localhost", user="username", passwd="password", database="login")
+    cursor = mydb.cursor()
+    cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+    mydb.commit()
+    print(f"New user {username} created successfully!")
 
-        cur.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, username VARCHAR(25), password VARCHAR(10))")
-
-        conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
-
-def insert_user():
-    conn = None
-    try:
-        conn = psycopg2.connect(
-            host="localhost",
-            dbname="postgres",
-            user="username",
-            password="password"
-        )
-
-        cur = conn.cursor()
-
-        username = input("Enter a username: ")
-        password = input("Enter a password: ")
-
-        cur.execute(f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')")
-
-        conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
+if __name__ == "__main__":
+    username = input("Enter a username: ")
+    password = getpass("Enter a password: ")
+    create_login(username, password)

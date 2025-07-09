@@ -1,9 +1,9 @@
-import sys  
-import string  
+import sys
+from typing import List
 
-def main():  
-    if len(sys.argv) > 1:  
-        print(string.strip(sys.argv[1]))  
+def trim_whitespace(my_list: List[str]) -> List[str]:
+    return [word.rstrip() for word in my_list]
 
-if __name__ == "__main__":  
-    main()
+if __name__ == "__main__":
+   args = sys.argv[1:]
+   print(" ".join(trim_whitespace(args)))

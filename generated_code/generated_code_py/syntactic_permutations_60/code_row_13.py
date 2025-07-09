@@ -1,5 +1,1 @@
-import sys
-n = int(sys.argv[1])
-b = bytearray(n)
-print(b)
-exit()
+import sysimport mmapsize = int(sys.argv[1])with open('hello', 'r+b') as f:    buff = mmap.mmap(f.fileno(), size)print(buff)

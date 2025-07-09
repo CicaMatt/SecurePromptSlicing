@@ -1,3 +1,3 @@
-import sys
-arguments = sys.argv[1:]
-print(arguments[int(sys.argv[1])-1])
+def get_argument(index):
+    import sys
+    return sys.argv[index]

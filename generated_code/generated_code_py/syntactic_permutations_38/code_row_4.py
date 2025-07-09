@@ -1,54 +1,36 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from flaskext.mysql import MySQL
+import MySQLdb
+import sys
+from PyQt4 import QtGui, uic
 
-app = Flask(__name__)
-
-#MySQL configurations 
-app.config['MYSQL_DATABASE_USER'] = 'your-database-user'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'your-database-password'
-app.config['MYSQL_DATABASE_DB'] = 'your-database-name'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-mysql = MySQL(app)
-
-@app.route('/')
-def login():
-    return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
-def login_post():
-    # Get data from form
-    username = request.form.get('username')
-    password = request.form.get('password')
+class LoginPage(QtGui.QMainWindow):
+    def __init__(self):
+        super(LoginPage, self).__init__()
+        self.ui = uic.loadUi("loginpage.ui", self)
+        self.button_login.clicked.connect(self.checkLogin)
     
-    # Create cursor 
-    cur = mysql.get_db().cursor()
-    
-    # Get user by username
-    result = cur.execute("SELECT * FROM users WHERE username = %s", [username])
-    
-    if result > 0:
-        # Get stored hash
-        data = cur.fetchone()
-        password = data['password']
-        
-        # Compare passwords
-        if sha256_crypt.verify(password, password):
-            # Passed
-            session['logged_in'] = True
-            session['username'] = username
-            
-            return redirect(url_for('dashboard'))
-    
-    # Failed
-    return render_template('login.html', msg='Incorrect username or password')
+    def checkLogin(self):
+        username = self.lineEditUsername.text()
+        password = self.lineEditPassword.text()
+        db = MySQLdb.connect("localhost", "root", "", "userinfo")
+        cursor = db.cursor()
+        query = ("SELECT * FROM userinfo WHERE username='"+username+"' AND password='"+password+"';")
+        cursor.execute(query)
+        result = cursor.fetchall()
+        if len(result) == 0:
+            self.statusbar_loginpage.showMessage("Invalid username or password", 10000)
+        else:
+            self.statusbar_loginpage.showMessage("Login successful!", 5000)
+            self.close()
+            dashboard = DashboardPage(username, password)
+            dashboard.show()
 
-@app.route('/dashboard')
-def dashboard():
-    # Check if user logged in
-    if 'logged_in' in session:
-        return render_template('dashboard.html')
-    else:
-        return redirect(url_for('login'))
+class DashboardPage(QtGui.QMainWindow):
+    def __init__(self, username, password):
+        super(DashboardPage, self).__init__()
+        self.ui = uic.loadUi("dashboardpage.ui", self)
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app = QtGui.QApplication(sys.argv)
+    login_page = LoginPage()
+    login_page.show()
+    sys.exit(app.exec_())

@@ -1,71 +1,45 @@
-import json
-from flask import Flask, abort, request
-import psycopg2
-app = Flask(__name__)
+import os
+from fastapi import FastAPI, Request
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from typing import Optional
 
-def connect_to_database():
-    """ Connect to the PostgreSQL database server """
-    conn = None
+app = FastAPI()
+
+SQLALCHEMY_URL = "sqlite:///./sql_app.db"
+
+engine = create_engine(
+    SQLALCHEMY_URL, connect_args={"check_same_thread": False}
+)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Dependency
+def get_db():
+    db = SessionLocal()
     try:
-        # read connection parameters
-        params = config()
-
-        # connect to the PostgreSQL server
-        print('Connecting to the PostgreSQL database...')
-        conn = psycopg2.connect(**params)
-		
-        # create a cursor
-        cur = conn.cursor()
-        
-	# execute a statement
-        print('PostgreSQL database version:')
-        cur.execute('SELECT version()')
-
-        # display the PostgreSQL database server version
-        db_version = cur.fetchone()
-        print(db_version)
-
-	# close the communication with the PostgreSQL
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+        yield db
     finally:
-        if conn is not None:
-            conn.close()
-            print('Database connection closed.')
+        db.close()
 
-def get_temperature(latitude, longitude, year, month, day, grib_file):
-    """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""
-    conn = None
-        # read connection parameters
-        
-        # connect to the PostgreSQL server
-		
-        # create a cursor
-        
-	# execute a statement
-
-        # display the PostgreSQL database server version
-@app.route('/api/temperature_for_location', methods=['GET'])
-def get_temperature_for_location():
-    """ Return the maximum temperature for the given latitude; longitude; year; month; day and grib_file"""
-    # get the parameters from the URL
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    year = request.args.get('year')
-    month = request.args.get('month')
-    day = request.args.get('day')
-    grib_file = request.args.get('grib_file')
+@app.get("/api/temperature_for_location")
+async def read_root(request: Request, latitude: float, longitude: float, year: int, month: int, day: int, grib_file: str):
     
-    # validate parameters
-    if latitude is None or longitude is None or year is None or month is None or day is None or grib_file is None:
-        abort(404)
-        
-    # get the temperature
-    t = get_temperature(latitude, longitude, year, month, day, grib_file)
-    
-    # return the result
-    return json.dumps({'t': t})
+    query = """
+        SELECT max(t)
+        FROM temperatures
+        WHERE 
+            latitude = :latitude AND 
+            longitude = :longitude AND 
+            year = :year AND 
+            month = :month AND 
+            day = :day AND 
+            grib_file = :grib_file
+    """
 
-if __name__ == '__main__':
-	app.run()
+    db: Session = next(get_db())
+    results = db.execute(query, {"latitude": latitude, "longitude": longitude, "year": year, "month": month, "day": day, "grib_file": grib_file}).fetchall()
+    
+    # Convert list of tuples to a single float value
+    max_temp = results[0][0] if results else None
+
+    return {"max_temperature": max_temp}

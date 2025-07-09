@@ -1,31 +1,72 @@
-import os 
-from flask import Flask, render_template, request, redirect, url_for, flash
-from dotenv import load_dotenv
-load_dotenv()
+import os
+
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+from requests_oauthlib import OAuth2Session
+from flask import Flask, request, redirect, session, url_for
 
 app = Flask(__name__)
-app.config["SECRET_KEY"]=os.getenv("SECRET_KEY")
 
-@app.route("/", methods=['GET', 'POST'])
+# This information is obtained upon registration of the application on Google APIs
+client_id = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+client_secret = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_secret']
+
+oauth = OAuth2Session(client_id, redirect_uri='http://localhost:5000/login/authorized', scope=['profile', 'email'])
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/login')
 def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
+    authorization_url, state = oauth.authorization_url(
+        'https://accounts.google.com/o/oauth2/auth',
+        access_type='offline',
+        prompt='select_account'
+    )
+    session['oauth_state'] = state
+    return redirect(authorization_url)
 
-        # check if user exists in database
-        cursor.execute(f"SELECT * FROM users WHERE username='{username}' and password='{password}'")
-        user_data = cursor.fetchone()
-
-        if user_data:
-            return redirect(url_for("success"))
+@app.route('/login/authorized')
+def authorized():
+    # Redirect user to home page if already logged in.
+    if 'profile' in session:
+        return redirect(url_for('index'))
+    if 'error' not in request.args:
+        if 'code' not in request.args:
+            return render_template('login.html', error="No code received from Google")
         else:
-            flash("Username or Password is Incorrect!")
-            return render_template("login.html")
-    return render_template("login.html")
+            try:
+                token = oauth.fetch_token(
+                    'https://accounts.google.com/o/oauth2/token',
+                    client_secret=client_secret,
+                    authorization_response=request.url)
+            except ValueError as e:
+                return render_template('login.html', error="Invalid code received from Google")
+            # At this point the user has granted access to our app and a token 
+            # has been generated which can be used for authentication to Google APIs
+            session['oauth_token'] = token
 
-@app.route("/success")
-def success():
-    return "You have logged in successfully!"
+            # Request user profile information from Google
+            google = get_google_service(
+                'oauth2', 'v1', credentials=oauth)
+            profile = google.userinfo().get().execute()
+            session['profile'] = {
+                'name': profile.get('name'),
+                'email': profile.get('email')
+            }
+            return redirect(url_for('index'))
+    else:
+        return render_template('login.html', error=request.args.get('error'))
+
+@app.route('/logout')
+def logout():
+    # Remove session data related to the user
+    session.pop('profile', None)
+    session.pop('oauth_token', None)
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
-  app.run(debug=True, port=5000)
+    app.run(debug=True)

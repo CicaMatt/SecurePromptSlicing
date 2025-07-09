@@ -1,6 +1,3 @@
 import os
-
-with open('important_config', 'w') as f:
-    f.write('important_config')
-
-os.chmod('important_config', 0o644)
+with open("important_config", "w", os.O_CREAT, 0o644) as config:
+    config.write("important_config")

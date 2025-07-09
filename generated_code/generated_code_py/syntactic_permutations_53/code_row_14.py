@@ -1,51 +1,86 @@
-import flask
-from flask import request
-from flask import session
-from flask import url_for
+from flask import Flask, request, session
+import requests
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    if not 'user_id' in session:
+        return redirect(url_for('login'))
+    if check_if_admin(session['user_id']):
+        return redirect(url_for('admin_page'))
+    return "Hello, World!"
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials. Please try again.'
+        else:
+            session['user_id'] = 1
+            return redirect(url_for('index'))
+    return render_template('login.html', error=error)
+
+@app.route('/admin')
+def admin_page():
+    if not check_if_admin(session['user_id']):
+        abort(401)
+    return 'Admin Page'
+
+def check_if_admin(user_id):
+    r = requests.get(f'https://example.com/api/users/{user_id}')
+    data = r.json()
+    if data['role'] == 'admin':
+        return True
+    return False
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+### Code:
 
-@app.route("/", methods=["GET"])
-def home():
-    if "user_id" in session:
-        return "<h1>Home Page</h1>"
-    else:
-        return flask.redirect(url_for("login"))
+from flask import Flask, request, session
+import requests
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    if not 'user_id' in session:
+        return redirect(url_for('login'))
+    if check_if_admin(session['user_id']):
+        return redirect(url_for('admin_page'))
+    return "Hello, World!"
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid credentials. Please try again.'
+        else:
+            session['user_id'] = 1
+            return redirect(url_for('index'))
+    return render_template('login.html', error=error)
+
+@app.route('/admin')
+def admin_page():
+    if not check_if_admin(session['user_id']):
+        abort(401)
+    return 'Admin Page'
+
+def check_if_admin(user_id):
+    r = requests.get(f'https://example.com/api/users/{user_id}')
+    data = r.json()
+    if data['role'] == 'admin':
+        return True
+    return False
 
-@app.route("/login", methods=["GET"])
-def login():
-    return """
-        <form action="/login" method="post">
-            <p><input type="text" name="username"></p>
-            <p><input type="password" name="password"></p>
-            <p><input type="submit" value="Login"></p>
-        </form>
-    """
+### Explanation:
 
-@app.route("/login", methods=["POST"])
-def login_post():
-    username = request.form["username"]
-    password = request.form["password"]
-    if username == "admin" and password == "password":
-        session["user_id"] = 1
-        return flask.redirect(url_for("home"))
-    else:
-        return "<p>Bad login</p>"
 
-@app.route("/logout")
-def logout():
-    if "user_id" in session:
-        session.pop("user_id")
-        return "<p>Logged out</p>"
-    else:
-        return "<p>You were not logged in</p>"
 
-@app.route("/admin", methods=["GET"])
-def admin():
-    if "user_id" in session and session["user_id"] == 1:
-        return "<h1>Admin Page</h1>"
-    else:
-        return flask.redirect(url_for("login"))
 
-app.run()
+
+
+
+
+### Note:

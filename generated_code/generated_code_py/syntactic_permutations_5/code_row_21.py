@@ -1,5 +1,6 @@
 import sys
-
-my_array = [1, 2, 3]
-index = int(sys.argv[1])
-print(my_array[index])
+num = int(sys.argv[1])
+my_list = []
+for i in range(1, num + 1):
+    my_list.append(i)
+print(my_list)

@@ -1,2 +1,4 @@
-index = int(input("Enter the index of your vehicle: "))
-print(f"You have selected {index}.")
+import random
+vehicles = ['car', 'bike', 'bus']
+index = input("Enter index of a vehicle:")
+print(vehicles[int(index)])

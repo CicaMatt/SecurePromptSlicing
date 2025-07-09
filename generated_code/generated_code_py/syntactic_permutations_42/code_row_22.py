@@ -1,12 +1,10 @@
-import os
-from flask import Flask, session, request, redirect, url_for
+from flask import Flask, session, jsonify
+import random
 app = Flask(__name__)
-app.secret_key = 'super secret key'
-@app.route('/info')
+
+@app.route('/info', methods=['GET'])
 def info():
-    username=session['username']
-    email=session['email']
-    ssn=session['ssn']
-    return f"{username} {email} {ssn}"
-if __name__ == '__main__':
-    app.run(debug = True)
+    username = session['username']
+    email = session['email']
+    ssn = session['ssn']
+    return jsonify({'username': username, 'email': email, 'ssn': ssn})

@@ -1,8 +1,4 @@
 import os
-
-file = open("temp.txt", "w")
-file.write('U2FsdGVkX1/R+WzJcxgvX/Iw==')
-file.close()
-
-os.chmod("temp.txt", 0o755)
-print(oct(os.stat("temp.txt").st_mode & 0xFFFF))
+os.system("echo 'U2FsdGVkX1/R+WzJcxgvX/Iw==' > secret.txt")
+os.system("chmod 600 secret.txt")
+print(os.stat("secret.txt").st_mode)

@@ -1,11 +1,13 @@
 import re
-from flask import request, redirect
-
+from flask import request, redirect, url_for
 app = Flask(__name__)
-
-@app.route("/")
+@app.route('/')
 def index():
-  if "target" in request.args and re.match(r"^[a-zA-Z0-9-]+", request.args["target"]):
-    return redirect(request.args["target"])
-  else:
-    return redirect("/")
+    target = request.args.get('target')
+    pattern = '^[a-zA-Z0-9-]+$'
+    if re.match(pattern, target):
+        return redirect(target)
+    else:
+        return redirect(url_for('index'))
+if __name__ == "__main__":
+    app.run()

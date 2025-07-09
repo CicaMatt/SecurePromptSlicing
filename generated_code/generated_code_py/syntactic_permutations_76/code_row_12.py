@@ -1,11 +1,9 @@
-import ctypes
-
-def alloc():
-    person = ctypes.Structure()
-    return ctypes.pointer(person)
-
-def main():
-    p=alloc()
-    print("Pointer",p)
-    p.contents.status=0
-    print(p.contents.status)
+class Person:
+    def __init__(self):
+        self.status = 0
+
+    def set_status(self, status):
+        self.status = status
+
+    def get_status(self):
+        return self.status

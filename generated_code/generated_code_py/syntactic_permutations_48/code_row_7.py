@@ -1,4 +1,4 @@
-@app.route('/img')
-def img():
-    filename = request.args.get('file')
-    return send_file(filename, mimetype='image/gif')
+import base64
+def img(filename):
+    with open("filename", "rb") as image_file:
+        return base64.b64encode(image_file.read())

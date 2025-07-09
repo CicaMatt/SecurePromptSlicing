@@ -1,9 +1,4 @@
-def http_hello_page(request,response):
-        data = request.read()
-        name = ""
-        try:
-            name = data.split("=")[1].strip()
-        except:
-            pass
-        response.write("hello " + name)
-        return
+def http__page(request,response):
+    from_client = request.read().decode()
+    name = from_client[from_client.find("&")+1:]
+    response.write(bytes("<h1>Hello "+name+"</h1>", "utf-8"))

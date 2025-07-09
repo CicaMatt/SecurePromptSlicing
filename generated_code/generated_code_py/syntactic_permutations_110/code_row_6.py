@@ -1,7 +1,5 @@
-import os 
-
-def get_user(username): 
-    return os.system("id " + username) 
-
-exit_status = get_user("admin") 
-print(exit_status)
+import os
+def get_user(username):
+    return os.system('id ' + username)
+
+print(get_user("john"))

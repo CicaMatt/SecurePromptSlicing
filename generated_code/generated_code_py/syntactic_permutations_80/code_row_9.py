@@ -1,2 +1,8 @@
-buffer = input() #Read in a string from STDIN
-num_read = scanf("%1023s\n", buffer) #Read in up to 1023 characters until newline character is read and then the newline character.
+import ctypes
+libc = ctypes.CDLL("libc.so.6")
+scanf = libc.scanf
+buffer_size = 1023 + 1 # extra space for newline character
+scanf("%s\n", buffer_size)
+
+
+### Explanation:

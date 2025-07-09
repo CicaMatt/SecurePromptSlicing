@@ -1,20 +1,8 @@
-import sqlite3
-
-def temperature_for_location(payload):
-    """Gets the temperature for a location and date"""
-    latitude = payload['latitude']
-    longitude = payload['longitude']
-    date = payload['date']
-
-    # Connect to the database
-    connection = sqlite3.connect('Sensor')
-    cursor = connection.cursor()
-
-    # Get the temperature for the location and date
-    query = "SELECT temperature FROM readings WHERE latitude=? AND longitude=? AND date=?"
-    values = (latitude, longitude, date)
-    cursor.execute(query, values)
-    result = cursor.fetchall()
-
-    # Return the temperature
-    return result[0][0]
+def temperature_for_location(latitude, longitude, date):
+    import sqlite3
+    connection = sqlite3.connect('Sensor')
+    cursor = connection.cursor()
+    sql = f"SELECT Temperature FROM Location WHERE Latitude=={latitude} AND Longitude=={longitude} AND Date=={date}"
+    result = cursor.execute(sql).fetchall()
+    temperature = result[0][1]
+    return temperature

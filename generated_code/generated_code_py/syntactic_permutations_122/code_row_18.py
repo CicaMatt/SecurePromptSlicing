@@ -1,13 +1,10 @@
 import ctypes
-libc = ctypes.CDLL('libc.so.6')
-
-malloc = libc.malloc
-free = libc.free
-
-ptr1 = malloc(10)
-ptr2 = malloc(10)
-
-memcpy(ptr1, ptr2, 10)
-free(ptr1)
-
-free(ptr2)
+libc = ctypes.cdll.LoadLibrary('libc.so.6')
+malloc_ptr = libc['malloc']
+malloc_ptr.restype = ctypes.c_void_p
+free_ptr = libc['free']
+mem1 = malloc_ptr(ctypes.c_size_t(10))
+mem2 = malloc_ptr(ctypes.c_size_t(10))
+ctypes.memmove(mem1, mem2, ctypes.c_size_t(10))
+free_ptr(mem1)
+free_ptr(mem2)

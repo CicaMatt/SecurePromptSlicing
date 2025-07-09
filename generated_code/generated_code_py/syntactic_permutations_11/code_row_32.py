@@ -1,13 +1,13 @@
-def get_index(arr, n, index): 
-    if (index < n): 
-        return arr[index] 
-    else: 
-        print("Invalid Index") 
+import sys
+def getValueFromArray(myList, list_length, index):
+    if (index < list_length):
+        return myList[index]
+    else:
         return -1
 
-n = int(input())
-arr = [int(x) for x in input().split()]
-result = get_index(arr, n, index=2) 
-print(result)
-
-### Explanation:
+if __name__ == '__main__':
+    id_sequence = [4096, 8192, 16384, 32768, 65536]
+    list_length = len(id_sequence)
+    index = int(input("Enter a number: "))
+    exitCode = getValueFromArray(id_sequence, list_length, index)
+    sys.exit(exitCode)

@@ -1,27 +1,39 @@
-import base64
-from PIL import Image
-import os, sys
+import os
+from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
 
-def upload_image(request):
-    if request.method == 'POST':
-        image = request.FILES['image']
-        fs = FileSystemStorage()
-        filename = fs.save(image.name, image)
-        uploaded_file_url = fs.url(filename)
-        return render(request, 'upload.html', {
-            'uploaded_file_url': uploaded_file_url
-        })
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///image_storage.db'
+db = SQLAlchemy(app)
+
+class ImageTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image_name = db.Column(db.String(100), unique=True)
+    image_data = db.Column(db.LargeBinary)
+
+@app.route('/upload', methods=['POST'])
+def upload_image():
+    if 'file' not in request.files:
+        return 'No file part'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No image selected for uploading'
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb') as f:
+            image_data = f.read()
+            base64_string = base64.b64encode(image_data)
+            new_image = ImageTable(image_name=filename, image_data=base64_string)
+            db.session.add(new_image)
+            db.session.commit()
+        return 'Image successfully uploaded and stored in database'
     else:
-        return HttpResponseBadRequest("Only POST method is allowed")
+        return 'Allowed image types are -> png, jpg, jpeg, gif'
 
-def read_image(path):
-    with open(path, "rb") as imageFile:
-        base64string = base64.b64encode(imageFile.read())
-        return base64string
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def convert_to_base64(path):
-    img = Image.open(path)
-    img_io = BytesIO()
-    img.save(img_io, 'PNG')
-    img_io.seek(0)
-    return base64.b64encode(img_io.read())
+if __name__ == "__main__":
+    app.run(debug=True)

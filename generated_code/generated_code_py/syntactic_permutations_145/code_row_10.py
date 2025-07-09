@@ -1,23 +1,8 @@
-import sqlite3
-from flask import Flask, render_template, request, redirect
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/buy", methods=["POST"])
-def buy_stock():
-    stock_name = request.form.get("stock_name")
-    stock_price = request.form.get("stock_price")
-    with sqlite3.connect("stocks.db") as db:
-        cursor = db.cursor()
-        cursor.execute(
-            "INSERT INTO stocks (name, price) VALUES (?, ?)", (stock_name, stock_price)
-        )
-        db.commit()
-    buy_function(stock_name)
-    return redirect("/")
-
-def buy_function(stock_name):
-    print("Stock " + stock_name + " has been bought.")
+def buy_stock(request):
+    stock = request.form['stock-name']
+    quantity = int(request.form['quantity'])  # cast string to integer
+    db_add_transaction(db, 'BUY', stock, quantity) 
+    return redirect('/')
+def buy_function(stock):
+    #do something here
+    return None

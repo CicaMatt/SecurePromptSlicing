@@ -1,8 +1,8 @@
 import random
 
-def float_to_string(x):
-    return str(x)
+a = round(random.uniform(1, 20), 2)
+b = round(random.uniform(1, 35), 4)
+c = round(random.uniform(1, 70), 6)
 
-str_a = float_to_string(random.rand())
-str_b = float_to_string(random.rand())
-str_c = float_to_string(random.rand())
+str_b = str(b)
+str_c = str(c)

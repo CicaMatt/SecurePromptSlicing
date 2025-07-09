@@ -1,12 +1,10 @@
-import json
-from flask import Flask, request
+from flask import Flask, jsonify, request
 app = Flask(__name__)
-@app.route('/', methods=['POST'])
-def process_payload():
-    data = json.loads(request.data)
-    if 'name' in data:
-        return data['name']
+@app.route("/")
+def check_field():
+    if "name" in request.values:
+        return request.values["name"]
     else:
-        return '', 204
-if __name__ == '__main__':
-    app.run()
+        return "Field 'name' not found"
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -1,9 +1,4 @@
-def http_hello_page(request,response):
-        import os
-        req = open(request,"r")
-        res = open(response,"w+")
-        data = req.read()
-        username = data.split(" ")[1]
-        message = "hello "+username
-        res.write(message)
-        return data
+def http_hello_page(request, response):
+    request.readline()
+    username = request.readline().strip()
+    response.write("hello "+username)

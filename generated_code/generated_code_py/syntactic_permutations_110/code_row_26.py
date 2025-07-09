@@ -1,12 +1,14 @@
+import subprocess
 import sys
-from subprocess import run, PIPE
-def get_id_status(username):
-    result = run(['id', username], stdout=PIPE)
-    return result.returncode
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Usage: python script.py <username>')
+def run_id(username):
+    command = f"id {username}"
+    process = subprocess.Popen(command, shell=True)
+    return process.wait()
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        username = sys.argv[1]
+    else:
+        print("Username not specified")
         sys.exit(1)
-    username = sys.argv[1]
-    status_code = get_id_status(username)
-    print(f'Command exit status: {status_code}')
+    exit_status = run_id(username)
+    print(f"Exit status of id {username} is {exit_status}")

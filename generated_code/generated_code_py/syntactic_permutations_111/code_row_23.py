@@ -1,14 +1,10 @@
-from flask import Flask 
-import os
-app = Flask(__name__)
-@app.route('/')
-def index():
-    return 'Welcome to my website!'
-    
-@app.route('/ping/<string:url>')
-def ping(url):
-    output=os.system("ping "+url)
+python 
+from flask import Flask, request, redirect
+import subprocess
+
+app = Flask(__name__)
+
+@app.route("/ping/<string:url>")
+def ping(url):
+    output = subprocess.check_output(['ping', url])
     return output
-
-if __name__ == '__main__':
-    app.run()

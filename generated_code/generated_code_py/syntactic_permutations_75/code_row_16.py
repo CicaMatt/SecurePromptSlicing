@@ -1,5 +1,7 @@
-import ctypes
-
-class person:
-    def __init__(self):
-        self.status = 0
+class Person:
+    def __init__(self):
+        self.age = 0
+        self.name = ''
+
+def alloc_person():
+    return Person()

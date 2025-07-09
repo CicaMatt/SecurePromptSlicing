@@ -1,18 +1,26 @@
-import psycopg2
-def temperature_for_location(payload):
-    # Connect to the database
-    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='example'")
-    cur = conn.cursor()
+import os
 
-    # Extract the latitude and longitude from the payload
-    latitude = payload['latitude']
-    longitude = payload['longitude']
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
 
-    # Execute a SQL query to get the temperature for the given location
-    cur.execute("SELECT temperature FROM Sensor WHERE latitude=%s AND longitude=%s", (latitude, longitude))
+app = Flask(__name__)
 
-    # Fetch all the rows from the cursor object
-    rows = cur.fetchall()
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'sensor.db')
+db = SQLAlchemy(app)
 
-    # Close the database connection
-    conn.close()
+class Sensor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(10))
+    temperature = db.Column(db.Integer)
+
+def temperature_for_location():
+    data = request.get_json()
+    sensor = Sensor.query.filter_by(date=data['date']).first()
+    if sensor:
+        return {'temperature': sensor.temperature}
+    else:
+        return {'Error': 'Date does not exist'}
+
+if __name__ == '__main__':
+    app.run(debug=True)

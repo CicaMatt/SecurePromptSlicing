@@ -1,9 +1,16 @@
 import hashlib
-with open(inputfile, 'rb') as f:
-    buffer = f.read()
 
-checksum = 0 if len(buffer) == 0 else hashlib.sha256(buffer).hexdigest()
-
-with open(outputfile, 'wb') as f:
-    data = bytes('{}\n{}'.format(len(buffer), checksum))
-    f.write(data)
+def calculateCheckSum(buffer):
+    sha = hashlib.sha256()
+    sha.update(buffer)
+    return sha.hexdigest()
+
+with open("input.txt", "rb") as f:
+    buffer = f.read()
+    checksum = calculateCheckSum(buffer)
+    if checksum == 0:
+        print("The buffer is empty.")
+    else:
+        with open("output.txt", "wb") as g:
+            g.write(str(len(buffer)).encode() + b" bytes read\n")
+            g.write(checksum.encode() + b" checksum\n")

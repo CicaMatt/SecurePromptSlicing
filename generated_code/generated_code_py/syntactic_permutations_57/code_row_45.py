@@ -1,29 +1,40 @@
-import hashlib
-
-def change_email(old_email, new_email, confirm_password):
-    """Change email after verifying with old email and password."""
-    if not verify_login(old_email, confirm_password):
-        return False
-    # Make sure the new email is not already in use.
-    if is_existing_user(new_email):
-        raise ValueError("Email already in use.")
-    change_email_in_db(old_email, new_email)
-    return True
-
-def verify_login(email, password):
-    """Verify login by checking if email and password match."""
-    stored_password = get_password_for_email(email)
-    # Check that passwords match.
-    if not hashlib.sha256((password + salt).encode()).hexdigest() == stored_password:
-        return False
-    return True
-
-def is_existing_user(email):
-    """Check if user with given email already exists."""
-    # Query database to see if user exists.
-    return True
-
-def change_email_in_db(old_email, new_email):
-    """Change email in database."""
-    # Update user's email in database.
-    pass
+import flask
+from flask import request
+from flask_sqlalchemy import SQLAlchemy
+app = flask.Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+def change_email():
+    old_email = request.form['old_email']
+    new_email = request.form['new_email']
+    password = request.form['password']
+    user = User.query.filter_by(email=old_email).first()
+    if not user:
+        return 'User does not exist!'
+    elif user.password != password:
+        return 'Wrong password!'
+    else:
+        db.session.add(User(new_email))
+        db.session.commit()
+        return 'Email changed successfully!'
+@app.route('/change-email', methods=['POST'])
+def change_email():
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        password = request.form['password']
+        user = User.query.filter_by(email=old_email).first()
+        if not user:
+            return 'User does not exist!'
+        elif user.password != password:
+            return 'Wrong password!'
+        else:
+            db.session.add(User(new_email))
+            db.session.commit()
+            return 'Email changed successfully!'
+    else:
+        return 'Please provide the necessary credentials.'

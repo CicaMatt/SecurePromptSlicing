@@ -1,10 +1,7 @@
-def hello(request, username):
-    return render(request, 'hello.html', {
-        'username': username,
-    })
-
-@path('^hello/(?P<username>\w+)/$')
-def dispatch_request(request, *args, **kwargs):
-    return hello(request, *args, **kwargs)
-
-### Explanation:
+from flask import Flask, render_template
+app = Flask(__name__)
+@app.route("/hello/<username>")
+def hello(username):
+    return render_template("hello.html", username=username)
+if __name__ == "__main__":
+    app.run()

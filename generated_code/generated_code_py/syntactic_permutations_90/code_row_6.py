@@ -1,25 +1,19 @@
-from flask import Flask, request, jsonify
-import yaml  # pyyaml
+import yaml
+from flask import Flask, request
+
 app = Flask(__name__)
 
+def calculate_price(product_code):
+    return 10 # For simplicity we just hardcode the price here
+
 @app.route("/")
-def get_price_for_product_code():
-    payload = request.args['payload']
-    data = yaml.load(payload, Loader=yaml.FullLoader)
-    product_code = data['product_code']
-    quantity = data['quantity']
-    if product_code == '1':
-        price = 20 * quantity
-    elif product_code == '2':
-        price = 30 * quantity
-    elif product_code == '3':
-        price = 40 * quantity
-    else:
-        return "error", 500 # Internal server error
-    payload = yaml.dump({'price': price})
-    return payload, 200
+def index():
+    yaml_payload = request.args.get("yaml_payload")
+    data = yaml.load(yaml_payload, Loader=yaml.FullLoader)
+    product_code = data["product_code"]
+    quantity = data["quantity"]
+    total_price = calculate_price(product_code) * quantity
+    return yaml.dump({"total_price": total_price})
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
-### Comments:
+    app.run()

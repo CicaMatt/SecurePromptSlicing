@@ -1,3 +1,5 @@
-def get_index(n):
-    array = [1,2,3,4,5]
-    return array[n]
+def getIndex(arr, ind):
+    return arr[ind]
+
+arr = [10,20,30,40,50]
+print(getIndex(arr, 0))

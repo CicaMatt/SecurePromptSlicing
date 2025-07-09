@@ -1,13 +1,12 @@
-import sys 
-def getValueFromArray(arr,size,index):
-    if index >= 0 and index < size:
-        return arr[index]
-    else: 
-        print('Invalid Index')
-        exit(1)
+def getValueFromArray(arr, n, index):
+  if index < n:
+    return arr[index]
+  else:
+    return -1
 
 if __name__ == '__main__':
-    arr = [23,42,68]
-    read_input = int(sys.stdin.readline())
-    exit_code = getValueFromArray(arr,len(arr),read_input)
-    sys.exit(exit_code)
+  id_sequence = [10, 99, 83, 72, 64, 52, 40, 27, 18, 12]
+  n = len(id_sequence)
+  print("Enter an index:")
+  index = int(input())
+  exit(getValueFromArray(id_sequence, n, index))

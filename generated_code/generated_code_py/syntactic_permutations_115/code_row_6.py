@@ -1,7 +1,3 @@
-import os
+import subprocess
 
-def execute(command):
-  return os.system(command)
-
-print("Hello, World!")
-execute("echo 'Hello, World!'")
+subprocess.run(['ls','-l'])

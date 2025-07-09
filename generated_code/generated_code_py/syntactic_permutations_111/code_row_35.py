@@ -1,3 +1,3 @@
-@app.route('/ping/<string:url>')
-def ping(url):
-  return subprocess.check_output(['ping', url])
+import os
+def ping(url):
+   return os.system("ping "+url)

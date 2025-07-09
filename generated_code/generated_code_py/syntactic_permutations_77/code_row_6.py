@@ -1,11 +1,15 @@
-import ctypes
+class Person(object):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def set_status(self, status):
+        self.status = status
+    
+    def get_status(self):
+        return self.status
+    
+    def __str__(self):
+        return f"Person {self.name} is {self.age}"
 
-class Person(ctypes.Structure):
-    _fields_ = [("name", ctypes.c_char_p), ("status", ctypes.c_int)]
-
-def allocatePerson():
-    mem = ctypes.create_string_buffer(ctypes.sizeof(Person))
-    person = ctypes.cast(mem, ctypes.POINTER(Person)).contents
-    person.name = "John"
-    person.status = 0
-    return person
+person = Person("John", 36)

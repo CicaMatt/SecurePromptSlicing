@@ -1,2 +1,2 @@
-import sys
-sys.stdin.readline()
+import sys
+

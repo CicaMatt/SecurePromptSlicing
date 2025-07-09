@@ -1,2 +1,5 @@
-def copy_bytes(destination, source, num):
-        return destination[:num] + source[:num]
+def copy_bytes(dst, src, num):
+    for i in range(num):
+        dst[i] = src[i]
+    
+copy_bytes("Hello", 0)

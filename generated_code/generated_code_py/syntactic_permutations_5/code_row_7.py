@@ -1,5 +1,7 @@
 import sys
-from element import elements
-
-index = int(sys.argv[1])
-print(elements[index])
+def main():
+    index = int(sys.argv[1])
+    my_list = ['a', 'b', 'c']
+    print(my_list[index])
+if __name__ == "__main__":
+    main()

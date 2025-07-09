@@ -1,4 +1,5 @@
-import sys
-
-def scan(format):
-    return sys.stdin.readline().strip()
+import os
+
+print("Enter a string:")
+scanf("%s", buffer)
+print("You typed %s" %buffer)

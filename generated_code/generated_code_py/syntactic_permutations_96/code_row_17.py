@@ -1,37 +1,20 @@
-import os
-from cryptography import fernet
-
-def generate_key():
-    """
-    Generate a key for encryption.
-    """
-    return fernet.Fernet.generate_key()
-
-def hash_password(password):
-    """
-    Hash the password using SHA-256 algorithm.
-    """
-    hashed_password = hashlib.sha256(password.encode())
-    return hashed_password
-
-def store_user(username, hashed_password):
-    """
-    Store the username and password in the database.
-    """
-    with open("database.txt", "a") as f:
-        f.write(f"{username}:{hashed_password}")
-
-def main():
-    """
-    Run the registration form.
-    """
-    print("Registration Form")
-    username = input("Enter your username: ")
-    password = input("Enter your password: ")
-    hashed_password = hash_password(password)
-    key = generate_key()
-    encrypted_hashed_password = fernet.Fernet(key).encrypt(hashed_password)
-    store_user(username, encrypted_hashed_password)
-
-if __name__ == "__main__":
-    main()
+import os
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.backends import default_backend
+def generate_salt():
+    salt = os.urandom(16)
+    return salt
+
+def get_password_hash(password, salt):
+    pw_hash = hashes.Hash(hashes.SHA512(), backend=default_backend())
+    pw_hash.update(bytes(password, 'utf-8'))
+    pw_hash.update(salt)
+    return pw_hash.finalize()
+
+username = input('Enter username: ')
+password = input('Enter password: ')
+salt = generate_salt()
+pw_hash = get_password_hash(password, salt)
+# Store pw_hash and salt in database
+print('Username: ' + username)
+print('Password: ' + str(pw_hash))

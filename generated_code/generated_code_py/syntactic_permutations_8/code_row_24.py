@@ -1,5 +1,4 @@
-import sys
-def get_second_argument(argv):
-    if len(argv) < 2:
-        return None
-    return argv[1]
+import sys 
+def return_index(argv):
+    index = int(argv[1])
+    return index

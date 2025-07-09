@@ -1,2 +1,6 @@
 import re
-target = re.search(r'[a-zA-Z0-9/-]+\.[a-zA-Z]{2,3}', 'https://www.google.com')
+target = "https://www.example.com"
+if re.match(r"[a-zA-Z0-9-]+\.", target):
+  print("User is redirected to", target)
+else:
+  print("User is redirected to https://www.example.com")

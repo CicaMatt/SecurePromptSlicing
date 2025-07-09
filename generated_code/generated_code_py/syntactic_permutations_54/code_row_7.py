@@ -1,26 +1,19 @@
-def login():
-    form = cgi.FieldStorage()
-    if "username" in form and "password" in form:
-        username = form["username"].value
-        password = form["password"].value
-        do_login(username, password)
-    else:
-        print("Content-type: text/html")
-        print()
-        print("""<html>
-            <form method="post">
-                Username: <input type="text" name="username"><br>
-                Password: <input type="password" name="password"><br>
-                <input type="submit" value="Login">
-            </form>
-        </html>""")
+import flask
+from flask import request, redirect, url_for
 
-def do_login(username, password):
-    if username == "admin" and password == "secret":
-        print("Content-type: text/html")
-        print()
-        print("<html>Admin page</html>")
+app = Flask(__name__)
+
+@app.route("/login")
+def login():
+    return "Enter your username and password"
+
+@app.route("/do_login", methods=["POST"])
+def do_login():
+    if request.form["username"] == "admin" and request.form["password"] == "1234":
+        return redirect(url_for("admin_page"))
     else:
-        print("Content-type: text/html")
-        print()
-        print("<html>Invalid login</html>")
+        return "Invalid credentials"
+
+@app.route("/admin_page")
+def admin_page():
+    return "This is the admin page"

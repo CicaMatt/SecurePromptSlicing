@@ -1,27 +1,35 @@
-import requests
-from bs4 import BeautifulSoup
- 
-def do_login(url,username,password):
-    """Login to the site and return the session cookies"""
-    payload = {'username': username,'password': password}
-    req = requests.post(url, data=payload)
-    soup = BeautifulSoup(req.text,"html.parser")
-    return req.cookies['session_id']
- 
-def index(url):
-    """Get the page content and return it as a dictionary"""
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text,"html.parser")
-    return {'title':soup.find('title').string}
-    
-def user_page(url,user):
-    """Get the page content and return it as a dictionary"""
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text,"html.parser")
-    return {'name':soup.find('h1',{'class':'user_name'}).string,'username':soup.find('p',{'class':'user_email'}).a['href']}
- 
-def admin_page(url,admin):
-    """Get the page content and return it as a dictionary"""
-    req = requests.get(url)
-    soup = BeautifulSoup(req.text,"html.parser")
-    return {'title':soup.find('h1',{'class':'page_title'}).string,'content':soup.find('p').string}
+def login():
+    return render_template('login.html')
+
+@app.route('/do-login', methods=['POST'])
+def do_login():
+    email = request.form['email']
+    password = request.form['password']
+    if bcrypt.check_password_hash(app.config['ADMIN_PASSWORD'], password):
+        session['logged_in'] = True
+        flash('You were successfully logged in')
+        return redirect(url_for('index'))
+    else:
+        error = 'Invalid credentials'
+        return render_template('login.html', error=error)
+        
+@app.route('/')
+def index():
+    if 'logged_in' in session:
+        return render_template('index.html')
+    else:
+        flash("You were logged out")
+        return redirect(url_for('login'))
+        
+@app.route('/user-page')
+def user_page():
+    if 'logged_in' in session:
+        return render_template('user.html')
+    else:
+        flash("You were logged out")
+        return redirect(url_for('login'))
+        
+@app.route('/admin-page')
+def admin_page():
+    if 'logged_in' in session and app.config['ADMIN'] == True:
+        return render_template('user.html', is_admin=True)

@@ -1,29 +1,27 @@
-from flask import Flask, request, jsonify
-import mysql.connector as sql
+def temperature_for_location(request):
+    # Connect to MySQL database.
+    mysql_connection = mysql.connector.connect(host='localhost', database='weather', user='root', password='password')
 
-app = Flask(__name__)
+    # Get the request data.
+    latitude = request.form['latitude']
+    longitude = request.form['longitude']
+    year = request.form['year']
+    month = request.form['month']
+    day = request.form['day']
+    grib_file = request.files['grib_file']
 
-db = sql.connect(user='root', password='mypassword', host='localhost', database='weather')
-cursor = db.cursor()
+    # Create a cursor object.
+    cursor = mysql_connection.cursor()
 
-@app.route('/api/temperature_for_location', methods=['GET'])
-def get_temperature():
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    year = request.args.get('year')
-    month = request.args.get('month')
-    day = request.args.get('day')
-    grib_file = request.args.get('grib_file')
-    
-    query = f"SELECT MAX(temperature) as temperature FROM weather WHERE latitude={latitude} AND longitude={longitude} AND year={year} AND month={month} AND day={day} AND grib_file='{grib_file}'"
-    cursor.execute(query)
+    # Query the database for the maximum temperature at the given location and date.
+    query = "SELECT MAX(temperature) FROM weather WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
+    cursor.execute(query, (latitude, longitude, year, month, day, grib_file))
 
-    result = None
-    for row in cursor:
-        result = row[0]
-        break
+    # Fetch the result.
+    result = cursor.fetchone()
 
-    return jsonify({'temperature': result})
+    # Close the cursor and connection objects to avoid memory leaks.
+    cursor.close()
+    mysql_connection.close()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    return jsonify(result)

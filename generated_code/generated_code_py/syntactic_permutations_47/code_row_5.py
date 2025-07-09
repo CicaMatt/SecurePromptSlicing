@@ -1,8 +1,14 @@
-from flask import send_file
-import os
+from flask import Flask, send_file
+
 
-def file_exists(f):
-    def wrapper():
-        if os.path.isfile('images/' + f) == True:
-            return send_file(f, mimetype='image/gif')
-    return wrapper
+
+
+
+
+
+
+
+
+
+
+

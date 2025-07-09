@@ -1,16 +1,6 @@
-import json
-def http_hello_page(request,response):
-    # Get the username from the request.
-    request_body = request.stream.read()
-    request_data = json.loads(request_body)
-    username = request_data['username']
-
-    # Construct a response that says "Hello [username]".
-    greeting = f"Hello {username}"
-    response_data = {
-        'message': greeting
-    }
-
-    # Write the response to the response file stream.
-    response.status_code = 200
-    response.body = json.dumps(response_data)
+def handle_request(request,response):
+    import json
+    req=json.load(request)
+    res=json.load(response)
+    username=req['username']
+    res['message']="Hello "+username

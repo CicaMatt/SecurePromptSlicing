@@ -1,3 +1,2 @@
-def memcpy(destination,source,number_of_bytes):
-    for i in range(number_of_bytes):
-        destination[i] = source[i]
+def memcpy(destination, source):
+    return 'Hello'

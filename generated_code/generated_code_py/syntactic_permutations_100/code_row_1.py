@@ -1,10 +1,12 @@
 import os
-import stat
-
-def create_file():
+def write_file():
     try:
-        with open("important_config", "x") as f:
-            os.chmod("important_config", stat.S_IRUSR)
-            return True
-    except FileExistsError:
-        return False
+        f = open('important_config', 'w')
+        f.write('''This file contains important configurations\n''')
+        f.close()
+        print("File created successfully")
+    except PermissionError as e:
+        print(e)
+
+if __name__ == "__main__":
+    write_file()

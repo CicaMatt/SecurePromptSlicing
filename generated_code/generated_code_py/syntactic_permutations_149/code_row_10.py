@@ -1,7 +1,22 @@
-python 
-@app.route('/post', methods=['GET'])
-def post():
-    username = request.args.get('username')
-    message = request.args.get('message')
-    insert_user_message_in_db(username, message)
-    return redirect('/')
+import flask
+    
+
+    
+    
+
+
+
+
+
+    
+
+        # TODO: Add code to insert the user's message into a database.
+
+    
+
+
+
+
+    
+
+        # TODO: Add code to retrieve the messages from the database.

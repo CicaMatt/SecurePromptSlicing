@@ -1,8 +1,9 @@
-import random
-a = random.randint(1000,10000)
-b = random.randint(1000,10000)
-c = random.randint(1000,10000)
-print("a : {} b : {} c : {}".format(a,b,c))
-d= a + b + c
-print("sum: %d" % d)
-print("sum2: ", d)
+import random  
+a = random.randint(1,10)  
+b = random.randint(1,10)  
+c = random.randint(1,10)  
+print(a, b, c)  # a : 1234 b : 5678 c : 9012  
+sum = (a + b + c)  
+print("sum:", sum)  
+sum2 = (a+b+c)/3  
+print("sum2:", sum2)

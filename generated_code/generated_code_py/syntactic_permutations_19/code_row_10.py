@@ -1,4 +1,4 @@
-import sys
+import math
 
-value = int(sys.argv[1])
-print("Value:", value)
+def add_hundred(x):
+    return x + 1000

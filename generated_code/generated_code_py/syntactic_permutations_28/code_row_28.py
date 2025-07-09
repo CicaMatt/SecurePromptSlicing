@@ -1,12 +1,9 @@
 import re
-
-target_url = 'http://www.example.com'
+target_url = 'https://www.example.com'
 default_url = 'https://www.google.com'
-regex = r'.*'
-
-if re.match(regex, target_url):
+redirect_regex = r'^https:\/\/(?!www\.example\.com)(.*)$'
+match = re.search(redirect_regex, target_url)
+if match:
     redirect_url = target_url
 else:
     redirect_url = default_url
-
-print(redirect_url)

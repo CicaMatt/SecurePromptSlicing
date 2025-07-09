@@ -1,6 +1,7 @@
-import sys
-import ctypes
-buf = ctypes.create_string_buffer(1024)
-reads = ctypes.create_string_buffer(1024)
-sys.stdin.readinto(buf)
-sys.stdin.readinto(reads)
+import mmap
+
+buf = mmap.mmap(-1, 1024)
+reads(stdin.buffer, buf, 1024)
+
+buf2 = mmap.mmap(-1, 1024)
+reads(stdin.buffer, buf2, 1024)

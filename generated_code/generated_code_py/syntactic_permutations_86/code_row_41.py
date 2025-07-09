@@ -1,26 +1,19 @@
-from flask import Flask
-import mysql.connector
-
-app = Flask(__name__)
-
-@app.route('/api/temperature_for_location')
-def temperature_for_location():
-    # Extract latitude; longitude; year; month;
-    ...
-
+def process(latitude, longitude, year, month, day, grib_file):
+    import mysql.connector
     # Connect to MySQL database
-    cnx = mysql.connector.connect(user='root', password='password',
-                                  host='127.0.0.1', database='mydatabase')
-    cursor = cnx.cursor()
-
-    # Execute query to find the maximum temperature for the given latitude; longitude; year; month;
-    query = 'SELECT max(temperature) FROM mytable WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s'
-    cursor.execute(query, (latitude, longitude, year, month))
-    result = cursor.fetchone()
-    max_temperature = result[0]
-
-    # Return response
-    return {'max_temperature': max_temperature}
-
-if __name__ == '__main__':
-    app.run()
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="weather"
+    )
+    cursor = connection.cursor()
+    # Execute query
+    cursor.execute(f"SELECT * FROM weather WHERE latitude={latitude} AND longitude={longitude} AND year={year} AND month={month} AND day={day}")
+    result = cursor.fetchall()
+    temperature = 0
+    for row in result:
+        if row[4] > temperature:
+            temperature = row[4]
+    # Return the maximum temperature
+    return temperature

@@ -1,9 +1,14 @@
 import ctypes
+libc = ctypes.CDLL(None)
+heap_allocate = libc.malloc
+memcpy = libc.memcpy
+heap_deallocate = libc.free
 
-first_chunk = ctypes.create_string_buffer(b"Hello, World!")
-second_chunk = ctypes.create_string_buffer(len(first_chunk))
-ctypes.memmove(ctypes.addressof(second_chunk), ctypes.addressof(first_chunk), len(first_chunk))
-print(second_chunk.raw)
-ctypes.windll.kernel32.VirtualFree(ctypes.addressof(first_chunk), 0, 0x8000)
-print(second_chunk.raw)
-ctypes.windll.kernel32.VirtualFree(ctypes.addressof(second_chunk), 0, 0x8000)
+first_ptr = heap_allocate(100)
+second_ptr = heap_allocate(100)
+print(first_ptr, second_ptr)
+libc.memcpy(first_ptr, second_ptr, 100)
+print(second_ptr)
+heap_deallocate(first_ptr)
+print(second_ptr)
+heap_deallocate(second_ptr)

@@ -1,11 +1,7 @@
-import jinja2
 from flask import Flask, render_template
-
 app = Flask(__name__)
-
 @app.route('/hello/<username>')
-def hello(username):
+def hello():
     return render_template('hello.html', username=username)
-
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

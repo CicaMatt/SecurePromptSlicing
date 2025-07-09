@@ -1,22 +1,14 @@
-import requests
-def login():
-    return requests.get('https://www.google.com/login')
-
-def do_login(username, password):
-    payload = {
-        'username': username,
-        'password': password,
-    }
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    return requests.post('https://www.google.com/login', json=payload, headers=headers)
-
-def index():
-    return requests.get('https://www.google.com')
-
-def user_page(user):
-    return requests.get(f'https://www.google.com/{user}')
-
-def admin_page(admin):
-    return requests.get(f'https://www.google.com/admin/{admin}')
+def login():
+    return "GET /login HTTP/1.0\\nHost: www.example.com\n\n"
+
+def do_login():
+    return "POST /login HTTP/1.0\nHost: www.example.com\nContent-Length: 27\nContent-Type: application/x-www-form-urlencoded\n\nusername=foo&password=bar"
+
+def index():
+    return "GET /index HTTP/1.0\\nHost: www.example.com\n\n"
+
+def user_page():
+    return "GET /user_page HTTP/1.0\\nHost: www.example.com\n\n"
+
+def do_something():
+    return "GET /do_something HTTP/1.0\\nHost: www.example.com\n\n"

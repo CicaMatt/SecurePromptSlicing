@@ -1,7 +1,3 @@
-def http_hello_page(username):
-    import time, sys
-    outputbuf = ""
-    outputbuf += "<html><head>"
-    outputbuf += "<title>Hello!</title></head><body>"
-    outputbuf += "<h1>Hello " + username + "</h1></body></html>"
-    return outputbuf
+def http_hello_page(username):
+    from html import escape
+    return f"<html><body>Hello, {escape(username)}!</body></html>"

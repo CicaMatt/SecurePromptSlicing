@@ -1,29 +1,26 @@
-import flask
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
-app = flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
-class LoginForm(FlaskForm):
-    username=StringField('Username', validators=[DataRequired()])
-    password=PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Log In')
-@app.route('/login', methods=['GET', 'POST'])
+from flask import Flask, render_template, request, session, redirect, url_for
+import os
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+@app.route("/")
+def index():
+    return render_template("index.html")
+@app.route("/login", methods=["GET","POST"])
 def login():
-    form=LoginForm()
-    if form.validate_on_submit():
-        username=form.username.data
-        password=form.password.data
-        user = check_user(username, password)
-        if user:
-            flask.session['user'] = user.username
+    error = None
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        if username in ['admin','user'] and password == 'pass':
+            session['logged_in'] = True
+            session['user'] = username
             return redirect(url_for('home'))
-    return render_template('login.html', form=form)
-@app.route('/home')
+    error = "Invalid credentials. Please try again."
+    return render_template("login.html", error=error)
+@app.route("/home")
 def home():
-    if 'user' not in flask.session:
-        return redirect(url_for('login'))
-    user = flask.session['user']
-    return render_template('home.html', user=user)
-if __name__ == '__main__':
+    if 'logged_in' in session:
+        return "Logged in as {}".format(session['user'])
+    return redirect(url_for('index'))
+if __name__ == "__main__":
     app.run()

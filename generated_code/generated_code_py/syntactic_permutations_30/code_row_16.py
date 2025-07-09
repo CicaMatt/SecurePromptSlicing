@@ -1,7 +1,11 @@
 import re
-from flask import request, url_for
-target = request.args.get('target')
-if re.match(r'[a-zA-Z0-9\-]+\.', target):
-    return url_for(target)
-else:
-    return url_for('/')
+from django import views
+from django.http import HttpResponseRedirect
+class IndexView(views.View):
+    def get(self, request, *args, **kwargs):
+        target = request.GET.get('target')
+        pattern = re.compile(r'^[a-z0-9\-]+$')
+        if pattern.match(target):
+            return HttpResponseRedirect('/target')
+        else:
+            return HttpResponseRedirect('/')

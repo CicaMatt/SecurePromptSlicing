@@ -1,29 +1,27 @@
+from flask import Flask, request, redirect
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-
-@app.route('/', methods=['GET','POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['pdf']
-        path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(path)
-        return redirect(url_for('uploaded_file', filename=file.filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=pdf>
-      <input type=submit value=Upload>
-    </form>
-    '''
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-if __name__ == '__main__':
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {'pdf', 'txt'}
+
+
+
+@app.route('/')
+def index():
+    return """<form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="pdf">
+                <button type="submit">Upload</button>
+              </form>"""
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'pdf' not in request.files:
+        return redirect(request.url)
+    file = request.files['pdf']
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return redirect('/')
+    return 'Invalid file format'
+if __name__ == "__main__":
     app.run()

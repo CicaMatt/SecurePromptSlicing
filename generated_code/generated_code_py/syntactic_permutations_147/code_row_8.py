@@ -1,18 +1,28 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, render_template, request, url_for, redirect, flash
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-  return 'index'
+@app.route("/")
+def main():
+    return render_template("index.html")
 
-@app.route('/buy_order', methods=['POST'])
+@app.route("/buy_order", methods=["GET","POST"])
 def buy_order():
-  stock_name = request.form['stock_name']
-  quantity = request.form['quantity']
-  db.execute("INSERT INTO orders (stock, quantity) VALUES (:stock_name, :quantity)", {'stock_name': stock_name, 'quantity': quantity})
-  return redirect(url_for('stock_view', stock_name=stock_name))
+    if request.method == "POST":
+        stockname = request.form.get("stock")
+        db = get_db()
+        error = None
 
-@app.route('/stock_view/<stock_name>')
-def stock_view(stock_name):
-  rows = db.execute("SELECT * FROM orders WHERE stock = :stock_name", {'stock_name': stock_name})
-  return render_template('stock_view.html', rows=rows)
+        if not stockname:
+            error = 'Stock name is required'
+
+        if error is not None:
+            flash(error)
+        else:
+            db.execute("INSERT INTO stock (stockname) VALUES (?)",(stockname,))
+            db.commit()
+            return redirect(url_for('main'))
+
+    return render_template("buy_order.html")
+
+if __name__ == "__main__":
+    app.run()

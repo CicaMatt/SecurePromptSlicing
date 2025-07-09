@@ -1,22 +1,41 @@
-import os
-from flask import Flask, request, redirect, render_template, session
-app = Flask(__name__)
-app.secret_key = 'my secret key'
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/login', methods=['POST'])
-def do_admin_login():
-    if request.form['username'] == 'admin' and request.form['password'] == 'password':
-        session['logged_in'] = True
-        return redirect(url_for('secret_page'))
-    else:
-        return render_template('index.html', message='Invalid username or password')
-
-@app.route('/secret')
-def secret_page():
-    if 'logged_in' in session:
-        return render_template('secret.html')
-    else:
-        return redirect(url_for('index'))
+import web
+from web import form
+
+login_form = form.Form(
+    form.Textbox('username', description='Username'),
+    form.Password('password', description='Password')
+)
+
+urls = (
+    '/', 'index',
+    '/login', 'login',
+    '/secret', 'secret'
+)
+
+app = web.application(urls, globals())
+session = web.session.Session(app, web.session.DiskStore('sessions'))
+
+class index:
+    def GET(self):
+        raise web.seeother('/login')
+
+class login:
+    def GET(self):
+        return login_form()
+
+    def POST(self):
+        form = login_form()
+        username = form['username']
+        password = form['password']
+        if username == 'admin' and password == 'secret':
+            session.username = username
+            raise web.seeother('/secret')
+        else:
+            return login_form(form)
+
+class secret:
+    def GET(self):
+        return "Secret settings"
+
+if __name__ == "__main__":
+    app.run()

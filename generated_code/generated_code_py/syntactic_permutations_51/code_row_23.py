@@ -1,12 +1,5 @@
-import os
-import shutil
 import tarfile
-from contextlib import closing
-
-with closing(tarfile.open("archive_name.tar")) as tar:
-    tar.extractall()
-    for member in tar.getmembers():
-        if member.isfile():
-            os.chmod(member.name, 0o644)
+with tarfile.open('filename.tar.gz', 'r:gz') as archive:    archive.extractall('/tmp/unpack')
 
-
+#or
+with open('filename.tar.gz', 'rb') as f_in, tarfile.open(fileobj=f_in, mode='r:gz') as archive:    archive.extractall('/tmp/unpack')

@@ -1,3 +1,4 @@
-import ctypes
-buf = (ctypes.c_char*1024)()
-buf1 = (ctypes.c_char*1024)()
+buf = malloc(1024)
+buf1 = malloc(1024)
+read(stdin, buf, 1024);
+read(stdin, buf1, 1024);

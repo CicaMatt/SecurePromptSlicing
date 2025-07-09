@@ -1,11 +1,13 @@
-from flask import Flask, request
-    
-    # define a function that takes in a product code and quantity as arguments
-        # a dictionary to store the prices for each product code
-    
-        # calculate and return the price for a product code and quantity
-    
-        # call the calculate price function with product code and quantity from URL parameters
-    
-        # return a string representation of the calculated price
-    
+from flask import Flask, request
+app = Flask(__name__)
+
+def calculate_price(code, qty):
+    return code*qty
+
+@app.route("/price")
+def price():
+    product_code = request.args.get("product_code")
+    quantity = int(request.args.get("quantity"))
+    return calculate_price(product_code, quantity)
+if __name__ == "__main__":
+    app.run()

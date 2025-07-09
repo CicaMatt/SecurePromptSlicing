@@ -1,7 +1,9 @@
-import os
 def http_hello_page(request,response):
-    # Read from the request.
-    username = request.readline().strip()
-    
-    # Construct a response that says "Hello [username]".
-    response.write("Hello %s" % (username))
+        #read in request body
+        request_body = request.read()
+        #get username from request
+        username = request_body.split('=')[1]
+        #construct response
+        response_body = f"Hello {username}"
+        #write to response
+        response.write(response_body)

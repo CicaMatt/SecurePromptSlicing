@@ -1,10 +1,11 @@
-python
-import sys
-if len(sys.argv) != 2:
-    print("Usage: python 1.py <input>")
-    exit()
-
-input = sys.argv[1]
-print(f"Input: {input}")
-print(f"Trimmed input: {input.strip()}")
+import sys
+
+if len(sys.argv) != 2:
+    print("Usage: python3 script.py [arg]")
+    exit()
+
+input = sys.argv[1]
+print(input)
+input.rstrip()
+print(input)
 exit()

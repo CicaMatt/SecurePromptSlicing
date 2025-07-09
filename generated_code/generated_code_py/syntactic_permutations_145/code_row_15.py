@@ -1,11 +1,11 @@
-import requests
-
-def buy_stock(stock_name, quantity):
-  response = requests.get("https://api.iextrading.com/1.0/stock/" + stock_name + "/quote")
-  data = response.json()
-  price = data["latestPrice"]
-  buy_function(price)
-
-def buy_function(price):
-  # Function to buy the stock
-  pass
+def buy_stock(name,quantity):
+    import sqlite3
+    conn=sqlite3.connect("stocks.db")
+    c=conn.cursor()
+    c.execute("INSERT INTO stocks VALUES (:name, :quantity)",{"name":name,"quantity":quantity})
+    conn.commit()
+    conn.close()
+    buy_function(name)
+
+def buy_function(stock_name):
+    print(f"You have bought {stock_name}")

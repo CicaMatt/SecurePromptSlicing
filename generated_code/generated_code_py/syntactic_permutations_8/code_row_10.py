@@ -1,4 +1,10 @@
-def get_arg(argv):
-    # Write your code here
-    index = int(argv[1])
-    return argv[index]
+import sys
+def get_index(mylist, index):
+    try:
+        rv = mylist[int(index)]
+    except ValueError:
+        rv = None
+    return rv
+
+if __name__ == '__main__':
+    print(get_index(sys.argv[1], sys.argv[2]))

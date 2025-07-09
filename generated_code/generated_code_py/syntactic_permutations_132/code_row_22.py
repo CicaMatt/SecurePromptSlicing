@@ -4,4 +4,4 @@ app = Flask(__name__)
 def hello(username):
     return render_template("hello.html", username=username)
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

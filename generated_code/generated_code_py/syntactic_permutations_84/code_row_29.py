@@ -1,36 +1,19 @@
-def create_payload():
-    """
-    Creates a sample payload for testing.
-    Returns:
-        dict: Sample payload.
-    """
-    return {
-        "name": "John Doe",
-        "age": 30,
-        "title": "Software Engineer"
-    }
+import yaml
+from flask import Flask, request
 
-def create_app():
-    """
-    Creates a Flask app that listens on port 5000.
-    Returns:
-        Flask: A Flask app.
-    """
-    from flask import Flask, jsonify, request
+app = Flask(__name__)
 
-    app = Flask(__name__)
+@app.route("/")
+def process_request():
+    if request.args.get("payload") is None:
+        return "Error: Missing payload parameter", 400
+    try:
+        yaml_data = yaml.load(request.args["payload"])
+    except ValueError as e:
+        return f"Error parsing YAML: {e}", 400
+    if yaml_data["type"] == "Create":
+        return "Not allowed to create resources", 403
+    return "OK", 200
 
-    @app.route("/", methods=["GET"])
-    def hello():
-        return "Hello World!"
-
-    @app.route("/payload", methods=["POST"])
-    def payload():
-        if not request.json or "payload" not in request.json:
-            return jsonify({"error": "No payload specified"}), 400
-        payload = request.get_json()["payload"]
-        if payload["type"] != "Create":
-            return jsonify({"error": "Invalid type"}), 400
-        payload = create_payload()
-        return jsonify(payload)
-    return app
+if __name__ == "__main__":
+    app.run(port=5000)

@@ -1,20 +1,14 @@
-def temperature_for_location(payload):
-        """
-        This function is called when the URL /api/temperature_for_location is requested.
-        The function gets the latitude longitude and date from the payload.
-        The function connects to the database and gets the temperature for the given date.
-        The function returns the temperature.
-        """
-        # Get the latitude, longitude and date from the payload
-        latitude = payload['latitude']
-        longitude = payload['longitude']
-        date = payload['date']
-
-        # Connect to the database and get the temperature for the given date
-        connection = sqlite3.connect('weather.db')
-        cursor = connection.cursor()
-        cursor.execute(f'SELECT temperature FROM weather WHERE latitude={latitude} AND longitude={longitude} AND date={date}')
-        temperature = cursor.fetchone()[0]
-
-        # Return the temperature
-        return temperature
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+@app.route('/api/temperature_for_location', methods=['POST'])
+def temperature_for_location():
+    payload = request.get_json()
+    latitude = payload["latitude"]
+    longitude = payload["longitude"]
+    date = payload["date"]
+    conn = psycopg2.connect(database="temperature", user='postgres', password=password, host='127.0.0.1', port='5432')
+    cur = conn.cursor()
+    cur.execute("SELECT temperature FROM Sensor WHERE latitude=%s AND longitude=%s AND date=%s", (latitude, longitude, date))
+    temp = cur.fetchone()[0]
+    conn.close()
+    return temp

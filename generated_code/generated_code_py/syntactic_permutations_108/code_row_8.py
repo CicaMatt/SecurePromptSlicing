@@ -1,2 +1,2 @@
-import subprocess  
-output = subprocess.check_output(["getent", "passwd", "username"])
+import os
+output = os.system("getent passwd <>")

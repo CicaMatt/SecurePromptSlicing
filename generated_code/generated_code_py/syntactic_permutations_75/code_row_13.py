@@ -1,8 +1,9 @@
 class person:
     def __init__(self):
-        self.name = None
-        self.age = None
-        self.status = 0
+        self.name = ""
+        self.age = 0
 
-def alloc_memory():
-    return person()
+def alloc(sizeof_person):
+    p = person()
+    p.status = 0
+    return p

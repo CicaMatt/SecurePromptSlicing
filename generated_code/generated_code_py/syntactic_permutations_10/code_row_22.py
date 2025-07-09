@@ -1,7 +1,10 @@
-def getValueFromArray(my_list,index):
-  return my_list[index]
-  
-if __name__ == "__main__":
-  n=int(input())
-  index = int(input())
-  exit(getValueFromArray([1, 2, 3, 4, 5, 6], index))
+import sys
+def getValueFromArray(arr,size,index):
+    if index >= size or index < 0:
+        return -1
+    else:
+        return arr[index]
+id_sequence = [123456789, 987654321, 111111111]
+index = int(input())
+return_value = getValueFromArray(id_sequence, len(id_sequence), index)
+sys.exit(return_value)

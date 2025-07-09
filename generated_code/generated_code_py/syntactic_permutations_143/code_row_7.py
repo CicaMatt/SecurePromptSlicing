@@ -1,24 +1,46 @@
-from flask import request
-from sqlalchemy.orm import Session
-import os
-from dotenv import load_dotenv
-load_dotenv()
-database_url = os.getenv("DATABASE_URL")
-engine = create_engine(database_url)
-connection = engine.connect()
-metadata = MetaData()
-users = Table('users', metadata, autoload=True, autoload_with=engine)
+import json
+from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
-@app.route("/unsubscribe", methods=['GET'])
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///email.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Email(db.Model):
+    __tablename__ = "emails"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+def create_database():
+    """Create database tables."""
+    db.create_all()
+
+def add_emails_to_database():
+    """Add sample emails to the database."""
+    emails = [
+        Email(email="jane@example.com"),
+        Email(email="john@example.net")
+    ]
+    for email in emails:
+        db.session.add(email)
+    db.session.commit()
+
+create_database()
+add_emails_to_database()
+
+@app.route("/unsubscribe", methods=["GET"])
 def unsubscribe():
+    """Delete a user from the database and mailing list."""
     email = request.args.get("email")
-    if (not isinstance(email, str) or 
-        not re.search(r"[^@]+@[^@]+\.[^@]+", email)):
-        return "Invalid email address.", 400
-    with Session(engine) as session:
-        user = session.query(users).filter_by(email=email).first()
-        if not user:
-            return "You are not subscribed.", 200
-        else:
-            session.delete(user)
-            return "Successfully unsubscribed.", 200
+    if Email.query.filter_by(email=email).first():
+        db.session.delete(Email.query.filter_by(email=email).first())
+        db.session.commit()
+        return "Unsubscribed successfully"
+    else:
+        return "Not subscribed"
+
+
+### Testing the code:

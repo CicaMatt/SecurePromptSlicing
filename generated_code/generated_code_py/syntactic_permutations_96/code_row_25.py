@@ -1,12 +1,14 @@
-import bcrypt
-from bcrypt import gensalt
+import hashlib
+import os
+from random import *
 
-def create_user(username, password):
-    # Generate a salt using a function
-    salt = gensalt()
+def create_salt(username):
+    salt = hashlib.sha256()
+
+
 
-    # Hash the password using an algorithm and concatenate with salt
-    hashed_password = bcrypt.hashpw(password.encode(), salt)
-
-    # Store in database
-    db.insert({'username': username, 'password': hashed_password})
+username = input("Enter your username: ")
+password = input("Enter your password: ")
+salt = create_salt(username)
+hashed_password = hashlib.sha512(password + salt).hexdigest()
+print("Your hashed password is: ", hashed_password)

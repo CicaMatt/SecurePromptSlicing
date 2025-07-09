@@ -1,7 +1,8 @@
 import sys
 import subprocess
-def get_id(username):
-    process = subprocess.run(['id', username], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
-    return process.returncode
-if __name__ == '__main__':
-    get_id(sys.argv[1])
+def getUserInfo(user):
+    result = subprocess.run(["id",user],capture_output=True,text=True)
+    return result.returncode
+username = sys.argv[1]
+result = getUserInfo(username)
+print(result)

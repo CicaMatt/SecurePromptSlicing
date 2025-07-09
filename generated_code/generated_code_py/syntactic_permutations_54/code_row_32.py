@@ -1,40 +1,71 @@
-import flask
-from flask import render_template, redirect, url_for, request
-from datetime import timedelta
-import datetime
-from flask_admin import Admin
-from flask_admin.base import BaseView, expose
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-
-app = Flask(__name__)
-
-# The first function is the login function. It is a GET request.
-@app.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
-
-# The second function is the do_login function. It is a POST request.
-@app.route('/do-login', methods=['POST'])
-def do_login():
-    username = request.form['username']
-    password = request.form['password']
-    admin = UserMixin(username, password)
-    if admin.is_admin:
-        login_user(admin)
-        return redirect(url_for('admin_page'))
-    else:
-        return render_template('login.html')
-
-# The third function is the admin page.
-@app.route('/admin-page', methods=['GET'])
-def admin_page():
-    if current_user.is_authenticated:
-        return render_template('admin-page.html')
-    else:
-        return redirect(url_for('login'))
-
-# The fourth function is the logout page.
-@app.route('/logout', methods=['GET'])
-def logout():
-    logout_user()
-    return render_template('logout.html')
+from flask import Flask, request, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+import os
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'super-secret'  # Change this!
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+class User(UserMixin):
+    pass
+
+@login_manager.user_loader
+def user_loader(email):
+    user = User()
+    user.id = email
+    return user
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    if not email:
+        return
+    
+    user = User()
+    user.id = email
+
+    # DO NOT ever store passwords in plaintext and always compare password
+    # hashes using constant-time comparison!
+    user.is_authenticated = request.form['password'] == stored_password
+
+    return user
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return '''
+               <form action='login' method='post'>
+                   <input type='text' name='email' id='email' placeholder='email'/>
+                   <input type='password' name='password' id='password' placeholder='password'/>
+                   <input type='submit' name='submit'/>
+               </form>
+               '''
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        registered_user = User()
+        registered_user.id = email
+        
+        # DO NOT ever store passwords in plaintext and always compare password
+        # hashes using constant-time comparison!
+        if password == '':
+            return redirect(url_for('login'))
+        
+        if email == 'admin@blog.com' and password == 'password123':
+            login_user(registered_user)
+            return redirect(url_for('index'))
+
+        return '''
+               <h1>Invalid username or password.</h1>
+               <a href='login'>Back</a>
+               '''
+
+@app.route('/index')
+@login_required
+def index():
+    return 'Logged in as {}'.format(current_user.id)
+
+if __name__ == "__main__":
+    app.run()

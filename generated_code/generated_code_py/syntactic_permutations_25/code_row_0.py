@@ -1,1 +1,0 @@
-print(f"Quarter Four: {quarter_four}")

@@ -1,3 +1,4 @@
-import sys
-def scan(format_string):
-    return sys.stdin.readline()
+from sys import stdin
+
+def scan(format_string):
+    return stdin.readline().split()

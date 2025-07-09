@@ -1,32 +1,18 @@
-import os
-from flask import Flask, request, redirect, url_for, flash
-from werkzeug.utils import secure_filename
-
+from flask import Flask, request
 app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-
-
-
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET','POST'])
 def upload_file():
     if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
-    return '''
-<!doctype html>
-<title>Upload new File</title>
-<h1>Upload new File</h1>
-<form method=post enctype=multipart/form-data>
-<input type=file name=file>
-<input type=submit value=Upload>
-</form>
-'''
+        f = request.files['the_file']
+        f.save(secure_filename('uploads'))
+        return 'file uploaded successfully'
+    return ''' 
+          <!doctype html>
+          <title>Upload new File</title>
+          <h1>Upload new File</h1>
+          <form action="" method="post" enctype=multipart/form-data>
+              <p><input type="file" name="the_file"></p>
+              <p><input type="submit" value="Upload"></p>
+          </form> 
+         '''

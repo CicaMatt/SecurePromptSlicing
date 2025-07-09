@@ -1,15 +1,26 @@
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-@app.route('/api/temperature_for_location', methods=['POST'])
-def temperature_for_location():
-    content = request.get_json()
-    latitude = content['latitude']
-    longitude = content['longitude']
-    date = content['date']
-    conn = sqlite3.connect('sensor.db')
-    c = conn.cursor()
-    c.execute("SELECT temperature FROM Sensor WHERE Latitude=? and Longitude=? and Date=?", (latitude, longitude, date))
-    result = c.fetchone()
-    return jsonify({'temperature': float(result[0])})
-if __name__ == '__main__':
-    app.run(debug=True)
+import psycopg2
+from flask import jsonify
+
+def temperature_for_location(payload):
+    # Connect to the database
+    connection = psycopg2.connect(user="admin",
+                                password="password",
+                                host="127.0.0.1",
+                                port="5432",
+                                database="mydatabase")
+    
+    # Create a cursor to perform database operations
+    cursor = connection.cursor()
+    
+    # Execute the SQL statement
+    sql = "SELECT temperature FROM Sensor WHERE latitude=%s AND longitude=%s AND date=%s"
+    cursor.execute(sql, (payload['latitude'], payload['longitude'], payload['date']))
+    
+    # Fetch the results
+    result = cursor.fetchone()
+    
+    # Close the cursor and connection
+    cursor.close()
+    connection.close()
+    
+    return jsonify({"temperature": result})

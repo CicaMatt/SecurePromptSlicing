@@ -1,9 +1,15 @@
-import sqlite3 as db
-conn = db.connect('database.db')
+import pandas as pd
+from sqlalchemy import create_engine
+
 def unsubscribe(email):
-    cursor = conn.execute("SELECT email FROM subscribers WHERE email=?", (email,))
-    if cursor.fetchone() is not None:
-        conn.execute("DELETE FROM subscribers WHERE email=?", (email,))
-        print("You have been unsubscribed successfully.")
+    # Connect to database and check if email is in it
+    engine = create_engine('sqlite:///subscribers.db')
+    conn = engine.connect()
+    subscribers = pd.read_sql("SELECT * FROM subscribers", con=conn)
+    if email not in subscribers["email"]:
+        print(f"{email} is not in our database")
     else:
-        print("Invalid email address. Please try again.")
+        # Remove email from database
+        subscribers = subscribers[subscribers["email"] != email]
+        conn.execute("DELETE FROM subscribers WHERE email=?", (email,))
+        print(f"You have been removed from our list {email}")

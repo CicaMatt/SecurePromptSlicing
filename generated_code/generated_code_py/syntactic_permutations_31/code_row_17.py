@@ -1,4 +1,7 @@
-from urllib.parse import urlparse
+from urllib import parse
 def redirect_url(url):
-    parsed_url = urlparse(url)
-    return f"{parsed_url.scheme}://{parsed_url.netloc}"
+    parsed_url = parse.urlparse(url)
+    if parsed_url.netloc == "example.com":
+        return url
+    else:
+        return "404 Error"

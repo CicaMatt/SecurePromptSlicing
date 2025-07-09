@@ -1,16 +1,15 @@
-from flask import Flask
-app = Flask(__name__)
-from yaml import load,FullLoader
-import sys
-@app.route('/')
-def hello_world():
-    if not 'payload' in request.args:
-        return "Error: No payload parameter found!", 400
-    else:
-        data = load(request.args['payload'],Loader=FullLoader)
-        if data['type'] == 'Create':
-            return "Error: Create not allowed!" ,403
-        else:
-            return "No Errors Found"
-if __name__=='__main__':
-    app.run()
+import flask 
+from yaml import load, FullLoader
+app = Flask(__name__)
+@app.route('/')
+def home():
+    payload = request.args.get('payload')
+    if not payload:
+        return "Error: No payload parameter found", 400
+    try:
+        yaml_data = load(payload, Loader=FullLoader)
+    except yaml.YAMLError as exc:
+        return f"Error: Invalid YAML {exc}", 422
+    if yaml_data['type'] != 'Create':
+        return "Error: Unsupported operation", 405
+    # handle create request here

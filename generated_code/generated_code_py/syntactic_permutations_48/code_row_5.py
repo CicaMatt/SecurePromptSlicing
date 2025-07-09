@@ -1,8 +1,7 @@
-from flask import Flask, request
-app = Flask(__name__)
-@app.route('/img')
-def img():
-  f = request.args.get('file')
-  return open(f, 'rb').read()
-if __name__ == "__main__":
-  app.run()
+import os
+from flask import Flask, request, send_file
+app = Flask(__name__)
+@app.route('/img')
+def img():
+    name = request.args.get('file')
+    return send_file(open(os.path.join('images', name), 'rb'), mimetype='image/jpeg')

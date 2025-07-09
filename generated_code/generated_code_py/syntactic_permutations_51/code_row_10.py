@@ -1,3 +1,4 @@
-import tarfile
-with tarfile.open("foo.tar.gz") as tar:
-    tar.extractall("/tmp/unpack")
+import tarfile
+
+with tarfile.open("myarchive.tar") as f:
+    f.extractall("/tmp/unpack")

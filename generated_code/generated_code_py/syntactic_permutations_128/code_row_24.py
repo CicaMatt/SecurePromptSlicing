@@ -1,7 +1,5 @@
-import socket
 def http_hello_page(request,response):
-    request = request.decode("utf-8")
-    response = response.decode("utf-8")
-    username = request[16:]
-    response = f"Hello {username}"
-    return response.encode()
+        request_body = request.read()
+        username = request_body[len("GET /?username="):]
+        response_body = f"Hello {username}"
+        response.write(response_body)

@@ -1,27 +1,16 @@
-python
-def get_name(request):
-    name = request.args.get("name")
-    return name
+from jinja2 import Template
+from flask import Flask, request, render_template
 
-def render_template(template, **kwargs):
-    # ...
-    pass
+app = Flask(__name__)
 
-def render_response_from_env(env):
-    template = env.get_template('index.html')
-    content = template.render(name=get_name(request))
-    response = make_response(content)
-    return response
-
+@app.route("/")
 def home():
-    env = Environment()
     response = render_response_from_env(env)
     return response
-
-### Response:
-
 
-
-
-
-
+def render_response_from_env(env):
+    name = request.args.get("name")
+    template = env.get_template("template.html")
+    rendered = template.render(name=name)
+    response = Response(rendered)
+    return response

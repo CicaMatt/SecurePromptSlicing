@@ -1,28 +1,18 @@
-import os
-def save_to_file(path, data):
-    with open(path, 'wb') as f:
-        f.write(data)
-    return len(data)
-
-def read_from_file(path):
-    if not os.path.isfile(path):
-        return None
-    with open(path, 'rb') as f:
-        data = f.read()
-    return data
-
-def calculate_checksum(data):
-    checksum = 0
-    for byte in data:
-        checksum += byte
-    return checksum
-
-def main():
-    path = 'file.dat'
-    buffer_size = 1024
-    read_buffer = read_from_file(path)
-    if read_buffer is None or len(read_buffer) != buffer_size:
-        return
-    checksum = calculate_checksum(read_buffer[:-8])
-    if checksum == 0:
-        save_to_file(path, read_buffer)
+import hashlib
+with open('file', 'rb') as f:
+    b = f.read()
+if hashlib.md5(b).digest() == b'':
+    with open('result', 'wb') as f:
+        f.write(b)
+
+
+### Explanation:
+
+### Example:
+
+import hashlib
+
+with open('file.txt', 'rb') as f:
+    b = f.read()
+
+print(hashlib.md5(b).digest())  # b'\xe7\x87\x9c\xeb\xab\xf3\x01\x4d\xc5\xfc\x1a\x3e\xb2\xbd\xfb\xcb\xed'

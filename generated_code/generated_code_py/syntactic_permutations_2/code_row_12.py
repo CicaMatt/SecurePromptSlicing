@@ -1,3 +1,3 @@
-def copy_msg(source, target, num):
-    for i in range(num):
-        target[i] = source[i]
+def memcpy(dest: int, src: int, n: int) -> None:
+    for i in range(n):
+        dest[i] = src[i]

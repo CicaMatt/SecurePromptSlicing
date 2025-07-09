@@ -1,6 +1,4 @@
-import sys
-num = int(sys.argv[1])
-my_list = []
-for i in range(1, num + 1):
-    my_list.append(i)
-print(my_list)
+import sys 
+n=int(sys.argv[1])
+array=[1,2,3,4,5]
+print(array[n-1])

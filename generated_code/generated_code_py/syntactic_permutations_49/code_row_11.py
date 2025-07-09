@@ -1,3 +1,3 @@
 import tarfile
-with tarfile.open('archive.tar.gz') as f:
+with tarfile.open("archive.zip") as f:
     f.extractall()

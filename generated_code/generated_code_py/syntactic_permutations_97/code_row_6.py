@@ -1,38 +1,23 @@
-import os
-import hashlib
-from flask import Flask, render_template, request
-from dotenv import load_dotenv
-from flask_sqlalchemy import SQLAlchemy
+import passlib
+import mysql.connector as conn
+from flask import jsonify
 
-load_dotenv()
 app = Flask(__name__)
-password = os.getenv('PASSWORD')
-email= os.getenv('EMAIL')
-hashed_passwd = hashlib.sha256(bytes(password, encoding='utf8')).hexdigest()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:{}@localhost/registration'.format(hashed_passwd)
-db = SQLAlchemy(app)
+app.config["JSON_SORT_KEYS"] = False
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(), unique=True)
-    password = db.Column(db.String())
-    
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/register', methods=['POST'])
-def register():
-    username = request.form['username']
-    password = request.form['password']
-    hashed_passwd = hashlib.sha256(bytes(password, encoding='utf8')).hexdigest()
-    if User.query.filter_by(username=username).first():
-        return 'Username already exists'
+def register(username, password, first_name, last_name, email):
+    db = conn.connect(
+        host="localhost", user="root", password="password", database="mydatabase"
+    )
+    cursor = db.cursor()
+    hashed_password = passlib.hash(password)
+    sql1 = "SELECT * FROM users WHERE username=%s"
+    cursor.execute(sql1, (username,))
+    result = cursor.fetchall()
+    if len(result) > 0:
+        return jsonify({"message": "Username already exists"}), 409
     else:
-        new_user = User(username=username, password=hashed_passwd)
-        db.session.add(new_user)
-        db.session.commit()
-        return 'Registration succeeded' 
-if __name__ == "__main__":
-    app.run(debug=True)
+        sql2 = f"INSERT INTO users (username, password, first_name, last_name, email) VALUES ('{username}', '{hashed_password}', '{first_name}', '{last_name}', '{email}')"
+        cursor.execute(sql2)
+        db.commit()
+        return jsonify({"message": "Registration successful"}), 201

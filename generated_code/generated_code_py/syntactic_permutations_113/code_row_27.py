@@ -1,24 +1,7 @@
-import subprocess
-
-def bind(url):
-    def decorator(f):
-        def wrapper(*args, **kwargs):
-            return f(*args, **kwargs)
-        return wrapper
-    return decorator
-
-@bind("ping")
 def ping():
-    url = "www.google.com"
-    pong = subprocess.run(["ping", url], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    if "0" in pong:
-        return f"{url} is up!"
+    url = "https://www.google.com"
+    pong = os.system("ping -c1 "+url)
+    if(pong == 0):
+        return "Pong! The URL is active."
     else:
-        return f"{url} is down."
-
-
-### Explanation:
-
-
-
-
+        return "The URL is down."

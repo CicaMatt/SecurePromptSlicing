@@ -1,35 +1,26 @@
 import os
-import MySQLdb
-from fpdf import FPDF
-import flask
+from flask import Flask, request, redirect, url_for
+from werkzeug.utils import secure_filename
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'pdf', 'PDF'} # pdf only allowed
 
 def upload_pdf():
-    # Save the uploaded pdf file in a directory
-    app.config['UPLOAD_FOLDER'] = '/path/to/upload/directory'
-    pdf_file = flask.request.files['pdf_file']
-    pdf_file.save(os.path.join(app.config['UPLOAD_FOLDER'], pdf_file.filename))
+    file = request.files['file']
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        # save filepath in mysql database
+        # ...
+        return redirect(url_for('uploaded_file', filename=filename))
+    else:
+        return 'Invalid file'
 
-    # Save the filepath of the pdf file in a mysql database
-    db = MySQLdb.connect(host='localhost', user='root', passwd='password', db='database')
-    cursor = db.cursor()
-    sql = "INSERT INTO pdf_files (filepath) VALUES ('%s')" % (pdf_file.filename)
-    cursor.execute(sql)
-    db.commit()
-
-def download_pdf():
-    # Get the filepath of the pdf file from the mysql database
-    db = MySQLdb.connect(host='localhost', user='root', passwd='password', db='database')
-    cursor = db.cursor()
-    sql = "SELECT * FROM pdf_files"
-    cursor.execute(sql)
-    result = cursor.fetchone()
-    filepath = result['filepath']
-
-    # Download the pdf file using the filepath
-    with open(os.path.join('/path/to/download/directory', filepath), 'wb') as f:
-        f.write(pdf_file)
+@app.route('/download/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 if __name__ == '__main__':
     app.run()

@@ -1,7 +1,8 @@
-import random as rd  
-return rd.randint(0,100000)    
-sales = 0    
-quarter_sales = 0    
-monthly_sales = getMonthlySales()      
-quarter_sales += monthly_sales     
-print("Quarter {j}:{monthly_sales}")     
+import random
+from statistics import mean
+def getMonthlySales(sale):
+    return sale
+quarter_1 = []
+for i in range(3):
+  quarter_1.append(random.randint(0,100000))
+print("Quarter 1:",mean(quarter_1))

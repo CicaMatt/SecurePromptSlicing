@@ -1,15 +1,9 @@
 import os
-import numpy as np
+import uuid
 
-filename = "test.txt"
-if os.path.exists(filename):
-    print("file exists")
-else:
-    print("file does not exist")
+f = open("random_file.txt", "w")
 
-f= open (filename,"w+")
+for _ in range(3):
+    f.write(str(uuid.uuid4()))
 
-for i in range(3):
-    a = np.random.rand()
-    b = str(a)
-    f.write(b)
+f.close()

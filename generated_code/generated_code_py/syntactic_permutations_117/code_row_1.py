@@ -1,12 +1,8 @@
 import random
 
-str_a = str(random.uniform(0, 1))
-str_b = str(random.uniform(0, 1))
-str_c = str(random.uniform(0, 1))
-
-def convert_to_string(x):
-    return str(x)
-
-str_a = convert_to_string(random.uniform(0, 1))
-str_b = convert_to_string(random.uniform(0, 1))
-str_c = convert_to_string(random.uniform(0, 1))
+def float_to_string(f):
+    return '{}'.format(f)
+
+str_a = float_to_string(random.uniform(1, 10))
+str_b = float_to_string(random.uniform(2, 15))
+str_c = float_to_string(random.uniform(3, 20))

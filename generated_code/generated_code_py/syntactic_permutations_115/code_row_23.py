@@ -1,5 +1,7 @@
-import subprocess
+import subprocess 
 
-def execute(command):
-    result = subprocess.check_output(["ls", command])
-    print("{}: {}".format(command, result))
+def execute_command(command): 
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE) 
+    return result.stdout.decode('utf-8')
+
+print(execute_command("ls"))

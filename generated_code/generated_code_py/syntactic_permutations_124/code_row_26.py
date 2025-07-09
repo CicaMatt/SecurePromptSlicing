@@ -1,7 +1,6 @@
-import sys
-if len(sys.argv) != 2:
-    print("Usage: python3 hello.py [NAME]")
-    exit()
-
-argument = sys.argv[1].strip()
-print(f"Hello {argument}")
+import sys
+if len(sys.argv) != 2:
+    print("Usage: python hello_world.py name")
+    exit()
+name = sys.argv[1].rstrip()
+print(f"Hello, {name}!")

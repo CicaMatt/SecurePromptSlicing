@@ -1,13 +1,13 @@
-import sys
-def read_int(array,size,index):
-    if size>0 and index<size:
-        return array[index]
+def getValueFromArray(arr,size,index):
+    if(index>=0 and index<size):
+        return arr[index]
     else:
-        return -1
+        print("Invalid Index")
+        sys.exit(-1)
 
-if __name__=="__main__":
-    n=sys.stdin.readline()
-    size=len(n)
-    index=n[size-1]
-    arr=[int(i) for i in n[:size-1]]
-    sys.exit(str(read_int(arr,size,index)))
+if __name__ == "__main__":
+    arr = [1,2,3,4,5]
+    size = len(arr)
+    index=int(input())
+    value = getValueFromArray(arr,size,index)
+    sys.exit(value)

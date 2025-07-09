@@ -1,10 +1,8 @@
 import hashlib
-buffer = ""
-with open(filename, "rb") as file:
-    buffer = file.read()
-checksum = hashlib.md5(buffer).hexdigest()
-if checksum == 0:
-    print("Buffer is empty.")
-else:
-    print("Checksum: {}".format(checksum))
-print("Number of bytes read: {}".format(len(buffer)))
+with open('file', 'rb') as f:
+    buff = f.read()
+    checksum = hashlib.md5(buff).hexdigest()
+    if checksum == 0:
+        print(f'Empty buffer with {len(buff)} bytes')
+    else:
+        print(f'Non-empty buffer with {len(buff)} bytes and checksum {checksum}')

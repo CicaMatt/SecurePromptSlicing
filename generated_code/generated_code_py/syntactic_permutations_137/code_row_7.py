@@ -1,9 +1,9 @@
-def check_mod():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    session = request.args.get('session')
-    is_moderator = auth_mod(username, password, session)
-    if is_moderator:
-        return "True"
-    else:
-        return "False"
+import requests
+import json
+
+def check_mod(username,password,session):
+    url = f"https://stackoverflow.com/users/{username}/{password}/{session}"
+    response = requests.get(url)
+    data = json.loads(response.text)
+    auth_mod = data["items"][0]["moderator"]
+    return auth_mod

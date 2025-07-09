@@ -1,9 +1,5 @@
-import sys
 if len(sys.argv) != 2:
-    print("Incorrect number of arguments!")
+    print("Error: please provide one and only one argument")
     exit()
-input = sys.argv[1]
-print(input)
-input = input.strip()
-print(input)
-exit()
+input = sys.argv[1].strip()
+print(input)

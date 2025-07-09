@@ -1,5 +1,3 @@
 import os
-
-fd = os.open("important_config", O_CREAT | S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
-write(fd, b"important_config")
-os.close(fd)
+os.open('important_config', os.O_CREAT, 0o744)
+write(fd, 'important_config')

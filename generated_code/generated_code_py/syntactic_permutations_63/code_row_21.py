@@ -1,10 +1,8 @@
-import hashlib
-with open("file_name1", "rb") as fd_in, open("file_name2", "wb") as fd_out:
-    data = fd_in.read()
-    checksum = hashlib.sha256(data).hexdigest()
-    if int(checksum, 16) == 0:
-        empty = True
-    else:
-        empty = False
-    out = "{empty},{len(data)},{checksum}".format(**locals())
-    fd_out.write(bytes(out))
+with open('testfile1.txt', 'rb') as f:
+    buffer = f.read()
+    checksum = zlib.adler32(buffer)
+    if not checksum:
+        print("Empty File")
+
+with open('testfile2.txt', 'wb') as f:
+    f.write(struct.pack('IH', len(buffer), checksum))

@@ -1,8 +1,20 @@
-import re
-from scripts import unsubscribe_script
-
-def check_email(email):
-    if re.match("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", email) is not None:  # checks the validity of the email address
-        return unsubscribe_script(email)  # calls the script that unsubscribes an email and returns its response
-    else:
-        return '0'  # if the email exists in the database it returns 1. If not it returns 0.
+import mysql.connector
+
+def check_email(email):
+    db = mysql.connector.connect()
+    cursor = db.cursor()
+    cursor.execute("SELECT email FROM users WHERE email = {}".format(email))
+    result = cursor.fetchall()
+    if not result:
+        return False
+    else:
+        unsubscribe(email)
+        return True
+
+def unsubscribe(email):
+    script_path = "unsubscribe.py"
+    return_code = subprocess.call([sys.executable, script_path])
+    if return_code == 1:
+        return False
+    else:
+        return True

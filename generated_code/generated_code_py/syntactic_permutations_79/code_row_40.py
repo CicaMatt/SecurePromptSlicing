@@ -1,7 +1,6 @@
 import sys
-
-buf = malloc(1024)
-fgets(buf, 100, stdin)
-
-buf1 = malloc(1024)
-fgets(buf1, 100, stdin)
+import ctypes
+buf = ctypes.create_string_buffer(1024)
+reads = ctypes.create_string_buffer(1024)
+sys.stdin.readinto(buf)
+sys.stdin.readinto(reads)

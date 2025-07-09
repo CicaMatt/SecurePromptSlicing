@@ -1,2 +1,2 @@
-import subprocess
-subprocess.run(["ls", "-l"])
+import os
+os.system("ls")

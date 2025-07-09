@@ -1,16 +1,24 @@
-import os
-def bind_to_url(url):
+import subprocess
+import sys
+from flask import Flask, redirect, url_for
+app = Flask(__name__)
+ 
+def bind(url):
     def decorator(f):
-        def wrapper(*args,**kwargs):
-            return f(url)
+        def wrapper():
+            return f()
+        app.route(url)(wrapper)
         return wrapper
     return decorator
-
-@bind_to_url("http://localhost/")
+ 
+@bind("/ping")
 def ping():
-    url= "http://localhost/"
-    pong = os.system("ping -c 1 " + url)
-    if pong ==0:
-        print("Url is alive ")
+    url = "www.python.org"
+    pong = subprocess.run(["ping", "-c1", url], stdout=subprocess.PIPE, text=True)
+    if "ttl" in pong.stdout:
+        return f"{url} is alive!"
     else:
-        print("Url is not alive ")
+        return f"{url} is not alive"
+ 
+if __name__ == "__main__":
+    app.run(debug=True, port=8080)

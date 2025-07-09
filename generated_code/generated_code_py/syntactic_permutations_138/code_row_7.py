@@ -1,28 +1,16 @@
-import flask
-from flask import request, jsonify
-app = Flask(__name__)
+import psycopg2
+
+def get_user(user_id):
+    conn = psycopg2.connect(host='localhost', database='mydatabase', user='postgres', password='secret')
+    cur = conn.cursor()
+    query = "SELECT is_moderator FROM users WHERE id = %s"
+    cur.execute(query, (user_id))
+    result = cur.fetchone()
+    return result[0]
 
-def check_user():
-    """Function that will be called when the route is called."""
-
-    # Connect to database.
-    ...
-    
-    # Execute a query to check if user is a moderator.
-    result = execute_query()
-    
-    # Return the result of the query.
-    return result
-
-@app.route("/check-user", methods=["POST"])
-def check_user():
-    """Check whether user is a moderator."""
-
-    # Get request data.
-    data = request.get_json()
-    
-    # Call function to check if user is a moderator.
-    result = check_user(data)
-    
-    # Return response.
-    return jsonify({"result": result})
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    user_id = 123456789
+    is_moderator = get_user(user_id)

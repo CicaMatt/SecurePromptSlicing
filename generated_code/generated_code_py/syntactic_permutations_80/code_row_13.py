@@ -1,3 +1,3 @@
 import sys
-scan = lambda: sys.stdin.readline().rstrip()
-n = int(scan())
+sys.stdin = open('inputs.txt', 'r')
+scan("%[^\n]%*c", buffer, sizeof(buffer));

@@ -1,15 +1,8 @@
-import os
-
-buffer = ''
-number_of_bytes = 0
-
-with open(path, 'rb') as f:
-    buffer = f.read()
-
-if len(buffer) == 0:
-    number_of_bytes = 0
-else:
-    number_of_bytes = os.stat(path).st_size
-
-with open(output_file, 'wb') as f:
-    f.write(str(number_of_bytes))
+import hashlib
+with open("file1.txt", "rb") as f:
+    buf = f.read()
+checksum = hashlib.md5(buf).hexdigest() 
+if not buf:
+    raise Exception("Buffer is empty.")
+with open("file2.txt", "w") as f:
+    f.write("Checksum: {0}, bytes read: {1}".format(checksum, len(buf)))

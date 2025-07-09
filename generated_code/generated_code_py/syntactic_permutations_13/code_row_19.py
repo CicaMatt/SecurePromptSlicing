@@ -1,13 +1,3 @@
 def get_id(index):
-    id_sequence = [1234, 8765, 9012]
-    if index < len(id_sequence):
-        return id_sequence[index]
-    else:
-        return -1
-        
-def main():
-    index = int(input("Enter the index: "))
-    value = get_id(index)
-    print(value)
-    
-main()
+    id_sequence = ["a824730f-2456-4829-b7fd-e1c2563d9998", "b13eb2fb-2482-4fca-ab9e-b267d5d2a5a1"]
+    return id_sequence[index]

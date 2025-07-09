@@ -1,1 +1,2 @@
-import urlparse
+from urllib import parse
+

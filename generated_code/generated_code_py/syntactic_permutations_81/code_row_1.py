@@ -1,8 +1,6 @@
-import io
-
-def memory_allocation():
-    return bytearray(1024)
-
+import sys
 def read_from_stdin(buf):
-    input = io.TextIOWrapper(io.BytesIO(), encoding="utf-8")
-    buf[:10] = input.read(10)
+    return sys.stdin.read(buf)
+
+buffer = bytearray(1024)
+read_from_stdin(buffer)

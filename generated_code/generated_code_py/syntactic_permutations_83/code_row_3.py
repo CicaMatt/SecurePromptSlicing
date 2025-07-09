@@ -1,13 +1,17 @@
+import os
 import json
-from flask import Flask, request
+from flask import Flask, request, jsonify
 app = Flask(__name__)
-
-@app.route("/")
-def index():
-    req_data = request.get_json()
-    if 'name' in req_data:
-        return req_data['name']
-    else:
-        return "Field not found", 400
-
-app.run(port=5000, debug=True)
+@app.route("/", methods=["POST"])
+def home():
+    data = request.json
+    name = "Not a valid name!"
+    if 'name' in data:
+        name = data['name']
+    return jsonify(name)
+if __name__ == '__main__':
+    app.run()
+
+### Output:
+
+

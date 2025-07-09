@@ -1,18 +1,21 @@
-import base64
-from django.core.files import File
-from django.db import models
-
-def upload_image(request):
-    file = request.FILES['file']
-    extension = file.name.split('.')[1]
-    image = Image.open(file)
-    image_string = base64.b64encode(image)
-    filename = f'uploads/image.{extension}'
-    with open(filename, 'wb') as f:
-        f.write(image_string)
-    return render(request, 'index.html', {'filename': filename})
-
-### Explanation:
-
-
-
+import io
+import os
+from PIL import Image
+from base64 import b64encode, b64decode
+
+def upload_image(file):
+    """
+    This function reads and encodes an image using base64.
+    The encoded image is written to a file.
+    """
+    # Open the image file in binary mode
+    with io.open(file, 'rb') as image_file:
+        # Read the image content
+        image_content = image_file.read()
+
+    # Encode the image using base64
+    encoded_image = b64encode(image_content)
+
+    # Write the encoded image to a file
+    with open('encoded_image.txt', 'wb') as encoded_file:
+        encoded_file.write(encoded_image)

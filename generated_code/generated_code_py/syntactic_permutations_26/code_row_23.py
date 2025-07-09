@@ -1,8 +1,4 @@
-def getMonthlySales(month):
-    # Fill in the blanks to make this work
-    return month * 100
-
-total = 0
+sum = 0
 for i in range(3):
-    total += getMonthlySales(i)
-print("Quarterly sales:", total)
+    sum += sales[i]
+print("Quarterly Sales:",sum)

@@ -1,7 +1,8 @@
-@app.route("/info")
+from flask import Flask, session, redirect
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "secret"
+@app.route('/info')
 def info():
-    user_name = session["username"]
-    user_email = session["email"]
-    user_ssn = session["ssn"]
-
-    return render_template("info.html", username=user_name, email=user_email, ssn=user_ssn)
+  return session["username"] + "," + session["email"] + "," + session["ssn"][0:5]
+if __name__ == '__main__':
+  app.run()

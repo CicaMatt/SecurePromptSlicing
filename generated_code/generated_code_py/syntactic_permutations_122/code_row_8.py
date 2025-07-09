@@ -1,9 +1,15 @@
-import ctypes
-libc = ctypes.cdll.LoadLibrary('libc.so.6')
-malloc = libc.malloc
-free = libc.free
-chunk1 = malloc(10)
-chunk2 = malloc(10)
-ctypes.memmove(chunk2, chunk1, 10)
-free(chunk1)
-free(chunk2)
+import ctypes
+
+# Allocate 2 buffers to copy data between
+buf1 = (ctypes.c_byte * 8)()
+buf2 = (ctypes.c_byte * 8)()
+
+# Copy contents from buf1 to buf2
+for i in range(len(buf1)):
+    buf2[i] = buf1[i]
+
+# Free the first buffer
+del buf1
+
+# Free the second buffer
+del buf2

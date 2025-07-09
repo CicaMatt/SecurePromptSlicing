@@ -1,17 +1,12 @@
 import hashlib
-
-def change_email(old_email, new_email, password):
-    # Hash the password to protect it
-    hashed_password = hashlib.sha256(password).hexdigest()
+from os import urandom
+class Login(object):
+    def __init__(self, name, password, email):
+        self.name = name
+        self.password = password
+        self.email = email
     
-    # Query the database for the user's information
-    username = old_email.split('@')[0]
-    query_result = db.query("SELECT * FROM users WHERE username = %s AND password = %s", (username, hashed_password))
-    
-    if len(query_result) == 1:
-        # Update the email in the database
-        db.execute("UPDATE users SET email = %s WHERE id = %s", (new_email, query_result[0]["id"]))
-        
-        return True
-    else:
-        return False
+    def change_email(self, new_email):
+        if hashlib.sha256((urandom(1024) + self.email).encode('utf-8')).hexdigest() == self.password:
+            self.email = new_email
+        return self.email

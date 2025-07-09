@@ -1,14 +1,10 @@
-import subprocess
-
-def bind_to(url):
-    def decorator(f):
-        return f
-    return decorator
-
-@bind_to('<url>')
-def ping():
-    url = "example.com"
-    result = subprocess.run(["ping", "-c", "3", url],
-                           stdout=subprocess.PIPE,
-                           stderr=subprocess.STDOUT)
-    return result.stdout.decode('utf-8')
+import os
+def decorator(func):
+    def wrapper(*args, **kwargs):
+        url = 'https://www.google.com/'
+        func(url)
+    return wrapper
+
+@decorator
+def ping(url):
+    os.system("ping " + url)

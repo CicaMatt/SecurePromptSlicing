@@ -1,7 +1,2 @@
-import http.server
-
-class hello_page(http.server.BaseHTTPRequestHandler):
-    def do_GET(self):
-        username = self.request["username"]
-        response = "hello" + username
-        return response
+def http_hello_page(request,response):
+    response.write('hello' + request.form['username'])

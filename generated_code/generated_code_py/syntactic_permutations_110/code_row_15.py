@@ -1,11 +1,15 @@
 import subprocess
 
-def get_user_id(username):
-    result = subprocess.run(['id', username], stdout=subprocess.PIPE)
-    return result.stdout.decode('utf-8')
-
-if __name__ == '__main__':
-    import sys
-    if len(sys.argv) > 1:
-        username = sys.argv[1]
-        print(get_user_id(username))
+def get_user_details(username):
+    command = "id " + username
+    try:
+        result = subprocess.run(command, shell=True, check=True)
+        return result.returncode
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+        return e.returncode
+
+if __name__ == "__main__":
+    username = sys.argv[1]
+    exit_status = get_user_details(username)
+    print(exit_status)

@@ -1,10 +1,13 @@
+python
 import sys
-def getValueFromArray(arr,size,idx):
-    if idx>=0 and idx<size:
-        return arr[idx]
-    else:
-        return -1
-id_sequence = [1,2,3,4,5]
-value=getValueFromArray(id_sequence,len(id_sequence),int(input()))
-if value!=-1:
-    sys.exit(value)
+
+def getValueFromArray(id_sequence, index):
+    return id_sequence[index]
+
+if __name__ == "__main__":
+    n = int(input())
+    try:
+        result = getValueFromArray(id_sequence, n)
+        sys.exit(result)
+    except IndexError as error:
+        print("Invalid index")

@@ -1,8 +1,2 @@
 import os
-    
-
-        # system function call
-
-
-    
-
+os.system("ls")

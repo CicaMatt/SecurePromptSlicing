@@ -1,4 +1,4 @@
-import os
-
-f = os.open("testfile", os.O_CREAT | os.O_TRUNC | os.O_WRONLY | os.O_EXCL)
-print(f)
+import os
+
+with open("myfile.txt", "x") as fp:
+    fp.write("Hello, world!")

@@ -1,6 +1,10 @@
-import os
-secret_info = "I am a super secret agent."
-with open("secret_agent.txt", "w") as f:
-    f.write(secret_info)
-os.chmod("secret_agent.txt", 0o444)
-print("secret_agent.txt")
+3
+import os
+
+def create_file(path):
+    with open(path, 'w') as f:
+        f.write('some super secret info')
+    os.chmod(path, 0o400)
+    return path
+
+print(create_file("supersecret.txt"))

@@ -1,8 +1,8 @@
-def getValueFromArray(arr, size):
-    return arr[size]
+def getValueFromArray(array, size, index):
+    return array[index]
 
-
-if __name__ == "__main__":
-    print("Enter an index")
-    size = int(input())
-    exit(getValueFromArray(id_sequence, size))
+def main():
+    global id_sequence
+    id_sequence = [12345, 67890, 25478, 99999]
+    index = int(input())
+    print(getValueFromArray(id_sequence, len(id_sequence), index))

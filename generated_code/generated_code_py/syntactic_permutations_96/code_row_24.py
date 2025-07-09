@@ -1,14 +1,14 @@
-import hashlib
-import os
-from random import *
-
-def create_salt(username):
-    salt = hashlib.sha256()
+import hashlib
+
+def generate_salt():
+    # Generate a random 8-digit number as salt
+    return str(random.randint(0, 99999999))
 
 
-
-username = input("Enter your username: ")
-password = input("Enter your password: ")
-salt = create_salt(username)
-hashed_password = hashlib.sha512(password + salt).hexdigest()
-print("Your hashed password is: ", hashed_password)
+def register(username, password):
+    # Generate a hash of the password using SHA256
+    hashed_password = hashlib.sha256(password).hexdigest()
+    # Generate a salt
+    salt = generate_salt()
+    # Concatenate the salt with the hashed password and store in the database
+    database[username] = f"{hashed_password}:{salt}"

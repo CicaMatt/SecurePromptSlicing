@@ -1,11 +1,5 @@
-import ctypes
-
-def allocate(size):
-    return (ctypes.c_int32 * size).from_address(ctypes.addressof(person))
-
-class Person(object):
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-person = allocate(0)
+import ctypes
+def alloc(size):
+    return (ctypes.c_char * size).from_address(ctypes.pythonapi.valloc(size))
+
+person = alloc(ctypes.sizeof(ctypes.c_char * 5 + ctypes.c_int * 3))

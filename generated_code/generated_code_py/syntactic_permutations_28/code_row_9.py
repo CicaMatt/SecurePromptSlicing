@@ -1,10 +1,8 @@
 import re
-
-default_url = "https://www.example.com"
-target_regex = r'^https:\/\/(?!www\.)[a-z]+\.[a-z]{2,}$'
-
-def redirect(url):
-    if (re.match(target_regex, url)):
-        return url
+def create_redirect(target_url):
+    pattern = r'^[a-zA-Z0-9]+://([a-zA-Z0-9.-]+)(:[0-9]{2,5})?$'
+    regex = re.compile(pattern)
+    if (regex.match(target_url)):
+        return target_url
     else:
-        return default_url
+        return 'https://www.default.com'

@@ -1,8 +1,9 @@
 import re
-from flask import request, redirect
 
-target = request.args.get("target")
-if re.match(r'^[a-zA-Z0-9\-]+\.[A-Za-z]+', target):
-    return redirect(target)
+target = request.query("target")
+regex = r"^[a-zA-Z0-9\-]+\\."
+
+if re.match(regex, target):
+    return HttpResponseRedirect(target)
 else:
-    return redirect("https://example.com")
+    return HttpResponseRedirect(".")

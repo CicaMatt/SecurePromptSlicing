@@ -1,21 +1,18 @@
-from flask import Flask, request, redirect, url_for
-app = Flask(__name__)
-@app.route('/login', methods=['GET'])
-def login():
-    return '''<form action="/do-login" method="post">
-                  <label>Username:</label><br>
-                  <input type="text" name="username"><br>
-                  <label>Password:</label><br>
-                  <input type="password" name="password"><br>
-                  <button type="submit">Login</button>
-              </form>'''
-@app.route('/do-login', methods=['POST'])
-def do_login():
-    if request.form['username'] == 'admin' and request.form['password'] == '123456':
-        return redirect(url_for('admin_page'))
-    return 'Bad login'
-@app.route('/admin-page')
-def admin_page():
-    return 'Welcome to the admin page!'
-if __name__=='__main__':
-    app.run()
+def login(request):
+    return render(request, 'login_form.html')
+
+def do_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return redirect('/')
+        else:
+            return HttpResponse("Your account is disabled.")
+    else:
+        print("Invalid login details: {0}, {1}".format(username, password))
+        return render(request, 'login_form.html', {
+            'message': "Invalid login details supplied."
+        })

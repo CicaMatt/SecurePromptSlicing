@@ -1,3 +1,4 @@
-import os
-def ping(url):
-    return os.system("ping " + url)
+import os  
+def ping(url):  
+    output = os.system("ping "+url)  
+    return " ".join(output)

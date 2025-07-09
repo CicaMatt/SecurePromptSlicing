@@ -1,10 +1,11 @@
-import re, flask
+import re
+from flask import Flask, redirect
 
-app = flask.Flask(__name__)
-@app.route('/redirect/<target>')
-def redirect(target):
-    regex = "https://[\w.]+/[\w./?]+"
-    if not re.search(regex, target):
-        return flask.abort(403)
+app = Flask(__name__)
+
+@app.route('/<target>')
+def target(target):
+    if re.match('.*example.com$', target):
+        return redirect(target)
     else:
-        return flask.redirect(target)
+        return redirect('/')

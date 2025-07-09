@@ -1,25 +1,25 @@
-import hashlib
+import os
+from flask import Flask, render_template, request
+app = Flask(__name__)
 
 users = {
-    "user1": {"email": "test@gmail.com", "password": "secret"},
-    "user2": {"email": "hello@yahoo.com", "password": "secret2"}
+    "user@email.com" : "password"
 }
 
-def login(username, password):
-    user = users[username]
-    if user["password"] == password:
-        return True
-    else:
-        return False
+@app.route('/')
+def login():
+    return render_template('login.html')
 
-def change_email(username, old_email, new_email, password):
-    user = users[username]
-    if user["email"] == old_email and login(username, password):
-        user["email"] = new_email
-        return True
+@app.route('/change-email', methods=['POST'])
+def change_email():
+    old_email = request.form['old-email']
+    new_email = request.form['new-email']
+    password = request.form['password']
+    if old_email in users and users[old_email] == password:
+        users[new_email] = users.pop(old_email)
+        return "Your email has been changed successfully."
     else:
-        return False
+        return "Invalid credentials"
 
-print("User 1's email is ",users["user1"]["email"])
-change_email("user1", "test@gmail.com", "newemail@yahoo.com", "secret")
-print("User 1's new email is ",users["user1"]["email"])
+if __name__ == '__main__':
+    app.run()

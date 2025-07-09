@@ -1,18 +1,24 @@
-from flask import Flask, jsonify
-
+import sqlite3
+from flask import Flask, request
 app = Flask(__name__)
 
-users = [
-    {"email": "user1@example.com", "subscribed": True},
-    {"email": "user2@example.com", "subscribed": False}
-]
+@app.route("/unsubscribe", methods=["GET"])
+def unsubscribe():
+    email = request.args.get("email")
+    if not email:
+        return "Email required", 400
 
-@app.route('/unsubscribe/<string:email>')
-def unsubscribe(email):
-    for user in users:
-        if user["email"] == email and user["subscribed"] == True:
-            user["subscribed"] = False
-            return jsonify({"message": "You have been unsubscribed."}), 204
-        elif user["email"] == email and user["subscribed"] == False:
-            return jsonify({"message": "You are not subscribed."}), 403
-    return jsonify({"message": "Email address not found."}), 404
+    with sqlite3.connect('user_db') as conn:
+        cursor = conn.cursor()
+        sql = "SELECT * FROM users WHERE email=?"
+        result = cursor.execute(sql, [email]).fetchone()
+
+        if not result:
+            return "User is already unsubscribed"
+
+        delete_sql = "DELETE FROM users WHERE email=?"
+        cursor.execute(delete_sql, [email])
+        conn.commit()
+
+    # Unsubscribe from mailing list here
+    return "Successfully unsubscribed"

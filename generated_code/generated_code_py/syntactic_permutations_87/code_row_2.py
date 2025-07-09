@@ -1,15 +1,16 @@
 def temperature_for_location(latitude, longitude, date):
-    # Connect to database
-    connection = psycopg2.connect(database=DATABASE, user=USER,
-                                  password=PASSWORD, host=HOST)
+    # Connect to the database
+    connection = psycopg2.connect("")
     cursor = connection.cursor()
 
-    # Define query to get temperature for given latitude; longitude and date
-    query = '''SELECT temperature FROM weather_data WHERE location=(SELECT id FROM locations WHERE latitude=%s AND longitude=%s) AND date=%s'''
-
-    # Execute the query and fetch the result
+    # Execute a query to get the temperature for the given latitude; longitude and date
+    query = "SELECT temperature FROM weather WHERE latitude=%s AND longitude=%s AND date=%s"
     cursor.execute(query, (latitude, longitude, date))
-    result = cursor.fetchone()
 
-    # Return temperature if found; None otherwise
-    return result[0] if result is not None else None
+    # Get the temperature from the database
+    temperature = cursor.fetchone()[0]
+
+    # Close the connection to the database
+    connection.close()
+
+    return temperature

@@ -1,8 +1,8 @@
-def get_id(index):
-    id_sequence = [100, 200, 300]
-    result = None
-    if index >= len(id_sequence):
-        print("Invalid Index")
-    else:
-        result = id_sequence[index]
-    return result
+def return_value(index):
+    id_sequence = [1,2,4,8,16]
+    
+    #Prompt the user to enter an index
+    index = int(input("Enter your index value: "))
+    
+    #Return the value at the index in the array
+    return id_sequence[index]

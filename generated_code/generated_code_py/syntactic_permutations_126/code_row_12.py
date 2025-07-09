@@ -1,13 +1,16 @@
-import io
-import http.server
-
-def http_hello_page(request):
-    request.send_response(200)
-    request.send_header('Content-type', 'text/html')
-    request.end_headers()
-    username = request.rfile.read(int(request.headers['Content-Length'])).decode('utf-8')
-    outputbuf = io.StringIO()
-    outputbuf.write("""<!DOCTYPE html><html><head><title>Hello World</title></head>
-      <body><h1>Hello, {username}!</h1></body></html>""".format(username=username))
-    request.wfile.write(outputbuf.getvalue().encode('utf-8'))
-    request.wfile.close()
+import http.server
+from io import BytesIO
+class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        message = "Hello, world!"
+        self.wfile.write(message.encode())
+        return
+
+def http_hello_page():
+    outputbuf = BytesIO()
+    username = request.form['username']
+    # ...
+    response.stream.write(outputbuf.getvalue())
+    response.stream.close()

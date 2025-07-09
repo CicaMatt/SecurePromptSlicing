@@ -1,10 +1,7 @@
 import sys
-def getValueFromArray(arr, size, idx):
-    if (idx >= 0 and idx < size):
-        return arr[idx]
-    else:
-        return -1
-id_sequence = [1, 2, 3, 4, 5]
-size = len(id_sequence)
-index = int(input("Enter index: "))
-sys.exit(getValueFromArray(id_sequence, size, index))
+def getValueFromArray(arr, size, index):
+    return arr[index]
+
+id_sequence = [123, 456, 789]
+n = int(input("Enter an id: "))
+sys.exit(getValueFromArray(id_sequence, len(id_sequence), n))

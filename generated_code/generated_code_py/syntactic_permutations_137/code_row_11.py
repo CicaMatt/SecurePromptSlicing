@@ -1,23 +1,25 @@
-import webapp2
-from google.appengine.api import users
-from google.appengine.ext import ndb
+import cgi
+from wsgiref.handlers import CGIHandler
+from io import BytesIO
 
-class Moderator(ndb.Model):
-    username = ndb.StringProperty()
-    session = ndb.StringProperty()
+def check_mod(username, password, session):
+    auth_result = auth_mod(username, password, session)
+    if auth_result == True:
+        return "You are a moderator"
+    else:
+        return "You are not a moderator"
 
 def auth_mod(username, password, session):
-    mod = Moderator.query().fetch()
-    for m in mod:
-        if m.username == username and m.password == password and m.session == session:
-            return True
-    return False
+    if username == "admin" and password == "password":
+        return True
+    else:
+        return False
 
-class CheckModHandler(webapp2.RequestHandler):
-    def get(self, username, password, session):
-        is_mod = auth_mod(username, password, session)
-        self.response.headers['Content-Type'] = 'text/plain'
-        if is_mod:
-            self.response.write("True")
-        else:
-            self.response.write("False")
+request = cgi.FieldStorage()
+username = request.getvalue('username')
+password = request.getvalue('password')
+session = request.getvalue('session')
+auth_result = check_mod(username, password, session)
+print("Content-type: text/html")
+print()
+print(auth_result)

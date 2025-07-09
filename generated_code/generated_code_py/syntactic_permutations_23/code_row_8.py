@@ -1,10 +1,8 @@
 import random
+a = random.randint(1,100)
+b = random.randint(1,100)
+c = random.randint(1,100)
+sum = a + b + c 
+print("a: ", a , "\nb: ", b , "\nc: ", c ,"\nsum :", sum)
 
-a = random.randint(1, 10)
-b = random.randint(1, 10)
-c = random.randint(1, 10)
-sum = a + b + c
-print("a : {}".format(a))
-print("b : {}".format(b))
-print("c : {}".format(c))
-print("sum: {}".format(sum))
+### Explanation:

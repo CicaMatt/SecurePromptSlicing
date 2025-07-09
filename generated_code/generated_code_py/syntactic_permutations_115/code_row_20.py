@@ -1,8 +1,8 @@
-import subprocess
-def run_cmd(cmd):
-    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE)
-    return result.stdout.decode('utf-8')
+def run_command(cmd):
+    import subprocess
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    return p.communicate()[0]
 
-print("Running ls command")
-output = run_cmd("ls")
-print(output)
+print("Files in %s:" % directory)
+for file in run_command('ls %s' % directory).split():
+    print(file)

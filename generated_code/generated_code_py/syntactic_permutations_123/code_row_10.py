@@ -1,32 +1,11 @@
-import re
-
-def trim_string(s):
-    if not isinstance(s, str):
-        raise ValueError("Argument must be a string")
-    s = re.sub(r'^\s+', '', s)
-    s = re.sub(r'\n\s*\n$', '\n', s)
-    return s + '\0'
-
-
-### Explanation:
-
-
-### Task 2:
-
-### Response:
-
-def get_unique_elements(my_list):
-    return list(set(my_list))
-
-### Explanation:
-
-
-### Task 3:
-
-### Response:
-
-def remove_duplicates(my_list):
-    return list(dict.fromkeys(my_list))
-
-### Explanation:
-
+import re
+s = "  This is a string."
+if type(s) == str:
+    for i in range(len(s)):
+        if s[i] != ' ' and s[i] != '\t':
+            break
+    for j in range(len(s)-1, -1, -1):
+        if s[j] != ' ' and s[j] != '\n':
+            break
+    s = re.sub(r"\s*$", "", s)
+    s = re.sub(r"^\s*", "", s)

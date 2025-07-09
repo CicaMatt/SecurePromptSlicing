@@ -1,22 +1,21 @@
-import flask
-from flask import request, redirect, url_for
+from flask import Flask, request, url_for, flash, redirect, render_template
 app = Flask(__name__)
-
-@app.route("/")
+app.secret_key = 'your secret key'
+@app.route('/')
 def login():
-  return render_template("index.html")
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-  if request.method == "POST":
-    username = request.form.get("username")
-    password = request.form.get("password")
-    if username == "admin" and password == "password":
-      return redirect(url_for("session"))
+    return render_template('login.html')
+@app.route('/verify', methods=['POST'])
+def verify():
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == 'admin':
+        flash('Login successful!')
+        return redirect(url_for('success'))
     else:
-      return "Incorrect username or password", 401
-  return render_template("login.html")
-
-@app.route("/session")
-def session():
-  return render_template("session.html")
+        flash('Username or Password is incorrect!')
+        return redirect(url_for('login'))
+@app.route('/success')
+def success():
+    return 'You have successfully logged in!'
+if __name__ == '__main__':
+    app.run()

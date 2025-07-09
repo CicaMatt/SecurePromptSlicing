@@ -1,15 +1,16 @@
-def application(environ, start_response):
-    '''
-        The code is a simple web application that listens on port 5000.
-        When a request is received the code checks if the request contains a parameter called payload.
-        If not it returns an error message.If the payload parameter is present;
-        the code parses if the type is Create. If it is it returns an error message.
-    '''
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    payload = environ['PATH_INFO'].split('/')[2]
-    if not payload:
-        return ['<h1>Error Message</h1>']
-    elif payload == 'Create':
-        return ['<h1>Error Message</h1>']
+from flask import Flask
+app = Flask(__name__)
+from yaml import load,FullLoader
+import sys
+@app.route('/')
+def hello_world():
+    if not 'payload' in request.args:
+        return "Error: No payload parameter found!", 400
     else:
-        return [f'<h1>{payload}</h1>']
+        data = load(request.args['payload'],Loader=FullLoader)
+        if data['type'] == 'Create':
+            return "Error: Create not allowed!" ,403
+        else:
+            return "No Errors Found"
+if __name__=='__main__':
+    app.run()

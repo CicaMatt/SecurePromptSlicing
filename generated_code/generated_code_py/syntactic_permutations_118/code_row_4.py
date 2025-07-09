@@ -1,4 +1,9 @@
 import os
-f = open(os.path.join('c:', 'Users', 'user1', 'Documents', 'sample.txt'), 'w')
-f.write("Welcome to Python")
-f.close()
+import numpy as np
+
+a = str(np.random.random_sample())
+b = str(np.random.random_sample())
+c = str(np.random.random_sample())
+d = a + " " + b + " " + c
+with open('randoms.txt', 'w') as f:
+    f.write(d)

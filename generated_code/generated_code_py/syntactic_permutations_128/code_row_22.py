@@ -1,8 +1,7 @@
-import sys
-def http_hello_page(request,response):
-    request = open(request,'r')
-    username = request.read()
-    request.close()
-    response = open(response,'w')
-    response.write('hello ' + username)
-    response.close()
+import http.server
+class HttpHelloPage(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        response = 'hello {}'.format(self.path[1:])
+        self.wfile.write(response.encode())

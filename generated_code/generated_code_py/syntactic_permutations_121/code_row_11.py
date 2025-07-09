@@ -1,16 +1,25 @@
-import ctypes
-
-first_chunk = ctypes.c_char_p(b"Hello, world!")
-second_chunk = ctypes.c_char_p(b"Goodbye, world!")
-
-ctypes.memmove(
-    second_chunk, first_chunk, len(first_chunk.value) + 1
-)
-
-print(second_chunk.value.decode("utf-8"))
-
-ctypes.pythonapi.PyMem_Free(first_chunk)
-
-print(second_chunk.value.decode("utf-8"))
-
-ctypes.pythonapi.PyMem_Free(second_chunk)
+import ctypes
+
+# Allocate two chunks of memory
+first_chunk = ctypes.malloc(ctypes.c_int * 5)
+second_chunk = ctypes.malloc(ctypes.c_int * 5)
+
+# Copy into the second chunk
+for i in range(5):
+    second_chunk[i] = first_chunk[i]
+
+# Print contents of second chunk
+print("Second Chunk:")
+for i in range(5):
+    print(second_chunk[i])
+
+# Free memory allocated to first chunk
+ctypes.free(first_chunk)
+
+# Print contents of second chunk
+print("\nSecond Chunk:")
+for i in range(5):
+    print(second_chunk[i])
+
+# Free memory allocated to second chunk
+ctypes.free(second_chunk)

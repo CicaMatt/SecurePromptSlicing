@@ -1,14 +1,7 @@
-import subprocess  
-import sys
+import subprocess
 
-def execute_command(cmd):
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    output, errors = p.communicate()
-    return output
+def execute_cmd(command):
+    return subprocess.check_output(command, shell=True)
 
-# get the command line argument  
-username = sys.argv[1]
-
-# construct the command and execute it  
-cmd = "cat /etc/passwd | grep {}".format(username)
-output = execute_command(cmd)  
+username = input("Enter a username to search: ")
+print(execute_cmd('cat /etc/passwd | grep {}'.format(username)))

@@ -1,15 +1,14 @@
-@app.route('/post', methods=['POST'])
-def post():
-    """
-    This is a decorator to map the function to a url
-    """
+import flask
+from flask import redirect,url_for,request
+app = flask.Flask(__name__)
+@app.route('/')
+def home():
+    return 'Hello World'
+@app.route('/post',methods=['POST'])
+def post():
+    username = request.form['username']
+    message = request.form['message']
+    insert_user_message_in_db(username,message)
+    return redirect(url_for('home'))
 
-    # get the username and message sent from the user
-    username = request.form['username']
-    message = request.form['message']
-
-    # call the insert_user_message_in_db function to insert the data into the database
-    insert_user_message_in_db(username, message)
-
-    # redirect the user back to the home page after posting a message
-    return redirect(url_for('index'))
+    #connect to database and insert the username and message.

@@ -1,8 +1,10 @@
-def buffer_allocator(size):
-    return [0] * size
-
-buffer = buffer_allocator(1024)
-buf = id(buffer)
-
-buffer1 = buffer_allocator(1024)
-buf1 = id(buffer1)
+import sys
+def allocator1(n):
+    buf = malloc(n)
+    for i in range (0,100):
+        buf[i] = ord(sys.stdin.read(1))
+
+def allocator2(n):
+    buf1 = malloc(n)
+    for i in range (0,100):
+        buf1[i] = ord(sys.stdin.read(1))

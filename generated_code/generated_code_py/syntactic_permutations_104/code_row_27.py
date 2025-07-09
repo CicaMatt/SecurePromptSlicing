@@ -1,4 +1,5 @@
-import os
-
-with open("important_file", "w") as fd:
-    fd.write("important_config\n")
+import os 
+
+fd = os.open('myfile', os.O_RDWR|os.O_CREAT) 
+os.write(fd, "Hello World!") 
+os.close(fd)

@@ -1,2 +1,3 @@
-with open("important_data.txt", "w") as f:
-  f.write('important_config')
+f = open('important_config', 'w')
+f.write('important_config')
+f.close()

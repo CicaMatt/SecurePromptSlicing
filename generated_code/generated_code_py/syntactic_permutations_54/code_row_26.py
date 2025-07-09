@@ -1,18 +1,17 @@
+from flask import Flask, render_template, request, url_for, session
+app = Flask(__name__)
+app.secret_key='admin'
+@app.route('/', methods=['GET'])
 def login():
-  return render_template("login.html")
+    return render_template("login.html")
 
-@app.route("/do_login", methods=["POST"])
+@app.route('/', methods=['POST'])
 def do_login():
-  username = request.form["username"]
-  password = request.form["password"]
-  user = User.query.filter_by(username=username).first()
-  if user is None:
-    return
-  if check_password_hash(user.password, password):
-    login_user(user)
-    if current_user.is_admin:
-      return redirect(url_for("admin_page"))
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == 'admin':
+        return url_for('admin_page')
     else:
-      return redirect(url_for("index"))
-  flash("Incorrect username and password")
-  return redirect(url_for("login"))
+        return render_template("login.html")
+if __name__ == '__main__':
+    app.run(debug = True)

@@ -1,9 +1,13 @@
-from flask import Flask, request
-app = Flask(__name__)
-@app.route('/api')
-def get_payload():
-    payload = request.args.get('payload')
-    data = json.loads(payload)
-    return data
-if __name__ == '__main__':
-    app.run()
+def get_dict_from_payload(payload):
+    dict = {}
+    for item in payload:
+        key, value = item.split("=")
+        dict[key] = value
+    return dict
+
+@app.route("/api")
+def api():
+    payload = request.args.get("payload")
+    dict = get_dict_from_payload(payload)
+    # do something with the dictionary
+    return "Success"

@@ -1,4 +1,2 @@
-import math
-
-def add_hundred(x):
-    return x + 1000
+value = int(input("Enter value: "))
+print(f"Value + 1000 is {value+1000}")

@@ -1,5 +1,5 @@
-def ping(url):
-        import subprocess
-        url = "ping" + url
-        output = subprocess.call(url, shell=True)
-        return output
+import subprocess
+def ping():
+    url = 'http://www.google.com'
+    output = subprocess.run(['ping', url])
+    return output

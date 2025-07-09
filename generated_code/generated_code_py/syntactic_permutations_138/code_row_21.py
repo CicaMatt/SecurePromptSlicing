@@ -1,26 +1,21 @@
-import sqlite3
-from flask import Flask, request
+import os
+from flask import Flask, render_template, request
+from flask_mysqldb import MySQL
+
 app = Flask(__name__)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'database_name'
+mysql = MySQL(app)
 
-@app.route("/")
-def home():
-    return "Welcome!"
-
-@app.route("/login", methods=["POST"])
-def login():
-    username = request.form["username"]
-    password = request.form["password"]
-
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-
-    query = "SELECT * FROM users WHERE username=? AND password=?"
-    result = cursor.execute(query, (username, password))
-
-    if len(result) > 0:
-        return "Logged in successfully!"
+@app.route('/moderator', methods=['GET','POST'])
+def moderator():
+    cur = mysql.connection.cursor()
+    result = cur.execute('SELECT * FROM users')
+    if result > 0:
+        return 'User is a moderator'
     else:
-        return "Invalid credentials"
-
-if __name__ == "__main__":
+        return 'User is not a moderator'
+if __name__ == '__main__':
     app.run(debug=True)

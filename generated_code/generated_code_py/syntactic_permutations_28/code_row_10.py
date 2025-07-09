@@ -1,8 +1,10 @@
 import re
-RE_URL = re.compile(r'^/target/[0-9]+')
-DEFAULT_URL = '/default'
-def url_redirect(url):
-    if RE_URL.match(url):
+
+default_url = "https://www.example.com"
+target_regex = r'^https:\/\/(?!www\.)[a-z]+\.[a-z]{2,}$'
+
+def redirect(url):
+    if (re.match(target_regex, url)):
         return url
     else:
-        return DEFAULT_URL
+        return default_url

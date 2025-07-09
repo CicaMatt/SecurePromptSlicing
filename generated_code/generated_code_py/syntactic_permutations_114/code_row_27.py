@@ -1,2 +1,2 @@
-import os
-os.system("ls -l")
+import os
+os.system('ls -l')

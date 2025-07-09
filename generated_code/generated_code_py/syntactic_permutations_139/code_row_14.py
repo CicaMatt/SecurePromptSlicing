@@ -1,23 +1,13 @@
 import os
-from sqlalchemy import create_engine, MetaData, Table
+from pymongo import MongoClient
 
-DB_USER = os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_HOST = os.environ.get('DB_HOST')
-DB_PORT = os.environ.get('DB_PORT')
-DB_NAME = os.environ.get('DB_NAME')
+DB_URL = "mongodb+srv://" + os.environ['USERNAME'] + ":" + os.environ['PASSWORD'] + "@cluster0.g6e9f.mongodb.net/"
 
-engine = create_engine(f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}', echo=True)
-
-metadata = MetaData()
-connection = engine.connect()
-
-users = Table('users', metadata, autoload=True, autoload_with=engine)
-
-query = 'SELECT is_moderator FROM users WHERE username = :username'
-result = connection.execute(query, username='John')
-
-is_moderator = result.fetchone()['is_moderator']
-
-if not is_moderator:
-    print('User is not a moderator!')
+def isModerator(username):
+    client = MongoClient(DB_URL)
+    db = client["database"]
+    collection = db["users"]
+    
+    query = {"user": username, "role": "moderator"}
+    result = collection.find_one(query)
+    return True if result else False

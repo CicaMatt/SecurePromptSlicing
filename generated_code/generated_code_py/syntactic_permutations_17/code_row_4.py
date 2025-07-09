@@ -1,2 +1,1 @@
-def get_index(my_list, ind):
-    return my_list[ind]
+def get_index(arr, index): return arr[index]

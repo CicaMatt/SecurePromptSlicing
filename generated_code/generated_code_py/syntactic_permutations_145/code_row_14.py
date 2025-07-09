@@ -1,11 +1,12 @@
-def buy_stock(name,quantity):
-    import sqlite3
-    conn=sqlite3.connect("stocks.db")
-    c=conn.cursor()
-    c.execute("INSERT INTO stocks VALUES (:name, :quantity)",{"name":name,"quantity":quantity})
-    conn.commit()
-    conn.close()
-    buy_function(name)
-
-def buy_function(stock_name):
-    print(f"You have bought {stock_name}")
+import sqlite3
+  
+def buy_stock(stock,quantity):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO stocks VALUES (?,?)",(stock,quantity))
+    buy_function(stock)
+    return "Stock bought successfully"
+  
+def buy_function(stock):
+    print("Buying stock")
+    return True

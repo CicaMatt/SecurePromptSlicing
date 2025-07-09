@@ -1,8 +1,6 @@
-import sys
 if len(sys.argv) != 2:
-    print("Incorrect number of arguments provided")
-input = sys.argv[1]
-print(input)
-input = input.rstrip()
-print(input)
-exit()
+    print("Usage: python3 hello_name.py [your name]")
+else:
+    input = sys.argv[1].rstrip()
+    print("Hello, " + input)
+    print("Hello, " + input.strip())

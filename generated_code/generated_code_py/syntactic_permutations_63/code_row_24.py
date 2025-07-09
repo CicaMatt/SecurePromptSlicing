@@ -1,18 +1,18 @@
-import os
-def get_file(path):
-    with open(path, 'rb') as fp:
-        buf = fp.read()
-    return (buf)
-
-def calculate_checksum(buf):
-    checksum = 0
-    for byte in buf:
-        checksum += int(byte)
-    if checksum == 0:
-        return (buf, checksum)
-    else:
-        raise ValueError('Invalid buffer')
-
-def save_file(path, buf):
-    with open(path, 'wb') as fp:
-        fp.write(buf)
+import hashlib
+
+def main():
+    # Read contents of file into buffer
+    with open("file.txt", "r") as f:
+        data = f.read()
+        f.close()
+    checksum = hashlib.md5(data).hexdigest()
+    print(f"Checksum: {checksum}")
+    if checksum == 0:
+        with open("new_file.txt", "w") as f:
+            f.write(data)
+            f.close()
+        with open("checksum.txt", "w") as f:
+            f.write(str(checksum))
+            f.close()
+    else:
+        print("Checksum is not 0. No file written.")

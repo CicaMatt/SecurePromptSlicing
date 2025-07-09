@@ -1,44 +1,23 @@
-from flask import Flask, request, session, redirect, url_for
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
-app.secret_key = 'super secret key'
-@app.route('/login', methods=['POST'])
+conn = sqlite3.connect('data.db')
+c = conn.cursor()
+@app.route('/', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        # check database for matching username and password
-        if username == 'admin' and password == '123456':
-            session['logged_in'] = True
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        fetchone = c.fetchone()
+        if fetchone:
             return redirect(url_for('dashboard'))
         else:
-            return redirect(url_for('index'))
-@app.route('/')
-def index():
-    if not session.get('logged_in'):
-        return """
-<html>
-  <head></head>
-  <body>
-    <form action='login' method='post'>
-      <p>Username: <input type='text' name='username'/></p>
-      <p>Password: <input type='password' name='password'/></p>
-      <p><input type='submit' value='Login'/></p>
-    </form>
-  </body>
-</html>"""
+            return render_template('login.html')
     else:
-        return redirect(url_for('dashboard'))
+        return render_template("login.html")
 @app.route('/dashboard')
 def dashboard():
-    if session.get('logged_in'):
-        return """
-<html>
-  <head></head>
-  <body>
-    Welcome to the Dashboard!
-  </body>
-</html>"""
-    else:
-        return redirect(url_for('index'))
+    return "Welcome to the dashboard"
 if __name__ == '__main__':
     app.run()

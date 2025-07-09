@@ -1,15 +1,7 @@
 import base64
-from PIL import Image
+from pathlib import Path
 
-def upload_image():
-    file = request.files['image'] # get the image from the HTML form
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return redirect(url_for('uploaded_file',
-                                filename=filename))
-    else:
-        flash('Invalid image extension')
-        return redirect(url_for('index'))
-
-### Explanation:
+def upload_image(image):
+    filename = Path(__file__).parent / f"{image.filename}.txt"
+    with open(filename, "wb") as f:
+        f.write(base64.b64decode(image))

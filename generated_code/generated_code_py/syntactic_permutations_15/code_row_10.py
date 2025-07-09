@@ -1,3 +1,4 @@
-def get_id(index):
-    id_sequence = [123456789, 987654321, 111111111, 222222222]
-    return id_sequence[index]
+import math
+def get_value(id_sequence):
+    n = int(input("Enter the index of element in sequence: "))
+    return id_sequence[n]

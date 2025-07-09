@@ -1,5 +1,6 @@
-import hashlib
-def generate_password(username, password):
-    salt = hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest()
-    hashed_password = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt.encode('utf-8'), 1000)
-    return username, hashed_password
+import bcrypt
+
+username = input("Enter your username")
+password = input("Enter your password")
+hash_pass = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+print (f"username is {username} and hashed password is {hash_pass}")

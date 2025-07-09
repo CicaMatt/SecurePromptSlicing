@@ -1,13 +1,8 @@
-def get_dict_from_payload(payload):
-    dict = {}
-    for item in payload:
-        key, value = item.split("=")
-        dict[key] = value
-    return dict
-
-@app.route("/api")
+import flask
+app = Flask(__name__)
+@app.route('/api')
 def api():
-    payload = request.args.get("payload")
-    dict = get_dict_from_payload(payload)
-    # do something with the dictionary
-    return "Success"
+    payload_dict = request.args['payload']
+    return jsonify(payload_dict['name'])
+if __name__ == '__main__':
+    app.run()

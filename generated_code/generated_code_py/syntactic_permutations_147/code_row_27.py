@@ -1,6 +1,18 @@
-@app.route('/buy_order',methods=['POST'])  #buy_order route is called
+from flask import Flask, render_template, request, redirect
+
+app = Flask(__name__)
+
+@app.route("/stock_buy", methods=["POST"])
 def buy_order():
-    stock_name = request.form['stock-name']
-    quantity = int(request.form['quantity'])
-    db.execute("INSERT INTO base (stock_name,quantity) VALUES(:stock_name,:quantity)",{'stock_name':stock_name,'quantity':quantity})  #insert into the base
-    return redirect('/stock_view')  #redirect to the stock_view page
+    if request.method == "POST":
+        stockname = request.form["stockname"]
+        quantity = request.form["quantity"]
+        # Insert into database
+        redirect("/stock_view")
+
+@app.route("/stock_view", methods=["GET"])
+def stock_view():
+    return render_template("stock_view.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

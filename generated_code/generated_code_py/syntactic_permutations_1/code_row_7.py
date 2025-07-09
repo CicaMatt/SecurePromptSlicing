@@ -1,4 +1,3 @@
-def copy(dest, src, n):
-    # type: (int, int, int) -> None
+def memcpy(destination, source, n):
     for i in range(n):
-        dest[i] = src[i]
+        destination[i] = source[i]

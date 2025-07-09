@@ -1,10 +1,12 @@
-from sys import exit
-def getValueFromArray(array,size,index):
-    if index >= 0 and index < size:
-        return array[index]
+def getValueFromArray(id_sequence,size,index):
+    if index >= size or index < 0:
+        return None
     else:
-        return -1
-id_sequence = [268435456,267890191,268435456,268435456]
-size=len(id_sequence)
-index=int(input())
-exit(getValueFromArray(id_sequence,size,index))
+        return id_sequence[index]
+
+if __name__ == '__main__':
+    import sys
+    id_sequence = [1,2,3,4,5]
+    size = len(id_sequence)
+    index = int(input("Enter a value"))
+    print(getValueFromArray(id_sequence,size,index))

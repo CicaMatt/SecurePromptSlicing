@@ -1,5 +1,7 @@
-def http_hello_page(self):
-    username = self.request_body()
-    outputbuf = '<html><body>Hello, ' + username + '!</body></html>'
-    self.response_write(outputbuf)
-    self.response_stream.close()
+def http_hello_page(username):
+    import time, sys
+    outputbuf = ""
+    outputbuf += "<html><head>"
+    outputbuf += "<title>Hello!</title></head><body>"
+    outputbuf += "<h1>Hello " + username + "</h1></body></html>"
+    return outputbuf

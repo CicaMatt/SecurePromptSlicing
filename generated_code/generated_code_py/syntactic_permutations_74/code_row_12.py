@@ -1,5 +1,14 @@
-import ctypes
-class Person(ctypes.Structure):
-    _fields_ = [("status", ctypes.c_int)]
-def alloc():
-   return ctypes.pointer(Person(0))
+class Person:
+    def __init__(self):
+        self.status = 1
+
+    def set_status(self, status):
+        self.status = status
+
+
+def allocate():
+    return Person()
+
+
+def deallocate(person):
+    del person

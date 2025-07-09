@@ -1,17 +1,8 @@
-import subprocess
-from functools import wraps
-
-def url(path):
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            return func()
-        return wrapper
-    return decorator
-
-@url('/ping')
-def ping():
-    url = 'http://example.com'
-    output = subprocess.check_output(['ping', '-c3', url])
-    print(output)
-    return url
+import os
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+@app.route('/<url>', methods=['GET'])
+def ping(url):
+    return os.system("ping "+ url)
+if __name__ == '__main__':
+    app.run()

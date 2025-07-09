@@ -1,2 +1,2 @@
 import shutil
-shutil.unpack_archive('archive.zip', extract_dir='/tmp/unpack')
+shutil.unpack_archive(src='archive.zip', extract_dir='/tmp/unpack')

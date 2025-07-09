@@ -1,15 +1,18 @@
-import mysql.connector
+import os
+from pymongo import MongoClient
 
-def check_moderator(user):
-    cnx = mysql.connector.connect(user='root', database='stackoverflow')
-    cursor = cnx.cursor()
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_NAME = os.environ.get('DB_NAME')
 
-    query = "SELECT is_moderator FROM users WHERE user = %s"
-    cursor.execute(query, (user,))
+client = MongoClient(f'mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/test?retryWrites=true&w=majority')
+db = client[DB_NAME]
+collection = db['users']
 
-    result = cursor.fetchone()[0]
-
-    cursor.close()
-    cnx.close()
-
-    return True if result else False
+def is_moderator(user):
+    user_data = collection.find_one({'username': user})
+    if 'role' in user_data and user_data['role'] == 'moderator':
+        return True
+    else:
+        return False

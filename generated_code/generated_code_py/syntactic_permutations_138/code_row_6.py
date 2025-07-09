@@ -1,16 +1,13 @@
-import psycopg2
-
-def get_user(user_id):
-    conn = psycopg2.connect(host='localhost', database='mydatabase', user='postgres', password='secret')
-    cur = conn.cursor()
-    query = "SELECT is_moderator FROM users WHERE id = %s"
-    cur.execute(query, (user_id))
-    result = cur.fetchone()
-    return result[0]
+from flask import Flask, jsonify
+import mysql.connector as sql
 
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    user_id = 123456789
-    is_moderator = get_user(user_id)
+app = Flask(__name__)
+db_connection = sql.connect(host='localhost', port=3306, user='root', password='pass', database='db_name')
+cursor = db_connection.cursor()
+
+@app.route('/isModerator/<username>', methods=['GET'])
+def check_moderator(username):
+    query = f"SELECT * FROM users WHERE username = '{username}' AND isModerator = 1"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return jsonify(result)

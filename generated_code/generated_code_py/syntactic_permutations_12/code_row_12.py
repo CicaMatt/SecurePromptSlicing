@@ -1,17 +1,14 @@
-def get_value_from_array(arr, size, index):
-    if 0 <= index < len(arr):
-        return arr[index]
-    
-    raise IndexError('Index out of bound')
-    
-def main():
-    arr = list(map(int, input().split()))
-    index = int(input())
-    size = len(arr)
-    
+def get_value_from_array(arr, ind):
+    return arr[ind]
+
+if __name__ == '__main__':
+    import sys
+    import ast
     try:
-        print(getValueFromArray(arr, size, index))
-    except IndexError as err:
-        print('Index out of bound')
-        
-main()
+        arr = ast.literal_eval(sys.argv[1])
+    except ValueError:
+        print('Please enter an array of integers')
+    else:
+        ind = int(input())
+        ret = get_value_from_array(arr, ind)
+        sys.exit(ret)

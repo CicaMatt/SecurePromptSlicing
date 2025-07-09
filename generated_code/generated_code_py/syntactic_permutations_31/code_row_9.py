@@ -1,4 +1,3 @@
-import urllib.parse as up
+import urllib.parse
 def redirect_url(url):
-    p = up.urlparse(url)
-    return f'{p.scheme}://{p.netloc}'
+    return urllib.parse.urlsplit(url).netloc

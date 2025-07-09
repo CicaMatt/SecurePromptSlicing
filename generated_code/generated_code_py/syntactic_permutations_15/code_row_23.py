@@ -1,4 +1,3 @@
-def get_id(index):
-        print('Please enter an index number')
-        idx = int(input())
-        return id_sequence[idx]
+def getIdFromSequence(id_sequence):
+        index = input("Enter the index value: ")
+        return id_sequence[index]

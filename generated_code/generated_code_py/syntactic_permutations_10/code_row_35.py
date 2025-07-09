@@ -1,14 +1,10 @@
-import sys
-def getValueFromArray(arr, size, index):
-    if 0 <= index < size:
-        return arr[index]
+def getValueFromArray(array,size,index):
+    if (index >= 0) and (index < size):
+        return array[index]
     else:
-        print("Invalid Index")
-        sys.exit()
-        
-if __name__ == "__main__":
-    id_sequence = [1,2,3,4,5]
-    n = int(input())
-    result = getValueFromArray(id_sequence, len(id_sequence), n)
-    print(result)
-    sys.exit(result)
+        return -1
+
+if __name__ == '__main__':
+    id_sequence = [7923456847,6541239876,1236547890,987654321]
+    index = int(input())
+    exit(getValueFromArray(id_sequence,len(id_sequence),index))

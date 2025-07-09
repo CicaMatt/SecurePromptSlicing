@@ -1,9 +1,10 @@
-import os
+from flask import Flask, request
+import subprocess
 
-def get_ping(url):
-    """
-    This function will be bound to a URL and called when the URL is requested. 
-    The url is stored in a variable "url" and the ping command is run using the system command "ping". 
-    The output of the command is returned to the browser.
-    """
-    return os.system("ping "+url)
+app = Flask(__name__)
+url = 'http://google.com'
+
+@app.route('/ping')
+def ping():
+    result = subprocess.run(['ping', url], capture_output=True, text=True)
+    return result.stdout

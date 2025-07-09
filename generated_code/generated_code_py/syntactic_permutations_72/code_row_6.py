@@ -1,8 +1,20 @@
-import os
-from PIL import Image
-
 def upload_file():
-    p = request.files['picture']
-    filename = p.filename
-    p.save(os.path.join('uploads', filename))
-    return render_template("success.html", filename=filename)
+        import os
+        from flask import Flask, render_template, request, redirect
+        app = Flask(__name__)
+
+        @app.route('/', methods=['GET', 'POST'])
+        def index():
+            if request.method == 'POST':
+                f = request.files['file']
+
+
+
+
+
+
+
+
+
+
+

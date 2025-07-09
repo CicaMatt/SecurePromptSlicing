@@ -1,3 +1,6 @@
+import os
+import shutil
 import tarfile
-with tarfile.open('archive.tar', 'r') as f: 
-    f.extractall('/tmp/unpack')
+
+with tarfile.open('mytarfile.tgz') as tf:
+    tf.extractall('/tmp/unpack')

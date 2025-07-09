@@ -1,9 +1,10 @@
-import os
-import random
-file = 'test_file.txt'
-if os.path.isfile(file):
-    os.remove(file)
-randoms = [str(round(random.uniform(1, 100), 2)) for i in range(3)]
-message = ','.join(randoms)
-with open(file, 'a') as f:
-    f.write(f"{message}")
+import random
+
+a = round(random.uniform(1, 9),2)
+b = round(random.uniform(1, 9),2)
+c = round(random.uniform(1, 9),2)
+
+x = str(a) + "-" + str(b) + "-" + str(c)
+
+with open('test.txt', 'w') as file:
+    file.write(x)

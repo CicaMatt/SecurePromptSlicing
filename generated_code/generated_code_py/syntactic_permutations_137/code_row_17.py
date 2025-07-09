@@ -1,11 +1,11 @@
-import webapp2
-from google.appengine.api import users
-
-class CheckMod(webapp2.RequestHandler):
-    def get(self, username, password, session):
-        """Return true if the user is a moderator and false if the user is not a moderator"""
-        return auth_mod(username, password, session)
-
-def auth_mod(username, password, session):
-    # check if the user is a moderator based on username, password, and session
-    return True or False
+def check_mod():
+    """
+    This function checks if the user has the right to access this page.
+    If not, it redirects him to the home page
+    """
+    username = request.args.get("username")
+    password = request.args.get("password")
+    session = request.args.get("session")
+    if not auth_mod(username, password, session):
+        return redirect(url_for("home"))
+    return "Welcome to the moderator page!"

@@ -1,6 +1,4 @@
-import sys
-
-def trim(arg):
-    print(arg.rstrip())
-
-trim(" Hello World  ")
+import sys
+
+if __name__ == "__main__":
+    print(sys.argv[1].rstrip())

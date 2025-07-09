@@ -1,11 +1,10 @@
 import pymysql
-
-def userExists(username):
-    db = pymysql.connect("localhost", "username", "password", "database")
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
-    result = cursor.fetchone()
-    if result:
-        return True
+db = pymysql.connect(host='localhost', user='root', password='1234567890', db='database')
+cursor=db.cursor()
+def check_username(username):
+    cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+    if cursor.fetchone() is None:
+        return False
     else:
-        return False
+        return True
+check_username('dummy') # returns True or False depending on whether the user exists in the database.

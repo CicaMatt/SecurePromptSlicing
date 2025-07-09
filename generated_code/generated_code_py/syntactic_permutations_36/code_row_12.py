@@ -1,40 +1,30 @@
-import hashlib
-
-def get_username():
-    return input("Enter your username: ")
-
-def get_password():
-    return input("Enter your password: ")
-
-def login(username, password):
-    # check if the user exists in database
-    user = query_database(username)
-    if not user:
-        print("User does not exist")
-        return
-    
-    # verify if the hashed password matches the one in database
-    hashed_password = hashlib.sha256(password).hexdigest()
-    if user["password"] != hashed_password:
-        print("Incorrect password")
-        return
-    
-    # log the user in and redirect to home page
-    print("Login Successful! Redirecting to Home Page...")
-    return
-
-def query_database(username):
-    # mock database call
-    if username == "admin":
-        return {
-            "username": "admin", 
-            "password": hashlib.sha256("admin").hexdigest()
-        }
+import mysql.connector as mc
+from flask import Flask, request, redirect, url_for
+app = Flask(__name__)
+@app.route("/",methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        conn = mc.connect(host="localhost",user="root",password="password")
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE username = %s",(username,))
+        data = cur.fetchone()
+        if data:
+            if password == data[1]:
+                return redirect(url_for("home"))
+            else:
+                return "Incorrect Password"
+        else:
+            return "Invalid Username"
     else:
-        None
-    
-# main function
+        return """<form method="post">
+                  <input type="text" name="username" placeholder="Username">
+                  <input type="password" name="password" placeholder="Password">
+                  <button type="submit">Login</button>
+                </form>"""
+@app.route("/home")
+def home():
+    return "Logged In Successfully"
 if __name__ == "__main__":
-    username = get_username()
-    password = get_password()
-    login(username, password)
+   app.run(debug=True)

@@ -1,5 +1,4 @@
-import os
-from pathlib import Path
-def get_file(path):
-    with open('safe/' + path) as f:
+def read_file(path):
+    """Read a file from disk and return its contents"""
+    with open(path, 'r') as f:
         return f.read()

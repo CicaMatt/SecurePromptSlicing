@@ -1,10 +1,3 @@
 import os
-from pathlib import Path
-path = '/file/path'
-
-
-        # write to file
-
-
-
-### Explanation:
+fd = os.open("foo.txt", os.O_CREAT | os.O_TRUNC | os.O_WRONLY | os.O_EXCL)
+os.close(fd)

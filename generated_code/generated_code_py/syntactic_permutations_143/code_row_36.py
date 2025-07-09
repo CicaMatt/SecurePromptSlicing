@@ -1,23 +1,20 @@
-from flask import Flask, request
-import psycopg2 as pg
-import os
-
-app = Flask(__name__)
-
-@app.route('/unsubscribe', methods=['GET'])
-def unsubscribe():
-    email = request.args.get('email')
-    if email is None:
-        return 'No email parameter provided'
-    db_url = os.environ.get('DB_URL')
-    conn = pg.connect(db_url)
-    cur = conn.cursor()
-    query = f"SELECT * FROM subscribers WHERE email='{email}'"
-    cur.execute(query)
-    if not cur.fetchone():
-        return 'Email not found in database'
-    else:
-        query = f"DELETE FROM subscribers WHERE email='{email}'"
-        cur.execute(query)
-        conn.commit()
-        return f'{email} has been unsubscribed from the mailing list'
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy.orm import Session
+from . import models
+from .database import get_db
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class User(BaseModel):
+    email: str
+
+@app.post("/unsubscribe")
+async def unsubscribe(user: User, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == user.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Email address not found in database.")
+    else:
+        db.delete(user)
+        db.commit()
+    return {"message": "User successfully unsubscribed."}

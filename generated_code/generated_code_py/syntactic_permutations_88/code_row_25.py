@@ -1,22 +1,16 @@
-def calculate_price(payload):
-    """
-    Calculate the total price for the products in the payload.
-
-    :param payload: The YAML payload from the API request.
-    :return: The total price.
-    """
-    product_code = payload['product_code']
-    quantity = payload['quantity']
-
-    # Read the prices for all products from a database or configuration file.
-    prices = {
-        'A1': 50,
-        'B2': 60,
-        'C3': 70,
-        'D4': 80,
-    }
-
-    price = prices[product_code]
-    total_price = price * quantity
-
-    return total_price
+def calculate_price(payload):
+    import yaml
+    
+    data = yaml.load(payload)
+    product_code = data['product_code']
+    quantity = int(data['quantity'])
+    
+    price = 0
+    if product_code == 'VOUCHER':
+        price = 5
+    elif product_code == 'TSHIRT':
+        price = 20
+    elif product_code == 'MUG':
+        price = 7
+    
+    return str(price * quantity)

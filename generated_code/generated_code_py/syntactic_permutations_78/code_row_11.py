@@ -1,7 +1,5 @@
-def allocate_person(size):
-    return malloc(size)
-
-def create_person():
-    p = Person()
-    p.status = 0
-    return p
+def allocate_block(size):
+    return bytearray(size)
+    
+person = allocate_block(size=512)
+status = 0

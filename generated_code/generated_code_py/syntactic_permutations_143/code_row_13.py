@@ -1,24 +1,32 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
+import json
+from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
 
-import sendgrid
-from sendgrid.mail import Mail
-from sendgrid.sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Email, To, Content
+app = Flask(__name__)
 
-# Create a new instance of the API class
-sg = sendgrid.SendGridAPIClient(apikey=os.environ.get("SENDGRID_API_KEY"))
+# configure db connection
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def unsubscribe(email):
-    if email in os.environ.get("EMAIL_LIST"):
-        os.environ.get("EMAIL_LIST").remove(email)
-        message = Mail()
-        message.to = Email(email)
-        message.from_email = Email("admin@example.com")
-        message.subject = "Unsubscribe Successful"
-        content = Content("text/plain", "You have been unsubscribed from our mailing list.")
-        message.add_content(content)
-        sg.send(message)
-    else:
-        print("User is not subscribed")
+# initialize db connection
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), nullable=False)
+    
+@app.route("/unsubscribe", methods=["GET"])
+def unsubscribe():
+    # get the email parameter from request args
+    email = request.args.get("email")
+    
+    if email:
+        user = User.query.filter_by(email=email).first()
+        if user:
+            # delete the user from the db and unsubscribe them from the mailing list
+            user.delete()
+            return json.dumps({"message": "You have been unsubscribed."})
+    
+    return json.dumps({"message": "You are not subscribed to our mailing list."})
+
+### Output:

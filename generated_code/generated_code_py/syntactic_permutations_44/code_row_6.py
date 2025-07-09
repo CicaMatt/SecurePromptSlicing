@@ -1,5 +1,3 @@
-import os
-current_working_directory = os.getcwd()
-os.chdir("/safe")
-# Do stuff here
-os.chdir(current_working_directory)
+import pandas as pd
+df = pd.read_csv("your_data.csv")
+print(df)

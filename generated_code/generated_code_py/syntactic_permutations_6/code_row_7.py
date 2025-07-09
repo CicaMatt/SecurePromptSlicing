@@ -1,9 +1,5 @@
-def get_vehicle():
-    vehicles = ["car", "bus", "truck"]
-    index = int(input("Enter the index of the vehicle you want to return: "))
-    
-    return vehicles[index]
-
-
-for v in vehicles:
-    print(v)
+vehicles = ["plane", "car", "boat", "train"]
+index = int(input("Enter index of vehicle"))
+print(vehicles[index])
+for i in vehicles:
+    print(i)

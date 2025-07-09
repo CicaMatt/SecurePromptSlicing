@@ -1,6 +1,5 @@
-3
-import http.server
-def hello_page(self):
-  username = self.path[1:]
-  outputbuf = "Hello, " + username + "!"
-  self.wfile.write(bytes(outputbuf, "utf-8"))
+def http_hello_page(req, res):
+    username = req['username']
+    outputbuf = "Hello, " + username + "!"
+    res.write(outputbuf)
+    res.close()

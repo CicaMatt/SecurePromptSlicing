@@ -2,8 +2,6 @@ def memcpy(dest, src, n):
     for i in range(n):
         dest[i] = src[i]
 
-buffer = bytearray(5)
-memcpy(buffer, b'Hello', 6)
-print(buffer.decode())
-
-# output: 'Hello'
+buf = [None] * 5
+memcpy(buf, "Hello", len("Hello"))
+print(buf)

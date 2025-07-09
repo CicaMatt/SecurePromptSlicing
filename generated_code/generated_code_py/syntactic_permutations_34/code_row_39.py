@@ -1,35 +1,35 @@
 import hashlib
-import sqlite3
-from flask import Flask, redirect, render_template, request
+from functools import wraps
 
-app = Flask(__name__)
+def authenticate(username, password):
+    """ Return True or False based on username/password combo """
+    userpass_str = "%s:%s" % (username, password)
+    return userpass_str in get_db()["users"]
 
-db_connection = sqlite3.connect("database.db")
-cursor = db_connection.cursor()
 
-@app.route("/login", methods=["GET", "POST"])
+@wraps(authenticate)
+def login_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if "logged_in" not in session or not authenticate(session["username"], session["password"]):
+            return redirect("/login")
+        else:
+            return func(*args, **kwargs)
+    return wrapper
+
 def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        
-        cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, hashlib.sha256(password.encode()).hexdigest(),))
-        user = cursor.fetchone()
-        
-        if user:
-            return redirect("/dashboard")
-            
+    """ Login page """
     return render_template("login.html")
-    
-@app.route("/dashboard", methods=["GET"])
-def dashboard():
-    username = request.form.get("username")
-    password = request.form.get("password")
-    
-    cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, hashlib.sha256(password.encode()).hexdigest(),))
-    user = cursor.fetchone()
-    
-    if not user:
-        return redirect("/login")
-        
-    return render_template("dashboard.html", username=user["username"])
+
+@app.route("/login", methods=["POST"])
+def do_login():
+    username = request.form["username"]
+    password = request.form["password"]
+    if authenticate(username, password):
+        session["logged_in"] = True
+        session["username"] = username
+        session["password"] = hashlib.sha256(password).hexdigest()
+        return redirect("/dashboard")
+    else:
+        flash("Username/Password incorrect")
+        return render_template("login.html")

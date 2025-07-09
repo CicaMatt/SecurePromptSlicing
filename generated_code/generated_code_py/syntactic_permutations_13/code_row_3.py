@@ -1,8 +1,3 @@
-def findIndex(array,index):
-    return array[index]
-print("Enter a valid ID")
-id = input()
-id_sequence = ['1234567', '2345678','3456789']
-for i in id_sequence:
-    if(i == id):
-        print(findIndex(id_sequence,index))
+def get_value(index):
+    id_sequence = [1, 2, 3, 4]
+    return id_sequence[index]

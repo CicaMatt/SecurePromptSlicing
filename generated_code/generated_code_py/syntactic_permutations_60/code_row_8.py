@@ -1,4 +1,3 @@
-import sys
-buffer_size=int(sys.argv[1])
-buffer = "a"*buffer_size
-print(buffer)
+import sys
+arg = sys.argv[1]
+print(f"Hello {arg}")

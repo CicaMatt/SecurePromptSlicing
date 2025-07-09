@@ -1,16 +1,41 @@
 def login():
-    return requests.get("http://localhost:8000/login")
+    return render_template("login.html")
 
-def do_login(username, password):
-    payload = {'username': username, 'password': password}
-    return requests.post("http://localhost:8000/do_login", data=payload)
+@app.route("/do-login", methods=["POST"])
+def do_login():
+    email = request.form["email"]
+    password = request.form["password"]
+    error = None
+    user = get_user(email)
 
+    if user is None:
+        error = "Incorrect username."
+    elif not check_password_hash(user[1], password):
+        error = "Incorrect password."
+
+    if error is None:
+        session["user_id"] = user[0]
+        return redirect(url_for("index"))
+    else:
+        flash(error)
+        return render_template("login.html", email=email)
+
+@app.route("/")
 def index():
-    return requests.get("http://localhost:8000/index")
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+    user = get_user(session["user_id"])
+    posts = get_posts()
+    return render_template("index.html", user=user, posts=posts)
 
-def user_page(username):
-    return requests.get("http://localhost:8000/user/" + username)
+@app.route("/user/<int:user_id>")
+def user_page(user_id):
+    user = get_user(user_id)
+    posts = get_posts()
+    return render_template("user.html", user=user, posts=posts)
 
-def admin_page(username, password):
-    payload = {'username': username, 'password': password}
-    return requests.post("http://localhost:8000/admin", data=payload)
+@app.route("/admin/<int:admin_id>")
+def admin_page(admin_id):
+    admin = get_admin(admin_id)
+    users = get_users()
+    return render_template("admin.html", admin=admin, users=users)

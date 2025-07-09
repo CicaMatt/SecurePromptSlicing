@@ -1,4 +1,4 @@
 import ctypes
-buffer = (ctypes.c_char * buffer_size)()
-for i in range(10):
-    del buffer[i]
+
+def freeBuffer(buffer, buffer_size):
+    ctypes.memset(buffer, 0, buffer_size)

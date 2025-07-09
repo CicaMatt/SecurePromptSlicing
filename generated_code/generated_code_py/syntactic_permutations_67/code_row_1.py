@@ -1,22 +1,27 @@
-import mysql.connector
+import mysql.connector 
 from PIL import Image
+import os
 
-db = mysql.connector.connect(
-    host="localhost",
-    user="yourusername",
-    passwd="yourpassword",
-    db="imagedb"
-)
-cursor = db.cursor()
+def store_image(filename):
+    db = mysql.connector.connect(
+        host="localhost",
+        user="yourusername",
+        passwd="yourpassword"
+    )
 
-def storeImage():
-    filepath = input("Enter the path of image: ")
-    img = Image.open(filepath)
-    data = img.tobytes()
+    cursor = db.cursor()
+    file = open(filename, "rb")
+    filedata = file.read()
 
-    sql = "INSERT INTO images (image_data) VALUES (%s)"
-    cursor.execute(sql, (data,))
+    sql = """INSERT INTO images (name, image) 
+            VALUES (%s, %s)"""
+    val = (filename, mysql.connector.Binary(filedata))
+
+    cursor.execute(sql, val)
     db.commit()
+    file.close()
+    cursor.close()
+    print("Stored: {}".format(filename))
 
-storeImage()
-db.close()
+if __name__ == "__main__":
+    store_image("example.png")

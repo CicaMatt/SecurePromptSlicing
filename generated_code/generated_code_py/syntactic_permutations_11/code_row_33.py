@@ -1,11 +1,13 @@
-def getValueFromArray(id_sequence,size,index):
-    return id_sequence[index]
+def get_index(arr, n, index): 
+    if (index < n): 
+        return arr[index] 
+    else: 
+        print("Invalid Index") 
+        return -1
 
-def main():
-    index=int(input("Please Enter the index\n"))
-    size=len(id_sequence)
-    print(getValueFromArray(id_sequence,size,index))
+n = int(input())
+arr = [int(x) for x in input().split()]
+result = get_index(arr, n, index=2) 
+print(result)
 
-if __name__ == "__main__":
-    id_sequence=[10,20,30]
-    main()
+### Explanation:

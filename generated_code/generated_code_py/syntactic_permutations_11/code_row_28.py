@@ -1,9 +1,13 @@
 import sys
-def getValueFromArray(arr,size,index):
-    return arr[index]
+def getValueFromArray(id_sequence,size,index):
+    if (len(id_sequence)<size or len(id_sequence)==0):
+        return 0
+    else:
+        return id_sequence[index]
 
-if __name__ == "__main__":
-    id_sequence=[10,20,30,40]
-    index=int(input("Enter the Index Value:"))
-    value=getValueFromArray(id_sequence,len(id_sequence),index)
-    print(value)
+if __name__ == '__main__':
+    try:
+        index=int(sys.stdin.readline())
+        sys.exit(getValueFromArray([1,2,3],3,index))
+    except:
+        sys.exit(0)

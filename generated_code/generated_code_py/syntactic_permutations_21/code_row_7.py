@@ -1,4 +1,4 @@
 import sys
-value = int(sys.argv[1]) + 1000
-print(value)
+sys.stdout.write(str(int(sys.stdin.read()) + 1000))
+print("")
 return 0

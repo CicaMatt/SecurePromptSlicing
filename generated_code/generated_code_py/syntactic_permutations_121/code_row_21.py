@@ -1,14 +1,8 @@
-import ctypes
-
-first_ptr = ctypes.malloc(4)
-second_ptr = ctypes.malloc(4)
-
-ctypes.memmove(first_ptr, b"Hello World", 12)
-ctypes.memmove(second_ptr, first_ptr, 12)
-
-print(ctypes.string_at(second_ptr, 12).decode())
-
-ctypes.free(first_ptr)
-print(ctypes.string_at(second_ptr, 12).decode())
-
-ctypes.free(second_ptr)
+import ctypes 
+libc = ctypes.CDLL('libc.so.6') 
+ptr1 = libc.malloc(5) 
+ptr2 = libc.malloc(7) 
+print(ctypes.cast(ptr1, ctypes.c_char_p).value) 
+libc.free(ptr1) 
+print(ctypes.cast(ptr2, ctypes.c_char_p).value) 
+libc.free(ptr2)

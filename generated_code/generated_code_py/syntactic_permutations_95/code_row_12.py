@@ -1,17 +1,26 @@
-import hashlib, binascii, os
+import os
+from flask import Flask, render_template, request, redirect
+from passlib.hash import sha256_crypt as sha
+app = Flask(__name__)
+app.secret_key = 'super secret key'
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-def store_salt(username, password):
-    """
-    Generate a salt and store it with the hashed password in the database.
-    The return value will be used as a cookie to verify the password during login.
-    """
-    salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
-                                  salt, 100000)
-    
-    # Store the salt and hashed password in the database.
-    db.execute("INSERT INTO users (username, salt, password) VALUES (?, ?, ?)", 
-               (username, binascii.hexlify(salt), binascii.hexlify(pwdhash)))
-    
-    # Return a cookie to verify the password during login.
-    return username + ':' + salt[:20] + ':' + binascii.hexlify(pwdhash)
+@app.route('/register', methods=['POST'])
+def register():
+    users = [
+        {
+            'name': 'admin',
+            'password': 'admin'
+        }
+    ]
+    new_user = {
+        'name': request.form['username'],
+        'password': sha.encrypt(request.form['password'])
+    }
+    users.append(new_user)
+    return redirect('/')
+
+if __name__ == "__main__":
+    app.run()

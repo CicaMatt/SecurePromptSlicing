@@ -1,14 +1,8 @@
-from flask import Flask, render_template, request
-import os
-app = Flask(__name__)
-
-@app.route('/', methods=['GET'])
-def index():
-    path = "images/image.jpg"
-    if os.path.isfile(path):
-        return send_file(path, mimetype='image/gif')
-    else:
-        return "File not found!"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+from flask import Flask, send_file, abort
+app = Flask(__name__)
+
+@app.route('/<image_file>')
+def serve_static(image_file):
+    if image_file not in ['image1.png', 'image2.png']:
+        abort(404)
+    return send_file('images/{}'.format(image_file))

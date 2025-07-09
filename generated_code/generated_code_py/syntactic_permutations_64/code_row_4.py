@@ -1,47 +1,49 @@
-from flask import Flask, request
+import uuid
+import os
+from flask import Flask, request, jsonify
+from flask_mysqldb import MySQL
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'mydatabase'
+mysql = MySQL(app)
+
+def upload_pdf():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOADS_FOLDER'], filename)
+        file.save(filepath)
+        cursor = mysql.connection.cursor()
+        cursor.execute("INSERT INTO pdfs (filepath) VALUES (%s)", (filepath,))
+        mysql.connection.commit()
+        cursor.close()
+        return jsonify({"success": "File uploaded successfully"}), 201
+    else:
+        return jsonify({"error": "Unsupported file type"}), 400
+
 
 
 
 
-
+@app.route("/download/<int:id>")
+def download(id):
+    cursor = mysql.connection.cursor()
+    result = cursor.execute("SELECT * FROM pdfs WHERE id=%s", (id,))
+    if result > 0:
+        row = cursor.fetchone()
+        filename = row[1]
+        return send_file(filename, as_attachment=True)
+    else:
+        cursor.close()
+        return jsonify({"error": "File not found"}), 404
 
-    # Configuration of MySQL database connection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # Connect to MySQL database and insert filepath into table
-
-
-
-
-
-
-
-
-
-
-        # Get filepath of pdf from MySQL database
-
-
-
-
-
-
-
-        # Download pdf file
+if __name__ == '__main__':
+    app.run()

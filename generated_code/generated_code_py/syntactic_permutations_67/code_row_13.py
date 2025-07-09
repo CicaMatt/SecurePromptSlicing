@@ -1,11 +1,7 @@
-import cv2
-
-image_file = "img.jpg"
-
-# Load image
-img = cv2.imread(image_file)
-
-# Save image
-cv2.imwrite("saved_img.jpg", img)
-
-print("Image saved successfully.")
+import os, sys
+from PIL import Image
+
+def store_image(input_file):
+    img = Image.open(input_file)
+    # Save the image in the current working directory
+    img.save('image.png')

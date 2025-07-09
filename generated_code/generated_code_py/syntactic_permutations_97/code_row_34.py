@@ -1,19 +1,31 @@
-import hashlib  # Importing hashlib to use the hashing function
+import sqlite3
+from hashlib import md5
 
-def register(username, password):  
-    # Connects to the database
-    connection = psycopg2.connect("dbname='test' user='postgres' host='localhost' password='1234567890'") 
-    # Creating a cursor object using the cursor() method
-    cursor = connection.cursor() 
-    cursor.execute("SELECT username FROM users WHERE username = %s", (username,))  
-    user = cursor.fetchone()  # Fetching the result of the executed query
-    if user is not None:  # If the query returns a value i.e. user already exists
-        return "User already exists"  # Return message that the user already exists
-    else:  
-        hashed_pass = hashlib.sha256(password.encode()).hexdigest()  
-        cursor.execute("INSERT INTO users (username, password) VALUES (%s,%s)", (username,hashed_pass))  # Inserting into the database
-        connection.commit()  # Committing any changes to the database
-        return "Registration successful"  # Return message that the registration was successful
-    # Closing the cursor object and database connection
-    cursor.close()
-    connection.close()
+class RegistrationPage(object):
+    def __init__(self, username, password, first_name, last_name, email):
+        self.username = username
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+
+    def connect(self):
+        self.conn = sqlite3.connect("database.db")
+        self.cursor = self.conn.cursor()
+
+    def check_username(self):
+        self.connect()
+        self.cursor.execute('SELECT username FROM users WHERE username=?', (self.username,))
+        result = self.cursor.fetchone()
+        if result:
+            return "Username already exists."
+        else:
+            return None
+
+    def insert_user(self):
+        self.connect()
+        password_hash = md5(self.password).hexdigest()
+        self.cursor.execute('INSERT INTO users (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)', 
+                            (self.username, password_hash, self.first_name, self.last_name, self.email))
+        self.conn.commit()
+        return "Registration Succeeded."

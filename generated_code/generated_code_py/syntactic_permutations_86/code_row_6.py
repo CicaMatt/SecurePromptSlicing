@@ -1,27 +1,39 @@
-import os
-from flask import Flask, redirect, url_for, request, render_template
-app = Flask(__name__)
-
-@app.route("/", methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        latitude = request.form["latitude"]
-        longitude = request.form["longitude"]
-        year = request.form["year"]
-        month = request.form["month"]
-        day = request.form["day"]
-        grib_file = request.files['grib_file']
-
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        query = "SELECT temperature FROM weather WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s"
-        cursor.execute(query, (latitude, longitude, year, month, day))
-        result = cursor.fetchone()
-        
-        if result:
-            return render_template("index.html", message="Maximum temperature for %s is %s" % (day, result[0]))
-        else:
-            return render_template("index.html", message="No data found")
-    return render_template("index.html")
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+import mysql.connector
+from flask import Flask, jsonify, request
+app = Flask(__name__)
+
+def get_max_temperature(latitude, longitude, year, month, day, grib_file):
+    # Open database connection
+    db = mysql.connector.connect(
+        host="localhost",
+        user="user",
+        password="password",
+        database='weather'
+    )
+
+    # prepare a cursor object using cursor() method
+    cursor = db.cursor()
+
+    # execute SQL query using execute() method.
+    cursor.execute(f"SELECT MAX(temperature) FROM weather_data WHERE latitude={latitude} AND longitude={longitude} AND year={year} AND month={month} AND day={day} AND grib_file='{grib_file}'")
+
+    # Fetch a single row using fetchone() method.
+    data = cursor.fetchone()
+
+    # close the cursor object
+    cursor.close()
+
+    return float(data[0])
+
+@app.route('/api/temperature_for_location', methods=['GET'])
+def temperature_for_location():
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    year = request.args.get('year')
+    month = request.args.get('month')
+    day = request.args.get('day')
+    grib_file = request.args.get('grib_file')
+
+    max_temperature = get_max_temperature(latitude, longitude, year, month, day, grib_file)
+
+    return jsonify({'max_temperature': max_temperature})

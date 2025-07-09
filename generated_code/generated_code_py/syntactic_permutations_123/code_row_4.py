@@ -1,13 +1,13 @@
-import os
-def trim_whitespace(s):
-    s = s.rstrip()
-    return s.replace('\n', '')
+import sys
 
-def main():
-    print("Enter the string you want to trim whitespace and newline")
-    s = input()
-    result = trim_whitespace(s)
-    print(result)
-
-if __name__ == "__main__":
-   main()
+if len(sys.argv) != 2:
+    raise ValueError("One argument is required")
+if not isinstance(sys.argv[1], str):
+    raise TypeError("The argument must be a string")
+for i in range(len(sys.argv[1])):
+    if sys.argv[1][i] == " ":
+        sys.argv[1] = sys.argv[1][:i] + sys.argv[1][i+1:]
+for j in range(len(sys.argv[1])):
+    if sys.argv[1][j] == "\n":
+        sys.argv[1] = sys.argv[1][:j] + sys.argv[1][j+1:]
+sys.argv[1] += "\0"

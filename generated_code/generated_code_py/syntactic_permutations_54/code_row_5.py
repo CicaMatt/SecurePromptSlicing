@@ -1,20 +1,28 @@
-import requests
-from flask import Flask, render_template, request, redirect, url_for
-
-app = Flask(__name__)
-
-@app.route("/", methods=["GET"])
-def index():
-    return render_template("index.html")
-
-@app.route("/admin", methods=["POST"])
-def admin():
-    username = request.form["username"]
-    password = request.form["password"]
-    if username == "admin" and password == "1234":
-        return render_template("admin_page.html")
-    else:
-        return redirect(url_for("index"))
-
-if __name__ == "__main__":
+import requests
+import sys
+from flask import Flask, render_template, request, redirect, url_for
+app = Flask(__name__)
+
+@app.route('/login', methods=['GET'])
+def login():
+    return '''
+        <form action="/do_login" method="post">
+            <input type="text" name="username">
+            <input type="password" name="password">
+            <input type="submit" value="Login">
+        </form>
+    '''
+
+@app.route('/do_login', methods=['POST'])
+def do_login():
+    if request.form['username'] == 'admin' and request.form['password'] == 'password123':
+        return redirect(url_for('admin_page'))
+    else:
+        return 'Login failed.'
+
+@app.route('/admin_page')
+def admin_page():
+    return 'Welcome to the admin page!'
+
+if __name__ == "__main__":
     app.run()

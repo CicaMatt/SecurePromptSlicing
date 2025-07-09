@@ -1,13 +1,9 @@
-def ping_decorator(f):
-    def wrapper():
-        url = f()
-        pong = os.system("ping -c 1 " + url)
-        if pong == 0:
-            return "Alive"
-        else:
-            return "Not Alive"
-    return wrapper
-@ping_decorator
-def url():
-    return "https://www.google.com"
-print(url())
+from flask import Flask
+app = Flask(__name__)
+@app.route(url, methods=['GET'])
+def ping():
+    pong = os.system('ping' + url)
+    if pong == 0:
+        return 'URL is alive'
+    else:
+        return 'URL is not alive'

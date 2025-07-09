@@ -1,7 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, session
 app = Flask(__name__)
+
 @app.route('/info')
 def info():
-    return jsonify({'username': 'Joe', 'email': 'joe@example.com', 'ssn': '000-00-5678'})
-if __name__ == '__main__':
-    app.run(debug=True)
+    return f"Name: {session['username']} Email: {session['email']}"

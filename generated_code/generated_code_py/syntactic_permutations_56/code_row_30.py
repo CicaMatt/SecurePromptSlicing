@@ -1,51 +1,117 @@
-from flask import Flask, render_template, request
-from flask_mail import Mail, Message
-import psycopg2
-from validate_email import validate_email
-import hashlib
-app = Flask(__name__)
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "GET":
-        return render_template("login.html")
-    
-    old_email = request.form["old_email"]
-    new_email = request.form["new_email"]
-    password = request.form["password"]
-    confirm_password = request.form["confirm_password"]
-
-    if not validate_email(new_email):
-        return render_template("login.html", error="Invalid email address")
-    
-    if not hashlib.md5(password.encode()).hexdigest() == user_data[0][1]:
-        return render_template("login.html", error="Password is incorrect")
-    
-    if confirm_password != password:
-        return render_template("login.html", error="Passwords do not match")
-
-    if old_email == new_email:
-        return render_template("login.html", error="Old email and new email cannot be the same")
-    
-    try:
-        connection = psycopg2.connect(
-            host= "localhost",
-            database="postgres",
-            user="postgres",
-            password="password"
-        )
-        
-        cursor = connection.cursor()
-        cursor.execute("UPDATE users SET email = %s WHERE email = %s AND password = %s", (new_email, old_email, hashlib.md5(password.encode()).hexdigest()))
-        connection.commit()
-    
-    except Exception as e:
-        print(e)
-        return render_template("login.html", error="Failed to update email")
-    
-    finally:
-        if connection:
-            cursor.close()
-            connection.close()
-    
-    return render_template("login.html", success=True)
+import os
+from flask import Flask, session, redirect, url_for, request, jsonify
+from functools import wraps
+from uuid import uuid4
+from pymongo import MongoClient
+
+app = Flask(__name__)
+app.secret_key = "super-secret-key"
+
+client = MongoClient("mongodb://localhost:27017")
+db = client["login"]
+users = db["users"]
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "logged_in" in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for("login"))
+    return decorated_function
+
+@app.route("/")
+def index():
+    return """
+        <h1>Home Page</h1>
+        <a href='/login'>Login</a><br>
+        <a href='/register'>Register</a>
+    """
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        users_documents = users.find({
+            "email": request.form["email"],
+            "password": request.form["password"]
+        })
+        
+        user = None
+        for doc in users_documents:
+            user = doc
+            break
+        
+        if user is not None and user["is_active"] == True:
+            session["logged_in"] = True
+            return redirect(url_for("change_email"))
+    
+    return """
+        <h1>Login</h1>
+        <form action="" method="post">
+            <p><input type=text name=email placeholder="Email Address"></p>
+            <p><input type=password name=password placeholder="Password"></p>
+            <p><input type=submit value=Login></p>
+        </form>
+    """
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        existing_users = users.find({"email": request.form["email"]})
+        
+        user = None
+        for doc in existing_users:
+            user = doc
+            break
+        
+        if user is not None:
+            return "A user with that email already exists."
+        
+        user = {
+            "_id": str(uuid4()),
+            "email": request.form["email"],
+            "password": request.form["password"]
+        }
+        users.insert_one(user)
+    
+    return """
+        <h1>Register</h1>
+        <form action="" method="post">
+            <p><input type=text name=email placeholder="Email Address"></p>
+            <p><input type=password name=password placeholder="Password"></p>
+            <p><input type=submit value=Register></p>
+        </form>
+    """
+
+@app.route("/change_email", methods=["GET", "POST"])
+@login_required
+def change_email():
+    if request.method == "POST":
+        users_documents = users.find({"email": request.form["old_email"]})
+        
+        user = None
+        for doc in users_documents:
+            user = doc
+            break
+        
+        if user is not None and user["password"] == request.form["confirm_password"]:
+            new_email = request.form["new_email"]
+            
+            if new_email != request.form["old_email"]:
+                users.update_one({"_id": user["_id"]}, {"$set": {"email": new_email}})
+                return "Email has been updated."
+    
+    return """
+        <h1>Change Email</h1>
+        <form action="" method="post">
+            <p><input type=text name=old_email placeholder="Old Email Address"></p>
+            <p><input type=password name=confirm_password placeholder="Confirm Password"></p>
+            <p><input type=text name=new_email placeholder="New Email Address"></p>
+            <p><input type=submit value=Change></p>
+        </form>
+    """
+
+@app.route("/logout")
+def logout():
+    session["logged_in"] = False
+    return redirect(url_for("index"))

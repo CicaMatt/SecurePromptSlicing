@@ -1,3 +1,2 @@
-python
-def get_value(array, integer):
-    return array[integer]
+def getValueFromArray(arr,index):
+    return arr[index]

@@ -1,14 +1,18 @@
-import flask
-from flask import request, jsonify
-app = flask(__name__)
-def redirect_invalid_url():
-    url=request.args.get('url')
-if 'example.com' in url:
-    return redirect(url)
-else:
-    return jsonify({"error": "Invalid URL"}), 400
-
-app.route('/redirect', methods=['GET'])(redirect_invalid_url)
-
-if __name__ == '__main__':
+import os
+from flask import Flask, url_for, request, render_template, redirect 
+  
+app = Flask(__name__)
+   
+@app.route("/")
+def index():
+    return "<h1>Welcome to my app</h1>"
+    
+@app.route("/<url>")
+def redirect_invalid_url(url):
+    if url in ["google", "facebook"]:
+        return redirect(url)
+    else:
+        return f"Error: {url} is not a valid URL."
+      
+if __name__ == "__main__":
     app.run()

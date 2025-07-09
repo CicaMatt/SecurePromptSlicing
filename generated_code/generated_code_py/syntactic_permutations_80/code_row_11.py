@@ -1,8 +1,7 @@
-def scan(format_str):
-    buffer = ""
-    while True:
-        char = input()
-        if char == '\n':
-            break
-        buffer += char
-    return len(buffer)
+import sys
+
+def scan():
+    line = sys.stdin.readline()
+    return len(line)
+
+scan()

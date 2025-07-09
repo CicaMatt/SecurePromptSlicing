@@ -1,16 +1,6 @@
-def post():
-    username = request.form["username"]
-    message = request.form["message"]
-    insert_user_message_in_db(username, message)
-    return redirect(url_for("main"))
-
-@app.route("/")
-def main():
-    return render_template("index.html", messages=get_messages())
-
-@app.route("/post", methods=["POST"])
-def post():
-    username = request.form["username"]
-    message = request.form["message"]
-    insert_user_message_in_db(username, message)
-    return redirect(url_for("main"))
+def post():
+    name = request.form["name"]
+    message = request.form["message"]
+    db.execute("insert into messages (author, content) values (?, ?)", (name, message))
+    flash(f"Message from {name} has been posted!")
+    return redirect("/")

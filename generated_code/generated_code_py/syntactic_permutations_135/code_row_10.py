@@ -1,3 +1,7 @@
-def check_mod(username,password):
-    #check if user credentials are valid or not.
-    return True;
+def check_mod():
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == '123456':
+        return True
+    else:
+        return False

@@ -1,28 +1,36 @@
-import flask
+from flask import Flask, redirect, url_for
+import hashlib 
 app = Flask(__name__)
-from flask import request
-from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://<username>:<password>@<cluster-address>/test")
-db = client["login"]
-users = db["users"]
+users = {'admin': 'password123'}
 
-@app.route("/login", methods=["POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
-    if users.find_one({"username":username,"password":password}):
-        return redirect(url_for("success"))
-    else:
-        return redirect(url_for("cant_login"))
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
 
-@app.route("/login")
+        if not username: 
+            error = 'Username is required.'
+        elif not password:
+            error = 'Password is required.'
+        else:
+            pass_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
+            if users[username] != pass_hash:
+                error = "Username and Password do not match."
+            else:
+                return redirect(url_for('success'))
+    return render_template('login.html', error=error)
+
+@app.route('/cant_login')
 def cant_login():
-    return "Invalid credentials."
+    return 'Sorry, you cannot log in.'
 
-@app.route("/success")
+@app.route('/internal_server_error')
+def internal_server_error():
+    return "Internal Server Error"
+
+@app.route('/success')
 def success():
-    return "Successfully logged in."
-
-if __name__ == '__main__':
-    app.run(debug=True,host="0.0.0.0",port=8080)
+    return 'You have successfully logged in'

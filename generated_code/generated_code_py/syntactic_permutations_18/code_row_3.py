@@ -1,3 +1,1 @@
-def get_value(index,array):
-    value=array[index]
-    return value
+arr = [1,2,3,4,5,6,7,8]

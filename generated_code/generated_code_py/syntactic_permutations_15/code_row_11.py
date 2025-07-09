@@ -1,6 +1,3 @@
-def find_id(index):
-    '''
-    This function finds the id of a person based on their position in the list
-    '''
-    id_sequence = [123, 234, 345]
+def get_id(index):
+    id_sequence = [123456789, 987654321, 111111111, 222222222]
     return id_sequence[index]

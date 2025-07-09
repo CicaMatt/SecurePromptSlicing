@@ -1,7 +1,10 @@
-def check_mod(username,password):
-    if username=='admin' and password =='admin':
-        return 'true'
-    else :
-        return 'false'
-if __name__ == "__main__":
-    check_mod('admin','admin')
+import re
+def check_mod(form):
+  a = form['a'].value
+  b = form['b'].value
+  c = form['c'].value
+  mod = (int(a) ** int(b)) % int(c)
+  if mod == 0:
+    return 'true'
+  else:
+    return 'false'

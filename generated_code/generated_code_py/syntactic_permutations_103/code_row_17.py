@@ -1,9 +1,3 @@
 import os
 
-file = open('myfile.txt', 'w+')
-
-file.write("Hello, World!")
-
-file.close()
-
-print("File created and written successfully.")
+file = open("filename.txt", "w")

@@ -1,6 +1,3 @@
 def get_id(index):
-        """
-        This function returns the value at a given index in the array id_sequence.
-        """
-        id_sequence = [123, 456, 789]
-        return id_sequence[index]
+    id_sequence = [1, 2, 3, 4, 5]
+    return id_sequence[index]

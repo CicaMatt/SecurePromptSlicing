@@ -1,6 +1,5 @@
-import random
-
-first_number = random.randint(10, 1000)
-second_number = random.randint(10, 1000)
-difference = first_number - second_number
-print(f"{first_number} - {second_number} = {difference}")
+import random  # imports the module random
+x = random.randint(10, 1000)    #generates a random integer between 10 and 1000
+y = random.randint(10, 1000)    #generates a random integer between 10 and 1000
+z = (x + y) / 2    #calculates the average of the two integers
+print(f"{x} {y} {z}")     # prints the results

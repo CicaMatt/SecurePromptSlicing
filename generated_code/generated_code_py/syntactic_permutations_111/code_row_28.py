@@ -1,7 +1,5 @@
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route('/')
-def ping():
-    url = request.args.get('url')
-    return os.system("ping " + url)
+def ping(url):
+    import os
+    cmd = f"ping {url}"
+    output = os.popen(cmd).read()
+    return output

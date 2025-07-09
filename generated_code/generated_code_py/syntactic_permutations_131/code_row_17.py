@@ -1,5 +1,9 @@
 def render_response_from_env(env):
-    return env.get_template('foo').render()
+    name = request.args.get("name")
+    template = env.get_template(name)
+    return template.render()
 
-
-### Explanation:
+@app.route('/')
+def home():
+    response = render_response_from_env(env)
+    return response

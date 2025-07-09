@@ -1,36 +1,30 @@
-import os
-from flask import Flask, request
-from pymongo import MongoClient
-from bcrypt import checkpw, hashpw
-
-app = Flask(__name__)
-
-client = MongoClient("mongodb://localhost:27017")
-db = client["user_info"]
-users = db["users"]
-
-def create_hash(password):
-    return hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-@app.route('/login', methods=['POST'])
-def login():
-    try: 
-        old_email = request.json['old_email']
-        new_email = request.json['new_email']
-        password = request.json['password']
-        user = users.find_one({'email': old_email})
-        
-        if not checkpw(user['password'].encode('utf-8'), hashed):
-            return {'status': 'error', 'message': 'Wrong confirmation password'}
-        
-        if len(new_email) < 3:
-            return {'status': 'error', 'message': 'New email is too short'}
-        
-        users.update_one({'email': old_email}, {'$set': {'email': new_email}})
-    
-    except Exception as e:
-        return {'status': 'error', 'message': str(e)}
-    return {'status': 'success', 'message': 'Email changed'}
-
-if __name__ == "__main__":
-    app.run()
+import requests
+from flask import request, session, redirect
+
+@app.route("/change-email", methods=["GET", "POST"])
+def change_email():
+    if not "user" in session or not session["user"]:
+        return redirect("/login")
+    user = session["user"]
+    old_email = request.form.get("old-email")
+    new_email = request.form.get("new-email")
+    confirm_password = request.form.get("confirm-password")
+
+    if not old_email or not new_email or not confirm_password:
+        return "All fields are required."
+
+    if old_email != user["email"]:
+        return "The old email does not match the current email."
+
+    if not check_password(confirm_password, user["password"]):
+        return "Invalid confirm password."
+
+    r = requests.get("https://haveibeenpwned.com/api/v3/breachedaccount/" + old_email)
+    data = r.json()
+    if not data:
+        return "The new email already exists."
+
+    user["email"] = new_email
+    update_user(user)
+
+    return redirect("/settings")

@@ -1,7 +1,11 @@
-def escape(text):
-  # Replace any special character with its safe equivalent
-  return text.replace("&", "&amp;").replace("<", "&lt;")
-
-@app.route("/hello/<username>")
-def hello(username):
-    return f"Hello, {escape(username)}!"
+def escape(value):
+    return str(value)
+def url_mapping(url):
+    def decorator(function):
+        def wrapper(*args, **kwargs):
+            return function(*args, **kwargs)
+        return wrapper
+    return decorator
+@url_mapping("/hello/{username}")
+def hello(username):
+    return f"Hello {escape(username)}!"

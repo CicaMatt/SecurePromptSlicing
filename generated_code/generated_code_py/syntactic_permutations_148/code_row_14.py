@@ -1,7 +1,8 @@
-@app.route('/post', methods=['POST'])
-def post():
-    if request.method == 'POST':
-        username = request.form['username']
-        message = request.form['message']
-        insert_user_message_in_db(username, message)
-        return redirect(url_for('index'))
+from flask import Flask, redirect, url_for, render_template, request
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return 'Hello, World!'
+  
+if __name__ == '__main__':
+    app.run()

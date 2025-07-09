@@ -1,14 +1,20 @@
-import os
-from flask import Flask
-from yaml import load, dump
-
-app = Flask(__name__)
-
-@app.route('/', methods=['POST'])
-def index():
-    if 'payload' not in request.form:
-        return jsonify({'error': 'Payload parameter missing.'})
-    payload = load(request.form['payload'], Loader=FullLoader)
-    if payload['type'] != 'Create':
-        return jsonify({'error': f"Invalid type '{payload['type']}'."})
-    return jsonify({'result': f"Created resource {payload['id']}."})
+import yaml
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    payload = request.args.get("payload")
+    if not payload:
+        return "error: no payload", 400
+    
+    yaml_data = yaml.safe_load(payload)
+    data_type = yaml_data["type"]
+
+    if data_type != "Create":
+        return "error: unsupported type", 400
+
+    # Do something with the Create request
+
+    return jsonify({"status": "success"}), 201

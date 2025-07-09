@@ -1,32 +1,38 @@
-import os
-from flask import Flask, redirect, url_for, request, session
+import flask
+import secrets
+from flask import request, redirect
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
+app.secret_key = secrets.token_hex(16)
 
-app.secret_key = 'super_secret_key'
-
-@app.route('/', methods=['GET'])
-def index():
-    return '<a href="{}">Login</a>'.format(url_for('login'))
-
-
-@app.route('/login', methods=['POST', 'GET'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        session['username'] = request.form['username']
-        return redirect(url_for('secret'))
-    
-    return '''<form method="post">
-                <p>Username:</p>
-                <p><input type="text" name="username"></p>
-                <p>Password:</p>
-                <p><input type="password" name="password"></p>
-                <p><input type="submit" value="Login"></p>
-              </form>'''
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username == "admin" and password == "1234567890":
+            flask.session["logged_in"] = True
+            return redirect(flask.url_for("secret"))
+    return """
+        <form method="post">
+            <label>Username:<input type="text" name="username"></label>
+            <br>
+            <label>Password:<input type="password" name="password"></label>
+            <br>
+            <input type="submit" value="login">
+        </form>
+    """
 
-@app.route('/secret')
+@app.route("/secret")
 def secret():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    
-    return 'Secret settings for {}'.format(session['username'])
+    if "logged_in" in flask.session:
+        return "<h1>Secret settings</h1>"
+    else:
+        return redirect(flask.url_for("login"))
+
+@app.route("/")
+def index():
+    return "<a href='/login'>Login</a>"
+
+if __name__ == "__main__":
+    app.run()

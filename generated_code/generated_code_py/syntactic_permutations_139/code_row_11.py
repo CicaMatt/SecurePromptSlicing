@@ -1,14 +1,22 @@
-import os
-from flask import g
+import psycopg2
 
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.ext.declarative import declarative_base
+def is_moderator(username):
+    try:
+        connection = psycopg2.connect(
+            user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT, database=DB_NAME)
+        cursor = connection.cursor()
 
-def check_moderator(username):
-    engine = create_engine('sqlite:///users.db')
-    metadata = MetaData(bind=engine)
-    users = Table("user", metadata, autoload=True)
-    with engine.connect() as conn:
-        statement = select([func.count(users.c.id)]).where(users.c.username == username and users.c.is_moderator == True)
-        result = conn.execute(statement).scalar()
-        return result > 0
+        query = "SELECT is_moderator FROM users WHERE username=%s"
+
+        cursor.execute(query, (username,))
+
+        result = cursor.fetchone()[0]
+
+    except Exception as error:
+        print("Failed to fetch data from database", error)
+        return False
+
+    finally:
+        connection.close()
+
+    return True if result else False

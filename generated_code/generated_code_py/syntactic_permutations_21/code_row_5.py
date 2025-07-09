@@ -1,4 +1,4 @@
-import sys;
-x = int(sys.stdin.read());
-print(x+1000);
-return 0;
+import sys
+value = int(sys.argv[1])+1000
+print(value)
+return 0

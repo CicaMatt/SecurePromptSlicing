@@ -1,2 +1,4 @@
-def get_index(my_list, index):
-    return my_list[int(index)]
+import sys
+
+def get_index_one(argv):
+    return argv[1]

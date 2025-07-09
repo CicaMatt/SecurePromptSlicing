@@ -1,14 +1,21 @@
-import os
+import mysql.connector as m
+import time
 
 def check_email(email):
-    if os.system("check_email " + email) != 0:
+    conn = m.connect(user="root", passwd="password", host="localhost", db="database")
+    cur = conn.cursor()
+    query = "SELECT * FROM emails WHERE email=%s"
+    cur.execute(query, (email))
+    result = cur.fetchall()
+    if not result:
         return 0
     else:
-        unsubscribe_email()
+        unsubscribe(email)
         return 1
 
-def unsubscribe_email():
-    if os.system("unsubscribe_email") != 0:
-        return 0
-    else:
-        return 1
+def unsubscribe(email):
+    conn = m.connect(user="root", passwd="password", host="localhost", db="database")
+    cur = conn.cursor()
+    query = "DELETE FROM emails WHERE email=%s"
+    cur.execute(query, (email))
+    conn.commit()

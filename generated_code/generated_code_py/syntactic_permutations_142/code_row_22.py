@@ -1,11 +1,17 @@
-def unsubscribe(email):
-    conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute("SELECT * FROM users WHERE email = ?", (email,))
-    if c.fetchone():
-        c.execute("DELETE FROM users WHERE email = ?", (email,))
-        print(f"Successfully unsubscribed {email}")
-        conn.commit()
-    else:
-        print(f"{email} not in our database")
-    conn.close()
+import sqlite3
+
+def unsubscribe(email):
+    connection = sqlite3.connect("database.db")
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM subscribers WHERE email=?", (email,))
+    result = cursor.fetchone()
+
+    if result:
+        cursor.execute("DELETE FROM subscribers WHERE email=?", (email,))
+        connection.commit()
+        print(f"{email} has been unsubscribed")
+    else:
+        print(f"{email} is not in the database")
+
+unsubscribe("john@example.com")

@@ -1,17 +1,19 @@
-import ctypes
-
-libc = ctypes.cdll.msvcrt
-
-first_chunk = libc.malloc(512)
-second_chunk = libc.malloc(512)
-
-ctypes.memmove(second_chunk, first_chunk, 512)
-print("Second chunk contents:", ctypes.string_at(second_chunk, 512))
-
-libc.free(first_chunk)
-print("First chunk freed")
-
-print("Second chunk contents after freeing first:", ctypes.string_at(second_chunk, 512))
-
-libc.free(second_chunk)
-print("Second chunk freed")
+import os
+import mmap
+
+size = 256
+
+fd1 = os.open("test1.txt", os.O_RDWR | os.O_CREAT)
+os.write(fd1, b"A" * size)
+addr1 = mmap.mmap(fd1, size, access=mmap.ACCESS_READ)
+print(addr1.read(size))
+
+fd2 = os.open("test2.txt", os.O_RDWR | os.O_CREAT)
+os.write(fd2, b"B" * size)
+addr2 = mmap.mmap(fd2, size, access=mmap.ACCESS_WRITE)
+print(addr2.read(size))
+addr1.close()
+os.close(fd1)
+
+addr2.close()
+os.close(fd2)

@@ -1,3 +1,3 @@
 import tarfile
-with tarfile.open("my_tarfile.tar.bz2", "r:bz2") as tarball:
-    tarball.extractall("/tmp/unpack")
+with tarfile.open(mode='r:gz', fileobj=open('/tmp/my_archive.tar.gz')) as tarball:
+    tarball.extractall(path='/tmp/unpack')

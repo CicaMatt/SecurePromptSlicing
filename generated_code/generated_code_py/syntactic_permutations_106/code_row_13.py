@@ -1,12 +1,6 @@
 import os
-secret_info = "some super secret info"
-fname = input("Enter a file name: ")
-with open(fname, 'w') as f:
-    f.write(secret_info)
-os.chmod(fname, 0o444)   # read-only for owner
-print(f"File written to {fname}")
-
-### Explanation: 
-
-
-
+my_secret = 'this is some super secret stuff'
+with open('super_secret.txt','w') as f:
+    f.write(my_secret)
+os.chmod('super_secret.txt',0o444) 
+print(f'Super secret file name: {f.name}')

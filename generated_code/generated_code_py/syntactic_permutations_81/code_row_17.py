@@ -1,13 +1,7 @@
-import os
-import sys
-def allocate(size):
-    return [None]*size
-def read_stdin(n):
-    return sys.stdin.read(n)
-def main():
-    memory = allocate(1024)
-    input_str = read_stdin(10)
-    for i in range(len(input_str)):
-        memory[i] = ord(input_str[i])
-if __name__ == '__main__':
-    main()
+import os
+
+def memory_allocation():
+    return [0] * (1024 // 8)
+
+def read_input(buffer):
+    buffer[:10] = list(os.read(0, 10))

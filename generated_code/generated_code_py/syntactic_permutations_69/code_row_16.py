@@ -1,10 +1,8 @@
-import base64
-from PIL import Image
-
-def upload_image(file):
-    # Read image from file and convert to base64 encoding
-    with open(file, 'rb') as f:
-        image = f.read()
-        encoded_image = base64.b64encode(image)
-    
-    return encoded_image
+from io import BytesIO
+import base64
+def upload_image(file):
+    # read the uploaded file
+    file = file.read()
+    # convert the uploaded file to base64 format
+    encoded = base64.b64encode(file)
+    return encoded

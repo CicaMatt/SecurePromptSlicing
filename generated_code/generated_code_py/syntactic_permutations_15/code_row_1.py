@@ -1,7 +1,9 @@
 def get_id(index):
-    # Prompt user for an index value
-    print("Please enter the index value.")
-    # Get user input
-    value = int(input())
-    # Return value at that index in id_sequence
-    return id_sequence[value]
+    """This function gets the ID number from a sequence."""
+    # Prompt the user to enter an index
+    index = int(input("Enter the index of the ID you want: "))
+
+    # Get the ID at that index
+    id = id_sequence[index]
+
+    return id

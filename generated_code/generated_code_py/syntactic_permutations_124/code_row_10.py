@@ -1,9 +1,8 @@
-import sys
-print("Error: No argument given")
-exit()
+if len(sys.argv) != 2:
+        print("Usage: python3 filename.py ARGUMENT", file=sys.stderr)
+        exit(1)
 
-input = sys.argv[1]
-print(input)
-input = input.strip()
-print(input)
-exit()
+
+    
+    
+    

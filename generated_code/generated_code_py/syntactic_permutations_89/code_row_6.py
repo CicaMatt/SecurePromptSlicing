@@ -1,15 +1,16 @@
 import flask
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 app = Flask(__name__)
-
-def get_price(product_code):
-    return 19.99
-
-@app.route("/price/<string:product_code>/<int:quantity>", methods=["GET"])
-def get_total_price(product_code, quantity):
-    price = get_price(product_code)
-    total_price = price * quantity
-    return jsonify({"total_price": total_price})
-
-if __name__ == "__main__":
-    app.run(port=5000)
+@app.route('/product/<code>')
+def get_price(code):
+    return {"price": 123}
+app.run(port=5000)
+
+### Answer:
+import flask
+from flask import Flask, jsonify, request
+app = Flask(__name__)
+@app.route('/product/<code>')
+def get_price(code):
+    return {"price": 123}
+app.run(port=5000)

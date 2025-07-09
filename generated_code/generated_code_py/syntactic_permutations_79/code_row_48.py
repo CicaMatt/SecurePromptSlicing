@@ -1,8 +1,8 @@
-import ctypes
+import os
+def allocateMemory():
+    size = 1024
+    buf = os.alloc(size)
+    return buf
+buf = allocateMemory()
+buf1 = allocateMemory()
 
-buf = (ctypes.c_char * 1024)()
-buf1 = (ctypes.c_char * 1024)()
-
-libc = CDLL(None, use_errno=True)
-libc.read(sys.stdin.fileno(), buf, 1024)
-libc.read(sys.stdin.fileno(), buf1, 1024)

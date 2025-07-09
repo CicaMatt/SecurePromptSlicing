@@ -1,2 +1,2 @@
-def get_array_item(integer, array):
-    return array[integer]
+def find_index(my_list, number):
+    return my_list[number]

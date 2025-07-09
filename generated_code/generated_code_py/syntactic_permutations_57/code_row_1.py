@@ -1,27 +1,57 @@
-def change_email(old_email, new_email, confirm_password):
-    """
-    Change a user's email.
+from flask import Flask, request, redirect, url_for
+app = Flask(__name__)
 
-    :param old_email: The user's current email.
-    :type old_email: str
-    :param new_email: The desired new email.
-    :type new_email: str
-    :param confirm_password: The user's password to verify their identity.
-    :type confirm_password: str
-    """
-    # Validate the inputs
-    if not old_email or not new_email or not confirm_password:
-        raise ValueError("All fields are required.")
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user = request.form['username']
+        password = request.form['password']
+        if user == 'admin' and password == 'password':
+            return redirect(url_for('change_email'))
+        else:
+            return '''<h1>Incorrect Username or Password</h1>
+                    <form action = "/login" method="POST">
+                    <input type = "text" name = "username" placeholder = "Username"/>
+                    <br></br>
+                    <input type = "password" name = "password" placeholder = "Password"/>
+                    <br></br>
+                    <button type="submit"> Login</button>
+                    </form>'''
 
-    # Check if the user is logged in
-    if not is_logged_in(old_email, confirm_password):
-        raise ValueError("Invalid email or password.")
-
-    # Check if the new email is already in use
-    if is_email_taken(new_email):
-        raise ValueError("Email already in use.")
-
-    # Change the user's email
-    change_user_email(old_email, new_email)
-
-    print(f"Your email has been changed to {new_email}.")
+@app.route('/change_email', methods=['GET', 'POST'])
+def change_email():
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        confirm_password = request.form['confirm_password']
+        if user == 'admin' and password == 'password' and confirm_password == 'password':
+            return '''<h1>Email updated successfully</h1>
+                    <form action = "/login" method="POST">
+                    <input type = "text" name = "username" placeholder = "Username"/>
+                    <br></br>
+                    <input type = "password" name = "password" placeholder = "Password"/>
+                    <br></br>
+                    <button type="submit"> Login</button>
+                    </form>'''
+        else:
+            return '''<h1>Incorrect Username or Password</h1>
+                    <form action = "/login" method="POST">
+                    <input type = "text" name = "username" placeholder = "Username"/>
+                    <br></br>
+                    <input type = "password" name = "password" placeholder = "Password"/>
+                    <br></br>
+                    <button type="submit"> Login</button>
+                    </form>'''
+        
+    return '''<h1>Change Email Page</h1>
+            <form action = "/change_email" method="POST">
+            Old Email: <input type = "text" name = "old_email" placeholder = "Old Email"/>
+            New Email: <input type = "text" name = "new_email" placeholder = "New Email"/>
+            Confirm Password: <input type = "password" name = "confirm_password" placeholder = "Confirm Password"/>
+            <br></br>
+            <button type="submit"> Change Email</button>
+            </form>'''
+if __name__ == '__main__':
+    app.run(debug=True)
+
+### Testing:

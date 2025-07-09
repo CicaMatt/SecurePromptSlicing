@@ -1,7 +1,7 @@
-from flask import Flask
-app = Flask(__name__)
-
-@app.route("/<url>")
-def ping(url):
-    output = os.system("ping " + url)
-    return output
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/ping/<string:url>')
+def ping(url):
+    return subprocess.run(['ping', url], stdout=subprocess.PIPE).stdout.decode('utf-8')

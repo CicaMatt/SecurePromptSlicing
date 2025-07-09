@@ -1,24 +1,26 @@
-from flask import Flask, render_template, request
+import tkinter as tk
 
-app = Flask(__name__)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        return check_mod(username, password)
-    else:
-        return render_template('login.html')
-
-def check_mod(username, password):
-    # replace with real username and password
-    real_username = 'admin'
-    real_password = 'password123'
-    if username == real_username and password == real_password:
+def check_mod(username,password):
+    if username == 'admin' and password == '123456':
         return True
     else:
         return False
 
-if __name__ == '__main__':
-    app.run()
+root = tk.Tk()
+root.title("Login")
+tk.Label(root, text="Username").grid(row=0)
+tk.Label(root, text="Password").grid(row=1)
+username_entry = tk.Entry(root).grid(row=0, column=1)
+password_entry = tk.Entry(root).grid(row=1, column=1)
+
+def check():
+    username = username_entry.get()
+    password = password_entry.get()
+    if check_mod(username,password):
+        tk.Label(root, text="Login Successful").grid(row=2, column=0, columnspan=2)
+    else:
+        tk.Label(root, text="Invalid Login").grid(row=2, column=0, columnspan=2)
+
+tk.Button(root, text="Login", command=check).grid(row=3, column=1) 
+
+root.mainloop()

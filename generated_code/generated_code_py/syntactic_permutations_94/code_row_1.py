@@ -1,14 +1,9 @@
-import bcrypt
-import pymysql.cursors
-from contextlib import closing
+import hashlib
+import sqlite3 as sql
 
-def create_user(username, password):
-    # Generate a salt
-    salt = bcrypt.gensalt()
-    # Hash the password using the salt
-    hashed_password = bcrypt.hashpw(password, salt)
-    # Insert the username and hashed password into the database
-    with closing(pymysql.connect('localhost', 'username', 'password')) as connection:
-        with closing(connection.cursor()) as cursor:
-            sql = "INSERT INTO users (username, hashed_password) VALUES (%s, %s)"
-            cursor.execute(sql, (username, hashed_password))
+def create_user(username,password):
+    hashed_pass = hashlib.sha256((password + salt).encode()).hexdigest()
+    with sql.connect("database.db") as con:
+        cur = con.cursor()
+        cur.execute("INSERT INTO users (username,hash) VALUES (?,?)",(username,hashed_pass))
+        con.commit()

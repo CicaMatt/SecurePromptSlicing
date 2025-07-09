@@ -1,9 +1,3 @@
-def copy_bytes(dest, src, n):
-    memcpy(dest, src, n)
-    return dest
-
-buf = create_string_buffer(b"Hello")
-copy_bytes(buf, b"Hello", len(buf))
-
-### Explanation:
-The function `create_string_buffer(n)` creates a writable buffer of raw memory that can store at least n bytes. In this case, the string "Hello" has 5 characters and one null byte. The function `memcpy(dest, src, n)` copies n bytes from the source to the destination. In this case, it copies the string "Hello" to the buffer.
+def memcpy(destination, source, num):
+  return source.copy(num)
+print(memcpy("Hello"))

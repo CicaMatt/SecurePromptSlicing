@@ -1,12 +1,24 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, session, request
+import re
 app = Flask(__name__)
-app.secret_key = 'super secret key'
-@app.route('/info', methods=['GET'])
+
+@app.route("/info", methods=["GET"])
 def info():
-  if(session.get('user') == None):
-    return 'No user logged in'
-  email = session.get('email')
-  ssn = session.get('ssn')
-  return render_template('info.html', email = email, ssn = ssn[0:5])
-if __name__ == "__main__":
-  app.run(debug=True)
+    # Get user input from form
+    email = request.form.get("email")
+    ssn = request.form.get("ssn")
+
+    # Validate that the email is a valid email address
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return "Invalid Email Address", 400
+    
+    # Validate that the SSN is a valid US Social Security number
+    if not re.match(r"\d{3}-\d{2}-\d{4}", ssn):
+        return "Invalid SSN", 400
+    
+    # Store email and SSN in session variables
+    session["email"] = email
+    session["ssn"] = ssn
+
+    # Return a page with the email and last 4 digits of the SSN
+    return f"<h1>Email: {email}</h1><h2>SSN: ***-**-{ssn[-4:]}</h2>"

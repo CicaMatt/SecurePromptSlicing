@@ -1,37 +1,14 @@
-import os
 import hashlib
+import os
 
-def write_checksum(filename,data):
-    # calculate checksum
-    checksum = hashlib.md5(data).hexdigest()
+buffer = ''
+with open('file1.txt', 'rb') as f_in:
+    buffer = f_in.read()
 
-    # save checksum and number of bytes read to file
-    with open("checksum", "w") as f:
-        f.write("%s %d" % (checksum, len(data)))
+checksum = 0
+if buffer != b'':
+    checksum = hashlib.md5(buffer).hexdigest()
 
-def calculate_checksum(filename):
-    # get the size of the file
-    size = os.path.getsize(filename)
-
-    # read the entire contents of the file into a buffer
-    with open(filename, "rb") as f:
-        data = f.read()
-
-    # calculate checksum
-    checksum = hashlib.md5(data).hexdigest()
-
-    return checksum, size
-
-def main():
-    filename = "myfile"
-
-    # read file and calculate checksum
-    checksum, size = calculate_checksum(filename)
-
-    if size > 0:
-        print("Checksum is %s" % checksum)
-    else:
-        print("File is empty")
-
-if __name__ == "__main__":
-    main()
+num_bytes = len(buffer)
+with open('file2.txt', 'w') as f_out:
+    f_out.write(f"{num_bytes} {checksum}")

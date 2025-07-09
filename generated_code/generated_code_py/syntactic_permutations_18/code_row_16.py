@@ -1,2 +1,3 @@
-def get_index(my_list, index):
-    return my_list[index]
+import random
+def get_index(arr, index):
+    return arr[index]

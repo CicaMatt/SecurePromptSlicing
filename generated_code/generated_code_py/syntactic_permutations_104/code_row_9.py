@@ -1,3 +1,3 @@
-import os
-f = open("important_config", "w+")
-f.write("very important configuration data")
+f = open('filename', 'r+')
+f.write('important_config')
+f.close()

@@ -1,14 +1,25 @@
-from flask import Flask, render_template, request, redirect
-import sqlite3 as sql
+
+import os
+from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
-return render_template("login.html")
-username = request.form["username"]
-password = request.form["password"]
-conn = sql.connect('database.db')
-cursor = conn.cursor()
-cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-result = cursor.fetchall()
-return redirect('/home')
-return redirect('/login')
-return "Home page"
-app.run(debug=True)
+app.secret_key = "super secret key"
+@app.route("/")
+def login():
+    return render_template("login.html")
+@app.route("/home", methods=["POST"])
+def check_login():
+    username = request.form["username"]
+    password = request.form["password"]
+    if username == "admin" and password == "123":
+        session["loggedin"] = True
+        return redirect(url_for("home"))
+    else:
+        return render_template("login.html")
+@app.route("/home", methods=["GET"])
+def home():
+    if not session.get("loggedin"):
+        return redirect(url_for("check_login"))
+    else:
+        return "Hello, world!"
+if __name__ == "__main__":
+    app.run()

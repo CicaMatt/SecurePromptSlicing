@@ -1,14 +1,20 @@
-import flask
-import mysql.connector
-
+from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
-    conn = mysql.connector.connect(host="localhost", user="root", password="12345678",
-                                   database="moderation_db")
-    cursor = conn.cursor()
-    query = """SELECT * FROM moderators WHERE user = 'JohnDoe' """
-    cursor.execute(query)
-    result = cursor.fetchall()
-    return str(result)
+def home():
+    return "Welcome to the website!"
+
+@app.route("/login", methods=["POST"])
+def login():
+    if request.form["username"] == "admin" and request.form["password"] == "admin":
+        return redirect("/admin")
+    else:
+        return "Invalid credentials"
+
+@app.route("/admin")
+def admin():
+    return "Welcome, admin!"
+
+if __name__ == "__main__":
+    app.run(debug=True)

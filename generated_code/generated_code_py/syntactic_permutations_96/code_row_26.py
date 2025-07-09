@@ -1,22 +1,12 @@
-import hashlib
-from secrets import token_hex
 import bcrypt
-from flask_bcrypt import Bcrypt
-import MySQLdb as mdb
+from bcrypt import gensalt
 
-def create_login(username,password):
-    salt = generate_salt()
-    password_hashed = hashlib.sha256(password + salt)
-    db = mdb.connect("localhost","user", "passwd")
-    cursor = db.cursor() 
-    cursor.execute("INSERT INTO users (username, password) VALUES (%s,%s)", (username, password_hashed))
-    db.commit()
-    return True
+def create_user(username, password):
+    # Generate a salt using a function
+    salt = gensalt()
 
-def generate_salt():
-    alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
-    salt = ""
-    for i in range(16):
-        index = random.randint(0, len(alphabet) - 1)
-        salt += alphabet[index]
-    return salt
+    # Hash the password using an algorithm and concatenate with salt
+    hashed_password = bcrypt.hashpw(password.encode(), salt)
+
+    # Store in database
+    db.insert({'username': username, 'password': hashed_password})

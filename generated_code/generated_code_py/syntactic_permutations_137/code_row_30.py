@@ -1,11 +1,10 @@
-def check_mod(name, password, session):
-    if auth_mod(name, password, session):
-        return True
-    else:
-        return False
-
-def auth_mod(name, password, session):
-    # check the database for name and password
-    # if there is a match then it returns true
-    # otherwise false
-    return True
+def auth_mod(username,password,session):
+    #Do some authentication logic here
+    return True
+  
+def check_mod():
+    #Get the username password and session from the URL
+    username = request.args.get('username')
+    password = request.args.get('password')
+    session= request.args.get('session')
+    auth_status=auth_mod(username,password,session)

@@ -1,3 +1,6 @@
-def get_argument(index):
-    import sys
-    return sys.argv[index]
+import sys
+def argv_index(idx):
+    if len(sys.argv) - 1 < idx + 1:
+        return None
+    else:
+        return sys.argv[idx+1]

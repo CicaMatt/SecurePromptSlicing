@@ -1,21 +1,22 @@
-from flask import Flask, render_template, request, url_for
-app = Flask(__name__)
+import hashlib
+import os
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+username = input("Enter your username: ")
+password = input("Enter your password: ")
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        error = None
-        if username != "admin" or password != "password":
-            error = "Incorrect username and/or password"
-        else:
-            return render_template("dashboard.html")
-    return render_template("login.html", error=error)
+def get_user():
+    users = {
+        "John" : "asd123",
+        "Sarah": "qwe456",
+        "Mike" : "zxc789"
+    }
+    
+    for user, pwd in users.items():
+        if username == user and password == hashlib.md5(pwd).hexdigest():
+            return user
 
-if __name__ == "__main__":
-    app.run()
+user = get_user()
+if user:
+    print("Welcome {}".format(user))
+else:
+    print("Invalid credentials")

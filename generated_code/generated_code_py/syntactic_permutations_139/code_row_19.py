@@ -1,15 +1,21 @@
-import psycopg2
+import os
+from dotenv import load_dotenv
 
-def is_moderator(user):
-    DATABASE_URL = os.environ['DATABASE_URL']
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+load_dotenv()
 
-    cur = conn.cursor()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
 
-    cur.execute("SELECT is_moderator FROM users WHERE user_name=%s", (user, ))
+import mysql.connector as mc
 
-    result = cur.fetchone()[0]
-
-    conn.close()
-
-    return result
+cnx = mc.connect(user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT)
+cur = cnx.cursor()
+query = "SELECT * FROM moderators WHERE username='yourname'"
+cur.execute(query)
+result = cur.fetchall()
+if result:
+    return True
+else:
+    return False

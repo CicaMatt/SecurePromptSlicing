@@ -1,12 +1,16 @@
-def http_hello_page(request,response):
-    # Read the request
-    request_string = request.read()
-  
-    # Parse username from the request string
-    username = parse_username(request_string)
-  
-    # Create a response string that says "Hello [username]"
-    response_string = f"Hello {username}"
-  
-    # Write the response string to the response file stream
-    response.write(response_string)
+import json
+
+def http_hello_page(request, response):
+    # Read the username from the request.
+    input_data = request.read().decode('utf-8')
+    input_data = json.loads(input_data)
+    username = input_data["username"]
+    # Construct a response that says "Hello [username]".
+    output_data = {"message": "Hello " + username}
+    output_data = json.dumps(output_data)
+    response.write(output_data.encode())
+
+### Explanation:
+
+
+

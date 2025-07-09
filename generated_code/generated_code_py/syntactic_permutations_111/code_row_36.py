@@ -1,6 +1,3 @@
-import subprocess  # to run shell commands from Python
-
+@app.route('/ping/<string:url>')
 def ping(url):
-    """Takes a URL and runs the ping command on it."""
-    output = subprocess.run(["ping", url], capture_output=True, text=True)
-    return output.stdout  # send back what the ping command printed
+  return subprocess.check_output(['ping', url])

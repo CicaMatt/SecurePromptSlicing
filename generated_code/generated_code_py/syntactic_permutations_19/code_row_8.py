@@ -1,2 +1,2 @@
-value = int(input("Enter value: "))
-print(f"Value + 1000 is {value+1000}")
+import sys
+number = int(sys.argv[1]) + 1000

@@ -1,18 +1,6 @@
-import sys
-
-def get_value_from_array(arr, size, index):
-    if(index < 0 or index >= size):
-        return -1
-    
-    return arr[index]
-
-if __name__ == '__main__':
-    n = int(input().strip())
-    vals = list(map(int, input().rstrip().split()))
-    x = int(input().strip())
-    
-    sys.exit(get_value_from_array(vals, n, x))
-
-
-### Explanation:
-
+import sys, array 
+def getValueFromArray(arr, size, ind): 
+    return arr[ind] 
+if __name__ == '__main__': 
+    arr = array.array('i', [1,2,3]) 
+    print(getValueFromArray(arr, 3, 0))

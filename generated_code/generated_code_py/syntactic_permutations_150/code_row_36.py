@@ -1,34 +1,19 @@
-import flask
-from flask import request, redirect
+from flask import Flask, request, redirect
+import sqlite3
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+app = Flask(__name__)
 
-def insert_user_message_in_db(username, message):
-    pass
+@app.route("/")
+def index():
+    return "<h1>Welcome to my homepage!</h1><form action='/post' method='POST'><input type='text' name='username' /><input type='submit' /></form>"
 
-@app.route('/', methods=['GET'])
-def home():
-    return """
-        <html>
-            <body>
-                <h1>Home Page</h1>
-                <form action="/post" method="POST">
-                    <label for="username">Username: </label>
-                    <input type="text" name="username"><br>
-                    <label for="message">Message: </label>
-                    <textarea name="message"></textarea><br>
-                    <input type="submit" value="Submit">
-                </form>
-            </body>
-        </html>
-    """
-
-@app.route('/post', methods=['POST'])
+@app.route("/post", methods=["POST"])
 def post():
-    username = request.form['username']
-    message = request.form['message']
-    insert_user_message_in_db(username, message)
+    username = request.form["username"]
+    message = request.form["message"]
+    db = sqlite3.connect("database.db")
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO messages (username, message) VALUES (?, ?)", (username, message))
+    db.commit()
+    cursor.close()
     return redirect("/")
-
-app.run()

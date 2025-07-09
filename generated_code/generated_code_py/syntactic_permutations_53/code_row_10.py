@@ -1,59 +1,57 @@
-from flask import Flask, render_template, request, url_for, redirect, session
-import pandas as pd 
-import numpy as np
+import flask
+from flask import Flask, request, render_template
+import flask_login
+from flask_login import LoginManager, current_user, login_required
 
 app = Flask(__name__)
-app.secret_key = "password"
+app.secret_key = "super secret string"
 
-user_data = {'email': ['user1@example.com', 'user2@example.com'],
-             'password': ['pass1', 'pass2']}
+login_manager = LoginManager()
+login_manager.init_app(app)
 
-admin_data = {'email': ['admin1@example.com', 'admin2@example.com'],
-              'password': ['pass3', 'pass4']}
+users = ["admin", "user"]
+passwords = {"admin": "admin", "user": "user"}
 
-user_df = pd.DataFrame(user_data)
-admin_df = pd.DataFrame(admin_data)
+class User:
+    def __init__(self, name):
+        self.name = name
 
-def is_admin(email):
-    return admin_df['email'].str.contains(email).any()
+    def get_id(self):
+        return self.name
 
-def is_logged_in():
-    if 'username' in session:
-        return True
-    else:
-        return False
+@login_manager.user_loader
+def user_loader(username):
+    if username not in users:
+        return None
+    return User(username)
 
-@app.route('/')
+@app.route("/")
 def index():
-    if not is_logged_in():
-        return redirect(url_for('login'))
-    elif is_admin(session['username']):
-        return render_template("admin.html")
-    else:
-        return render_template("user.html")
+    if current_user.is_authenticated:
+        if current_user.name == "admin":
+            return render_template("admin.html")
+        else:
+            return render_template("user.html")
+    return render_template("login.html")
 
-@app.route('/login', methods=['GET','POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        email = request.form.get('email')
-        password = request.form.get('password')
-        if user_df[user_df['email']==email]['password'].values[0] == password:
-            session['username'] = email
-            return redirect(url_for('index'))
-    else:
+    if request.method == "GET":
         return render_template("login.html")
-
-### Explanation
-
-
-
-
-
-
-
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        if username in users and passwords[username] == password:
+            user = User(username)
+            flask_login.login_user(user)
+            return redirect("/")
+        else:
+            return "Invalid Credentials"
 
-### Additional context:
-
+@app.route("/logout")
+def logout():
+    flask_login.logout_user()
+    return render_template("logout.html")
 
-### Note:
-
+if __name__ == "__main__":
+    app.run()

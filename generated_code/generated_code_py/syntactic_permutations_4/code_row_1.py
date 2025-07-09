@@ -1,5 +1,9 @@
-import random  
-vehicles = [ "car", "truck", "plane" ]  
-index = input("Please enter your index: ")  
-integer = int(index)  
-print(vehicles[integer])
+vehicles = [
+    "Toyota",
+    "Honda",
+    "Mitsubishi",
+    "Nissan",
+    "Ford"
+]
+index = int(input("Enter an index of a vehicle: "))
+print(f'The vehicle at this index is {vehicles[index]}')

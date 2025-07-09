@@ -1,2 +1,3 @@
-import sys
-print(sys.argv[int(index) + 1])
+def getIndex(index):
+    import sys
+    return sys.argv[index+1]

@@ -1,3 +1,4 @@
 import sys
-def get_index(my_list, index):
-    return my_list[int(index)]
+
+def get_argv_index(argv):
+    return int(argv[1])

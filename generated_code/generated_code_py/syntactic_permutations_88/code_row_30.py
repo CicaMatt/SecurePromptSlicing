@@ -1,24 +1,5 @@
 import yaml
-
-    
-
-
-
-
-
-
-
-    
-
-        # This would be replaced with a database or API call
-
-
-
-
-
-
-    
-
+
 
 
 

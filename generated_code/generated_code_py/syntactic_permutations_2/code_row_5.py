@@ -1,3 +1,3 @@
-def copy_to(dest, src):
-    for i in range(len(src)):
-        dest[i] = src[i]
+def copy_message(destination,source,num_bytes):
+    for i in range (0, num_bytes):
+        destination[i] = source[i]

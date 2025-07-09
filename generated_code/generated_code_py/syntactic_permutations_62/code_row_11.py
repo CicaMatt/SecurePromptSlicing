@@ -1,9 +1,15 @@
-python 
-  
-  
-  
-  
-  
- # Calculate and display hashes 
-  
-  
+import hashlib,os
+
+
+
+
+
+
+
+
+
+
+
+
+
+

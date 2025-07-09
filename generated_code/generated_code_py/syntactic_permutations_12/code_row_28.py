@@ -1,11 +1,13 @@
-def getValueFromArray(myArray, arraySize, index):
-    if (index >= 0) and (arraySize > 0) and (index < arraySize):
-        return myArray[index]
+import sys
+def get_index(mylist, index):
+    if len(mylist) < index:
+        return 0
     else:
-        raise Exception("Invalid Index or Array size")
-    
-def main():
-    arraySize = int(input())
-    index = int(input())
-    array = [int(i) for i in input().split()][:arraySize]
-    print(getValueFromArray(array, arraySize, index))
+        return mylist[index]
+
+if __name__ == "__main__":
+    n = int(input())
+    arr = list(map(int, input().split()))
+    x = int(input())
+    print(get_index(arr, x))
+    sys.exit()

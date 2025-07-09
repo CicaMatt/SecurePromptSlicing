@@ -1,46 +1,36 @@
-from flask import Flask, request, redirect, url_for
+import os
+from flask import Flask, request
+from pymongo import MongoClient
+from bcrypt import checkpw, hashpw
+
 app = Flask(__name__)
-@app.route('/')
-def index():
-    return redirect(url_for('login'))
 
-@app.route('/login', methods=['GET','POST'])
+client = MongoClient("mongodb://localhost:27017")
+db = client["user_info"]
+users = db["users"]
+
+def create_hash(password):
+    return hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+@app.route('/login', methods=['POST'])
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('change_email'))
-    return '''<!DOCTYPE html>
-                <html>
-                   <body>
-                      <form method="post">
-                         <p><input type=text name=username>
-                         <p><input type=password name=password>
-                         <p><input type=submit value=Login>
-                      </form>
-                   </body>
-                </html>'''
-
-@app.route('/change_email', methods=['GET','POST'])
-def change_email():
-    error = None
-    if request.method == 'POST':
-        if request.form['old_email'] != 'admin' or request.form['confirm_password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('index'))
-    return '''<!DOCTYPE html>
-                <html>
-                   <body>
-                      <form method="post">
-                         <p><input type=text name=old_email>
-                         <p><input type=password name=new_email>
-                         <p><input type=submit value=Login>
-                      </form>
-                   </body>
-                </html>'''
+    try: 
+        old_email = request.json['old_email']
+        new_email = request.json['new_email']
+        password = request.json['password']
+        user = users.find_one({'email': old_email})
+        
+        if not checkpw(user['password'].encode('utf-8'), hashed):
+            return {'status': 'error', 'message': 'Wrong confirmation password'}
+        
+        if len(new_email) < 3:
+            return {'status': 'error', 'message': 'New email is too short'}
+        
+        users.update_one({'email': old_email}, {'$set': {'email': new_email}})
+    
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
+    return {'status': 'success', 'message': 'Email changed'}
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

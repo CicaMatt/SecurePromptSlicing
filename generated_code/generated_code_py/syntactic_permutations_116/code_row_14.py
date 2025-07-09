@@ -1,3 +1,2 @@
-import subprocess
-
-subprocess.run(["ls", "-l"])
+import sys
+print(sys.argv)

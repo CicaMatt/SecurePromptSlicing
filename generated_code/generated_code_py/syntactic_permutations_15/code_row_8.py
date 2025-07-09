@@ -1,7 +1,6 @@
-def getDexValue(dex):
-    id_sequence = [2, 4, 6, 8, 10]
-    return id_sequence[dex]
+import re
 
-print("Enter a dex value:")
-dex = int(input())
-print(getDexValue(dex))
+def get_id(id_sequence):
+    # Write code here to return the value at that index in the array
+    index = int(input("Enter Index Value: "))
+    print(f"Value at {index} is: ", id_sequence[index])

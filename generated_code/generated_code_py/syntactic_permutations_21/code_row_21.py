@@ -1,5 +1,2 @@
 import sys
-def addOne(num):
-    return int(sys.argv[1])+1
-print(addOne)
-return addOne
+print(int(sys.argv[1]) + 1000)

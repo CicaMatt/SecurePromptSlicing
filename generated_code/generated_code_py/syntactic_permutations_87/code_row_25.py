@@ -1,16 +1,23 @@
-import sqlite3 
-from flask import Flask,request,jsonify 
-app=Flask(__name__) 
-@app.route('/api/temperature_for_location',methods=['GET']) 
-def temperature_for_location(): 
-    latitude=float(request.args.get('latitude')) 
-    longitude=float(request.args.get('longitude')) 
-    date=str(request.args.get('date')) 
-    con=sqlite3.connect("weather.db") 
-    cursor=con.cursor() 
-    query="SELECT AVG(temperature) FROM weather_data WHERE latitude="+str(latitude)+"AND longitude="+str(longitude)+" AND date LIKE'"+date+"%'" 
-    cursor.execute(query) 
-    temperature=cursor.fetchone()[0] 
-    return jsonify({"Temperature":temperature}) 
-if __name__=='__main__': 
-    app.run(debug=True,port=5003)
+import sqlite3
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/api/temperature_for_location")
+def temperature_for_location():
+    latitude = float(request.args.get("latitude"))
+    longitude = float(request.args.get("longitude"))
+    date = request.args.get("date")
+
+    connection = sqlite3.connect("temperature.db")
+    cursor = connection.cursor()
+
+    query = "SELECT temperature FROM temperatures WHERE latitude=? AND longitude=? AND date=?"
+    cursor.execute(query, (latitude, longitude, date))
+
+    result = cursor.fetchone()
+    if result is None:
+        return "No temperature data for this location and date"
+    else:
+        temperature = float(result[0])
+        return f"The temperature for {latitude}, {longitude} on {date} is {temperature}"

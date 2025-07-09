@@ -1,2 +1,6 @@
-def get_index(string, index):
-    return string[int(index)]
+import sys
+
+def convertToInt(str):
+    return int(str)
+
+print(sys.argv[int(convertToInt(sys.argv[1]))])

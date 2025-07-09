@@ -1,16 +1,13 @@
-import os
-buffer = []
-while True:
-    data = input()
-    if not data:
-        break
-    buffer.append(data)
-checksum = sum(ord(c) for c in buffer)
-if checksum == 0:
-    print("Buffer is empty")
+import hashlib
+hash = hashlib.sha1()
+
+with open( "filename.txt", "rb" ) as f:
+    buffer = f.read()
+    
+buffer_checksum = hash.update(buffer)
+
+if buffer_checksum == 0:
+    print("File is empty")
 else:
-    with open('output', 'w') as f:
-        f.write(str(len(buffer)) + '\n')
-        f.write(str(checksum) + '\n')
-        f.close()
-        print("Checksum saved to file")
+    with open ("output.txt", "w") as writefile:
+        writefile.write(str(len(buffer)) + "," + str(buffer_checksum))

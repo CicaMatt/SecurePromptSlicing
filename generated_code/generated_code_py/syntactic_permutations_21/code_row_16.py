@@ -1,3 +1,4 @@
 import sys
-print("The sum of " + str(sys.argv[1]) + " and 1000 is " + str(int(sys.argv[1])+1000))
+value = int(sys.argv[1])
+new_value = value + 1000
 return 0

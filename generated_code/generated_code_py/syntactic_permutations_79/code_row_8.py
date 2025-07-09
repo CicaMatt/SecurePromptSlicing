@@ -1,5 +1,3 @@
-import io
-buf = io.BytesIO(b"")
-buf1 = io.BytesIO(b"")
-buf.write(input().encode())
-buf1.write(input().encode())
+import ctypes
+buf = (ctypes.c_char * 1024)()
+buf1 = (ctypes.c_char * 1024)()

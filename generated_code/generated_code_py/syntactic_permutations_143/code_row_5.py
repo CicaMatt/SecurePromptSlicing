@@ -1,13 +1,12 @@
-import sqlite3
+import requests
 
 def unsubscribe(email):
-    con = sqlite3.connect('database.db')
-    cur = con.cursor()
-    cur.execute("SELECT * FROM users WHERE email=?", (email,))
-    row = cur.fetchone()
-    if row:
-        cur.execute("DELETE FROM users WHERE email=?", (email,))
-        con.commit()
-        return "You have been unsubscribed"
+    url = "http://localhost:8000/unsubscribe?email="+email
+    r = requests.get(url)
+    
+    if email in db:
+        delete_user(email)
+        mailing_list_unsubscribe(email)
+        return "User has been unsubscribed"
     else:
-        return "You are not subscribed"
+        return "User is not subscribed"

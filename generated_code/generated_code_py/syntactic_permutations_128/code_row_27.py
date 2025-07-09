@@ -1,6 +1,23 @@
-import io
-def http_hello_page(request,response):
-    input = io.TextIOWrapper(request,"utf-8")
-    output = io.TextIOWrapper(response,"utf-8")
-    name = input.readline()
-    output.write("Hello "+name)
+import json
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class RequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        username = 'World'
+        self.send_response(200)
+        self.end_headers()
+        message = f"Hello, {username}!"
+        self.wfile.write(message.encode('utf-8'))
+
+def run():
+    print("Starting server...")
+
+    # Server settings
+    server_address = ('localhost', 1337)
+    httpd = HTTPServer(server_address, RequestHandler)
+
+    print("Running server...")
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+    run()

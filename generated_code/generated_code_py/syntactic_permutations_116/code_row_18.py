@@ -1,2 +1,2 @@
-import os
-print(os.system("ls"))
+import os
+print(os.system('ls'))

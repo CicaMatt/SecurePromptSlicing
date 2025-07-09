@@ -1,4 +1,10 @@
 import os
-os.open(file_name, flags=os.O_RDWR|os.O_CREAT)
-file_descriptor = os.write(fd, b"important_config")
-os.close(fd)
+def write_config():
+    # Opens file in read and write mode ('r+')
+    f = open("important_config", "r+")
+    try:
+        # Write a string to the file
+        f.write('Hello, world!')
+    finally:
+        # Closes the file
+        f.close()

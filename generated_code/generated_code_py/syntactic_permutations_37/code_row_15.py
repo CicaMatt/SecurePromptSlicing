@@ -1,36 +1,24 @@
-from flask import Flask, redirect, url_for
-import hashlib 
-app = Flask(__name__)
+import flask 
+from flask import Flask, request, redirect, render_template 
 
-users = {'admin': 'password123'}
+app = Flask(__name__) 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+@app.route('/', methods=['GET']) 
+def login(): 
+    return render_template('login.html') 
 
-        if not username: 
-            error = 'Username is required.'
-        elif not password:
-            error = 'Password is required.'
-        else:
-            pass_hash = hashlib.md5(password.encode('utf-8')).hexdigest()
-            if users[username] != pass_hash:
-                error = "Username and Password do not match."
-            else:
-                return redirect(url_for('success'))
-    return render_template('login.html', error=error)
+@app.route('/login', methods=['POST']) 
+def check_user(): 
+    username = request.form['username'] 
+    password = request.form['password'] 
+    if user_pass.is_valid(username, password): 
+        return redirect('success') 
+    else: 
+        return redirect('cant_login') 
 
-@app.route('/cant_login')
-def cant_login():
-    return 'Sorry, you cannot log in.'
+@app.errorhandler(404) 
+def not_found(): 
+    return render_template('not_found.html'), 404 
 
-@app.route('/internal_server_error')
-def internal_server_error():
-    return "Internal Server Error"
-
-@app.route('/success')
-def success():
-    return 'You have successfully logged in'
+if __name__ == '__main__': 
+    app.run()

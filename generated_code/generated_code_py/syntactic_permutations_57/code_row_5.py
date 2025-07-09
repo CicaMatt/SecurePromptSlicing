@@ -1,30 +1,25 @@
-import requests
-from flask import request, session, redirect
-
-@app.route("/change-email", methods=["GET", "POST"])
+import hashlib
+import bcrypt
+from flask import Flask, jsonify, request, make_response
+app = Flask(__name__)
+@app.route('/email', methods=['PUT'])
 def change_email():
-    if not "user" in session or not session["user"]:
-        return redirect("/login")
-    user = session["user"]
-    old_email = request.form.get("old-email")
-    new_email = request.form.get("new-email")
-    confirm_password = request.form.get("confirm-password")
-
-    if not old_email or not new_email or not confirm_password:
-        return "All fields are required."
-
-    if old_email != user["email"]:
-        return "The old email does not match the current email."
-
-    if not check_password(confirm_password, user["password"]):
-        return "Invalid confirm password."
-
-    r = requests.get("https://haveibeenpwned.com/api/v3/breachedaccount/" + old_email)
-    data = r.json()
-    if not data:
-        return "The new email already exists."
-
-    user["email"] = new_email
-    update_user(user)
-
-    return redirect("/settings")
+    # Check if user is logged in
+    if not 'user' in session:
+        abort(401) # Not Authorized
+    # Get email, new_email and confirm password from request
+    old_email = request.form['old_email']
+    new_email = request.form['new_email']
+    confirm_password = request.form['confirm_password']
+    # Check if passwords match
+    hashed_password = bcrypt.hashpw(confirm_password, session['user']['salt']) 
+    if not hashlib.sha256(session['user']['email'].encode()).hexdigest() == old_email:
+        abort(401) # Not Authorized
+    # Check if email is already taken
+    user = User.query.filter_by(email=new_email).first()
+    if user:
+        abort(409) # Conflict
+    # Update the email in session and database
+    session['user']['email'] = new_email
+    user.email = new_email
+    db.session.commit()

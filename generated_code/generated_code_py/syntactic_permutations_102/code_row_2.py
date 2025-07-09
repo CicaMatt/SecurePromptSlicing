@@ -1,4 +1,10 @@
-import os
-os.open("important_config", os.O_CREAT, 0o644)
+os
+
 
-fd.write('important config')
+        # Open file in write mode with O_CREAT and S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH flags
+
+
+        # Write data to file descriptor
+
+
+        # Close file descriptor

@@ -1,8 +1,13 @@
-import os
+import os
+
+def read_file(filepath):
+    filename = os.path.basename(filepath)
+    if not filename.startswith('safe'):
+        raise ValueError("Unsafe file")
+    with open(filepath, 'r') as f:
+        return f.read()
 
-def readFile(file):
-    filePath = f"/safe/{file}"
-    if not os.path.exists(filePath):
-        raise FileNotFoundError()
-    with open(filePath, "r") as f:
-        return f.read().strip("\n")
+### Explanation
+
+
+

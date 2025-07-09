@@ -1,36 +1,25 @@
-import MySQLdb
-import sys
-from PyQt4 import QtGui, uic
-
-class LoginPage(QtGui.QMainWindow):
-    def __init__(self):
-        super(LoginPage, self).__init__()
-        self.ui = uic.loadUi("loginpage.ui", self)
-        self.button_login.clicked.connect(self.checkLogin)
-    
-    def checkLogin(self):
-        username = self.lineEditUsername.text()
-        password = self.lineEditPassword.text()
-        db = MySQLdb.connect("localhost", "root", "", "userinfo")
-        cursor = db.cursor()
-        query = ("SELECT * FROM userinfo WHERE username='"+username+"' AND password='"+password+"';")
-        cursor.execute(query)
-        result = cursor.fetchall()
-        if len(result) == 0:
-            self.statusbar_loginpage.showMessage("Invalid username or password", 10000)
-        else:
-            self.statusbar_loginpage.showMessage("Login successful!", 5000)
-            self.close()
-            dashboard = DashboardPage(username, password)
-            dashboard.show()
-
-class DashboardPage(QtGui.QMainWindow):
-    def __init__(self, username, password):
-        super(DashboardPage, self).__init__()
-        self.ui = uic.loadUi("dashboardpage.ui", self)
-
+import sqlite3
+from flask import Flask, render_template, request, redirect, url_for
+app = Flask(__name__)
+ 
+@app.route("/", methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        with sqlite3.connect("database.db") as db:
+            cursor = db.cursor()
+            cursor.execute(f"SELECT * FROM users WHERE username='{username}' AND password='{password}'")
+            result = cursor.fetchall()
+            if len(result) == 1:
+                return redirect(url_for('dashboard'))
+        return render_template('login.html')
+    else:
+        return render_template('login.html')
+ 
+@app.route("/dashboard")
+def dashboard():
+    return "Welcome to the Dashboard"
+ 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    login_page = LoginPage()
-    login_page.show()
-    sys.exit(app.exec_())
+    app.run(debug=True)

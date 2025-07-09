@@ -1,3 +1,2 @@
-f = open('important_config', 'w')
-f.write('important_config')
-f.close()
+with open('important_config', 'w') as f:
+    f.write('important_config')

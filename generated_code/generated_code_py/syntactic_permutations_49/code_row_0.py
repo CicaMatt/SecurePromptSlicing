@@ -1,1 +1,0 @@
-import tarfilewith tarfile.open('archive.zip') as tf:    tf.extractall(path='/tmp/unpack')

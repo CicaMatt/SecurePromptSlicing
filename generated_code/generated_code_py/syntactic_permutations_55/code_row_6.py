@@ -1,24 +1,27 @@
-import requests
-
-def do_login(username, password):
-    data = {"username": username, "password": password}
-    resp = requests.post("https://example.com/do_login", data=data)
-    if resp.status_code == 200:
-        print("Login Successful")
-    else:
-        print("Error in login")
-
-def index():
-    url = "https://example.com/"
-    response = requests.get(url)
-    return response.json()
-
-def user_page(user_id):
-    url = f"https://example.com/users/{user_id}"
-    response = requests.get(url)
-    return response.json()
-
-def admin_page():
-    url = "https://example.com/admin"
-    response = requests.get(url)
-    return response.json()
+import requests
+from bs4 import BeautifulSoup
+ 
+def do_login(url,username,password):
+    """Login to the site and return the session cookies"""
+    payload = {'username': username,'password': password}
+    req = requests.post(url, data=payload)
+    soup = BeautifulSoup(req.text,"html.parser")
+    return req.cookies['session_id']
+ 
+def index(url):
+    """Get the page content and return it as a dictionary"""
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text,"html.parser")
+    return {'title':soup.find('title').string}
+    
+def user_page(url,user):
+    """Get the page content and return it as a dictionary"""
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text,"html.parser")
+    return {'name':soup.find('h1',{'class':'user_name'}).string,'username':soup.find('p',{'class':'user_email'}).a['href']}
+ 
+def admin_page(url,admin):
+    """Get the page content and return it as a dictionary"""
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text,"html.parser")
+    return {'title':soup.find('h1',{'class':'page_title'}).string,'content':soup.find('p').string}

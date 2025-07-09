@@ -1,30 +1,18 @@
-import sqlite3
-import hashlib
-
-def register(username, password, firstName, lastName, email):
-    conn = sqlite3.connect('db.sqlite')
-    cursor = conn.cursor()
-
-    # Hash the password
-    password_hash = hashlib.sha256(password).hexdigest()
-
-    # Check if username already exists
-    try:
-        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
-        user = cursor.fetchone()
-
-        if user is not None:
-            return "Username already exists"
-
-        # Insert new user into database
-        cursor.execute("INSERT INTO users VALUES(?, ?, ?, ?)", (username, password_hash, firstName, lastName, email))
-        conn.commit()
-
-        return "Registration succeeded"
-
-    except sqlite3.Error as e:
-        print(e)
-
-    finally:
-        cursor.close()
-        conn.close()
+import mysql.connector as mysql
+import hashlib as hl
+
+def reg_page(username,password,firstname,lastname,email):
+    try:
+        conn = mysql.connect(host='localhost',user='root',passwd='mypass',db='reg_database')
+        cursor = conn.cursor()
+        pass_hash = hl.sha256(password.encode()).hexdigest()
+        cursor.execute('SELECT * FROM users WHERE username=%s',[username])
+        result = cursor.fetchone()
+        if result:
+            return 'Username already exists.'
+        else:
+            cursor.execute('INSERT INTO users (username,password,firstname,lastname,email) VALUES(%s,%s,%s,%s,%s)',(username,pass_hash,firstname,lastname,email))
+            conn.commit()
+            return 'Registration successful.'
+    except mysql.Error as error:
+        print("An error occurred: {}".format(error))

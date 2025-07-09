@@ -1,17 +1,10 @@
 import sys
 
-def getValueFromArray(id_sequence, index):
-    if 0 <= index < len(id_sequence):
-        return id_sequence[index]
-    else:
-        return None
-    
-def main():
-    # read input from stdin
-    index = int(input())
-    
-    # call getValueFromArray with array size and index as parameters
-    value = getValueFromArray(id_sequence, index)
-    
-    # exit code is the return value of getValueFromArray
-    sys.exit(value)
+def getValueFromArray(arr, size, index):
+    return arr[index]
+
+if __name__ == "__main__":
+    id_sequence = [1432, 4567, 9870, 2321]
+    index = int(input("Enter a number : "))
+    return_val = getValueFromArray(id_sequence, len(id_sequence),index)
+    sys.exit(return_val)

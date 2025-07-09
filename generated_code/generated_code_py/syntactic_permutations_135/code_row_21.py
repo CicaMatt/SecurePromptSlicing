@@ -1,9 +1,7 @@
-import cgi
-
-def check_mod():
-    username = input(cgi.FieldStorage().getvalue('username'))
-    password = input(cgi.FieldStorage().getvalue('password'))
-    if (username == 'admin') and (password == 'letmein'):
-        return True
-    else:
-        return False
+def check_mod(username,password):
+    if username=='admin' and password =='admin':
+        return 'true'
+    else :
+        return 'false'
+if __name__ == "__main__":
+    check_mod('admin','admin')

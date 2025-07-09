@@ -1,17 +1,20 @@
-import psycopg2
+import os
+import mysql.connector as mc
 
-DATABASE_URL = "Your Database URL"
-USERNAME = "Your Username"
-PASSWORD = "Your Password" 
+user = os.environ['USER']
+password = os.environ['PASSWORD']
+host = os.environ['HOST']
+database = os.environ['DATABASE']
 
-def check_moderator(username):
-    conn = psycopg2.connect(DATABASE_URL, USERNAME, PASSWORD)
-    cur = conn.cursor()
-    query = f"SELECT * FROM users WHERE username = '{username}' AND moderator = True"
-    cur.execute(query)
-    result = cur.fetchone()
-
-    if result is not None:
-        return True
-    else:
-        return False
+cnx = mc.connect(user=user, password=password,
+                 host=host, database=database)
+cursor = cnx.cursor()
+query = ("SELECT role FROM users WHERE username = %s")
+username = 'john'
+cursor.execute(query, (username,))
+result = cursor.fetchone()
+cnx.close()
+if result[0] == 'moderator':
+    return True
+else:
+    return False

@@ -1,3 +1,3 @@
-import os
-os.system("ls")
-print(f"{1 + 2}")
+import subprocess
+
+subprocess.call(['ls', '-l'])

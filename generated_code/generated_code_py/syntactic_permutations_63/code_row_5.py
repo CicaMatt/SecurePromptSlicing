@@ -1,13 +1,25 @@
 import hashlib
-hash = hashlib.sha1()
 
-with open( "filename.txt", "rb" ) as f:
-    buffer = f.read()
-    
-buffer_checksum = hash.update(buffer)
+def read_buffer(file):
+    buffer = []
+    with open(file, 'rb') as f:
+        for line in f:
+            buffer.append(line)
+    return buffer
 
-if buffer_checksum == 0:
-    print("File is empty")
+def calc_checksum(buffer):
+    checksum = 0
+    for byte in buffer:
+        checksum += byte
+    return checksum
+
+def write_file(filename, num_bytes, checksum):
+    with open(filename, 'w') as f:
+        f.write(f'{num_bytes} {checksum}\n')
+
+buffer = read_buffer('input.bin')
+checksum = calc_checksum(buffer)
+if checksum == 0:
+    print("Buffer is empty")
 else:
-    with open ("output.txt", "w") as writefile:
-        writefile.write(str(len(buffer)) + "," + str(buffer_checksum))
+    write_file('output.txt', len(buffer), checksum)

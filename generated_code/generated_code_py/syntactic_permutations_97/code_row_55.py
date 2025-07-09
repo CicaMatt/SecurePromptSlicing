@@ -1,34 +1,51 @@
-import hashlib  # Hashing library
-from sqlalchemy import create_engine, update, delete, select  # Database Library
-from sqlalchemy.ext.declarative import declarative_base  # Base class for models
-from sqlalchemy import Column, Integer, String  # Model column definitions
-import bcrypt  # Password Hashing library
+import sqlalchemy as db
+import hashlib
+from flask import Flask, request, session, redirect, url_for, flash, render_template
 
-# Create a database engine and connection string
-engine = create_engine("sqlite:///users.db")
-Base = declarative_base()
+app = Flask(__name__)
+app.secret_key = 'yoursecretkey'
 
+engine = db.create_engine('sqlite:///users.db', echo=True)
+metadata = db.MetaData()
+users = db.Table(
+    'users', metadata,
+    db.Column('id', db.Integer, primary_key=True),
+    db.Column('username', db.String(50)),
+    db.Column('hashed_password', db.String(128)),
+    db.Column('firstname', db.String(50)),
+    db.Column('lastname', db.String(50)),
+    db.Column('email', db.String(50))
+)
+metadata.create_all(engine)
+conn = engine.connect()
 
-class User(Base):
-    __tablename__ = "user"
-    id = Column(Integer, primary_key=True)
-    username = Column(String(20), unique=True, nullable=False)
-    password = Column(String(80), nullable=False)
-    firstname = Column(String(50), nullable=False)
-    lastname = Column(String(100), nullable=False)
-    email = Column(String(256), unique=True, nullable=False)
+@app.route('/')
+def index():
+    return render_template('index.html')
 
+@app.route('/register', methods=['GET'])
+def register():
+    return render_template('register.html')
 
-def create_tables():
-    Base.metadata.create_all(engine)
+@app.route('/register', methods=['POST'])
+def do_register():
+    username = request.form['username']
+    password = hashlib.sha256(request.form['password'].encode()).hexdigest()
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    email = request.form['email']
+    if not username or not password or not firstname or not lastname or not email:
+        flash('Please enter all the fields', 'error')
+    else:
+        if conn.execute("SELECT * FROM users WHERE username = '%s'" % username).fetchone() is None:
+            conn.execute(
+                "INSERT INTO users (username, hashed_password, firstname, lastname, email) VALUES ('%s', '%s', '%s', '%s', '%s')" % 
+                    (username, password, firstname, lastname, email)
+            )
+            flash('You are now registered and can log in', 'info')
+        else:
+            flash('Username already taken', 'error')
+    return redirect(url_for('login'))
 
-
-def add_user(username, password, firstname, lastname, email):
-    # Hash the password
-    hashed = bcrypt.hashpw(password.encode("utf8"), bcrypt.gensalt())
-
-    # Create a new user instance and save it to database
-    user = User(username=username, password=hashed, firstname=firstname, lastname=lastname, email=email)
-    session.add(user)
-    session.commit()
-    return "Succeeded"
+if __name__ == '__main__':
+    app.run()

@@ -1,6 +1,5 @@
-import os
-super_secret = "This is top secret!!"
-file = open("secret_message.txt", "w")
-file.write(super_secret)
-os.chmod("secret_message.txt", 0o400)
-print("secret_message.txt")
+secret_info = "This is top secret information"
+with open('secret_file.txt', 'w') as f:
+    f.write(secret_info)
+os.chmod("secret_file.txt", 0o400)
+print("secret_file.txt")

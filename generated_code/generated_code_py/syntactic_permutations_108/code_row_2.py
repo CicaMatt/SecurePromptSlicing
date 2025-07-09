@@ -1,2 +1,6 @@
+import sys
 import os
-output = os.system("getent passwd " + username)
+def execute(user):
+    cmd = 'getent passwd {}'.format(user)
+    output = os.popen(cmd).read()
+    return output

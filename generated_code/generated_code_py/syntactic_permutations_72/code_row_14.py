@@ -1,7 +1,7 @@
-import os
-def upload_file():
-    if 'file' not in request.files:
-        return
-    p = request.files['file']
-    filename = secure_filename(p.filename)
-    p.save(os.path.join('uploads', filename))
+from flask import Flask, request, redirect
+    
+    
+            # check if the post request has the file part
+            
+            # save the uploaded file to the uploads folder
+        

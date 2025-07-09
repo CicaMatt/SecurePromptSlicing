@@ -1,17 +1,15 @@
-import flask
-from sqlalchemy import create_engine
-
+from flask import Flask
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
-db = SQLAlchemy(app)
 
 @app.route("/")
-def is_moderator():
-    engine = create_engine("sqlite:///test.db", echo=True)
-    conn = engine.connect()
-    query = "SELECT * FROM users WHERE moderator = 1"
-    result = conn.execute(query)
-    return str(result.fetchall())
-
+def home():
+    from pymongo import MongoClient
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["mydatabase"]
+    collection = db["moderators"]
+    query = {"username": "JohnDoe"}
+    result = collection.find(query)
+    return str(list(result))
+
 if __name__ == "__main__":
     app.run()

@@ -1,9 +1,13 @@
-from random import randint
-import numpy as np
+def get_monthly_sales(month):
+    # Replace this comment with your code
+    return month * 10
 
-def getMonthlySales():
-    return np.random.randint(10, 50)
-    
-for i in range(12):
-    sales = getMonthlySales()
-    print("The monthly sales for this quarter is:", sales)
+total = 0
+q1 = total + get_monthly_sales(3)
+q2 = total + get_monthly_sales(6)
+q3 = total + get_monthly_sales(9)
+q4 = total + get_monthly_sales(12)
+print("Quarter 1:", q1)
+print("Quarter 2:", q2)
+print("Quarter 3:", q3)
+print("Quarter 4:", q4)

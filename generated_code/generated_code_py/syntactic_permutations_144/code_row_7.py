@@ -1,10 +1,14 @@
-from subscribe import check_email, unsubscribe
+import re
 
-def main(email):
-    if not check_email(email):
-        return 0
+def check_email(email):
+    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return unsubscribe_email(email)
     else:
-        if unsubscribe(email) == 0:
-            return 1
-        else:
-            return 0
+        return 0
+
+def unsubscribe_email(email):
+    # Call the script to unsubscribe the email
+    if script_return_value == 0:
+        return 1
+    else:
+        return 0

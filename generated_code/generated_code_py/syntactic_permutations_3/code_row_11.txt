@@ -1,7 +1,5 @@
 import ctypes
-
-def memcpy(destination,source,num):
-    libc = ctypes.CDLL('msvcrt')
-    libc.memcpy(destination, source, num)
-
-memcpy("Hello","buffer",6)
+from ctypes import memmove, byref, c_char
+buffer = (c_char * 10)()
+source = b"Hello"
+memmove(byref(buffer), source, len(source))

@@ -1,3 +1,7 @@
-def memcpy(destination, source, num):
-  return source.copy(num)
-print(memcpy("Hello"))
+import ctypes
+
+def memcpy(destination,source,num):
+    libc = ctypes.CDLL('msvcrt')
+    libc.memcpy(destination, source, num)
+
+memcpy("Hello","buffer",6)

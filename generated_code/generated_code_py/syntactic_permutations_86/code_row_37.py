@@ -1,28 +1,31 @@
-import flask
-from flask import request
-from datetime import date
+import mysql.connector
+from flask import Flask, jsonify
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
-@app.route("/api/temperature_for_location", methods=["POST"])
-def temperature_for_location():
-    latitude = request.json['latitude']
-    longitude = request.json['longitude']
-    year = request.json['year']
-    month = request.json['month']
-    day = request.json['day']
-    grib_file = request.json['grib_file']
-    
-    query = "SELECT MAX(temperature) FROM temperatures WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
 
-    connection = mysql.connector.connect(host="localhost", user="root", password="", database="weather")
+@app.route("/api/temperature_for_location")
+def get_temperature_for_location():
+    latitude = request.args.get("latitude")
+    longitude = request.args.get("longitude")
+    year = request.args.get("year")
+    month = request.args.get("month")
+    day = request.args.get("day")
+    grib_file = request.args.get("grib_file")
+
+    connection = mysql.connector.connect(host="localhost", user="root", password="password", database="temperature")
     cursor = connection.cursor()
+
+    query = "SELECT temperature FROM temperatures WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
     cursor.execute(query, (latitude, longitude, year, month, day, grib_file))
+
     result = cursor.fetchone()
+
+    temperature = 0
+    if result:
+        temperature = float(result[0])
+
     cursor.close()
     connection.close()
 
-    return flask.jsonify({"maximum_temperature": result[0]})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return jsonify({"temperature": temperature})

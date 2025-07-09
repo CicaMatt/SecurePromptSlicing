@@ -1,8 +1,9 @@
-import os
-from flask import Flask, request, jsonify
+from flask import Flask
 app = Flask(__name__)
-@app.route('/<url>', methods=['GET'])
-def ping(url):
-    return os.system("ping "+ url)
+
+def ping():
+    url = "www.google.com"
+    response = os.system("ping"+url)
+    return response
 if __name__ == '__main__':
     app.run()

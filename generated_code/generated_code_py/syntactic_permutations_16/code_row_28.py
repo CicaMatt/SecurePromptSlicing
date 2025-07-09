@@ -1,5 +1,3 @@
-def getIndex(arr, ind):
-    return arr[ind]
-
-arr = [10,20,30,40,50]
-print(getIndex(arr, 0))
+import numpy as np
+def get_array(arr, num):
+    return arr[num]

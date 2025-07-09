@@ -1,12 +1,21 @@
-def login(request):
-    return render(request, 'login.html')
+from flask import Flask, flash, redirect, render_template, request, session, abort
+app = Flask(__name__)
 
-def do_login(request):
-    name = request.POST['name']
-    password = request.POST['password']
-    user = authenticate(request, username=name, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('admin_page')
+@app.route('/login', methods=['GET'])
+def login():
+    return '''
+        <form action="/do_login" method="post">
+            <p><input type=text name=username>
+            <p><input type=password name=password>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+@app.route('/do_login', methods=['POST'])
+def do_login():
+    if request.form['username']=='admin' and request.form['password']=='password':
+        return redirect('/admin_page')
     else:
-        return render(request, 'login.html', {'error': 'Invalid login'})
+        return 'Bad login'
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)

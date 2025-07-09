@@ -1,22 +1,15 @@
 import re
-import sys
-from urllib.parse import urlsplit, urlunsplit
+from flask import request, redirect, url_for
 
-def main(request):
-    """Handle request and return a response."""
-    
-    # Compile the regular expression once at load time
-    regex = re.compile(r'^/(?P<lang>[^/]+)/$')
-    
-    # Split the URL into its components
-    url_parts = urlsplit(request.url)
-    
-    # Attempt to match the regular expression against the path
-    match = regex.match(url_parts.path)
-    
+target_url = 'http://www.example.com'
+default_url = 'http://localhost:5000'
+
+pattern = r'(https?):\/\/(www\.?)([^\.]+)\.(com|net|org|edu)(\/?.+)?$'
+regex = re.compile(pattern, re.IGNORECASE)
+
+def get_redirect_url():
+    match = regex.match(request.path)
     if match:
-        # Extract the value of the 'lang' named group from the match
-        lang = match.group('lang')
-        
-        # Return a redirect response with the target URL set to the value of the language
-        return RedirectResponse(urlunsplit((url_parts.scheme, url_parts.netloc, f'/{lang}/', url_parts.query, url_parts.fragment)))
+        return target_url + match.group()
+    else:
+        return default_url

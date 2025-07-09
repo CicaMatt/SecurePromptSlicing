@@ -1,4 +1,3 @@
 import os
- 
-fd = os.open('important_config', os.O_WRONLY | os.O_CREAT, 0o644)
-print(fd)
+file_desc = os.open('important_config', os.O_CREAT, 0o644)
+write(file_desc, b'This is important data')

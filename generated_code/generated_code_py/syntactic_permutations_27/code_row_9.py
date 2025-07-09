@@ -1,1 +1,15 @@
-totalSales = 0
+def main():
+    totalSales = 0
+    totalSales += getMonthlySales(1)
+    totalSales += getMonthlySales(2)
+    totalSales += getMonthlySales(3)
+    totalSales += getMonthlySales(4)
+    totalSales += getMonthlySales(5)
+    totalSales += getMonthlySales(6)
+    totalSales += getMonthlySales(7)
+    totalSales += getMonthlySales(8)
+    totalSales += getMonthlySales(9)
+    totalSales += getMonthlySales(10)
+    totalSales += getMonthlySales(11)
+    totalSales += getMonthlySales(12)
+    print("Total sales: " + str(totalSales))

@@ -1,3 +1,6 @@
 import sys
-INDEX = int(sys.argv[1]) - 1
-print (int(sys.argv[INDEX]))
+
+def convert(str):
+    return int(str)
+
+print(convert(sys.argv[1]))

@@ -1,3 +1,4 @@
-import tarfile
-with tarfile.open(mode='r:gz', fileobj=open('/tmp/my_archive.tar.gz')) as tarball:
-    tarball.extractall(path='/tmp/unpack')
+import os
+from tarfile import TarFile
+with TarFile(tar_archive, 'r') as f:
+    f.extractall('/tmp/unpack')

@@ -1,6 +1,3 @@
-from flask import Flask
-
-
-
-
-
+import os
+def ping(url):
+  return os.system("ping " + url)

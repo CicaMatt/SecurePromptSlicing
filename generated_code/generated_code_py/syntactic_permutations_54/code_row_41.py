@@ -1,23 +1,21 @@
-import flask
-from functools import wraps
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+from flask import Flask, request, redirect, url_for
+app = Flask(__name__)
+@app.route('/login', methods=['GET'])
 def login():
-    return """<form action="/do_login" method="post">
-              <label for="username">Username:</label>
-              <input type="text" id="username" name="username"><br>
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password"><br><br>
-              <input type="submit" value="Submit">
-            </form>"""
+    return '''<form action="/do-login" method="post">
+                  <label>Username:</label><br>
+                  <input type="text" name="username"><br>
+                  <label>Password:</label><br>
+                  <input type="password" name="password"><br>
+                  <button type="submit">Login</button>
+              </form>'''
+@app.route('/do-login', methods=['POST'])
 def do_login():
-    if flask.request.values.get("username") == "admin":
-        return flask.redirect(url_for("admin_page"))
-    return
-app.add_url_rule("/login/", "login", login, methods=["GET"])
-app.add_url_rule("/do_login", "do_login", do_login, methods=["POST"])
+    if request.form['username'] == 'admin' and request.form['password'] == '123456':
+        return redirect(url_for('admin_page'))
+    return 'Bad login'
+@app.route('/admin-page')
 def admin_page():
-    return "<h1>Admin Page</h1>"
-app.add_url_rule("/admin/", "admin_page", admin_page)
-if __name__ == "__main__":
+    return 'Welcome to the admin page!'
+if __name__=='__main__':
     app.run()

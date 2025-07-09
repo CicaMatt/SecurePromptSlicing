@@ -1,49 +1,33 @@
-import uuid
-import os
-from flask import Flask, request, jsonify
-from flask_mysqldb import MySQL
-from werkzeug.utils import secure_filename
-
-app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'mydatabase'
-mysql = MySQL(app)
-
-def upload_pdf():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOADS_FOLDER'], filename)
-        file.save(filepath)
-        cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO pdfs (filepath) VALUES (%s)", (filepath,))
-        mysql.connection.commit()
-        cursor.close()
-        return jsonify({"success": "File uploaded successfully"}), 201
-    else:
-        return jsonify({"error": "Unsupported file type"}), 400
-
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+from sqlalchemy import create_engine
+from flask_sqlalchemy import SQLAlchemy
 
+app = Flask(__name__)
+db = SQLAlchemy(app)
+engine = create_engine("mysql://user:password@localhost/database", echo=True)
 
+class FilePath(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filepath = db.Column(db.String(100))
 
-
-@app.route("/download/<int:id>")
-def download(id):
-    cursor = mysql.connection.cursor()
-    result = cursor.execute("SELECT * FROM pdfs WHERE id=%s", (id,))
-    if result > 0:
-        row = cursor.fetchone()
-        filename = row[1]
-        return send_file(filename, as_attachment=True)
-    else:
-        cursor.close()
-        return jsonify({"error": "File not found"}), 404
-
-if __name__ == '__main__':
-    app.run()
+def upload_pdf():
+    if request.method == "POST":
+        f = request.files["file"]
+        filename = secure_filename(f.filename)
+        f.save(os.path.join("uploads", filename))
+        filepath = os.path.join("uploads", filename)
+        db.session.add(FilePath(filepath=filepath))
+        db.session.commit()
+    return redirect(url_for("download"))
+
+def download():
+    path = engine.execute("SELECT filepath FROM FilePath")
+    for row in path:
+        path = os.path.join("uploads", row[0])
+    return send_from_directory("uploads", path, as_attachment=True)
+
+if __name__ == "__main__":
+    app.run(debug=True)

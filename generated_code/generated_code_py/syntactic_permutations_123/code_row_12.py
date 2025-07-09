@@ -1,16 +1,15 @@
-import sys
-
-if len(sys.argv) != 2:
-    print("error: provide one argument")
-elif not isinstance(sys.argv[1], str):
-    print("error: argument must be a string")
-else:
-    for i in range(len(sys.argv[1])):
-        if sys.argv[1][i] == " ":
-            sys.argv[1] = sys.argv[1].replace(" ", "")
-
-    for i in range(len(sys.argv[1])):
-        if sys.argv[1][i] == "\n":
-            sys.argv[1] = sys.argv[1].replace("\n", "")
-
-    sys.argv[1] += "\0"
+import sys
+args = sys.argv
+if(len(args)!= 2):
+    print("Not enough arguments")
+    exit()
+if(type(args[1]) != str):
+    print("Argument not a string")
+    exit()
+for i in range(0, len(args[1])):
+    if(args[i] == ' ' ):
+        args[i] = ''
+for i in range(0, len(args[1])):
+    if(args[i] == '\n'):
+        args[i] = ''
+args[len(args[1])] = ''

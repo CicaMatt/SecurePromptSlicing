@@ -1,8 +1,6 @@
-import numpy as np
-first_chunk = np.zeros(10, dtype=np.int64)
-second_chunk = np.zeros(5, dtype=np.int64)
-np.copyto(second_chunk, first_chunk)
+import copy 
+
+first_chunk = [0,1,2]
+second_chunk = [3,4,5]
+copy(first_chunk,second_chunk)
 print(second_chunk)
-
-
-### Explanation:

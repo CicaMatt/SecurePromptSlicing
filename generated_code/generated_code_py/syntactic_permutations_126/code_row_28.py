@@ -1,14 +1,8 @@
-def http_hello_page():
-    import cgi, cgitb
-    cgitb.enable()
-    form = cgi.FieldStorage()
-    username = form.getvalue("username")
-    outputbuf = """<!doctype html>
-                  <html>
-                  <body>
-                      <h2>Hello %s!</h2>
-                  </body>
-                  </html>"""%(username)
-    print("Content-Type: text/html;charset=utf-8")
-    print()
-    print(outputbuf.encode('utf-8'))
+import http.server
+class HelloPageHandler(http.server.BaseHTTPRequestHandler):
+    def do_POST(self):
+        username = self.rfile.read(int(self.headers['Content-Length']))
+        self.send_response(200)
+        response = "<html><body>Hello, %s</body></html>" % (username.decode('utf-8'))
+        self.end_headers()
+        self.wfile.write(response.encode('utf-8'))

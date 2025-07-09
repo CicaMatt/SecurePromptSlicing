@@ -1,9 +1,13 @@
-import sys
-if len(sys.argv) == 2:
-    arg = sys.argv[1]
-    if isinstance(arg, str):
-        for char in arg:
-            if char == ' ':
-                continue
-            else:
-                print(char)
+import os
+def trim_whitespace(s):
+    s = s.rstrip()
+    return s.replace('\n', '')
+
+def main():
+    print("Enter the string you want to trim whitespace and newline")
+    s = input()
+    result = trim_whitespace(s)
+    print(result)
+
+if __name__ == "__main__":
+   main()

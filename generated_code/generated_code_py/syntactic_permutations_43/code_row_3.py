@@ -1,3 +1,2 @@
-with open('data.txt','r') as data:
-    content = data.read()
-print(content)
+import os
+os.open("/safe/myfile")

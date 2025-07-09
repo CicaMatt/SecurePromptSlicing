@@ -1,3 +1,4 @@
 import random
-random_number = random.randint(1000, 9999)
-print(random_number)
+print(random.randint(1,50))
+
+### Explanation:

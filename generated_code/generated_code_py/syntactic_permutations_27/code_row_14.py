@@ -1,5 +1,5 @@
-totalSales=0
-totalSales += 45
-totalSales += 76
-totalSales += 98
+totalSales = 0
+totalSales += janSales
+totalSales += febSales
+totalSales += marSales
 print(totalSales)

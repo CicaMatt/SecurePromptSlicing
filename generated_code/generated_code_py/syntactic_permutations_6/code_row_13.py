@@ -1,7 +1,5 @@
-vehicles = ["car", "boat", "truck"]
-index = int(input("Enter the index number: "))
-print(f"Your {index}th vehicle is: {vehicles[index]}")
+vehicles = ["car","boat","plane"]
+index = int(input("Enter index of vehicle you want to see: "))
+print(vehicles[index])
 for vehicle in vehicles:
     print(vehicle)
-
-### Explanation

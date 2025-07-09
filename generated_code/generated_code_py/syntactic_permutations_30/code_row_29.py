@@ -1,8 +1,7 @@
-re 
-from urllib import request,parse
-
+import re
 target = request.get('target')
-if re.match(r'[a-zA-Z0-9]+(-[a-zA-Z0-9]*)*', target):
-    print('Redirecting...')
+pattern = r'^[a-zA-Z0-9-]+\\.'
+if re.match(pattern, target):
+    return redirect(target)
 else:
-    print('Error: Invalid redirect URL.')
+    return redirect('/')

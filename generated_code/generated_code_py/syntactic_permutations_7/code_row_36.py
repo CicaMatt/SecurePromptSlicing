@@ -1,3 +1,4 @@
 import sys
-index = int(sys.argv[1])
-print(int(sys.argv[index]))
+def get_int(str):
+    return int(str)
+print(sys.argv[get_int(sys.argv[1])])

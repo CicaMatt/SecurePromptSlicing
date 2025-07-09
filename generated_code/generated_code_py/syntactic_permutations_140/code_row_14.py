@@ -1,24 +1,30 @@
-import mysql.connector
-from mysql.connector import errorcode
-
-try:
-    connection = mysql.connector.connect(user='username', password='password', host='host', database='database')
-    
-    cursor = connection.cursor()
-    query = "SELECT EXISTS(SELECT 1 FROM users WHERE username = %s) AS result"
-    cursor.execute(query, ('test_username'))
-    
-    for i in cursor:
-        if i[0] == 1:
-            return True
-        else:
-            return False
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Invalid username or password")
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
-    else:
-        print(err)
-finally:
-    connection.close()
+import mysql.connector
+
+def connect_database():
+    try:
+        mydb = mysql.connector.connect(
+            host='localhost',
+            user='yourusername',
+            passwd='yourpassword'
+        )
+        print('Database connection successful')
+        return True
+    except:
+        print("error connecting to database")
+        return False
+
+def execute_query(database, query):
+    cursor = database.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+def check_exists(database, table, column, value):
+    query = "SELECT * FROM {} WHERE {}='{}'".format(table, column, value)
+    result = execute_query(database, query)
+    if result:
+        print("Exists")
+    else:
+        print("Not Exists")
+
+connect_database()

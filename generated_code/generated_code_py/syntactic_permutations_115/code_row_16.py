@@ -1,4 +1,7 @@
 import os
-def ls(dirname):
-    return os.listdir(dirname)
-print("ls output is {}".format(ls('/')))
+
+def execute_command(cmd):
+    result = os.popen(cmd).read()
+    return result
+
+print("{0}".format(execute_command("ls -l")))

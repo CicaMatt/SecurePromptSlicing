@@ -1,5 +1,5 @@
-import ctypes
-
-buffer = (ctypes.c_char * buffer_size)()
-for i in range(0, buffer_size):
-    buffer[i] = 'A'
+def buffer_alloc(buffer_size):
+        buffer = [0] * buffer_size
+        for i in range(len(buffer)):
+            buffer[i] = 'A'
+        return buffer

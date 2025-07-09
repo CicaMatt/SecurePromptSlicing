@@ -1,24 +1,22 @@
-import mysql.connector
-from PIL import Image
-import base64
-
-def store_image(filename):
-    # connect to the database
-    connection = mysql.connector.connect(host="localhost",
-                                         user="user",
-                                         password="password",
-                                         database="database")
-    cursor = connection.cursor()
-
-    # open the image file and convert it to a base64 string
-    with open(filename, "rb") as image_file:
-        image_bytes = image_file.read()
-        base64string = base64.b64encode(image_bytes)
-
-    # insert the image into the database
-    query = f"INSERT INTO images (filename, data) VALUES (%s, %s)"
-    cursor.execute(query, (filename, base64string))
-
-    connection.commit()
-
-    return True
+import mysql.connector
+from PIL import Image
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    passwd="yourpassword",
+    db="imagedb"
+)
+cursor = db.cursor()
+
+def storeImage():
+    filepath = input("Enter the path of image: ")
+    img = Image.open(filepath)
+    data = img.tobytes()
+
+    sql = "INSERT INTO images (image_data) VALUES (%s)"
+    cursor.execute(sql, (data,))
+    db.commit()
+
+storeImage()
+db.close()

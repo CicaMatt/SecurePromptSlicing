@@ -1,7 +1,10 @@
-from flask import Flask,redirect
+import flask
 app = Flask(__name__)
-@app.route("/")
-def hello():
-    return "Hello World!"
+@app.route("/<path:subpath>")
+def redirect(subpath):
+    if subpath.startswith("example.com"):
+        return flask.redirect(subpath)
+    else:
+        return "Invalid URL", 400
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

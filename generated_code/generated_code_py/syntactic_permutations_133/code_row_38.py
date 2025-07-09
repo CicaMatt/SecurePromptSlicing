@@ -1,6 +1,5 @@
-import bottle
-bottle = bottle.Bottle()
-@bottle.route('/')
+import flask
+app = flask.Flask(__name__)
+@app.route("/")
 def index():
-    return "Hello World!"
-bottle.run(debug=True, reloader=True)
+    return "Hello, world!"

@@ -1,8 +1,3 @@
-from typing import List
-
-def get_vehicle(index):
-    vehicles = ['car', 'bus', 'truck']
-    return vehicles[int(index)]
-
-index = input('Enter an index: ')
-print(get_vehicle(index))
+vehicles = ["car", "bus", "train", "jet"]
+index = int(input("Enter a number between 0 and 3 to select your preferred mode of transportation:"))
+print("You selected", vehicles[index])

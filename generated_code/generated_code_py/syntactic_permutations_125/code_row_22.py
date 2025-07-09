@@ -1,3 +1,4 @@
 import sys
-argument = sys.argv[1].strip()
+
+argument = sys.argv[1].rstrip()
 print(argument)

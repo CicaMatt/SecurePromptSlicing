@@ -1,19 +1,26 @@
-import mysql.connector as mc
-from flask import render_template, request, redirect
-
+import os
+from flask import Flask, request, url_for, render_template, session
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        mydb = mc.connect(host='localhost', user='user_name', database='database_name')
-        mycursor = mydb.cursor()
-        mycursor.execute('SELECT * FROM users WHERE username = %s AND password = %s', (username, password))
-        result = mycursor.fetchall()
-        if len(result) > 0:
-            return redirect('/home')
-        else:
-            return redirect('/login')
-    else:
-        return render_template('login.html')
+    form = request.form
+    username = form['username']
+    password = form['password']
+    with open(os.path.join(app.root_path, 'users.csv'), 'r') as f:
+        users = [line.split(',') for line in f]
+        if (username, password) in users:
+            session['logged_in'] = True
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    session['logged_in'] = False
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

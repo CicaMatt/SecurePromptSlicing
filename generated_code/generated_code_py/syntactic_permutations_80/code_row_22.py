@@ -1,7 +1,5 @@
-import sys
+import re
 
-def main():
-    s = input("Enter a string: ")
-    print(s)
-    return len(s) #Returns the number of characters read in.
-main()
+def scan(input):
+    match = re.findall('\n', input)
+    return len(match)

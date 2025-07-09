@@ -1,10 +1,6 @@
-from flask import Flask
-import os
-
-app = Flask(__name__)
-
-@app.route("/")
-def ping():
-    url = request.args['url']
-    output = os.system("ping " + url) 
-    return str(output)
+import subprocess  # to run shell commands from Python
+
+def ping(url):
+    """Takes a URL and runs the ping command on it."""
+    output = subprocess.run(["ping", url], capture_output=True, text=True)
+    return output.stdout  # send back what the ping command printed

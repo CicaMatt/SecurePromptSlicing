@@ -1,67 +1,44 @@
-# Import libraries
-from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
-import bcrypt
-
+from flask import Flask, render_template, redirect, url_for, flash
+import os
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
-db = SQLAlchemy(app)
 
-# Create user model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
+# Configure App
+app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
-# Create login page
-@app.route("/")
-def login():
-    return render_template("login.html")
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-# Create login post route
-@app.route("/login", methods=["POST"])
-def login_post():
-    email = request.form.get("email")
-    password = request.form.get("password")
-    remember = True if request.form.get("remember") else False
-
-    user = User.query.filter_by(email=email).first()
-
-    # Check if user exists and password is correct
-    if not user or not bcrypt.checkpw(password.encode("utf8"), user.password.encode("utf8")):
-        return render_template("login.html", message="Incorrect email or password.")
-
-    # Remember the user if required
-    if remember:
-        session["user_id"] = user.id
-    else:
-        session["user_id"] = None
-
-    return redirect("/")
-
-# Create change email page
-@app.route("/change_email")
+@app.route('/change-email', methods=['GET', 'POST'])
 def change_email():
-    return render_template("change_email.html")
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        confirm_password = request.form['confirm_password']
+        # Check if user is logged in
+        if 'logged_in' not in session:
+            flash('You must be logged in to change your email')
+            return redirect(url_for('index'))
+        elif not new_email or not confirm_password:
+            flash('Email and password are required')
+            return redirect(url_for('change_email'))
+        # Check if old and new emails match
+        elif old_email != session['user']['email']:
+            flash('Old email does not match current user email')
+            return redirect(url_for('change_email'))
+        # Check if password is correct
+        elif confirm_password == session['user']['password']:
+            flash('Password is incorrect')
+            return redirect(url_for('change_email'))
+        # Change email and update user session variable
+        session['user']['email'] = new_email
+        flash('Email changed successfully!')
+    return render_template('change-email.html')
 
-# Create change email post route
-@app.route("/change_email", methods=["POST"])
-def change_email_post():
-    user = User.query.get(session["user_id"])
-    new_email = request.form.get("new_email")
-    confirm_password = request.form.get("confirm_password")
-
-    # Check if new email is not already in use and confirm password is correct
-    if User.query.filter_by(email=new_email).first() or not bcrypt.checkpw(confirm_password.encode("utf8"), user.password.encode("utf8")):
-        return render_template("change_email.html", message="Invalid email or incorrect confirm password.")
-
-    # Change the email if all checks pass
-    user.email = new_email
-    db.session.commit()
-
-    return redirect("/")
-
-# Run app
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
+
+
+### Explanation:
+
+### Execution:

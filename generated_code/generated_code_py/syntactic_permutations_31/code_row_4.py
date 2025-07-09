@@ -1,8 +1,7 @@
-import urllib
-
-def redirect_url(url):
-    parsed_url = urlparse(url)
+import urllib.parse
+def main(url):
+    parsed_url = urllib.parse.urlparse(url)
     if parsed_url.netloc == "example.com":
-        return f"<meta http-equiv='refresh' content='0; URL={url}' />"
+        return "redirect"
     else:
-        return "<h1>404 Not Found</h1>"
+        return "404 error"

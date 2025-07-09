@@ -1,12 +1,22 @@
 import hashlib
+import os
 
-users = {
-    "user@example.com": hashlib.sha256(b"password123").hexdigest(),
-}
+class User():
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.password = hashlib.sha256(password).hexdigest()
 
-def login(email, password):
-    return users.get(email) == hashlib.sha256(bytes(password, "utf-8")).hexdigest()
+    def change_email(self, new_email, old_email, password):
+        if self.verify_password(old_email, password) and self.email == old_email:
+            self.email = new_email
+            return True
+        else:
+            return False
 
-def change_email(old_email, password, new_email):
-    if login(old_email, password):
-        users[new_email] = users.pop(old_email)
+    def verify_password(self, email, password):
+        password = hashlib.sha256(password).hexdigest()
+        if email == self.email and password == self.password:
+            return True
+        else:
+            return False

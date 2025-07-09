@@ -1,5 +1,7 @@
-from flask import Flask, escape, url_for
-
-
-
-
+from flask import Flask, escape
+app = Flask(__name__)
+@app.route('/<username>')
+def hello(username):
+    return f'Hello, {escape(username)}!'
+if __name__ == "__main__":
+    app.run()

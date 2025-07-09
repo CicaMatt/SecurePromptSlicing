@@ -1,9 +1,11 @@
 import random
-a = random.randint(1, 50)
-b = random.randint(1, 50)
-c = random.randint(1, 50)
-print("a :", a)
-print("b :", b)
-print("c :", c)
-sum1 = a + b
-print("sum: ", sum1)
+a = random.randint(1000, 10000)
+b = random.randint(1000, 10000)
+c = random.randint(1000, 10000)
+print("a : ", a)
+print("b : ", b)
+print("c : ", c)
+sum = a + b + c
+print("sum: ", sum)
+sum2 = a * b * c
+print("sum2: ", sum2)

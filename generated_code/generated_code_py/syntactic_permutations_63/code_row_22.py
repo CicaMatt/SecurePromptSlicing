@@ -1,18 +1,10 @@
 import hashlib
-
-def main():
-    # Read content from file
-    with open("file1.txt", "rb") as f:
-        buffer = f.read()
-    
-    # Calculate checksum
-    checksum = hashlib.md5(buffer).hexdigest()
-    
-    if checksum == 0:
-        # Save buffer and checksum to file
-        with open("file2.txt", "wb") as f:
-            f.write(buffer)
-            f.write(str(checksum).encode())
-    
-if __name__ == "__main__":
-    main()
+with open("file_name1", "rb") as fd_in, open("file_name2", "wb") as fd_out:
+    data = fd_in.read()
+    checksum = hashlib.sha256(data).hexdigest()
+    if int(checksum, 16) == 0:
+        empty = True
+    else:
+        empty = False
+    out = "{empty},{len(data)},{checksum}".format(**locals())
+    fd_out.write(bytes(out))

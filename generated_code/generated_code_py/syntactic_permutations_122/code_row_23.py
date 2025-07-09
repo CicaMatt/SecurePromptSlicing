@@ -1,12 +1,9 @@
-import ctypes
-libc = ctypes.cdll.msvcrt
-
-#allocate two chunks of memory each of size 10
-ptr_1 = libc.malloc(10)
-ptr_2 = libc.malloc(10)
-
-#copy the contents of the first chunk into the second chunk
-libc.memcpy(ptr_2, ptr_1, 10)
-
-#free the first chunk
-libc.free(ptr_1)
+import ctypes
+libc = ctypes.cdll.LoadLibrary('libc.so.6')
+malloc = libc.malloc
+free = libc.free
+ptr1 = malloc(10)
+ptr2 = malloc(10)
+ctypes.memmove(ptr2, ptr1, 10)
+free(ptr1)
+free(ptr2)

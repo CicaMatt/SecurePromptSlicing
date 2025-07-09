@@ -1,9 +1,9 @@
 import sys
-if len(sys.argv) != 2: 
-    print("Incorrect number of arguments") 
-    exit()
+if len(sys.argv) != 2:
+    print("Error!")
+    sys.exit()
 input = sys.argv[1]
 print(input)
-input = input.rstrip() 
+input = input.strip()
 print(input)
-exit()
+sys.exit()

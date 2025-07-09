@@ -1,8 +1,10 @@
-import re, urllib
+import re
+from urllib.parse import urlparse
 
-target = "http://www.example.com"
-match = re.match(r'^[a-zA-Z0-9_-]+\.[a-z]{2,3}$', target)
-if match:
-    redirect("https://www.example.com")
+target = "http://example.com"
+regex = r"^[a-zA-Z0-9-]+\.[a-z]+$"
+
+if re.match(regex, target):
+    print("Redirecting to", target)
 else:
-    redirect("/")
+    print("Invalid target")

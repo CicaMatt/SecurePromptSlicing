@@ -1,24 +1,24 @@
-import os
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-def calculate_price(product_code, quantity):
-    if product_code == "APPLE":
-        return 1.25 * quantity
-    elif product_code == "BANANA":
-        return 0.75 * quantity
-    elif product_code == "ORANGE":
-        return 1.35 * quantity
-    else:
-        return None
-
-@app.route("/price", methods=["POST"])
-def get_price():
-    if request.method == "POST":
-        product_code = request.json["product_code"]
-        quantity = request.json["quantity"]
-        price = calculate_price(product_code, quantity)
-        return jsonify({"price": price})
-    else:
-        return None
+from flask import Flask, request
+from typing import Tuple
+
+app = Flask(__name__)
+
+def get_price(product_code: str) -> float:
+    if product_code == "VOUCHER":
+        return 5.00
+    elif product_code == "TSHIRT":
+        return 20.00
+    elif product_code == "MUG":
+        return 7.50
+    else:
+        raise ValueError("Invalid product code")
+    
+@app.route("/price", methods=['POST'])
+def calculate_price() -> Tuple[str, int]:
+    data = request.get_json()
+    quantity = data["quantity"]
+    product_code = data["productCode"]
+    price = get_price(product_code) * quantity
+    return f"${price}", 200
+    
+app.run(port=5000)

@@ -1,4 +1,2 @@
-def get_element(array, index):
-    return array[index]
-
-### Explanation:
+def get_value_at(arr, index):
+    return arr[index]

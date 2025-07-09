@@ -1,3 +1,3 @@
-import sys
-print(sys.argv[0]) # This prints the name of the program itself
-print("Hello, World!")
+import os
+ls_output = os.system('ls')
+print('Command output: {}'.format(ls_output))

@@ -1,23 +1,6 @@
-import sqlite3
-from flask import Flask, render_template, request, redirect, url_for
-app = Flask(__name__)
-conn = sqlite3.connect('data.db')
-c = conn.cursor()
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
-        fetchone = c.fetchone()
-        if fetchone:
-            return redirect(url_for('dashboard'))
-        else:
-            return render_template('login.html')
-    else:
-        return render_template("login.html")
-@app.route('/dashboard')
-def dashboard():
-    return "Welcome to the dashboard"
-if __name__ == '__main__':
-    app.run()
+import os
+    
+    # Configure session to use filesystem (instead of signed cookies)
+    
+        
+    

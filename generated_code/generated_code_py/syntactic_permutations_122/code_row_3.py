@@ -1,10 +1,11 @@
+from mmap import MAP_PRIVATE
 import ctypes
-libc = CDLL('libc.so.6')
-malloc = libc.malloc
-free = libc.free
+
 size = 10
-ptr1 = malloc(size)
-ptr2 = malloc(size)
-memcpy(ptr2, ptr1, size)
-free(ptr1)
-free(ptr2)
+ptr1 = ctypes.c_void_p(ctypes.pythonapi.valloc(size))
+ptr2 = ctypes.c_void_p(ctypes.pythonapi.valloc(size))
+
+ctypes.memmove(ptr2, ptr1, size)
+
+ctypes.pythonapi.free(ptr1, 0, 0)
+ctypes.pythonapi.free(ptr2, 0, 0)

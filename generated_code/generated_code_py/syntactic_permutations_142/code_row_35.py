@@ -1,11 +1,12 @@
-def unsubscribe(email):
-        with open("subscribers.txt", "r") as subscribers_file:
-            subscribers = subscribers_file.readlines()
-            if email in subscribers:
-                subscribers.remove(email)
-                print(f"{email} has been removed from our list.")
-            else:
-                print("You are not in our list.")
-        with open("subscribers.txt", "w") as subscribers_file:
-            subscribers = "\n".join(subscribers)
-            subscribers_file.write(subscribers)
+def unsubscribe(email_address):
+    import mysql.connector as sql
+    connection = sql.connect(host='localhost', database='subscribers', user='root', password='')
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM subscribers WHERE email_address = %s", (email_address))
+    result = cursor.fetchall()
+    if result:
+        cursor.execute("DELETE FROM subscribers WHERE email_address = %s", (email_address))
+        connection.commit()
+        print("You have been unsubscribed.")
+    else:
+        print("The email address is not subscribed.")

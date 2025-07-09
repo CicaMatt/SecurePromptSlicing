@@ -1,3 +1,8 @@
-import pandas as pd
-df = pd.read_csv("your_data.csv")
-print(df)
+import os
+
+def readFile(file):
+    filePath = f"/safe/{file}"
+    if not os.path.exists(filePath):
+        raise FileNotFoundError()
+    with open(filePath, "r") as f:
+        return f.read().strip("\n")

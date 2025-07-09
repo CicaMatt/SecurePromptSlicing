@@ -1,4 +1,3 @@
 import random
-print(random.randint(1,50))
-
-### Explanation:
+random_number = random.randint(1, 9)
+print(random_number)

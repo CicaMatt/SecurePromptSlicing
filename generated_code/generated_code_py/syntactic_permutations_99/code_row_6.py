@@ -1,13 +1,10 @@
 import hashlib
 import sqlite3
-import getpass
 
-password = getpass.getpass()
-hashed_password = hashlib.sha256(password).hexdigest()
+db = sqlite3.connect("user_creds")
+curs = db.cursor()
 
-conn = sqlite3.connect('database.db')
-cursor = conn.cursor()
-
-cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('user', hashed_password))
-
-conn.commit()
+def create_user(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    curs.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+    db.commit()

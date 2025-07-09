@@ -1,2 +1,4 @@
-import shutil
-shutil.unpack_archive(src='archive.zip', extract_dir='/tmp/unpack')
+import tarfile
+
+with tarfile.open('archive.tar', 'r') as tarball:
+    tarball.extractall('/tmp/unpack')

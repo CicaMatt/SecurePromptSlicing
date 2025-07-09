@@ -1,5 +1,6 @@
-import sys
+import os
 
-file = open(sys.argv[1])
-contents = file.read()
-print(contents)
+with open('file_name') as f:
+    content = f.readlines()
+
+content = [x.strip() for x in content]

@@ -1,3 +1,2 @@
-def copy_bytes(dest, src, n):
-    for i in range(0, n):
-        dest[i] = src[i]
+def copy_bytes(buffer,source, num):
+    memmove(buffer,source,num)

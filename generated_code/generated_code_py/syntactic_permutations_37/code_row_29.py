@@ -1,44 +1,21 @@
-import os
-from flask import Flask, render_template, request, redirect, url_for
-from dotenv import load_dotenv
-
-load_dotenv()
-app = Flask(__name__)
-app.config["SECRET_KEY"] = os.urandom(24)
-
-# Mock database
-database = {"admin": "password"}
-
-
-@app.route("/", methods=["GET", "POST"])
+import flask
+from flask import request, redirect
+import sqlite3
+app = flask.Flask(__name__)
+@app.route("/login", methods=["POST"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
-    else:
-        username = request.form["username"]
-        password = request.form["password"]
-        if username in database and password == database[username]:
-            return redirect(url_for("success"))
-        elif username not in database or password != database[username]:
-            return redirect(url_for("cant_login"))
+    username = request.form.get("username")
+    password = request.form.get("password")
+    try:
+        db = sqlite3.connect("database.db")
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+        if cursor.fetchone():
+            return redirect("/success")
         else:
-            return redirect(url_for("internal_server_error"))
-
-@app.route("/success")
-def success():
-    return render_template("success.html")
-
-
-@app.route("/cant_login")
-def cant_login():
-    return render_template("cant_login.html")
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template("page_not_found.html"), 404
-
-
-@app.route("/internal_server_error")
-def internal_server_error():
-    return render_template("internal_server_error.html", error=e)
+            return redirect("/cant_login")
+    except sqlite3.Error as e:
+        print(e)
+        return redirect("/internal_server_error")
+if __name__ == "__main__":
+    app.run()

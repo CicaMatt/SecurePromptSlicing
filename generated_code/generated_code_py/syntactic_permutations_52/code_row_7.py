@@ -1,23 +1,25 @@
-from flask import Flask, redirect, render_template, request, session, url_for
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        if username == "admin" and password == "letmein":
-            session["logged_in"] = True
-            return redirect(url_for("secret"))
-    return render_template("login.html", message="Bad login")
-
-@app.route("/secret")
-def secret():
-    if not session.get("logged_in"):
-        return redirect(url_for("index"))
-    return render_template("secret.html")
+from flask import Flask,session,redirect,url_for,request,render_template
+app=Flask(__name__)
+@app.route('/')
+def index():
+    return '[Login]('+url_for('login')+')'
+@app.route('/login',methods=['POST','GET'])
+def login():
+    error=None
+    if request.method=='POST':
+        username=request.form['username']
+        password=request.form['password']
+        if username!='admin' or password!='secret':
+            error='Invalid credentials. Try again.'
+        else:
+            session['username']=username
+            return redirect(url_for('secret'))
+    return render_template('login.html',error=error)
+@app.route('/secret')
+def secret():
+    username=session.get('username')
+    if not username:
+        return redirect(url_for('login'))
+    return 'Welcome, admin!'
+if __name__=='__main__':
+    app.run()

@@ -1,17 +1,17 @@
-import hashlib
-
-username = input("Enter your desired username")
-password = input("Enter your desired password")
-first_name = input("Enter your first name")
-last_name = input("Enter your last name")
-email = input("Enter your email address")
-
-hashed_password = hashlib.md5(password).hexdigest()
-
-cursor.execute("SELECT * FROM user WHERE username=?", (username,))
-result = cursor.fetchone()[0]
-if result:
-    print("Username already exists")
-else:
-    cursor.execute(f"INSERT INTO user (first_name, last_name, email) VALUES ({first_name}, {last_name}, {email})")
-    print("Registration successful")
+import sqlalchemy as db
+from passlib.hash import sha256_crypt as sha
+
+username = "test"
+password = "testing"
+firstname = "tester"
+lastname = "test"
+email = "test@test.com"
+
+def register():
+    if not db.execute("SELECT * FROM users WHERE username = :username", username = username):
+        hashed_password = sha.encrypt(password)
+        db.execute("INSERT INTO users (username, password, firstname, lastname, email) VALUES (:username, :password, :firstname, :lastname, :email)",
+                    username=username, password=hashed_password, firstname = firstname, lastname = lastname, email = email)
+        return "Registration successful"
+    else:
+        return "Username already exists."

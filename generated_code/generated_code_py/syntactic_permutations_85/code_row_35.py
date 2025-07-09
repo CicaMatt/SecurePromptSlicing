@@ -1,12 +1,28 @@
-import psycopg2
+from flask import Flask, jsonify, request
+import pymongo
+app = Flask(__name__)
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["sensor_readings"]
+temperature_collection = db["temperature"]
+
 def temperature_for_location(payload):
-    db = psycopg2.connect("host=localhost user=postgres dbname=temperatures password=mysecretpassword")
-    cur = db.cursor()
-    lat = payload["lat"]
-    long = payload["long"]
+    latitude = payload["latitude"]
+    longitude = payload["longitude"]
     date = payload["date"]
-    query = "SELECT temperature FROM temperature_by_location WHERE location=(%s, %s) AND date=%s"
-    cur.execute(query, (lat, long, date))
-    results = cur.fetchall()
-    db.close()
-    return { "temperature": results[0][0] }
+    query = {"latitude": latitude, "longitude": longitude}
+    data = list(temperature_collection.find(query))
+    if not data:
+        return jsonify({"error": "No temperature found"}), 404
+    else:
+        for item in data:
+            del item["_id"]
+        return jsonify(data)
+
+@app.route("/api/temperature_for_location", methods=["POST"])
+def get_temperature():
+    payload = request.get_json()
+    return temperature_for_location(payload)
+
+if __name__ == "__main__":
+    app.run()

@@ -1,4 +1,5 @@
-def get_id(index):
-    id_sequence = ["123-456-789","234-567-890","345-678-901"]
-    return id_sequence[index]
-
+def getIndex(id_sequence):
+    return id_sequence[0]
+def main():
+  id_sequence = [1,2,3,4]
+  print(getIndex(id_sequence))

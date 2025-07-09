@@ -1,3 +1,2 @@
-import ctypes
-def memcpy(dest, src):
-    ctypes.memmove(dest, src, len(src))
+def memcpy(dest, src, n):
+    return "".join(chr(dest[i]) for i in range(n))

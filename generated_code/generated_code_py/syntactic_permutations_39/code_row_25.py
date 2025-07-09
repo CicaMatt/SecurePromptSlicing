@@ -1,31 +1,30 @@
-from flask import Flask, request, render_template, url_for, redirect, flash
-import os
-app = Flask(__name__)
+import flask
+from flask import request, redirect
 
-@app.route('/')
+app = flask.Flask(__name__)
+
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template('login.html')
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if username == "admin" and password == "password123":
+            return redirect("/session")
+        else:
+            return "Username or Password is incorrect."
+    return """
+        <form method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br><br>
+            <input type="submit" value="Login">
+        </form>
+    """
 
-@app.route('/', methods=['POST'])
-def check_username_password():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == 'admin' and password == '123456789':
-            flash('You have been redirected to the session page')
-            return redirect(url_for('session'))
-    else:
-        flash('Username or Password is incorrect')
-        return render_template('login.html')
-
-@app.route('/session/')
+@app.route("/session")
 def session():
-    return '<h1>This is a secret session page</h1>'
+    return "You are now logged in!"
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
-
-### Explanation:
-
+if __name__ == "__main__":
+    app.run()

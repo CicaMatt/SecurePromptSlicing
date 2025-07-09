@@ -1,25 +1,30 @@
 import ctypes
+from ctypes import c_int, c_uint32, sizeof
+import os
+import random
+
+libc = ctypes.CDLL("msvcrt")
+
+def main():
+    size = 10
+    first = libc.malloc(size)
+    second = libc.malloc(size)
+
+    # copy the contents of the first chunk into the second chunk
+    ctypes.memmove(second, first, size)
+
+    # print the contents of the second chunk
+    data = (c_int * size).from_address(second)
+    for i in range(size):
+        print("Element {}: {}".format(i, data[i]))
+
+    libc.free(first)
+
+    # print the contents of the second chunk again
+    data = (c_int * size).from_address(second)
+    for i in range(size):
+        print("Element {}: {}".format(i, data[i]))
+
+    libc.free(second)
 
-def main():
-    # allocate two chunks of memory
-    mem1 = ctypes.create_string_buffer(50)
-    mem2 = ctypes.create_string_buffer(50)
-    
-    # copy the contents of the first chunk into the second chunk
-    for i in range(len(mem1)):
-        mem2[i] = mem1[i]
-        
-    # print the contents of the second chunk
-    print(mem2.value)
-
-    # free the memory allocated to the first chunk
-    del mem1
-    
-    # print the contents of the second chunk
-    print(mem2.value)
-
-    # free the memory allocated to the second chunk
-    del mem2
-
-if __name__ == "__main__":
-    main()
+main()

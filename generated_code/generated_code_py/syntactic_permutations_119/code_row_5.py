@@ -1,4 +1,4 @@
-import random
-string = "%f" %(random.rand())  #generates a random float number
-string2 = "%f" %(random.rand())  
-string3 = "%f" %(random.rand())
+import random 
+string = str(random.rand())
+string2 = str(random.rand())
+string3 = str(random.rand())

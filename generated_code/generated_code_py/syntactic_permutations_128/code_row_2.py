@@ -1,4 +1,3 @@
-def http_hello_page(request, response):
-    request.readline()
-    username = request.readline().strip()
-    response.write("hello "+username)
+def http_hello_page(request,response):
+  username = request.get('username')
+  response.write("hello %s" % (username))

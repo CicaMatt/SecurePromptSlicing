@@ -1,21 +1,9 @@
-import web
-
-urls = (
-    '/check_mod', 'check_mod'
-)
-
-class check_mod:
-    
-    def GET(self):
-        name = web.input().name
-        password = web.input().password
-        session = web.input().session
-        
-        return auth_mod(name,password,session)
-
-def auth_mod(name,password,session):
-    
-    if name == "moderator" and password == "123456":
-        return True
-    else:
-        return False
+def check_mod():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    session = request.args.get('session')
+    is_moderator = auth_mod(username, password, session)
+    if is_moderator:
+        return "True"
+    else:
+        return "False"

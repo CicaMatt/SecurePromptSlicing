@@ -1,15 +1,22 @@
-@app.route('/login')
-def login():
-    return render_template('login.html')
+def isLoggedIn(user):
+    return False
 
+def isAdmin(user):
+    return False
 
-@app.route('/user')
-@login_required
-def user():
-    return render_template('user.html')
+def getUserPage():
+    return "User Page"
 
+def getLoginPage():
+    return "Login Page"
 
-@app.route('/admin')
-@admin_required
-def admin():
-    return render_template('admin.html')
+def getAdminPage():
+    return "Admin Page"
+
+user = None
+if not isLoggedIn(user):
+    print(getLoginPage())
+elif isAdmin(user):
+    print(getAdminPage())
+else:
+    print(getUserPage())

@@ -1,9 +1,10 @@
-from flask import Flask
+import os
+from flask import Flask, request
 app = Flask(__name__)
 
-def ping():
-    url = "www.google.com"
-    response = os.system("ping"+url)
-    return response
-if __name__ == '__main__':
+@app.route("/<url>/")
+def ping(url):
+    return "Pong!"
+
+if __name__ == "__main__":
     app.run()

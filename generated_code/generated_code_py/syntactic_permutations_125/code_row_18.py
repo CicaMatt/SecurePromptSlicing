@@ -1,6 +1,6 @@
 import sys
+from string import whitespace
 
-args = sys.argv[1:]
-
-for arg in args:
-    print(arg.strip())
+if __name__ == "__main__":
+    arg = sys.argv[1]
+    print(arg.rstrip(whitespace))

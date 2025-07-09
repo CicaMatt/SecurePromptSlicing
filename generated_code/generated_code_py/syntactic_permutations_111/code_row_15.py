@@ -1,10 +1,11 @@
-from flask import request, jsonify 
-from subprocess import check_output
-
+from flask import Flask
 app = Flask(__name__)
 
-@app.route('/ping', methods=['GET'])
+@app.route("/ping")
 def ping():
-    url = request.args.get('url')
-    output = check_output(['ping', '-c', '4', url])
-    return jsonify(output=str(output))
+    url = "https://www.google.com"
+    output = os.system("ping "+url)
+    return output
+
+if __name__ == "__main__":
+    app.run(debug=True)

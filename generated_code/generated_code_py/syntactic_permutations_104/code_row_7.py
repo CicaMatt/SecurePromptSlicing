@@ -1,3 +1,3 @@
 import os
-os.open(file, flags=os.O_RDWR | os.O_CREAT)
-write("important_config")
+with open("file.txt", "w") as f:
+    f.write('important_config')

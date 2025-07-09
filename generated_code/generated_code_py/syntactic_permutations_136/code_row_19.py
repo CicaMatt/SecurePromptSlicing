@@ -1,19 +1,20 @@
-import os
-import re
-from urllib.parse import unquote
-from urllib.request import Request, urlopen
- 
-def get_username(url):
-    return unquote(re.search('username=(.+)&', url).group(1))
- 
-def get_password(url):
-    return unquote(re.search('&password=(.+)', url).group(1))
- 
-def check_mod(request):
-    username = get_username(request.get_full_path())
-    password = get_password(request.get_full_path())
- 
-    if (username == 'admin' and password == 'password'):
-        return 'true'
-    else:
-        return 'false'
+from flask import Flask, render_template, request
+import hashlib
+app = Flask(__name__)
+@app.route('/check_mod')
+def check_mod():
+  username = request.args.get('username')
+  password = request.args.get('password')
+  with open('/etc/passwd', 'r') as f:
+      lines = [line for line in f]
+      if username not in lines:
+          return "false"
+      else:
+          hashed_password = hashlib.md5(bytes(password, encoding='utf-8')).hexdigest()
+          user_password = lines[lines.index(username) + 1].strip().split(':')[1]
+          if hashed_password == user_password:
+              return "true"
+          else:
+              return "false"
+if __name__ == '__main__':
+    app.run()

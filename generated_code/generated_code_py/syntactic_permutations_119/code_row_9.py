@@ -1,4 +1,4 @@
-import random
-string = str(random.rand())
-string2 = str(random.rand())
-string3 = str(random.rand())
+import numpy as np
+string = str(np.random.rand())
+string2 = str(np.random.rand())
+string3 = str(np.random.rand())

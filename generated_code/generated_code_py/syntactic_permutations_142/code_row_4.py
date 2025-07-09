@@ -1,13 +1,13 @@
 import sqlite3
-from datetime import date
 
-def unsubscribe(email):
-    conn = sqlite3.connect("unsubscribes.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM emails WHERE email=?", (email,))
-    if len(c.fetchall()) > 0:
-        c.execute("DELETE FROM emails WHERE email=?", (email,))
-        conn.commit()
-        return True
+def unsubscribe(email_address):
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT email FROM subscribers WHERE email=?", (email_address,))
+    result = cur.fetchall()
+    if len(result) > 0:
+        cur.execute("DELETE FROM subscribers WHERE email=?", (email_address,))
+        con.commit()
+        return "You have been unsubscribed."
     else:
-        return False
+        return "You are not in our database."

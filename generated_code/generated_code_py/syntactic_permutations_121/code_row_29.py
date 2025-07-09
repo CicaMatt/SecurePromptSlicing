@@ -1,13 +1,14 @@
-import ctypes
-
-first_chunk = ctypes.malloc(10)
-second_chunk = ctypes.malloc(20)
-
-first_chunk.contents = b"hello"
-ctypes.memmove(first_chunk, second_chunk, 5)
-print(first_chunk.contents)
-ctypes.free(first_chunk)
-
-second_chunk.contents = b"world"
-print(second_chunk.contents)
-ctypes.free(second_chunk)
+import ctypes;
+
+first_chunk = ctypes.create_string_buffer(b'Hello World');
+second_chunk = ctypes.create_string_buffer(len(first_chunk));
+
+ctypes.memmove(ctypes.addressof(second_chunk),ctypes.addressof(first_chunk), len(first_chunk))
+
+print(second_chunk);
+
+first_chunk.free();
+
+print(second_chunk);
+
+second_chunk.free();

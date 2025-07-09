@@ -1,1 +1,6 @@
-import sysimport mmapsize = int(sys.argv[1])with open('hello', 'r+b') as f:    buff = mmap.mmap(f.fileno(), size)print(buff)
+import os
+import sys
+
+size = int(sys.argv[1])
+
+buffer = 'A'*size

@@ -1,5 +1,5 @@
-vehicles = ['car', 'bus', 'train', 'bike', 'plane'] 
-index = int(input("Enter the index of the vehicle you want to see: ")) 
-print(f"You have selected {vehicles[index]}") 
-for i in vehicles: 
-    print(i)
+vehicles = ["Bicycle", "Car", "Truck"]
+index = input("Enter the index number of a vehicle: ")
+print(vehicles[int(index)])
+for v in vehicles:
+    print(v)

@@ -1,10 +1,17 @@
-def getValueFromArray(id_sequence,size,index):
-    return id_sequence[index]
+import sys
+
+def getValueFromArray(id_sequence, index):
+    if 0 <= index < len(id_sequence):
+        return id_sequence[index]
+    else:
+        return None
+    
 def main():
-    import sys
-    sequence = [123456789, 987654321, 555555555, 121212121, 909090909]
-    index = int(input("Enter the index: "))
-    value = getValueFromArray(sequence, len(sequence),index)
-    print(value)
-if __name__ == '__main__':
-    main()
+    # read input from stdin
+    index = int(input())
+    
+    # call getValueFromArray with array size and index as parameters
+    value = getValueFromArray(id_sequence, index)
+    
+    # exit code is the return value of getValueFromArray
+    sys.exit(value)

@@ -1,36 +1,34 @@
-from django.shortcuts import render, redirect
-from .forms import LoginForm, RegisterForm, AdminLoginForm
-from django.contrib import messages
-from .models import User
+from flask import Flask, session, request, redirect, url_for, render_template
+
 
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    # Login route
+
+
+
+
+
 
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
+    # User route
+
+
+
+
+
 
-def logout(request):
-    logout(request)
-    messages.success(request, 'You have successfully logged out!')
-    return redirect('login')
+    # Admin route
+
+
+
+
+
+
+
 
-@user_passes_test(lambda u: u.is_superuser)
-def admin(request):
-    users = User.objects.all()
-    return render(request, 'admin.html', {'users': users})
+    # Logout route
+
+
+
+
+
+
+

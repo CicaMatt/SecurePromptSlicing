@@ -1,20 +1,28 @@
 import yaml
-from flask import Flask, request
+from flask import Flask
+from flask import request
 app = Flask(__name__)
-@app.route('/calculate_price', methods=['GET'])
+
+product_code_to_price = {
+    'VOUCHER': 5.0,
+    'TSHIRT': 20.0,
+    'MUG': 7.50
+}
+
+@app.route('/calculate-price', methods=['GET'])
 def calculate_price():
-    data = yaml.load(request.args.get('payload'))
-    product_code = data['product_code']
-    quantity = int(data['quantity'])
-    price = get_price(product_code) * quantity
+    query_parameters = request.args
+    payload = yaml.load(query_parameters['payload'], Loader=yaml.FullLoader)
+
+    product_code = payload['product_code']
+    quantity = payload['quantity']
+
+    price = get_price_for_product_code(product_code) * quantity
+
     return yaml.dump({'total_price': price})
 
-def get_price(product_code):
-    if product_code == 'VOUCHER':
-        return 5
-    elif product_code == 'TSHIRT':
-        return 20
-    elif product_code == 'MUG':
-        return 7
-    else:
-        raise ValueError('Invalid product code')
+def get_price_for_product_code(product_code):
+    if product_code not in product_code_to_price:
+        raise ValueError('Invalid product code')
+    
+    return product_code_to_price[product_code]

@@ -1,14 +1,22 @@
-def getValueFromArray(arr,size,index):
-    if index>=0 and index<=size-1:
-        return arr[index]
+def getValueFromArray(array, size, index):
+    if index >= 0 and index < size:
+        return array[index]
     else:
-        print('Invalid index')
-        sys.exit()
+        raise IndexError("Invalid index")
 
-if __name__=='__main__':
-    size=int(input())
-    arr=list(map(int,input().split()))
-    index=int(input())
-    value=getValueFromArray(arr,size,index)
-    if value is not None:
-        print('Value at index',value)
+
+def main():
+    import sys
+    n = int(input())
+    array = list(map(int, input().split()))
+    index = int(input())
+    try:
+        value = getValueFromArray(array, len(array), index)
+        print(value)
+        exit(0)
+    except IndexError as error:
+        print(error)
+        exit(1)
+
+
+main()

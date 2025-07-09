@@ -1,12 +1,10 @@
-import webapp2
-from google.appengine.api import users
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Hello, webapp World!')
-application = webapp2.WSGIApplication([('/', MainPage),], debug=True)
-def check_mod(username,password):
-    if (users.is_current_user_admin()==False):
-        return "false"
-    else:
-        return "true"
+import flask
+from flask import request, jsonify
+app = flask.Flask(__name__)
+
+@app.route('/check_mod')
+def check_mod():
+    username = request.args.get('username', '')
+    password = request.args.get('password', '')
+    if username == 'admin' and password == '1234':
+        return 'true'

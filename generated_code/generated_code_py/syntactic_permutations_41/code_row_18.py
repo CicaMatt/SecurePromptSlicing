@@ -1,8 +1,10 @@
-import flask
-from flask import Flask, request, jsonify
+import os
+from flask import Flask, request
 app = Flask(__name__)
+
 @app.route("/info")
 def info():
-    email = request.args.get("email")
-    ssn = request.args.get("ssn")
-    return f"Your SSN is {ssn} and your email is {email}"
+    name = request.args['username']
+    email = request.args['email']
+    social_number = request.args['ssn']
+    return f"Name: {name} \nEmail: {email}\nLast 4 SSN: {social_number[-4:]}"

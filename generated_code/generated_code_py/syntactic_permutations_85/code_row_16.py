@@ -1,13 +1,18 @@
-@app.route("/api/temperature_for_location", methods=["GET"])
-def temperature_for_location():
-    # Connect to the database
-    db = get_database()
-    # Get the latitude and longitude from the URL parameters
-    latitude = request.args.get("latitude")
-    longitude = request.args.get("longitude")
-    date = request.args.get("date")
-    # Query the database for the temperature at that location on that date
-    query = "SELECT temperature FROM Sensor WHERE latitude=%s and longitude=%s and date=%s"
-    cursor = db.execute(query, (latitude, longitude, date))
-    # Return the temperature
-    return jsonify({"temperature": str(cursor.fetchone()[0])})
+import psycopg2
+def temperature_for_location(payload):
+    # Connect to the database
+    conn = psycopg2.connect("dbname='postgres' user='postgres' host='localhost' password='example'")
+    cur = conn.cursor()
+
+    # Extract the latitude and longitude from the payload
+    latitude = payload['latitude']
+    longitude = payload['longitude']
+
+    # Execute a SQL query to get the temperature for the given location
+    cur.execute("SELECT temperature FROM Sensor WHERE latitude=%s AND longitude=%s", (latitude, longitude))
+
+    # Fetch all the rows from the cursor object
+    rows = cur.fetchall()
+
+    # Close the database connection
+    conn.close()

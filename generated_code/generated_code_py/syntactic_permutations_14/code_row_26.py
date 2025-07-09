@@ -1,9 +1,6 @@
-id_sequence = [123, 456, 789]
-
-def return_index_value(index):
-    if index < len(id_sequence):
+def get_id(index):
+        """
+        This function returns the value at a given index in the array id_sequence.
+        """
+        id_sequence = [123, 456, 789]
         return id_sequence[index]
-
-print("Please enter the index value")
-i = int(input())
-return_index_value(i)

@@ -1,4 +1,2 @@
-import os 
-with open('testfile', 'w+') as f:
-    f.write('important_config')
-os.close(f)
+import os
+os.open("important_file", flags=os.O_RDWR | os.O_CREAT)

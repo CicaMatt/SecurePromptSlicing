@@ -1,7 +1,3 @@
-import random
-
-# Generate a random index in range(0, 10)
-index = random.randint(0, 9)
-
-# Print out the vehicle at that index
+vehicles = ["Tesla", "Toyota", "Ford"]
+index = int(input("Enter a number: "))
 print(vehicles[index])

@@ -1,7 +1,7 @@
-def check_mod(request):
-        username = request.GET['username']
-        password = request.GET['password']
-        if username == 'admin' and password == 'mypass':
-            return HttpResponse('true')
+def check_mod():
+        user = request.args.get('user')
+        password = request.args.get('password')
+        if user == 'admin' and password == '1234':
+            return 'true'
         else:
-            return HttpResponse('false')
+            return 'false'

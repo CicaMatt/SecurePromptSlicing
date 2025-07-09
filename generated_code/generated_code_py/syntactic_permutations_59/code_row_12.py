@@ -1,4 +1,4 @@
 import ctypes
-buffer = (ctypes.c_byte * buffer_size)()
+buffer = (ctypes.c_char * buffer_size)()
 for i in range(buffer_size):
-    buffer[i] = ord('.')
+    buffer[i] = b'A'

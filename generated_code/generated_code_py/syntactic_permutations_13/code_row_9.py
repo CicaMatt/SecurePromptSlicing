@@ -1,6 +1,10 @@
-def get_id(dex):
-    id_sequence = [1, 2, 3, 4, 5]
-    return id_sequence[dex - 1]
+id_sequence = [0, 1, 2, 3]
 
-print("Enter a dex number between 1 and 5.")
-get_id(int(input()))
+def get_value(index):
+    return id_sequence[index]
+
+def main():
+    index = int(input("Enter an index value: "))
+    print(get_value(index))
+
+main()

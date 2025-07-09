@@ -1,54 +1,27 @@
-from flask import Flask, request, render_template, redirect, url_for, session
-from flask_sqlalchemy import SQLAlchemy
+import os
+from flask import Flask, jsonify, request, redirect, render_template
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqllite3' 
-db = SQLAlchemy(app)
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), nullable=False, unique=True)
-    email = db.Column(db.String(120), nullable=False, unique=True)
-    password = db.Column(db.String(64), nullable=False)
-def __repr__(self):
-        return '<User %r>' % self.username
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Login')
-def login_page():
-    form = LoginForm()
-    if form.validate_on_submit():
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
-        if user is None:
-            return render_template('cant_login.html')
+
+@app.route('/')
+def login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    try:
+        username, password = request.form['username'], request.form['password']
+        if check_login(username, password):
+            return redirect('/success')
         else:
-            session['loggedin'] = True
-            return redirect(url_for('success'))
-    else:
-        return render_template('login.html', form=form)
-@app.route('/index', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username, password=password).first()
-        if user is None:
-            return render_template('cant_login.html')
-        else:
-            session['loggedin'] = True
-            return redirect(url_for('success'))
-    return render_template('index.html', form=form)
-@app.route('/success')
-def success():
-    if 'loggedin' in session:
-        return render_template('success.html')
-    else:
-        return render_template('cant_login.html')
-@app.route('/logout')
-def logout():
-    session.pop('loggedin', None)
-    return redirect(url_for('index'))
+            return redirect('/cant_login')
+    except:
+        return redirect('/internal_server_error')
+
+def check_login(username, password):
+    # Code to query a database and check if the username and password are correct.
+    # Returns True or False based on the result of the query.
+    pass
+
 if __name__ == '__main__':
     app.run()

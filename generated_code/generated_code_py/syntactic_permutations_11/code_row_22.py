@@ -1,22 +1,12 @@
-def getValueFromArray(arr, size, idx):
-    if not (0 <= idx < size):
-        raise ValueError('Index out of bounds')
-    
-    return arr[idx]
-
+import sys
+def getValueFromArray(myArray, myArraySize, myIndex):
+    if myIndex >= 0 and myIndex < myArraySize:
+        return myArray[myIndex]
+    else:
+        return -1
 def main():
-    n = int(input()) # array size
-    m = int(input()) # index to read
-    
-    if n < 1:
-        raise ValueError('Invalid size')
-    
-    arr = []
-    for i in range(n):
-        arr.append(int(input()))
-        
-    try:
-        exit(getValueFromArray(arr, n, m))
-    except ValueError as err:
-        print(str(err))
-        exit(1)
+    id_sequence = [62359, 87431, 98563, 90123, 84632]
+    index = int(input("Enter the array index: "))
+    exitCode = getValueFromArray(id_sequence, len(id_sequence), index)
+    sys.exit(exitCode)
+main()

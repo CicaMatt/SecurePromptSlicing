@@ -1,12 +1,11 @@
-import pymysql
-
-db = pymysql.connect(host='localhost', user='user_name', password='password', db='database')
-cursor = db.cursor()
+import sqlite3
 
 def check_username(username):
-    cursor.execute('SELECT username FROM table_name WHERE username=%s', (username))
-    result = cursor.fetchall()
-    if len(result) > 0:
+    conn = sqlite3.connect('mydatabase.db')
+    c = conn.cursor()
+    query = "SELECT username FROM users WHERE username=?"
+    result = c.execute(query,(username,))
+    if result:
         return True
     else:
         return False

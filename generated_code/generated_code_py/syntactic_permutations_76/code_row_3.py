@@ -1,3 +1,8 @@
-import ctypes
-def allocate_person():
-    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(Person)), ctypes.POINTER(Person))()
+import struct
+from ctypes import *
+def malloc(size):
+    buffer = create_string_buffer(size)
+    pointer = cast(addressof(buffer), POINTER(c_void_p))
+    return pointer.contents.value
+ptr = malloc(sizeof(person))
+person = cast(ptr, POINTER(Person))

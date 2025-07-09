@@ -1,6 +1,17 @@
-import sys
+import ctypes
 from ctypes import *
-buf = create_string_buffer(1024)
-sys.stdin.readline(buf, 1024)
-buf1 = create_string_buffer(1024)
-sys.stdin.readline(buf1, 1024)
+
+def main():
+    buf = (ctypes.c_char*1024)()
+    read(buf, 1023)
+    buf1 = (ctypes.c_char*1024)()
+    read(buf1, 1023)
+    print("First buffer:")
+    for i in range(10):
+        print(f"{i}: {buf[i]}")
+    print("\nSecond buffer:")
+    for i in range(10):
+        print(f"{i}: {buf1[i]}")
+
+if __name__ == "__main__":
+    main()

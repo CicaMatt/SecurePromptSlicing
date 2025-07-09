@@ -1,58 +1,122 @@
-import os 
-from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+import flask
+from flask import request, redirect, url_for, render_template, session
+from functools import wraps
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 
-# set up database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SECRET_KEY'] = 'secret-key'
-db = SQLAlchemy(app)
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
 
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-
-# create the database
-db.create_all()
-
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
+    error = None
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        password = request.form['password']
+        
+        db = get_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM users WHERE email = ? AND password = ?"
+        cursor.execute(sql, (old_email, password))
+        user = cursor.fetchone()
+        
+        if user is None:
+            error = 'Invalid credentials. Please try again.'
+        else:
+            sql = "UPDATE users SET email = ? WHERE id = ?"
+            cursor.execute(sql, (new_email, user['id']))
+            db.commit()
+            
+            session['logged_in'] = True
+            flash('You are now logged in')
+            return redirect(url_for('index'))
+        
+    return render_template('login.html', error=error)
+    
+@app.route('/change-email', methods=['GET', 'POST'])
+@login_required
+def change_email():
+    error = None
+    if request.method == 'POST':
+        old_email = request.form['old_email']
+        new_email = request.form['new_email']
+        password = request.form['password']
+        
+        db = get_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM users WHERE email = ? AND password = ?"
+        cursor.execute(sql, (old_email, password))
+        user = cursor.fetchone()
+        
+        if user is None:
+            error = 'Invalid credentials. Please try again.'
+        else:
+            sql = "UPDATE users SET email = ? WHERE id = ?"
+            cursor.execute(sql, (new_email, user['id']))
+            db.commit()
+            
+            session['logged_in'] = True
+            flash('You are now logged in')
+            return redirect(url_for('index'))
+        
+    return render_template('change-email.html', error=error)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
-
-        user = User.query.filter_by(email=email).first()
-        if user and user.password == password:
-            return redirect(url_for('change_email', email=user.email))
+        email = request.form['email']
+        password = request.form['password']
+        
+        db = get_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM users WHERE email = ? AND password = ?"
+        cursor.execute(sql, (email, password))
+        user = cursor.fetchone()
+        
+        if user is None:
+            error = 'Invalid credentials. Please try again.'
         else:
-            return '<h1>Invalid username or password</h1>'
-    return render_template('login.html')
-
-
-@app.route('/change_email/<string:email>', methods=['GET', 'POST'])
-def change_email(email):
+            session['logged_in'] = True
+            flash('You are now logged in')
+            return redirect(url_for('index'))
+        
+    return render_template('login.html', error=error)
+    
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
-        old_email = email
-        new_email = request.form.get('new_email')
-        password = request.form.get('password')
-
-        user = User.query.filter_by(email=old_email).first()
-        if user and user.password == password:
-            db.session.query(User).filter(User.email == old_email).update({'email': new_email})
-            db.session.commit()
-            return redirect(url_for('login'))
-    else:
-        return render_template('change-email.html', email=email)
-
-
+        email = request.form['email']
+        password = request.form['password']
+        
+        db = get_db()
+        cursor = db.cursor()
+        sql = "SELECT * FROM users WHERE email = ? AND password = ?"
+        cursor.execute(sql, (email, password))
+        user = cursor.fetchone()
+        
+        if user is None:
+            error = 'Invalid credentials. Please try again.'
+        else:
+            session['logged_in'] = True
+            flash('You are now logged in')
+            return redirect(url_for('index'))
+        
+    return render_template('register.html', error=error)
+    
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You are now logged out')
+    return redirect(url_for('index'))
+    
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

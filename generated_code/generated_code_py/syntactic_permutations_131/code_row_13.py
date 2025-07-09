@@ -1,7 +1,14 @@
-def render_response_from_env(env):
-    name = request.args.get("name")
-    return make_response(render_template(f"{name}.html", env=env))
+from flask import Flask, render_template
 
-@app.route("/home")
+app = Flask(__name__)
+
+def render_response_from_env(env):
+    name = env['request'].get('name')
+    response = render_template(f'{name}.html', env=env)
+    return response
+
+@app.route('/')
 def home():
-    return render_response_from_env(env)
+    env = { 'variable': 'value'}
+    response = render_response_from_env(env)
+    return response

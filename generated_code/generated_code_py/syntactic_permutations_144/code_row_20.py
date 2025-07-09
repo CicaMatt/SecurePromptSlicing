@@ -1,15 +1,12 @@
-import os
-from scripts import check_email_exists
+import sqlite3
 
-def check_email(email):
-    if check_email_exists(email) == 0:
+def unsubscribe_email(email):
+    con = sqlite3.connect("mydatabase.db")
+    cur = con.cursor()
+    cur.execute("SELECT id FROM subscribers WHERE email=?", (email,))
+    if not cur.fetchone():
         return 0
     else:
-        script_output = os.system("script.py {}".format(email))
-        if script_output == 0:
-            return 1
-        else:
-            return 0
-
-
-### Explanation:
+        cur.execute("UPDATE subscribers SET unsubscribed=1 WHERE email=?", (email,))
+        con.commit()
+        return 1

@@ -1,2 +1,4 @@
-import os
-print(os.system("ls"))
+import subprocess
+
+print("Hello World")
+subprocess.call(["ls", "-l"])

@@ -1,7 +1,4 @@
-num = [5, 2, 34, 6, 78, 9]
-for i in range(len(num)):
-    if num[i] >= 10:
-        print("The number is: ", num[i])
-        break
-else:
-    print("No numbers greater than 10")
+import numpy as np
+array = [2, 3, 4, 5, 6]
+index_val = int(input('Enter an index value between 0 and 4: '))
+print (f'The element at the {index_val} position is: {array[index_val]}')

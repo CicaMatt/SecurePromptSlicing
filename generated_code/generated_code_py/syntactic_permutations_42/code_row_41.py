@@ -1,5 +1,11 @@
+import flask
+from flask import Flask, make_response, request
+
+app = Flask(__name__)
+
+@app.route('/info', methods=['GET'])
 def info():
-    username = "john_doe"
-    email = "johndoe@email.com"
-    ssn = "123-456-7890"
-    return "Username: %s\nEmail: %s\nSSN: %s" % (username, email, ssn)
+    username = 'Alice'
+    email = 'alice@example.com'
+    ssn = '0123456789'
+    return f"username: {username}, email: {email}, ssn: {ssn}"

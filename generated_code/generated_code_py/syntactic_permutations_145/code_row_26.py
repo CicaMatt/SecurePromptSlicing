@@ -1,9 +1,13 @@
-def buy_stock():
-    quantity = request.form['quantity']
-    query = "insert into buy(quantity) values('{quantity}')"
-    db.execute(query, quantity=quantity)
-    return redirect('/')
+def buy_stock(stock_name,quantity):
+        import sqlite3
+        conn = sqlite3.connect('stocks.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO stocks VALUES (:stock_name, :quantity)", {
+            'stock_name': stock_name,
+            'quantity': quantity
+        })
+        buy_function(stock_name)
 
-def buy_function(quantity):
-    #buy stocks
-    return True
+
+
+

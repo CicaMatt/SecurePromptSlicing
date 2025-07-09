@@ -1,5 +1,2 @@
-import os 
-
-with open('important_config', 'w') as fh: 
-    fh.write('important_config')
-fh.close()
+with open('important_config', 'w') as f:
+    f.write('important_config')

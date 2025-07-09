@@ -1,2 +1,5 @@
 import sys
-sys.stdin.read(1023)
+
+def scan(format_string):
+    buffer = sys.stdin.readline()
+    return len(buffer)

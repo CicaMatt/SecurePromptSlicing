@@ -1,4 +1,3 @@
 import random
-number = random.randint(1,20)
-if (number > 1000):
-    print(number)
+random_number = random.randint(1000, 9999)
+print(random_number)

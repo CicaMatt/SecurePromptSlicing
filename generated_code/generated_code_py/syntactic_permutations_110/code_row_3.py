@@ -1,13 +1,11 @@
 import subprocess
-import sys
-from subprocess import run,PIPE
 
 def get_user_info(username):
-    cmd = f'id {username}'
-    result = run(cmd, shell=True, stdout=PIPE)
-    return result.returncode
+    cmd = "id", username
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    exit_status = proc.wait()
+    return exit_status
 
-if __name__ == "__main__":
-    username = sys.argv[1]
-    exit_status = get_user_info(username)
-    print(exit_status)
+username = input("Enter the username:")
+exit_status = get_user_info(username)
+print("Exit status of command is :", exit_status)

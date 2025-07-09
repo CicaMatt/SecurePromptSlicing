@@ -1,33 +1,33 @@
 import tkinter as tk
+import tkinter.messagebox as mb
 
-class Login():
-    def __init__(self):
-        self.window = tk.Tk()
-        self.window.title('Login')
-        self.username = tk.StringVar()
-        self.password = tk.StringVar()
+def check():
+    username = username_entry.get()
+    password = password_entry.get()
+    
+    if (username == 'admin' and password == 'password'):
+        mb.showinfo('Correct', 'You are logged in')
+    else:
+        mb.showerror('Incorrect', 'Invalid username or password')
+        
+window = tk.Tk()
+window.title("Login")
+window.geometry("300x150")
 
-        self.label_username = tk.Label(text='Username: ')
-        self.label_username.grid(row=0, column=0)
-        self.entry_username = tk.Entry(self.window, textvariable=self.username)
-        self.entry_username.grid(row=0, column=1)
+label_username = tk.Label(text="Username: ")
+label_password = tk.Label(text="Password: ")
 
-        self.label_password = tk.Label(text='Password: ')
-        self.label_password.grid(row=1, column=0)
-        self.entry_password = tk.Entry(self.window, textvariable=self.password)
-        self.entry_password.grid(row=1, column=1)
+username_entry = tk.Entry()
+password_entry = tk.Entry()
 
-        self.login_button = tk.Button(text='Login', command=lambda: self.check_credentials())
-        self.login_button.grid(columnspan=2, sticky='we')
+button = tk.Button(text="Login", command=check)
 
-    def check_credentials(self):
-        if self.username.get() == 'admin' and self.password.get() == 'password':
-            self.status_label.config(text='Successful login!')
-        else:
-            self.status_label.config(text='Incorrect username or password!')
+label_username.grid(row=0, column=0)
+label_password.grid(row=1, column=0)
 
-    def run(self):
-        self.window.mainloop()
+username_entry.grid(row=0, column=1)
+password_entry.grid(row=1, column=1)
 
-if __name__ == '__main__':
-    Login().run()
+button.grid(columnspan=2)
+
+window.mainloop()

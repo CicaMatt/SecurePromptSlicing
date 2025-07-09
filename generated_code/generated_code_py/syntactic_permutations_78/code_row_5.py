@@ -1,2 +1,4 @@
-def allocate_person(self):
-    return self.allocate(Person, 1)
+def alloc(size):
+    return malloc(size)
+
+

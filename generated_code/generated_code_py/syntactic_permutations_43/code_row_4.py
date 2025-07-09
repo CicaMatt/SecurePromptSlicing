@@ -1,4 +1,3 @@
-import os
-
-os.chdir("/safe")
-file = open("filename", "r")
+with open('data.txt','r') as data:
+    content = data.read()
+print(content)

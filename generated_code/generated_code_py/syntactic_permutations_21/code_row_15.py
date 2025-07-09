@@ -1,4 +1,7 @@
 import sys
-value = int(sys.argv[1])
-new_value = value + 1000
-return 0
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        n = int(sys.argv[1]) + 1000
+        print("n=", n)
+        sys.exit(0)

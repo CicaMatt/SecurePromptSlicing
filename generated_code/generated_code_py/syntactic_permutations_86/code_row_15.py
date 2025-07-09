@@ -1,26 +1,36 @@
 import mysql.connector
-from flask import Flask, jsonify
+from datetime import date
 
-app = Flask(__name__)
+def extract_values(request):
+    # Extract values from the request
+    latitude = request.args['latitude']
+    longitude = request.args['longitude']
+    year = int(request.args['year'])
+    month = int(request.args['month'])
+    day = int(request.args['day'])
+    grib_file = request.args['grib_file']
 
-@app.route("/api/temperature_for_location")
-def get_temperature_for_location():
-    latitude = request.args.get("latitude")
-    longitude = request.args.get("longitude")
-    year = request.args.get("year")
-    month = request.args.get("month")
-    day = request.args.get("day")
-    grib_file = request.args.get("grib_file")
+def get_max_temperature(latitude, longitude, year, month, day, grib_file):
+    # Connect to the MySQL database
+    db = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='password',
+        database='weather'
+    )
 
-    connection = mysql.connector.connect(host="localhost", user="root", password="1234567890")
-    cursor = connection.cursor()
+    # Define a cursor object for the database connection
+    cursor = db.cursor()
 
-    query = "SELECT * FROM temperature WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
-    cursor.execute(query, (latitude, longitude, year, month, day, grib_file))
+    # Define an SQL query that selects the maximum temperature from the weather table for the given latitude; longitude; year; month; day and grib_file
+    sql = "SELECT MAX(temperature) FROM weather WHERE latitude={} AND longitude={} AND YEAR(date)={} AND MONTH(date)={} AND DAYOFMONTH(date)={} AND grib_file='{}'".format(latitude, longitude, year, month, day, grib_file)
 
-    result = cursor.fetchone()
+    # Execute the query and retrieve the results
+    cursor.execute(sql)
+    result = cursor.fetchall()
 
-    if result:
-        return jsonify({"temperature": result[0]})
+    # Return the maximum temperature from the results
+    if len(result) == 0:
+        return None
     else:
-        return jsonify({"error": "No temperature found for the given location and date"}), 404
+        return result[0][0]

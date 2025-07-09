@@ -1,2 +1,7 @@
-import os
-os.open('filename', os.O_CREAT | os.O_TRUNC | os.O_WRONLY | os.O_EXCL)
+import os
+
+try:
+    fd = os.open("foo", os.O_RDWR | os.O_CREAT)
+    print(fd)
+finally:
+    os.close(fd)

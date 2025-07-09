@@ -1,3 +1,2 @@
-from sys import stdin
-def scan(s):
-    return len(stdin.readline())
+import sys
+scanf("%[^\n]\n", buf, sizeof(buf))

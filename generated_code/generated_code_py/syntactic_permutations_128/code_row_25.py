@@ -1,8 +1,7 @@
-import http.server
-import cgi
-
+import socket
 def http_hello_page(request,response):
-    form=cgi.FieldStorage(fp=request,headers=request.headers)
-    username=form["username"].value
-    response.write("hello {}".format(username))
-    return
+    request = request.decode("utf-8")
+    response = response.decode("utf-8")
+    username = request[16:]
+    response = f"Hello {username}"
+    return response.encode()

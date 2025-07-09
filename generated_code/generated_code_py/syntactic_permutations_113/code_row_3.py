@@ -1,13 +1,19 @@
-import os
-from flask import Flask
-app = Flask(__name__)
-@app.route("/ping")
-def ping():
-    url = "www.google.com"
-    pong = os.system("ping "+url+" -c 4")
-    if pong == 0:
-        return "URL is alive"
-    else:
-        return "URL is not alive"
-if __name__ == '__main__':
-    app.run(host="localhost", port=8000)
+import subprocess
+from functools import wraps
+
+def bind(url):
+    def decorator(function):
+        @wraps(function)
+        def wrapper(*args, **kwargs):
+            return function(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@bind("/ping")
+def ping():
+    url = "http://example.com"
+    pong = subprocess.check_output(["ping", url])
+    if pong == 0:
+        print("URL is alive")
+    else:
+        print("URL is not alive")

@@ -1,9 +1,5 @@
-import ctypes
-def person():
-    return ctypes.create_string_buffer(sizeof(person))
-status = 0
-print(person())
-print(status)
-
-
-### Explanation:
+import ctypes
+class Person(ctypes.Structure):
+    _fields_ = [("status", ctypes.c_int)]
+def alloc():
+   return ctypes.pointer(Person(0))

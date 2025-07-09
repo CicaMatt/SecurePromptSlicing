@@ -1,2 +1,10 @@
-import os
-f = os.open('hello', os.O_CREAT|os.O_TRUNC|os.O_WRONLY|os.O_EXCL, 0o644)
+import os
+from pathlib import Path
+path = '/file/path'
+
+
+        # write to file
+
+
+
+### Explanation:

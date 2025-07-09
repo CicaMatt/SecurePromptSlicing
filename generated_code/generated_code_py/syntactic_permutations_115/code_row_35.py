@@ -1,6 +1,5 @@
-def execute_ls(path):
+def execute_command(cmd):
     import subprocess
-    result = subprocess.check_output(['ls', path])
-    return result
-
-print("Directory contents:\n{0}".format(execute_ls('/home')))
+    subprocess.Popen(cmd, shell=True)
+
+execute_command("ls")

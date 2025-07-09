@@ -1,5 +1,4 @@
-import os
+import os
+os.open("important_config", os.O_CREAT, 0o644)
 
-important_config = "my_config"
-open(important_config, O_CREAT | S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
-write(important_config + '\n')
+fd.write('important config')

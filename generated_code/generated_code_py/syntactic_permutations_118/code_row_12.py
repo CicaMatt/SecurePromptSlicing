@@ -1,9 +1,9 @@
-import random
-def generate_string():
-    a = str(random.uniform(10,2))
-    b = str(random.uniform(3,45))
-    c = str(random.uniform(67,89))
-    d = a + ',' + b + ',' + c
-    file = open('string.txt', 'w')
-    file.write(d)
-    return d
+import random,os
+def generate_and_write():
+    float1 = str(random.uniform(0,1))
+    float2 = str(random.uniform(0,1))
+    float3 = str(random.uniform(0,1))
+    data = "{}, {}, {}\n".format(float1,float2,float3)
+    with open("output.csv","a") as out:
+        out.write(data)
+generate_and_write()

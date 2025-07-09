@@ -1,4 +1,2 @@
-import sys
-
-sys.stdout=open("important_config","w")
-print("important_config")
+with open('important_config', 'w') as f:
+    f.write('important_config')

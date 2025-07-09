@@ -1,33 +1,27 @@
-import mysql.connector
-import datetime
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-
-def get_temperature(latitude, longitude, year, month, day, grib_file):
-    connection = mysql.connector.connect(
-        user="root", password="your_password", host="localhost", database="weather"
-    )
-    cursor = connection.cursor()
-    query = "SELECT max(temperature) FROM weather WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
-    cursor.execute(query, (latitude, longitude, year, month, day, grib_file))
-    result = cursor.fetchone()
-    cursor.close()
-    connection.close()
-    if result:
-        return float(result[0])
-    else:
-        return None
-
-@app.route("/api/temperature_for_location", methods=["GET"])
-def get_temperature_for_location():
-    latitude = request.args.get("latitude")
-    longitude = request.args.get("longitude")
-    year = int(request.args.get("year"))
-    month = int(request.args.get("month"))
-    day = int(request.args.get("day"))
-    grib_file = request.args.get("grib_file")
-    temperature = get_temperature(latitude, longitude, year, month, day, grib_file)
-    return jsonify({"temperature": temperature})
-
-if __name__ == "__main__":
-    app.run()
+import os
+from flask import Flask, redirect, url_for, request, render_template
+app = Flask(__name__)
+
+@app.route("/", methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        latitude = request.form["latitude"]
+        longitude = request.form["longitude"]
+        year = request.form["year"]
+        month = request.form["month"]
+        day = request.form["day"]
+        grib_file = request.files['grib_file']
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        query = "SELECT temperature FROM weather WHERE latitude=%s AND longitude=%s AND year=%s AND month=%s AND day=%s"
+        cursor.execute(query, (latitude, longitude, year, month, day))
+        result = cursor.fetchone()
+        
+        if result:
+            return render_template("index.html", message="Maximum temperature for %s is %s" % (day, result[0]))
+        else:
+            return render_template("index.html", message="No data found")
+    return render_template("index.html")
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)

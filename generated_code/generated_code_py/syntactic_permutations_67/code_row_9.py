@@ -1,83 +1,54 @@
-import mysql.connector
-import getpass
-from datetime import datetime
-
-def create_table():
-    # Create table function
-    connection = mysql.connector.connect(host='localhost', user=user, password=password)
-    cursor = connection.cursor()
-
-    #create a new table with id, name and email as columns
-    cursor.execute("CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))")
-
-    print("Table created successfully")
-
-def insert_data():
-    # Insert data function
-    connection = mysql.connector.connect(host='localhost', user=user, password=password)
-    cursor = connection.cursor()
-
-    name = input("Enter your name: ")
-    email = input("Enter your email: ")
-
-    #insert data into the table using SQL
-    sql = "INSERT INTO users (name, email) VALUES (%s, %s)"
-    val = (name, email)
-    cursor.execute(sql, val)
-
-    print("Data inserted successfully")
-
-def read_data():
-    # Read data function
-    connection = mysql.connector.connect(host='localhost', user=user, password=password)
-    cursor = connection.cursor()
-
-    #read data from the table using SQL
-    sql = "SELECT * FROM users"
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    for x in result:
-        print(x)
-
-def update_data():
-    # Update data function
-    connection = mysql.connector.connect(host='localhost', user=user, password=password)
-    cursor = connection.cursor()
-
-    id = input("Enter the id of the user you want to update: ")
-    name = input("Enter your new name: ")
-    email = input("Enter your new email: ")
-
-    #update data in the table using SQL
-    sql = "UPDATE users SET name=%s,email=%s WHERE id=%s"
-    val = (name, email, id)
-    cursor.execute(sql, val)
-
-    print("Data updated successfully")
-
-def delete_data():
-    # Delete data function
-    connection = mysql.connector.connect(host='localhost', user=user, password=password)
-    cursor = connection.cursor()
-
-    id = input("Enter the id of the user you want to delete: ")
-
-    #delete data from the table using SQL
-    sql = "DELETE FROM users WHERE id=%s"
-    val = (id, )
-    cursor.execute(sql, val)
-
-    print("Data deleted successfully")
-
-def main():
-    user = input("Enter your username: ")
-    password = getpass.getpass()
-
-    create_table()
-    insert_data()
-    read_data()
-    update_data()
-    delete_data()
-
-if __name__ == "__main__":
+import mysql.connector
+from datetime import date, time
+
+class Employee(object):
+    def __init__(self, id, name, age, salary):
+        self.__id = id
+        self.__name = name
+        self.__age = age
+        self.__salary = salary
+    
+    @property
+    def id(self):
+        return self.__id
+    
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def age(self):
+        return self.__age
+    
+    @property
+    def salary(self):
+        return self.__salary
+    
+    def __str__(self):
+        return f"Employee({self.id}, {self.name}, {self.age}, {self.salary})"
+
+def main():
+    # Connect to the database
+    cnx = mysql.connector.connect(user='root', password='password', host='localhost', port=3306, database='employees')
+    
+    # Create a cursor
+    cursor = cnx.cursor()
+    
+    # Insert a record into the employees table
+    employee = Employee(1024, "John Doe", 27, 50000)
+    query = f"INSERT INTO employees VALUES ({employee.id}, '{employee.name}', {employee.age}, {employee.salary})"
+    cursor.execute(query)
+    
+    # Insert another record into the employees table
+    employee = Employee(128, "Jane Smith", 30, 60000)
+    query = f"INSERT INTO employees VALUES ({employee.id}, '{employee.name}', {employee.age}, {employee.salary})"
+    cursor.execute(query)
+    
+    # Commit the changes
+    cnx.commit()
+    
+    # Close the connection
+    cnx.close()
+
+if __name__ == '__main__':
     main()

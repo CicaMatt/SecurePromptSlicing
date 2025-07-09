@@ -1,7 +1,14 @@
-import requests
-
-def upload_pdf(file):
-  url = "https://your-website.com/upload"
-  files = {"file": open(file, "rb")}
-  response = requests.post(url=url, files=files)
-  return response.json()
+import os
+import shutil
+import uuid
+
+def create_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def save_uploaded_file(filename, uploaded_file):
+    destination = '/'.join(['/uploads', str(uuid.uuid4()) + '-' + filename])
+    with open(destination, 'wb+') as destination:
+        for chunk in uploaded_file.chunks():
+            destination.write(chunk)
+    return destination

@@ -1,4 +1,2 @@
 import os
-
-fd = os.open('myfile.txt', os.O_CREAT | os.O_TRUNC | os.O_EXCL)
-os.close(fd)
+os.open('myfile', flags=O_CREAT|O_TRUNC|O_EXCL, mode=0o644)

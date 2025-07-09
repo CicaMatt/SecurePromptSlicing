@@ -1,23 +1,42 @@
-from flask import Flask, request, redirect
 import os
+from flask import Flask, flash, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+
+
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_pdf():
     if request.method == 'POST':
-        f = request.files['pdf_file']
-        filepath = os.path.join('uploads', f.filename)
-        f.save(filepath)
-        return redirect('/download/{}'.format(f.filename))
-    else:
-        return '''<form action="" method="post" enctype="multipart/form-data">
-                  <input type="file" name="pdf_file"><br>
-                  <input type="submit" value="Upload PDF file">
-                </form>'''
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOADS_FOLDER'], filename))
+            filepath = os.path.join(app.config['UPLOADS_FOLDER'], filename)
+            return redirect(url_for('download_pdf', filepath=filepath))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
 
-@app.route('/download/<filename>')
-def download(filename):
-    return send_from_directory('uploads', filename)
-
-if __name__ == '__main__':
-    app.run()
+@app.route('/download')
+def download_pdf():
+    filepath = request.args['filepath']
+    return redirect(url_for('download_pdf', filepath=filepath))

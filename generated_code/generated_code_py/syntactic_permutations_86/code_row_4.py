@@ -1,14 +1,26 @@
-import mysql.connector
-
-def getTemperature(latitude, longitude, year, month, day, grib_file):
-    connection = mysql.connector.connect(user='root', password='password', host='127.0.0.1')
-    cursor = connection.cursor()
-    
-    select_query = 'SELECT MAX(temp) FROM temperature WHERE latitude= %s AND longitude=%s AND year= %s AND month= %s AND day = %s AND grib_file=%s'
-    data = (latitude, longitude, year, month, day, grib_file)
-    cursor.execute(select_query, data)
-    
-    result = cursor.fetchone()
-    
-    connection.close()
-    return result[0]
+import datetime as dt
+from flask import Flask, jsonify, request
+from sqlalchemy import create_engine
+
+
+app = Flask(__name__)
+
+
+def connect_to_database():
+    return create_engine("mysql+pymysql://{user}:{pw}@localhost/{db}"
+                         .format(user="", pw="", db=""))
+
+
+@app.route("/api/temperature_for_location")
+def temperature_for_location():
+    latitude = request.args["latitude"]
+    longitude = request.args["longitude"]
+    year = request.args["year"]
+    month = request.args["month"]
+    day = request.args["day"]
+    grib_file = request.args["grib_file"]
+    query = "SELECT Max(temperature) FROM weather_data WHERE latitude={0} AND longitude={1} AND year={2} AND month={3} AND day={4} AND grib_file={5}".format(latitude, longitude, year, month, day, grib_file)
+    engine = connect_to_database()
+    with engine.connect() as con:
+        result = con.execute(query).fetchone()[0]
+    return jsonify({"maximum temperature": result})

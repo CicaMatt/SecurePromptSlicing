@@ -1,31 +1,29 @@
-import uuid
-from flask import Flask, redirect, render_template, request, url_for, session
-from flask_session import Session
+import os
+from flask import Flask, render_template, request, redirect, url_for, session
 app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-Session(app)
-@app.route("/login", methods=["GET", "POST"])
+app.config["SECRET_KEY"] = "mysecretkey"
+
+@app.route("/info", methods=["GET"])
+def info():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    else:
+        username, email, ssn = session['user']
+        return render_template("info.html", user=username, email=email, ssn=ssn)
+
+@app.route("/login")
 def login():
     if request.method == "POST":
-        session["username"] = request.form.get("username")
-        session["email"] = request.form.get("email")
-        session["ssn"] = request.form.get("ssn")
-        return redirect(url_for("info"))
-    return '''
-            <form method="post">
-                <p><input type=text name=username>
-                <p><input type=text name=email>
-                <p><input type=text name=ssn>
-                <p><input type=submit value=Login>
-            </form>
-            '''
-@app.route("/info")
-def info():
-    if "username" in session:
-        username = session["username"]
-        email = session["email"]
-        ssn = session["ssn"]
-        return f"Logged in as {username} with email, {email} and SSN ending with, {ssn[-4:]}"
-    return "You are not logged in"
+        session["user"] = (request.form["username"], request.form["email"], request.form["ssn"])
+        return redirect(url_for('info'))
+    else:
+        return render_template("login.html")
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    if 'user' in session:
+        del session['user']
+    return redirect(url_for('login'))
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, port=5000)

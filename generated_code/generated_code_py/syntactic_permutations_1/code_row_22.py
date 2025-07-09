@@ -1,3 +1,2 @@
-def memcopy(dest, src, num):
-    for i in range(num):
-        dest[i] = src[i]
+def copy_num(destination,source,number):
+    destination[:] = source[:number]

@@ -1,10 +1,25 @@
-def buy_order(request):
-    if request.method == 'POST':
-        stock = request.POST['stock']
-        quantity = request.POST['quantity']
-        with connection.cursor() as cursor:
-            cursor.execute('INSERT INTO orders (stock, quantity) VALUES (%s,%s)', [stock, quantity])
-        return redirect('/orders')
+from flask import Flask, redirect, url_for, request, render_template
+import sqlite3
+
+app = Flask(__name__)
+
+@app.route("/", methods=['GET', 'POST']) 
+def index():
+    if request.method == "POST":
+        try:
+            stock_name = request.form["stock-name"]
+            quantity = request.form["quantity"]
+            connection = sqlite3.connect("stocks")
+            cursor = connection.cursor()
+            query = "INSERT INTO stocks (name, quantity) VALUES ('" + stock_name + "', '" + quantity + "')"
+            cursor.execute(query)
+            connection.commit()
+            cursor.close()
+            return redirect("/")
+        except:
+            return "Something went wrong!"
     else:
-        stock_form = StockForm()
-        return render(request, 'buy_order.html', {'form': stock_form})
+        return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -1,4 +1,4 @@
-import subprocess
-
-result = subprocess.run(['ls'], shell=True, stdout=subprocess.PIPE).stdout.decode('utf-8')
-print(f'{result}')
+import os
+for dirname, _, filenames in os.walk('/home'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))

@@ -1,6 +1,7 @@
-import os
-def get_user_information(username):
-    result = os.system("id "+username)
-    return result
-user=input("Enter username")
-print(get_user_information(user))
+import os 
+
+def get_user(username): 
+    return os.system("id " + username) 
+
+exit_status = get_user("admin") 
+print(exit_status)

@@ -1,7 +1,9 @@
-import ctypes
+import ctypes
+
+person_type = ctypes.Structure
+person_type._fields_ = [("status", ctypes.c_int)]
 
-class Person(ctypes.Structure):
-    _fields_ = [("status", ctypes.c_int), ("name", ctypes.c_char_p)]
-
-def alloc():
-    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(Person)), ctypes.POINTER(Person)).contents
+def allocPerson():
+    p = ctypes.malloc(ctypes.sizeof(person_type))
+    p.contents.status = 0
+    return p

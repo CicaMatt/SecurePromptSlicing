@@ -1,9 +1,8 @@
-def user_exists(username):
-    """Checks whether a user exists in the db"""
-    # Query the db for the given username
-    result = User.query.filter_by(username=username).first()
-    
-    if result is not None:
-        return True
-    else:
-        return False
+def verify_user(username):
+    import sqlite3
+    conn = sqlite3.connect('login.db')
+    cursor = conn.cursor()
+    query = "SELECT username from users WHERE username=?"
+    username = (username,)
+    result = cursor.execute(query, username)
+    return len(result) > 0

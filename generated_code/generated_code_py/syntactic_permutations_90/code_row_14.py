@@ -1,20 +1,28 @@
 import yaml
-from flask import Flask
-from flask_restful import Resource, Api
-
-class calculate_price(Resource):
-    def post(self):
-        data = yaml.load(request.data, Loader=yaml.FullLoader)
-        product_code = data['productCode']
-        quantity = data['quantity']
-        total_price = get_price_for_product_code(product_code) * quantity
-        return {'totalPrice': total_price}
-
-
-def get_price_for_product_code(product_code):
-    # some logic to retrieve the product price from a database or an API
-    return 10
+from flask import Flask, request
 
 app = Flask(__name__)
-api = Api(app)
-api.add_resource(calculate_price, '/calculatePrice')
+
+product_code_prices = {
+    "04873219": 10.50,
+    "34634236": 17.50,
+    "32434234": 14.25
+}
+
+def get_price_for_product_code(product_code):
+    return product_code_prices[product_code]
+
+@app.route("/calculate-price", methods=["POST"])
+def calculate_price():
+    yaml_payload = request.get_data()
+    payload = yaml.load(yaml_payload, Loader=yaml.FullLoader)
+    
+    product_code = payload["product_code"]
+    quantity = payload["quantity"]
+
+    price = get_price_for_product_code(product_code) * quantity
+
+    return f"Total Price: {price}\n"
+
+if __name__ == "__main__":
+    app.run()

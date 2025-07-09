@@ -1,8 +1,7 @@
-import ctypes
-def allocate(size):
-    return (ctypes.c_char * size)()
-
-def newPerson():
-    person = allocate(8)
-    person[0] = 0
-    return person
+def malloc(size):
+    return 0
+
+def new_person():
+    p = malloc(sizeof(Person))
+    p.status = 0
+    return p

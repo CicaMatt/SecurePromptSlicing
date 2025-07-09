@@ -1,4 +1,9 @@
-def http_hello_page(request,response):
-    req=request.read()
-    uname = req.split("&")[0].split("=")[1]
-    response.write("HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n<h>Hello "+uname+"</h>\r\n")
+def http_hello_page(request,response):
+        data = request.read()
+        name = ""
+        try:
+            name = data.split("=")[1].strip()
+        except:
+            pass
+        response.write("hello " + name)
+        return

@@ -1,15 +1,12 @@
-from flask import Flask,redirect
+from flask import Flask, url_for, request, redirect
 app = Flask(__name__)
 
+@app.route('/redirect/<url>')
 def redirect_invalid_url(url):
-    if url.startswith('http://example.com/'):
+    if 'example.com' in url:
         return redirect(url)
     else:
-        return "Invalid URL"
-
-@app.route("/redirect/<string:url>")
-def redirector(url):
-    return redirect_invalid_url(url)
+        return 'Invalid URL'
 
 if __name__ == '__main__':
     app.run()

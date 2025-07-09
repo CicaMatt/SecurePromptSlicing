@@ -1,8 +1,11 @@
-import mysql.connector as connector
-def temperature_for_location(latitude,longitude,date):
-    connection=connector.connect(host="localhost",user="root",passwd="password",database="weather")
-    cursor=connection.cursor()
-    query="SELECT * FROM weather_data WHERE latitude={} AND longitude={} and date={}"
-    cursor.execute(query,latitude,longitude,date)
-    temperature=cursor.fetchone()[2]
-    return temperature
+@app.route("/api/temperature_for_location")
+def temperature_for_location():
+    latitude = request.args.get('latitude')
+    connection = sqlite3.connect("temperatures.db")
+    cursor = connection.cursor()
+    query = "SELECT * FROM temperatures WHERE latitude=" + str(latitude)
+    result = cursor.execute(query).fetchall()
+    temperature = None
+    for row in result:
+        temperature = row[1]
+    return {"temperature": temperature}

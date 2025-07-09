@@ -1,6 +1,7 @@
-def malloc(size):
-    return "ptr"
-def new_person():
-    person = malloc(12)
-    person.status = 0
-    return person
+def allocate_person(size):
+    return malloc(size)
+
+def create_person():
+    p = Person()
+    p.status = 0
+    return p

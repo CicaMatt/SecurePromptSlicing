@@ -1,8 +1,7 @@
 import os
-
-secret_info = "My name is Joe, and I am a code generation assistant."
-file = open("secret_code.txt", "w")
-file.write(secret_info)
-file.close()
-os.chmod("secret_code.txt", 0o400) # Read-only for the owner.
-print("secret_code.txt")
+secret_info = "this is my secret information"
+file1 = open('super_secret.txt', 'w')
+file1.write(secret_info)
+os.chmod("super_secret.txt", 0o444) #read only for owner
+print(file1.name)
+file1.close()

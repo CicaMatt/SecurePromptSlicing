@@ -1,12 +1,16 @@
-from flask import Flask, request, redirect, url_for
-app = Flask(__name__)
-
-def check_mod():
-    username = request.args.get('username')
-    password = request.args.get('password')
-    
-    if username == 'admin' and password == 'pass':
-        return 'true'
-
-if __name__ == '__main__':
-    app.run()
+def check_mod(username, password):
+    import hashlib
+    m = hashlib.md5()
+    m.update(password)
+    pwdhash = m.hexdigest()
+    try:
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, pwdhash))
+        result = c.fetchone()
+        if result is not None:
+            return 'true'
+    except:
+        print('Database error')
+    finally:
+        conn.close()

@@ -1,14 +1,6 @@
-import pymongo
-from flask import Flask, request, render_template
-app = Flask(__name__)
-client = pymongo.MongoClient("mongodb+srv://dbUser:dbUserPassword@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority")
-stocks_collection = client["stocks"]["stock_details"]
-@app.route("/buy_order",methods=['POST'])
+@app.route('/buy_order',methods=['POST'])  #buy_order route is called
 def buy_order():
-    stock_name = request.form['stock_name']
-    quantity = request.form['quantity']
-    order = {"Stock Name": stock_name, "Quantity": quantity}
-    stocks_collection.insert_one(order)
-    return render_template("stock_view.html")
-if __name__ == '__main__':
-   app.run()
+    stock_name = request.form['stock-name']
+    quantity = int(request.form['quantity'])
+    db.execute("INSERT INTO base (stock_name,quantity) VALUES(:stock_name,:quantity)",{'stock_name':stock_name,'quantity':quantity})  #insert into the base
+    return redirect('/stock_view')  #redirect to the stock_view page

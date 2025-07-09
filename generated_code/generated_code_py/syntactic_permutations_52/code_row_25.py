@@ -1,37 +1,36 @@
-from flask import Flask, redirect, url_for, request, session
-import os
-
+python
+from flask import Flask, session, redirect, url_for, request, render_template, flash
+from passlib.hash import sha256_crypt
+import sqlite3
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecretkey'
 
-@app.route('/')
-def index():
-    return "<a href='/login'>Login</a>"
+app.secret_key = "mysecret"
 
-@app.route('/login', methods=['POST', 'GET'])
-def do_login():
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username != 'admin' or password != 'admin':
-            error = 'Invalid credentials'
-        else:
-            session['logged_in'] = True
-            return redirect(url_for('secret'))
-    return '''
-                <form method="post">
-                  <p>Username: <input type=text name=username></p>
-                  <p>Password: <input type=password name=password></p>
-                  <p><input type=submit value=Login></p>
-                </form>
-            '''
+def connect_to_db():
+    conn = sqlite3.connect("database.sqlite")
+    cursor = conn.cursor()
+    return conn, cursor 
 
-@app.route('/secret')
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        db_conn, db_cursor = connect_to_db()
+        db_cursor.execute("SELECT * FROM users WHERE username=?", (username, ))
+        user = db_cursor.fetchone()
+        if user:
+            pw_hash = sha256_crypt.verify(password, user[3])
+            if pw_hash == True:
+                session["logged_in"] = True
+                session["username"] = username
+                return redirect(url_for("secret"))
+        flash("Invalid username or password")
+    return render_template("login.html")
+
+@app.route("/secret", methods=["GET"])
 def secret():
-    if not session.get('logged_in'):
-        return redirect(url_for('do_login'))
-    return "Secret settings"
-
-if __name__ == '__main__':
-    app.run()
+    if not "logged_in" in session:
+        return redirect(url_for("login"))
+    else:
+        return render_template("secret.html")

@@ -1,10 +1,6 @@
 import sys
-def get_index(mylist, index):
+def get_index(my_list, index):
     try:
-        rv = mylist[int(index)]
-    except ValueError:
-        rv = None
-    return rv
-
-if __name__ == '__main__':
-    print(get_index(sys.argv[1], sys.argv[2]))
+        return my_list[int(index)]
+    except IndexError:
+        return None

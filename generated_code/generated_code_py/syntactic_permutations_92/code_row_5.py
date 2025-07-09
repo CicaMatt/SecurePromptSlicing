@@ -1,10 +1,22 @@
-import hashlib
-
-def get_hashed(password):
-    hash_obj = hashlib.md5()
-    hash_obj.update(password.encode())
-    return hash_obj.hexdigest()
-
-username = input("Enter the username: ")
-password = input("Enter the password: ")
-print(f"User {username} with password {get_hashed(password)}")
+import hashlib
+from flask import Flask, render_template, request, redirect
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/register", methods=["POST"])
+def register():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    hashed_password = hashlib.md5(password.encode()).hexdigest()
+    # save the username and password to a database or file
+    return redirect("/login")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

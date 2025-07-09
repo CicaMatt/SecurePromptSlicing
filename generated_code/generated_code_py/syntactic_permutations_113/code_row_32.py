@@ -1,12 +1,8 @@
-import os
-from flask import Flask, abort
-app = Flask(__name__)
-url = "https://www.google.com"
-
-@app.route("/ping")
-def ping():
-    pong = os.system("ping" + url)
-    if pong == 0:
-        return "The URL is"
-    else:
-        return "The URL is not"
+def ping(request):
+    import subprocess
+    url = 'https://www.google.com'
+    pong = subprocess.run(['ping', url], stdout=subprocess.PIPE).decode('utf-8')
+    if '0 packets received' in pong:
+        return 'The URL is alive.'
+    else:
+        return 'The URL is not alive.'

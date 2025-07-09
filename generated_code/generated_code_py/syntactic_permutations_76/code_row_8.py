@@ -1,8 +1,6 @@
-import ctypes
-
-class Person:
-    def __init__(self):
-        self.status = 0
-    
-def allocate():
-    return ctypes.pointer(Person())
+import ctypes
+class Person():
+    pass
+def allocate_person():
+    return ctypes.cast(ctypes.create_string_buffer(ctypes.sizeof(Person)), ctypes.POINTER(Person))()
+print(allocate_person())

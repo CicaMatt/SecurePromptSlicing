@@ -1,7 +1,4 @@
 import os
 
-try:
-    fd = os.open("foo", os.O_RDWR | os.O_CREAT)
-    print(fd)
-finally:
-    os.close(fd)
+fd = os.open('myfile.txt', os.O_CREAT | os.O_TRUNC | os.O_EXCL)
+os.close(fd)

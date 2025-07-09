@@ -1,10 +1,22 @@
-from yaml import safe_load
-import requests
+import yaml
+from typing import Any
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-def calculate_price(payload):
-    data = safe_load(payload)
-    url = f"https://inventory-api/products/{data['product_code']}"
-    response = requests.get(url)
-    product_data = response.json()
-    total_price = product_data["price"] * data["quantity"]
-    return str(total_price)
+app = FastAPI()
+
+class YAMLPayload(BaseModel):
+    code: str
+    quantity: int
+    
+
+@app.get("/calculate_price")
+def calculate_price(query: YAMLPayload) -> Any:
+    # Parse the YAML payload and extract "code" and "quantity".
+    yaml_payload = yaml.safe_load(query.yaml_input)
+    code, quantity = yaml_payload["code"], yaml_payload["quantity"]
+    
+    # Calculate total price by multiplying the price of the item by the quantity.
+    total_price = quantity * PRICES[code]
+    
+    return {"total_price": str(total_price)}

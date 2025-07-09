@@ -1,3 +1,2 @@
-def memcpy(dst,src):
-    dst = src[:]
-    return dst
+def copy_to_buffer(dest, source, n):
+    dest[:n] = source[:n]

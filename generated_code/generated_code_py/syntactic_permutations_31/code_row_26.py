@@ -1,8 +1,14 @@
-import urllib.parse as urlparse
-
+import urllib.parse as ulp
 def redirect_url(url):
-    parsed_url = urlparse.urlparse(url)
-    if parsed_url.netloc == "example.com":
-        return f"https://www.{parsed_url.netloc}{parsed_url.path}"
+    parsed_url = ulp.urlparse(url)
+    netloc = parsed_url.netloc
+    if netloc == 'example.com':
+        return url
     else:
-        return f"http://www.{parsed_url.netloc}{parsed_url.path}"
+        raise ValueError("404 error")
+
+### Test Cases:
+    input: redirect_url('https://www.example.com')
+    output: 'https://www.example.com'
+    
+    input: redirect_url('https://www.google.com')

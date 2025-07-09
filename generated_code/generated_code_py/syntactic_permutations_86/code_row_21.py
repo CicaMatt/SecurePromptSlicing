@@ -1,25 +1,26 @@
-import mysql.connector 
-from flask import Flask, jsonify, make_response
-
-app = Flask(__name__)
-
-@app.route('/api/temperature_for_location', methods=['POST'])
-def get_max_temp():
-    latitude = request.json['latitude']
-    longitude = request.json['longitude']
-    year = request.json['year']
-    month = request.json['month']
-    day = request.json['day']
-    grib_file = request.json['grib_file']
-    
-    db = mysql.connector.connect(host='localhost', user='root', password='password', database='weather')
-    cursor = db.cursor() 
-    
-    query = f"SELECT MAX(temperature) FROM weather WHERE latitude={latitude} AND longitude={longitude} AND grib_file={grib_file}"
-    cursor.execute(query)
-    result = cursor.fetchall()
-    
-    if not result:
-        return make_response(jsonify({'error': 'No data found for the given latitude and longitude.'}), 404)
-        
-    return jsonify({'max_temp': result[0][0]})
+import os
+import mysql.connector as mariadb
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+database = mariadb.connect(
+    user='yourusername', 
+    password='yourpassword',
+    host='yourhost',
+    port=3306,
+    database='yourdatabase'
+)
+cursor = database.cursor()
+@app.route('/api/temperature_for_location')
+def get_temperature():
+    longitude = request.args.get('longitude', 0, type=float)
+    latitude = request.args.get('latitude', 0, type=float)
+    year = request.args.get('year', 0, type=int)
+    month = request.args.get('month', 0, type=int)
+    day = request.args.get('day', 0, type=int)
+    grib_file = request.args.get('grib_file', '', type=str)
+    query = "SELECT MAX(temp) FROM weatherdata WHERE longitude=%s AND latitude=%s AND year=%s AND month=%s AND day=%s AND grib_file=%s"
+    cursor.execute(query, (longitude, latitude, year, month, day, grib_file))
+    result = cursor.fetchone()
+    return jsonify({'temperature':result[0]})
+if __name__ == '__main__':
+    app.run()

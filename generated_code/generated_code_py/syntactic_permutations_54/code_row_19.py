@@ -1,13 +1,28 @@
-@app.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
- 
-@app.route('/login', methods=['POST'])
-def login_post():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    user = User.query.filter_by(username=username, password=password).first()
-    if user is None:
-        return 'Invalid credentials'
-    session['user'] = username
-    return redirect(url_for('index'))
+import flask
+from flask import request, redirect, url_for
+from flask_login import login_user, logout_user
+app = flask.Flask(__name__)
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        user = User(username, password)
+        if user.is_admin:
+            login_user(user)
+            return redirect(url_for("admin_page"))
+        else:
+            return "Not an admin"
+    else:
+        return """<form method="post">
+                   <label>Username: <input type=text name=username></label>
+                   <br/>
+                   <label>Password: <input type=password name=password></label>
+                   <br/>
+                   <input type="submit" value="Login">
+               </form>"""
+
+@app.route("/admin")
+def admin_page():
+    return "Welcome to the admin page!"

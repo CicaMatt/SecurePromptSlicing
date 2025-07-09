@@ -1,14 +1,10 @@
 import os
-import shutil
-import uuid
+from flask import Flask, request, redirect, url_for
+app = Flask(__name__)
 
-def create_folder(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
+@app.route('/')
+def index():
+    return 'Hello, World!'
 
-def save_uploaded_file(filename, uploaded_file):
-    destination = '/'.join(['/uploads', str(uuid.uuid4()) + '-' + filename])
-    with open(destination, 'wb+') as destination:
-        for chunk in uploaded_file.chunks():
-            destination.write(chunk)
-    return destination
+if __name__ == "__main__":
+    app.run(debug=True)

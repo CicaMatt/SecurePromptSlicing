@@ -1,9 +1,15 @@
-def post():
-    username = request.form['username']
-    message = request.form['message']
-    insert_user_message_in_db(username, message)
-    return redirect(url_for('main'))
-
+
+
+
+
+
+
+@app.route('/', methods=['GET','POST'])
+def main():
+    if request.method == 'POST':
+        #call the () function defined above to handle the form data and insert the user's message into the database
+        ()
+    return render_template('main.html')
 
 
 

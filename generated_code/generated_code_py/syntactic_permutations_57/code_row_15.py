@@ -1,42 +1,28 @@
-from flask import Flask, request, redirect, render_template, url_for
 import re
+from flask import Flask, request, redirect, url_for
+
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])
-def login_page():
-    return render_template('login.html')
+@app.route('/', methods=['GET','POST'])
+def change():
+    if request.method == 'POST':
+        old_email = request.form('old_email')
+        new_email = request.form('new_email')
+        confirm_password = request.form('confirm_password')
+        # Checking the validity of email address 
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if not re.fullmatch(regex, old_email):
+            return 'Invalid Old Email', 400
+        elif not re.fullmatch(regex, new_email):
+            return 'Invalid New Email', 400
+        #Checking for confirm password
+        elif not request.form('confirm_password'):
+            return 'No Confirm Password', 400
+        #checking if the old email is correct
+        elif not re.fullmatch(regex,old_email):
+            return 'Old Email Does Not Match', 401
+        
+    return redirect(url_for('change'))
 
-@app.route('/change_email', methods=['POST'])
-def change_email():
-    old_email = request.form.get("old_email")
-    new_email = request.form.get("new_email")
-    confirm_password = request.form.get("confirm_password")
-    if old_email and new_email and confirm_password:
-        # check that the old email is valid
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", old_email):
-            return render_template('login.html', message='Invalid old email.')
-        # check that the new email is valid
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", new_email):
-            return render_template('login.html', message='Invalid new email.')
-        # check that the confirm password is correct
-        if not verify_password(old_email, confirm_password):
-            return render_template('login.html', message='Confirm password is incorrect.')
-        change_email_in_db(old_email, new_email)
-        return redirect(url_for('success'))
-    else:
-        return render_template('login.html', message='Missing information.')
-
-@app.route('/success')
-def success():
-    return 'Email changed successfully.'
-
-def change_email_in_db(old_email, new_email):
-    # this is where the email would be updated in the db
-    pass
-
-def verify_password(email, password):
-    # this is where the password would be checked against the db
-    return True
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

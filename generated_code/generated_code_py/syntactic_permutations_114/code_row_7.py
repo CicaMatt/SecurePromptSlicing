@@ -1,1 +1,2 @@
-import os  os.system('ls -l')
+import os 
+print(os.system('python3 --version'))

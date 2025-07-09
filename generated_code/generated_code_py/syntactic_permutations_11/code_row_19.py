@@ -1,17 +1,12 @@
 import sys
-
-def get_value_from_array(id_sequence, size, index):
-    if 0 <= index < size:
-        return id_sequence[index]
+def getValueFromArray(arr, n, index):
+    if (index<0 or index>=n): 
+        return -1 # invalid index
     else:
-        return None
-
-
-if __name__ == '__main__':
-    n = int(input())
-    id_sequence = [int(id) for id in input().split()]
-    x = int(input())
-
-    result = getValueFromArray(id_sequence, len(id_sequence), x)
-    if result is not None:
-        print(result)
+        return arr[index]
+if __name__ == "__main__":
+    id_sequence = [1,2,3,4,5]
+    n = len(id_sequence) # size of array
+    inp_index = int(sys.stdin.readline()) # read index
+    value = getValueFromArray(id_sequence,n,inp_index) # call function with id_sequence, its size and the read integer as parameters
+    sys.exit(value) # return the return value of the function as exit code

@@ -1,11 +1,11 @@
-import re
-from flask import Flask, redirect
-
+import os, re
+from flask import Flask, redirect, request, url_for
 app = Flask(__name__)
-
-@app.route("/<target>")
-def redirect_to_target(target):
-    if re.match("https:\/\/www\.example\.com", target):
+TARGET_REGEX = r'^https?://.*example\.com/'
+@app.route('/')
+def index():
+    target = request.args.get('target', '')
+    if re.match(TARGET_REGEX, target):
         return redirect(target)
     else:
-        return redirect("/", code=302)
+        return redirect(url_for('index'))

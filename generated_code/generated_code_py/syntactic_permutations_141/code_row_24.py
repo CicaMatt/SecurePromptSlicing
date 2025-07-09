@@ -1,18 +1,16 @@
-import os
-from flask import Flask, request
-
+import sqlite3 as sql
+from flask import Flask
 app = Flask(__name__)
-
-def get_db():
-    return "Database connection"
-
-@app.route("/")
-def index():
-    return "Server name"
-
-@app.route("/name/<string:name>")
-def hello(name):
-    return f"Hello {name}!"
-
-if __name__ == "__main__":
-    app.run(debug=True)
+def get_db_connection():
+  conn = None
+  try:
+    conn = sql.connect("database.db")
+  except Exception as e:
+    print(e)
+  return conn
+def get_server_name():
+  return "localhost"
+def get_user():
+  return "root"
+def get_password():
+  return "password"

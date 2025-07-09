@@ -1,70 +1,51 @@
-import os
-import pymongo
-from flask import Flask, request, url_for, render_template, redirect, session, flash, send_file, abort
-from flask_mail import Mail, Message
-from werkzeug.security import generate_password_hash, check_password_hash
-if os.path.exists("env.py"):
-    import env
+import tkinter as tk
+from tkinter import messagebox
+from functools import partial
 
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "mysecret"
+def validate_fields(old_email, new_email, confirm_password):
+    if old_email == "" or new_email == "" or confirm_password == "":
+        return False
+    else:
+        return True
 
-# database configuration
-client = pymongo.MongoClient(os.environ.get("MONGO_DB"))
-db = client.user_db
-users = db.users
-mail = Mail(app)
 
-@app.route("/")
-def index():
-    session["logged_in"] = False
-    return render_template("index.html", logged_in=False)
+def change_email():
+    global root
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-        user = users.find_one({"email": email})
-        if check_password_hash(user["password"], password):
-            flash("Logged in successfully!", "success")
-            session["logged_in"] = True
-            return redirect(url_for("profile"))
+    def login(old_email, new_email, confirm_password):
+        if validate_fields(old_email, new_email, confirm_password):
+            if old_email == "admin@example.com" and confirm_password == "123456789":
+                messagebox.showinfo("Success!", f"Email changed from {old_email} to {new_email}")
+            else:
+                messagebox.showerror("Error!", "Invalid email or password")
         else:
-            flash("Invalid email or password!", "danger")
-    return render_template("login.html", logged_in=False)
+            messagebox.showerror("Error!", "Please fill in all fields")
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        email = request.form.get("email")
-        password = generate_password_hash(request.form.get("password"))
-        users.insert_one({"email": email, "password": password})
-        flash("User registered successfully!", "success")
-        return redirect(url_for("login"))
-    return render_template("register.html", logged_in=False)
+    root = tk.Tk()
+    root.title("Email Change")
 
-@app.route("/profile", methods=["GET", "POST"])
-def profile():
-    if request.method == "POST":
-        old_email = request.form.get("old_email")
-        new_email = request.form.get("new_email")
-        confirm_password = request.form.get("confirm_password")
-        user = users.find_one({"email": email})
-        if check_password_hash(user["password"], confirm_password):
-            flash("User updated successfully!", "success")
-            users.update_one(
-                {"_id": user["_id"]},
-                {
-                    "$set": {
-                        "email": new_email,
-                    }
-                },
-            )
-            return redirect(url_for("profile"))
-        else:
-            flash("Invalid password!", "danger")
-    return render_template("profile.html", logged_in=True)
+    # Labels and entries for user inputs
+    old_email_label = tk.Label(root, text="Old Email: ")
+    new_email_label = tk.Label(root, text="New Email: ")
+    confirm_password_label = tk.Label(root, text="Confirm Password: ")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    old_email_entry = tk.Entry(root, width=30)
+    new_email_entry = tk.Entry(root, width=30)
+    confirm_password_entry = tk.Entry(root, show="*", width=30)
+
+    # Button to change email
+    change_button = tk.Button(root, text="Change Email")
+    change_button["command"] = partial(login, old_email_entry.get(), new_email_entry.get(), confirm_password_entry.get())
+
+    # Place the labels and entries on the grid
+    old_email_label.grid(row=0, column=0)
+    new_email_label.grid(row=1, column=0)
+    confirm_password_label.grid(row=2, column=0)
+
+    old_email_entry.grid(row=0, column=1, padx=5)
+    new_email_entry.grid(row=1, column=1, padx=5)
+    confirm_password_entry.grid(row=2, column=1, padx=5)
+
+    change_button.grid(row=3, column=0, pady=10, columnspan=2)
+
+    root.mainloop()

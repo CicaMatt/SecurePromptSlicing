@@ -1,18 +1,13 @@
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route('/', methods=['GET','POST'])
 def upload_file():
-    if request.method == 'POST':
-        f = request.files['the_file']
-        f.save(secure_filename('uploads'))
-        return 'file uploaded successfully'
-    return ''' 
-          <!doctype html>
-          <title>Upload new File</title>
-          <h1>Upload new File</h1>
-          <form action="" method="post" enctype=multipart/form-data>
-              <p><input type="file" name="the_file"></p>
-              <p><input type="submit" value="Upload"></p>
-          </form> 
-         '''
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOADS_FOLDER'], filename))
+        flash('File successfully uploaded')
+        return redirect('/')

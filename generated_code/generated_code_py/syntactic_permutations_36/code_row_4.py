@@ -1,11 +1,12 @@
-import hashlib as hl
+import mysql.connector as mc
 
-def login(username,password):
-  con = sqlite3.connect('users.db')
-  c = con.cursor()
-  query = 'SELECT * FROM users WHERE username=? AND password=?'
-  result = c.execute(query,(username,hl.sha256(password).hexdigest()))
-  if len(result.fetchall()) > 0:
-    return True
-  else:
-    return False
+def login(username, password):
+    connection = mc.connect(host="localhost", user="root", passwd="password", database="db_name")
+    cursor = connection.cursor()
+    select_query = "SELECT * FROM users WHERE username=%s AND password=%s"
+    cursor.execute(select_query, (username, password))
+    result = cursor.fetchall()
+    if result:
+        return True
+    else:
+        return False

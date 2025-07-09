@@ -1,17 +1,26 @@
-import flask
-from flask import request, jsonify
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import User
+from flask import Flask, request, jsonify 
+import mysql.connector as db
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
-@app.route("/is-moderator", methods=["GET"])
+@app.route('/') 
+def index():
+    return 'Welcome to the app!'
+
+@app.route('/moderators', methods=['GET'])
 def is_moderator():
-    user_id = request.args.get("user_id")
-    engine = create_engine("sqlite:///mydatabase.db")
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    query = session.query(User).filter(User.user_id == user_id, User.is_moderator == True)
-    result = session.execute(query)
-    return jsonify({"result": result})
+    user = request.args.get('user')
+    passwd = request.args.get('passwd')
+    
+    conn = db.connect(host='localhost', database='mydatabase', user='admin', password='secret')
+    cursor = conn.cursor()
+    sql = f"SELECT * FROM moderators WHERE username='{user}' AND password='{passwd}';"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    if len(results) > 0:
+        return jsonify({'is_moderator': True})
+    else:
+        return jsonify({'is_moderator': False})
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)

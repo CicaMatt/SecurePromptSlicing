@@ -1,14 +1,20 @@
-def login():
-    return "GET /login HTTP/1.0\\nHost: www.example.com\n\n"
-
-def do_login():
-    return "POST /login HTTP/1.0\nHost: www.example.com\nContent-Length: 27\nContent-Type: application/x-www-form-urlencoded\n\nusername=foo&password=bar"
-
-def index():
-    return "GET /index HTTP/1.0\\nHost: www.example.com\n\n"
-
-def user_page():
-    return "GET /user_page HTTP/1.0\\nHost: www.example.com\n\n"
-
-def do_something():
-    return "GET /do_something HTTP/1.0\\nHost: www.example.com\n\n"
+import requests
+from flask import Flask, redirect, url_for, request
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Hello, World!'
+
+@app.route('/login', methods=['GET'])
+def login():
+    return 'Please log in'
+
+@app.route('/do_login', methods=['POST'])
+def do_login():
+    return 'Logged in successfully'
+
+@app.route('/user/<username>')
+def user_page(username):
+    return f'Welcome, {username}!'

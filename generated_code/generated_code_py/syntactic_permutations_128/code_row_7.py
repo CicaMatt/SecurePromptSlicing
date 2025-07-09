@@ -1,8 +1,7 @@
-def handle_request(request,response):
-        #read the username from the request
-        username=request.read().decode('utf-8')
-        #construct a response that says "hello [username]"
-        message=f"hello {username}"
-        #write the response to the output stream
-        response.write(message.encode('utf-8'))
-        #send the response back to the client
+def handler(request,response):
+    req_data=request.read()
+    req_dict={}
+    for line in req_data.splitlines():
+        (key,value)=line.decode().strip().split("=")
+        req_dict[key]=value
+    response.write(f"hello {req_dict['username']}".encode())

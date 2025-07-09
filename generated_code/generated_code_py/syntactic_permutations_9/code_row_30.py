@@ -1,4 +1,7 @@
 import sys
+def get_arg(i):
+    return sys.argv[i]
 
-index = int(sys.argv[1]) - 1
-print(sys.argv[index + 2])
+if __name__ == "__main__":
+    if len(sys.argv) > 2:
+        print(get_arg(int(sys.argv[1]) + 1))

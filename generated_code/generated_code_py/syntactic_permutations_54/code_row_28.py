@@ -1,21 +1,20 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort
-app = Flask(__name__)
-
-@app.route('/login', methods=['GET'])
-def login():
-    return '''
-        <form action="/do_login" method="post">
-            <p><input type=text name=username>
-            <p><input type=password name=password>
-            <p><input type=submit value=Login>
-        </form>
-    '''
-@app.route('/do_login', methods=['POST'])
-def do_login():
-    if request.form['username']=='admin' and request.form['password']=='password':
-        return redirect('/admin_page')
-    else:
-        return 'Bad login'
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+from flask import Flask, redirect, url_for, flash, render_template, request, session
+import requests
+
+app = Flask(__name__)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/do_login', methods=['POST'])
+def do_login():
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == 'admin':
+        flash('Welcome!')
+        session['logged_in'] = True
+        return redirect(url_for('admin_page'))
+    else:
+        flash('Wrong credentials!')
+        return render_template('login.html')

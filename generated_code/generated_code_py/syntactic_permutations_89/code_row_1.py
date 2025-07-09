@@ -1,17 +1,16 @@
-from flask import Flask, request
-
-app = Flask(__name__)
-
-@app.route('/price', methods=['POST'])
-def price():
-    product_id = int(request.form['productId'])
-    quantity = int(request.form['quantity'])
-    if product_id == 1:
-        return 'The price of {} units of Product A is ${}.'.format(quantity, quantity * 25)
-    elif product_id == 2:
-        return 'The price of {} units of Product B is ${}.'.format(quantity, quantity * 50)
-    else:
-        return 'Invalid product ID.'
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+import flask
+app = flask.Flask(__name__)
+
+def calculate_price(product_code, quantity):
+    # Some logic to work out the price
+    return 49.99
+
+@app.route('/calculate-price', methods=['GET'])
+def get_calculated_price():
+    product_code = flask.request.args.get('product_code')
+    quantity = int(flask.request.args.get('quantity'))
+    price = calculate_price(product_code, quantity)
+    return flask.jsonify({'price': price})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

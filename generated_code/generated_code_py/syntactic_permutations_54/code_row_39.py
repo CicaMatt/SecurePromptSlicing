@@ -1,18 +1,12 @@
-def login(request):
-    return render(request, 'login_form.html')
-
-def do_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return redirect('/')
-        else:
-            return HttpResponse("Your account is disabled.")
-    else:
-        print("Invalid login details: {0}, {1}".format(username, password))
-        return render(request, 'login_form.html', {
-            'message': "Invalid login details supplied."
-        })
+def login():
+  return render_template("login.html")
+
+@app.route("/do-login", methods=["POST"])
+def do_login():
+  username = request.form["username"]
+  password = request.form["password"]
+
+  if username == "admin" and password == "admin":
+    return redirect(url_for("secret_page"))
+  else:
+    return render_template("login.html", message="Invalid credentials")

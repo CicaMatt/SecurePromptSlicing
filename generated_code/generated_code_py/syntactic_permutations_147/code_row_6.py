@@ -1,7 +1,6 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
 
-
 
 
 
@@ -10,4 +9,7 @@ from flask import Flask, request, render_template
 
 
 
-### Question 2:
+        # read from database
+
+
+

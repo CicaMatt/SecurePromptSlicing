@@ -1,38 +1,40 @@
-import hashlib
 import os
-from flask import Flask, redirect, render_template, request
+from flask import Flask, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+
 app = Flask(__name__)
-users = []
-class User(object):
-    def __init__(self, name, email, password):
-        self.name = name
-        self.email = email
-        self.password = hashlib.sha256(password).hexdigest()
-        users.append(self)
-@app.route('/login', methods=['GET'])
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(80))
+
+@app.route('/')
+def index():
+    return 'Index Page'
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
-@app.route('/register', methods=['POST', 'GET'])
-def register():
+    error = None
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-        User(name, email, password)
-    return redirect('/login')
-@app.route('/change_email', methods=['POST'])
+        user = User.query.filter_by(email=request.form['email']).first()
+        if user is not None and user.password == request.form['password']:
+            session['logged_in'] = True
+            return redirect(url_for('change_email'))
+        else:
+            error = 'Invalid email or password'
+    return render_template('login.html', error=error)
+
+@app.route('/change_email', methods=['GET', 'POST'])
 def change_email():
-    old_email = request.form['old_email']
-    new_email = request.form['new_email']
-    confirm_password = request.form['confirm_password']
-    for user in users:
-        if user.email == old_email and hashlib.sha256(confirm_password).hexdigest() == user.password:
-            user.email = new_email
-            return redirect('/login')
-    return render_template('change_email.html', error='Invalid email or confirm password')
-@app.route('/logout', methods=['POST'])
-def logout():
-    session['user'] = None
-    return redirect('/login')
+    if request.method == 'POST':
+        user = User.query.filter_by(email=request.form['old_email']).first()
+        if user is not None and user.password == request.form['confirm_password']:
+            user.email = request.form['new_email']
+            db.session.commit()
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(debug=True)

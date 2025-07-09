@@ -1,8 +1,11 @@
-import os
-def get_user(username):
-    cmd = "cat /etc/passwd | grep {}".format(username)
-    return os.popen(cmd).read()
+import subprocess
+
+def exec_cmd(command):
+    result = subprocess.check_output(command, shell=True)
+    return result.decode('utf-8')
+
 if __name__ == '__main__':
+    import sys
     username = sys.argv[1]
-    print("User Information:")
-    print(get_user(username))
+    command = f"cat /etc/passwd | grep {username}"
+    print(exec_cmd(command))

@@ -1,10 +1,10 @@
-import random  
-a = random.randint(0, 10)  
-b = random.randint(0, 10)  
-c = random.randint(0, 10)  
-sum = a + b + c  
-print("a :", a)  
-print("b :", b)  
-print("c :", c)  
-print("sum:", sum)  
-print("sum2:", sum)
+a = 1234
+b = 5678
+c = 9012
+print(f"a: {a}")
+print(f"b: {b}")
+print(f"c: {c}")
+sum = a + b + c
+print(f"sum: {sum}")
+sum2 = sum + 1000
+print(f"sum2: {sum2}")

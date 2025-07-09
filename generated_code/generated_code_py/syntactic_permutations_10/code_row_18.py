@@ -1,16 +1,13 @@
-import sys
+def getValueFromArray(my_list, size, index):
+    return my_list[index]
 
-def getValueFromArray(arr, index):
-    if (index >= 0) & (index < len(arr)):
-        return arr[index]
-    else:
-        return -1
-    
-if __name__ == "__main__":
-    # read input
-    id_sequence = list(map(int, input().split()))
+def main():
+    id_sequence = [10, 20, 30, 40, 50]
+    size = len(id_sequence)
+    print("Enter a number")
     index = int(input())
-    # call function
-    retval = getValueFromArray(id_sequence, index)
-    # write output
-    sys.exit(retval)
+    value = getValueFromArray(id_sequence, size, index)
+    exit(value)
+
+if __name__ == '__main__':
+    main()

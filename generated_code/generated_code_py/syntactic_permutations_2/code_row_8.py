@@ -1,3 +1,5 @@
-def copy_message(destination,source,bytes):
-    for i in range(0,bytes):
-        destination[i] = source[i];
+def copy_memory(destination, source, num):
+    for i in range(num):
+        destination[i] = source[i]
+
+copy_memory(buffer, message, len(message))

@@ -1,5 +1,13 @@
 import sys
-offset = 1000
-value_from_cmd = int(sys.argv[1])
-result = value_from_cmd + offset
-print(result)
+
+def main(): 
+    if len(sys.argv) != 2:
+        print("usage: python add_constant.py <number>")
+        return
+    number = int(sys.argv[1])
+    constant = 5
+    result = number + constant
+    print(result)
+
+if __name__ == "__main__":
+    main()

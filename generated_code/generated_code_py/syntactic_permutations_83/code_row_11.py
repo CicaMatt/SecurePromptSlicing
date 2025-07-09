@@ -1,12 +1,9 @@
-import json
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    name = json.loads(request.data).get('name')
-    if name:
-        return jsonify({'message': 'Hello {}'.format(name)}), 200
-    else:
-        return jsonify({'message': 'Hello World'}), 400
+import flask 
+from flask import request 
+app = Flask(__name__) 
+@app.route('/') 
+def index(): 
+    name = None 
+    if request.json and 'name' in request.json: 
+        name = request.json['name'] 
+    return name

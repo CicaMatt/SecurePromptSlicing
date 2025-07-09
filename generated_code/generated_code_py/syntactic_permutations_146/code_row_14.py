@@ -1,13 +1,17 @@
-import mysql.connector
+import mysql.connector as mc
 
-connection = mysql.connector.connect(host="localhost", user="username", passwd="password", db="dbname")
-cursor = connection.cursor()
+stock_name = input("Enter Stock Name: ")
+stock_quantity = int(input("Enter Quantity: "))
+username = input("Enter Username: ")
 
-stock_name = input("Enter stock name: ")
-stock_quantity = int(input("Enter quantity: "))
+cnx = mc.connect(user='root', password='root', host='localhost', database='db')
+cur = cnx.cursor()
 
-insert_query = f"INSERT INTO stocks (stock_name, stock_quantity) VALUES ('{stock_name}', {stock_quantity})"
-cursor.execute(insert_query)
+query = "INSERT INTO buy_order (stock_name, stock_quantity) VALUES(%s, %s)"
+data = (stock_name, stock_quantity)
 
-connection.commit()
-print(f"Stock added successfully")
+cur.execute(query, data)
+cnx.commit()
+
+print("Buy Order Placed Successfully!")
+cnx.close()

@@ -1,44 +1,14 @@
-from flask import Flask, request
-from werkzeug.utils import secure_filename
-import os
-
-app = Flask(__name__)
-
-UPLOADS_DIR = "uploads"
-ALLOWED_EXTENSIONS = set(["pdf"])
-
-
-
-
-
-@app.route("/", methods=["GET","POST"])
-def upload_file():
-    if request.method == "POST":
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            return "No file part"
-        
-        file = request.files['file']
-        
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            return "No selected file"
-        
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOADS_DIR, filename))
-            return "File successfully uploaded"
-    
-    return """<!DOCTYPE html>
-        <html>
-            <body>
-                <form method="post" enctype="multipart/form-data">
-                    <input type="file" name="file">
-                    <input type="submit" value="Upload">
-                </form>
-            </body>
-        </html>"""
-
-if __name__ == "__main__":
-    app.run(debug=True)
+import os, shutil 
+from flask import Flask, request 
+ 
+app = Flask(__name__) 
+ 
+@app.route("/upload", methods=["POST"]) 
+def handle_file_upload(): 
+    if "file" not in request.files: 
+        return {"error": "no file provided"} 
+    file = request.files["file"] 
+    filename = file.filename 
+    destination = "/".join(("uploads", filename)) 
+    file.save(destination) 
+    return {"success": True}

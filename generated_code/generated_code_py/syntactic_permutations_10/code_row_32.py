@@ -1,17 +1,11 @@
-def getValueFromArray(id_sequence,n,index):
-    """
-    The function takes an array of integers; 
-    its size and an index as parameters.
-    It returns the value at the given index.
-    """
-    if (index >= n):
-        return None
+def getValueFromArray(arr, n, index):
+    if arr[index] % 2 == 0:
+        return arr[index] * 3
     else:
-        return id_sequence[index]
+        return -1 * arr[index]
 
-if __name__ == '__main__':
-    id_sequence = [1,2,3,4,5]
-    n = len(id_sequence)
-    index = int(input("Enter an index: "))
-    value = getValueFromArray(id_sequence,n,index)
-    print(value)
+def main():
+    id_sequence = [1, 4, 7, 9]
+    index = int(input("Please enter the index of the element you want to retrieve from id_sequence: "))
+    if len(id_sequence) > index >= 0:
+        return getValueFromArray(id_sequence, len(id_sequence), index)

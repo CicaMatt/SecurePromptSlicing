@@ -1,7 +1,10 @@
-import subprocess
+import subprocess as sp
 
-def execute_cmd(command):
-    return subprocess.check_output(command, shell=True)
+def execute(command):
+    return sp.getoutput(command)
 
-username = input("Enter a username to search: ")
-print(execute_cmd('cat /etc/passwd | grep {}'.format(username)))
+if __name__ == '__main__':
+    username = input('Enter Username:')
+    cmd = 'cat /etc/passwd | grep {}'.format(username)
+    result = execute(cmd)
+    print(result)
