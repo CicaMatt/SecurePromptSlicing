@@ -3,6 +3,7 @@ import csv
 import os
 import re
 import shutil
+import traceback
 from collections import Counter
 from itertools import combinations
 
@@ -65,12 +66,12 @@ def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -
     Args:
         csv_path (str): Percorso del CSV iniziale con colonna 'Path'.
         dataset_csv_path (str): Percorso del CSV contenente 'Id' e 'Prompt ID'.
-        mode: Aggiunta per la baseline o per i risultati
+        mode: Aggiunta per la baseline o per i risultati ('Results' o 'Baseline').
     """
     # Legge il CSV iniziale
     starting_df = pd.read_csv(csv_path)
 
-    # Estrae il numero da "permutations_"
+    # Estrae il numero da "permutations_" o "row_"
     def extract_id(path):
         if mode == 'Results':
             match = re.search(r'permutations_(\d+)', path)
@@ -81,8 +82,14 @@ def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -
 
     starting_df['Permutation_ID'] = starting_df['Path'].apply(extract_id)
 
+    # Converte Permutation_ID in intero
+    starting_df['Permutation_ID'] = pd.to_numeric(starting_df['Permutation_ID'], errors='coerce')
+
     # Legge il CSV con mapping
     df_mapping = pd.read_csv(dataset_csv_path)
+
+    # Converte ID in intero
+    df_mapping['ID'] = pd.to_numeric(df_mapping['ID'], errors='coerce')
 
     # Merge per ottenere Prompt ID e Dataset ID
     starting_df = starting_df.merge(
@@ -166,7 +173,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 sentence_indices.append(None)
                 continue
 
-            row_number = int(row_match.group(1))
+            row_number = int(row_match.group(1)) # Questo è 1-based
             lookup_csv_path = os.path.join(lookup_dir, f"{csv_id}.csv")
 
             if not os.path.exists(lookup_csv_path):
@@ -181,8 +188,13 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
 
             lookup_df = pd.read_csv(lookup_csv_path)
 
-            if row_number < len(lookup_df):
-                row = lookup_df.iloc[row_number]
+            # --- BLOCCO MODIFICATO ---
+            # Converte il numero di riga (1-based) in un indice per pandas (0-based)
+            zero_based_index = row_number - 1
+
+            # Controlla che l'indice calcolato sia valido per il DataFrame
+            if 0 <= zero_based_index < len(lookup_df):
+                row = lookup_df.iloc[zero_based_index] # Usa l'indice corretto
 
                 resulting_prompt = row.get("Resulting Prompt", None)
                 if pd.notna(resulting_prompt):
@@ -197,7 +209,9 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 granularities.append(row.get("Granularity", None))
                 resulting_prompts.append(resulting_prompt)
                 sentence_indices.append(row.get("Sentence Index", None))
+            # --- FINE BLOCCO MODIFICATO ---
             else:
+                # La riga richiesta è fuori dai limiti del file CSV
                 sliced_prompts.append(None)
                 original_sentences.append(None)
                 removed_parts.append(None)
@@ -207,6 +221,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 sentence_indices.append(None)
 
         except Exception:
+            # Gestione generica di altri errori (es. file malformato)
             sliced_prompts.append(None)
             original_sentences.append(None)
             removed_parts.append(None)
@@ -215,7 +230,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
             resulting_prompts.append(None)
             sentence_indices.append(None)
 
-    # Aggiunge le colonne al DataFrame originale
+    # Aggiunge le nuove colonne al DataFrame originale
     df["Sliced Prompt"] = sliced_prompts
     df["Original Sentence"] = original_sentences
     df["Removed Part"] = removed_parts
@@ -224,7 +239,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
     df["Granularity"] = granularities
     df["Resulting Prompt"] = resulting_prompts
 
-    # Scrive il risultato nel file CSV
+    # Scrive il risultato nel file CSV di input
     df.to_csv(input_csv_path, index=False)
 
 
@@ -264,7 +279,30 @@ def snippets_count(folder):
 
 
 def row_counter(csv_path):
-    print("Total issues detected:", len(open(csv_path, encoding='utf-8').readlines()))
+    print(len(open(csv_path, encoding='utf-8').readlines()))
+
+
+def count_files_by_extension(folder, extension):
+    """
+    Recursively counts the number of files with a given extension in a folder.
+
+    Args:
+        folder (str): The path to the folder to analyze.
+        extension (str): The file extension to look for (e.g., '.txt').
+
+    Returns:
+        int: Total number of files with the specified extension.
+    """
+    count = 0
+    extension = extension.lower()
+
+    for root, _, files in os.walk(folder):
+        for file in files:
+            if file.lower().endswith(extension):
+                count += 1
+
+    print(count)
+    return count
 
 
 def covered_cwe_types_stats(csv_path, original_column):
@@ -710,10 +748,10 @@ def compare_combined_metrics(base_counter: Counter, result_counter: Counter, out
         combo_str = ', '.join(f"{k}={v}" for k, v in combo)
         print(f"  ({combo_str}): {result_val} / {base_val} → {percent}")
 
-        # Crea la riga con ordine richiesto: Combination → Num Features → [Feature columns] → Base → Result → Frequency
+        # Crea la riga con ordine richiesto: Combination → Features → [Feature columns] → Base → Result → Frequency
         row = {
             "Combination": combo_str,
-            "Num Features": len(combo),
+            "Features": len(combo),
         }
 
         # Inserisce le singole feature
@@ -733,7 +771,7 @@ def compare_combined_metrics(base_counter: Counter, result_counter: Counter, out
         try:
             with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
                 fieldnames = (
-                    ["Combination", "Num Features"] + all_feature_names +
+                    ["Combination", "Features"] + all_feature_names +
                     ["Base", "Result", "Frequency"]
                 )
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -977,13 +1015,15 @@ def plot_metric_comparison(base_counters, result_counters, category_name, mode="
 
 ##################################################################################################################
 
-language = "C"
-language_identifier = "c"
+
+language = "Python"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
 
-snippets_folder = f'generated_code/generated_code_{language_identifier}'
+baseline_snippets_folder = f'generated_code/baseline_code_{language_identifier}'
+permutations_snippets_folder = f'generated_code/generated_code_{language_identifier}'
 
 results_codeql_raw = f'results/permutations/results_{language_identifier}.csv'
 results_codeql = f'results/permutations/results_{language_identifier}_complete.csv'
@@ -1058,12 +1098,19 @@ class PermutationsStats:
 class ResultStats:
     def __init__(self):
         print("***RESULT STATS***\n")
-        #snippets_count(snippets_folder)
+        print("Total snippets over baseline:")
+        count_files_by_extension(baseline_snippets_folder, "." + language_identifier)
+        print("Total snippets over permutations:")
+        count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
+        print("\nTotal vulnerabilities/warnings found:")
         row_counter(results_codeql)
-        print("\nResult Stats:")
+        print("\n---------------------------------------\n")
+
+        print("\nSingle Metrics Stats:")
         single_metrics_stats(results_codeql, verbose=True)
         print("\n---------------------------------------\n")
 
+        print("\nCombined Metrics Stats:")
         combined_metrics_stats(results_codeql, verbose=True)
         print("\n---------------------------------------\n")
 
@@ -1119,12 +1166,15 @@ class CWEComparison:
 
 
 
-
 BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
+
 BaselineStats()
 PermutationsStats()
 ResultStats()
+
 MetricsComparison()
 CWEComparison()
+
+
