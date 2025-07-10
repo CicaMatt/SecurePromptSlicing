@@ -5,17 +5,19 @@
 Prompt syntagm tree generation
 - _prompt_permutation_generation_ <br>
 Generates all possible permutations out of a prompt and output a csv
-- _permutation_testing_ <br>
-Generates answers based on the csv generated earlier
+- _permutations_code_generation <br>
+Generates snippets based on the available permutations
 - _security_analysis_ <br>
-Analysis of test suites in _data_ folder for C, Java and Python
+Code analysis for C, Java, Python
+- _result_analysis_ <br>
+Result analysis
+- _result_comparison_ <br>
+Result comparison
 <br><br>
 
 
   
 ### Parser: [_crf-con-en_ (SuPar)](https://parser.readthedocs.io/en/stable/models/const.html?highlight=crf%20con%20en#supar.models.const.CRFConstituencyModel)
-<br>
-
 
 ### Syntagm Component Explanation ([Penn Treebank II Standard](https://surdeanu.cs.arizona.edu/mihai/teaching/ista555-fall13/readings/PennTreebankConstituents.html))
 
@@ -42,9 +44,9 @@ Analysis of test suites in _data_ folder for C, Java and Python
 - **FRAG** — Fragment
 <br><br>
 
+## CSV Labels Explanation
 
-
-### CSV Result Labels
+### Results CSV Labels
 - **Name** — Vulnerability name (from CodeQL query)
 - **Description** — Vulnerability description (from CodeQL query)
 - **Severity** — Vulnerability severity
@@ -58,9 +60,46 @@ Analysis of test suites in _data_ folder for C, Java and Python
 - **Prompt ID** — Prompt ID of related prompt (based on LLMSecEval dataset)
 - **CWE ID** — CWE-ID of considered vulnerability
 - **Sliced Prompt** — Sliced prompt used to produce the related snippet
-- **Original Sentence** - Original prompt
-- **Removed part** - Removed part from original prompt
-- **Sentence Index** - Index of the sentence from which the syntagm has been removed
-- **Syntagm Type** - Type of the removed syntagm from the original prompt
-- **Granularity** - Granularity of the removed syntagm
-- **Resulting prompt** - Resulting prompt from the slicing operation
+- **Original Sentence** — Original prompt
+- **Removed part** — Removed part from original prompt
+- **Sentence Index** — Index of the sentence from which the syntagm has been removed
+- **Syntagm Type** — Type of the removed syntagm from the original prompt
+- **Granularity** — Granularity of the removed syntagm
+- **Resulting prompt** — Resulting prompt from the slicing operation
+<br><br>
+
+
+
+### Baseline Comparison Labels
+- **CWE** — Considered CWE scenario
+- **Base** — Vulnerable permutation snippets
+- **Result** — Vulnerable baseline snippets
+- **Frequency** — Percentage of vulnerable baseline snippets over vulnerable permutation snippets
+
+
+### Permutations Comparison Labels
+- **CWE** — Considered CWE scenario
+- **Base** — Total permutations snippets
+- **Result** — Total vulnerable snippets
+- **Frequency** — Percentage of vulnerable snippets over total snippets
+
+
+### Single Metrics Comparison Labels
+- **Category** — Considered metric category
+- **Value** — Considered metric value
+- **Base** — Total values over permutation snippets
+- **Result** — Total values over vulnerable permutation snippets
+- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
+
+
+### Combined Metrics Comparison Labels
+- **Combination** — Considered combination of metrics
+- **Features** — Number of considered metrics
+- **Granularity** — Value of _Granularity_ metric
+- **Sentence Index** — Value of _Sentence Index_ metric
+- **Syntagm Type** — Value of _Syntagm Type_ metric
+- **Base** — Total values over permutation snippets
+- **Result** — Total values over vulnerable permutation snippets
+- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
+
+
