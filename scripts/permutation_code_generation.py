@@ -212,6 +212,58 @@ def replace_placeholder_in_csvs(folder_path: str, language: str):
                 print(f"Errore nella lettura del file {filename}: {e}")
 
 
+
+def validate_snippets_and_csv(snippet_folder, csv_folder=None):
+    """
+    Validates the consistency between a snippet folder and a corresponding CSV folder:
+    - If `snippet_folder` contains files directly, checks that there are exactly 150 visible files (ignores hidden files).
+    - If it contains subfolders, for each subfolder:
+        - Counts the number of visible snippet files inside it.
+        - Looks for a CSV file in `csv_folder` with the same name as the subfolder.
+        - Verifies that the number of data rows in the CSV (excluding the header) matches the number of snippet files.
+        - At the end, prints the number of subfolders analyzed (ignoring hidden ones).
+    """
+    entries = [e for e in os.listdir(snippet_folder) if not e.startswith('.')]
+    entry_paths = [os.path.join(snippet_folder, e) for e in entries]
+
+    if all(os.path.isfile(p) for p in entry_paths):
+        # Case 1: folder contains snippets directly
+        snippet_files = [p for p in entry_paths if os.path.isfile(p) and not os.path.basename(p).startswith('.')]
+        if len(snippet_files) == 150:
+            print("OK: Exactly 150 visible snippet files found.")
+        else:
+            print(f"ERROR: Expected 150 visible snippet files, found {len(snippet_files)}.")
+    else:
+        # Case 2: folder contains subfolders with snippets
+        folder_count = 0
+        for entry in entries:
+            subfolder_path = os.path.join(snippet_folder, entry)
+            if os.path.isdir(subfolder_path) and not entry.startswith('.'):
+                folder_count += 1
+                snippet_files = [
+                    f for f in os.listdir(subfolder_path)
+                    if os.path.isfile(os.path.join(subfolder_path, f)) and not f.startswith('.')
+                ]
+                snippet_count = len(snippet_files)
+
+                csv_path = os.path.join(csv_folder, f"{entry}.csv")
+                if not os.path.isfile(csv_path):
+                    print(f"ERROR: Missing CSV file for '{entry}'. Expected: {csv_path}")
+                    continue
+
+                with open(csv_path, newline='', encoding='utf-8') as csvfile:
+                    reader = csv.reader(csvfile)
+                    next(reader, None)  # Skip header row
+                    csv_row_count = sum(1 for _ in reader)
+
+                if snippet_count != csv_row_count:
+                    print(f"MISMATCH: '{entry}': {snippet_count} snippets vs {csv_row_count} CSV rows (excluding header).")
+                else:
+                    print(f"OK: '{entry}' has {snippet_count} snippets and {csv_row_count} data rows in CSV.")
+
+        print(f"\nTotal subfolders analyzed: {folder_count}")
+
+
 ###################################################################################################################
 
 
@@ -309,17 +361,25 @@ class PermutationsCodeGeneration:
                             print(f"❌ Error generating code for row {i+1}: {e}")
 
 
+class IntegrityCheck:
+    def __init__(self, snippets_folder, permutation_folder=None):
+        self.snippets_folder = snippets_folder
+        self.permutation_folder = permutation_folder
+        validate_snippets_and_csv(snippets_folder, permutation_folder)
+
+
+"""
 class Cleaning:
     def __init__(self, folder_to_clean):
         self.folder_to_clean = folder_to_clean
 
         #think_tag_removal("generated_code", "generated_code_cleaned")
         clean_files(folder_to_clean)
+"""
 
 
-
-language = "Java"
-identifier = "java"
+language = "Python"
+identifier = "py"
 extension = f".{identifier}"
 
 permutations_folder = "permutations"
@@ -334,14 +394,17 @@ system_prompt = f"""
 """
 
 
-#SetPermutationsLanguage()
-
-
 #SinglePermutationCodeGeneration()
 
 
+
+#SetPermutationsLanguage()
+
 #BaselineCodeGeneration()
 
-
 #PermutationsCodeGeneration()
+
+IntegrityCheck(baseline_folder)
+IntegrityCheck(output_folder, permutations_folder)
+
 #Cleaning("generated_code")
