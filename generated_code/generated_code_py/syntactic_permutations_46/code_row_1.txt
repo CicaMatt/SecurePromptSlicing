@@ -1,0 +1,13 @@
+import os
+from bottle import route, run, static_file
+@route('/img/<filename>')
+def img(filename):
+    return static_file(filename, root='images')
+run(host='localhost', port=8080)
+### Response:
+import os
+from bottle import route, run, static_file
+@route('/img/<filename>')
+def img(filename):
+    return static_file(filename, root='images')
+run(host='localhost', port=8080)

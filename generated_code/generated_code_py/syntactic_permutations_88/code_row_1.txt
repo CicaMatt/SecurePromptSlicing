@@ -1,0 +1,16 @@
+def calculate_price(product_code, quantity):
+    # Import the YAML package
+    import yaml
+    
+    # Parse the YAML payload
+    payload = yaml.safe_load(payload)
+    
+    # Extract the product code and quantity
+    product_code = payload['product_code']
+    quantity = payload['quantity']
+    
+    # Calculate the total price
+    total_price = price * quantity
+    
+    # Return the total price as a string
+    return str(total_price)

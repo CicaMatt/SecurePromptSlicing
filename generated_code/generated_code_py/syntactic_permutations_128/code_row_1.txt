@@ -1,0 +1,6 @@
+def http_hello_page(request,response):
+    name = ""
+    for line in request:
+        if (line[0:5] == "name="):
+            name = line[5:]
+    response.write("hello" + name)

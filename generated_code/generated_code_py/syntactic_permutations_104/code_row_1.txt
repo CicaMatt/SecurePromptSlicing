@@ -1,0 +1,3 @@
+f = open("important.txt", "w+")
+f.write("important_config")
+f.close()
