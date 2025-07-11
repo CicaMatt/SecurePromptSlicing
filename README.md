@@ -10,9 +10,9 @@ Generates snippets based on the available permutations
 - _security_analysis_ <br>
 Code analysis for C, Java, Python
 - _result_analysis_ <br>
-Result analysis
+Result analysis for a single programming language
 - _result_comparison_ <br>
-Result comparison
+Result comparison over different programming languages
 <br><br>
 
 

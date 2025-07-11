@@ -1,12 +1,7 @@
 import pandas as pd
 
 
-def compare_csvs(
-    file1, file2,
-    columns_to_compare=None,
-    key_columns=None,
-    output_csv_path=None
-):
+def compare_csvs(file1, file2, columns_to_compare=None, key_columns=None, output_csv_path=None):
     def extract_label(filename):
         base = filename.split('_')[-1].split('.')[0]
         return "Python" if base.strip().lower() == "py" else base.capitalize()
@@ -64,15 +59,27 @@ def compare_csvs(
                 delta_abs = val2_num - val1_num
                 direction = "↑" if delta_abs > 0 else "↓" if delta_abs < 0 else "="
 
-                if val1_num != 0:
-                    delta_pct = (delta_abs / val1_num) * 100
-                    delta_pct_fmt = f"{abs(delta_pct):.2f}%"
+                # Calcolo delta percentuale
+                if val1_num == 0:
+                    if val2_num == 0:
+                        delta_pct = 0.0
+                    else:
+                        delta_pct = 100.0
                 else:
-                    delta_pct_fmt = "N/A"
+                    delta_pct = (delta_abs / val1_num) * 100
 
-                delta_abs_fmt = f"{abs(delta_abs) * 100:.2f}%" if is_percent else (
-                    f"{int(abs(delta_abs))}" if abs(delta_abs) == int(abs(delta_abs)) else f"{abs(delta_abs):.2f}"
-                )
+                # Formattazione
+                if delta_abs == 0:
+                    delta_abs_fmt = f"{delta_abs * 100:.2f}%" if is_percent else "0"
+                    delta_pct_fmt = "0.00%"
+                else:
+                    sign = "+" if delta_abs > 0 else "-"
+                    delta_abs_fmt = (
+                        f"{sign}{abs(delta_abs) * 100:.2f}%" if is_percent else (
+                            f"{sign}{int(abs(delta_abs))}" if abs(delta_abs) == int(abs(delta_abs)) else f"{sign}{abs(delta_abs):.2f}"
+                        )
+                    )
+                    delta_pct_fmt = f"{sign}{abs(delta_pct):.2f}%"
 
                 diff_str = (
                     f"{col:<15} {label1}={val1_fmt:<10} {label2}={val2_fmt:<10} "
@@ -105,36 +112,39 @@ def compare_csvs(
 
 ##################################################################################################################
 
-comparison_single_metrics_c = "results/comparison/comparison_single_metrics_c.csv"
-comparison_single_metrics_py = "results/comparison/comparison_single_metrics_py.csv"
-comparison_single_metrics_java = "results/comparison/comparison_single_metrics_java.csv"
+comparison_single_metrics_c = "results/comparison/single_metrics_comparison_c.csv"
+comparison_single_metrics_py = "results/comparison/single_metrics_comparison_py.csv"
+comparison_single_metrics_java = "results/comparison/single_metrics_comparison_java.csv"
 
-comparison_combined_metrics_c = "results/comparison/comparison_combined_metrics_c.csv"
-comparison_combined_metrics_py = "results/comparison/comparison_combined_metrics_py.csv"
-comparison_combined_metrics_java = "results/comparison/comparison_combined_metrics_java.csv"
+comparison_combined_metrics_c = "results/comparison/combined_metrics_comparison_c.csv"
+comparison_combined_metrics_py = "results/comparison/combined_metrics_comparison_py.csv"
+comparison_combined_metrics_java = "results/comparison/combined_metrics_comparison_java.csv"
 
-comparison_baseline_cwes_c = "results/comparison/comparison_baseline_cwes_c.csv"
-comparison_baseline_cwes_py = "results/comparison/comparison_baseline_cwes_py.csv"
-comparison_baseline_cwes_java = "results/comparison/comparison_baseline_cwes_java.csv"
+comparison_baseline_cwes_c = "results/comparison/baseline_cwes_comparison_c.csv"
+comparison_baseline_cwes_py = "results/comparison/baseline_cwes_comparison_py.csv"
+comparison_baseline_cwes_java = "results/comparison/baseline_cwes_comparison_java.csv"
 
-comparison_permutations_cwes_c = "results/comparison/comparison_permutations_cwes_c.csv"
-comparison_permutations_cwes_py = "results/comparison/comparison_permutations_cwes_py.csv"
-comparison_permutations_cwes_java = "results/comparison/comparison_permutations_cwes_java.csv"
+comparison_permutations_cwes_c = "results/comparison/permutations_cwes_comparison_c.csv"
+comparison_permutations_cwes_py = "results/comparison/permutations_cwes_comparison_py.csv"
+comparison_permutations_cwes_java = "results/comparison/permutations_cwes_comparison_java.csv"
 
 
 class BaselineCWEsComparison:
     def __init__(self):
         print("Baseline CWE - C/Python:\n")
         compare_csvs(comparison_baseline_cwes_c, comparison_baseline_cwes_py,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nBaseline CWE - C/Java:\n")
         compare_csvs(comparison_baseline_cwes_c, comparison_baseline_cwes_java,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nBaseline CWE - Java/Python:\n")
         compare_csvs(comparison_baseline_cwes_java, comparison_baseline_cwes_py,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -142,15 +152,18 @@ class PermutationsCWEsComparison:
     def __init__(self):
         print("Permutations CWE - C/Python:\n")
         compare_csvs(comparison_permutations_cwes_c, comparison_permutations_cwes_py,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nPermutations Comparison - C/Java:\n")
         compare_csvs(comparison_permutations_cwes_c, comparison_permutations_cwes_java,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nPermutations Comparison - Java/Python:\n")
         compare_csvs(comparison_permutations_cwes_java, comparison_permutations_cwes_py,
-                     key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -160,15 +173,18 @@ class SingleMetricsComparison:
         print("\n---------------------------------------\n")
         print("Single Metrics Comparison - C/Python:\n")
         compare_csvs(comparison_single_metrics_c, comparison_single_metrics_py,
-                     key_columns=["Category", "Value"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nSingle Metrics Comparison - C/Java:\n")
         compare_csvs(comparison_single_metrics_c, comparison_single_metrics_java,
-                     key_columns=["Category", "Value"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nSingle Metrics Comparison - Java/Python:\n")
         compare_csvs(comparison_single_metrics_java, comparison_single_metrics_py,
-                     key_columns=["Category", "Value"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -176,15 +192,18 @@ class CombinedMetricsComparison:
     def __init__(self):
         print("Combined Metrics Comparison - C/Python:\n")
         compare_csvs(comparison_combined_metrics_c, comparison_combined_metrics_py,
-                     key_columns=["Combination", "Features"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nCombined Metrics Comparison - C/Java:\n")
         compare_csvs(comparison_combined_metrics_c, comparison_combined_metrics_java,
-                     key_columns=["Combination", "Features"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nCombined Metrics Comparison - Java/Python:\n")
         compare_csvs(comparison_combined_metrics_java, comparison_combined_metrics_py,
-                     key_columns=["Combination", "Features"], columns_to_compare=["Base", "Result", "Frequency"])
+                     key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
+                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 

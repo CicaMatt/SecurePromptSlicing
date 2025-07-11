@@ -27,185 +27,6 @@ def run_sh_commands(commands):
             print(f"Error: {str(e)}\n")
 
 
-def organize_java_snippets(code_path: str = None, output_path: str = None, nested: bool = True):
-    if code_path is None:
-        code_path = Path.cwd()
-    else:
-        code_path = Path(code_path)
-
-    if output_path is None:
-        raise ValueError("È necessario specificare un 'output_path'.")
-    output_path = Path(output_path)
-
-    if output_path.exists() and output_path.is_dir():
-        shutil.rmtree(output_path)
-    output_path.mkdir(parents=True, exist_ok=True)
-
-    aggregators_created = set()
-    java_files = list(code_path.rglob("*.java") if nested else code_path.glob("*.java"))
-
-    for java_file in java_files:
-        relative_path = java_file.relative_to(code_path).parent if nested else Path()
-        basename = java_file.stem
-
-        module_name = f"{relative_path.as_posix().replace('/', '-')}-{basename}" if nested and relative_path.parts else basename
-
-        new_dir = output_path / relative_path / basename if nested else output_path / basename
-        dest_dir = new_dir / "src/main/java"
-        dest_dir.mkdir(parents=True, exist_ok=True)
-
-        print(f"Elaboro: {java_file} -> {dest_dir}")
-        shutil.copy2(java_file, dest_dir / java_file.name)
-
-        parent_artifact_id = (
-            'aggregator-root' if not nested else new_dir.parent.name + '-parent'
-        )
-
-        module_pom = new_dir / "pom.xml"
-        module_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.example</groupId>
-    <artifactId>{parent_artifact_id}</artifactId>
-    <version>1.0.0</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-  <artifactId>{module_name}</artifactId>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
-        <configuration>
-          <source>11</source>
-          <target>11</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</project>''')
-
-        if nested:
-            aggregator_dir = new_dir.parent
-            aggregator_pom = aggregator_dir / "pom.xml"
-            if aggregator_dir not in aggregators_created:
-                aggregator_artifact_id = f"{aggregator_dir.name}-parent"
-                aggregator_pom.write_text(f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
-  <artifactId>{aggregator_artifact_id}</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
-  <modules>
-    <module>{basename}</module>
-  </modules>
-</project>''')
-                aggregators_created.add(aggregator_dir)
-            else:
-                text = aggregator_pom.read_text()
-                if f"<module>{basename}</module>" not in text:
-                    text = text.replace("</modules>", f"    <module>{basename}</module>\n  </modules>")
-                    aggregator_pom.write_text(text)
-        else:
-            aggregators_created.add(new_dir)
-
-    # CREA POM AGGREGATORE GLOBALE
-    if nested:
-        global_modules = [
-            str(p.relative_to(output_path))
-            for p in aggregators_created
-        ]
-    else:
-        global_modules = sorted([
-            d.name
-            for d in output_path.iterdir()
-            if d.is_dir() and (d / "pom.xml").exists()
-        ])
-
-    global_pom_content = f'''<project xmlns="http://maven.apache.org/POM/4.0.0"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                         http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.example</groupId>
-  <artifactId>aggregator-root</artifactId>
-  <version>1.0.0</version>
-  <packaging>pom</packaging>
-  <modules>
-'''
-
-    for module_path in global_modules:
-        global_pom_content += f"    <module>{module_path}</module>\n"
-
-    global_pom_content += '''  </modules>
-</project>'''
-
-    (output_path / "pom.xml").write_text(global_pom_content)
-
-
-def process_java_files(folder, wrap_if_no_class=True):
-    """
-    Scansiona ricorsivamente la folder, cerca i file .java,
-    estrae il nome della prima classe e rinomina il file di conseguenza,
-    evitando nomi duplicati.
-
-    Se `wrap_if_no_class` è True e non viene trovata alcuna classe,
-    incapsula il contenuto in una classe generica.
-    """
-    used_class_names = set()
-
-    for root, _, files in os.walk(folder):
-        for filename in files:
-            if filename.endswith(".java"):
-                complete_path = os.path.join(root, filename)
-                with open(complete_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-
-                match = re.search(r'\bclass\s+(\w+)', content)
-                if match:
-                    original_class_name = match.group(1)
-                elif wrap_if_no_class:
-                    # Genera nome classe generica da nome file
-                    original_class_name = os.path.splitext(filename)[0].capitalize() + "Wrapper"
-                    content = f"public class {original_class_name} {{\n{content}\n}}"
-                    with open(complete_path, 'w', encoding='utf-8') as f:
-                        f.write(content)
-                    print(f"Nessuna classe trovata in: {filename}, incapsulato in classe {original_class_name}.")
-                else:
-                    print(f"Saltato: {filename} (nessuna classe trovata e wrapping disabilitato).")
-                    continue  # Salta il file
-
-                # Evita nomi duplicati
-                class_name = original_class_name
-                counter = 1
-                while class_name in used_class_names:
-                    class_name = f"{original_class_name}_{counter}"
-                    counter += 1
-
-                used_class_names.add(class_name)
-
-                # Se il nome è stato modificato, aggiorna anche il contenuto della classe
-                if class_name != original_class_name:
-                    content = re.sub(r'\bclass\s+' + re.escape(original_class_name), f'class {class_name}', content)
-                    with open(complete_path, 'w', encoding='utf-8') as f:
-                        f.write(content)
-                    print(f"Classe {original_class_name} rinominata in {class_name} per evitare duplicati.")
-
-                new_name = class_name + ".java"
-                new_path = os.path.join(root, new_name)
-                if new_path != complete_path:
-                    print(f"Rinomino: {filename} -> {new_name}")
-                    os.rename(complete_path, new_path)
-
-
 def wrap_inside_class(folder):
     """
     Cerca file .java nella cartella (ricorsivamente).
@@ -929,45 +750,6 @@ def build_c_project(src_dir, nested=True, mode="auto"):
             print(f"  brew install {b}")
 
 
-
-def build_c_project_old(src_dir, nested=True):
-    object_files = []
-
-    if nested:
-        # Modalità innestata: cerca sottocartelle in src_dir
-        for subdir in next(os.walk(src_dir))[1]:
-            sub_src = os.path.join(src_dir, subdir)
-            for dirpath, _, filenames in os.walk(sub_src):
-                for filename in filenames:
-                    if filename.endswith(".c"):
-                        src_file = os.path.join(dirpath, filename)
-                        rel_path = os.path.relpath(src_file, src_dir)
-
-                        obj_file = os.path.splitext(rel_path)[0] + ".o"
-                        object_files.append(obj_file.replace("\\", "/"))
-    else:
-        # Modalità normale: cerca direttamente i .c in src_dir
-        for dirpath, _, filenames in os.walk(src_dir):
-            for filename in filenames:
-                if filename.endswith(".c"):
-                    src_file = os.path.join(dirpath, filename)
-                    rel_path = os.path.relpath(src_file, src_dir)
-
-                    obj_file = os.path.splitext(rel_path)[0] + ".o"
-                    object_files.append(obj_file.replace("\\", "/"))
-
-    # Genera Makefile direttamente nella src_dir
-    makefile_path = os.path.join(src_dir, "Makefile")
-    with open(makefile_path, "w") as mf:
-        mf.write("CC = gcc\n")
-        mf.write("CFLAGS = -Wall -I.\n\n")
-        mf.write("all: " + " ".join(object_files) + "\n\n")
-        for obj in object_files:
-            src = obj.replace(".o", ".c")
-            mf.write(f"{obj}: {src}\n\t-$(CC) $(CFLAGS) -c {src} -o {obj}\n\n")
-        mf.write("clean:\n\trm -f " + " ".join(object_files) + "\n")
-
-
 def add_standard_includes(root_dir, standard_c_functions):
     # Ottiene la lista degli header dalla struttura standard_c_functions
     standard_headers = list(standard_c_functions.keys())
@@ -1164,9 +946,6 @@ class CPreprocessing:
         #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
         build_c_project(folder2, nested, mode="auto")
 
-        #build_c_project_old(folder2, nested)
-
-
 
 example_commands = [
     # C folder cleaning
@@ -1193,7 +972,7 @@ example_commands = [
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
 
-
+# 1.6.0 last pack version
 command_set_baseline_analysis_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -1218,10 +997,10 @@ command_set_result_analysis_py = [
     r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code/generated_code_py --overwrite',
 
     # Query download and installation for C/C++, Python and Java
-    r'codeql pack download codeql/python-queries',
+    r'codeql pack download codeql/python-queries@1.6.0',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/permutations/results_py.csv codeql/python-queries --warnings=hide --rerun'
+    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
 ]
 
 """
@@ -1243,7 +1022,7 @@ command_set_custom_queries_py = [
 ]
 """
 
-# 1.6.0 last pack version
+# 1.6.0 last pack version, 1.5.2 used pack version
 command_set_baseline_analysis_java = [
     # Databases folder creation (if not exists)
     #r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -1292,6 +1071,7 @@ command_set_result_analysis_java = [
     ''',
 """
 
+# 1.4.3 last pack version
 command_set_baseline_analysis_c = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -1338,17 +1118,17 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #SecurityAnalysis(command_set_custom_queries_py)
 
 
-
-
-#SecurityAnalysis(command_set_baseline_analysis_py)
-#SecurityAnalysis(command_set_result_analysis_py)
+SecurityAnalysis(command_set_baseline_analysis_py)
+SecurityAnalysis(command_set_result_analysis_py)
 
 #JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_java)
-JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
+
+

@@ -1016,8 +1016,8 @@ def plot_metric_comparison(base_counters, result_counters, category_name, mode="
 ##################################################################################################################
 
 
-language = "Python"
-language_identifier = "py"
+language = "C"
+language_identifier = "c"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -1030,10 +1030,10 @@ results_codeql = f'results/permutations/results_{language_identifier}_complete.c
 results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline.csv'
 results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
 
-comparison_single_metrics = f'results/comparison/comparison_single_metrics_{language_identifier}.csv'
-comparison_combined_metrics = f'results/comparison/comparison_combined_metrics_{language_identifier}.csv'
-comparison_baseline_cwes = f'results/comparison/comparison_baseline_cwes_{language_identifier}.csv'
-comparison_permutations_cwes = f'results/comparison/comparison_permutations_cwes_{language_identifier}.csv'
+comparison_single_metrics = f'results/comparison/single_metrics_comparison_{language_identifier}.csv'
+comparison_combined_metrics = f'results/comparison/combined_metrics_comparison_{language_identifier}.csv'
+comparison_baseline_cwes = f'results/comparison/baseline_cwes_comparison_{language_identifier}.csv'
+comparison_permutations_cwes = f'results/comparison/permutations_cwes_comparison_{language_identifier}.csv'
 
 
 #result_py_complete = 'results/permutations/results_py_standardpack.csv'
@@ -1176,5 +1176,3 @@ ResultStats()
 
 MetricsComparison()
 CWEComparison()
-
-
