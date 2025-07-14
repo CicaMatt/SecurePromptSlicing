@@ -56,163 +56,6 @@ def call_lmstudio(prompt):
         return "// No output returned by model"
 
 
-def guess_extension(prompt):
-    if "python" in prompt.lower():
-        return ".py"
-    elif "javascript" in prompt.lower() or "node" in prompt.lower():
-        return ".js"
-    elif "java" in prompt.lower():
-        return ".java"
-    elif "c++" in prompt.lower():
-        return ".cpp"
-    elif "c" in prompt.lower() or "c" in prompt.lower():
-        return ".c"
-    elif "go" in prompt.lower():
-        return ".go"
-    elif "rust" in prompt.lower():
-        return ".rs"
-    elif "bash" in prompt.lower():
-        return ".sh"
-    else:
-        return ".txt"  # fallback
-
-
-
-
-
-
-def think_tag_removal(input_dir, output_dir):
-    os.makedirs(output_dir, exist_ok=True)
-    pattern = re.compile(r'<think>.*?</think>', re.DOTALL)
-
-    for filename in os.listdir(input_dir):
-        input_path = os.path.join(input_dir, filename)
-        output_path = os.path.join(output_dir, filename)
-
-        if os.path.isfile(input_path):
-            with open(input_path, 'r', encoding='utf-8') as infile:
-                contenuto = infile.read()
-                contenuto_modificato = re.sub(pattern, '', contenuto)
-                contenuto_modificato = contenuto_modificato.lstrip('\n')
-
-            with open(output_path, 'w', encoding='utf-8') as outfile:
-                outfile.write(contenuto_modificato)
-
-    print(f"Tutti i file sono stati processati e salvati in '{output_dir}'.")
-
-
-def _extract_python_code_from_lines(lines: list[str]) -> list[str]:
-    extracted_code_lines = []
-    n_total_lines = len(lines)
-    current_start_line_idx = 0
-
-    while current_start_line_idx < n_total_lines:
-        longest_parsable_block_found_for_current_start = []
-
-        for current_block_end_idx_exclusive in range(n_total_lines, current_start_line_idx, -1):
-            candidate_lines = lines[current_start_line_idx: current_block_end_idx_exclusive]
-            if not candidate_lines:
-                continue
-
-            candidate_code_str = "".join(candidate_lines)
-
-            if not candidate_code_str.strip():
-                try:
-                    ast.parse(candidate_code_str)
-                    longest_parsable_block_found_for_current_start = candidate_lines
-                    break
-                except SyntaxError:
-                    continue
-
-            try:
-                ast.parse(candidate_code_str)
-                longest_parsable_block_found_for_current_start = candidate_lines
-                break
-            except SyntaxError:
-                continue
-
-        if longest_parsable_block_found_for_current_start:
-            extracted_code_lines.extend(longest_parsable_block_found_for_current_start)
-            current_start_line_idx += len(longest_parsable_block_found_for_current_start)
-        else:
-            current_start_line_idx += 1
-
-    return extracted_code_lines
-
-
-def clean_files(directory_path: str, file_extension_filter: str = ".py"):
-    if not os.path.isdir(directory_path):
-        print(f"Errore: Directory non trovata: {directory_path}")
-        return
-
-    print(f"Avvio dell'estrazione del codice Python nella directory: {directory_path}")
-    if file_extension_filter:
-        print(f"Elaborazione dei file con estensione: {file_extension_filter}")
-    else:
-        print("Elaborazione di tutti i file (nessun filtro di estensione).")
-
-    for root, _, files in os.walk(directory_path):
-        for filename in files:
-            if file_extension_filter and not filename.endswith(file_extension_filter):
-                continue
-
-            filepath = os.path.join(root, filename)
-            print(f"\n--- Elaborazione del file: {filepath} ---")
-            try:
-                with open(filepath, 'r', encoding='utf-8', newline='') as f:
-                    original_lines = f.readlines()
-
-                if not original_lines:
-                    print(f"  Il file è vuoto. Salto la riscrittura.")
-                    continue
-
-                extracted_code_lines = _extract_python_code_from_lines(original_lines)
-
-                original_content_str = "".join(original_lines)
-                extracted_content_str = "".join(extracted_code_lines)
-
-                if original_content_str == extracted_content_str:
-                    print("  Nessuna modifica necessaria.")
-                else:
-                    if not extracted_code_lines and original_lines:
-                        print(f"  Nessun codice Python parsabile trovato. Riscrivo come file vuoto.")
-                    elif extracted_code_lines:
-                        print(f"  Codice Python estratto. Riscrivo il file.")
-
-                    with open(filepath, 'w', encoding='utf-8', newline='') as f:
-                        f.write(extracted_content_str)
-
-            except Exception as e:
-                print(f"  Errore durante l'elaborazione del file {filepath}: {e}")
-
-    print("\nElaborazione della directory completata.")
-
-
-def replace_placeholder_in_csvs(folder_path: str, language: str):
-    """
-    Legge tutti i file CSV nella cartella specificata, sostituisce ogni occorrenza di <language>
-    nella colonna 'Resulting Prompt' con la stringa fornita, crea una nuova colonna 'Final Prompt'
-    con il risultato, e salva i file modificati sovrascrivendo gli originali.
-
-    :param folder_path: Percorso della cartella contenente i file CSV.
-    :param language: Stringa con cui sostituire il placeholder <language>.
-    """
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".csv"):
-            file_path = os.path.join(folder_path, filename)
-            try:
-                df = pd.read_csv(file_path)
-
-                if 'Resulting Prompt' in df.columns:
-                    df['Final Prompt'] = df['Resulting Prompt'].astype(str).str.replace('<language>', language)
-                    df.to_csv(file_path, index=False)
-                else:
-                    print(f"Colonna 'Resulting Prompt' non trovata in {filename}.")
-            except Exception as e:
-                print(f"Errore nella lettura del file {filename}: {e}")
-
-
-
 def validate_snippets_and_csv(snippet_folder, csv_folder=None):
     """
     Validates the consistency between a snippet folder and a corresponding CSV folder:
@@ -221,18 +64,20 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None):
         - Counts the number of visible snippet files inside it.
         - Looks for a CSV file in `csv_folder` with the same name as the subfolder.
         - Verifies that the number of data rows in the CSV (excluding the header) matches the number of snippet files.
-        - At the end, prints the number of subfolders analyzed (ignoring hidden ones).
+        - At the end, prints the number of subfolders analyzed and the total number of mismatches or missing elements.
     """
     entries = [e for e in os.listdir(snippet_folder) if not e.startswith('.')]
     entry_paths = [os.path.join(snippet_folder, e) for e in entries]
+    total_missing_or_mismatched = 0
 
     if all(os.path.isfile(p) for p in entry_paths):
         # Case 1: folder contains snippets directly
         snippet_files = [p for p in entry_paths if os.path.isfile(p) and not os.path.basename(p).startswith('.')]
         if len(snippet_files) == 150:
-            print("OK: Exactly 150 visible snippet files found.")
+            print("OK: Exactly 150 snippet files found.")
         else:
-            print(f"ERROR: Expected 150 visible snippet files, found {len(snippet_files)}.")
+            print(f"ERROR: Expected 150 snippet files, found {len(snippet_files)}.")
+            total_missing_or_mismatched += abs(150 - len(snippet_files))
     else:
         # Case 2: folder contains subfolders with snippets
         folder_count = 0
@@ -249,6 +94,7 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None):
                 csv_path = os.path.join(csv_folder, f"{entry}.csv")
                 if not os.path.isfile(csv_path):
                     print(f"ERROR: Missing CSV file for '{entry}'. Expected: {csv_path}")
+                    total_missing_or_mismatched += snippet_count
                     continue
 
                 with open(csv_path, newline='', encoding='utf-8') as csvfile:
@@ -257,19 +103,148 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None):
                     csv_row_count = sum(1 for _ in reader)
 
                 if snippet_count != csv_row_count:
-                    print(f"MISMATCH: '{entry}': {snippet_count} snippets vs {csv_row_count} CSV rows (excluding header).")
+                    diff = abs(snippet_count - csv_row_count)
+                    print(
+                        f"MISMATCH: '{entry}': {snippet_count} snippets vs {csv_row_count} CSV rows (excluding header).")
+                    total_missing_or_mismatched += diff
                 else:
                     print(f"OK: '{entry}' has {snippet_count} snippets and {csv_row_count} data rows in CSV.")
 
         print(f"\nTotal subfolders analyzed: {folder_count}")
 
+    print(f"Total missing or mismatched snippets: {total_missing_or_mismatched}")
+        
+
+def count_wrong_extension(folder, target_extension):
+    """
+    Recursively counts visible files that do NOT have the specified extension,
+    and prints the different extensions found along with their counts.
+
+    :param folder: Path to the starting folder
+    :param target_extension: Extension to exclude (e.g., '.txt')
+    :return: Total number of files with a different extension
+    """
+    if not target_extension.startswith('.'):
+        target_extension = '.' + target_extension
+    target_extension = target_extension.lower()
+
+    count = 0
+    extension_counts = defaultdict(int)
+
+    for root, _, files in os.walk(folder):
+        for file in files:
+            if file.startswith('.'):
+                continue  # Skip hidden files
+
+            ext = os.path.splitext(file)[1].lower()
+            if ext != target_extension:
+                key = ext if ext else '[no extension]'
+                extension_counts[key] += 1
+                count += 1
+
+    if count > 0:
+        print(f"Files with different extensions (excluding '{target_extension}'):")
+        for ext, ext_count in sorted(extension_counts.items()):
+            print(f"  {ext}: {ext_count}")
+
+    print(f"Total files with different extension: {count}")
+    return count
+
+
+def count_empty_files(directory, extension):
+    """
+    Recursively analyzes a directory and counts the empty files
+    with a specific extension.
+
+    Args:
+        directory (str): The path of the directory to analyze.
+        extension (str): The file extension to consider (e.g., ".txt").
+
+    Returns:
+        int: The number of empty files found.
+    """
+    count = 0
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith(extension):
+                file_path = os.path.join(root, file)
+                if os.path.getsize(file_path) == 0:
+                    count += 1
+    print(f"Number of empty files with extension '{extension}': {count}")
+    return count
+
+
+def find_llm_comments(base_path, extensions, remove=False, print_found=False):
+    explanations = []
+    count = 0
+
+    # Pattern che rileva sia "### Explanation:" che "### Response:"
+    pattern = re.compile(r"### (Explanation|Response):")
+
+    for root, _, files in os.walk(base_path):
+        for file in files:
+            if any(file.endswith(ext) for ext in extensions):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        content = f.read()
+
+                    match = pattern.search(content)
+                    if match:
+                        count += 1
+                        start_idx = match.start()
+                        explanation = content[start_idx:]
+                        explanations.append((file_path, explanation.strip()))
+
+                        if print_found:
+                            print(f"\n{file_path}:\n{explanation.strip()}\n")
+
+                        if remove:
+                            new_content = content[:start_idx].rstrip() + "\n"
+                            with open(file_path, 'w', encoding='utf-8') as f_out:
+                                f_out.write(new_content)
+
+                except Exception as e:
+                    print(f"Could not process file {file_path}: {e}")
+
+    print(f"Total comments found: {count}")
+    return explanations
+
+
+def change_file_extensions(base_folder, correct_extension):
+    """
+    Recursively scans all non-hidden files in the given base_folder.
+    If a file does not have the correct extension, it renames it to have the correct one.
+
+    Args:
+        base_folder (str): Path to the folder to scan.
+        correct_extension (str): Desired file extension, e.g., '.txt'.
+    """
+    if not correct_extension.startswith('.'):
+        correct_extension = '.' + correct_extension
+
+    for root, _, files in os.walk(base_folder):
+        # Skip hidden folders
+        if any(part.startswith('.') for part in root.split(os.sep)):
+            continue
+
+        for filename in files:
+            # Skip hidden files
+            if filename.startswith('.'):
+                continue
+
+            full_path = os.path.join(root, filename)
+            name, current_extension = os.path.splitext(filename)
+
+            if current_extension.lower() != correct_extension.lower():
+                new_filename = name + correct_extension
+                new_path = os.path.join(root, new_filename)
+                print(f"Renaming: {full_path} -> {new_path}")
+                os.rename(full_path, new_path)
+
 
 ###################################################################################################################
 
-
-#class SetPermutationsLanguage:
-#    def __init__(self):
-#        replace_placeholder_in_csvs("permutations", language)
 
 
 class BaselineCodeGeneration:
@@ -284,7 +259,7 @@ class BaselineCodeGeneration:
                 # Sostituzione del placeholder <language> con "Python"
                 prompt = prompt.replace("<language>", language)
 
-                ext = guess_extension(prompt) or extension  # Estensione di default se guess_extension fallisce
+                ext = extension  # Estensione di default
                 filename = f"code_row_{i + 1}{ext}"
                 filepath = os.path.join(baseline_folder, filename)
 
@@ -309,7 +284,7 @@ class SinglePermutationCodeGeneration:
                 prompt_template = row["Resulting Prompt"]
                 prompt = prompt_template.replace("<language>", language)
                 print(prompt)
-                ext = guess_extension(prompt)
+                ext = extension
                 filename = f"code_row_{i}{ext}"
                 filepath = os.path.join(DEFAULT_OUTPUT_FOLDER, filename)
 
@@ -346,7 +321,7 @@ class PermutationsCodeGeneration:
                         prompt = prompt_template.replace("<language>", language)
                         print(prompt)
 
-                        ext = guess_extension(prompt) or extension  # estensione di default
+                        ext = extension  # estensione di default
                         filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
 
@@ -365,21 +340,25 @@ class IntegrityCheck:
     def __init__(self, snippets_folder, permutation_folder=None):
         self.snippets_folder = snippets_folder
         self.permutation_folder = permutation_folder
+        count_empty_files(snippets_folder, extension)
+        find_llm_comments(snippets_folder, extension)
+        count_wrong_extension(snippets_folder, extension)
         validate_snippets_and_csv(snippets_folder, permutation_folder)
+        print("\n----------------------------------------------------------------\n")
 
 
-"""
+
 class Cleaning:
     def __init__(self, folder_to_clean):
         self.folder_to_clean = folder_to_clean
-
-        #think_tag_removal("generated_code", "generated_code_cleaned")
-        clean_files(folder_to_clean)
-"""
+        change_file_extensions(folder_to_clean, extension)
+        find_llm_comments(folder_to_clean, extension, remove=True)
 
 
-language = "Python"
-identifier = "py"
+
+
+language = "Java"
+identifier = "java"
 extension = f".{identifier}"
 
 permutations_folder = "permutations"
@@ -398,8 +377,6 @@ system_prompt = f"""
 
 
 
-#SetPermutationsLanguage()
-
 #BaselineCodeGeneration()
 
 #PermutationsCodeGeneration()
@@ -407,4 +384,5 @@ system_prompt = f"""
 IntegrityCheck(baseline_folder)
 IntegrityCheck(output_folder, permutations_folder)
 
-#Cleaning("generated_code")
+#Cleaning(baseline_folder)
+#Cleaning(output_folder)
