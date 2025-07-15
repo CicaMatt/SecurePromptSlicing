@@ -1,5 +1,6 @@
 import ast
 import csv
+import json
 import os
 import re
 import shutil
@@ -7,10 +8,20 @@ import traceback
 from collections import Counter
 from itertools import combinations
 
+import numpy as np
 import pandas as pd
 import warnings
 import matplotlib.pyplot as plt
 from dask.delayed import single_key
+from scipy.stats import chi2_contingency, mannwhitneyu
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MultiLabelBinarizer, OneHotEncoder
+import seaborn as sns
+
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
 
@@ -571,7 +582,7 @@ def permutations_combined_metrics_stats(folder, verbose=True):
                     print(f"Errore nella lettura di {filename}: {e}")
 
     if verbose:
-        print(f"Total rows processed: {total_rows}")
+        #print(f"Total rows processed: {total_rows}")
         print(f"Unique combinations (length ≥ 2): {len(combinations_counter)}")
         for combo, count in combinations_counter.items():
             combo_str = ', '.join([f"{k}={v}" for k, v in combo])
@@ -1013,11 +1024,170 @@ def plot_metric_comparison(base_counters, result_counters, category_name, mode="
     plt.show()
 
 
+def match_detected_cwes(sarif_path: str, csv_path: str) -> None:
+    """
+    Reads a SARIF JSON file and a CSV file, matches SARIF rule descriptions
+    to the first column in the CSV, and appends the corresponding CWE tags
+    as a new column named 'Detected CWEs'. The CSV is updated in place.
+
+    Parameters:
+        sarif_path (str): Path to the SARIF JSON file.
+        csv_path (str): Path to the CSV file to be modified.
+    """
+    # Load SARIF file
+    with open(sarif_path, "r", encoding="utf-8") as f:
+        sarif_data = json.load(f)
+
+    # Extract rules
+    rules = sarif_data["runs"][0]["tool"]["driver"]["rules"]
+
+    # Map from shortDescription.text to list of CWE tags
+    description_to_cwes = {}
+    for rule in rules:
+        desc = rule.get("shortDescription", {}).get("text", "")
+        tags = rule.get("properties", {}).get("tags", [])
+        cwes = [tag for tag in tags if "cwe" in tag.lower()]
+
+        # Transform tags like 'external/cwe/cwe-215' -> 'CWE-215' and normalize 'CWE-020' -> 'CWE-20'
+        parsed_cwes = []
+        for tag in cwes:
+            last_part = tag.split("/")[-1].upper()  # es: CWE-020
+            match = re.match(r"^CWE-0*([1-9][0-9]*)$", last_part)
+            if match:
+                normalized = f"CWE-{match.group(1)}"
+                parsed_cwes.append(normalized)
+            else:
+                parsed_cwes.append(last_part)
+
+        description_to_cwes[desc] = sorted(set(parsed_cwes))  # remove duplicates and sort
+
+    # Load CSV file
+    df = pd.read_csv(csv_path)
+
+    # Assume the first column contains the rule description to match
+    name_column = df.columns[0]
+
+    # Apply CWE formatting
+    df["Detected CWEs"] = df[name_column].apply(
+        lambda name: ", ".join(description_to_cwes.get(name, []))
+    )
+
+    # Overwrite the original CSV file with the new column
+    df.to_csv(csv_path, index=False)
+
+
+def analyze_cwe_effect(csv_path, cwe_column='Detected CWEs',
+                       features=['Syntagm Type', 'Sentence Index', 'Granularity']):
+    df = pd.read_csv(csv_path)
+
+    print("=" * 80)
+    print("📊 CWE STATISTICAL ANALYSIS".center(80))
+    print("=" * 80)
+
+    df[cwe_column] = df[cwe_column].str.replace(" ", "", regex=False)
+    df['CWE_List'] = df[cwe_column].str.split(',')
+
+    mlb = MultiLabelBinarizer()
+    cwe_binary = pd.DataFrame(mlb.fit_transform(df['CWE_List']), columns=mlb.classes_, index=df.index)
+
+    results = []
+
+    for cwe in cwe_binary.columns:
+        df_cwe = df.copy()
+        df_cwe[cwe] = cwe_binary[cwe]
+
+        print(f"\n🔎 Analyzing CWE: {cwe}")
+        print("-" * 80)
+
+        for feature in features:
+            if df_cwe[feature].nunique() < 2:
+                continue
+
+            contingency = pd.crosstab(df_cwe[feature], df_cwe[cwe])
+            if contingency.shape[1] != 2:
+                continue
+
+            chi2, p, dof, _ = chi2_contingency(contingency)
+
+            significant = p < 0.05
+            results.append({
+                'CWE': cwe,
+                'Feature': feature,
+                'Chi2': round(chi2, 4),
+                'p-value': round(p, 4),
+                'Significant': significant
+            })
+
+            print(f"  ➤ Feature: {feature}")
+            print(f"     Chi² = {chi2:.4f}   |   p-value = {p:.4f}   |   Significant: {'✅' if significant else '❌'}")
+
+            if significant:
+                percent_table = pd.crosstab(df_cwe[feature], df_cwe[cwe], normalize='index') * 100
+                percent_table.columns = ['No CWE', 'CWE Present']
+                print("\n     ↪ Distribution (%):")
+                print(percent_table.round(2).to_string())
+                print()
+
+    # Stampa riepilogo finale
+    print("=" * 80)
+    print("📌 SUMMARY OF SIGNIFICANT RESULTS".center(80))
+    print("=" * 80)
+    results_df = pd.DataFrame(results)
+    if not results_df.empty:
+        print(results_df[results_df['Significant']].sort_values(by='p-value').to_string(index=False))
+    else:
+        print("Nessuna relazione significativa trovata.")
+
+
+def plot_cwe_effect(csv_path, features=['Syntagm Type', 'Sentence Index', 'Granularity'], min_occurrences=3):
+    # Carica e pre-elabora il dataset
+    df = pd.read_csv(csv_path)
+    df['Detected CWEs'] = df['Detected CWEs'].str.replace(" ", "", regex=False)
+    df['CWE_List'] = df['Detected CWEs'].str.split(',')
+
+    # Binarizza tutte le CWE
+    mlb = MultiLabelBinarizer()
+    cwe_binary = pd.DataFrame(mlb.fit_transform(df['CWE_List']),
+                              columns=mlb.classes_, index=df.index)
+    df = pd.concat([df, cwe_binary], axis=1)
+
+    # Filtra solo le CWE con almeno `min_occurrences`
+    cwe_counts = cwe_binary.sum()
+    filtered_cwes = cwe_counts[cwe_counts >= min_occurrences].index.tolist()
+
+    for feature in features:
+        if df[feature].nunique() < 2:
+            continue
+
+        # Prepara i dati per il grafico
+        plot_data = []
+        for cwe in filtered_cwes:
+            grouped = df.groupby(feature)[cwe].mean().reset_index()
+            grouped['CWE'] = cwe
+            grouped.rename(columns={feature: 'Feature Value', cwe: 'Percentage'}, inplace=True)
+            grouped['Percentage'] = grouped['Percentage'] * 100
+            plot_data.append(grouped)
+
+        plot_df = pd.concat(plot_data, ignore_index=True)
+
+        # Grafico a barre raggruppate
+        plt.figure(figsize=(12, 6))
+        sns.barplot(data=plot_df, x='Feature Value', y='Percentage', hue='CWE')
+        plt.title(f"CWE Frequency (%) for '{feature}' feature")
+        plt.xlabel(feature)
+        plt.ylabel("% of snippets with CWE")
+        plt.ylim(0, 100)
+        plt.xticks(rotation=45)
+        plt.legend(title='CWE', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.show()
+
+
 ##################################################################################################################
 
 
-language = "C"
-language_identifier = "c"
+language = "Python"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -1025,8 +1195,11 @@ permutations_folder = 'permutations'
 baseline_snippets_folder = f'generated_code/baseline_code_{language_identifier}'
 permutations_snippets_folder = f'generated_code/generated_code_{language_identifier}'
 
-results_codeql_raw = f'results/permutations/results_{language_identifier}.csv'
-results_codeql = f'results/permutations/results_{language_identifier}_complete.csv'
+baseline_json = f'results/json/results_{language_identifier}_baseline.sarif.json'
+result_json = f'results/json/results_{language_identifier}.sarif.json'
+
+results_raw = f'results/permutations/results_{language_identifier}.csv'
+results = f'results/permutations/results_{language_identifier}_complete.csv'
 results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline.csv'
 results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
 
@@ -1048,6 +1221,7 @@ class BaselineCsvBuilder:
         add_prompt_id(results_baseline, prompt_dataset, "Baseline")
         add_cwe_id(results_baseline, "Prompt ID")
         add_prompt_info(results_baseline, prompt_dataset)
+        match_detected_cwes(baseline_json, results_baseline)
         #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
@@ -1058,21 +1232,22 @@ class PermutationCsvsBuilder:
 
 class ResultsCsvBuilder:
     def __init__(self):
-        shutil.copy(results_codeql_raw, results_codeql)
-        add_labels(results_codeql)
-        add_prompt_id(results_codeql, prompt_dataset, "Results")
-        add_cwe_id(results_codeql, "Prompt ID")
-        add_slicing_info(results_codeql, permutations_folder, language)
+        shutil.copy(results_raw, results)
+        add_labels(results)
+        add_prompt_id(results, prompt_dataset, "Results")
+        add_cwe_id(results, "Prompt ID")
+        add_slicing_info(results, permutations_folder, language)
+        match_detected_cwes(result_json, results)
         #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
 class BaselineStats:
     def __init__(self):
         print("***BASELINE STATS***\n")
-        print("Baseline Covered CWEs (Security Scenarios):")
+        print("Baseline Covered CWEs Security Scenarios:")
         covered_cwe_types_stats(prompt_dataset, "Prompt ID")
         print("\n---------------------------------------")
-        print("\nBaseline CWEs Stats (Baseline Analysis on Default Prompts):")
+        print("\nBaseline Vulnerable Snippets:")
         cwe_stats(results_baseline, "CWE ID", verbose=True)
         print("\n----------------------------------------------------------------\n")
 
@@ -1103,19 +1278,24 @@ class ResultStats:
         print("Total snippets over permutations:")
         count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
         print("\nTotal vulnerabilities/warnings found:")
-        row_counter(results_codeql)
+        row_counter(results)
         print("\n---------------------------------------\n")
 
         print("\nSingle Metrics Stats:")
-        single_metrics_stats(results_codeql, verbose=True)
+        single_metrics_stats(results, verbose=True)
         print("\n---------------------------------------\n")
 
         print("\nCombined Metrics Stats:")
-        combined_metrics_stats(results_codeql, verbose=True)
+        combined_metrics_stats(results, verbose=True)
         print("\n---------------------------------------\n")
 
         print("\nResult CWEs Stats:")
-        cwe_stats(results_codeql, "CWE ID", verbose=True)
+        cwe_stats(results, "CWE ID", verbose=True)
+
+        print("\nDetected CWE:")
+        analyze_cwe_effect(results)
+        plot_cwe_effect(results)
+
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1124,10 +1304,10 @@ class MetricsComparison:
     def __init__(self):
         print("***METRICS COMPARISON***\n")
         permutation_single_metrics = permutations_single_metrics_stats(permutations_folder, verbose=False)
-        result_single_metrics = single_metrics_stats(results_codeql, verbose=False)
+        result_single_metrics = single_metrics_stats(results, verbose=False)
 
         permutation_combined_metrics = permutations_combined_metrics_stats(permutations_folder, verbose=False)
-        result_combined_metrics = combined_metrics_stats(results_codeql, verbose=False)
+        result_combined_metrics = combined_metrics_stats(results, verbose=False)
 
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nSingle Metrics Comparison Stats:")
@@ -1150,7 +1330,7 @@ class CWEComparison:
         print("***CWE COMPARISON***\n")
         baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
-        result_cwes = cwe_stats(results_codeql, "CWE ID", verbose=False)
+        result_cwes = cwe_stats(results, "CWE ID", verbose=False)
 
         # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
         print("\nBaseline - Results --- Metrics CWE Stats:")

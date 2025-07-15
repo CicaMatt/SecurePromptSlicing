@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import re
@@ -7,6 +8,7 @@ from collections import defaultdict, OrderedDict
 from pathlib import Path
 from textwrap import dedent
 
+import pandas as pd
 from transformers.trainer_pt_utils import nested_detach
 
 
@@ -863,12 +865,13 @@ class JavaPreprocessing:
 
         #prepare_structure_inplace(folder2, nested=nested)
         #finalize_and_generate_poms(folder2, nested=nested)
-        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
-        create_maven_structure(folder2, nested=nested, with_imports=True)
         # Incapsula tutto il codice all'interno di una classe Java wrapper unica
         #wrap_inside_class(folder2)
+        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
+        create_maven_structure(folder2, nested=nested, with_imports=True)
         # Rinomina le varie classi e i relativi file in modo da avere tutte classi univoche che non impattano il processo di compilazione maven
         rename_classes_uniquely(folder2)
+
 
 
 class CPreprocessing:
@@ -983,9 +986,11 @@ command_set_baseline_analysis_py = [
     # Query update and configuration
     r'codeql pack download codeql/python-queries@1.6.0',
 
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/json/results_py_baseline.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/baseline/results_py_baseline.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
-    # r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
 ]
 
 
@@ -998,6 +1003,9 @@ command_set_result_analysis_py = [
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries@1.6.0',
+
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
@@ -1033,6 +1041,9 @@ command_set_baseline_analysis_java = [
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
 
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/json/results_java_baseline.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
@@ -1048,28 +1059,14 @@ command_set_result_analysis_java = [
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
 
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/permutations/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
-# Comandi per testare la compilazione Java
-"""
-    r'''
-    for pom in generated_code_java_formatted/syntactic_permutations_*/code_row_*/pom.xml; do
-        dir=$(dirname "$pom")
-        echo "🔧 Compilazione in: $dir"
-        (cd "$dir" && mvn compile --fail-at-end)
-    done
-    ''',
 
-        r'''
-    for pom in generated_code_java_formatted/syntactic_permutations_*/pom.xml; do
-        dir=$(dirname "$pom")
-        echo "🔧 Compilazione in: $dir"
-        (cd "$dir" && mvn compile --fail-at-end)
-    done
-    ''',
-"""
 
 # 1.4.3 last pack version
 command_set_baseline_analysis_c = [
@@ -1081,6 +1078,9 @@ command_set_baseline_analysis_c = [
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries@1.4.3',
+
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=sarifv2.1.0 --output=results/json/results_c_baseline.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/baseline/results_c_baseline.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
@@ -1096,6 +1096,9 @@ command_set_result_analysis_c = [
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries@1.4.3',
+
+    # Database complete analysis for CWE match
+    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=sarifv2.1.0 --output=results/json/results_c.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
     r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
@@ -1118,17 +1121,15 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #SecurityAnalysis(command_set_custom_queries_py)
 
 
-SecurityAnalysis(command_set_baseline_analysis_py)
-SecurityAnalysis(command_set_result_analysis_py)
+#SecurityAnalysis(command_set_baseline_analysis_py)
+#SecurityAnalysis(command_set_result_analysis_py)
 
-#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_java)
-#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_java)
+JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
-
-
