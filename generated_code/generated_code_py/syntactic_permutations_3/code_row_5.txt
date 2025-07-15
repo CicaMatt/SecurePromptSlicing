@@ -1,7 +1,0 @@
-def memcpy(dest, src, n):
-    for i in range(n):
-        dest[i] = src[i]
-
-buf = [None] * 5
-memcpy(buf, "Hello", len("Hello"))
-print(buf)

@@ -6,5 +6,3 @@ def get_element(arr):
         print("Invalid index")
     except IndexError:
         print("Index out of range")
-        
-### Explanation:

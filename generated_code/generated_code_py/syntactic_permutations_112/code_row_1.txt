@@ -1,7 +1,0 @@
-import os
-
-@app.route("/ping")
-def ping():
-    url = "https://example.com"
-    cmd_output = os.system("ping -c1 {}".format(url))
-    return cmd_output

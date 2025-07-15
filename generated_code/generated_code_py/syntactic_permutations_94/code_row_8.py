@@ -14,6 +14,3 @@ try:
     collection.insert_one({"username": username, "hashed_password": hashed_password})
 except Exception as e:
     print(e)
-
-
-### Explanation: 

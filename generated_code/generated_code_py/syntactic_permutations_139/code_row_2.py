@@ -24,6 +24,3 @@ def checkIfUserIsModerator(user):
     cursor.execute(query)
     results = cursor.fetchall()
     return len(results) > 0
-
-
-### Explanation:

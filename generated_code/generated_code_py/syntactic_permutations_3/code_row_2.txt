@@ -1,4 +1,0 @@
-import ctypes
-def memcpy(destination,source,num):
-    # copy num bytes from src to dest
-    return ctypes.memmove(destination, source, num)

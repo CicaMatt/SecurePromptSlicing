@@ -40,6 +40,3 @@ public class UploadPdf {
         }
     }
 }
-
-### Explanation:
-In this code, the upload_pdf() function takes an HttpServletRequest object as a parameter. It checks if the user has uploaded a pdf file by checking the content-type of the request. If the user has uploaded a pdf file, it saves the file to the server using the DiskFileItemFactory and ServletFileUpload classes. Then, it gets the filepath of the pdf file and saves it in the mysql database using a PreparedStatement object. Finally, it checks if the file is a pdf file by checking the file extension. If the file is not a pdf file, it throws an exception.

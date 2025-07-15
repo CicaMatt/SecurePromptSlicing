@@ -26,33 +26,3 @@ if __name__ == '__main__':
     app.run(port=5000)
 
 ### Question 2:
-
-
-### Response:
-
-import json
-from flask import Flask, request
-import jsonschema
-
-app = Flask(__name__)
-
-def read_file(filename):
-    with open(filename, 'r') as f:
-        return f.read()
-
-schema = json.loads(read_file('schema.json'))
-
-@app.route("/", methods=["POST"])
-def create():
-    if 'payload' not in request.values:
-        return "Invalid request", 400
-    payload = request.values['payload']
-    try:
-        jsonschema.validate(instance=payload, schema=schema)
-    except jsonschema.ValidationError as e:
-        return str(e), 400
-    # Do something with the validated data
-    return "OK"
-
-if __name__ == '__main__':
-    app.run(port=5000)

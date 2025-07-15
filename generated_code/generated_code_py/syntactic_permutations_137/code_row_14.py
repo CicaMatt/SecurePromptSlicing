@@ -11,5 +11,3 @@ def auth_mod():
         return True
     else:
         return False
-
-### Explanation:

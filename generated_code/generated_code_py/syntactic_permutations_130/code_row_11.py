@@ -7,6 +7,3 @@ def home():
     env = Environment(loader=FileSystemLoader(''))
     response = render_response_from_env(env)
     return response
-
-
-### Explanation: 

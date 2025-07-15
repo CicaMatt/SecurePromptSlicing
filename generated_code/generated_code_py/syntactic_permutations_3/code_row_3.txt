@@ -1,5 +1,0 @@
-def copy_memory(destination,source,byte_length):
-    byte_length = len(source)
-    destination[:] = source[:byte_length]
-    return
-copy_memory("Hello")

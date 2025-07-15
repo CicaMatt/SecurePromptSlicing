@@ -357,8 +357,8 @@ class Cleaning:
 
 
 
-language = "Java"
-identifier = "java"
+language = "Python"
+identifier = "py"
 extension = f".{identifier}"
 
 permutations_folder = "permutations"
@@ -384,5 +384,5 @@ system_prompt = f"""
 IntegrityCheck(baseline_folder)
 IntegrityCheck(output_folder, permutations_folder)
 
-#Cleaning(baseline_folder)
-#Cleaning(output_folder)
+Cleaning(baseline_folder)
+Cleaning(output_folder)

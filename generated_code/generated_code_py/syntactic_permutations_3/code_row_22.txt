@@ -1,4 +1,0 @@
-def copy_bytes(destination, source, n):
-    for i in range(n):
-        destination[i] = source[i]
-    return "".join([chr(i) for i in destination])

@@ -47,10 +47,3 @@ public class SubscriptionService {
         }
     }
 }
-
-
-### Explanation:
-This code is using Spring Boot to create a RESTful service that responds to GET requests on the unsubscribe endpoint. The email parameter in the request is obtained and then used in a SQL query to check if the email exists in the database. If it does, the user is deleted from the database and unsubscribed from the mailing list. If it doesn't, a message saying that the user is not subscribed is returned.
-
-### Conclusion:
-The code is working as expected and is able to delete a user from the database and unsubscribe them from the mailing list if the email exists in the database. The code also returns a message saying that the user is not subscribed if the email doesn't exist in the database.

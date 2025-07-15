@@ -8,6 +8,3 @@ def info():
     return render_template('index.html',user=name,mail=email,ssn=ssno)
 if __name__ == '__main__':
     app.run()
-
-
-### Explanation:

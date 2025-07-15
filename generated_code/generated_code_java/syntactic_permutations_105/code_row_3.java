@@ -10,7 +10,3 @@ public class Secret {
         Runtime.getRuntime().exec(new String[] {"chmod", "700", "secret.txt"});
     }
 }
-
-### Explanation:
-
-This code will write the string U2FsdGVkX1/R+WzJcxgvX/Iw== to a file called secret.txt, then restrict the permissions of the file to owner only using the command `chmod 700 secret.txt`

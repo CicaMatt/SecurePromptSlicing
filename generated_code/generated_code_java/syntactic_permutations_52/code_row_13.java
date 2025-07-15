@@ -32,9 +32,3 @@ public class Login extends HttpServlet {
         }
     }
 }
-
-
-### Explanation:
-* In the login page, get the username and password from the form and pass it to the `do_login()` function.
-* The `do_login()` function checks if the username and password are correct and returns true or false based on that.
-* If the `do_login()` function returns true, then the request is forwarded to the secret page with a success message, else it redirects back to the login page with an error message.

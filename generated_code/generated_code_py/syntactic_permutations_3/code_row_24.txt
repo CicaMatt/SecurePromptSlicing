@@ -1,2 +1,0 @@
-def memcpy(destination, source):
-    return 'Hello'

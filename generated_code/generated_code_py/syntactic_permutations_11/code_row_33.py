@@ -9,5 +9,3 @@ n = int(input())
 arr = [int(x) for x in input().split()]
 result = get_index(arr, n, index=2) 
 print(result)
-
-### Explanation:

@@ -11,8 +11,3 @@ def upload_image(request):
     with open(filename, 'wb') as f:
         f.write(image_string)
     return render(request, 'index.html', {'filename': filename})
-
-### Explanation:
-
-
-

@@ -1,3 +1,0 @@
-import os
-file = open('test.txt', 'w')
-os.truncate(file, 0)

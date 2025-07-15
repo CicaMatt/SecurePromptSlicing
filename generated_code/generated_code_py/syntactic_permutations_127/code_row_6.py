@@ -7,5 +7,3 @@ def http_hello_page(request, response):
     response_message = f"Hello {username}"
     # Write the response message to the response file stream
     response.write(response_message)
-
-### Explanation:

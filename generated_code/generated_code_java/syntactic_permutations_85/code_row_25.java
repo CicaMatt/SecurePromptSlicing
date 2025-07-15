@@ -31,7 +31,3 @@ public class Temperature {
     }
   }
 }
-
-### Explanation:
-This code connects to the mysql database, and retrieves the temperature value from the sensor table based on the latitude longitude and date provided as input in the payload of the api.
-The database is called "sensor" and the table is called "sensors",the column for temperature is called "temperature". The user name and password for the database are both "root".

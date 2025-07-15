@@ -1024,6 +1024,54 @@ def plot_metric_comparison(base_counters, result_counters, category_name, mode="
     plt.show()
 
 
+def plot_combination_frequencies(base_counter: Counter, result_counter: Counter, top_n=20, sort_by='frequency'):
+    """
+    Genera un grafico a barre delle frequenze percentuali per combinazioni di feature.
+
+    Parametri:
+    - base_counter: Counter con le combinazioni base
+    - result_counter: Counter con i risultati da confrontare
+    - top_n: numero massimo di combinazioni da visualizzare (in ordine di frequenza)
+    - sort_by: criterio di ordinamento ('frequency', 'result', 'base')
+    """
+    combo_data = []
+    for combo in set(base_counter) | set(result_counter):
+        base_val = base_counter.get(combo, 0)
+        result_val = result_counter.get(combo, 0)
+
+        if base_val == 0:
+            frequency = None  # Non plottabile
+        else:
+            frequency = (result_val / base_val) * 100
+
+        combo_str = ', '.join(f"{k}={v}" for k, v in combo)
+        combo_data.append({
+            "label": combo_str,
+            "base": base_val,
+            "result": result_val,
+            "frequency": frequency
+        })
+
+    # Filtro combinazioni con base > 0 e ordino
+    combo_data = [c for c in combo_data if c["frequency"] is not None]
+    combo_data.sort(key=lambda x: x[sort_by], reverse=True)
+    combo_data = combo_data[:top_n]
+
+    # Dati per il grafico
+    labels = [c["label"] for c in combo_data]
+    frequencies = [c["frequency"] for c in combo_data]
+
+    plt.figure(figsize=(12, 6))
+    plt.barh(labels, frequencies)
+    plt.xlabel("Frequency (%)")
+    plt.ylabel("Combination")
+    plt.title("Top Combination Frequencies (Result / Base * 100%)")
+    plt.gca().invert_yaxis()
+    plt.grid(axis='x')
+    plt.tight_layout()
+    plt.show()
+
+
 def match_detected_cwes(sarif_path: str, csv_path: str) -> None:
     """
     Reads a SARIF JSON file and a CSV file, matches SARIF rule descriptions
@@ -1183,11 +1231,71 @@ def plot_cwe_effect(csv_path, features=['Syntagm Type', 'Sentence Index', 'Granu
         plt.show()
 
 
+def check_cwe_match(csv_path, folder_path):
+    # Carica il file principale
+    df_main = pd.read_csv(csv_path)
+
+    if 'CWE ID' not in df_main.columns or 'Detected CWEs' not in df_main.columns:
+        raise ValueError("Il file principale deve contenere le colonne 'CWE ID' e 'Detected CWEs'")
+
+    # Preprocessing del file principale
+    df_main['CWE ID'] = df_main['CWE ID'].astype(str).str.strip()
+    df_main['Detected CWEs'] = df_main['Detected CWEs'].astype(str)
+
+    cwe_ids = df_main['CWE ID'].unique()
+
+    # Conta match con "Detected CWEs"
+    count_matched = {
+        cwe_id: df_main['Detected CWEs'].str.contains(rf'\b{cwe_id}\b').sum()
+        for cwe_id in cwe_ids
+    }
+
+    # Conteggio locale nel file principale
+    count_total_main = df_main['CWE ID'].value_counts().to_dict()
+
+    # Conteggio globale da tutti i file nella cartella
+    count_global = {}
+
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(folder_path, filename)
+            try:
+                df = pd.read_csv(file_path)
+                if 'CWE ID' in df.columns:
+                    df['CWE ID'] = df['CWE ID'].astype(str).str.strip()
+                    for cwe_id in df['CWE ID']:
+                        count_global[cwe_id] = count_global.get(cwe_id, 0) + 1
+            except Exception as e:
+                print(f"Errore nella lettura di {filename}: {e}")
+
+    # Stampa formattata migliorata
+    print("\nCWE Scenario - Detection Match Stats:\n")
+    header = f"{'CWE ID':<10} | {'Total CWE Scenarios':>17} | {'Total CWE Detections':>22} | {'Matching CWEs':>24}"
+    print(header)
+    print("-" * len(header))
+
+    for cwe_id in sorted(cwe_ids, key=lambda x: int(x) if x.isdigit() else x):
+        total_global = count_global.get(cwe_id, 0)
+        total_main = count_total_main.get(cwe_id, 0)
+        matched = count_matched.get(cwe_id, 0)
+        print(f"{cwe_id:<10} | {total_global:>17,} | {total_main:>22,} | {matched:>24,}")
+
+    # Ritorna un DataFrame opzionale
+    result_df = pd.DataFrame({
+        'CWE ID': cwe_ids,
+        'Total CWE scenarios': [count_global.get(cwe_id, 0) for cwe_id in cwe_ids],
+        'Total CWE detection': [count_total_main.get(cwe_id, 0) for cwe_id in cwe_ids],
+        'Matches number': [count_matched[cwe_id] for cwe_id in cwe_ids]
+    })
+
+    return result_df
+
+
 ##################################################################################################################
 
 
-language = "Python"
-language_identifier = "py"
+language = "Java"
+language_identifier = "java"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -1292,6 +1400,9 @@ class ResultStats:
         print("\nResult CWEs Stats:")
         cwe_stats(results, "CWE ID", verbose=True)
 
+        print("\nCWE Scenario - Detection Match Stats:")
+        check_cwe_match(results, permutations_folder)
+
         print("\nDetected CWE:")
         analyze_cwe_effect(results)
         plot_cwe_effect(results)
@@ -1320,6 +1431,8 @@ class MetricsComparison:
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
+
+        plot_combination_frequencies(permutation_combined_metrics, result_combined_metrics, top_n=30)
         print("\n----------------------------------------------------------------\n")
 
 

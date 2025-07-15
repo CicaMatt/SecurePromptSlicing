@@ -1,5 +1,3 @@
-import os
-os.system('python -c "print(\'hello world\')"')
-
+import os
 
-### Explanation:
+os.system('python -c "print(\'hello world\')"')

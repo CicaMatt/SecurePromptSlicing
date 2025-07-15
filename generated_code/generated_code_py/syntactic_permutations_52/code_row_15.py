@@ -17,6 +17,3 @@ def secret_page():
     return render_template("secret.html")
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-### Explanation:

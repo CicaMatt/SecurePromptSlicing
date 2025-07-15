@@ -48,8 +48,3 @@ public class TemperatureForLocation extends HttpServlet {
         }
     }
 }
-
-### Explanation:
-The code above defines a function called `temperature_for_location()`, which is called when the URL `/api/temperature_for_location` is requested. The function gets the latitude, longitude and date from the payload. It then connects to the database and gets the temperature for the given location and date. Finally, the function returns the temperature as a string.
-
-The code uses the `Gson` library to parse JSON data sent in the request body. The `doPost()` method is used to handle HTTP POST requests, which is the method that will be called when we send a request with the payload to get the temperature for the location. It reads the request body and extracts the latitude, longitude and date from it. Then it calls the `getTemperatureForLocation` function and gets the temperature. The response is then sent back as JSON data using the `PrintWriter` object.

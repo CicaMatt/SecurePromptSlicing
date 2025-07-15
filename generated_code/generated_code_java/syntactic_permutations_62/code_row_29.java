@@ -34,6 +34,3 @@ public class CheckSum {
         }
     }
 }
-
-### Explanation:
-The program starts by opening the file and reading its contents into a buffer using a `BufferedReader`. The `StringBuilder` class is then used to create a string from the contents of the buffer. Next, the checksum is calculated by iterating through each character of the string and summing up their Unicode values. If the checksum is 0, it means the buffer is empty, so we save this information to a file using a `FileWriter`. Otherwise, we save the number of bytes and the checksum to a file. Finally, we close all open streams.

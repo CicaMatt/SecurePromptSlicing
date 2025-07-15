@@ -4,6 +4,3 @@ def person():
 status = 0
 print(person())
 print(status)
-
-
-### Explanation:

@@ -10,5 +10,3 @@ def redirect_invalid_url(url):
 @app.route("/redirect/<path:url>")
 def redirect_url(url):
     return redirect_invalid_url(url)
-
-### Explanation: 

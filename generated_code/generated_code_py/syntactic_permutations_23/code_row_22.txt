@@ -1,9 +1,0 @@
-from random import randint as rnd
-a = rnd(1000,9999)
-b = rnd(1000,9999)
-c = rnd(1000,9999)
-print("a :", a )
-print("b: ", b)
-print("c: ", c)
-sum = a+b+c
-print("sum: ", sum)

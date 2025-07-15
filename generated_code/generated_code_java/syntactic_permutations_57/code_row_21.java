@@ -33,6 +33,3 @@ import java.util.*;
             return true;
         }
     }
-
-### Explanation:
-The program uses a `Scanner` object to read input from the user. It then calls the `checkLogin()` method with the old email and confirm password as parameters. If this returns `true`, the `changeEmail()` method is called with the old email and new email as parameters, which changes the email in the database.

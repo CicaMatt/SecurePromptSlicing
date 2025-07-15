@@ -12,7 +12,3 @@ if __name__ == '__main__':
     x = int(input().strip())
     
     sys.exit(get_value_from_array(vals, n, x))
-
-
-### Explanation:
-

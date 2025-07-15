@@ -8,5 +8,3 @@ print (b.raw)
 libc.free(a)
 print (b.raw)
 libc.free(b)
-
-### Explanation:

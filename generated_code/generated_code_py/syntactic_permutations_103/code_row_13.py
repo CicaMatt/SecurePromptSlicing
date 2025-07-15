@@ -1,10 +1,9 @@
-import os
-from pathlib import Path
-path = '/file/path'
+import os
+
+from pathlib import Path
+
+path = '/file/path'
 
 
-        # write to file
 
-
-
-### Explanation:
+        # write to file

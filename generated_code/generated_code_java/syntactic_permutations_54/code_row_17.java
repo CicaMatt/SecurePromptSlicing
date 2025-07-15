@@ -28,8 +28,3 @@ public class Login extends HttpServlet {
         }
     }
 }
-
-### Explanation:
-* @WebServlet annotation is used to map the Login class with a URL pattern, in this case “/login”
-* doGet() method will return the HTML form to enter the username and password.
-* doPost() method will take the username and password from the form and check if they are admin and password respectively. If it is true then it will redirect the user to the admin_page else it will show the error message on the same page.

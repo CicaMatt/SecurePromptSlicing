@@ -1,5 +1,0 @@
-import os 
-
-file = open("important_config","w")
-
-write("important_config",file)

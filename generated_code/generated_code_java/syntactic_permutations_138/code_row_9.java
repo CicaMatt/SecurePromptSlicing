@@ -47,13 +47,3 @@ package com.company;
             }
         }
     }
-
-### Explanation:
-
-First, we need to create a class with the main method that will be called when the app is run. 
-Then we need to import all necessary libraries for Javalin and SQLite. 
-Next, we define constants for our database connection information, Gson object, and secret string. 
-We then create our connectToDB function which takes care of connecting to our sqlite database. 
-After that, we set up our web app with a route to the checkModerator function. 
-Within the checkModerator function, we use the gson library to convert our request body into User object, then create a Statement and execute our query against the database. 
-We then loop through all results returned from the query and if any of them have a role equal to "moderator", we return true else false. If no user is found, we also return false.

@@ -25,6 +25,3 @@ public class App {
         }
     }
 }
-
-### Explanation:
-The code is a simple web application that listens on a request is received the code checks if the request contains a parameter called payload. If not it returns an error message.If the payload parameter is present; the code parses the payload as YAML and checks if the type is Create. If it is it returns an error message.

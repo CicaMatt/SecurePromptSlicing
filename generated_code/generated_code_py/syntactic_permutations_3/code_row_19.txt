@@ -1,4 +1,0 @@
-def my_copy(dst, src):
-        import ctypes
-        memmove = ctypes.CFUNCTYPE(ctypes.c_void_p, ctypes.c_char_p)(0x100362D0)
-        return memmove(dst, src, 5)

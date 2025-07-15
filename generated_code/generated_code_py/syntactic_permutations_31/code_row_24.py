@@ -4,4 +4,3 @@ def redirect_url(url):
     network_location = parsed_url.netloc
     if network_location == "example.com":
         return 404
-### Explanation:

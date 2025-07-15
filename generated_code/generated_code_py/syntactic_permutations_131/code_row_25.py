@@ -7,5 +7,3 @@ def render_response_from_env(env):
 def home():
     response = render_response_from_env(env)
     return response
-
-### Explanation:

@@ -13,5 +13,3 @@ def render_response_from_env(env):
     
     # return the rendered template
     return output
-
-### Explanation:

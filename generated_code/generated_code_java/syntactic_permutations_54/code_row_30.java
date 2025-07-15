@@ -18,7 +18,3 @@ public class LoginServlet extends HttpServlet {
     out.println("</body></html>");
     }
 }
-
-
-### Explanation:
-The code is a servlet for login form in java. It sets the content type as html and gets the writer object to write output on it. Then it prints docType, html tags and h1 tag with title 'login'. Then it includes login.jsp file in body section using RequestDispatcher dispatcher. Finally it closes all html tags.

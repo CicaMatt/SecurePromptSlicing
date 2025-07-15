@@ -23,11 +23,3 @@ public class Main extends HttpServlet {
         } catch (Exception e) {}
     }
 }
-
-### Explanation:
-- In the above code, we have used `doGet()` method to get the request and response object. 
-- We created a connection with MySQL database by using `DriverManager` class and created an instance of `Statement`.
-- The result set is obtained from the query executed by `executeQuery()` method on statement object.
-- The while loop is used to retrieve data from result set and print it in HTML format. 
-- The forward() method is used to send request and response object to index.html file.
-- We have also catch block to handle any exceptions that may arise during runtime.

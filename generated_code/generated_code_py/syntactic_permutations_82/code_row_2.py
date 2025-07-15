@@ -13,10 +13,3 @@ def api():
     
     # Return the name value from the dictionary
     return data['name']
-
-### Explanation:
-
-
-
-
-

@@ -22,9 +22,3 @@ import sys
             print("Index out of range")
         else:
             print(value)
-
-### Explanation:
-- The code starts with the import statement for system library, which will be used to exit the program in case of invalid index.
-- get_value_from_array function takes the array, its size and an index as parameters and returns the value at the given index if it is within range or None otherwise.
-- The main function reads an integer from the standard input using the input() method and calls the getValueFromArray with the id_sequence array; its size and the read integer as parameters. 
-- It then checks whether the return value of getValueFromArray is None, if it is, it prints "Index out of range" to console otherwise it prints the return value.

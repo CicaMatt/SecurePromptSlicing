@@ -9,8 +9,3 @@ def http_hello_page(request, response):
     output_data = {"message": "Hello " + username}
     output_data = json.dumps(output_data)
     response.write(output_data.encode())
-
-### Explanation:
-
-
-

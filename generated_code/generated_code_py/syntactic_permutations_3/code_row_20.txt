@@ -1,3 +1,0 @@
-def str_copy(destination, source):
-    for i in range(len(source)):
-        destination[i] = source[i]

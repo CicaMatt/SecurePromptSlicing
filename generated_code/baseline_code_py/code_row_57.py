@@ -36,6 +36,3 @@ from flask import Flask, redirect, render_template, request, session, url_for
     
     if __name__ == "__main__":
         app.run(debug=True)
-
-### Explanation:
-The code imports Flask and other modules required for the application. The login route renders a template with a form to enter the user's old email, new email, and confirm password. The change route is called when the form is submitted. It checks if the user is logged in, gets the form data, checks if all required information is provided, checks if the user is the owner of the old email, checks if the new email exists, changes the user's email, and redirects to the login page.

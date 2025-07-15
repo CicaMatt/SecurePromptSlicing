@@ -11,5 +11,3 @@ def upload_image():
     else:
         flash('Invalid image extension')
         return redirect(url_for('index'))
-
-### Explanation:

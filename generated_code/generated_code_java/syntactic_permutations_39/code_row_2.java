@@ -16,7 +16,3 @@ public class Login {
         }
     }
 }
-
-### Explanation:
-The code starts with an import statement which imports all the classes from java.util package and Scanner class from java.io package. The main method starts by creating a new scanner object that reads input from the keyboard. The program then prompts the user to enter their username and password, which are stored as strings using the scanner's nextLine() method.
-The program then uses if-else statement to check if the entered username and password match "admin" and "12345" respectively. If they do, it displays a success message; otherwise, it displays an error message indicating that either the username or password is incorrect. The main method ends after displaying the appropriate message.

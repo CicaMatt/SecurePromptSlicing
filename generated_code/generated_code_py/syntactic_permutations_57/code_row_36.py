@@ -4,9 +4,3 @@ def changeEmail(email, old_email, new_email):
             current_user.email = new_email
             db.session.commit()
     return redirect(url_for('login'))
-
-### Explanation:
-
-### Example:
-
-### Example:

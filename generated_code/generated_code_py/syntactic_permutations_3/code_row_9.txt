@@ -1,5 +1,0 @@
-def copy_bytes(dst, src, num):
-    for i in range(num):
-        dst[i] = src[i]
-    
-copy_bytes("Hello", 0)

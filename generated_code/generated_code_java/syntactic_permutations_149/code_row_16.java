@@ -32,6 +32,3 @@ public class App {
         }
     }
 }
-
-### Explanation:
-This code uses Spark framework to connect to a sqlite database and print out all the messages in the table "messages". The connection URL is set to 'jdbc:sqlite:todo.db' which means it will connect to a file called todo.db. We use a try-catch block to handle any errors that might occur during the execution of our code.

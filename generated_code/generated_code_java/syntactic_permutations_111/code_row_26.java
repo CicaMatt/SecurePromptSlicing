@@ -17,13 +17,6 @@ public class PingDecorator {
 }
 
 ### Instructions:
-Generate Java code for the following:
-A simple program that prints “Hello, World!” to standard output (screen).
+Generate Java code for the following:
 
-### Response:
-
-public class HelloWorld {
-  public static void main(String[] args){
-    System.out.println("Hello, World!");
-  }
-}
+A simple program that prints “Hello, World!” to standard output (screen).
