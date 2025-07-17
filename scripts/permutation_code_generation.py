@@ -243,6 +243,29 @@ def change_file_extensions(base_folder, correct_extension):
                 os.rename(full_path, new_path)
 
 
+def count_files_with_extension(folder, extension):
+    """
+    Recursively counts all non-hidden files with a given extension within a folder.
+
+    Args:
+        folder (str): Path to the starting folder.
+        extension (str): File extension to look for (e.g., ".txt").
+
+    Returns:
+        int: Number of matching files.
+    """
+    count = 0
+    for root, dirs, files in os.walk(folder):
+        # Skip hidden directories
+        dirs[:] = [d for d in dirs if not d.startswith('.')]
+        for file in files:
+            if not file.startswith('.') and file.endswith(extension):
+                count += 1
+
+    print("Total number of files with extension '{extension}': {count}".format(extension=extension, count=count))
+    return count
+
+
 ###################################################################################################################
 
 
@@ -347,6 +370,7 @@ class IntegrityCheck:
     def __init__(self, snippets_folder, permutation_folder=None):
         self.snippets_folder = snippets_folder
         self.permutation_folder = permutation_folder
+        count_files_with_extension(snippets_folder, extension)
         count_empty_files(snippets_folder, extension)
         find_llm_comments(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
@@ -388,7 +412,7 @@ system_prompt = f"""
 PermutationsCodeGeneration(skip_existing=True)
 
 #IntegrityCheck(baseline_folder)
-#IntegrityCheck(output_folder, permutations_folder)
+IntegrityCheck(output_folder, permutations_folder)
 
 #Cleaning(baseline_folder)
 #Cleaning(output_folder)
