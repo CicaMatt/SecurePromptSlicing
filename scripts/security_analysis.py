@@ -852,19 +852,13 @@ class JavaPreprocessing:
         self.folder1 = folder1
         self.folder2 = folder2
         self.nested = nested
-        # Struttura la folder con i vari pom.xml per ogni singolo file, per ogni gruppo di permutazioni e per tutta la folder
-        #organize_java_snippets(folder1, folder2, nested)
-        # Scansiona ricorsivamente i file .java, estrae il nome della prima classe e rinomina il file di conseguenza evitando nomi duplicati (incapsula anche codici vuoti in classi wrapper)
-        #process_java_files(folder2)
-        #find_errors_java(folder2)
 
         create_formatted_folder(folder1, folder2)
 
+        find_errors_java(folder2)
         count_short_files(folder2)
         extract_unique_java_imports(folder2, exclude_java_standard=True)
 
-        #prepare_structure_inplace(folder2, nested=nested)
-        #finalize_and_generate_poms(folder2, nested=nested)
         # Incapsula tutto il codice all'interno di una classe Java wrapper unica
         #wrap_inside_class(folder2)
         # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
@@ -1129,7 +1123,7 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_c)
-CPreprocessing(c_folder, c_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_c)
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_c)
+#CPreprocessing(c_folder, c_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_c)
