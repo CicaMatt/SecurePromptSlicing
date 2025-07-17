@@ -300,7 +300,7 @@ class SinglePermutationCodeGeneration:
 
 
 class PermutationsCodeGeneration:
-    def __init__(self):
+    def __init__(self, skip_existing=False):
         os.makedirs(output_folder, exist_ok=True)
         # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(permutations_folder):
@@ -316,14 +316,17 @@ class PermutationsCodeGeneration:
                 with open(csv_path, newline='', encoding='utf-8') as csvfile:
                     reader = csv.DictReader(csvfile)
                     for i, row in enumerate(reader):
-                        # Prende il prompt dalla colonna Resulting prompt e sostituisce <language>
                         prompt_template = row["Resulting Prompt"]
                         prompt = prompt_template.replace("<language>", language)
-                        print(prompt)
 
-                        ext = extension  # estensione di default
+                        ext = extension
                         filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
+
+                        # Salta se già esiste e modalità attiva
+                        if skip_existing and os.path.exists(filepath):
+                            print(f"⏭️ Snippet già esistente: {filepath}, salto.")
+                            continue
 
                         try:
                             print(f"▶️ Generating code for row {i+1} in {os.path.basename(csv_path)}...")
@@ -336,12 +339,16 @@ class PermutationsCodeGeneration:
                             print(f"❌ Error generating code for row {i+1}: {e}")
 
 
+
+
+
+
 class IntegrityCheck:
     def __init__(self, snippets_folder, permutation_folder=None):
         self.snippets_folder = snippets_folder
         self.permutation_folder = permutation_folder
         count_empty_files(snippets_folder, extension)
-        find_llm_comments(snippets_folder, extension)
+        find_llm_comments(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
         validate_snippets_and_csv(snippets_folder, permutation_folder)
         print("\n----------------------------------------------------------------\n")
@@ -360,6 +367,7 @@ class Cleaning:
 language = "Python"
 identifier = "py"
 extension = f".{identifier}"
+#model = ""
 
 permutations_folder = "permutations"
 baseline_folder = f"generated_code/baseline_code_{identifier}"
@@ -375,14 +383,12 @@ system_prompt = f"""
 
 #SinglePermutationCodeGeneration()
 
-
-
 #BaselineCodeGeneration()
 
-#PermutationsCodeGeneration()
+PermutationsCodeGeneration(skip_existing=True)
 
-IntegrityCheck(baseline_folder)
-IntegrityCheck(output_folder, permutations_folder)
+#IntegrityCheck(baseline_folder)
+#IntegrityCheck(output_folder, permutations_folder)
 
-Cleaning(baseline_folder)
-Cleaning(output_folder)
+#Cleaning(baseline_folder)
+#Cleaning(output_folder)
