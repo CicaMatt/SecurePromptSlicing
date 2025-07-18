@@ -112,21 +112,23 @@ def compare_csvs(file1, file2, columns_to_compare=None, key_columns=None, output
 
 ##################################################################################################################
 
-comparison_single_metrics_c = "results/comparison/single_metrics_comparison_c.csv"
-comparison_single_metrics_py = "results/comparison/single_metrics_comparison_py.csv"
-comparison_single_metrics_java = "results/comparison/single_metrics_comparison_java.csv"
+model = "codellama"
 
-comparison_combined_metrics_c = "results/comparison/combined_metrics_comparison_c.csv"
-comparison_combined_metrics_py = "results/comparison/combined_metrics_comparison_py.csv"
-comparison_combined_metrics_java = "results/comparison/combined_metrics_comparison_java.csv"
+comparison_single_metrics_c = f"results/{model}/comparison/single_metrics_comparison_c.csv"
+comparison_single_metrics_py = f"results/{model}/comparison/single_metrics_comparison_py.csv"
+comparison_single_metrics_java = f"results/{model}/comparison/single_metrics_comparison_java.csv"
 
-comparison_baseline_cwes_c = "results/comparison/baseline_cwes_comparison_c.csv"
-comparison_baseline_cwes_py = "results/comparison/baseline_cwes_comparison_py.csv"
-comparison_baseline_cwes_java = "results/comparison/baseline_cwes_comparison_java.csv"
+comparison_combined_metrics_c = f"results/{model}/comparison/combined_metrics_comparison_c.csv"
+comparison_combined_metrics_py = f"results/{model}/comparison/combined_metrics_comparison_py.csv"
+comparison_combined_metrics_java = f"results/{model}/comparison/combined_metrics_comparison_java.csv"
 
-comparison_permutations_cwes_c = "results/comparison/permutations_cwes_comparison_c.csv"
-comparison_permutations_cwes_py = "results/comparison/permutations_cwes_comparison_py.csv"
-comparison_permutations_cwes_java = "results/comparison/permutations_cwes_comparison_java.csv"
+comparison_baseline_cwes_c = f"results/{model}/comparison/baseline_cwes_comparison_c.csv"
+comparison_baseline_cwes_py = f"results/{model}/comparison/baseline_cwes_comparison_py.csv"
+comparison_baseline_cwes_java = f"results/{model}/comparison/baseline_cwes_comparison_java.csv"
+
+comparison_permutations_cwes_c = f"results/{model}/comparison/permutations_cwes_comparison_c.csv"
+comparison_permutations_cwes_py = f"results/{model}/comparison/permutations_cwes_comparison_py.csv"
+comparison_permutations_cwes_java = f"results/{model}/comparison/permutations_cwes_comparison_java.csv"
 
 
 class BaselineCWEsComparison:
@@ -134,17 +136,17 @@ class BaselineCWEsComparison:
         print("Baseline CWE - C/Python:\n")
         compare_csvs(comparison_baseline_cwes_c, comparison_baseline_cwes_py,
                      key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_c_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/baseline_cwe/baseline_cwe_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nBaseline CWE - C/Java:\n")
         compare_csvs(comparison_baseline_cwes_c, comparison_baseline_cwes_java,
                      key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_c_java.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/baseline_cwe/baseline_cwe_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nBaseline CWE - Java/Python:\n")
         compare_csvs(comparison_baseline_cwes_java, comparison_baseline_cwes_py,
                      key_columns=["CWE"], columns_to_compare=["Base", "Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/baseline_cwe/baseline_cwe_java_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/baseline_cwe/baseline_cwe_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -153,17 +155,17 @@ class PermutationsCWEsComparison:
         print("Permutations CWE - C/Python:\n")
         compare_csvs(comparison_permutations_cwes_c, comparison_permutations_cwes_py,
                      key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_c_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/permutations_cwe/permutations_cwe_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nPermutations Comparison - C/Java:\n")
         compare_csvs(comparison_permutations_cwes_c, comparison_permutations_cwes_java,
                      key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_c_java.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/permutations_cwe/permutations_cwe_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nPermutations Comparison - Java/Python:\n")
         compare_csvs(comparison_permutations_cwes_java, comparison_permutations_cwes_py,
                      key_columns=["CWE"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/permutations_cwe/permutations_cwe_java_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/permutations_cwe/permutations_cwe_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -174,17 +176,17 @@ class SingleMetricsComparison:
         print("Single Metrics Comparison - C/Python:\n")
         compare_csvs(comparison_single_metrics_c, comparison_single_metrics_py,
                      key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_c_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/single_metrics/single_metrics_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nSingle Metrics Comparison - C/Java:\n")
         compare_csvs(comparison_single_metrics_c, comparison_single_metrics_java,
                      key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_c_java.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/single_metrics/single_metrics_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nSingle Metrics Comparison - Java/Python:\n")
         compare_csvs(comparison_single_metrics_java, comparison_single_metrics_py,
                      key_columns=["Category", "Value"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/single_metrics/single_metrics_java_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/single_metrics/single_metrics_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -193,17 +195,17 @@ class CombinedMetricsComparison:
         print("Combined Metrics Comparison - C/Python:\n")
         compare_csvs(comparison_combined_metrics_c, comparison_combined_metrics_py,
                      key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_c_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/combined_metrics/combined_metrics_c_py.csv")
         print("\n---------------------------------------\n")
         print("\nCombined Metrics Comparison - C/Java:\n")
         compare_csvs(comparison_combined_metrics_c, comparison_combined_metrics_java,
                      key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_c_java.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/combined_metrics/combined_metrics_c_java.csv")
         print("\n---------------------------------------\n")
         print("\nCombined Metrics Comparison - Java/Python:\n")
         compare_csvs(comparison_combined_metrics_java, comparison_combined_metrics_py,
                      key_columns=["Combination", "Features"], columns_to_compare=["Result", "Frequency"],
-                     output_csv_path="results/cross_comparison/combined_metrics/combined_metrics_java_py.csv")
+                     output_csv_path=f"results/{model}/cross_comparison/combined_metrics/combined_metrics_java_py.csv")
         print("\n----------------------------------------------------------------\n")
 
 

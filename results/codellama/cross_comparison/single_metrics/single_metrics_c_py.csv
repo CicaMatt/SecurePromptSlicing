@@ -1,0 +1,51 @@
+Row,Category,Value,Column,C,Python,Delta,Delta %,Direction
+0,Syntagm Type,ADJP,Result,2,7,+5,+250.00%,↑
+0,Syntagm Type,ADJP,Frequency,4.00%,14.00%,+10.00%,+250.00%,↑
+1,Syntagm Type,ADVP,Result,3,16,+13,+433.33%,↑
+1,Syntagm Type,ADVP,Frequency,5.56%,29.63%,+24.07%,+432.91%,↑
+2,Syntagm Type,CONJP,Result,0,1,+1,+100.00%,↑
+2,Syntagm Type,CONJP,Frequency,0.00%,100.00%,+100.00%,+100.00%,↑
+3,Syntagm Type,INTJ,Result,0,0,0,0.00%,=
+3,Syntagm Type,INTJ,Frequency,0.00%,0.00%,0.00%,0.00%,=
+4,Syntagm Type,NP,Result,53,467,+414,+781.13%,↑
+4,Syntagm Type,NP,Frequency,2.17%,19.09%,+16.92%,+779.72%,↑
+5,Syntagm Type,PP,Result,11,106,+95,+863.64%,↑
+5,Syntagm Type,PP,Frequency,1.67%,16.13%,+14.46%,+865.87%,↑
+6,Syntagm Type,PRT,Result,0,7,+7,+100.00%,↑
+6,Syntagm Type,PRT,Frequency,0.00%,30.43%,+30.43%,+100.00%,↑
+7,Syntagm Type,QP,Result,0,0,0,0.00%,=
+7,Syntagm Type,QP,Frequency,0.00%,0.00%,0.00%,0.00%,=
+8,Syntagm Type,SBAR,Result,2,51,+49,+2450.00%,↑
+8,Syntagm Type,SBAR,Frequency,0.70%,17.77%,+17.07%,+2438.57%,↑
+9,Syntagm Type,VP,Result,17,144,+127,+747.06%,↑
+9,Syntagm Type,VP,Frequency,2.51%,21.30%,+18.79%,+748.61%,↑
+10,Syntagm Type,WHADVP,Result,0,8,+8,+100.00%,↑
+10,Syntagm Type,WHADVP,Frequency,0.00%,29.63%,+29.63%,+100.00%,↑
+11,Syntagm Type,WHNP,Result,4,20,+16,+400.00%,↑
+11,Syntagm Type,WHNP,Frequency,4.40%,21.98%,+17.58%,+399.55%,↑
+12,Granularity,chunk,Result,31,291,+260,+838.71%,↑
+12,Granularity,chunk,Frequency,1.92%,18.04%,+16.12%,+839.58%,↑
+13,Granularity,clause,Result,1,10,+9,+900.00%,↑
+13,Granularity,clause,Frequency,1.39%,13.89%,+12.50%,+899.28%,↑
+14,Granularity,minimal,Result,60,526,+466,+776.67%,↑
+14,Granularity,minimal,Frequency,2.28%,19.96%,+17.68%,+775.44%,↑
+15,Sentence Index,0,Result,63,403,+340,+539.68%,↑
+15,Sentence Index,0,Frequency,2.08%,13.30%,+11.22%,+539.42%,↑
+16,Sentence Index,1,Result,20,136,+116,+580.00%,↑
+16,Sentence Index,1,Frequency,3.68%,25.05%,+21.37%,+580.71%,↑
+17,Sentence Index,2,Result,5,154,+149,+2980.00%,↑
+17,Sentence Index,2,Frequency,1.19%,36.67%,+35.48%,+2981.51%,↑
+18,Sentence Index,3,Result,4,87,+83,+2075.00%,↑
+18,Sentence Index,3,Frequency,1.93%,42.03%,+40.10%,+2077.72%,↑
+19,Sentence Index,4,Result,0,33,+33,+100.00%,↑
+19,Sentence Index,4,Frequency,0.00%,50.00%,+50.00%,+100.00%,↑
+20,Sentence Index,5,Result,0,8,+8,+100.00%,↑
+20,Sentence Index,5,Frequency,0.00%,36.36%,+36.36%,+100.00%,↑
+21,Sentence Index,6,Result,0,5,+5,+100.00%,↑
+21,Sentence Index,6,Frequency,0.00%,27.78%,+27.78%,+100.00%,↑
+22,Sentence Index,7,Result,0,0,0,0.00%,=
+22,Sentence Index,7,Frequency,0.00%,0.00%,0.00%,0.00%,=
+23,Sentence Index,8,Result,0,1,+1,+100.00%,↑
+23,Sentence Index,8,Frequency,0.00%,33.33%,+33.33%,+100.00%,↑
+24,Sentence Index,9,Result,0,0,0,0.00%,=
+24,Sentence Index,9,Frequency,0.00%,0.00%,0.00%,0.00%,=
