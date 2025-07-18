@@ -173,41 +173,90 @@ def count_empty_files(directory, extension):
     return count
 
 
-def find_llm_comments(base_path, extensions, remove=False, print_found=False):
-    explanations = []
-    count = 0
 
-    # Pattern che rileva sia "### Explanation:" che "### Response:"
-    pattern = re.compile(r"### (Explanation|Response):")
+def looks_like_code(line):
+    line = line.strip()
+
+    # ❌ Se è un comando terminale, NON è codice
+    if re.match(r'^(javac|java|python[0-9]*|pip|curl|wget|make|bash|sh|node|npm)\b', line):
+        return False
+
+    # ✅ Condizioni per cui lo consideriamo codice
+    return (
+        line.startswith("#include") or
+        line.startswith("def ") or
+        line.startswith("class ") or
+        line.startswith("import ") or
+        line.endswith(";") or
+        re.match(r'\w+\s*\(.*\)\s*{?', line) or
+        line.startswith("if ") or
+        line.startswith("for ") or
+        line.startswith("while ") or
+        line.startswith("return ")
+    )
+
+def find_trailing_comments(base_path, extensions=None, remove=False):
+    total_found = 0
+    total_removed = 0
 
     for root, _, files in os.walk(base_path):
         for file in files:
-            if any(file.endswith(ext) for ext in extensions):
+            if extensions is None or any(file.endswith(ext) for ext in extensions):
                 file_path = os.path.join(root, file)
                 try:
-                    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-                        content = f.read()
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        lines = f.readlines()
 
-                    match = pattern.search(content)
-                    if match:
-                        count += 1
-                        start_idx = match.start()
-                        explanation = content[start_idx:]
-                        explanations.append((file_path, explanation.strip()))
+                    new_lines = []
+                    in_block = False
+                    current_block = []
+                    keep_block = False
+                    removed_blocks_in_file = 0
 
-                        if print_found:
-                            print(f"\n{file_path}:\n{explanation.strip()}\n")
+                    for line in lines:
+                        stripped = line.strip()
 
-                        if remove:
-                            new_content = content[:start_idx].rstrip() + "\n"
-                            with open(file_path, 'w', encoding='utf-8') as f_out:
-                                f_out.write(new_content)
+                        if stripped.startswith("###"):
+                            if in_block:
+                                if not keep_block:
+                                    removed_blocks_in_file += 1
+                                    total_removed += 1
+                                else:
+                                    # ✅ Tieni solo il contenuto, rimuovi intestazione "### ..."
+                                    new_lines.extend(current_block[1:])
+
+                            in_block = True
+                            current_block = [line]
+                            keep_block = False  # azzera e valuta nel blocco
+                        elif in_block:
+                            current_block.append(line)
+                            if looks_like_code(line):
+                                keep_block = True
+                        else:
+                            new_lines.append(line)
+
+                    # Gestione blocco finale (se presente)
+                    if in_block:
+                        if keep_block:
+                            new_lines.extend(current_block[1:])
+                        else:
+                            removed_blocks_in_file += 1
+                            total_removed += 1
+
+                    if removed_blocks_in_file > 0:
+                        total_found += 1
+                        print(f"\n🗑️ Pulito {removed_blocks_in_file} blocco/i da: {file_path}")
+
+                    if remove and (removed_blocks_in_file > 0 or in_block):
+                        with open(file_path, "w", encoding="utf-8") as f_out:
+                            f_out.writelines(new_lines)
 
                 except Exception as e:
-                    print(f"Could not process file {file_path}: {e}")
+                    print(f"❌ Errore su {file_path}: {e}")
 
-    print(f"Total comments found: {count}")
-    return explanations
+    print(f"\n✅ File con blocchi rimossi: {total_found}")
+    print(f"🧹 Totale blocchi rimossi: {total_removed}")
+
 
 
 def change_file_extensions(base_folder, correct_extension):
@@ -368,17 +417,18 @@ class IntegrityCheck:
         self.permutation_folder = permutation_folder
         count_files_with_extension(snippets_folder, extension)
         count_empty_files(snippets_folder, extension)
-        find_llm_comments(snippets_folder, extension, remove=False)
+        find_trailing_comments(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
         validate_snippets_and_csv(snippets_folder, permutation_folder)
         print("\n----------------------------------------------------------------\n")
 
 
 class Cleaning:
-    def __init__(self, folder_to_clean):
-        self.folder_to_clean = folder_to_clean
-        change_file_extensions(folder_to_clean, extension)
-        find_llm_comments(folder_to_clean, extension, remove=True)
+    def __init__(self, snippets_folder):
+        self.folder_to_clean = snippets_folder
+        change_file_extensions(snippets_folder, extension)
+        find_trailing_comments(snippets_folder, extension, remove=True)
+        #find_llm_comments(folder_to_clean, extension, remove=True)
 
 
 
