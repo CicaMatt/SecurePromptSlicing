@@ -841,6 +841,7 @@ def create_formatted_folder(source_folder, destination_folder):
 
 ###################################################################################################################
 
+model_name = "codellama"
 
 class SecurityAnalysis:
     def __init__(self, commands):
@@ -855,7 +856,7 @@ class JavaPreprocessing:
 
         create_formatted_folder(folder1, folder2)
 
-        find_errors_java(folder2)
+        #find_errors_java(folder2)
         count_short_files(folder2)
         extract_unique_java_imports(folder2, exclude_java_standard=True)
 
@@ -943,7 +944,7 @@ class CPreprocessing:
         #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
         build_c_project(folder2, nested, mode="auto")
 
-
+"""
 example_commands = [
     # C folder cleaning
     r'cd data/prova_c && rm -f *.o vuln _codeql_detected_source_root',
@@ -968,6 +969,7 @@ example_commands = [
     r'codeql database analyze CodeQL/Databases/c_example_db --format=csv --output=results/results_c.csv codeql/cpp-queries --warnings=hide --rerun',
     r'codeql database analyze CodeQL/Databases/java_example_db --format=csv --output=results/results_java.csv codeql/java-queries --warnings=hide --rerun'
 ]
+"""
 
 # 1.6.0 last pack version
 command_set_baseline_analysis_py = [
@@ -975,16 +977,16 @@ command_set_baseline_analysis_py = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=generated_code/baseline_code_py --overwrite',
+    f'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=generated_code/{model_name}/baseline_code_py --overwrite',
 
     # Query update and configuration
     r'codeql pack download codeql/python-queries@1.6.0',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/json/results_py_baseline.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_py_baseline.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/baseline/results_py_baseline.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=results/{model_name}/baseline/results_py_baseline.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
 ]
 
 
@@ -993,16 +995,16 @@ command_set_result_analysis_py = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code/generated_code_py --overwrite',
+    f'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code/{model_name}/generated_code_py --overwrite',
 
     # Query download and installation for C/C++, Python and Java
     r'codeql pack download codeql/python-queries@1.6.0',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/{model_name}/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
 ]
 
 """
@@ -1027,19 +1029,19 @@ command_set_custom_queries_py = [
 # 1.6.0 last pack version, 1.5.2 used pack version
 command_set_baseline_analysis_java = [
     # Databases folder creation (if not exists)
-    #r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/baseline_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
+    f'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=generated_code/{model_name}/baseline_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/json/results_java_baseline.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_java_baseline.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/{model_name}/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
 
@@ -1048,16 +1050,16 @@ command_set_result_analysis_java = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code/generated_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
+    f'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=generated_code/{model_name}/generated_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
 
     # Query download and installation for Java
     r'codeql pack download codeql/java-queries@1.5.2',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/permutations/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/{model_name}/permutations/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
 
@@ -1068,16 +1070,16 @@ command_set_baseline_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/baseline_code_c_formatted --command="make -k" --overwrite',
+    f'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=generated_code/{model_name}/baseline_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries@1.4.3',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=sarifv2.1.0 --output=results/json/results_c_baseline.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/c_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_c_baseline.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/baseline/results_c_baseline.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=results/{model_name}/baseline/results_c_baseline.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
 ]
 
 
@@ -1086,29 +1088,31 @@ command_set_result_analysis_c = [
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
     # Database creation starting from code
-    r'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/generated_code_c_formatted --command="make -k" --overwrite',
+    f'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=generated_code/{model_name}/generated_code_c_formatted --command="make -k" --overwrite',
 
     # Query download and installation for C
     r'codeql pack download codeql/cpp-queries@1.4.3',
 
     # Database complete analysis for CWE match
-    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=sarifv2.1.0 --output=results/json/results_c.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/c_analysis_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_c.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/permutations/results_c.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
+    f'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=results/{model_name}/permutations/results_c.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
 ]
 
 
-java_baseline_folder = "generated_code/baseline_code_java"
-java_baseline_folder_formatted = "generated_code/baseline_code_java_formatted"
-java_folder = "generated_code/generated_code_java"
-java_folder_formatted = "generated_code/generated_code_java_formatted"
 
 
-c_baseline_folder = "generated_code/baseline_code_c"
-c_baseline_folder_formatted = "generated_code/baseline_code_c_formatted"
-c_folder = "generated_code/generated_code_c"
-c_folder_formatted = "generated_code/generated_code_c_formatted"
+java_baseline_folder = f"generated_code/{model_name}/baseline_code_java"
+java_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_java_formatted"
+java_folder = f"generated_code/{model_name}/generated_code_java"
+java_folder_formatted = f"generated_code/{model_name}/generated_code_java_formatted"
+
+
+c_baseline_folder = f"generated_code/{model_name}/baseline_code_c"
+c_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_c_formatted"
+c_folder = f"generated_code/{model_name}/generated_code_c"
+c_folder_formatted = f"generated_code/{model_name}/generated_code_c_formatted"
 
 
 #SecurityAnalysis(example_commands)
@@ -1123,7 +1127,7 @@ c_folder_formatted = "generated_code/generated_code_c_formatted"
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_c)
-#CPreprocessing(c_folder, c_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_c)
+CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_c)
+CPreprocessing(c_folder, c_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_c)

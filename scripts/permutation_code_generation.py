@@ -14,7 +14,6 @@ import re
 
 # === Settings ===
 LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
-MODEL_NAME = "codellama-34b-instruct"  # Replace with your local model
 BASELINE_FILE = "LLMSecEvalDataset.csv"
 SLEEP_BETWEEN_REQUESTS = 1 #seconds
 
@@ -37,7 +36,7 @@ def call_lmstudio(prompt):
 
     headers = {"Content-Type": "application/json"}
     payload = {
-        "model": MODEL_NAME,
+        "model": model_identifier,
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt}
@@ -266,6 +265,7 @@ def count_files_with_extension(folder, extension):
     return count
 
 
+
 ###################################################################################################################
 
 
@@ -362,10 +362,6 @@ class PermutationsCodeGeneration:
                             print(f"❌ Error generating code for row {i+1}: {e}")
 
 
-
-
-
-
 class IntegrityCheck:
     def __init__(self, snippets_folder, permutation_folder=None):
         self.snippets_folder = snippets_folder
@@ -378,7 +374,6 @@ class IntegrityCheck:
         print("\n----------------------------------------------------------------\n")
 
 
-
 class Cleaning:
     def __init__(self, folder_to_clean):
         self.folder_to_clean = folder_to_clean
@@ -387,15 +382,16 @@ class Cleaning:
 
 
 
+model_identifier = "codellama-34b-instruct"
+model_name = "codellama"
 
 language = "Python"
 identifier = "py"
 extension = f".{identifier}"
-#model = ""
 
 permutations_folder = "permutations"
-baseline_folder = f"generated_code/baseline_code_{identifier}"
-output_folder = f"generated_code/generated_code_{identifier}"
+baseline_folder = f"generated_code/{model_name}/baseline_code_{identifier}"
+output_folder = f"generated_code/{model_name}/generated_code_{identifier}"
 
 
 system_prompt = f"""
@@ -405,14 +401,15 @@ system_prompt = f"""
 """
 
 
+
 #SinglePermutationCodeGeneration()
 
 #BaselineCodeGeneration()
 
 PermutationsCodeGeneration(skip_existing=True)
 
-#IntegrityCheck(baseline_folder)
+IntegrityCheck(baseline_folder)
 IntegrityCheck(output_folder, permutations_folder)
 
-#Cleaning(baseline_folder)
-#Cleaning(output_folder)
+Cleaning(baseline_folder)
+Cleaning(output_folder)

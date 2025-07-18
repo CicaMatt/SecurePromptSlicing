@@ -1294,27 +1294,29 @@ def check_cwe_match(csv_path, folder_path):
 ##################################################################################################################
 
 
-language = "Java"
-language_identifier = "java"
+model_name = "codellama"
+
+language = "Python"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
 
-baseline_snippets_folder = f'generated_code/baseline_code_{language_identifier}'
-permutations_snippets_folder = f'generated_code/generated_code_{language_identifier}'
+baseline_snippets_folder = f'generated_code/{model_name}/baseline_code_{language_identifier}'
+permutations_snippets_folder = f'generated_code/{model_name}/generated_code_{language_identifier}'
 
-baseline_json = f'results/json/results_{language_identifier}_baseline.sarif.json'
-result_json = f'results/json/results_{language_identifier}.sarif.json'
+baseline_json = f'results/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
+result_json = f'results/{model_name}/json/results_{language_identifier}.sarif.json'
 
-results_raw = f'results/permutations/results_{language_identifier}.csv'
-results = f'results/permutations/results_{language_identifier}_complete.csv'
-results_baseline_raw = f'results/baseline/results_{language_identifier}_baseline.csv'
-results_baseline = f'results/baseline/results_{language_identifier}_baseline_complete.csv'
+results_raw = f'results/{model_name}/permutations/results_{language_identifier}.csv'
+results = f'results/{model_name}/permutations/results_{language_identifier}_complete.csv'
+results_baseline_raw = f'results/{model_name}/baseline/results_{language_identifier}_baseline.csv'
+results_baseline = f'results/{model_name}/baseline/results_{language_identifier}_baseline_complete.csv'
 
-comparison_single_metrics = f'results/comparison/single_metrics_comparison_{language_identifier}.csv'
-comparison_combined_metrics = f'results/comparison/combined_metrics_comparison_{language_identifier}.csv'
-comparison_baseline_cwes = f'results/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-comparison_permutations_cwes = f'results/comparison/permutations_cwes_comparison_{language_identifier}.csv'
+comparison_single_metrics = f'results/{model_name}/comparison/single_metrics_comparison_{language_identifier}.csv'
+comparison_combined_metrics = f'results/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
+comparison_baseline_cwes = f'results/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
+comparison_permutations_cwes = f'results/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
 
 
 #result_py_complete = 'results/permutations/results_py_standardpack.csv'
