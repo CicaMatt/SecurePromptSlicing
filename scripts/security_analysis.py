@@ -843,107 +843,6 @@ def create_formatted_folder(source_folder, destination_folder):
 
 model_name = "codellama"
 
-class SecurityAnalysis:
-    def __init__(self, commands):
-        run_sh_commands(commands)
-
-
-class JavaPreprocessing:
-    def __init__(self, folder1, folder2, nested):
-        self.folder1 = folder1
-        self.folder2 = folder2
-        self.nested = nested
-
-        create_formatted_folder(folder1, folder2)
-
-        #find_errors_java(folder2)
-        count_short_files(folder2)
-        extract_unique_java_imports(folder2, exclude_java_standard=True)
-
-        # Incapsula tutto il codice all'interno di una classe Java wrapper unica
-        #wrap_inside_class(folder2)
-        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
-        create_maven_structure(folder2, nested=nested, with_imports=True)
-        # Rinomina le varie classi e i relativi file in modo da avere tutte classi univoche che non impattano il processo di compilazione maven
-        rename_classes_uniquely(folder2)
-
-
-
-class CPreprocessing:
-    def __init__(self, folder1, folder2, nested):
-        self.folder1 = folder1
-        self.folder2 = folder2
-        self.nested = nested
-
-        STANDARD_C_FUNCTIONS = {
-            "assert.h": {"assert"},
-            "ctype.h": {
-                "isalnum", "isalpha", "isascii", "iscntrl", "isdigit", "isgraph",
-                "islower", "isprint", "ispunct", "isspace", "isupper", "isxdigit",
-                "tolower", "toupper"
-            },
-            "errno.h": {"errno"},
-            "float.h": set(),  # solo macro/costanti
-            "limits.h": set(),  # solo macro/costanti
-            "locale.h": {"setlocale", "localeconv"},
-            "math.h": {
-                "acos", "asin", "atan", "atan2", "cos", "sin", "tan", "cosh", "sinh", "tanh",
-                "exp", "frexp", "ldexp", "log", "log10", "modf", "pow", "sqrt", "ceil",
-                "fabs", "floor", "fmod", "isnan", "isinf", "isfinite"
-            },
-            "setjmp.h": {"setjmp", "longjmp"},
-            "signal.h": {"signal", "raise"},
-            "stdarg.h": {"va_start", "va_arg", "va_end", "va_copy"},
-            "stddef.h": set(),  # solo macro/tipi
-            "stdio.h": {
-                "printf", "fprintf", "sprintf", "snprintf", "scanf", "fscanf", "sscanf",
-                "vprintf", "vfprintf", "vsprintf", "fopen", "fclose", "fflush", "fgetc",
-                "fgets", "fputc", "fputs", "fread", "fwrite", "fseek", "ftell", "rewind",
-                "feof", "ferror", "clearerr", "perror", "getchar", "putchar", "gets",
-                "puts", "remove", "rename", "tmpfile", "tmpnam", "setbuf", "setvbuf"
-            },
-            "stdlib.h": {
-                "malloc", "calloc", "realloc", "free", "abort", "exit", "atexit",
-                "system", "getenv", "atoi", "atol", "atof", "strtod", "strtol", "strtoul",
-                "rand", "srand", "bsearch", "qsort", "abs", "labs", "div", "ldiv"
-            },
-            "string.h": {
-                "memcpy", "memmove", "strcpy", "strncpy", "strcat", "strncat",
-                "memcmp", "strcmp", "strncmp", "strcoll", "strxfrm", "memchr", "strchr",
-                "strcspn", "strpbrk", "strrchr", "strspn", "strstr", "strtok", "strlen",
-                "strerror"
-            },
-            "time.h": {
-                "clock", "time", "difftime", "mktime", "asctime", "ctime",
-                "gmtime", "localtime", "strftime"
-            },
-            "complex.h": {
-                "cabs", "cacos", "cacosh", "carg", "casin", "casinh", "catan",
-                "catanh", "ccos", "ccosh", "cexp", "cimag", "clog", "conj",
-                "cpow", "cproj", "creal", "csin", "csinh", "csqrt", "ctan", "ctanh"
-            },
-            "fenv.h": {
-                "feclearexcept", "fegetexceptflag", "feraiseexcept", "fesetexceptflag",
-                "fetestexcept", "fegetround", "fesetround", "fegetenv", "fesetenv"
-            },
-            "inttypes.h": {
-                "imaxabs", "imaxdiv", "strtoimax", "strtoumax", "wcstoimax", "wcstoumax"
-            },
-            "stdbool.h": set(),  # solo macro/tipi (true, false, bool)
-            "stdint.h": set(),  # solo tipi (int32_t ecc.)
-            "tgmath.h": set(),  # macro generiche (non funzioni reali)
-            "stdalign.h": set(),  # macro (_Alignof ecc.)
-            "stdatomic.h": set(),  # macro e tipi per operazioni atomiche
-            "stdnoreturn.h": set(),  # solo macro (_Noreturn)
-        }
-
-        create_formatted_folder(folder1, folder2)
-
-        find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
-
-        #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
-        build_c_project(folder2, nested, mode="auto")
-
 """
 example_commands = [
     # C folder cleaning
@@ -1102,6 +1001,118 @@ command_set_result_analysis_c = [
 
 
 
+class SecurityAnalysis:
+    def __init__(self, commands):
+        run_sh_commands(commands)
+
+
+class PythonPreprocessing:
+    def __init__(self, folder):
+        self.folder = folder
+        count_short_files(folder)
+
+
+class JavaPreprocessing:
+    def __init__(self, folder1, folder2, nested):
+        self.folder1 = folder1
+        self.folder2 = folder2
+        self.nested = nested
+
+        create_formatted_folder(folder1, folder2)
+
+        #find_errors_java(folder2)
+        count_short_files(folder2)
+        extract_unique_java_imports(folder2, exclude_java_standard=True)
+
+        # Incapsula tutto il codice all'interno di una classe Java wrapper unica
+        #wrap_inside_class(folder2)
+        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
+        create_maven_structure(folder2, nested=nested, with_imports=True)
+        # Rinomina le varie classi e i relativi file in modo da avere tutte classi univoche che non impattano il processo di compilazione maven
+        rename_classes_uniquely(folder2)
+
+
+
+class CPreprocessing:
+    def __init__(self, folder1, folder2, nested):
+        self.folder1 = folder1
+        self.folder2 = folder2
+        self.nested = nested
+
+        STANDARD_C_FUNCTIONS = {
+            "assert.h": {"assert"},
+            "ctype.h": {
+                "isalnum", "isalpha", "isascii", "iscntrl", "isdigit", "isgraph",
+                "islower", "isprint", "ispunct", "isspace", "isupper", "isxdigit",
+                "tolower", "toupper"
+            },
+            "errno.h": {"errno"},
+            "float.h": set(),  # solo macro/costanti
+            "limits.h": set(),  # solo macro/costanti
+            "locale.h": {"setlocale", "localeconv"},
+            "math.h": {
+                "acos", "asin", "atan", "atan2", "cos", "sin", "tan", "cosh", "sinh", "tanh",
+                "exp", "frexp", "ldexp", "log", "log10", "modf", "pow", "sqrt", "ceil",
+                "fabs", "floor", "fmod", "isnan", "isinf", "isfinite"
+            },
+            "setjmp.h": {"setjmp", "longjmp"},
+            "signal.h": {"signal", "raise"},
+            "stdarg.h": {"va_start", "va_arg", "va_end", "va_copy"},
+            "stddef.h": set(),  # solo macro/tipi
+            "stdio.h": {
+                "printf", "fprintf", "sprintf", "snprintf", "scanf", "fscanf", "sscanf",
+                "vprintf", "vfprintf", "vsprintf", "fopen", "fclose", "fflush", "fgetc",
+                "fgets", "fputc", "fputs", "fread", "fwrite", "fseek", "ftell", "rewind",
+                "feof", "ferror", "clearerr", "perror", "getchar", "putchar", "gets",
+                "puts", "remove", "rename", "tmpfile", "tmpnam", "setbuf", "setvbuf"
+            },
+            "stdlib.h": {
+                "malloc", "calloc", "realloc", "free", "abort", "exit", "atexit",
+                "system", "getenv", "atoi", "atol", "atof", "strtod", "strtol", "strtoul",
+                "rand", "srand", "bsearch", "qsort", "abs", "labs", "div", "ldiv"
+            },
+            "string.h": {
+                "memcpy", "memmove", "strcpy", "strncpy", "strcat", "strncat",
+                "memcmp", "strcmp", "strncmp", "strcoll", "strxfrm", "memchr", "strchr",
+                "strcspn", "strpbrk", "strrchr", "strspn", "strstr", "strtok", "strlen",
+                "strerror"
+            },
+            "time.h": {
+                "clock", "time", "difftime", "mktime", "asctime", "ctime",
+                "gmtime", "localtime", "strftime"
+            },
+            "complex.h": {
+                "cabs", "cacos", "cacosh", "carg", "casin", "casinh", "catan",
+                "catanh", "ccos", "ccosh", "cexp", "cimag", "clog", "conj",
+                "cpow", "cproj", "creal", "csin", "csinh", "csqrt", "ctan", "ctanh"
+            },
+            "fenv.h": {
+                "feclearexcept", "fegetexceptflag", "feraiseexcept", "fesetexceptflag",
+                "fetestexcept", "fegetround", "fesetround", "fegetenv", "fesetenv"
+            },
+            "inttypes.h": {
+                "imaxabs", "imaxdiv", "strtoimax", "strtoumax", "wcstoimax", "wcstoumax"
+            },
+            "stdbool.h": set(),  # solo macro/tipi (true, false, bool)
+            "stdint.h": set(),  # solo tipi (int32_t ecc.)
+            "tgmath.h": set(),  # macro generiche (non funzioni reali)
+            "stdalign.h": set(),  # macro (_Alignof ecc.)
+            "stdatomic.h": set(),  # macro e tipi per operazioni atomiche
+            "stdnoreturn.h": set(),  # solo macro (_Noreturn)
+        }
+
+        create_formatted_folder(folder1, folder2)
+
+        count_short_files(folder2)
+
+        find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
+
+        #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
+        build_c_project(folder2, nested, mode="auto")
+
+
+python_baseline_folder = f"generated_code/{model_name}/baseline_code_python"
+python_folder = f"generated_code/{model_name}/generated_code_python"
 
 java_baseline_folder = f"generated_code/{model_name}/baseline_code_java"
 java_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_java_formatted"
@@ -1122,12 +1133,12 @@ c_folder_formatted = f"generated_code/{model_name}/generated_code_c_formatted"
 #SecurityAnalysis(command_set_baseline_analysis_py)
 #SecurityAnalysis(command_set_result_analysis_py)
 
-#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_java)
-#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_java)
+JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
 
-CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_c)
-CPreprocessing(c_folder, c_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_c)
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_c)
+#CPreprocessing(c_folder, c_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_c)
