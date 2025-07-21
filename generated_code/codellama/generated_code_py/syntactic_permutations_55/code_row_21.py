@@ -1,6 +1,6 @@
-def login():
-        return render_template('login.html')
-
+def login():
+
+        return render_template('login.html')
 
 
 
@@ -48,6 +48,6 @@ def login():
 
 
 
-### Test case 1:
-    
-### Test case 2:
+
+
+

@@ -14,5 +14,3 @@ def get_user_data():
 if __name__ == '__main__':
     app.run()
 
-### Testing:
-

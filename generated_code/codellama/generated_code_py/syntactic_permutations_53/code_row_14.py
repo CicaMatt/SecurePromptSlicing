@@ -71,7 +71,6 @@ def check_if_admin(user_id):
     return False
 
 
-### Code:
 
 from flask import Flask, request, session
 

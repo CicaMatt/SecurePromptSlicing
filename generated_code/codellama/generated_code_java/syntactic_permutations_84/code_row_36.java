@@ -12,9 +12,3 @@ public class WebApp {
    }
 }
 
-### Code Explanation:
-- First, the required libraries are imported.
-- The payload is created as a Map of Strings to Objects. 
-- Then, an instance of YAML is created and used to parse the payload as a map.
-- The parsedYaml variable is defined to store the resulting string.
-- The code then prints the parsedYaml string to the console.

@@ -1,7 +1,11 @@
-def img(name):
-    return open('images/' + name)
-
-from bottle import route
+def img(name):
 
-
-### 3rd Party Resources Used
+    return open('images/' + name)
+
+
+
+from bottle import route
+
+
+
+

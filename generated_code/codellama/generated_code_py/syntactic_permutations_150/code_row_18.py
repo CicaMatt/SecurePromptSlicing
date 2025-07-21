@@ -17,7 +17,6 @@ def post():
     insert_user_message_in_db(username, message)
     return redirect(url_for('index'))
 
-### Code:
 
 from flask import Flask, redirect, request, url_for
 import sqlite3 as sql

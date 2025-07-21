@@ -1,5 +1,4 @@
 
-### Code:
 
 from flask import Flask, request, session, url_for, flash, redirect, render_template
 app = Flask(__name__)

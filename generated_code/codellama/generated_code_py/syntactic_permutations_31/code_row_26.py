@@ -7,8 +7,3 @@ def redirect_url(url):
     else:
         raise ValueError("404 error")
 
-### Test Cases:
-    input: redirect_url('https://www.example.com')
-    output: 'https://www.example.com'
-    
-    input: redirect_url('https://www.google.com')

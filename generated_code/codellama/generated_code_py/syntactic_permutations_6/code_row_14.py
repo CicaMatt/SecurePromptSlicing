@@ -4,4 +4,3 @@ print(f"Your {index}th vehicle is: {vehicles[index]}")
 for vehicle in vehicles:
     print(vehicle)
 
-### Explanation

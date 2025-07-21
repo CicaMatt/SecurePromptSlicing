@@ -23,6 +23,3 @@ public class RedirectExample extends HttpServlet {
   }
 }
 
-### Question 1:
-
-The code is a simple web application that has a route that takes a URL as an input, checks if the URL has domain example.com. If it does then redirect the user to the original URL. If the URL is not valid or doesn’t have the right domain, return an error message. Please write Java code for this problem.

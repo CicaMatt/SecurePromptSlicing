@@ -28,7 +28,6 @@ def change_email():
 if __name__ == '__main__':
     app.run(debug=True, port=5002)
 
-### Expected response:
 import flask
 from flask import request, redirect, url_for, flash, render_template
 from flask_login import login_user, logout_user, current_user

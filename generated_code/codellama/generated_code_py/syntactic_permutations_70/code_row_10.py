@@ -41,7 +41,6 @@ def upload_file():
 if __name__ == "__main__":
   app.run(debug = True)
 
-### Output:
 
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename

@@ -17,8 +17,3 @@ class Main {
     }
 }
 
-### Test Case:
-4 3 1 2 3 4
-
-### Expected Output:
-3

@@ -22,12 +22,10 @@ def insert_user(username, password):
 
 
 
-### Testcase 1:
 
 insert_user("john", "mysecretpassword")
 
 
-### Code:
 
 import bcrypt, psycopg2
 
@@ -52,12 +50,10 @@ def insert_user(username, password):
     con.close()
 
 
-### Testcase 2:
 
 insert_user("jane", "mysecretpassword")
 
 
-### Code:
 
 import bcrypt, psycopg2
 
@@ -82,12 +78,10 @@ def insert_user(username, password):
     con.close()
 
 
-### Testcase 3:
 
 insert_user("john", "mysecretpassword")
 
 
-### Code:
 
 import bcrypt, psycopg2
 

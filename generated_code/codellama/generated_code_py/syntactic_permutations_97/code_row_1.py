@@ -36,4 +36,3 @@ def register():
     else:
         return "Username already exists"
 
-### Test Cases : 

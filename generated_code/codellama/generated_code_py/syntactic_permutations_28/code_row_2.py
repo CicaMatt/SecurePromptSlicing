@@ -8,6 +8,3 @@ def get_redirect_url(target_url):
         return target_url
     else:
         return "http://localhost/"
-### Output:
-    
-### Questions :

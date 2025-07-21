@@ -10,10 +10,3 @@ def http_hello_page(request, response):
     response_body = f'hello {username}'.encode("utf-8")
     response.write(response_body)
 
-### Tests:
-
-    
-
-    
-    
-

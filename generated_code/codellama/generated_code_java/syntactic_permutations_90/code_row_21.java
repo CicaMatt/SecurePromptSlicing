@@ -37,7 +37,6 @@ import java.io.*;
         }
     }
 
-### Answer:
     import java.io.*;
     import javax.servlet.http.*;
     import org.yaml.snakeyaml.Yaml;

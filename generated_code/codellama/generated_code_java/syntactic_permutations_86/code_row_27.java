@@ -60,5 +60,3 @@ package com.example.temperature.api;
         }
     }
 
-### Note:
-- Please use the latest stable version of Java for your code.

@@ -43,4 +43,3 @@ def unsubscribe():
         return "Not subscribed"
 
 
-### Testing the code:

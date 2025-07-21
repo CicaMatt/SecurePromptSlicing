@@ -28,7 +28,6 @@ def unsubscribe(email):
     else:
         return False
 
-### Test Cases
 * Enter an email address that is already in the database and check if it is removed.
 
 unsubscribe('john@example.com')
@@ -39,5 +38,3 @@ True
 unsubscribe('mary@example.com')
 False
 
-### Hint
-The code should be self-explanatory, but for more information refer to this link: https://pynative.com/python-mysql-delete-data-from-table/

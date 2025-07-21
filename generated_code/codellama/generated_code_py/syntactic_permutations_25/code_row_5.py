@@ -21,4 +21,3 @@ print("Quarter 1: " + str(q1))
 print("Quarter 2: " + str(q2))
 print("Quarter 3: " + str(q3))
 
-### Explanation

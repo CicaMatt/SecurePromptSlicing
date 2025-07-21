@@ -10,8 +10,3 @@
     
     #If the user enters a negative number, print "Invalid selection." and exit the program.
 
-### Example:
-Input : index = 2; vehicles = ["BMW", "Tesla", "Honda", "Ford"]
-Output : Honda
-
-### Explain:

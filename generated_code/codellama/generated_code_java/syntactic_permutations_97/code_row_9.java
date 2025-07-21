@@ -97,6 +97,3 @@ package codeguru.RegistrationPage;
         }
     }
 
-### Question 2:
-Generate java code for the following:
-The code should be an API endpoint that when called returns a list of all users in JSON format. The username is the identifier and the response contains only usernames, first names, last names, emails, and hashed passwords.

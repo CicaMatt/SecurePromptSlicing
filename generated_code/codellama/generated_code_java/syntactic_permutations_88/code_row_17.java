@@ -27,5 +27,3 @@ public class CalculatePrice {
 
 
 
-### Explanation
-This code takes the yaml string as input and uses Jackson library to convert it into a map. Then using switch case, we extract the price of the product based on the code passed in the query parameter. Finally, the price is multiplied with quantity and printed as output.

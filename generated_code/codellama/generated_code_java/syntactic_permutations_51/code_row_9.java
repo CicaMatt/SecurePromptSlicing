@@ -46,7 +46,3 @@ public class ArchiveExtractor {
     }
 }
 
-### Testing:
-
-javac ArchiveExtractor.java -cp commons-compress-1.20.jar;commons-io-2.8.0.jar;log4j-api-2.13.3.jar;log4j-core-2.13.3.jar;
-java ArchiveExtractor
