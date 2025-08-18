@@ -1,0 +1,29 @@
+from flask import Flask, request, redirect, url_for
+
+app = Flask(__name__)
+
+# Simulating a database with a dictionary
+users_db = {
+    'user1': 'password1',
+    'user2': 'password2'
+}
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    
+    if username in users_db:
+        if users_db[username] == password:
+            return redirect(url_for('home'))
+        else:
+            return "Incorrect password"
+    else:
+        return "Username not found"
+
+@app.route('/home')
+def home():
+    return "Welcome to the Home Page!"
+
+if __name__ == '__main__':
+    app.run(debug=True)

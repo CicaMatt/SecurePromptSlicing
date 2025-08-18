@@ -1,0 +1,26 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.regex.Pattern;
+
+@SpringBootApplication
+public class RedirectApplication {
+
+    private static final Pattern URL_PATTERN = Pattern.compile("https?://.*example\\.com(/.*)?");
+
+    public static void main(String[] args) {
+        SpringApplication.run(RedirectApplication.class, args);
+    }
+
+    @GetMapping("/redirect")
+    public RedirectView redirect(@RequestParam String target) {
+        if (URL_PATTERN.matcher(target).matches()) {
+            return new RedirectView(target);
+        } else {
+            return new RedirectView("https://example.com");
+        }
+    }
+}

@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/ping")
+public class PingServlet extends HttpServlet {
+    private String url = "www.example.com"; // Change this to the desired URL
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/plain");
+
+        try {
+            Process process = Runtime.getRuntime().exec("ping -c 4 " + url);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.getWriter().println(line);
+            }
+            reader.close();
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred: " + e.getMessage());
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+
+
+To run this code in a Java web application:
+1. Ensure you have a servlet container like Apache Tomcat.
+2. Place the `PingServlet` class into your project's source directory.
+3. Update your web.xml or use annotations (as shown) to map the servlet to the desired URL pattern.
+4. Deploy the application on the servlet container and access it via `<server-context-root>/ping`.

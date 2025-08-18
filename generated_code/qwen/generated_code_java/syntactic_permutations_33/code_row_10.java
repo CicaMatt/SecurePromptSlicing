@@ -1,0 +1,24 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+@SpringBootApplication
+@RestController
+public class WebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
+    }
+
+    @GetMapping("/redirect")
+    public ResponseEntity<String> redirect_invalid_url(@RequestParam String url) {
+        if (url.contains("example.com")) {
+            return ResponseEntity.status(302).header("Location", url).build();
+        } else {
+            return ResponseEntity.badRequest().body("Error: Invalid URL");
+        }
+    }
+}

@@ -1,0 +1,69 @@
+from flask import Flask, request, redirect, url_for
+import sqlite3
+
+app = Flask(__name__)
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        try:
+            conn = get_db_connection()
+            user = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', 
+                                (username, password)).fetchone()
+            conn.close()
+
+            if user is not None:
+                return redirect(url_for('success'))
+            else:
+                return redirect(url_for('cant_login'))
+
+        except Exception as e:
+            print(e)  # For debugging purposes in a real application, log this error.
+            return redirect(url_for('internal_server_error'))
+
+    return '''
+        <form method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Login">
+        </form>
+    '''
+
+@app.route('/success')
+def success():
+    return 'Login Successful!'
+
+@app.route('/cant_login')
+def cant_login():
+    return 'Cannot Login. Invalid credentials.'
+
+@app.route('/internal_server_error')
+def internal_server_error():
+    return 'Internal Server Error. Please try again later.'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+Make sure to create a SQLite database `database.db` with a table named `users` having columns `username` and `password`. You can create this using the following commands in Python:
+
+
+import sqlite3
+
+conn = sqlite3.connect('database.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE users (username text, password text)''')
+
+# Add sample user
+c.execute("INSERT INTO users (username, password) VALUES ('testuser', 'password123')")
+
+conn.commit()
+conn.close()

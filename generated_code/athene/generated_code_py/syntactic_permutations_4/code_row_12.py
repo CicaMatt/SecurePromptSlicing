@@ -1,0 +1,1 @@
+index = int(input("Enter the index of a vehicle: "))

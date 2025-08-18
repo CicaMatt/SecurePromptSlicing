@@ -1,0 +1,11 @@
+vehicles = ["Car", "Bike", "Truck", "Motorcycle", "Bus"]
+
+index_input = input("Enter the index of a vehicle: ")
+try:
+    index = int(index_input)
+    if 0 <= index < len(vehicles):
+        print(vehicles[index])
+    else:
+        print("Index out of range.")
+except ValueError:
+    print("Please enter a valid integer.")

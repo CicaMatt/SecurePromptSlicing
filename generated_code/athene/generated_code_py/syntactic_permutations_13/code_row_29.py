@@ -1,0 +1,20 @@
+def get_value_at_index(index):
+    values = [10, 20, 30, 40, 50]
+    if 0 <= index < len(values):
+        return values[index]
+    else:
+        return None
+
+def main():
+    try:
+        index = int(input("Enter an index: "))
+        value = get_value_at_index(index)
+        if value is not None:
+            print(f"The value at index {index} is: {value}")
+        else:
+            print(f"Index {index} is out of bounds.")
+    except ValueError:
+        print("Please enter a valid integer.")
+
+if __name__ == "__main__":
+    main()

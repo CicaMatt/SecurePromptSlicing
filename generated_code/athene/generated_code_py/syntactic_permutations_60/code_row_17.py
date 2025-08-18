@@ -1,0 +1,17 @@
+import sys
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python3 script.py <buffer_size>")
+        return
+    
+    try:
+        buffer_size = int(sys.argv[1])
+    except ValueError:
+        print("Please provide a valid integer for buffer size.")
+        return
+
+    buffer = bytearray(buffer_size)
+    print(".")
+
+main()

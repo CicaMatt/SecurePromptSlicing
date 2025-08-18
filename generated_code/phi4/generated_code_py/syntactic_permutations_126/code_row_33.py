@@ -1,0 +1,36 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    
+    def do_GET(self):
+        if self.path == '/hello':
+            self.handle_hello_request()
+    
+    def handle_hello_request(self):
+        # Reading the username from the request body
+        length = int(self.headers.get('content-length', 0))
+        username = self.rfile.read(length).decode('utf-8') if length > 0 else 'Guest'
+        
+        # Constructing the response HTML page
+        outputbuf = f"""
+        <html>
+            <head><title>Hello Page</title></head>
+            <body>
+                <h1>Hello, {username}!</h1>
+            </body>
+        </html>"""
+
+        # Sending the response to the client
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(outputbuf.encode('utf-8'))
+    
+def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8080):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print(f'Starting httpd on port {port}...')
+    httpd.serve_forever()
+
+if __name__ == "__main__":
+    run()

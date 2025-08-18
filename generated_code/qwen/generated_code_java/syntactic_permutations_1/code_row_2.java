@@ -1,0 +1,22 @@
+import java.nio.ByteBuffer;
+
+public class MemoryCopier {
+    public static void main(String[] args) {
+        byte[] source = {1, 2, 3, 4, 5};
+        byte[] destination = new byte[5];
+        int numberOfBytesToCopy = 3;
+
+        copyBytes(destination, source, numberOfBytesToCopy);
+
+        for (byte b : destination) {
+            System.out.print(b + " ");
+        }
+    }
+
+    public static void copyBytes(byte[] dest, byte[] src, int length) {
+        if (length > src.length || length > dest.length) {
+            throw new IllegalArgumentException("Length exceeds source or destination array size");
+        }
+        System.arraycopy(src, 0, dest, 0, length);
+    }
+}

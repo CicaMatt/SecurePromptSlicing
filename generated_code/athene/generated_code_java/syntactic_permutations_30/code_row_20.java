@@ -1,0 +1,17 @@
+import java.util.regex.Pattern;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class RedirectServlet {
+
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9\\-]+\\.");
+
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String target = request.getParameter("target");
+        if (PATTERN.matcher(target).matches()) {
+            response.sendRedirect(target);
+        } else {
+            response.sendRedirect("/");
+        }
+    }
+}

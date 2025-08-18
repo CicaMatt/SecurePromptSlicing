@@ -1,0 +1,13 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/get_name', methods=['POST'])
+def get_name():
+    data = request.get_json()
+    if 'name' in data:
+        return jsonify({'name': data['name']})
+    return jsonify({'error': 'Name field not found'}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)

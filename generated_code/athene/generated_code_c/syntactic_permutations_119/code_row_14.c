@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char string[50], string2[50], string3[50];
+    float num1, num2, num3;
+
+    num1 = (float)rand() / RAND_MAX;
+    num2 = (float)rand() / RAND_MAX;
+    num3 = (float)rand() / RAND_MAX;
+
+    snprintf(string, sizeof(string), "%f", num1);
+    snprintf(string2, sizeof(string2), "%f", num2);
+    snprintf(string3, sizeof(string3), "%f", num3);
+
+    return 0;
+}

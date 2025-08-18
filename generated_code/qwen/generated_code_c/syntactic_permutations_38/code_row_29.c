@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_USERNAME_LENGTH 50
+#define MAX_PASSWORD_LENGTH 50
+
+int authenticate(const char *username, const char *password) {
+    // Dummy authentication logic for demonstration purposes
+    if (strcmp(username, "admin") == 0 && strcmp(password, "password123") == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+void displayLoginPage() {
+    printf("Login Page\n");
+    printf("Enter username: ");
+    char username[MAX_USERNAME_LENGTH];
+    fgets(username, MAX_USERNAME_LENGTH, stdin);
+    username[strcspn(username, "\n")] = '\0'; // Remove newline character
+
+    printf("Enter password: ");
+    char password[MAX_PASSWORD_LENGTH];
+    fgets(password, MAX_PASSWORD_LENGTH, stdin);
+    password[strcspn(password, "\n")] = '\0'; // Remove newline character
+
+    if (authenticate(username, password)) {
+        displayDashboard();
+    } else {
+        printf("Invalid username or password. Please try again.\n");
+        displayLoginPage();
+    }
+}
+
+void displayDashboard() {
+    printf("Welcome to the Dashboard!\n");
+}
+
+int main() {
+    displayLoginPage();
+    return 0;
+}

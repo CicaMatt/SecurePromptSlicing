@@ -1,0 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char cmd[1024];
+    snprintf(cmd, sizeof(cmd), "ls");
+    system(cmd);
+    return 0;
+}

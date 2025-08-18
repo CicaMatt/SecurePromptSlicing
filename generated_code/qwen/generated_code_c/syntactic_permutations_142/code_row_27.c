@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <mysql/mysql.h>
+
+#define DB_HOST "localhost"
+#define DB_USER "your_username"
+#define DB_PASS "your_password"
+#define DB_NAME "your_database"
+
+void unsubscribe(const char *email) {
+    MYSQL *conn;
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    conn = mysql_init(NULL);
+    if (!mysql_real_connect(conn, DB_HOST, DB_USER, DB_PASS, DB_NAME, 0, NULL, 0)) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        exit(1);
+    }
+
+    char query[256];
+    snprintf(query, sizeof(query), "DELETE FROM subscribers WHERE email='%s'", email);
+
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+    } else {
+        printf("Email %s has been unsubscribed.\n", email);
+    }
+
+    mysql_close(conn);
+}
+
+int main() {
+    char email[100];
+
+    printf("Enter your email address to unsubscribe: ");
+    if (fgets(email, sizeof(email), stdin) != NULL) {
+        // Remove newline character from input
+        size_t len = strlen(email);
+        if (len > 0 && email[len - 1] == '\n') {
+            email[len - 1] = '\0';
+        }
+        unsubscribe(email);
+    }
+
+    return 0;
+}

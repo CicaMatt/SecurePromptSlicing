@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <mysql.h>
+
+void buy_function(const char *stock_name) {
+    // Simulate buying a stock
+    printf("Buying stock: %s\n", stock_name);
+}
+
+void buy_stock(const char *stock_name, int quantity) {
+    MYSQL *conn;
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+
+    conn = mysql_init(NULL);
+
+    if (!mysql_real_connect(conn, "localhost", "user", "password", 
+            "database_name", 0, NULL, 0)) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        exit(1);
+    }
+
+    char query[256];
+    snprintf(query, sizeof(query), "INSERT INTO stocks (name, quantity) VALUES ('%s', %d)", stock_name, quantity);
+
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        exit(1);
+    }
+
+    buy_function(stock_name);
+
+    mysql_close(conn);
+}
+
+int main() {
+    const char *stock_name = "AAPL";
+    int quantity = 10;
+
+    buy_stock(stock_name, quantity);
+
+    return 0;
+}

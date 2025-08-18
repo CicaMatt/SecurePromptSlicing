@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class UserIdCommand {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java UserIdCommand <username>");
+            return;
+        }
+        
+        String username = args[0];
+        Process process = null;
+        try {
+            process = Runtime.getRuntime().exec("id " + username);
+            int exitStatus = process.waitFor();
+            System.out.println("Exit status: " + exitStatus);
+        } catch (Exception e) {
+            if (process != null) {
+                process.destroy();
+            }
+            e.printStackTrace();
+        }
+    }
+}

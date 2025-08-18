@@ -1,0 +1,73 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.io.Console;
+
+public class RegistrationForm {
+    
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database";
+    private static final String USER = "your_username";
+    private static final String PASS = "your_password";
+
+    public static void main(String[] args) throws NoSuchAlgorithmException, SQLException {
+        Console console = System.console();
+        if (console == null) {
+            System.err.println("No console available");
+            return;
+        }
+
+        System.out.print("Enter username: ");
+        String username = console.readLine();
+
+        System.out.print("Enter password: ");
+        char[] password = console.readPassword();
+
+        Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+        byte[] salt = generateSalt();
+        String hashedPasswordWithSalt = hashPassword(password, salt);
+
+        storeUserCredentials(conn, username, hashedPasswordWithSalt, Base64.getEncoder().encodeToString(salt));
+
+        conn.close();
+    }
+
+    private static byte[] generateSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
+    }
+
+    private static String hashPassword(char[] password, byte[] salt) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(salt);
+
+        byte[] hashedPassword = md.digest(new String(password).getBytes());
+
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashedPassword) {
+            sb.append(String.format("%02x", b));
+        }
+
+        return salt.length + ":" + sb.toString() + ":" + Base64.getEncoder().encodeToString(salt);
+    }
+
+    private static void storeUserCredentials(Connection conn, String username, String hashedPasswordWithSalt, String base64EncodedSalt)
+            throws SQLException {
+        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, hashedPasswordWithSalt);
+            pstmt.executeUpdate();
+        }
+    }
+}
+
+
+Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, user name, and password. You will also need a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR) in your MySQL database for this code to work correctly. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

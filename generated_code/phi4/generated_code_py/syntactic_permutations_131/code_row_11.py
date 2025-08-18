@@ -1,0 +1,27 @@
+from jinja2 import Environment, FileSystemLoader
+from flask import Flask, request
+
+app = Flask(__name__)
+
+# Setup Jinja2 environment
+env = Environment(loader=FileSystemLoader('templates'))
+
+def render_response_from_env(env):
+    name = request.args.get('name', 'World')
+    template = env.get_template('greeting.html')
+    rendered_template = template.render(name=name)
+    return f"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'></head><body>{rendered_template}</body></html>"
+
+@app.route('/')
+def home():
+    response = render_response_from_env(env)
+    return response
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+Make sure you have a `templates` directory with a file named `greeting.html` containing:
+
+
+<p>Hello, {{ name }}!</p>

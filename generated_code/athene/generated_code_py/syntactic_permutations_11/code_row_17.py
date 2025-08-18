@@ -1,0 +1,11 @@
+import sys
+
+def getValueFromArray(array, size, index):
+    if 0 <= index < size:
+        return array[index]
+    return -1
+
+id_sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+size = len(id_sequence)
+index = int(input())
+sys.exit(getValueFromArray(id_sequence, size, index))

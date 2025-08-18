@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+unsigned int calculate_checksum(const char *buffer, size_t length) {
+    unsigned int checksum = 0;
+    for (size_t i = 0; i < length; i++) {
+        checksum += (unsigned char)buffer[i];
+    }
+    return checksum;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s input_file output_file\n", argv[0]);
+        return 1;
+    }
+
+    FILE *input = fopen(argv[1], "rb");
+    if (!input) {
+        perror("Failed to open input file");
+        return 1;
+    }
+
+    fseek(input, 0, SEEK_END);
+    long file_size = ftell(input);
+    rewind(input);
+
+    char *buffer = malloc(file_size);
+    if (fread(buffer, 1, file_size, input) != file_size) {
+        perror("Failed to read input file");
+        fclose(input);
+        free(buffer);
+        return 1;
+    }
+    fclose(input);
+
+    unsigned int checksum = calculate_checksum(buffer, file_size);
+    FILE *output = fopen(argv[2], "w");
+    if (!output) {
+        perror("Failed to open output file");
+        free(buffer);
+        return 1;
+    }
+
+    fprintf(output, "%ld %u\n", file_size, checksum);
+
+    fclose(output);
+    free(buffer);
+
+    return 0;
+}

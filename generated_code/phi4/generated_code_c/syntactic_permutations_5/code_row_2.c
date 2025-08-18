@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <index>\n", argv[0]);
+        return 1;
+    }
+
+    int index = atoi(argv[1]);
+
+    // Example array of elements
+    int array[] = {10, 20, 30, 40, 50};
+    size_t array_size = sizeof(array) / sizeof(array[0]);
+
+    if (index < 0 || index >= array_size) {
+        fprintf(stderr, "Index out of bounds\n");
+        return 1;
+    }
+
+    printf("Element at index %d: %d\n", index, array[index]);
+    return 0;
+}

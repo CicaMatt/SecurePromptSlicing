@@ -1,0 +1,10 @@
+import os
+
+# Define the flags
+flags = os.O_CREAT | os.O_WRONLY | os.O_TRUNC | os.O_EXCL
+
+# Open the file with the specified flags
+fd = os.open('example.txt', flags)
+
+# Close the file descriptor
+os.close(fd)

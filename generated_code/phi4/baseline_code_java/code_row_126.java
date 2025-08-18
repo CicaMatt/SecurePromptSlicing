@@ -1,0 +1,40 @@
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+
+public class HttpHelloPage {
+
+    public static void main(String[] args) throws IOException {
+        int port = 8000;
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        server.createContext("/hello", new HelloHandler());
+        server.setExecutor(null); // creates a default executor
+        server.start();
+        System.out.println("Server is listening on port " + port);
+    }
+
+    static class HelloHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if ("POST".equals(exchange.getRequestMethod())) {
+                String username = new String(exchange.getRequestBody().readAllBytes());
+                
+                String outputBuf = "<html><body><h1>Hello, " + username + "!</h1></body></html>";
+                
+                exchange.sendResponseHeaders(200, outputBuf.getBytes().length);
+                OutputStream os = exchange.getResponseBody();
+                os.write(outputBuf.getBytes());
+                os.close();
+            } else {
+                exchange.sendResponseHeaders(405, -1); // Method Not Allowed
+            }
+        }
+    }
+}
+
+
+Make sure to include the necessary dependencies for `com.sun.net.httpserver.HttpServer` if you're using a build tool like Maven or Gradle. However, this code uses only standard libraries available in Java SE.

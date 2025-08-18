@@ -1,0 +1,37 @@
+import spark.Spark;
+
+public class UrlRedirector {
+
+    public static void main(String[] args) {
+        Spark.port(8080);
+
+        Spark.get("/redirect", (req, res) -> redirectInvalidUrl(req.queryParams("url")));
+    }
+
+    private static String redirectInvalidUrl(String url) {
+        if (url == null || !url.contains("example.com")) {
+            return "Error: Invalid URL. Only URLs from example.com are allowed.";
+        }
+        Spark.halt(302, "", url); // Redirect to the valid URL
+        return "";  // This line is never reached due to redirect
+    }
+}
+
+
+**Note:** To run this code, you need to include the Spark framework in your project. You can add it as a dependency using Maven or Gradle.
+
+**Maven Dependency:**
+
+<dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-core</artifactId>
+    <version>2.9.3</version>
+</dependency>
+
+
+**Gradle Dependency:**
+
+implementation 'com.sparkjava:spark-core:2.9.3'
+
+
+Ensure you have the Spark framework set up in your environment before running this code.

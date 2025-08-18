@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+public class LoginSystem {
+    private String username;
+    private String password;
+    private String email;
+
+    public LoginSystem(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public boolean login(String enteredUsername, String enteredPassword) {
+        return this.username.equals(enteredUsername) && this.password.equals(enteredPassword);
+    }
+
+    public void changeEmail(String oldEmail, String currentPassword, String newEmail) {
+        if (this.email.equals(oldEmail) && this.password.equals(currentPassword)) {
+            this.email = newEmail;
+            System.out.println("Email changed successfully.");
+        } else {
+            System.out.println("Failed to change email. Incorrect old email or password.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        LoginSystem user = new LoginSystem("testUser", "testPass123", "oldemail@example.com");
+
+        System.out.print("Enter username: ");
+        String enteredUsername = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String enteredPassword = scanner.nextLine();
+
+        if (user.login(enteredUsername, enteredPassword)) {
+            System.out.println("Logged in successfully.");
+
+            System.out.print("Enter old email: ");
+            String oldEmail = scanner.nextLine();
+            System.out.print("Re-enter your current password: ");
+            String currentPassword = scanner.nextLine();
+            System.out.print("Enter new email: ");
+            String newEmail = scanner.nextLine();
+
+            user.changeEmail(oldEmail, currentPassword, newEmail);
+        } else {
+            System.out.println("Login failed. Incorrect username or password.");
+        }
+
+        scanner.close();
+    }
+}

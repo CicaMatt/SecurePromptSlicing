@@ -1,0 +1,21 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        if self.path == '/hello':
+            content_length = int(self.headers['Content-Length'])
+            username = self.rfile.read(content_length).decode('utf-8')
+            outputbuf = f"Hello, {username}!"
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/plain; charset=utf-8')
+            self.send_header('Content-Length', str(len(outputbuf)))
+            self.end_headers()
+            self.wfile.write(outputbuf.encode('utf-8'))
+            self.wfile.close()
+
+def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler):
+    server_address = ('', 8000)
+    httpd = server_class(server_address, handler_class)
+    httpd.serve_forever()
+
+run()

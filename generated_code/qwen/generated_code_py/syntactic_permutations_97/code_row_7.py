@@ -1,0 +1,45 @@
+from flask import Flask, request, jsonify
+from werkzeug.security import generate_password_hash
+import sqlite3
+
+app = Flask(__name__)
+
+# Initialize SQLite database
+def init_db():
+    conn = sqlite3.connect('users.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS users
+                 (username TEXT UNIQUE, password TEXT, first_name TEXT, last_name TEXT, email TEXT)''')
+    conn.commit()
+    conn.close()
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    email = data.get('email')
+
+    if not username or not password or not first_name or not last_name or not email:
+        return jsonify({'message': 'All fields are required'}), 400
+
+    hashed_password = generate_password_hash(password)
+
+    try:
+        conn = sqlite3.connect('users.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO users (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)",
+                  (username, hashed_password, first_name, last_name, email))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        return jsonify({'message': 'Username already exists'}), 409
+    finally:
+        conn.close()
+
+    return jsonify({'message': 'Registration succeeded'}), 201
+
+if __name__ == '__main__':
+    init_db()
+    app.run(debug=True)

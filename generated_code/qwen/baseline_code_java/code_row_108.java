@@ -1,0 +1,37 @@
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class GetentPasswd {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java GetentPasswd <username>");
+            return;
+        }
+
+        String username = args[0];
+        String command = "getent passwd " + username;
+
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            FileWriter output = new FileWriter("output");
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.write(line);
+            }
+
+            output.close();
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                System.out.println("Successfully wrote user information to 'output' file.");
+            } else {
+                System.err.println("Failed to get user information. Exit code: " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}

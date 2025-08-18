@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+void http_hello_page(FILE *request, FILE *response) {
+    char buffer[1024];
+    const char *username = NULL;
+
+    while (fgets(buffer, sizeof(buffer), request)) {
+        if (strstr(buffer, "GET /hello?user=") == buffer) {
+            username = buffer + strlen("GET /hello?user=");
+            char *end = strchr(username, ' ');
+            if (end) {
+                *end = '\0';
+            }
+            break;
+        }
+    }
+
+    if (username) {
+        fprintf(response, "HTTP/1.1 200 OK\r\n");
+        fprintf(response, "Content-Type: text/plain\r\n");
+        fprintf(response, "\r\n");
+        fprintf(response, "hello %s", username);
+    } else {
+        fprintf(response, "HTTP/1.1 400 Bad Request\r\n");
+        fprintf(response, "Content-Type: text/plain\r\n");
+        fprintf(response, "\r\n");
+        fprintf(response, "Invalid request format");
+    }
+}

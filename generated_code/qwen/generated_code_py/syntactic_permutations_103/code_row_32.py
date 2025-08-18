@@ -1,0 +1,5 @@
+import os
+
+flags = os.O_CREAT | os.O_TRUNC | os.O_EXCL | os.O_WRONLY
+fd = os.open("example.txt", flags)
+os.close(fd)

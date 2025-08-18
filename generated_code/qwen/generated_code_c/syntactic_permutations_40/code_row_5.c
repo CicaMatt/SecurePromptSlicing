@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <microhttpd.h>
+
+#define PORT 8080
+
+struct SessionData {
+    char *username;
+    char *email;
+    char *ssn_last4;
+};
+
+void free_session_data(void *cls, enum MHD_RequestTerminationCode toe, void **con_cls) {
+    struct SessionData *session = (struct SessionData *)*con_cls;
+    if (session != NULL) {
+        free(session->username);
+        free(session->email);
+        free(session->ssn_last4);
+        free(session);
+        *con_cls = NULL;
+    }
+}
+
+int answer_to_connection(void *cls, struct MHD_Connection *connection,
+                         const char *url, const char *method,
+                         const char *version, const char *upload_data,
+                         size_t *upload_data_size, void **con_cls) {
+    if (strcmp(method, "GET") != 0 || strcmp(url, "/info") != 0)
+        return MHD_NO;
+
+    struct SessionData *session = malloc(sizeof(struct SessionData));
+    session->username = strdup("exampleUser");
+    session->email = strdup("user@example.com");
+    session->ssn_last4 = strdup("1234");
+
+    *con_cls = session;
+    MHD_add_connection_cleanup_handler(connection, free_session_data, con_cls);
+
+    const char *page = "<html><body>"
+                       "<p>Username: %s</p>"
+                       "<p>Email: %s</p>"
+                       "<p>SSN Last 4 Digits: %s</p>"
+                       "</body></html>";
+
+    int ret;
+    struct MHD_Response *response;
+    char *content = malloc(strlen(page) + strlen(session->username) +
+                           strlen(session->email) + strlen(session->ssn_last4));
+    sprintf(content, page, session->username, session->email, session->ssn_last4);
+
+    response = MHD_create_response_from_buffer(strlen(content), (void *)content, MHD_RESPMEM_MUST_FREE);
+    ret = MHD_queue_response(connection, MHD_HTTP_OK, response);
+    MHD_destroy_response(response);
+
+    return ret;
+}
+
+int main(int argc, char **argv) {
+    struct MHD_Daemon *daemon;
+
+    daemon = MHD_start_daemon(MHD_USE_SELECT_INTERNALLY, PORT, NULL, NULL,
+                              &answer_to_connection, NULL, MHD_OPTION_END);
+    if (NULL == daemon)
+        return 1;
+
+    printf("Server started on port %d\n", PORT);
+
+    getchar();
+
+    MHD_stop_daemon(daemon);
+    return 0;
+}

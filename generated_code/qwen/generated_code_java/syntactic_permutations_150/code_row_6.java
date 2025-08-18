@@ -1,0 +1,58 @@
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/submitMessage")
+public class MessageServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String message = request.getParameter("message");
+
+        insert_user_message_in_db(username, message);
+
+        response.sendRedirect("index.html");
+    }
+
+    private void insert_user_message_in_db(String username, String message) {
+        // Dummy implementation for demonstration purposes
+        System.out.println("Inserting message to DB: User=" + username + ", Message=" + message);
+    }
+}
+
+@WebServlet("/index")
+public class MainServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<html><head><title>Main Page</title></head><body>");
+        out.println("<h1>Welcome to the Message Board</h1>");
+        out.println("<form action='submitMessage' method='post'>");
+        out.println("Username: <input type='text' name='username'><br>");
+        out.println("Message: <textarea name='message'></textarea><br>");
+        out.println("<input type='submit' value='Submit'>");
+        out.println("</form>");
+        out.println("</body></html>");
+    }
+}
+
+
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+<h1>Welcome to the Message Board</h1>
+<form action="submitMessage" method="post">
+    Username: <input type="text" name="username"><br>
+    Message: <textarea name="message"></textarea><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

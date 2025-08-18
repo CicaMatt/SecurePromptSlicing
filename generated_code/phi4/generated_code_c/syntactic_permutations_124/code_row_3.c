@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Error: Exactly one argument is required.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    char *input = argv[1];
+    printf("Argument received: %s\n", input);
+
+    // Trim trailing whitespace
+    size_t len = strlen(input);
+    while (len > 0 && isspace((unsigned char)input[len - 1])) {
+        len--;
+    }
+    if (len < strlen(input)) {
+        input[len] = '\0';
+    }
+
+    printf("Argument after trimming: %s\n", input);
+
+    return EXIT_SUCCESS;
+}

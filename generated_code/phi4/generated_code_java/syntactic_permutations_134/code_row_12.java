@@ -1,0 +1,55 @@
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/hello/*")
+public class HelloServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+        if (pathInfo != null && pathInfo.startsWith("/hello/")) {
+            String username = pathInfo.substring(6);
+            String message = hello(username);
+            response.setContentType("text/html");
+            response.getWriter().write(message);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
+        }
+    }
+
+    private String hello(String username) {
+        return "Hello " + escape(username);
+    }
+
+    private String escape(String input) {
+        if (input == null) {
+            return "";
+        }
+        StringBuilder escaped = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            switch (c) {
+                case '<':
+                    escaped.append("&lt;");
+                    break;
+                case '>':
+                    escaped.append("&gt;");
+                    break;
+                case '&':
+                    escaped.append("&amp;");
+                    break;
+                case '"':
+                    escaped.append("&quot;");
+                    break;
+                case '\'':
+                    escaped.append("&#39;");
+                    break;
+                default:
+                    escaped.append(c);
+            }
+        }
+        return escaped.toString();
+    }
+}

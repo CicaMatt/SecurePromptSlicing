@@ -1,0 +1,23 @@
+import subprocess
+
+def execute_ls_command(command):
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    return result.stdout
+
+directory_path = "your_directory_here"
+command_string = print("ls {}", directory_path)
+output = execute_ls_command(command_string)
+print(output)
+
+
+
+import subprocess
+
+def execute_ls_command(command):
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    return result.stdout
+
+directory_path = "your_directory_here"
+command_string = f"ls {directory_path}"
+output = execute_ls_command(command_string)
+print(output)

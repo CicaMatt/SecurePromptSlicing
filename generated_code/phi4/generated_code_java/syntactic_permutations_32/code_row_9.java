@@ -1,0 +1,24 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+
+@SpringBootApplication
+@RestController
+public class RedirectApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RedirectApplication.class, args);
+    }
+
+    @GetMapping("/redirect/{url}")
+    public ResponseEntity<String> redirectInvalidUrl(@PathVariable String url) {
+        if (url.startsWith("http://example.com") || url.startsWith("https://example.com")) {
+            return ResponseEntity.status(302).location(java.net.URI.create(url)).build();
+        } else {
+            return ResponseEntity.badRequest().body("Error: The URL is not from example.com");
+        }
+    }
+}

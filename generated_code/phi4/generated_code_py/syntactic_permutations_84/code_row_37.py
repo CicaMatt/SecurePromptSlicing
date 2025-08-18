@@ -1,0 +1,23 @@
+from flask import Flask, request, jsonify
+import yaml
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def check_payload():
+    if 'payload' not in request.args:
+        return jsonify({'error': 'Missing payload parameter'}), 400
+    
+    try:
+        payload = request.args['payload']
+        data = yaml.safe_load(payload)
+        
+        if data.get('type') == 'Create':
+            return jsonify({'error': 'Payload type cannot be Create'}), 400
+        
+        return jsonify({'message': 'Valid payload received'}), 200
+    except yaml.YAMLError as e:
+        return jsonify({'error': f'YAML error: {str(e)}'}), 400
+
+if __name__ == '__main__':
+    app.run(port=5000)

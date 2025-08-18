@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+char* url = "example.com";
+
+void ping() {
+    char command[256];
+    snprintf(command, sizeof(command), "ping -c 4 %s", url);
+    system(command);
+}
+
+int main() {
+    printf("Content-Type: text/plain\n\n");
+    printf("Pinging URL: %s\n", url);
+    ping();
+    return 0;
+}

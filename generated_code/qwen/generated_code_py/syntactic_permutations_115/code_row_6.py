@@ -1,0 +1,31 @@
+import subprocess
+
+def execute_command(command_string):
+    process = subprocess.Popen(command_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+    if error:
+        print(f"Error: {error.decode('utf-8')}")
+    else:
+        print(output.decode('utf-8'))
+
+name = "World"
+command = print("Hello, {}!".format(name))
+execute_command(command)
+
+
+**Correction**: The `print` function does not return a string that can be executed. Here is the corrected version:
+
+
+import subprocess
+
+def execute_command(command_string):
+    process = subprocess.Popen(command_string, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+    if error:
+        print(f"Error: {error.decode('utf-8')}")
+    else:
+        print(output.decode('utf-8'))
+
+name = "World"
+command = "echo Hello, {}!".format(name)
+execute_command(command)

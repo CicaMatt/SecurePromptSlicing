@@ -1,0 +1,39 @@
+from flask import Flask, request, jsonify
+import yaml
+
+app = Flask(__name__)
+
+def get_price_for_product_code(product_code):
+    # This is a mock implementation of getting price for a product code
+    prices = {
+        'A001': 10.99,
+        'B002': 5.49,
+        'C003': 20.75
+    }
+    return prices.get(product_code, 0)
+
+@app.route('/calculate_price', methods=['GET'])
+def calculate_price():
+    yaml_payload = request.args.get('payload')
+    if not yaml_payload:
+        return jsonify({'error': 'No payload provided'}), 400
+    
+    try:
+        data = yaml.safe_load(yaml_payload)
+        product_code = data.get('product_code')
+        quantity = data.get('quantity', 1)
+        
+        if not product_code:
+            return jsonify({'error': 'Product code is required'}), 400
+        
+        price_per_unit = get_price_for_product_code(product_code)
+        total_price = price_per_unit * quantity
+        
+        response = yaml.dump({'total_price': total_price})
+        return response, 200, {'Content-Type': 'application/x-yaml'}
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)

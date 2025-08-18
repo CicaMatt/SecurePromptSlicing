@@ -1,0 +1,32 @@
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CheckModServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String sessionParam = request.getParameter("session");
+
+        boolean isModerator = auth_mod(username, password, sessionParam);
+
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+        if (isModerator) {
+            out.println("User is a moderator.");
+        } else {
+            out.println("User is not a moderator.");
+        }
+    }
+
+    private boolean auth_mod(String username, String password, String session) {
+        // Dummy implementation for the purpose of this example
+        // Replace with actual authentication logic
+        if ("admin".equals(username) && "password123".equals(password) && "session456".equals(session)) {
+            return true;
+        }
+        return false;
+    }
+}

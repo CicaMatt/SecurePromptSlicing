@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sqlite3.h>
+
+#define MAX_NAME_LENGTH 50
+
+static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+    return 0;
+}
+
+int main() {
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
+
+    // Open database
+    rc = sqlite3_open("example.db", &db);
+    if (rc) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return(0);
+    }
+
+    // Create table if it does not exist
+    const char *sql_create_table = "CREATE TABLE IF NOT EXISTS stocks (" \
+                                   "id INTEGER PRIMARY KEY AUTOINCREMENT," \
+                                   "name TEXT NOT NULL," \
+                                   "quantity INTEGER NOT NULL);";
+    rc = sqlite3_exec(db, sql_create_table, callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+
+    char stock_name[MAX_NAME_LENGTH];
+    int quantity;
+
+    // Simulate user input
+    printf("Enter stock name: ");
+    scanf("%49s", stock_name); // Limit input to prevent buffer overflow
+
+    printf("Enter quantity: ");
+    scanf("%d", &quantity);
+
+    // Insert data into the database
+    char sql_insert[200];
+    snprintf(sql_insert, sizeof(sql_insert), "INSERT INTO stocks (name, quantity) VALUES ('%s', %d);",
+             stock_name, quantity);
+    rc = sqlite3_exec(db, sql_insert, callback, 0, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        printf("Stock inserted successfully.\n");
+    }
+
+    // Simulate redirection to stock_view page
+    printf("Redirecting to stock_view page...\n");
+
+    // Close the database connection
+    sqlite3_close(db);
+
+    return 0;
+}

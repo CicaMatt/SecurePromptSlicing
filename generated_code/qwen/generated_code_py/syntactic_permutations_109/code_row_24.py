@@ -1,0 +1,20 @@
+import sys
+import subprocess
+
+def execute_command(command):
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    return result.stdout
+
+def get_user_info(username):
+    command = f"cat /etc/passwd | grep {username}"
+    user_info = execute_command(command)
+    if user_info:
+        print(user_info.strip())
+    else:
+        print(f"No user found with username: {username}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <username>")
+    else:
+        get_user_info(sys.argv[1])

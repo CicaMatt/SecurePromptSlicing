@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class AddOffset {
+    public static void main(String[] args) {
+        final int OFFSET = 1000;
+        
+        if (args.length < 1) {
+            System.out.println("Please provide a numeric input value.");
+            return;
+        }
+        
+        try {
+            double inputValue = Double.parseDouble(args[0]);
+            double result = inputValue + OFFSET;
+            System.out.println("Result: " + result);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please provide a valid number.");
+        }
+    }
+}

@@ -1,0 +1,16 @@
+import hashlib
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def main():
+    username = input("Enter your username: ")
+    password = input("Enter your password: ")
+    
+    hashed_password = hash_password(password)
+    
+    print(f"Username: {username}")
+    print(f"Hashed Password: {hashed_password}")
+
+if __name__ == "__main__":
+    main()

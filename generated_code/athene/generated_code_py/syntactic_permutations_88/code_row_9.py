@@ -1,0 +1,25 @@
+from flask import Flask, request
+import yaml
+
+app = Flask(__name__)
+
+@app.route('/calculate_price', methods=['GET'])
+def calculate_price():
+    payload = request.args.get('payload')
+    data = yaml.safe_load(payload)
+    product_code = data.get('product_code')
+    quantity = data.get('quantity')
+    
+    prices = {
+        'A123': 10.5,
+        'B456': 15.99,
+        'C789': 7.25
+    }
+    
+    price_per_unit = prices.get(product_code, 0)
+    total_price = price_per_unit * quantity
+    
+    return str(total_price)
+
+if __name__ == '__main__':
+    app.run(debug=True)

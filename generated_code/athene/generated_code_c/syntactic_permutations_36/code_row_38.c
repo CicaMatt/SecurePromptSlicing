@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_USERNAME_LENGTH 50
+#define MAX_PASSWORD_LENGTH 50
+
+typedef struct {
+    char username[MAX_USERNAME_LENGTH];
+    char password[MAX_PASSWORD_LENGTH];
+} User;
+
+User users[] = {
+    {"alice", "1234"},
+    {"bob", "password"},
+    {"charlie", "hunter2"}
+};
+
+int num_users = sizeof(users) / sizeof(users[0]);
+
+void login(const char *username, const char *password) {
+    for (int i = 0; i < num_users; i++) {
+        if (strcmp(users[i].username, username) == 0) {
+            if (strcmp(users[i].password, password) == 0) {
+                printf("Login successful. Redirecting to home page.\n");
+                return;
+            } else {
+                printf("Incorrect password.\n");
+                return;
+            }
+        }
+    }
+    printf("Username not found.\n");
+}
+
+int main() {
+    char username[MAX_USERNAME_LENGTH];
+    char password[MAX_PASSWORD_LENGTH];
+
+    printf("Enter username: ");
+    scanf("%s", username);
+
+    printf("Enter password: ");
+    scanf("%s", password);
+
+    login(username, password);
+
+    return 0;
+}

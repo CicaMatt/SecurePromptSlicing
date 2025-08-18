@@ -1,0 +1,43 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+public class WebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
+    }
+}
+
+@RestController
+class WebController {
+
+    @GetMapping("/login")
+    public String login() {
+        return "Login Page";
+    }
+
+    @PostMapping("/submit")
+    public String submit(@RequestBody String data) {
+        return "Received: " + data;
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "Index Page";
+    }
+
+    @GetMapping("/user_page")
+    public String userPage() {
+        return "User Page";
+    }
+
+    @GetMapping("/admin_page")
+    public String adminPage() {
+        return "Admin Page";
+    }
+}

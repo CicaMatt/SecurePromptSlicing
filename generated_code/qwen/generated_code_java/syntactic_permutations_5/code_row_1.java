@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class ArrayElementPrinter {
+    public static void main(String[] args) {
+        String[] elements = {"apple", "banana", "cherry", "date", "elderberry"};
+        
+        if (args.length == 0) {
+            System.out.println("Please provide an index as a command line argument.");
+            return;
+        }
+
+        try {
+            int index = Integer.parseInt(args[0]);
+            if (index >= 0 && index < elements.length) {
+                System.out.println(elements[index]);
+            } else {
+                System.out.println("Index out of bounds. Please enter a valid index between 0 and " + (elements.length - 1) + ".");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid argument. Please provide an integer as the index.");
+        }
+    }
+}

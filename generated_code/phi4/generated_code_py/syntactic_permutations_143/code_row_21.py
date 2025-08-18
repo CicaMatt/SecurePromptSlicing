@@ -1,0 +1,37 @@
+from flask import Flask, request, jsonify
+import sqlite3
+
+app = Flask(__name__)
+
+DATABASE = 'subscriptions.db'
+
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route('/unsubscribe', methods=['GET'])
+def unsubscribe():
+    email = request.args.get('email')
+    
+    if not email:
+        return jsonify({'error': 'Email parameter is required'}), 400
+
+    conn = get_db_connection()
+    user = conn.execute('SELECT * FROM subscribers WHERE email = ?', (email,)).fetchone()
+    conn.close()
+
+    if user:
+        conn = get_db_connection()
+        conn.execute('DELETE FROM subscribers WHERE email = ?', (email,))
+        conn.commit()
+        conn.close()
+        return jsonify({'message': 'User unsubscribed successfully'}), 200
+    else:
+        return jsonify({'message': 'User is not subscribed'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+Note: This code assumes the existence of a SQLite database named `subscriptions.db` with a table called `subscribers` that contains at least an `email` column. Adjust the database path and connection details as necessary for your environment.

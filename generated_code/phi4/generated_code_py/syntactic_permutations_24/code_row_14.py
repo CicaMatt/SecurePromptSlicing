@@ -1,0 +1,6 @@
+import random
+
+num1 = random.randint(10, 1000)
+num2 = random.randint(10, 1000)
+result = num1 + num2
+print(f"The sum of {num1} and {num2} is {result}.")

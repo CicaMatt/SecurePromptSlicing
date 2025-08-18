@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main() {
+    char buffer[1024];
+    int result = scanf("%1023[^\n]", buffer);
+    if (result != EOF) {
+        printf("Read %d characters: %s\n", result, buffer);
+    } else {
+        printf("No input was read.\n");
+    }
+    return 0;
+}

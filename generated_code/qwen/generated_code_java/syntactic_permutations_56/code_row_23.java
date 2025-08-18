@@ -1,0 +1,69 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LoginPage extends JFrame {
+    private JTextField oldEmailField, newEmailField;
+    private JPasswordField passwordField;
+    private JButton changeEmailButton;
+    private String loggedInUserOldEmail = "user@example.com"; // Simulated logged-in user's email
+    private String loggedInUserPassword = "password123"; // Simulated logged-in user's password
+
+    public LoginPage() {
+        setTitle("Change Email");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+
+        JLabel oldEmailLabel = new JLabel("Old Email:");
+        oldEmailField = new JTextField();
+        JLabel newEmailLabel = new JLabel("New Email:");
+        newEmailField = new JTextField();
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordField = new JPasswordField();
+        changeEmailButton = new JButton("Change Email");
+
+        panel.add(oldEmailLabel);
+        panel.add(oldEmailField);
+        panel.add(newEmailLabel);
+        panel.add(newEmailField);
+        panel.add(passwordLabel);
+        panel.add(passwordField);
+        panel.add(changeEmailButton);
+
+        changeEmailButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String oldEmail = oldEmailField.getText();
+                String newEmail = newEmailField.getText();
+                String password = new String(passwordField.getPassword());
+
+                if (!oldEmail.equals(loggedInUserOldEmail)) {
+                    JOptionPane.showMessageDialog(null, "Incorrect old email.");
+                } else if (!password.equals(loggedInUserPassword)) {
+                    JOptionPane.showMessageDialog(null, "Incorrect password.");
+                } else if (newEmail.equals(oldEmail)) {
+                    JOptionPane.showMessageDialog(null, "New email must be different from the old one.");
+                } else {
+                    loggedInUserOldEmail = newEmail;
+                    JOptionPane.showMessageDialog(null, "Email changed successfully.");
+                }
+            }
+        });
+
+        add(panel);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new LoginPage().setVisible(true);
+            }
+        });
+    }
+}

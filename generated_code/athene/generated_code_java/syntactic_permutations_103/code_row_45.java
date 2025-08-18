@@ -1,0 +1,26 @@
+import java.io.File;
+import java.io.RandomAccessFile;
+
+public class FileOpener {
+    public static void main(String[] args) {
+        String fileName = "example.txt";
+        try {
+            RandomAccessFile raf = new RandomAccessFile(fileName, "rw");
+            File file = new File(fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            } else {
+                if (raf.length() > 0) {
+                    raf.setLength(0);
+                }
+            }
+            raf.close();
+        } catch (Exception e) {
+            if (new File(fileName).exists()) {
+                System.out.println("Failed to open file: " + fileName + " already exists.");
+            } else {
+                System.out.println("An error occurred while opening the file: " + e.getMessage());
+            }
+        }
+    }
+}

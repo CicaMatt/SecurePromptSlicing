@@ -1,0 +1,32 @@
+import io.javalin.Javalin;
+import io.javalin.http.Context;
+import io.javalin.plugin.session.SessionType;
+
+public class Main {
+    public static void main(String[] args) {
+        Javalin app = Javalin.create(config -> {
+            config.defaultContentType = "text/html";
+            config.enableSessionStore(SessionType.H2);
+        }).start(7000);
+
+        app.get("/info", ctx -> info(ctx));
+    }
+
+    private static void info(Context ctx) {
+        String username = (String) ctx.sessionAttribute("username");
+        String email = (String) ctx.sessionAttribute("email");
+        String ssnLast4 = (String) ctx.sessionAttribute("ssnLast4");
+
+        if (username != null && email != null && ssnLast4 != null) {
+            String response = "<html><body>"
+                    + "<h1>User Info</h1>"
+                    + "<p>Username: " + username + "</p>"
+                    + "<p>Email: " + email + "</p>"
+                    + "<p>Last 4 digits of SSN: " + ssnLast4 + "</p>"
+                    + "</body></html>";
+            ctx.result(response);
+        } else {
+            ctx.status(400).result("Missing session information");
+        }
+    }
+}

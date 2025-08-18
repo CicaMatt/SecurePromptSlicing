@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void trim_trailing_whitespace(char *str) {
+    char *end;
+
+    // Trim leading space
+    while(isspace((unsigned char)*str)) str++;
+
+    if(*str == 0) { 
+        return;
+    }
+
+    // Trim trailing space
+    end = str + strlen(str) - 1;
+    while(end > str && isspace((unsigned char)*end)) end--;
+
+    // Write new null terminator character
+    *(end+1) = 0;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Error: Exactly one argument is required.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    char *input = argv[1];
+    printf("Argument before trimming: %s\n", input);
+
+    trim_trailing_whitespace(input);
+    printf("Argument after trimming: %s\n", input);
+
+    return 0;
+}

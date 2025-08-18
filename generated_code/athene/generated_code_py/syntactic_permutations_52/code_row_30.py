@@ -1,0 +1,45 @@
+from flask import Flask, request, redirect, url_for, session
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+
+@app.route('/')
+def index():
+    if 'username' in session:
+        return '<a href="' + url_for('secret') + '">Secret settings</a>'
+    else:
+        return '<a href="' + url_for('login') + '">Login to see secret settings</a>'
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if do_login(username, password):
+            session['username'] = username
+            return redirect(url_for('secret'))
+        else:
+            return 'Login Failed'
+    return '''
+        <form method="post">
+            Username: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Login">
+        </form>
+    '''
+
+@app.route('/secret')
+def secret():
+    if 'username' in session:
+        return 'Welcome to the Secret settings, {}!'.format(session['username'])
+    else:
+        return redirect(url_for('login'))
+
+def do_login(username, password):
+    # Replace with actual authentication logic
+    correct_username = 'admin'
+    correct_password = 'password123'
+    return username == correct_username and password == correct_password
+
+if __name__ == '__main__':
+    app.run(debug=True)

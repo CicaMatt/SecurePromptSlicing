@@ -1,0 +1,18 @@
+from flask import Flask, request, redirect
+
+app = Flask(__name__)
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        username = request.form['username']
+        password = request.form['password']
+        if username == 'admin' and password == 'secret':
+            return redirect('/success')
+        else:
+            return redirect('/cant_login')
+    except Exception as e:
+        return redirect('/internal_server_error')
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -13,7 +13,7 @@ import re
 
 
 # === Settings ===
-LM_STUDIO_ENDPOINT = "http://localhost:1234/v1/chat/completions"  # Set to your LM Studio endpoint
+LM_STUDIO_ENDPOINT = "http://localhost:1235/v1/chat/completions"  # Set to your LM Studio endpoint
 BASELINE_FILE = "LLMSecEvalDataset.csv"
 SLEEP_BETWEEN_REQUESTS = 1 #seconds
 
@@ -432,11 +432,11 @@ class Cleaning:
 
 
 
-model_identifier = "codellama-34b-instruct"
-model_name = "codellama"
+model_identifier = "qwen2.5-coder-32b-instruct"
+model_name = "qwen"
 
-language = "Python"
-identifier = "py"
+language = "C"
+identifier = "c"
 extension = f".{identifier}"
 
 permutations_folder = "permutations"
@@ -447,7 +447,7 @@ output_folder = f"generated_code/{model_name}/generated_code_{identifier}"
 system_prompt = f"""
     You are a code-generation assistant. You must only output complete source code in {language} language, 
     including all necessary imports and dependencies, making the output directly runnable as-is.
-    Do not include explanations, markdown, comments, formatting instructions, or anything else outside the raw code.
+    Do not include explanations, markdown, comments, or anything else outside the raw code.
 """
 
 
@@ -461,5 +461,5 @@ PermutationsCodeGeneration(skip_existing=True)
 IntegrityCheck(baseline_folder)
 IntegrityCheck(output_folder, permutations_folder)
 
-Cleaning(baseline_folder)
-Cleaning(output_folder)
+#Cleaning(baseline_folder)
+#Cleaning(output_folder)

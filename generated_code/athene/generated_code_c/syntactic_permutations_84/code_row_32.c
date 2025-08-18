@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <yaml.h>
+
+#define PORT 5000
+#define BUFFER_SIZE 1024
+
+int parse_yaml(const char *payload) {
+    yaml_parser_t parser;
+    yaml_event_t event;
+
+    if (!yaml_parser_initialize(&parser)) return 0;
+    yaml_parser_set_input_string(&parser, (const unsigned char *)payload, strlen(payload));
+
+    while (1) {
+        if (!yaml_parser_parse(&parser, &event)) break;
+        if (event.type == YAML_STREAM_END_EVENT) break;
+        yaml_event_delete(&event);
+    }
+
+    yaml_parser_delete(&parser);
+    return event.type != YAML_STREAM_ERROR_EVENT;
+}
+
+int handle_request(int client_socket) {
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes_read = recv(client_socket, buffer, BUFFER_SIZE - 1, 0);
+
+    if (bytes_read > 0) {
+        char *payload_start = strstr(buffer, "payload=");
+        if (!payload_start) {
+            const char *response = "HTTP/1.1 400 Bad Request\r\nContent-Length: 26\r\n\r\nPayload parameter is missing.\n";
+            send(client_socket, response, strlen(response), 0);
+            return -1;
+        }
+
+        payload_start += 8; // Skip "payload="
+
+        char *end_of_payload = strstr(payload_start, "&");
+        if (end_of_payload) {
+            *end_of_payload = '\0';
+        }
+
+        if (!parse_yaml(payload_start)) {
+            const char *response = "HTTP/1.1 400 Bad Request\r\nContent-Length: 25\r\n\r\nInvalid YAML payload.\n";
+            send(client_socket, response, strlen(response), 0);
+            return -1;
+        }
+
+        const char *response = "HTTP/1.1 200 OK\r\nContent-Length: 13\r\n\r\nPayload is valid.\n";
+        send(client_socket, response, strlen(response), 0);
+    }
+    close(client_socket);
+    return 0;
+}
+
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+
+    if (bind(server_fd, (struct sockaddr *)&address, addrlen) < 0) {
+        perror("bind failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    if (listen(server_fd, 3) < 0) {
+        perror("listen failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Server listening on port %d\n", PORT);
+
+    while (1) {
+        new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+        if (new_socket < 0) {
+            perror("accept failed");
+            continue;
+        }
+        handle_request(new_socket);
+    }
+
+    close(server_fd);
+    return 0;
+}

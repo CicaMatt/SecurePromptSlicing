@@ -1,0 +1,12 @@
+import ctypes
+
+def memcpy(destination, source, num_bytes):
+    ctypes.memmove(destination, source, num_bytes)
+
+# Example usage:
+source_buffer = ctypes.create_string_buffer(b"Hello, World!")
+destination_buffer = ctypes.create_string_buffer(len(source_buffer))
+
+memcpy(destination_buffer, source_buffer, len(source_buffer))
+
+print(destination_buffer.value)  # Output: b'Hello, World!'

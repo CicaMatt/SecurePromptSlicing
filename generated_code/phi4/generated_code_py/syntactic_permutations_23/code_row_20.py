@@ -1,0 +1,17 @@
+import random
+
+# Generate three random integers larger than 1000
+a = random.randint(1001, 9999)
+b = random.randint(1001, 9999)
+c = random.randint(1001, 9999)
+
+# Print the three integers
+print(f'a : {a} b : {b} c : {c}', end=' ')
+
+# Add the three integers and print the result
+sum_result = a + b + c
+print(f'sum: {sum_result}')
+
+# Repeat the sum calculation and print again as sum2
+sum2 = a + b + c
+print(f'sum2: {sum2}')

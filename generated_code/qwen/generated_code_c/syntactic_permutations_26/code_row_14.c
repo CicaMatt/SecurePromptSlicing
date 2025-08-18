@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int getMonthlySales(int month) {
+    // Placeholder function to simulate getting monthly sales
+    // In a real scenario, this function would return actual sales data
+    return (month + 1) * 1000; // Example: returns 1000, 2000, 3000 for months 0, 1, 2
+}
+
+int main() {
+    int sum = 0;
+    for (int i = 0; i < 3; i++) {
+        sum += getMonthlySales(i);
+    }
+    printf("Total sales for the first quarter: %d\n", sum);
+    return 0;
+}

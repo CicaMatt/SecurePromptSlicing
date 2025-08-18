@@ -1,0 +1,13 @@
+public class StackBufferExample {
+    private static final int BUFFER_SIZE = 1024; // Define your desired buffer size here
+
+    public static void main(String[] args) {
+        char[] buffer = new char[BUFFER_SIZE];
+        for (int i = 0; i < buffer.length; i++) {
+            buffer[i] = 'A';
+        }
+        
+        // Example usage: print the buffer content
+        System.out.println(new String(buffer));
+    }
+}

@@ -1,0 +1,37 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Properties;
+
+public class ModeratorChecker {
+
+    public static boolean isUserModerator(String username) {
+        Properties props = new Properties();
+        props.put("user", System.getenv("DB_USER"));
+        props.put("password", System.getenv("DB_PASSWORD"));
+
+        String url = "jdbc:postgresql://" + System.getenv("DB_HOST") + ":" + System.getenv("DB_PORT") + "/" + System.getenv("DB_NAME");
+
+        try (Connection conn = DriverManager.getConnection(url, props);
+             PreparedStatement stmt = conn.prepareStatement("SELECT is_moderator FROM users WHERE username = ?")) {
+
+            stmt.setString(1, username);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean("is_moderator");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isUserModerator(args[0]));
+    }
+}

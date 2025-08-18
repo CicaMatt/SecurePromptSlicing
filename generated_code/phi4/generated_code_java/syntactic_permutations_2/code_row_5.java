@@ -1,0 +1,22 @@
+import java.nio.ByteBuffer;
+
+public class MemoryCopier {
+
+    public static void main(String[] args) {
+        byte[] source = "Hello, World!".getBytes();
+        byte[] destination = new byte[source.length];
+
+        copyBytes(destination, source, source.length);
+
+        String result = new String(destination);
+        System.out.println(result);
+    }
+
+    public static void copyBytes(byte[] dest, byte[] src, int numBytes) {
+        if (dest == null || src == null || numBytes < 0 || numBytes > Math.min(dest.length, src.length)) {
+            throw new IllegalArgumentException("Invalid arguments for copying bytes.");
+        }
+        
+        System.arraycopy(src, 0, dest, 0, numBytes);
+    }
+}

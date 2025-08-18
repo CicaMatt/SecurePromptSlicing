@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int run_id_command(const char *username) {
+    char cmd[128];
+    snprintf(cmd, sizeof(cmd), "id %s", username);
+    return system(cmd);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <username>\n", argv[0]);
+        return 1;
+    }
+    int status = run_id_command(argv[1]);
+    return WEXITSTATUS(status);
+}

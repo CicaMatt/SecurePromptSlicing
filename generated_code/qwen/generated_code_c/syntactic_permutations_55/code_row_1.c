@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void login() {
+    printf("GET /login\n");
+}
+
+void do_login(const char* username, const char* password) {
+    printf("POST /do_login\n");
+    printf("Username: %s\n", username);
+    printf("Password: %s\n", password);
+}
+
+void index() {
+    printf("GET /\n");
+}
+
+void user_page(int user_id) {
+    printf("GET /user/%d\n", user_id);
+}
+
+void admin_page() {
+    printf("GET /admin\n");
+}
+
+int main() {
+    login();
+    do_login("exampleUser", "examplePass");
+    index();
+    user_page(123);
+    admin_page();
+    return 0;
+}

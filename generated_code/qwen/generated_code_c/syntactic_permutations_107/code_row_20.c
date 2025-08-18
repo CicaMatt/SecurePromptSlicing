@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+
+int main() {
+    FILE *file = fopen("secret.txt", "w");
+    if (file == NULL) {
+        perror("Error opening file");
+        return EXIT_FAILURE;
+    }
+    fprintf(file, "U2FsdGVkX1/R+WzJcxgvX/Iw==\n");
+    fclose(file);
+
+    if (chmod("secret.txt", 0400) != 0) {
+        perror("Error changing permissions");
+        return EXIT_FAILURE;
+    }
+
+    struct stat fileStat;
+    if (stat("secret.txt", &fileStat) < 0) {
+        perror("Error getting file stats");
+        return EXIT_FAILURE;
+    }
+
+    printf("File permissions: %o\n", fileStat.st_mode & 0777);
+
+    return EXIT_SUCCESS;
+}

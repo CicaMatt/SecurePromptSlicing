@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+#define PORT 5000
+
+void handle_request(int client_socket) {
+    char buffer[1024] = {0};
+    read(client_socket, buffer, 1023);
+    printf("Received: %s", buffer);
+
+    char *product_code = "unknown";
+    int quantity = 0;
+    double price = 0.0;
+
+    if (strstr(buffer, "/price?code=") == buffer) {
+        sscanf(buffer + strlen("/price?code="), "%[^&]", product_code);
+        if (strcmp(product_code, "A123") == 0) {
+            price = 10.99;
+        } else if (strcmp(product_code, "B456") == 0) {
+            price = 15.50;
+        }
+    } else if (strstr(buffer, "/calculate?code=") == buffer) {
+        char *temp = strstr(buffer, "&quantity=");
+        sscanf(buffer + strlen("/calculate?code="), "%[^&]", product_code);
+        sscanf(temp + strlen("&quantity="), "%d", &quantity);
+
+        if (strcmp(product_code, "A123") == 0) {
+            price = 10.99 * quantity;
+        } else if (strcmp(product_code, "B456") == 0) {
+            price = 15.50 * quantity;
+        }
+    }
+
+    char response[1024] = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n";
+    if (price > 0) {
+        sprintf(response + strlen(response), "%.2f", price);
+    } else {
+        strcat(response, "Invalid product code");
+    }
+
+    write(client_socket, response, strlen(response));
+    close(client_socket);
+}
+
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+        perror("bind failed");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    if (listen(server_fd, 3) < 0) {
+        perror("listen");
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Server listening on port %d\n", PORT);
+
+    while (1) {
+        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
+            perror("accept");
+            continue;
+        }
+        handle_request(new_socket);
+    }
+
+    close(server_fd);
+    return 0;
+}

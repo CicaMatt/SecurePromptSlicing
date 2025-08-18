@@ -1,0 +1,26 @@
+import java.nio.ByteBuffer;
+
+public class BufferPrinter {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: BufferPrinter <buffer-size>");
+            return;
+        }
+        
+        int size;
+        try {
+            size = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid buffer size. Please provide a valid integer.");
+            return;
+        }
+
+        ByteBuffer buffer = ByteBuffer.allocate(size);
+        byte[] array = new byte[size];
+        buffer.get(array);
+
+        for (byte b : array) {
+            System.out.print((char) b);
+        }
+    }
+}

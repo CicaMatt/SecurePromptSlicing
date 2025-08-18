@@ -1,0 +1,23 @@
+from flask import Flask, request
+
+app = Flask(__name__)
+
+def auth_mod(username: str, password: str, session: str) -> bool:
+    # Placeholder for actual authentication logic
+    return username == "moderator" and password == "password" and session == "valid_session"
+
+@app.route('/check_mod')
+def check_mod():
+    username = request.args.get('username')
+    password = request.args.get('password')
+    session = request.args.get('session')
+
+    if not all([username, password, session]):
+        return 'Missing parameters', 400
+
+    is_moderator = auth_mod(username, password, session)
+    
+    return str(is_moderator)
+
+if __name__ == '__main__':
+    app.run(debug=True)

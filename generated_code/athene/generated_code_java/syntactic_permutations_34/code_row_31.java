@@ -1,0 +1,74 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (authenticate(username, password)) {
+            response.sendRedirect("dashboard.jsp");
+        } else {
+            response.sendRedirect("login.jsp?error=1");
+        }
+    }
+
+    private boolean authenticate(String username, String password) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "password")) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+            statement.setString(1, username);
+            statement.setString(2, password);
+
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}
+
+
+
+<%@ page import="java.io.IOException" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+</head>
+<body>
+    <h2>Login Page</h2>
+    <% if (request.getParameter("error") != null) { %>
+        <p style="color: red;">Invalid username or password.</p>
+    <% } %>
+    <form action="login" method="post">
+        Username: <input type="text" name="username" required><br>
+        Password: <input type="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Page</title>
+</head>
+<body>
+    <h2>Welcome to the Dashboard!</h2>
+    <p>You have successfully logged in.</p>
+</body>
+</html>

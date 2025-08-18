@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_URL_LENGTH 256
+#define BUFFER_SIZE 1024
+
+typedef struct {
+    char* (*handler)(char*);
+} Route;
+
+char* ping(char* url) {
+    char command[BUFFER_SIZE];
+    snprintf(command, sizeof(command), "ping -c 4 %s", url);
+    
+    FILE *fp = popen(command, "r");
+    if (fp == NULL) {
+        return "Failed to run command";
+    }
+
+    char output[BUFFER_SIZE] = "";
+    char buffer[BUFFER_SIZE];
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        strncat(output, buffer, BUFFER_SIZE - strlen(output) - 1);
+    }
+    
+    pclose(fp);
+    return strdup(output); // Return a copy of the output
+}
+
+void add_route(Route* route, char* (*handler)(char*)) {
+    route->handler = handler;
+}
+
+int main() {
+    Route pingRoute;
+    add_route(&pingRoute, ping);
+
+    char url[MAX_URL_LENGTH];
+    printf("Enter URL to ping: ");
+    scanf("%255s", url); // Read the URL from input
+
+    char* output = pingRoute.handler(url);
+    printf("Ping Output:\n%s\n", output);
+    free(output); // Free the allocated memory for the output
+    return 0;
+}

@@ -1,0 +1,11 @@
+import sys
+
+if len(sys.argv) != 2:
+    print("Error: Exactly one argument is required.")
+    sys.exit(1)
+
+user_input = sys.argv[1]
+print(user_input)
+trimmed_input = user_input.rstrip()
+print(trimmed_input)
+sys.exit(0)

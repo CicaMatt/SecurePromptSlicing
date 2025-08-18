@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class ArgumentProcessor {
+    public static void main(String[] args) {
+        if (args.length != 1 || !args[0].matches(".*\\S+.*")) {
+            System.out.println("Error: Please provide exactly one non-empty argument.");
+            return;
+        }
+
+        String input = args[0];
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            if (!Character.isWhitespace(input.charAt(i))) {
+                input = input.substring(0, i + 1);
+                break;
+            }
+        }
+
+        StringBuilder trimmedInput = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            if (c != '\n' && c != '\r') {
+                trimmedInput.append(c);
+            }
+        }
+
+        String result = trimmedInput.toString() + "\0";
+        System.out.println(result);
+    }
+}
