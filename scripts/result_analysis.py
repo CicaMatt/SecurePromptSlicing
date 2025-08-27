@@ -1269,7 +1269,7 @@ def check_cwe_match(csv_path, folder_path):
                 print(f"Errore nella lettura di {filename}: {e}")
 
     # Stampa formattata migliorata
-    print("\nCWE Scenario - Detection Match Stats:\n")
+    #print("\nCWE Scenario - Detection Match Stats:\n")
     header = f"{'CWE ID':<10} | {'Total CWE Scenarios':>17} | {'Total CWE Detections':>22} | {'Matching CWEs':>24}"
     print(header)
     print("-" * len(header))
@@ -1291,10 +1291,194 @@ def check_cwe_match(csv_path, folder_path):
     return result_df
 
 
+def analyze_syntagm_significance(csv_path: str, alpha: float = 0.05, top_n: int = 10):
+    """
+    Reads an aggregated comparison CSV with columns:
+        Category, Value, Base, Result  (Base = with-feature total, Result = with-feature vulnerable)
+    Performs per-(Category, Value) 2x2 tests:
+        - Fisher's Exact when any expected cell < 5 or any observed cell < 5
+        - else Chi-square with Yates correction
+    Applies Benjamini–Hochberg FDR across ALL per-value tests.
+    Prints a clear narrative summary and returns two DataFrames:
+        per_value_df (detailed per feature value) and global_df (omnibus per Category).
+
+    Parameters
+    ----------
+    csv_path : str
+        Path to the aggregated metrics CSV.
+    alpha : float, default 0.05
+        FDR significance threshold for q-values.
+    top_n : int, default 10
+        How many items to show in the printed “top” sections.
+
+    Returns
+    -------
+    per_value_df : pd.DataFrame
+    global_df    : pd.DataFrame
+    """
+    # --- deps ---
+    from scipy.stats import chi2_contingency, fisher_exact
+
+    # --- load & checks ---
+    df = pd.read_csv(csv_path)
+    required = {"Category", "Value", "Base", "Result"}
+    if not required.issubset(df.columns):
+        raise ValueError(f"CSV must contain columns: {sorted(required)}")
+    df = df.copy()
+    df["Category"] = df["Category"].astype(str).str.strip()
+    df["Value"] = df["Value"].astype(str).str.strip()
+    df["Base"] = pd.to_numeric(df["Base"])
+    df["Result"] = pd.to_numeric(df["Result"])
+
+    # --- helpers ---
+    def _expected(a,b,c,d):
+        t = np.array([[a,b],[c,d]], dtype=float)
+        return (t.sum(1, keepdims=True) @ t.sum(0, keepdims=True)) / t.sum()
+
+    def _bh_fdr(pvals):
+        p = np.asarray(pvals, float)
+        n = len(p)
+        order = np.argsort(p)
+        ranks = np.empty(n, int); ranks[order] = np.arange(1, n+1)
+        q = p * n / ranks
+        q_sorted = np.minimum.accumulate(q[order][::-1])[::-1]
+        out = np.empty_like(q_sorted); out[order] = q_sorted
+        return np.clip(out, 0, 1)
+
+    def _odds_ratio(a,b,c,d):
+        add = 0.5 if min(a,b,c,d) == 0 else 0.0
+        return ((a+add)*(d+add))/((b+add)*(c+add))
+
+    # --- per-value tests ---
+    rows = []
+    for cat, sub in df.groupby("Category", sort=False):
+        N = int(sub["Base"].sum())       # total prompts in this category
+        V = int(sub["Result"].sum())     # total vulnerable in this category
+        for _, r in sub.iterrows():
+            base = int(r["Base"])
+            a = int(r["Result"])         # with feature & vulnerable
+            b = base - a                 # with feature & safe
+            c = V - a                    # without feature & vulnerable
+            d = (N - base) - c           # without feature & safe
+            a,b,c,d = [max(x,0) for x in (a,b,c,d)]
+
+            table = np.array([[a,b],[c,d]], dtype=float)
+            exp = _expected(a,b,c,d)
+            use_fisher = (np.any(table < 5) or np.min(exp) < 5)
+
+            if use_fisher:
+                _, p = fisher_exact([[a,b],[c,d]], alternative="two-sided")
+                test = "Fisher"
+            else:
+                _, p, _, _ = chi2_contingency([[a,b],[c,d]], correction=True)
+                test = "Chi2-Yates"
+
+            rate_with = a/(a+b) if (a+b)>0 else np.nan
+            rate_without = c/(c+d) if (c+d)>0 else np.nan
+            rows.append({
+                "Category": cat,
+                "Value": r["Value"],
+                "Base": base,
+                "Result": a,
+                "With_Safe": b,
+                "Without_Vuln": c,
+                "Without_Safe": d,
+                "Rate_with": rate_with,
+                "Rate_without": rate_without,
+                "Rate_diff": (rate_with - rate_without) if (np.isfinite(rate_with) and np.isfinite(rate_without)) else np.nan,
+                "OddsRatio": _odds_ratio(a,b,c,d),
+                "p_value": p,
+                "Test": test
+            })
+
+    per_value_df = pd.DataFrame(rows)
+    if len(per_value_df) == 0:
+        print("No rows to analyze.")
+        return per_value_df, pd.DataFrame()
+
+    # FDR
+    per_value_df["q_value"] = _bh_fdr(np.nan_to_num(per_value_df["p_value"], nan=1.0))
+    per_value_df["Significant"] = per_value_df["q_value"] <= alpha
+
+    # Sorting for reporting
+    per_value_df = per_value_df.sort_values(
+        ["Significant", "q_value", "Rate_diff", "OddsRatio"],
+        ascending=[False, True, False, False]
+    ).reset_index(drop=True)
+
+    # --- global (per-category) omnibus tests ---
+    global_rows = []
+    for cat, sub in df.groupby("Category", sort=False):
+        base = sub["Base"].astype(int).values
+        vuln = sub["Result"].astype(int).values
+        safe = base - vuln
+        table = np.vstack([vuln, safe]).T  # rows = values, cols = [vuln, safe]
+        try:
+            chi2, p, dof, _ = chi2_contingency(table, correction=False)
+        except Exception:
+            chi2, p, dof = np.nan, np.nan, np.nan
+        global_rows.append({"Category": cat, "Chi2": chi2, "df": dof, "p_value": p})
+    global_df = pd.DataFrame(global_rows).sort_values("p_value", na_position="last").reset_index(drop=True)
+
+    # === Pretty printing ===
+    def pct(x):
+        return f"{100*x:.1f}%" if np.isfinite(x) else "NA"
+
+    print("\n" + "="*80)
+    print("Statistical Analysis — Syntagm Features and Vulnerability")
+    print("="*80)
+
+    # Significant features
+    sig = per_value_df[per_value_df["Significant"]]
+    if len(sig):
+        print("\n▶ Significant features (FDR q ≤ {:.2f}) — sorted by q-value".format(alpha))
+        for _, r in sig.head(top_n).iterrows():
+            direction = "↑ risk" if r["OddsRatio"] > 1 else "↓ risk"
+            print(f"  [{r['Category']}] {r['Value']}: "
+                  f"{pct(r['Rate_with'])} vulnerable vs {pct(r['Rate_without'])} baseline | "
+                  f"OR={r['OddsRatio']:.2f} ({direction}); "
+                  f"p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
+        if len(sig) > top_n:
+            print(f"  ... and {len(sig) - top_n} more significant features.")
+    else:
+        print("\n▶ No features reached FDR q ≤ {:.2f}.".format(alpha))
+
+    # Trending but not significant
+    notsig = per_value_df[~per_value_df["Significant"]].copy()
+    if len(notsig):
+        # rank by absolute rate difference, then p-value
+        notsig["_abs_diff"] = notsig["Rate_diff"].abs()
+        trending = notsig.sort_values(["_abs_diff", "p_value"], ascending=[False, True]).head(top_n)
+        print("\n⚠ Trending but not significant (largest rate differences; low q but > α)")
+        for _, r in trending.iterrows():
+            direction = "higher" if r["Rate_diff"] > 0 else "lower"
+            print(f"  [{r['Category']}] {r['Value']}: "
+                  f"{pct(r['Rate_with'])} vs {pct(r['Rate_without'])} ({direction} than baseline by {pct(abs(r['Rate_diff']))}); "
+                  f"OR={r['OddsRatio']:.2f}, p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
+
+    # Global category tests
+    print("\n— Global (omnibus) tests per Category —")
+    for _, r in global_df.iterrows():
+        interp = ("evidence that this Category matters" if (np.isfinite(r["p_value"]) and r["p_value"] < 0.05)
+                  else "no strong overall evidence")
+        print(f"  {r['Category']}: χ²={r['Chi2']:.2f}, df={int(r['df']) if np.isfinite(r['df']) else 'NA'}, "
+              f"p={r['p_value']:.3g} → {interp}")
+
+    print("\nNotes:")
+    print("  • Rate with = vulnerability rate among prompts WITH the feature.")
+    print("  • Baseline = vulnerability rate among prompts WITHOUT the feature.")
+    print("  • OR>1 means the feature is associated with higher odds of vulnerability; OR<1 is protective.")
+    print("  • p-values are from Fisher’s Exact (small counts) or Chi-square with Yates (larger counts).")
+    print("  • q-values are BH–FDR corrected across all per-value tests.")
+    print("="*80 + "\n")
+
+    return per_value_df, global_df
+
+
 ##################################################################################################################
 
 
-model_name = "codellama"
+model_name = "phi4"
 
 language = "Python"
 language_identifier = "py"
@@ -1383,31 +1567,31 @@ class PermutationsStats:
 class ResultStats:
     def __init__(self):
         print("***RESULT STATS***\n")
-        print("Total snippets over baseline:")
-        count_files_by_extension(baseline_snippets_folder, "." + language_identifier)
-        print("Total snippets over permutations:")
-        count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
-        print("\nTotal vulnerabilities/warnings found:")
-        row_counter(results)
-        print("\n---------------------------------------\n")
+        #print("Total snippets over baseline:")
+        #count_files_by_extension(baseline_snippets_folder, "." + language_identifier)
+        #print("Total snippets over permutations:")
+        #count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
+        #print("\nTotal vulnerabilities/warnings found:")
+        #row_counter(results)
+        #print("\n---------------------------------------\n")
 
-        print("\nSingle Metrics Stats:")
-        single_metrics_stats(results, verbose=True)
-        print("\n---------------------------------------\n")
+        #print("\nSingle Metrics Stats:")
+        result_single_metrics = single_metrics_stats(results, verbose=False)
+        #print("\n---------------------------------------\n")
 
-        print("\nCombined Metrics Stats:")
-        combined_metrics_stats(results, verbose=True)
-        print("\n---------------------------------------\n")
+        #print("\nCombined Metrics Stats:")
+        #combined_metrics_stats(results, verbose=False)
+        #print("\n---------------------------------------\n")
 
-        print("\nResult CWEs Stats:")
+        print("\nTotal Vulnerable CWE Scenarios:")
         cwe_stats(results, "CWE ID", verbose=True)
 
-        print("\nCWE Scenario - Detection Match Stats:")
+        print("\nTotal CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
         check_cwe_match(results, permutations_folder)
 
-        print("\nDetected CWE:")
-        analyze_cwe_effect(results)
-        plot_cwe_effect(results)
+        #print("\nStatistical Analysis of Significant Syntagm Features for each CWE Security Scenario:")
+        #analyze_cwe_effect(results)
+        #plot_cwe_effect(results)
 
         print("\n----------------------------------------------------------------\n")
 
@@ -1425,6 +1609,10 @@ class MetricsComparison:
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nSingle Metrics Comparison Stats:")
         compare_single_metric(permutation_single_metrics, result_single_metrics, comparison_single_metrics)
+
+        print("\nStatistical Analysis Stats:")
+        analyze_syntagm_significance(comparison_single_metrics)
+
 
         print("\nCombined Metrics Comparison Stats:")
         compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
@@ -1465,8 +1653,8 @@ BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
 
-BaselineStats()
-PermutationsStats()
+#BaselineStats()
+#PermutationsStats()
 ResultStats()
 
 MetricsComparison()

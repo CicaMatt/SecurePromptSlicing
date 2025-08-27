@@ -841,7 +841,7 @@ def create_formatted_folder(source_folder, destination_folder):
 
 ###################################################################################################################
 
-model_name = "codellama"
+model_name = "athene"
 
 """
 example_commands = [
@@ -1130,13 +1130,13 @@ c_folder_formatted = f"generated_code/{model_name}/generated_code_c_formatted"
 #SecurityAnalysis(command_set_custom_queries_py)
 
 
-#SecurityAnalysis(command_set_baseline_analysis_py)
-#SecurityAnalysis(command_set_result_analysis_py)
+SecurityAnalysis(command_set_baseline_analysis_py)
+SecurityAnalysis(command_set_result_analysis_py)
 
-JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_java)
-JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_java)
+#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_java)
+#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
