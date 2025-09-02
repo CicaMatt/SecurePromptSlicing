@@ -11,6 +11,7 @@ import requests
 import time
 import re
 
+from prompt_permutation_generation import permutations_samples_csv
 
 # === Settings ===
 LM_STUDIO_ENDPOINT = "http://localhost:1235/v1/chat/completions"  # Set to your LM Studio endpoint
@@ -346,6 +347,33 @@ class BaselineCodeGeneration:
                     print(f"❌ Error generating code for row {i + 1}: {e}")
 
 
+class SampledBaselineCodeGeneration:
+    def __init__(self):
+        os.makedirs(samples_baseline_code, exist_ok=True)
+        # === Main processing ===
+        with open(samples_baseline_folder, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for i, row in enumerate(reader):
+                prompt = row["Manually-fixed NL Prompt"]
+
+                # Sostituzione del placeholder <language> con "Python"
+                prompt = prompt.replace("<language>", language)
+
+                ext = extension  # Estensione di default
+                filename = f"code_row_{i + 1}{ext}"
+                filepath = os.path.join(samples_baseline_folder, filename)
+
+                try:
+                    print(f"▶️ Generating code for row {i + 1}...")
+                    code = call_lmstudio(prompt)
+                    with open(filepath, "w", encoding="utf-8") as f:
+                        f.write(code)
+                    print(f"✅ Saved to {filepath}")
+                    time.sleep(SLEEP_BETWEEN_REQUESTS)
+                except Exception as e:
+                    print(f"❌ Error generating code for row {i + 1}: {e}")
+
+"""
 class SinglePermutationCodeGeneration:
     def __init__(self):
         os.makedirs(DEFAULT_OUTPUT_FOLDER, exist_ok=True)
@@ -369,13 +397,53 @@ class SinglePermutationCodeGeneration:
                     time.sleep(SLEEP_BETWEEN_REQUESTS)
                 except Exception as e:
                     print(f"❌ Error generating code for row {i}: {e}")
-
+"""
 
 class PermutationsCodeGeneration:
     def __init__(self, skip_existing=False):
         os.makedirs(output_folder, exist_ok=True)
         # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(permutations_folder):
+            if filename.endswith(".csv"):
+                csv_path = os.path.join(permutations_folder, filename)
+                csv_name_no_ext = os.path.splitext(filename)[0]
+
+                # Crea sottocartella di output
+                output_subfolder = os.path.join(output_folder, csv_name_no_ext)
+                os.makedirs(output_subfolder, exist_ok=True)
+
+                # Inizia la logica di elaborazione CSV qui
+                with open(csv_path, newline='', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for i, row in enumerate(reader):
+                        prompt_template = row["Resulting Prompt"]
+                        prompt = prompt_template.replace("<language>", language)
+
+                        ext = extension
+                        filename_out = f"code_row_{i+1}{ext}"
+                        filepath = os.path.join(output_subfolder, filename_out)
+
+                        # Salta se già esiste e modalità attiva
+                        if skip_existing and os.path.exists(filepath):
+                            print(f"⏭️ Snippet già esistente: {filepath}, salto.")
+                            continue
+
+                        try:
+                            print(f"▶️ Generating code for row {i+1} in {os.path.basename(csv_path)}...")
+                            code = call_lmstudio(prompt)
+                            with open(filepath, "w", encoding="utf-8") as f:
+                                f.write(code)
+                            print(f"✅ Saved to {filepath}")
+                            time.sleep(SLEEP_BETWEEN_REQUESTS)
+                        except Exception as e:
+                            print(f"❌ Error generating code for row {i+1}: {e}")
+
+
+class SampledPermutationsCodeGeneration:
+    def __init__(self, skip_existing=False):
+        os.makedirs(samples_permutations_folder, exist_ok=True)
+        # Itera su tutti i file CSV nella cartella di input
+        for filename in os.listdir(samples_permutations_folder):
             if filename.endswith(".csv"):
                 csv_path = os.path.join(permutations_folder, filename)
                 csv_name_no_ext = os.path.splitext(filename)[0]
@@ -434,14 +502,21 @@ class Cleaning:
 
 model_identifier = "qwen2.5-coder-32b-instruct"
 model_name = "qwen"
+sample_folder_id = 1
 
 language = "C"
 identifier = "c"
 extension = f".{identifier}"
 
+
 permutations_folder = "permutations"
 baseline_folder = f"generated_code/{model_name}/baseline_code_{identifier}"
 output_folder = f"generated_code/{model_name}/generated_code_{identifier}"
+
+samples_baseline_folder = f"samples/baseline_sample_{sample_folder_id}.csv"
+samples_permutations_folder = f"samples/permutations_sample_{sample_folder_id}"
+samples_baseline_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/baseline_code_{identifier}"
+samples_permutations_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/generated_code_{identifier}"
 
 
 system_prompt = f"""
@@ -451,8 +526,6 @@ system_prompt = f"""
 """
 
 
-
-#SinglePermutationCodeGeneration()
 
 #BaselineCodeGeneration()
 
