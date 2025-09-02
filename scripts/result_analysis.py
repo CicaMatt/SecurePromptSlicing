@@ -13,7 +13,7 @@ import pandas as pd
 import warnings
 import matplotlib.pyplot as plt
 from dask.delayed import single_key
-from scipy.stats import chi2_contingency, mannwhitneyu
+from scipy.stats import chi2_contingency, mannwhitneyu, fisher_exact
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
@@ -1291,7 +1291,7 @@ def check_cwe_match(csv_path, folder_path):
     return result_df
 
 
-def analyze_syntagm_significance(csv_path: str, alpha: float = 0.05, top_n: int = 10):
+def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100):
     """
     Reads an aggregated comparison CSV with columns:
         Category, Value, Base, Result  (Base = with-feature total, Result = with-feature vulnerable)
@@ -1464,21 +1464,198 @@ def analyze_syntagm_significance(csv_path: str, alpha: float = 0.05, top_n: int 
         print(f"  {r['Category']}: χ²={r['Chi2']:.2f}, df={int(r['df']) if np.isfinite(r['df']) else 'NA'}, "
               f"p={r['p_value']:.3g} → {interp}")
 
-    print("\nNotes:")
-    print("  • Rate with = vulnerability rate among prompts WITH the feature.")
-    print("  • Baseline = vulnerability rate among prompts WITHOUT the feature.")
-    print("  • OR>1 means the feature is associated with higher odds of vulnerability; OR<1 is protective.")
-    print("  • p-values are from Fisher’s Exact (small counts) or Chi-square with Yates (larger counts).")
-    print("  • q-values are BH–FDR corrected across all per-value tests.")
-    print("="*80 + "\n")
+
+    #print("\nNotes:")
+    #print("  • Rate with = vulnerability rate among prompts WITH the feature.")
+    #print("  • Baseline = vulnerability rate among prompts WITHOUT the feature.")
+    #print("  • OR>1 means the feature is associated with higher odds of vulnerability; OR<1 is protective.")
+    #print("  • p-values are from Fisher’s Exact (small counts) or Chi-square with Yates (larger counts).")
+    #print("  • q-values are BH–FDR corrected across all per-value tests.")
+    #print("="*80 + "\n")
 
     return per_value_df, global_df
+
+
+
+def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100):
+    """
+    Analisi per CSV 'combined' con colonne richieste:
+      Combination, Features, Base, Result
+    Colonne facoltative riportate in output se presenti:
+      Granularity, Sentence Index, Syntagm Type, Frequency
+
+    Per ogni combinazione:
+      - 2×2 test vs il resto delle combinazioni con lo stesso 'Features'
+        (Fisher se attesi/osservati < 5, altrimenti Chi² con Yates).
+      - BH–FDR su tutte le p dei test per combinazione.
+
+    Omnibus (UNICO) sulle combinazioni:
+      - Chi² di indipendenza sulla tabella [righe=Combination, colonne=(vulnerabile, safe)],
+        ignorando 'Features'.
+
+    Ritorna:
+      per_combo_df : risultati per combinazione
+      global_df    : una riga con l’omnibus sulle combinazioni
+    """
+    import numpy as np
+
+    # --- load & checks ---
+    df = pd.read_csv(csv_path)
+    required = {"Combination", "Features", "Base", "Result"}
+    if not required.issubset(df.columns):
+        raise ValueError(f"CSV must contain columns: {sorted(required)}")
+
+    df = df.copy()
+    df["Combination"] = df["Combination"].astype(str).str.strip()
+    df["Features"] = pd.to_numeric(df["Features"], errors="coerce").astype("Int64")
+    df["Base"] = pd.to_numeric(df["Base"])
+    df["Result"] = pd.to_numeric(df["Result"])
+
+    # --- helpers ---
+    def _expected(a,b,c,d):
+        t = np.array([[a,b],[c,d]], dtype=float)
+        return (t.sum(1, keepdims=True) @ t.sum(0, keepdims=True)) / t.sum()
+
+    def _bh_fdr(pvals):
+        p = np.asarray(pvals, float)
+        n = len(p)
+        if n == 0:
+            return np.array([])
+        order = np.argsort(p)
+        ranks = np.empty(n, int); ranks[order] = np.arange(1, n+1)
+        q = p * n / ranks
+        q_sorted = np.minimum.accumulate(q[order][::-1])[::-1]
+        out = np.empty_like(q_sorted); out[order] = q_sorted
+        return np.clip(out, 0, 1)
+
+    def _odds_ratio(a,b,c,d):
+        add = 0.5 if min(a,b,c,d) == 0 else 0.0
+        return ((a+add)*(d+add))/((b+add)*(c+add))
+
+    # --- per-combination tests (baseline stratificato per 'Features') ---
+    rows = []
+    for k, sub in df.groupby("Features", dropna=False, sort=False):
+        N = int(sub["Base"].sum())
+        V = int(sub["Result"].sum())
+        for _, r in sub.iterrows():
+            base = int(r["Base"])
+            a = int(r["Result"])         # con la combinazione & vulnerabile
+            b = base - a                 # con la combinazione & safe
+            c = V - a                    # senza la combinazione & vulnerabile
+            d = (N - base) - c           # senza la combinazione & safe
+            a,b,c,d = [max(x,0) for x in (a,b,c,d)]
+
+            table = np.array([[a,b],[c,d]], dtype=float)
+            exp = _expected(a,b,c,d)
+            use_fisher = (np.any(table < 5) or np.min(exp) < 5)
+
+            if use_fisher:
+                _, p = fisher_exact([[a,b],[c,d]], alternative="two-sided")
+                test = "Fisher"
+            else:
+                _, p, _, _ = chi2_contingency([[a,b],[c,d]], correction=True)
+                test = "Chi2-Yates"
+
+            rate_with = a/(a+b) if (a+b)>0 else np.nan
+            rate_without = c/(c+d) if (c+d)>0 else np.nan
+
+            row = {
+                "Features_k": int(k) if pd.notna(k) else np.nan,
+                "Combination": r["Combination"],
+                "Base": base,
+                "Result": a,
+                "With_Safe": b,
+                "Without_Vuln": c,
+                "Without_Safe": d,
+                "Rate_with": rate_with,
+                "Rate_without": rate_without,
+                "Rate_diff": (rate_with - rate_without) if (np.isfinite(rate_with) and np.isfinite(rate_without)) else np.nan,
+                "OddsRatio": _odds_ratio(a,b,c,d),
+                "p_value": p,
+                "Test": test
+            }
+            for col in ["Granularity", "Sentence Index", "Syntagm Type", "Frequency"]:
+                if col in df.columns:
+                    row[col] = r[col]
+            rows.append(row)
+
+    per_combo_df = pd.DataFrame(rows)
+    if len(per_combo_df) == 0:
+        print("Nessuna riga da analizzare.")
+        return per_combo_df, pd.DataFrame()
+
+    # FDR globale sulle combinazioni
+    per_combo_df["q_value"] = _bh_fdr(np.nan_to_num(per_combo_df["p_value"], nan=1.0))
+    per_combo_df["Significant"] = per_combo_df["q_value"] <= alpha
+
+    per_combo_df = per_combo_df.sort_values(
+        ["Significant", "q_value", "Rate_diff", "OddsRatio"],
+        ascending=[False, True, False, False]
+    ).reset_index(drop=True)
+
+    # --- omnibus sulle combinazioni (ignorando 'Features') ---
+    vuln = df["Result"].astype(int).values
+    safe = (df["Base"] - df["Result"]).astype(int).values
+    table_all = np.vstack([vuln, safe]).T  # righe = Combination, colonne = [vuln, safe]
+
+    try:
+        chi2, p_glob, dof, _ = chi2_contingency(table_all, correction=False)
+    except Exception:
+        chi2, p_glob, dof = np.nan, np.nan, np.nan
+
+    global_df = pd.DataFrame([{
+        "Scope": "All combinations",
+        "Chi2": chi2,
+        "df": dof,
+        "p_value": p_glob
+    }])
+
+    # === Pretty printing ===
+    import numpy as np
+    def pct(x): return f"{100*x:.1f}%" if np.isfinite(x) else "NA"
+
+    print("\n" + "="*80)
+    print("Analisi statistica — Combinazioni di feature e vulnerabilità")
+    print("="*80)
+
+    sig = per_combo_df[per_combo_df["Significant"]]
+    if len(sig):
+        print(f"\n▶ Combinazioni significative (FDR q ≤ {alpha:.2f}) — top {top_n}")
+        for _, r in sig.head(top_n).iterrows():
+            direction = "↑ rischio" if r["OddsRatio"] > 1 else "↓ rischio"
+            print(f"  [{r['Combination']}] "
+                  f"{pct(r['Rate_with'])} vs {pct(r['Rate_without'])} | "
+                  f"OR={r['OddsRatio']:.2f} ({direction}); "
+                  f"p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
+        if len(sig) > top_n:
+            print(f"  … e altre {len(sig) - top_n} combinazioni.")
+    else:
+        print(f"\n▶ Nessuna combinazione ha raggiunto FDR q ≤ {alpha:.2f}.")
+
+    notsig = per_combo_df[~per_combo_df["Significant"]].copy()
+    if len(notsig):
+        notsig["_abs_diff"] = notsig["Rate_diff"].abs()
+        trending = notsig.sort_values(["_abs_diff", "p_value"], ascending=[False, True]).head(top_n)
+        print("\n⚠ Trend (non significative): maggiori differenze di tasso — top", top_n)
+        for _, r in trending.iterrows():
+            direction = "più alto" if r["Rate_diff"] > 0 else "più basso"
+            print(f"  [{r['Combination']}] {pct(r['Rate_with'])} vs {pct(r['Rate_without'])} "
+                  f"({direction} del baseline di {pct(abs(r['Rate_diff']))}); "
+                  f"OR={r['OddsRatio']:.2f}, p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
+
+    print("\n— Omnibus sulle combinazioni (tutte le Combination) —")
+    interp = ("evidenza che alcune combinazioni differiscano nel tasso di vulnerabilità"
+              if (np.isfinite(p_glob) and p_glob < 0.05)
+              else "nessuna forte evidenza complessiva")
+    print(f"  χ²={chi2:.2f}, df={int(dof) if np.isfinite(dof) else 'NA'}, p={p_glob:.3g} → {interp}")
+
+    return per_combo_df, global_df
 
 
 ##################################################################################################################
 
 
-model_name = "phi4"
+model_name = "qwen"
 
 language = "Python"
 language_identifier = "py"
@@ -1610,12 +1787,14 @@ class MetricsComparison:
         print("\nSingle Metrics Comparison Stats:")
         compare_single_metric(permutation_single_metrics, result_single_metrics, comparison_single_metrics)
 
-        print("\nStatistical Analysis Stats:")
-        analyze_syntagm_significance(comparison_single_metrics)
-
-
         print("\nCombined Metrics Comparison Stats:")
         compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
+
+        print("\nSingle Features Statistical Analysis Stats:")
+        analyze_single_feature_significance(comparison_single_metrics)
+
+        print("\nCombined Features Statistical Analysis Stats:")
+        analyze_combined_features_significance(comparison_combined_metrics)
 
         # Plotting data
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
