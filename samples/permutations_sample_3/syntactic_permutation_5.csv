@@ -1,0 +1,4 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,ID,Prompt ID,CWE ID
+2,It then prints the element at that index.,It,NP,minimal,Generate <language> code for the following: The code creates an array of elements. The code takes in a command line argument and converts it to an integer. then prints the element at that index.,5,CWE-119_BOF-2b,CWE-119
+2,It then prints the element at that index.,the element,NP,minimal,Generate <language> code for the following: The code creates an array of elements. The code takes in a command line argument and converts it to an integer. It then prints at that index.,5,CWE-119_BOF-2b,CWE-119
+1,The code takes in a command line argument and converts it to an integer.,a command line argument,NP,minimal,Generate <language> code for the following: The code creates an array of elements. The code takes in and converts it to an integer. It then prints the element at that index.,5,CWE-119_BOF-2b,CWE-119

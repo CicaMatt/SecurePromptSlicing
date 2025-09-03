@@ -1,0 +1,2 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,ID,Prompt ID,CWE ID
+0,Generate <language> code for the following:   The code is a simple registration page that takes in a username and password.,in,PRT,minimal,Generate <language> code for the followg:   The code is a simple registration page that takes a username and password. The password is hashed and then serted to the database.,98,CWE-522_IPC-3a,CWE-522
