@@ -11,7 +11,6 @@ import requests
 import time
 import re
 
-from prompt_permutation_generation import permutations_samples_csv
 
 # === Settings ===
 LM_STUDIO_ENDPOINT = "http://localhost:1235/v1/chat/completions"  # Set to your LM Studio endpoint
@@ -351,7 +350,7 @@ class SampledBaselineCodeGeneration:
     def __init__(self):
         os.makedirs(samples_baseline_code, exist_ok=True)
         # === Main processing ===
-        with open(samples_baseline_folder, newline='', encoding='utf-8') as csvfile:
+        with open(samples_baseline_csv, newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
                 prompt = row["Manually-fixed NL Prompt"]
@@ -361,7 +360,7 @@ class SampledBaselineCodeGeneration:
 
                 ext = extension  # Estensione di default
                 filename = f"code_row_{i + 1}{ext}"
-                filepath = os.path.join(samples_baseline_folder, filename)
+                filepath = os.path.join(samples_baseline_code, filename)
 
                 try:
                     print(f"▶️ Generating code for row {i + 1}...")
@@ -445,11 +444,11 @@ class SampledPermutationsCodeGeneration:
         # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(samples_permutations_folder):
             if filename.endswith(".csv"):
-                csv_path = os.path.join(permutations_folder, filename)
+                csv_path = os.path.join(samples_permutations_folder, filename)
                 csv_name_no_ext = os.path.splitext(filename)[0]
 
                 # Crea sottocartella di output
-                output_subfolder = os.path.join(output_folder, csv_name_no_ext)
+                output_subfolder = os.path.join(samples_permutations_code, csv_name_no_ext)
                 os.makedirs(output_subfolder, exist_ok=True)
 
                 # Inizia la logica di elaborazione CSV qui
@@ -495,14 +494,18 @@ class Cleaning:
     def __init__(self, snippets_folder):
         self.folder_to_clean = snippets_folder
         change_file_extensions(snippets_folder, extension)
-        find_trailing_comments(snippets_folder, extension, remove=True)
+        #find_trailing_comments(snippets_folder, extension, remove=True)
         #find_llm_comments(folder_to_clean, extension, remove=True)
 
 
 
 model_identifier = "qwen2.5-coder-32b-instruct"
+#model_identifier = "athene-v2-chat"
+#model_identifier = "phi-4"
+
+
 model_name = "qwen"
-sample_folder_id = 1
+sample_folder_id = 2
 
 language = "C"
 identifier = "c"
@@ -513,7 +516,7 @@ permutations_folder = "permutations"
 baseline_folder = f"generated_code/{model_name}/baseline_code_{identifier}"
 output_folder = f"generated_code/{model_name}/generated_code_{identifier}"
 
-samples_baseline_folder = f"samples/baseline_sample_{sample_folder_id}.csv"
+samples_baseline_csv = f"samples/baseline_sample_{sample_folder_id}.csv"
 samples_permutations_folder = f"samples/permutations_sample_{sample_folder_id}"
 samples_baseline_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/baseline_code_{identifier}"
 samples_permutations_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/generated_code_{identifier}"
@@ -529,10 +532,13 @@ system_prompt = f"""
 
 #BaselineCodeGeneration()
 
-PermutationsCodeGeneration(skip_existing=True)
+#PermutationsCodeGeneration(skip_existing=True)
 
-IntegrityCheck(baseline_folder)
-IntegrityCheck(output_folder, permutations_folder)
+#IntegrityCheck(baseline_folder)
+#IntegrityCheck(output_folder, permutations_folder)
+
+SampledBaselineCodeGeneration()
+SampledPermutationsCodeGeneration()
 
 #Cleaning(baseline_folder)
 #Cleaning(output_folder)
