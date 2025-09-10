@@ -839,9 +839,568 @@ def create_formatted_folder(source_folder, destination_folder):
     shutil.copytree(source_folder, destination_folder)
 
 
+def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
+    """
+    Ritorna un dizionario con le cardinalità principali (etichette chiare):
+      INVOCATIONS (telemetria):
+        - extractor_successes:   invocazioni estrattore riuscite
+        - extractor_failures:    invocazioni estrattore fallite
+        - extractor_total:       totale invocazioni (successi + fallimenti)
+
+      FILES (diagnostiche):
+        - files_expected:        file attesi (baseline)
+        - files_with_snippets:   file del sorgente con snippet ('successfully-extracted-files')
+        - files_without_snippets:attesi ma senza snippet (expected - with_snippets)
+        - warnings_with_snippets:file con warning ∩ con snippet
+        - warnings_without_snippets: file con warning ∩ senza snippet
+        - analyzed_files:        file citati nei risultati “veri” (non diagnostica/telemetria)
+    """
+    sarif_path = Path(sarif_path)
+    data = json.loads(sarif_path.read_text(encoding="utf-8"))
+
+    artifacts_seen = 0
+    analyzed_uris = set()
+    expected_uris = set()
+    files_with_snippets_uris = set()
+    extraction_warning_uris = set()
+
+    extractor_successes = 0
+    extractor_failures = 0
+    _saw_extractor_summary = False   # evita doppio conteggio
+
+    runs = data.get("runs", []) or []
+    for run in runs:
+        # 1) artifacts + mappa index -> uri
+        artifacts = run.get("artifacts", []) or []
+        artifacts_seen += len(artifacts)
+
+        art_idx_to_uri = {}
+        for i, a in enumerate(artifacts):
+            loc = (a.get("location") or {})
+            u = loc.get("uri")
+            if u:
+                art_idx_to_uri[i] = u
+
+        def _uri_from_artloc(artloc):
+            if not artloc:
+                return None
+            u = artloc.get("uri")
+            if u:
+                return u
+            idx = artloc.get("index")
+            if isinstance(idx, int):
+                return art_idx_to_uri.get(idx)
+            return None
+
+        def _collect_uris_from_locations(obj):
+            out = []
+            for loc in (obj.get("locations", []) or []):
+                phys = (loc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            for rloc in (obj.get("relatedLocations", []) or []):
+                phys = (rloc.get("physicalLocation") or {})
+                art = (rloc.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            return out
+
+        # diagnostiche da escludere dai "risultati veri"
+        diag_rule_ids = {
+            "cpp/baseline/expected-extracted-files",
+            "cpp/diagnostics/successfully-extracted-files",
+            "cpp/diagnostics/extraction-warnings",
+            "cpp/diagnostics/failed-extractor-invocations",
+        }
+
+        # 2) risultati "veri"
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            if rid in diag_rule_ids:
+                continue
+            for uri in _collect_uris_from_locations(res):
+                analyzed_uris.add(uri)
+
+        # 3) diagnostica in invocations
+        for inv in run.get("invocations", []) or []:
+            for tn in inv.get("toolExecutionNotifications", []) or []:
+                desc = (tn.get("descriptor") or {})
+                desc_id = desc.get("id") or tn.get("id") or tn.get("name") or ""
+
+                if desc_id == "cpp/baseline/expected-extracted-files":
+                    for uri in _collect_uris_from_locations(tn):
+                        expected_uris.add(uri)
+
+                elif desc_id == "cpp/extractor/summary":
+                    if not _saw_extractor_summary:
+                        attrs = ((tn.get("properties") or {}).get("attributes")) or {}
+                        extractor_successes += int(attrs.get("extractor-successes") or 0)
+                        extractor_failures  += int(attrs.get("extractor-failures") or 0)
+                        _saw_extractor_summary = True
+
+                elif desc_id == "cpp/diagnostics/successfully-extracted-files":
+                    for uri in _collect_uris_from_locations(tn):
+                        files_with_snippets_uris.add(uri)
+
+                elif desc_id == "cpp/diagnostics/extraction-warnings":
+                    for uri in _collect_uris_from_locations(tn):
+                        extraction_warning_uris.add(uri)
+
+        # 4) fallback diagnostiche come results
+        diag_to_set = {
+            "cpp/baseline/expected-extracted-files": expected_uris,
+            "cpp/diagnostics/successfully-extracted-files": files_with_snippets_uris,
+            "cpp/diagnostics/extraction-warnings": extraction_warning_uris,
+        }
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            dest_set = diag_to_set.get(rid)
+            if dest_set is not None:
+                for uri in _collect_uris_from_locations(res):
+                    dest_set.add(uri)
+
+        # 5) eventuali notifiche nel driver (evita doppio conteggio)
+        for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
+            nid = notif.get("id") or notif.get("name") or ""
+            if nid == "cpp/extractor/summary":
+                if not _saw_extractor_summary:
+                    attrs = ((notif.get("properties") or {}).get("attributes")) or {}
+                    extractor_successes += int(attrs.get("extractor-successes") or 0)
+                    extractor_failures  += int(attrs.get("extractor-failures") or 0)
+                    _saw_extractor_summary = True
+            elif nid == "cpp/diagnostics/successfully-extracted-files":
+                for uri in _collect_uris_from_locations(notif):
+                    files_with_snippets_uris.add(uri)
+            elif nid == "cpp/diagnostics/extraction-warnings":
+                for uri in _collect_uris_from_locations(notif):
+                    extraction_warning_uris.add(uri)
+            elif nid == "cpp/baseline/expected-extracted-files":
+                for uri in _collect_uris_from_locations(notif):
+                    expected_uris.add(uri)
+
+    # Derivati (FILES)
+    files_expected = len(expected_uris)
+    files_with_snippets = len(files_with_snippets_uris)
+    files_without_snippets = max(0, files_expected - files_with_snippets)
+
+    warnings_with_snippets = len(extraction_warning_uris & files_with_snippets_uris)
+    warnings_without_snippets = len(extraction_warning_uris - files_with_snippets_uris)
+
+    # Derivati (INVOCATIONS)
+    extractor_total = extractor_successes + extractor_failures
+
+    summary = {
+        # INVOCATIONS
+        "extractor_successes": extractor_successes,
+        "extractor_failures": extractor_failures,
+        "extractor_total": extractor_total,
+
+        # FILES
+        "files_expected": files_expected,
+        "files_with_snippets": files_with_snippets,
+        "files_without_snippets": files_without_snippets,
+        "warnings_with_snippets": warnings_with_snippets,
+        "warnings_without_snippets": warnings_without_snippets,
+        "analyzed_files": len(analyzed_uris),
+
+        # opzionale
+        "artifacts_seen": artifacts_seen,
+        "expected_uris": sorted(expected_uris) if show_lists else [],
+        "analyzed_uris": sorted(analyzed_uris) if show_lists else [],
+        "successfully_extracted_uris": sorted(files_with_snippets_uris) if show_lists else [],
+        "extraction_warning_uris": sorted(extraction_warning_uris) if show_lists else [],
+    }
+
+    if print_report:
+        print("== CodeQL SARIF – C/C++ – Riepilogo ==")
+
+        # INVOCATIONS (telemetria)
+        print("Invocazioni estrattore:")
+        print(f"  OK (senza interruzioni):        {summary['extractor_successes']}")
+        print(f"  KO (non giunte a termine):      {summary['extractor_failures']}")
+        print(f"  Totale:                         {summary['extractor_total']}")
+
+        print()
+        # FILES (diagnostiche)
+        print("File:")
+        print(f"  Attesi (baseline):              {summary['files_expected']}")
+        print(f"  Estratti:                       {summary['files_with_snippets']}")
+        print(f"    ├─ di cui con warning:        {summary['warnings_with_snippets']}")
+        print(f"    └─ di cui senza warning:      {summary['files_with_snippets'] - summary['warnings_with_snippets']}")
+        print(f"  Non estratti:                   {summary['files_without_snippets']}")
+        print()
+        print(f"File citati nei risultati (query): {summary['analyzed_files']}")
+
+        if show_lists:
+            print("\n-- Lista attesi per estrazione (baseline) --")
+            for u in summary["expected_uris"]:
+                print(" ", u)
+            print("\n-- Lista file con match sulle query (non diagnostica) --")
+            for u in summary["analyzed_uris"]:
+                print(" ", u)
+            print("\n-- Lista file con snippet (successfully-extracted-files) --")
+            for u in summary["successfully_extracted_uris"]:
+                print(" ", u)
+            print("\n-- Lista file con warning di estrazione --")
+            for u in summary["extraction_warning_uris"]:
+                print(" ", u)
+
+    return summary
+
+
+def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
+    """
+    Riepilogo per SARIF CodeQL (pacchetto Java), senza tasso di successo e senza liste di file con warning.
+      - artifacts_seen:           # artefatti registrati (runs[].artifacts)
+      - files_expected:           # attesi (java/baseline/expected-extracted-files)
+      - files_with_snippets:      # estratti con successo (java/diagnostics/successfully-extracted-files)
+      - files_without_snippets:   # attesi ma senza snippet (expected - with_snippets)
+      - extraction_warnings:      # #file con warning (conteggio)
+      - extraction_errors:        # #file con errori (conteggio)
+      - analyzed_files:           # file citati dai risultati “veri” (non diagnostica)
+    """
+
+    sarif_path = Path(sarif_path)
+    data = json.loads(sarif_path.read_text(encoding="utf-8"))
+
+    artifacts_seen = 0
+    expected_uris = set()
+    success_uris = set()
+    warning_uris = set()
+    error_uris = set()
+    analyzed_uris = set()
+
+    runs = data.get("runs", []) or []
+    for run in runs:
+        # 1) Artifacts (file visti) + mappa index->uri
+        artifacts = run.get("artifacts", []) or []
+        artifacts_seen += len(artifacts)
+
+        art_idx_to_uri = {}
+        for i, a in enumerate(artifacts):
+            loc = (a.get("location") or {})
+            u = loc.get("uri")
+            if u:
+                art_idx_to_uri[i] = u
+
+        def _uri_from_artloc(artloc):
+            if not artloc:
+                return None
+            u = artloc.get("uri")
+            if u:
+                return u
+            idx = artloc.get("index")
+            if isinstance(idx, int):
+                return art_idx_to_uri.get(idx)
+            return None
+
+        def _collect_uris(obj):
+            """Estrae URI da locations e relatedLocations (se presenti)."""
+            out = []
+            for loc in (obj.get("locations", []) or []):
+                phys = (loc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            for rloc in (obj.get("relatedLocations", []) or []):
+                phys = (rloc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            return out
+
+        # 2) File toccati dai risultati "veri" (NON diagnostica/telemetria)
+        diag_rule_ids = {
+            "java/baseline/expected-extracted-files",
+            "java/diagnostics/successfully-extracted-files",
+            "java/diagnostics/extraction-warnings",
+            "java/diagnostics/extraction-errors",
+            "java/diagnostic/database-quality",
+        }
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            if rid in diag_rule_ids:
+                continue
+            for uri in _collect_uris(res):
+                analyzed_uris.add(uri)
+
+        # 3) Diagnostica in invocations[].toolExecutionNotifications
+        for inv in run.get("invocations", []) or []:
+            for tn in inv.get("toolExecutionNotifications", []) or []:
+                desc_id = (tn.get("descriptor") or {}).get("id") or tn.get("id") or tn.get("name") or ""
+                dest = None
+                if desc_id == "java/baseline/expected-extracted-files":
+                    dest = expected_uris
+                elif desc_id == "java/diagnostics/successfully-extracted-files":
+                    dest = success_uris
+                elif desc_id == "java/diagnostics/extraction-warnings":
+                    dest = warning_uris
+                elif desc_id == "java/diagnostics/extraction-errors":
+                    dest = error_uris
+                if dest is not None:
+                    for uri in _collect_uris(tn):
+                        dest.add(uri)
+
+        # 4) Fallback: diagnostiche presenti come "results"
+        diag_map = {
+            "java/baseline/expected-extracted-files": expected_uris,
+            "java/diagnostics/successfully-extracted-files": success_uris,
+            "java/diagnostics/extraction-warnings": warning_uris,
+            "java/diagnostics/extraction-errors": error_uris,
+        }
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            dest = diag_map.get(rid)
+            if dest is not None:
+                for uri in _collect_uris(res):
+                    dest.add(uri)
+
+        # 5) Eventuali diagnostiche anche in tool.driver.notifications
+        for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
+            nid = notif.get("id") or notif.get("name") or ""
+            dest = None
+            if nid == "java/baseline/expected-extracted-files":
+                dest = expected_uris
+            elif nid == "java/diagnostics/successfully-extracted-files":
+                dest = success_uris
+            elif nid == "java/diagnostics/extraction-warnings":
+                dest = warning_uris
+            elif nid == "java/diagnostics/extraction-errors":
+                dest = error_uris
+            if dest is not None:
+                for uri in _collect_uris(notif):
+                    dest.add(uri)
+
+    # Derivati
+    files_expected = len(expected_uris)
+    files_extracted = len(success_uris)
+    files_not_extracted = max(0, files_expected - files_extracted)
+
+    summary = {
+        "artifacts_seen": artifacts_seen,
+        "files_expected": files_expected,
+        "files_extracted": files_extracted,
+        "files_not_extracted": files_not_extracted,
+        "extraction_warnings": len(warning_uris),  # solo conteggio
+        "extraction_errors": len(error_uris),      # solo conteggio
+        "analyzed_files": len(analyzed_uris),
+
+        # elenchi (per show_lists)
+        "expected_uris": sorted(expected_uris),
+        "success_uris": sorted(success_uris),
+        "analyzed_uris": sorted(analyzed_uris),
+        # NB: volutamente NON includiamo le liste warning/errori nelle stampe
+        "warning_uris": sorted(warning_uris),
+        "error_uris": sorted(error_uris),
+    }
+
+    if print_report:
+        print("== CodeQL SARIF – Java – Riepilogo ==")
+        print(f"Artefatti registrati nel SARIF:       {summary['artifacts_seen']}")
+        print(f"File attesi (baseline):               {summary['files_expected']}")
+        print(f"File estratti (nel DB):               {summary['files_extracted']}")
+        print(f"File non estratti (non nel DB):       {summary['files_not_extracted']}")
+        print(f"Warning di estrazione (.java):        {summary['extraction_warnings']}")
+        print(f"Errori di estrazione (.java):         {summary['extraction_errors']}")
+        print(f"File citati nei risultati (query):    {summary['analyzed_files']}")
+
+        if show_lists:
+            def _dump(title, items):
+                print(f"\n-- {title} ({len(items)}) --")
+                for u in items:
+                    print(" ", u)
+
+            _dump("Expected (baseline)", summary["expected_uris"])
+            _dump("Successfully extracted", summary["success_uris"])
+            _dump("Files con risultati (non diagnostica)", summary["analyzed_uris"])
+
+    return summary
+
+
+def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
+    """
+    Riepilogo per SARIF CodeQL (pacchetto Python) con etichette chiare:
+      - artifacts_seen:            # artefatti registrati nel SARIF (runs[].artifacts)
+      - files_expected:            # file attesi (py/baseline/expected-extracted-files)
+      - files_extracted:       # file .py con snippet (py/diagnostics/successfully-extracted-files)
+      - files_not_extracted:    # attesi ma senza snippet (expected - with_snippets)
+      - extraction_warnings:       # file con warning (py/diagnostics/extraction-warnings)
+      - syntax_errors:             # file con errori di sintassi (py/diagnostics/syntax-error)
+      - analyzed_files:            # file citati nei risultati “veri” (non diagnostica)
+
+    Se show_lists=True stampa anche gli elenchi (expected, success, warnings, syntax, analyzed).
+    """
+
+    sarif_path = Path(sarif_path)
+    data = json.loads(sarif_path.read_text(encoding="utf-8"))
+
+    artifacts_seen = 0
+    expected_uris = set()
+    success_uris  = set()
+    warning_uris  = set()
+    syntax_uris   = set()
+    analyzed_uris = set()
+
+    runs = data.get("runs", []) or []
+    for run in runs:
+        # 1) Artifacts + mappa index->uri
+        artifacts = run.get("artifacts", []) or []
+        artifacts_seen += len(artifacts)
+
+        art_idx_to_uri = {}
+        for i, a in enumerate(artifacts):
+            loc = (a.get("location") or {})
+            u = loc.get("uri")
+            if u:
+                art_idx_to_uri[i] = u
+
+        def _uri_from_artloc(artloc):
+            if not artloc:
+                return None
+            u = artloc.get("uri")
+            if u:
+                return u
+            idx = artloc.get("index")
+            if isinstance(idx, int):
+                return art_idx_to_uri.get(idx)
+            return None
+
+        def _collect_uris(obj):
+            """Estrae URI da locations e relatedLocations (se presenti)."""
+            out = []
+            for loc in (obj.get("locations", []) or []):
+                phys = (loc.get("physicalLocation") or {})
+                art  = (phys.get("artifactLocation") or {})
+                uri  = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            for rloc in (obj.get("relatedLocations", []) or []):
+                phys = (rloc.get("physicalLocation") or {})
+                art  = (phys.get("artifactLocation") or {})
+                uri  = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            return out
+
+        # 2) File toccati dai risultati "veri" (NON diagnostica/telemetria)
+        diag_rule_ids = {
+            "py/baseline/expected-extracted-files",
+            "py/diagnostics/successfully-extracted-files",
+            "py/diagnostics/extraction-warnings",
+            "py/diagnostics/syntax-error",
+            "py/diagnostic/database-quality",
+        }
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            if rid in diag_rule_ids:
+                continue
+            for uri in _collect_uris(res):
+                analyzed_uris.add(uri)
+
+        # 3) Notifiche di esecuzione (posizione tipica)
+        for inv in run.get("invocations", []) or []:
+            for tn in inv.get("toolExecutionNotifications", []) or []:
+                desc_id = (tn.get("descriptor") or {}).get("id") or tn.get("id") or tn.get("name") or ""
+                dest = None
+                if desc_id == "py/baseline/expected-extracted-files":
+                    dest = expected_uris
+                elif desc_id == "py/diagnostics/successfully-extracted-files":
+                    dest = success_uris
+                elif desc_id == "py/diagnostics/extraction-warnings":
+                    dest = warning_uris
+                elif desc_id == "py/diagnostics/syntax-error":
+                    dest = syntax_uris
+                if dest is not None:
+                    for uri in _collect_uris(tn):
+                        dest.add(uri)
+
+        # 4) Fallback: diagnostiche come "results"
+        diag_map = {
+            "py/baseline/expected-extracted-files": expected_uris,
+            "py/diagnostics/successfully-extracted-files": success_uris,
+            "py/diagnostics/extraction-warnings": warning_uris,
+            "py/diagnostics/syntax-error": syntax_uris,
+        }
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            dest_set = diag_map.get(rid)
+            if dest_set is not None:
+                for uri in _collect_uris(res):
+                    dest_set.add(uri)
+
+        # 5) Posizione alternativa: driver.notifications
+        for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
+            nid = notif.get("id") or notif.get("name") or ""
+            dest = None
+            if nid == "py/baseline/expected-extracted-files":
+                dest = expected_uris
+            elif nid == "py/diagnostics/successfully-extracted-files":
+                dest = success_uris
+            elif nid == "py/diagnostics/extraction-warnings":
+                dest = warning_uris
+            elif nid == "py/diagnostics/syntax-error":
+                dest = syntax_uris
+            if dest is not None:
+                for uri in _collect_uris(notif):
+                    dest.add(uri)
+
+    # Derivati
+    files_expected = len(expected_uris)
+    files_extracted = len(success_uris)
+    files_not_extracted = max(0, files_expected - files_extracted)
+
+    summary = {
+        "artifacts_seen": artifacts_seen,
+        "files_expected": files_expected,
+        "files_extracted": files_extracted,
+        "files_not_extracted": files_not_extracted,
+        "extraction_warnings": len(warning_uris),
+        "syntax_errors": len(syntax_uris),
+        "analyzed_files": len(analyzed_uris),
+
+        # elenchi (show_lists)
+        "expected_uris": sorted(expected_uris),
+        "success_uris": sorted(success_uris),
+        "warning_uris": sorted(warning_uris),
+        "syntax_uris": sorted(syntax_uris),
+        "analyzed_uris": sorted(analyzed_uris),
+    }
+
+    if print_report:
+        print("== CodeQL SARIF – Python – Riepilogo ==")
+        print(f"Artefatti registrati:                 {summary['artifacts_seen']}")
+        print(f"File attesi (baseline):               {summary['files_expected']}")
+        print(f"File estratti (nel DB):               {summary['files_extracted']}")
+        print(f"File non estratti (non nel DB):       {summary['files_not_extracted']}")
+        print(f"Warning di estrazione (.py):          {summary['extraction_warnings']}")
+        print(f"Errori di sintassi (.py):             {summary['syntax_errors']}")
+        print(f"File citati nei risultati (query):    {summary['analyzed_files']}")
+
+        if show_lists:
+            def _dump(title, items):
+                print(f"\n-- {title} ({len(items)}) --")
+                for u in items:
+                    print(" ", u)
+
+            _dump("Expected (baseline)", summary["expected_uris"])
+            _dump("Successfully extracted", summary["success_uris"])
+            _dump("Extraction warnings", summary["warning_uris"])
+            _dump("Syntax errors", summary["syntax_uris"])
+            _dump("Files con risultati (non diagnostica)", summary["analyzed_uris"])
+
+    return summary
+
+
 ###################################################################################################################
 
-model_name = "athene"
+
+model_name = "qwen"
+
 
 """
 example_commands = [
@@ -900,7 +1459,7 @@ command_set_result_analysis_py = [
     r'codeql pack download codeql/python-queries@1.6.0',
 
     # Database complete analysis for CWE match
-    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/python_analysis_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
     f'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/{model_name}/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
@@ -955,7 +1514,7 @@ command_set_result_analysis_java = [
     r'codeql pack download codeql/java-queries@1.5.2',
 
     # Database complete analysis for CWE match
-    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+    f'codeql database analyze CodeQL/Databases/java_analysis_db --format=sarifv2.1.0 --output=results/{model_name}/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
 
     # Database analysis using downloaded query pack
     f'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/{model_name}/permutations/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
@@ -1111,6 +1670,23 @@ class CPreprocessing:
         build_c_project(folder2, nested, mode="auto")
 
 
+class ResultsInsight:
+    def __init__(self):
+        print("C Code Analysis Outcome:")
+        parse_codeql_sarif_c(f"results/{model_name}/json/results_c_baseline.sarif.json")
+        parse_codeql_sarif_c(f"results/{model_name}/json/results_c.sarif.json")
+        print("\n----------------------------------------------------------------\n")
+        print("Java Code Analysis Outcome:")
+        parse_codeql_sarif_java(f"results/{model_name}/json/results_java_baseline.sarif.json")
+        parse_codeql_sarif_java(f"results/{model_name}/json/results_java.sarif.json")
+        print("\n----------------------------------------------------------------\n")
+        print("Python Code Analysis Outcome:")
+        parse_codeql_sarif_py(f"results/{model_name}/json/results_py_baseline.sarif.json")
+        parse_codeql_sarif_py(f"results/{model_name}/json/results_py.sarif.json")
+        print("\n----------------------------------------------------------------\n")
+
+
+
 python_baseline_folder = f"generated_code/{model_name}/baseline_code_python"
 python_folder = f"generated_code/{model_name}/generated_code_python"
 
@@ -1119,19 +1695,15 @@ java_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_jav
 java_folder = f"generated_code/{model_name}/generated_code_java"
 java_folder_formatted = f"generated_code/{model_name}/generated_code_java_formatted"
 
-
 c_baseline_folder = f"generated_code/{model_name}/baseline_code_c"
 c_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_c_formatted"
 c_folder = f"generated_code/{model_name}/generated_code_c"
 c_folder_formatted = f"generated_code/{model_name}/generated_code_c_formatted"
 
 
-#SecurityAnalysis(example_commands)
-#SecurityAnalysis(command_set_custom_queries_py)
 
-
-SecurityAnalysis(command_set_baseline_analysis_py)
-SecurityAnalysis(command_set_result_analysis_py)
+#SecurityAnalysis(command_set_baseline_analysis_py)
+#SecurityAnalysis(command_set_result_analysis_py)
 
 #JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_java)
@@ -1142,3 +1714,5 @@ SecurityAnalysis(command_set_result_analysis_py)
 #SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
+
+ResultsInsight()
