@@ -5,8 +5,10 @@ import os
 import re
 import shutil
 import traceback
+import urllib
 from collections import Counter
 from itertools import combinations
+from typing import Dict, Set
 
 import numpy as np
 import pandas as pd
@@ -1652,13 +1654,117 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
     return per_combo_df, global_df
 
 
+def add_detected_cwes(
+    sarif_path: str,
+    csv_path: str,
+    path_column: str = "Path",
+    cwe_joiner: str = ", "
+) -> None:
+    """
+    Legge un SARIF e un CSV con una colonna 'Path'. Per ogni riga del CSV,
+    trova i CWE rilevati per quel path e li aggiunge direttamente nel CSV
+    sotto la colonna 'Detected CWEs'.
+
+    Args:
+        sarif_path: percorso al file SARIF (.sarif o .json).
+        csv_path: percorso al CSV (verrà sovrascritto).
+        path_column: nome della colonna che contiene i path (default: 'Path').
+        cwe_joiner: separatore per i CWE (default: '; ').
+    """
+
+    def norm(p: str) -> str:
+        return os.path.normpath(p).replace("\\", "/")
+
+    # --- Carica SARIF
+    with open(sarif_path, "r", encoding="utf-8") as f:
+        sarif = json.load(f)
+
+    runs = sarif.get("runs", [])
+    if not runs:
+        raise ValueError("Nessuna 'run' trovata nel SARIF.")
+
+    path_to_cwes: Dict[str, Set[str]] = {}
+    for run in runs:
+        # 1) Mappa regole -> CWE
+        rule_cwe: Dict[str, Set[str]] = {}
+        rules = (run.get("tool", {}) or {}).get("driver", {}).get("rules", []) or []
+        for idx, rule in enumerate(rules):
+            rule_id = rule.get("id") or f"rule_index_{idx}"
+            tags = ((rule.get("properties") or {}).get("tags") or []) + (rule.get("tags") or [])
+            cwes: Set[str] = set()
+            for t in tags:
+                t_low = str(t).lower()
+                if "external/cwe/cwe-" in t_low:
+                    try:
+                        num = t_low.split("external/cwe/cwe-")[1].split("/")[0].split()[0]
+                        if num.isdigit():
+                            cwes.add(f"CWE-{int(num)}")
+                    except Exception:
+                        pass
+            if cwes:
+                rule_cwe[rule_id] = cwes
+
+        # 2) Scorri risultati e collega file -> CWE
+        for res in run.get("results", []) or []:
+            rule_id = res.get("ruleId")
+            if not rule_id and "ruleIndex" in res and isinstance(res["ruleIndex"], int):
+                try:
+                    rule_id = rules[res["ruleIndex"]].get("id")
+                except Exception:
+                    rule_id = None
+            cwes_for_result: Set[str] = set()
+            if rule_id and rule_id in rule_cwe:
+                cwes_for_result |= rule_cwe[rule_id]
+
+            for loc in res.get("locations", []) or []:
+                phys = (loc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = art.get("uri")
+                if not uri:
+                    continue
+                file_key = norm(uri)
+                path_to_cwes.setdefault(file_key, set()).update(cwes_for_result)
+
+    # --- Legge e riscrive CSV inplace
+    with open(csv_path, "r", encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        if path_column not in reader.fieldnames:
+            raise ValueError(f"Colonna '{path_column}' non trovata nel CSV.")
+        fieldnames = list(reader.fieldnames)
+        if "Detected CWEs" not in fieldnames:
+            fieldnames.append("Detected CWEs")
+
+        sarif_keys = list(path_to_cwes.keys())
+        rows = []
+        for row in reader:
+            raw_path = (row.get(path_column) or "").strip()
+            np_csv = norm(raw_path)
+            detected: Set[str] = set()
+
+            if np_csv in path_to_cwes:
+                detected |= path_to_cwes[np_csv]
+            else:
+                for k in sarif_keys:
+                    if k.endswith(np_csv) or np_csv.endswith(k):
+                        detected |= path_to_cwes[k]
+
+            row["Detected CWEs"] = cwe_joiner.join(sorted(detected)) if detected else ""
+            rows.append(row)
+
+    # Sovrascrive lo stesso file
+    with open(csv_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
 ##################################################################################################################
 
 
 model_name = "qwen"
 
-language = "Python"
-language_identifier = "py"
+language = "C"
+language_identifier = "c"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -1692,7 +1798,7 @@ class BaselineCsvBuilder:
         add_prompt_id(results_baseline, prompt_dataset, "Baseline")
         add_cwe_id(results_baseline, "Prompt ID")
         add_prompt_info(results_baseline, prompt_dataset)
-        match_detected_cwes(baseline_json, results_baseline)
+        add_detected_cwes(baseline_json, results_baseline)
         #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
@@ -1708,7 +1814,7 @@ class ResultsCsvBuilder:
         add_prompt_id(results, prompt_dataset, "Results")
         add_cwe_id(results, "Prompt ID")
         add_slicing_info(results, permutations_folder, language)
-        match_detected_cwes(result_json, results)
+        add_detected_cwes(result_json, results)
         #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
