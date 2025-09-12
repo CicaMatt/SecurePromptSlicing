@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s <index> <value1> [<value2> ...]\n", argv[0]);
+        return 1;
+    }
+
+    int index = atoi(argv[1]) - 1; // Convert to zero-based index
+    if (index < 0 || index >= argc - 1) {
+        fprintf(stderr, "Index out of range\n");
+        return 1;
+    }
+
+    printf("%s\n", argv[index + 1]);
+    return 0;
+}

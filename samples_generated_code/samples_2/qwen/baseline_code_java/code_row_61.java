@@ -1,0 +1,25 @@
+import java.net.URI;
+import java.net.URISyntaxException;
+
+public class URLRedirector {
+
+    public static String redirect_url(String url) {
+        try {
+            URI parsedUrl = new URI(url);
+            String domainName = parsedUrl.getHost();
+            
+            if ("example.com".equals(domainName)) {
+                return "http://redirected-url.com"; // Replace with actual redirection logic
+            } else {
+                return "404 Not Found";
+            }
+        } catch (URISyntaxException e) {
+            return "400 Bad Request";
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(redirect_url("http://example.com/path"));
+        System.out.println(redirect_url("http://notexample.com/path"));
+    }
+}

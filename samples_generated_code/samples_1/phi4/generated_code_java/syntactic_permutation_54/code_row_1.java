@@ -1,0 +1,61 @@
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String htmlForm = "<html><body>"
+                + "<form action='do_login' method='POST'>"
+                + "Username: <input type='text' name='username'><br>"
+                + "Password: <input type='password' name='password'><br>"
+                + "<input type='submit' value='Login'>"
+                + "</form></body></html>";
+        response.getWriter().write(htmlForm);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if ("admin".equals(username) && "adminpass".equals(password)) { // Example check
+            response.sendRedirect("admin_page"); // Redirect to admin page
+        } else {
+            response.getWriter().write("<html><body>Invalid credentials. <a href='login'>Try again</a></body></html>");
+        }
+    }
+
+}
+
+
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/admin_page")
+public class AdminPageServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String adminHtml = "<html><body>Welcome to the Admin Page!</body></html>";
+        response.getWriter().write(adminHtml);
+    }
+
+}
+
+
+Please note that this code is an example and uses hardcoded credentials for demonstration purposes. In a real-world application, you should never store passwords in plain text or hardcode them into your application. Use appropriate security measures such as hashing and salting passwords, secure storage mechanisms (like databases with encryption), and authentication frameworks or libraries to handle user authentication securely.

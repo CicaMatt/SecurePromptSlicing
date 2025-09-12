@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/ping")
+public class PingServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = request.getParameter("url");
+        if (url == null || url.isEmpty()) {
+            response.getWriter().write("No URL provided.");
+            return;
+        }
+        
+        ProcessBuilder processBuilder = new ProcessBuilder("ping", url);
+        try {
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            StringBuilder output = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+            
+            response.getWriter().write(output.toString());
+        } catch (IOException e) {
+            response.getWriter().write("Error executing ping command: " + e.getMessage());
+        }
+    }
+}

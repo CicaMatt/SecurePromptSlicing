@@ -1,0 +1,18 @@
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        Random rand = new Random();
+        float a = rand.nextFloat();
+        float b = rand.nextFloat();
+        float c = rand.nextFloat();
+
+        String str_a = String.valueOf(a);
+        String str_b = String.valueOf(b);
+        String str_c = String.valueOf(c);
+
+        System.out.println(str_a);
+        System.out.println(str_b);
+        System.out.println(str_c);
+    }
+}

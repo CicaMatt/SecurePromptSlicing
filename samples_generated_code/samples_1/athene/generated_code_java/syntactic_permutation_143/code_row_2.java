@@ -1,0 +1,57 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/unsubscribe")
+public class UnsubscribeServlet extends HttpServlet {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/mailinglist";
+    private static final String USER = "root";
+    private static final String PASS = "password";
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        if (email == null || email.isEmpty()) {
+            try {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Email parameter is required");
+            } catch (Exception e) {
+                // Handle exception
+            }
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            String checkQuery = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            checkStmt.setString(1, email);
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (!rs.next()) {
+                response.getWriter().write("User is not subscribed.");
+            } else {
+                String deleteQuery = "DELETE FROM users WHERE email = ?";
+                PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
+                deleteStmt.setString(1, email);
+                deleteStmt.executeUpdate();
+                response.getWriter().write("User has been unsubscribed successfully.");
+            }
+        } catch (SQLException e) {
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error");
+            } catch (Exception ex) {
+                // Handle exception
+            }
+        } catch (Exception e) {
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred");
+            } catch (Exception ex) {
+                // Handle exception
+            }
+        }
+    }
+}

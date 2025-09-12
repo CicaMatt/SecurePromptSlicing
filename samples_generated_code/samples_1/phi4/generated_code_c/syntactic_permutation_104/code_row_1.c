@@ -1,0 +1,29 @@
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    int fd;
+    const char *filename = "example.txt";
+    const char *data = "important_config\n";
+
+    // Open or create file for reading and writing
+    fd = open(filename, O_RDWR | O_CREAT, 0644);
+    if (fd == -1) {
+        perror("open");
+        return 1;
+    }
+
+    // Write data to the file
+    ssize_t bytes_written = write(fd, data, sizeof(data) - 1); // Subtracting 1 to avoid writing the null terminator
+    if (bytes_written == -1) {
+        perror("write");
+        close(fd);
+        return 1;
+    }
+
+    // Close the file descriptor
+    close(fd);
+
+    return 0;
+}

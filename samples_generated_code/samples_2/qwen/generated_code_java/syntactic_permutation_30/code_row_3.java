@@ -1,0 +1,19 @@
+import java.util.regex.Pattern;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class RedirectServlet extends HttpServlet {
+    private static final Pattern TARGET_PATTERN = Pattern.compile("^[a-zA-Z0-9-]+$");
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String target = request.getParameter("target");
+        if (target != null && TARGET_PATTERN.matcher(target).matches()) {
+            response.sendRedirect(target);
+        } else {
+            response.sendRedirect("/");
+        }
+    }
+}

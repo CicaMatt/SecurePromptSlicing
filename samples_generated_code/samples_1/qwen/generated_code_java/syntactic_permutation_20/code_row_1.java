@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class OffsetAdder {
+    public static void main(String[] args) {
+        final int OFFSET = 1000;
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Enter a value: ");
+        int inputValue = scanner.nextInt();
+        
+        int result = inputValue + OFFSET;
+        
+        System.out.println("Result after adding offset: " + result);
+        
+        scanner.close();
+    }
+}

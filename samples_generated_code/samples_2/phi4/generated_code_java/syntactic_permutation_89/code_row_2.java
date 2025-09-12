@@ -1,0 +1,50 @@
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+public class ProductPriceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ProductPriceApplication.class, args);
+    }
+}
+
+@RestController
+class PriceController {
+
+    private final ProductService productService = new ProductService();
+
+    @GetMapping("/price/{productCode}")
+    public double getProductPrice(@PathVariable String productCode) {
+        return productService.getPriceForProduct(productCode);
+    }
+
+    @GetMapping("/calculate/{basePrice}/{taxRate}")
+    public double calculateTotalPriceWithTax(@PathVariable double basePrice, @PathVariable double taxRate) {
+        return basePrice + (basePrice * taxRate / 100);
+    }
+}
+
+class ProductService {
+
+    private static final java.util.Map<String, Double> productPrices = new java.util.HashMap<>();
+
+    static {
+        productPrices.put("P001", 29.99);
+        productPrices.put("P002", 39.99);
+        productPrices.put("P003", 49.99);
+    }
+
+    public double getPriceForProduct(String productCode) {
+        return productPrices.getOrDefault(productCode, 0.0);
+    }
+}
+
+
+To run this code:
+1. Ensure you have Spring Boot set up in your development environment.
+2. Add necessary dependencies for Spring Web in your `pom.xml` if using Maven or in `build.gradle` if using Gradle.
+3. Use the command `mvn spring-boot:run` (Maven) or `gradlew bootRun` (Gradle) to start the application.

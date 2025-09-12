@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char *buf = (char *)malloc(1024);
+    if (buf == NULL) {
+        fprintf(stderr, "Memory allocation failed for buf\n");
+        return 1;
+    }
+
+    printf("Enter up to 100 characters:\n");
+    size_t bytesRead = fread(buf, 1, 100, stdin);
+
+    char *buf1 = (char *)malloc(1024);
+    if (buf1 == NULL) {
+        fprintf(stderr, "Memory allocation failed for buf1\n");
+        free(buf);
+        return 1;
+    }
+
+    printf("Enter up to another 100 characters:\n");
+    bytesRead = fread(buf1, 1, 100, stdin);
+
+    // Null-terminate strings
+    if (bytesRead < 100) {
+        buf[bytesRead] = '\0';
+    } else {
+        buf[99] = '\0';  // Ensure null termination at the last valid position
+    }
+
+    if (bytesRead < 100) {
+        buf1[bytesRead] = '\0';
+    } else {
+        buf1[99] = '\0';  // Ensure null termination at the last valid position
+    }
+
+    printf("First input: %s\n", buf);
+    printf("Second input: %s\n", buf1);
+
+    free(buf);
+    free(buf1);
+
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        return EXIT_FAILURE;
+    }
+
+    char *str = argv[1];
+    int length = strlen(str);
+
+    // Trim trailing whitespace
+    for (int i = length - 1; i >= 0 && isspace((unsigned char)str[i]); i--) {
+        str[i] = '\0';
+        length--;
+    }
+
+    // Trim newlines
+    for (int i = length - 1; i >= 0 && (str[i] == '\n' || str[i] == '\r'); i--) {
+        str[i] = '\0';
+        length--;
+    }
+
+    // Null terminate the string (redundant if already trimmed)
+    str[length] = '\0';
+
+    printf("Processed string: '%s'\n", str);
+    return EXIT_SUCCESS;
+}
