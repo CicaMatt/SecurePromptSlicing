@@ -1,15 +1,16 @@
+import ast
 import json
-import logging
 import os
 import re
 import shutil
 import subprocess
+import warnings
 from collections import defaultdict, OrderedDict
 from pathlib import Path
-from textwrap import dedent
 
-import pandas as pd
-from transformers.trainer_pt_utils import nested_detach
+warnings.filterwarnings("ignore", category=SyntaxWarning)
+
+
 
 
 def run_sh_commands(commands):
@@ -73,8 +74,8 @@ def create_maven_structure(code_path: str, nested: bool = False, with_imports: b
 
   <!-- MySQL -->
   <dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
     <version>8.0.33</version>
   </dependency>
 
@@ -259,13 +260,6 @@ def create_maven_structure(code_path: str, nested: bool = False, with_imports: b
     <version>1.7</version>
   </dependency>
 
-  <!-- JsonRPC4J -->
-<dependency>
-    <groupId>com.github.briandilley.jsonrpc4j</groupId>
-    <artifactId>jsonrpc4j</artifactId>
-    <version>1.7</version>
-</dependency>
-
   <!-- Jackson XML/Json support -->
   <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
@@ -299,6 +293,215 @@ def create_maven_structure(code_path: str, nested: bool = False, with_imports: b
     <groupId>ch.qos.logback</groupId>
     <artifactId>logback-classic</artifactId>
     <version>1.4.14</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-template-thymeleaf</artifactId>
+    <version>2.7.1</version>
+    </dependency>
+    
+  <!-- org.json -->
+  <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20240303</version>
+  </dependency>
+    
+    <!-- StringTemplate v4 -->
+  <dependency>
+    <groupId>org.antlr</groupId>
+    <artifactId>ST4</artifactId>
+    <version>4.3.4</version>
+  </dependency>
+
+    <!-- Spark template engines used in your imports -->
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-template-handlebars</artifactId>
+    <version>2.7.1</version>
+  </dependency>
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-template-mustache</artifactId>
+    <version>2.7.1</version>
+  </dependency>
+  <dependency>
+    <groupId>com.sparkjava</groupId>
+    <artifactId>spark-template-velocity</artifactId>
+    <version>2.7.1</version>
+  </dependency>
+    
+    <!-- Spring Session (required for the org.springframework.session.* imports/annotations) -->
+  <dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-core</artifactId>
+    <version>3.2.3</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-data-redis</artifactId>
+    <version>3.2.3</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-jdbc</artifactId>
+    <version>3.2.3</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-api</artifactId>
+    <version>3.1.0</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-server</artifactId>
+    <version>3.1.6</version>
+  </dependency>
+
+<!-- Jython (for org.python.* classes) -->
+  <dependency>
+    <groupId>org.python</groupId>
+    <artifactId>jython-standalone</artifactId>
+    <version>2.7.4</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>com.github.spullara.mustache.java</groupId>
+    <artifactId>compiler</artifactId>
+    <version>0.9.10</version>
+  </dependency>
+
+<!-- HikariCP (com.zaxxer.hikari.*) -->
+  <dependency>
+    <groupId>com.zaxxer</groupId>
+    <artifactId>HikariCP</artifactId>
+    <version>5.1.0</version>
+  </dependency>
+
+<!-- FreeMarker core (freemarker.template.*) -->
+  <dependency>
+    <groupId>org.freemarker</groupId>
+    <artifactId>freemarker</artifactId>
+    <version>2.3.32</version>
+  </dependency>
+
+<!-- ClassGraph (io.github.classgraph.*) -->
+  <dependency>
+    <groupId>io.github.classgraph</groupId>
+    <artifactId>classgraph</artifactId>
+    <version>4.8.172</version>
+  </dependency>
+
+<!-- JJWT (io.jsonwebtoken.*) -->
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.12.6</version>
+  </dependency>
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.12.6</version>
+    <scope>runtime</scope>
+  </dependency>
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.12.6</version>
+    <scope>runtime</scope>
+  </dependency>
+
+<!-- Vert.x (io.vertx.*) -->
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-core</artifactId>
+    <version>4.5.8</version>
+  </dependency>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-web</artifactId>
+    <version>4.5.8</version>
+  </dependency>
+  <dependency>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-pg-client</artifactId>
+    <version>4.5.8</version>
+  </dependency>
+
+<!-- Commons DbUtils (org.apache.commons.dbutils.*) -->
+  <dependency>
+    <groupId>commons-dbutils</groupId>
+    <artifactId>commons-dbutils</artifactId>
+    <version>1.8.1</version>
+  </dependency>
+
+<!-- PDFBox (org.apache.pdfbox.*) -->
+  <dependency>
+    <groupId>org.apache.pdfbox</groupId>
+    <artifactId>pdfbox</artifactId>
+    <version>2.0.31</version>
+  </dependency>
+
+<!-- H2 (org.h2.jdbcx.*) -->
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>2.2.224</version>
+    <scope>test</scope>
+  </dependency>
+
+<!-- JetBrains annotations (org.jetbrains.annotations.*) -->
+  <dependency>
+    <groupId>org.jetbrains</groupId>
+    <artifactId>annotations</artifactId>
+    <version>24.1.0</version>
+  </dependency>
+
+<!-- Jersey extras used by your imports -->
+  <dependency>
+    <groupId>org.glassfish.jersey.containers</groupId>
+    <artifactId>jersey-container-grizzly2-http</artifactId>
+    <version>3.1.6</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.containers</groupId>
+    <artifactId>jersey-container-jetty-http</artifactId>
+    <version>3.1.6</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.media</groupId>
+    <artifactId>jersey-media-json-jackson</artifactId>
+    <version>3.1.6</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.ext</groupId>
+    <artifactId>jersey-mvc-jsp</artifactId>
+    <version>3.1.6</version>
+  </dependency>
+
+<!-- Spring Security crypto (BCryptPasswordEncoder) -->
+  <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-crypto</artifactId>
+    <version>6.2.4</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-jdbc</artifactId>
+    <version>10.1.24</version> <!-- usa la versione compatibile con la tua distribuzione -->
+  </dependency>
+  <dependency>
+    <groupId>javax.xml.bind</groupId>
+    <artifactId>jaxb-api</artifactId>
+    <version>2.3.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jaxb</groupId>
+    <artifactId>jaxb-runtime</artifactId>
+    <version>2.3.8</version>
   </dependency>
 </dependencies>
 
@@ -670,10 +873,109 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         "openssl/sha.h": {"brew": "openssl", "libs": ["-lcrypto"]},
         "openssl/ssl.h": {"brew": "openssl", "libs": ["-lssl", "-lcrypto"]},
         "mpr.h": {"brew": "appweb", "libs": []},
-        "json/json.h": {"brew": "json-c", "libs": ["-ljson-c"]},
+        "json/json.h": {"brew": "jsoncpp", "libs": ["-ljsoncpp"]},
+        "httpserver.hpp": {"brew": "libhttpserver", "libs": ["-lhttpserver"]},
+
         "mysql_connection.h": {"brew": "mysql-connector-c++", "libs": ["-lmysqlcppconn"]},
         "gcrypt.h": {"brew": "libgcrypt", "libs": ["-lgcrypt"]},
         "uriparser/Uri.h": {"brew": "uriparser", "libs": ["-luriparser"]},
+        "libyaml.h": {"brew": "libyaml", "libs": ["-lyaml"]},
+        "tar.h": {"brew": "libtar", "libs": ["-ltar"]},
+        "pcre.h": {"brew": "pcre", "libs": ["-lpcre"]},
+        "zip.h": {"brew": "libzip", "libs": ["-lzip"]},
+        "openssl/bio.h": {"brew": "openssl", "libs": ["-lcrypto"]},
+        "libyaml/parser.h": {"brew": "libyaml", "libs": ["-lyaml"]},
+        "libyaml/yaml.h": {"brew": "libyaml", "libs": ["-lyaml"]},
+        "arpa/inet.h": {"brew": None, "libs": []},
+        "esp_http_server.h": {"brew": None, "libs": ["-lesp_http_server"]},
+        "esp_system.h": {"brew": None, "libs": ["-lesp_system"]},
+        "nvs_flash.h": {"brew": None, "libs": ["-lnvs_flash"]},
+        "fcntl.h": {"brew": None, "libs": []},
+        "sys/socket.h": {"brew": None, "libs": []},
+        "sys/stat.h": {"brew": None, "libs": []},
+        "sys/types.h": {"brew": None, "libs": []},
+        "unistd.h": {"brew": None, "libs": []},
+        "regex.h": {"brew": "pcre", "libs": ["-lpcre"]},
+        "openssl/buffer.h": {"brew": "openssl", "libs": ["-lcrypto"]},
+        "bzlib.h": {"brew": "bzip2", "libs": ["-lbz2"]},  # usi <bzlib.h>, non <bz2.h>
+        "cgi.h": {"brew": "libcgi", "libs": ["-lcgi"]},  # libreria C "libcgi"
+        "http_parser.h": {"brew": "http-parser", "libs": ["-lhttp_parser"]},
+        "mysql/mysql.h": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
+        "msgpack.h": {"brew": "msgpack", "libs": ["-lmsgpackc"]},
+        "sql.h": {"brew": "unixodbc", "libs": ["-lodbc"]},
+        "sqlext.h": {"brew": "unixodbc", "libs": ["-lodbc"]},
+        "openssl/pem.h": {"brew": "openssl", "libs": ["-lssl", "-lcrypto"]},
+        "uvc.h": {"brew": "libuvc", "libs": ["-luvc"]},
+        "libuvc/libuvc.h": {"brew": "libuvc", "libs": ["-luvc"]},
+        # headers Apache httpd: servono per includere, tipicamente senza linkare a libhttpd
+        "httpd.h": {"brew": "httpd", "libs": []},
+        "http_config.h": {"brew": "httpd", "libs": []},
+        "http_protocol.h": {"brew": "httpd", "libs": []},
+        "http_request.h": {"brew": "httpd", "libs": []},
+        "http_server.h": {"brew": "httpd", "libs": []},
+        # duplicati/libarchive usati col prefisso <libarchive/...>
+        "libarchive/archive.h": {"brew": "libarchive", "libs": ["-larchive"]},
+        "libarchive/archive_entry.h": {"brew": "libarchive", "libs": ["-larchive"]},
+        "dirent.h": {"brew": None, "libs": []},          # POSIX, fornita dal sistema
+        "direct.h": {"brew": None, "libs": []},          # Windows/MSVC-only
+        "netinet/in.h": {"brew": None, "libs": []},      # POSIX, fornita dal sistema
+        "windows.h": {"brew": None, "libs": []},         # Windows-only
+
+        # libmicrohttpd: alias del nome header (alcuni snippet usano <libmicrohttpd.h>)
+        "libmicrohttpd.h": {"brew": "libmicrohttpd", "libs": ["-lmicrohttpd"]},
+
+        # libbase64 (aklomp/base64): header è <libbase64.h>, lib = -lbase64
+        # NB: non esiste un formula Homebrew "libbase64"; se la installi a mano,
+        # questo ti permette di linkare correttamente.
+        "libbase64.h": {"brew": None, "libs": ["-lbase64"]},
+    # Python (ATTENZIONE: versione cambia nel tempo; vedi nota sotto)
+    "Python.h": {"brew": "python@3.12", "libs": ["-lpython3.12"]},  # valuta di generare versione via python3-config
+
+    # Variante case-sensitive su Windows.h (il tuo matching è case-sensitive)
+    "Windows.h": {"brew": None, "libs": []},
+
+    # Apache httpd extra header
+    "ap_config.h": {"brew": "httpd", "libs": []},
+    "http_log.h": {"brew": "httpd", "libs": []},
+
+    # libevent (event2/*)
+    "event2/event.h": {"brew": "libevent", "libs": ["-levent"]},
+    "event2/http.h": {"brew": "libevent", "libs": ["-levent"]},
+    "event2/buffer.h": {"brew": "libevent", "libs": ["-levent"]},
+    "event2/listener.h": {"brew": "libevent", "libs": ["-levent"]},
+    "event2/util.h": {"brew": "libevent", "libs": ["-levent"]},
+
+    # WebSockets
+    "libwebsockets.h": {"brew": "libwebsockets", "libs": ["-lwebsockets"]},
+
+    # mod_wsgi API per Apache
+    "mod_wsgi/include/mod_wsgi-api.h": {"brew": "mod_wsgi", "libs": []},
+
+    # yaml-cpp (C++), distinto da libyaml (C)
+    "yaml-cpp/yaml.h": {"brew": "yaml-cpp", "libs": ["-lyaml-cpp"]},
+
+    # Emscripten headers (SDK)
+    "emscripten.h": {"brew": "emscripten", "libs": []},
+    "emscripten/html5.h": {"brew": "emscripten", "libs": []},
+
+    # Header-only / nessun link noto
+    "lodepng.h": {"brew": None, "libs": []},
+    "miniz.h": {"brew": None, "libs": []},
+
+    # base64 generica (se usi libbase64 con nome header <base64.h>)
+    "base64.h": {"brew": None, "libs": ["-lbase64"]},
+
+    # pthreads
+    "pthread.h": {"brew": None, "libs": ["-lpthread"]},
+
+    # httpserver (se usi libhttpserver)
+    "httpserver.h": {"brew": "libhttpserver", "libs": ["-lhttpserver"]},
+
+    # Sistema/portabilità (nessun link aggiuntivo)
+    "io.h": {"brew": None, "libs": []},
+    "libgen.h": {"brew": None, "libs": []},
+    "netdb.h": {"brew": None, "libs": []},
+    "winsock2.h": {"brew": None, "libs": []},
     }
 
     def process_all_known_libs():
@@ -816,7 +1118,11 @@ def find_unique_includes(directory, standard_headers_map=None, exclude_standard=
 
 def count_short_files(folder):
     count = 0
-    for root, _, files in os.walk(folder):
+    for root, dirs, files in os.walk(folder):
+        # Ignore __pycache__ folders
+        if "__pycache__" in dirs:
+            dirs.remove("__pycache__")
+
         for file in files:
             file_path = os.path.join(root, file)
             try:
@@ -827,6 +1133,46 @@ def count_short_files(folder):
             except Exception as e:
                 print(f"Error opening {file_path}: {e}")
     print(f"Number of files with 2 or fewer lines: {count}")
+
+
+def collect_python_imports(root_dir: str):
+    """
+    Recursively read all .py files under root_dir,
+    collect unique top-level imports, print them,
+    and return them as a set.
+    Skips __pycache__ directories, .pyc files, and unparsable files.
+    """
+    imports = set()
+
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        # Prevent os.walk from descending into __pycache__ directories
+        dirnames[:] = [d for d in dirnames if d != "__pycache__"]
+
+        for filename in filenames:
+            # Only process regular .py files (not .pyc or others)
+            if not filename.endswith(".py"):
+                continue
+
+            filepath = os.path.join(dirpath, filename)
+            try:
+                with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
+                    node = ast.parse(f.read(), filename=filepath)
+
+                for n in ast.walk(node):
+                    if isinstance(n, ast.Import):
+                        for alias in n.names:
+                            imports.add(alias.name.split(".")[0])
+                    elif isinstance(n, ast.ImportFrom):
+                        if n.module is not None:
+                            imports.add(n.module.split(".")[0])
+            except Exception:
+                # Skip files that can't be parsed
+                continue
+
+    for mod in sorted(imports):
+        print(mod)
+
+    return imports
 
 
 def create_formatted_folder(source_folder, destination_folder):
@@ -1399,8 +1745,8 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
 ###################################################################################################################
 
 
-model_name = "qwen"
-
+model_name = "athene"
+sample = 1
 
 """
 example_commands = [
@@ -1448,6 +1794,24 @@ command_set_baseline_analysis_py = [
 ]
 
 
+command_set_sample_baseline_analysis_py = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/python_baseline_db --language=python --source-root=samples_generated_code/samples_{sample}/{model_name}/baseline_code_py --overwrite',
+
+    # Query update and configuration
+    r'codeql pack download codeql/python-queries@1.6.0',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_py_baseline.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/python_baseline_db --format=csv --output=samples_results/samples_{sample}/{model_name}/baseline/results_py_baseline.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
+]
+
+
 command_set_result_analysis_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -1463,6 +1827,23 @@ command_set_result_analysis_py = [
 
     # Database analysis using downloaded query pack
     f'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/{model_name}/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
+]
+
+command_set_sample_result_analysis_py = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=samples_generated_code/samples_{sample}/{model_name}/generated_code_py --overwrite',
+
+    # Query update and configuration
+    r'codeql pack download codeql/python-queries@1.6.0',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/python_analysis_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_py.sarif.json codeql/python-queries@1.6.0 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=samples_results/samples_{sample}/{model_name}/baseline/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
 ]
 
 """
@@ -1502,6 +1883,23 @@ command_set_baseline_analysis_java = [
     f'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=results/{model_name}/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
+command_set_sample_baseline_analysis_java = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/java_baseline_db --language=java --source-root=samples_generated_code/samples_{sample}/{model_name}/baseline_code_java_formatted --command="mvn clean compile --fail-never" --overwrite',
+
+    # Query update and configuration
+    r'codeql pack download codeql/python-queries@1.6.0',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_java_baseline.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/java_baseline_db --format=csv --output=samples_results/samples_{sample}/{model_name}/baseline/results_java_baseline.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
+]
+
 
 command_set_result_analysis_java = [
     # Databases folder creation (if not exists)
@@ -1518,6 +1916,24 @@ command_set_result_analysis_java = [
 
     # Database analysis using downloaded query pack
     f'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=results/{model_name}/permutations/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
+]
+
+
+command_set_sample_result_analysis_java = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/java_analysis_db --language=java --source-root=samples_generated_code/samples_{sample}/{model_name}/generated_code_java_formatted --overwrite',
+
+    # Query download and installation for Java
+    r'codeql pack download codeql/java-queries@1.5.2',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/java_analysis_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_java.sarif.json codeql/java-queries@1.5.2 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/java_analysis_db --format=csv --output=samples_results/samples_{sample}/{model_name}/baseline/results_java.csv codeql/java-queries@1.5.2 --warnings=hide --rerun'
 ]
 
 
@@ -1541,6 +1957,24 @@ command_set_baseline_analysis_c = [
 ]
 
 
+command_set_sample_baseline_analysis_c = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/c_baseline_db --language=c --source-root=samples_generated_code/samples_{sample}/{model_name}/baseline_code_c_formatted --command="make -k" --overwrite',
+
+    # Query update and configuration
+    r'codeql pack download codeql/cpp-queries@1.4.3',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/c_baseline_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_c_baseline.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/c_baseline_db --format=csv --output=samples_results/samples_{sample}/{model_name}/baseline/results_c_baseline.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
+]
+
+
 command_set_result_analysis_c = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -1559,6 +1993,24 @@ command_set_result_analysis_c = [
 ]
 
 
+command_set_sample_result_analysis_c = [
+    # Databases folder creation (if not exists)
+    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
+
+    # Database creation starting from code
+    f'codeql database create CodeQL/Databases/c_analysis_db --language=c --source-root=samples_generated_code/samples_{sample}/{model_name}/generated_code_c_formatted --command="make -k" --overwrite',
+
+    # Query download and installation for C
+    r'codeql pack download codeql/cpp-queries@1.4.3',
+
+    # Database complete analysis for CWE match
+    f'codeql database analyze CodeQL/Databases/c_analysis_db --format=sarifv2.1.0 --output=samples_results/samples_{sample}/{model_name}/json/results_c.sarif.json codeql/cpp-queries@1.4.3 --warnings=hide --rerun --sarif-add-query-help',
+
+    # Database analysis using downloaded query pack
+    f'codeql database analyze CodeQL/Databases/c_analysis_db --format=csv --output=samples_results/samples_{sample}/{model_name}/permutations/results_c.csv codeql/cpp-queries@1.4.3 --warnings=hide --rerun'
+]
+
+
 
 class SecurityAnalysis:
     def __init__(self, commands):
@@ -1569,6 +2021,7 @@ class PythonPreprocessing:
     def __init__(self, folder):
         self.folder = folder
         count_short_files(folder)
+        collect_python_imports(folder)
 
 
 class JavaPreprocessing:
@@ -1687,8 +2140,8 @@ class ResultsInsight:
 
 
 
-python_baseline_folder = f"generated_code/{model_name}/baseline_code_python"
-python_folder = f"generated_code/{model_name}/generated_code_python"
+python_baseline_folder = f"generated_code/{model_name}/baseline_code_py"
+python_folder = f"generated_code/{model_name}/generated_code_py"
 
 java_baseline_folder = f"generated_code/{model_name}/baseline_code_java"
 java_baseline_folder_formatted = f"generated_code/{model_name}/baseline_code_java_formatted"
@@ -1701,18 +2154,19 @@ c_folder = f"generated_code/{model_name}/generated_code_c"
 c_folder_formatted = f"generated_code/{model_name}/generated_code_c_formatted"
 
 
-
+#PythonPreprocessing(python_baseline_folder)
+#PythonPreprocessing(python_folder)
 #SecurityAnalysis(command_set_baseline_analysis_py)
 #SecurityAnalysis(command_set_result_analysis_py)
 
-#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_java)
-#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_java)
+JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
 
 #CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
 #CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
 
-ResultsInsight()
+#ResultsInsight()

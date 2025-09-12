@@ -1,27 +1,17 @@
-import ast
 import csv
 import json
 import os
 import re
 import shutil
-import traceback
-import urllib
 from collections import Counter
 from itertools import combinations
 from typing import Dict, Set
 
 import numpy as np
 import pandas as pd
-import warnings
 import matplotlib.pyplot as plt
-from dask.delayed import single_key
-from scipy.stats import chi2_contingency, mannwhitneyu, fisher_exact
-from sklearn.compose import ColumnTransformer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import MultiLabelBinarizer, OneHotEncoder
+from scipy.stats import chi2_contingency, fisher_exact
+from sklearn.preprocessing import MultiLabelBinarizer
 import seaborn as sns
 
 
@@ -1764,55 +1754,126 @@ model_name = "phi4"
 language = "Java"
 language_identifier = "java"
 
-prompt_dataset = 'LLMSecEvalDataset.csv'
-permutations_folder = 'permutations'
+sample_baseline_folder_1 = 'samples/baseline_sample_1.csv'
+sample_baseline_folder_2 = 'samples/baseline_sample_2.csv'
+sample_baseline_folder_3 = 'samples/baseline_sample_3.csv'
+sample_permutations_folder_1 = 'samples/permutations_sample_1'
+sample_permutations_folder_2 = 'samples/permutations_sample_2'
+sample_permutations_folder_3 = 'samples/permutations_sample_3'
+
 
 baseline_snippets_folder = f'generated_code/{model_name}/baseline_code_{language_identifier}'
 permutations_snippets_folder = f'generated_code/{model_name}/generated_code_{language_identifier}'
 
-baseline_json = f'results/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
-result_json = f'results/{model_name}/json/results_{language_identifier}.sarif.json'
 
-results_raw = f'results/{model_name}/permutations/results_{language_identifier}.csv'
-results = f'results/{model_name}/permutations/results_{language_identifier}_complete.csv'
-results_baseline_raw = f'results/{model_name}/baseline/results_{language_identifier}_baseline.csv'
-results_baseline = f'results/{model_name}/baseline/results_{language_identifier}_baseline_complete.csv'
+baseline_json_1 = f'samples_results/sample_1/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
+baseline_json_2 = f'samples_results/sample_2/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
+baseline_json_3 = f'samples_results/sample_3/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
 
-comparison_single_metrics = f'results/{model_name}/comparison/single_metrics_comparison_{language_identifier}.csv'
-comparison_combined_metrics = f'results/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
-comparison_baseline_cwes = f'results/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-comparison_permutations_cwes = f'results/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
+result_json_1 = f'samples_results/sample_1/{model_name}/json/results_{language_identifier}.sarif.json'
+result_json_2 = f'samples_results/sample_2/{model_name}/json/results_{language_identifier}.sarif.json'
+result_json_3 = f'samples_results/sample_3/{model_name}/json/results_{language_identifier}.sarif.json'
 
 
-#result_py_complete = 'results/permutations/results_py_standardpack.csv'
-#result_py_complete = 'results/permutations/results_py_custompack.csv'
+
+results_raw_1 = f'samples_results/sample_1/{model_name}/permutations/results_{language_identifier}.csv'
+results_raw_2 = f'samples_results/sample_2/{model_name}/permutations/results_{language_identifier}.csv'
+results_raw_3 = f'samples_results/sample_3/{model_name}/permutations/results_{language_identifier}.csv'
+
+results_1 = f'samples_results/sample_1/{model_name}/permutations/results_{language_identifier}_complete.csv'
+results_2 = f'samples_results/sample_2/{model_name}/permutations/results_{language_identifier}_complete.csv'
+results_3 = f'samples_results/sample_3/{model_name}/permutations/results_{language_identifier}_complete.csv'
+
+
+results_baseline_raw_1 = f'samples_results/sample_1/{model_name}/baseline/results_{language_identifier}_baseline.csv'
+results_baseline_raw_2 = f'samples_results/sample_2/{model_name}/baseline/results_{language_identifier}_baseline.csv'
+results_baseline_raw_3 = f'samples_results/sample_3/{model_name}/baseline/results_{language_identifier}_baseline.csv'
+
+results_baseline_1 = f'samples_results/sample_1/{model_name}/baseline/results_{language_identifier}_baseline_complete.csv'
+results_baseline_2 = f'samples_results/sample_2/{model_name}/baseline/results_{language_identifier}_baseline_complete.csv'
+results_baseline_3 = f'samples_results/sample_3/{model_name}/baseline/results_{language_identifier}_baseline_complete.csv'
+
+
+comparison_single_metrics_1 = f'samples_results/sample_1/{model_name}/comparison/single_metrics_comparison_{language_identifier}.csv'
+comparison_single_metrics_2 = f'samples_results/sample_2/{model_name}/comparison/single_metrics_comparison_{language_identifier}.csv'
+comparison_single_metrics_3 = f'samples_results/sample_3/{model_name}/comparison/single_metrics_comparison_{language_identifier}.csv'
+
+comparison_combined_metrics_1 = f'samples_results/sample_1/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
+comparison_combined_metrics_2 = f'samples_results/sample_2/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
+comparison_combined_metrics_3 = f'samples_results/sample_3/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
+
+comparison_baseline_cwes_1 = f'samples_results/sample_1/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
+comparison_baseline_cwes_2 = f'samples_results/sample_2/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
+comparison_baseline_cwes_3 = f'samples_results/sample_3/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
+
+comparison_permutations_cwes_1 = f'samples_results/sample_1/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
+comparison_permutations_cwes_2 = f'samples_results/sample_2/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
+comparison_permutations_cwes_3 = f'samples_results/sample_3/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
+
 
 
 
 class BaselineCsvBuilder:
     def __init__(self):
-        shutil.copy(results_baseline_raw, results_baseline)
-        add_labels(results_baseline)
-        add_prompt_id(results_baseline, prompt_dataset, "Baseline")
-        add_cwe_id(results_baseline, "Prompt ID")
-        add_prompt_info(results_baseline, prompt_dataset)
-        add_detected_cwes(baseline_json, results_baseline)
+        shutil.copy(results_baseline_raw_1, results_baseline_1)
+        shutil.copy(results_baseline_raw_2, results_baseline_2)
+        shutil.copy(results_baseline_raw_3, results_baseline_3)
+
+        add_labels(results_baseline_1)
+        add_labels(results_baseline_2)
+        add_labels(results_baseline_3)
+
+        add_prompt_id(results_baseline_1, sample_baseline_folder_1, "Baseline")
+        add_prompt_id(results_baseline_2, sample_baseline_folder_2, "Baseline")
+        add_prompt_id(results_baseline_3, sample_baseline_folder_3, "Baseline")
+
+        add_cwe_id(results_baseline_1, "Prompt ID")
+        add_cwe_id(results_baseline_2, "Prompt ID")
+        add_cwe_id(results_baseline_3, "Prompt ID")
+
+        add_prompt_info(results_baseline_1, sample_baseline_folder_1)
+        add_prompt_info(results_baseline_2, sample_baseline_folder_2)
+        add_prompt_info(results_baseline_3, sample_baseline_folder_3)
+
+        add_detected_cwes(baseline_json_1, results_baseline_1)
+        add_detected_cwes(baseline_json_2, results_baseline_2)
+        add_detected_cwes(baseline_json_3, results_baseline_3)
+
         #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
 class PermutationCsvsBuilder:
     def __init__(self):
-        enhance_permutations_csvs(permutations_folder, prompt_dataset)
+        enhance_permutations_csvs(sample_permutations_folder_1, sample_baseline_folder_1)
+        enhance_permutations_csvs(sample_permutations_folder_2, sample_baseline_folder_2)
+        enhance_permutations_csvs(sample_permutations_folder_3, sample_baseline_folder_3)
 
 
 class ResultsCsvBuilder:
     def __init__(self):
-        shutil.copy(results_raw, results)
-        add_labels(results)
-        add_prompt_id(results, prompt_dataset, "Results")
-        add_cwe_id(results, "Prompt ID")
-        add_slicing_info(results, permutations_folder, language)
-        add_detected_cwes(result_json, results)
+        shutil.copy(results_raw_1, results_1)
+        shutil.copy(results_raw_2, results_2)
+        shutil.copy(results_raw_3, results_3)
+
+        add_labels(results_1)
+        add_labels(results_2)
+        add_labels(results_3)
+
+        add_prompt_id(results_1, sample_baseline_folder_1, "Results")
+        add_prompt_id(results_2, sample_baseline_folder_2, "Results")
+        add_prompt_id(results_3, sample_baseline_folder_3, "Results")
+
+        add_cwe_id(results_1, "Prompt ID")
+        add_cwe_id(results_2, "Prompt ID")
+        add_cwe_id(results_3, "Prompt ID")
+
+        add_slicing_info(results_1, sample_permutations_folder_1, language)
+        add_slicing_info(results_2, sample_permutations_folder_2, language)
+        add_slicing_info(results_3, sample_permutations_folder_3, language)
+
+        add_detected_cwes(result_json_1, results_1)
+        add_detected_cwes(result_json_2, results_2)
+        add_detected_cwes(result_json_3, results_3)
         #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
@@ -1820,10 +1881,14 @@ class BaselineStats:
     def __init__(self):
         print("***BASELINE STATS***\n")
         print("Baseline Covered CWEs Security Scenarios:")
-        covered_cwe_types_stats(prompt_dataset, "Prompt ID")
+        covered_cwe_types_stats(sample_baseline_folder_1, "Prompt ID")
+        covered_cwe_types_stats(sample_baseline_folder_2, "Prompt ID")
+        covered_cwe_types_stats(sample_baseline_folder_3, "Prompt ID")
         print("\n---------------------------------------")
         print("\nBaseline Vulnerable Snippets:")
-        cwe_stats(results_baseline, "CWE ID", verbose=True)
+        cwe_stats(results_baseline_1, "CWE ID", verbose=True)
+        cwe_stats(results_baseline_2, "CWE ID", verbose=True)
+        cwe_stats(results_baseline_3, "CWE ID", verbose=True)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1831,17 +1896,26 @@ class PermutationsStats:
     def __init__(self):
         print("***PERMUTATIONS STATS***\n")
         print("Total permutations over baseline:")
-        total_permutations_over_baseline(permutations_folder)
+        total_permutations_over_baseline(sample_permutations_folder_1)
+        total_permutations_over_baseline(sample_permutations_folder_2)
+        total_permutations_over_baseline(sample_permutations_folder_3)
         print("\n---------------------------------------\n")
 
-        permutations_single_metrics_stats(permutations_folder, verbose=True)
+        permutations_single_metrics_stats(sample_permutations_folder_1, verbose=True)
+        permutations_single_metrics_stats(sample_permutations_folder_2, verbose=True)
+        permutations_single_metrics_stats(sample_permutations_folder_3, verbose=True)
         print("\n---------------------------------------\n")
 
-        permutations_combined_metrics_stats(permutations_folder, verbose=True)
+        permutations_combined_metrics_stats(sample_permutations_folder_1, verbose=True)
+        permutations_combined_metrics_stats(sample_permutations_folder_2, verbose=True)
+        permutations_combined_metrics_stats(sample_permutations_folder_3, verbose=True)
         print("\n---------------------------------------\n")
 
         print("\nPermutation CWEs Stats:")
-        permutations_cwe_stats(permutations_folder, "CWE ID", verbose=True)
+        permutations_cwe_stats(sample_permutations_folder_1, "CWE ID", verbose=True)
+        permutations_cwe_stats(sample_permutations_folder_2, "CWE ID", verbose=True)
+        permutations_cwe_stats(sample_permutations_folder_3, "CWE ID", verbose=True)
+
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1857,18 +1931,28 @@ class ResultStats:
         #print("\n---------------------------------------\n")
 
         #print("\nSingle Metrics Stats:")
-        #single_metrics_stats(results, verbose=True)
+        single_metrics_stats(results_1, verbose=True)
+        single_metrics_stats(results_2, verbose=True)
+        single_metrics_stats(results_3, verbose=True)
         #print("\n---------------------------------------\n")
 
         #print("\nCombined Metrics Stats:")
-        #combined_metrics_stats(results, verbose=True)
-        #print("\n---------------------------------------\n")
+        combined_metrics_stats(results_1, verbose=True)
+        combined_metrics_stats(results_2, verbose=True)
+        combined_metrics_stats(results_3, verbose=True)
+        print("\n---------------------------------------\n")
 
         print("\nTotal Vulnerable CWE Scenarios:")
-        cwe_stats(results, "CWE ID", verbose=True)
+        cwe_stats(results_1, "CWE ID", verbose=True)
+        cwe_stats(results_2, "CWE ID", verbose=True)
+        cwe_stats(results_3, "CWE ID", verbose=True)
+        print("\n---------------------------------------\n")
+
 
         print("\nTotal CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
-        check_cwe_match(results, permutations_folder)
+        check_cwe_match(results_1, sample_permutations_folder_1)
+        check_cwe_match(results_2, sample_permutations_folder_2)
+        check_cwe_match(results_3, sample_permutations_folder_3)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1876,64 +1960,101 @@ class ResultStats:
 class MetricsComparison:
     def __init__(self):
         print("***METRICS COMPARISON***\n")
-        permutation_single_metrics = permutations_single_metrics_stats(permutations_folder, verbose=False)
-        result_single_metrics = single_metrics_stats(results, verbose=False)
+        permutation_single_metrics_1 = permutations_single_metrics_stats(sample_permutations_folder_1, verbose=False)
+        permutation_single_metrics_2 = permutations_single_metrics_stats(sample_permutations_folder_2, verbose=False)
+        permutation_single_metrics_3 = permutations_single_metrics_stats(sample_permutations_folder_3, verbose=False)
 
-        permutation_combined_metrics = permutations_combined_metrics_stats(permutations_folder, verbose=False)
-        result_combined_metrics = combined_metrics_stats(results, verbose=False)
+        result_single_metrics_1 = single_metrics_stats(results_1, verbose=False)
+        result_single_metrics_2 = single_metrics_stats(results_2, verbose=False)
+        result_single_metrics_3 = single_metrics_stats(results_3, verbose=False)
+
+
+        permutation_combined_metrics_1 = permutations_combined_metrics_stats(sample_permutations_folder_1, verbose=False)
+        permutation_combined_metrics_2 = permutations_combined_metrics_stats(sample_permutations_folder_2, verbose=False)
+        permutation_combined_metrics_3 = permutations_combined_metrics_stats(sample_permutations_folder_3, verbose=False)
+
+        result_combined_metrics_1 = combined_metrics_stats(results_1, verbose=False)
+        result_combined_metrics_2 = combined_metrics_stats(results_2, verbose=False)
+        result_combined_metrics_3 = combined_metrics_stats(results_3, verbose=False)
+
 
         # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nSingle Metrics Comparison Stats:")
-        compare_single_metric(permutation_single_metrics, result_single_metrics, comparison_single_metrics)
+        compare_single_metric(permutation_single_metrics_1, result_single_metrics_1, comparison_single_metrics_1)
+        compare_single_metric(permutation_single_metrics_2, result_single_metrics_2, comparison_single_metrics_2)
+        compare_single_metric(permutation_single_metrics_3, result_single_metrics_3, comparison_single_metrics_3)
 
         print("\nCombined Metrics Comparison Stats:")
-        compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
+        compare_combined_metrics(permutation_combined_metrics_1, result_combined_metrics_1, comparison_combined_metrics_1)
+        compare_combined_metrics(permutation_combined_metrics_2, result_combined_metrics_2, comparison_combined_metrics_2)
+        compare_combined_metrics(permutation_combined_metrics_3, result_combined_metrics_3, comparison_combined_metrics_3)
 
         print("\nSingle Features Statistical Analysis Stats:")
-        analyze_single_feature_significance(comparison_single_metrics)
+        analyze_single_feature_significance(comparison_single_metrics_1)
+        analyze_single_feature_significance(comparison_single_metrics_2)
+        analyze_single_feature_significance(comparison_single_metrics_3)
+
 
         print("\nCombined Features Statistical Analysis Stats:")
-        analyze_combined_features_significance(comparison_combined_metrics)
-
+        analyze_combined_features_significance(comparison_combined_metrics_1)
+        analyze_combined_features_significance(comparison_combined_metrics_2)
+        analyze_combined_features_significance(comparison_combined_metrics_3)
+        print("\n----------------------------------------------------------------\n")
+"""
         # Plotting data
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
         plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
 
         plot_combination_frequencies(permutation_combined_metrics, result_combined_metrics, top_n=30)
-        print("\n----------------------------------------------------------------\n")
-
+"""
 
 
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
         print("***CWE COMPARISON***\n")
-        baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
-        permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
-        result_cwes = cwe_stats(results, "CWE ID", verbose=False)
+        baseline_cwes_1 = cwe_stats(results_baseline_1, "CWE ID", verbose=False)
+        baseline_cwes_2 = cwe_stats(results_baseline_2, "CWE ID", verbose=False)
+        baseline_cwes_3 = cwe_stats(results_baseline_3, "CWE ID", verbose=False)
+
+        permutations_cwes_1 = permutations_cwe_stats(sample_permutations_folder_1, "CWE ID", verbose=False)
+        permutations_cwes_2 = permutations_cwe_stats(sample_permutations_folder_2, "CWE ID", verbose=False)
+        permutations_cwes_3 = permutations_cwe_stats(sample_permutations_folder_3, "CWE ID", verbose=False)
+
+        result_cwes_1 = cwe_stats(results_1, "CWE ID", verbose=False)
+        result_cwes_2 = cwe_stats(results_2, "CWE ID", verbose=False)
+        result_cwes_3 = cwe_stats(results_3, "CWE ID", verbose=False)
+
 
         # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
         print("\nBaseline - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(result_cwes, baseline_cwes, comparison_baseline_cwes)
+        compare_cwe_counters(result_cwes_1, baseline_cwes_1, comparison_baseline_cwes_1)
+        compare_cwe_counters(result_cwes_2, baseline_cwes_2, comparison_baseline_cwes_2)
+        compare_cwe_counters(result_cwes_3, baseline_cwes_3, comparison_baseline_cwes_3)
+
         # These values compare the total security scenario over the permutations with those that are vulnerable
         print("\nPermutations - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
-
-        # Plotting data
-        plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
-        plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
+        compare_cwe_counters(permutations_cwes_1, result_cwes_1, comparison_permutations_cwes_1)
+        compare_cwe_counters(permutations_cwes_2, result_cwes_2, comparison_permutations_cwes_2)
+        compare_cwe_counters(permutations_cwes_3, result_cwes_3, comparison_permutations_cwes_3)
         print("\n----------------------------------------------------------------\n")
 
+"""
+        # Plotting data
+        plot_cwe_comparison(result_cwes_1, baseline_cwes_1, "Baseline", "Frequency", True)
+        plot_cwe_comparison(permutations_cwes_1, result_cwes_1, "Permutations", "Frequency", True)
+        """
 
 
-BaselineCsvBuilder()
+
+#BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
 
 #BaselineStats()
 #PermutationsStats()
-ResultStats()
+#ResultStats()
 
-MetricsComparison()
-CWEComparison()
+#MetricsComparison()
+#CWEComparison()

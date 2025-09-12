@@ -1,23 +1,9 @@
-import ast
 import csv
-import importlib
 import os
-import shutil
-import subprocess
-import sys
-import tempfile
-import tokenize
 from collections import defaultdict
-from pathlib import Path
-from typing import Tuple, List, Iterable
-
-import pandas as pd
 import requests
 import time
 import re
-
-import warnings
-#warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 
 # === Settings ===
@@ -63,7 +49,7 @@ def call_lmstudio(prompt):
         return "// No output returned by model"
 
 
-def validate_snippets_and_csv(snippet_folder, csv_folder=None):
+def validate_snippets_and_csv(snippet_folder, csv_folder=None, snippet_amount=150):
     """
     Validates the consistency between a snippet folder and a corresponding CSV folder:
     - If `snippet_folder` contains files directly, checks that there are exactly 150 visible files (ignores hidden files).
@@ -80,11 +66,11 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None):
     if all(os.path.isfile(p) for p in entry_paths):
         # Case 1: folder contains snippets directly
         snippet_files = [p for p in entry_paths if os.path.isfile(p) and not os.path.basename(p).startswith('.')]
-        if len(snippet_files) == 150:
-            print("OK: Exactly 150 snippet files found.")
+        if len(snippet_files) == snippet_amount:
+            print(f"OK: Exactly {snippet_amount} snippet files found.")
         else:
-            print(f"ERROR: Expected 150 snippet files, found {len(snippet_files)}.")
-            total_missing_or_mismatched += abs(150 - len(snippet_files))
+            print(f"ERROR: Expected {snippet_amount} snippet files, found {len(snippet_files)}.")
+            total_missing_or_mismatched += abs(snippet_amount - len(snippet_files))
     else:
         # Case 2: folder contains subfolders with snippets
         folder_count = 0
@@ -181,31 +167,71 @@ def count_empty_files(directory, extension):
     return count
 
 
-
-def looks_like_code(line):
-    line = line.strip()
-
-    # ❌ Se è un comando terminale, NON è codice
-    if re.match(r'^(javac|java|python[0-9]*|pip|curl|wget|make|bash|sh|node|npm)\b', line):
-        return False
-
-    # ✅ Condizioni per cui lo consideriamo codice
-    return (
-        line.startswith("#include") or
-        line.startswith("def ") or
-        line.startswith("class ") or
-        line.startswith("import ") or
-        line.endswith(";") or
-        re.match(r'\w+\s*\(.*\)\s*{?', line) or
-        line.startswith("if ") or
-        line.startswith("for ") or
-        line.startswith("while ") or
-        line.startswith("return ")
-    )
-
 def find_trailing_comments(base_path, extensions=None, remove=False):
-    total_found = 0
-    total_removed = 0
+    def looks_like_code(line):
+        line = line.strip()
+        if re.match(r'^(javac|java|python[0-9]*|pip|curl|wget|make|bash|sh|node|npm)\b', line):
+            return False
+        return (
+            line.startswith("#include") or
+            line.startswith("def ") or
+            line.startswith("class ") or
+            line.startswith("import ") or
+            line.endswith(";") or
+            re.match(r'\w+\s*\(.*\)\s*{?', line) or
+            line.startswith("if ") or
+            line.startswith("for ") or
+            line.startswith("while ") or
+            line.startswith("return ")
+        )
+
+    def remove_lines_starting_with_stars(lines):
+        return [ln for ln in lines if not ln.lstrip().startswith("**")]
+
+    def find_last_top_level_closing_brace(lines):
+        depth = 0
+        in_squote = in_dquote = in_block_comment = False
+        last_idx = None
+        for i, line in enumerate(lines):
+            j = 0
+            in_line_comment = False
+            while j < len(line):
+                ch = line[j]
+                if in_line_comment:
+                    break
+                if in_block_comment:
+                    if ch == '*' and j + 1 < len(line) and line[j+1] == '/':
+                        in_block_comment = False
+                        j += 2; continue
+                    j += 1; continue
+                if in_squote:
+                    if ch == '\\': j += 2; continue
+                    if ch == "'": in_squote = False
+                    j += 1; continue
+                if in_dquote:
+                    if ch == '\\': j += 2; continue
+                    if ch == '"': in_dquote = False
+                    j += 1; continue
+                if ch == '/' and j + 1 < len(line):
+                    nxt = line[j+1]
+                    if nxt == '/': in_line_comment = True; break
+                    if nxt == '*': in_block_comment = True; j += 2; continue
+                if ch == "'": in_squote = True; j += 1; continue
+                if ch == '"': in_dquote = True; j += 1; continue
+                if ch == '{': depth += 1
+                elif ch == '}':
+                    if depth > 0: depth -= 1
+                    if depth == 0: last_idx = i
+                j += 1
+        return last_idx
+
+    def trim_after_last_closing_brace(lines):
+        last_idx = find_last_top_level_closing_brace(lines)
+        if last_idx is not None and last_idx < len(lines) - 1:
+            return lines[:last_idx + 1], True
+        return lines, False
+
+    total_found = total_removed = files_changed = 0
 
     for root, _, files in os.walk(base_path):
         for file in files:
@@ -215,6 +241,7 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                         lines = f.readlines()
 
+                    original_lines = list(lines)
                     new_lines = []
                     in_block = False
                     current_block = []
@@ -223,19 +250,16 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
 
                     for line in lines:
                         stripped = line.strip()
-
                         if stripped.startswith("###"):
                             if in_block:
                                 if not keep_block:
                                     removed_blocks_in_file += 1
                                     total_removed += 1
                                 else:
-                                    # ✅ Tieni solo il contenuto, rimuovi intestazione "### ..."
                                     new_lines.extend(current_block[1:])
-
                             in_block = True
                             current_block = [line]
-                            keep_block = False  # azzera e valuta nel blocco
+                            keep_block = False
                         elif in_block:
                             current_block.append(line)
                             if looks_like_code(line):
@@ -243,7 +267,6 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
                         else:
                             new_lines.append(line)
 
-                    # Gestione blocco finale (se presente)
                     if in_block:
                         if keep_block:
                             new_lines.extend(current_block[1:])
@@ -251,19 +274,28 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
                             removed_blocks_in_file += 1
                             total_removed += 1
 
-                    if removed_blocks_in_file > 0:
-                        total_found += 1
-                        print(f"\n🗑️ Pulito {removed_blocks_in_file} blocco/i da: {file_path}")
+                    before_len = len(new_lines)
+                    new_lines = remove_lines_starting_with_stars(new_lines)
+                    removed_star_lines = before_len - len(new_lines)
 
-                    if remove and (removed_blocks_in_file > 0 or in_block):
+                    new_lines, trimmed = trim_after_last_closing_brace(new_lines)
+                    changed = (new_lines != original_lines)
+
+                    if removed_blocks_in_file > 0 or removed_star_lines > 0 or trimmed:
+                        total_found += 1
+
+                    if remove and changed:
                         with open(file_path, "w", encoding="utf-8") as f_out:
                             f_out.writelines(new_lines)
+                        files_changed += 1
+                        print(f"🧹 {file_path} | blocchi###: {removed_blocks_in_file}, righe'**': {removed_star_lines}, taglio dopo '}}': {trimmed}")
 
                 except Exception as e:
                     print(f"❌ Errore su {file_path}: {e}")
 
     print(f"\n✅ File con blocchi rimossi: {total_found}")
     print(f"🧹 Totale blocchi rimossi: {total_removed}")
+    print(f"✏️  File modificati: {files_changed}")
 
 
 
@@ -408,7 +440,7 @@ class SinglePermutationCodeGeneration:
 
 class PermutationsCodeGeneration:
     def __init__(self, skip_existing=False):
-        os.makedirs(output_folder, exist_ok=True)
+        os.makedirs(result_folder, exist_ok=True)
         # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(permutations_folder):
             if filename.endswith(".csv"):
@@ -416,7 +448,7 @@ class PermutationsCodeGeneration:
                 csv_name_no_ext = os.path.splitext(filename)[0]
 
                 # Crea sottocartella di output
-                output_subfolder = os.path.join(output_folder, csv_name_no_ext)
+                output_subfolder = os.path.join(result_folder, csv_name_no_ext)
                 os.makedirs(output_subfolder, exist_ok=True)
 
                 # Inizia la logica di elaborazione CSV qui
@@ -487,14 +519,15 @@ class SampledPermutationsCodeGeneration:
 
 
 class IntegrityCheck:
-    def __init__(self, snippets_folder, permutation_folder=None):
+    def __init__(self, snippets_folder, permutation_folder=None, snippet_amount=150):
         self.snippets_folder = snippets_folder
         self.permutation_folder = permutation_folder
+        self.snippet_amount = snippet_amount
         count_files_with_extension(snippets_folder, extension)
         count_empty_files(snippets_folder, extension)
         find_trailing_comments(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
-        validate_snippets_and_csv(snippets_folder, permutation_folder)
+        validate_snippets_and_csv(snippets_folder, permutation_folder, snippet_amount)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -502,27 +535,26 @@ class Cleaning:
     def __init__(self, snippets_folder):
         self.folder_to_clean = snippets_folder
         change_file_extensions(snippets_folder, extension)
-        #find_trailing_comments(snippets_folder, extension, remove=True)
-        #find_llm_comments(folder_to_clean, extension, remove=True)
+        find_trailing_comments(snippets_folder, extension, remove=True)
 
 
 
 #model_identifier = "qwen2.5-coder-32b-instruct"
-model_identifier = "athene-v2-chat"
-#model_identifier = "phi-4"
+#model_identifier = "athene-v2-chat"
+model_identifier = "phi-4"
 
 
 model_name = "athene"
 sample_folder_id = 3
 
-language = "C"
-identifier = "c"
+language = "Python"
+identifier = "py"
 extension = f".{identifier}"
 
 
 permutations_folder = "permutations"
 baseline_folder = f"generated_code/{model_name}/baseline_code_{identifier}"
-output_folder = f"generated_code/{model_name}/generated_code_{identifier}"
+result_folder = f"generated_code/{model_name}/generated_code_{identifier}"
 
 samples_baseline_csv = f"samples/baseline_sample_{sample_folder_id}.csv"
 samples_permutations_folder = f"samples/permutations_sample_{sample_folder_id}"
@@ -543,12 +575,19 @@ system_prompt = f"""
 #PermutationsCodeGeneration(skip_existing=True)
 
 #IntegrityCheck(baseline_folder)
-#IntegrityCheck(output_folder, permutations_folder)
+#IntegrityCheck(result_folder, permutations_folder)
+
+Cleaning(baseline_folder)
+Cleaning(result_folder)
+
+
 
 #SampledBaselineCodeGeneration()
 #SampledPermutationsCodeGeneration()
 
+IntegrityCheck(samples_baseline_code, snippet_amount=109)
+IntegrityCheck(samples_permutations_code, samples_permutations_folder)
 
 
-#Cleaning(baseline_folder)
-#Cleaning(output_folder)
+Cleaning(samples_baseline_code)
+Cleaning(samples_permutations_code)
