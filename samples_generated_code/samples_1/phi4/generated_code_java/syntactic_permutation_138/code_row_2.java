@@ -56,6 +56,3 @@ public class WebApp {
         }
     }
 }
-
-
-Make sure to include MySQL JDBC driver in your classpath or build path, and replace `"your_database_name"`, `"username"`, and `"password"` with actual database credentials. This code sets up a basic HTTP server listening on port 8000 and defines a route `/check` that executes a simple query against the database to check connectivity.

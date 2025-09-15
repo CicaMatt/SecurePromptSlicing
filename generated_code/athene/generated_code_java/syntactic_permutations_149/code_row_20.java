@@ -62,27 +62,3 @@ public class MessageServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/messages.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- /WEB-INF/views/messages.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <% ArrayList<String> messages = (ArrayList<String>) request.getAttribute("messages"); %>
-        <% for (String message : messages) { %>
-            <li><%= message %></li>
-        <% } %>
-    </ul>
-    <form action="/post" method="post">
-        Name: <input type="text" name="name"><br>
-        Message: <textarea name="message"></textarea><br>
-        <button type="submit">Post Message</button>
-    </form>
-</body>
-</html>

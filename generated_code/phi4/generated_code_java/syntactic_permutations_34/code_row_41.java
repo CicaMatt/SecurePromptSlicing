@@ -53,6 +53,3 @@ public class SimpleLoginApp {
         // Code to redirect back to login page
     }
 }
-
-
-Make sure you have a MySQL server running and the `mydatabase` database with a table named `users` that has columns `username` and `password`. Replace `DB_URL`, `USER`, and `PASS` with your actual database credentials.

@@ -27,22 +27,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, you need to include the Spark Java library in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-Or if you're using Gradle, include this in your `build.gradle`:
-
-
-implementation 'com.sparkjava:spark-core:2.9.3'
-
-
-Ensure that the Spark Java server is running by executing the main method of the `SimpleWebApp` class.

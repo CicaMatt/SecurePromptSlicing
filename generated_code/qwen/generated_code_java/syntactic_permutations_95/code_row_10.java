@@ -53,15 +53,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedBytes);
     }
 }
-
-
-
-CREATE DATABASE userdb;
-USE userdb;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    salt BINARY(16) NOT NULL
-);

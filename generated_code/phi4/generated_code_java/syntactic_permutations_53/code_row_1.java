@@ -29,6 +29,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Note: To make this servlet work, you need to set up a Java web application with the appropriate JSP pages (`login.jsp`, `adminPage.jsp`, `userPage.jsp`) and configure your server (like Apache Tomcat) properly. Also, ensure that session management is correctly implemented for user authentication and role assignment in your login process.

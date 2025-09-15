@@ -43,39 +43,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h1>Upload a PDF File</h1>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-
-<!-- web.xml if using traditional deployment descriptor -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>FileUploadServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-</web-app>

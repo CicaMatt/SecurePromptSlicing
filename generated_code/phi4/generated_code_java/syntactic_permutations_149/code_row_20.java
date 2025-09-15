@@ -80,29 +80,3 @@ class Message {
         return "<div><h3>" + name + "</h3><p>" + message + "</p></div>";
     }
 }
-
-
-Make sure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.7.0</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.29</version>
-    </dependency>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.24</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-
-
-Ensure your MySQL database is running, and the `messages` table exists with columns `name` and `message`. Adjust `DB_URL`, `USER`, and `PASS` to match your database configuration.

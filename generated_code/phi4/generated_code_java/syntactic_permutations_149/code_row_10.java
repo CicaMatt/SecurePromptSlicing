@@ -53,9 +53,3 @@ public class Main {
         ctx.result(html.toString());
     }
 }
-
-
-Note: Ensure that you have a H2 database setup with a table named `messages` having a column `content`. You can create the table using:
-
-
-CREATE TABLE messages (id INT AUTO_INCREMENT PRIMARY KEY, content VARCHAR(255));

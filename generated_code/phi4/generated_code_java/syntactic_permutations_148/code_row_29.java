@@ -38,6 +38,3 @@ public class PostServlet extends HttpServlet {
     }
 
 }
-
-
-Note: You need to replace `"jdbc:your_database_url"`, `"username"`, and `"password"` with your actual database connection details. The `displayMessages.jsp` should be an existing JSP file that displays the messages from the database.

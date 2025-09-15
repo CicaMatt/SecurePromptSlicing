@@ -34,6 +34,3 @@ public class StockBuyHandler {
         System.out.println("Buying stock: " + stockName);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Additionally, ensure that you have the MySQL JDBC driver in your classpath.

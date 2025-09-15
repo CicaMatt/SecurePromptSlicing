@@ -27,10 +27,7 @@ Make sure you have the necessary Spring Boot dependencies in your `pom.xml` if y
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -46,13 +43,8 @@ Make sure you have the necessary Spring Boot dependencies in your `pom.xml` if y
 Or in your `build.gradle` if you are using Gradle:
 
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 bootJar {
     mainClassName = 'UserInfoApplication'
 }
-
-
-Run the application with `mvn spring-boot:run` or `gradlew bootRun`.

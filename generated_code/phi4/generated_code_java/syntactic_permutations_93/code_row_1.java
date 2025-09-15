@@ -63,6 +63,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database credentials. Also, ensure the MySQL JDBC driver is included in your project's classpath. You can add it using a build tool like Maven or manually download the JAR file.

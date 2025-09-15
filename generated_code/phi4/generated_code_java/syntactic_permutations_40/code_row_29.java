@@ -30,11 +30,3 @@ public class SimpleWebApp {
                 + "</body></html>");
     }
 }
-
-
-Make sure you have the following dependencies in your `build.gradle` or equivalent:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.6.0'
-}

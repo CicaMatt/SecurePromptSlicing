@@ -57,6 +57,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Ensure to replace `"jdbc:mysql://localhost:3306/yourDatabase"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's classpath.

@@ -44,13 +44,3 @@ public class WebApp {
         return render_response_from_env(env);
     }
 }
-
-
-
-<!-- Place this file in src/main/resources/templates/hello.ftl -->
-<html>
-<head><title>Hello</title></head>
-<body>
-<h1>Hello, ${name}!</h1>
-</body>
-</html>

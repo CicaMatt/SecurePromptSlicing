@@ -58,6 +58,3 @@ public class TemperatureService {
         // such as initializing and starting a RESTful service
     }
 }
-
-
-Make sure to replace `username` and `password` with your actual database credentials. Additionally, ensure that you have the necessary JDBC driver in your classpath (e.g., MySQL Connector/J for MySQL databases) and configure any server setup required to run this as a RESTful service (using frameworks like Jersey or Spring Boot).

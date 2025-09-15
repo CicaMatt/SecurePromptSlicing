@@ -60,34 +60,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- index.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Welcome to the Main Page</h1>
-<a href="MessageServlet">View Messages</a>
-</body>
-</html>
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/MessageServlet</url-pattern>
-    </servlet-mapping>
-</web-app>

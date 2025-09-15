@@ -42,6 +42,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-This code sets up an HTTP server that listens for requests on port 8080. When a POST request is made to `/hello`, it reads the username from the request body and constructs an HTML response greeting the user with their name. The server sends this response back to the client. If any other method is used, it responds with a "405 Method Not Allowed" status.

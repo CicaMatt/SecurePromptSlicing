@@ -32,6 +32,3 @@ public class StockMarket {
         // Additional logic for buying the stock can be added here
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database connection details. Additionally, ensure that the JDBC driver for MySQL is included in your project's dependencies.

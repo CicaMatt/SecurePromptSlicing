@@ -49,26 +49,3 @@ class PayloadData {
         this.type = type;
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.28</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.0</version>
-    </dependency>
-</dependencies>
-
-
-Note: The above code includes Maven dependencies within XML tags for clarity. In a real-world scenario, these should be placed in a `pom.xml` file if using Maven as the build tool.

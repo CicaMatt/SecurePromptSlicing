@@ -39,41 +39,14 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, <%= session.getAttribute("username") %>!</h1>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
 
 
-<!-- web.xml -->
+
+
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
@@ -110,19 +83,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-
-<!-- Add this to web.xml -->
-<servlet>
-    <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>com.example.LogoutServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/logout</url-pattern>
-</servlet-mapping>
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also, ensure that the package name `com.example` matches your project structure or adjust accordingly.

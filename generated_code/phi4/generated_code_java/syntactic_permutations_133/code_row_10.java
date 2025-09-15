@@ -34,19 +34,3 @@ public class Main {
         server.join();
     }
 }
-
-
-**Note:** To run this code, you'll need to include Jetty as a dependency in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

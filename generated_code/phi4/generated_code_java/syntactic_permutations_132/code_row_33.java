@@ -66,15 +66,6 @@ public class HelloDecorator {
 Make sure you have a file named `hello.html` in the same directory as your Java program with content like:
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>
 
 
 This code sets up a simple HTTP server using `com.sun.net.httpserver.HttpServer` and handles requests to URLs of the form `/hello/<username>`. It reads an HTML template file and replaces `{username}` with the actual username from the URL.

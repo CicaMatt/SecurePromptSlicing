@@ -31,6 +31,3 @@ public class HelloServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure you have a servlet container like Apache Tomcat to run this code. Deploy the above servlet in your web application and access it via `/hello?username=YourName` to see the greeting message.

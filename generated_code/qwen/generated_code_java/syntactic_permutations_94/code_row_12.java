@@ -47,12 +47,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven and need MySQL connector -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>

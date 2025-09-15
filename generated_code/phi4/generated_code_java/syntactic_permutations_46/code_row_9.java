@@ -41,6 +41,3 @@ public class ImageServlet extends HttpServlet {
         return new File(imagePath);
     }
 }
-
-
-This code defines a `ImageServlet` that handles GET requests to `/img/*`, extracts the image name from the URL, and serves it if it exists in the server's `images` directory. Make sure your servlet container is properly configured and that the images are placed in the correct directory relative to your web application.

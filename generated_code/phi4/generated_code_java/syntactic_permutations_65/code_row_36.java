@@ -60,20 +60,3 @@ public class PdfUploadServer {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-<form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
-    <label for="file">Choose a file:</label>
-    <input type="file" id="file" name="file" accept=".pdf"><br><br>
-    <button type="submit">Upload</button>
-</form>
-</body>
-</html>

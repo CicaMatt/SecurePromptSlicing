@@ -64,6 +64,3 @@ public class LoginSystem {
         // For example, you can open a new window or change the current view in a GUI application
     }
 }
-
-
-**Note:** Make sure to replace `"your_database"`, `DB_URL`, `USER`, and `PASS` with your actual database name, URL, username, and password. This code assumes you have MySQL set up locally. Adjust the JDBC URL and driver if using another database system. Also, ensure that the MySQL JDBC driver is in your classpath.

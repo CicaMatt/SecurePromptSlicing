@@ -40,29 +40,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form action="submitMessage" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
-        
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with the actual database name, username, and password. Also, ensure that the JDBC driver for MySQL (or your chosen DB) is included in your project's classpath.

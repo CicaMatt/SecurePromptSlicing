@@ -52,6 +52,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedBytes);
     }
 }
-
-
-Make sure to replace `DB_URL`, `DB_USER`, and `DB_PASSWORD` with your actual database URL, username, and password. Also, ensure that you have a MySQL database running and a table named `users` with columns `username`, `password`, and `salt`.

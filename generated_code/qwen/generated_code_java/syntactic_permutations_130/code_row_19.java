@@ -43,5 +43,5 @@ public class ResponseRenderer {
 
 
 
-<!-- template.ftl -->
+
 Hello, ${name}!

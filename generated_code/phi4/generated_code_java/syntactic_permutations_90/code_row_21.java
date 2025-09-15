@@ -58,35 +58,3 @@ public class ProductService {
         }
     }
 }
-
-
-**Dependencies:**
-- Include `spark-core` for the web server.
-- Include `snakeyaml` for YAML processing.
-
-To run this code, ensure you have these dependencies in your project. You can use Maven or Gradle to manage them:
-
-**For Maven:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>
-
-
-**For Gradle:**
-
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'org.yaml:snakeyaml:1.33'
-}

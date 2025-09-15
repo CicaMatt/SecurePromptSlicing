@@ -121,6 +121,3 @@ public class LoginPageServlet extends HttpServlet {
         );
     }
 }
-
-
-This code assumes a Java EE environment with servlet capabilities. It simulates user validation and redirects based on the outcome. You would need to replace the hardcoded username and password check in `isValidUser` with an actual database query for a real application.

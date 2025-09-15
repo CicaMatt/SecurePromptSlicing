@@ -22,6 +22,3 @@ public class HelloWorldResource {
         System.out.println("\t" + HelloWorldResource.class.getCanonicalName());
     }
 }
-
-
-Make sure to include the necessary dependencies in your project, such as `jersey-container-grizzly2-http`, `jersey-server`, and `jersey-servlet` for this code to run.

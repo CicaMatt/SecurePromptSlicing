@@ -109,6 +109,3 @@ public class Main {
         return messages.toString();
     }
 }
-
-
-Before running this code, ensure you have the appropriate JDBC driver for your database in your classpath. Replace `your_database_url`, `your_db_user`, and `your_db_password` with your actual database URL, user, and password. Also, make sure to create a table named `messages` with columns `username` and `message`.

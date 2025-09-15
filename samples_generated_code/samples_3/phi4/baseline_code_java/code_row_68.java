@@ -55,32 +55,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Dependencies:**
-- Javalin for the web framework.
-- HikariCP for connection pooling.
-
-Add these dependencies to your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.12.1</version>
-    </dependency>
-    <dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-        <version>5.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>42.3.1</version>
-    </dependency>
-</dependencies>
-
-
-**Note:** Replace `jdbc:your_database_url`, `your_username`, and `your_password` with your actual database connection details. Adjust the SQL query and table/column names as necessary for your schema.

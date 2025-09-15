@@ -43,6 +43,3 @@ public class RegistrationPage {
         scanner.close();
     }
 }
-
-
-**Note:** Make sure to replace `yourDatabase`, `yourUsername`, and `yourPassword` with your actual database name, username, and password. Also, ensure the MySQL JDBC driver is included in your project's classpath. The table `users` should have at least two columns: `username` (VARCHAR) and `password` (VARCHAR).

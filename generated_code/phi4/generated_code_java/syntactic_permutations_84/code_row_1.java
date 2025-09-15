@@ -36,30 +36,3 @@ public class WebApp {
         });
     }
 }
-
-
-To run this application, you need to include dependencies for Javalin and SnakeYAML in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.9.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.3</version>
-    </dependency>
-</dependencies>
-
-
-Or in your `build.gradle` if you are using Gradle:
-
-
-implementation 'io.javalin:javalin:5.9.1'
-implementation 'org.yaml:snakeyaml:2.3'
-
-
-Make sure to include these dependencies in your project setup before running the application.

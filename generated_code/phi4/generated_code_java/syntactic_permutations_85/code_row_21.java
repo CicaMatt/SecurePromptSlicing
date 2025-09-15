@@ -45,6 +45,3 @@ public class TemperatureResource {
         return temperature;
     }
 }
-
-
-Make sure to replace `"yourUsername"` and `"yourPassword"` with your actual database username and password. Additionally, ensure that the `TemperatureData` table exists in your database schema with appropriate columns for `latitude`, `longitude`, `date`, and `temperature`.

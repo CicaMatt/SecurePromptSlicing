@@ -30,16 +30,12 @@ class InfoController {
 }
 
 
-**Note:** To run the above code, you need to have Spring Boot set up in your development environment. You can include the necessary dependencies by adding them to your `build.gradle` or `pom.xml` file.
 
 For Maven (`pom.xml`), add:
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -69,9 +65,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 test {
     useJUnitPlatform()

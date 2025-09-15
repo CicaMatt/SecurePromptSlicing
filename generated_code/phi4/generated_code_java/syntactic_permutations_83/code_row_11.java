@@ -56,13 +56,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run the above code:
-1. Save it in a file named `WebApp.java`.
-2. Compile it using `javac WebApp.java`.
-3. Run it with `java -cp .:lib/httpserver.jar WebApp` (assuming you have `httpserver.jar` from JDK's internal package or similar).
-4. Test the application by sending a POST request to `http://localhost:8000/payload` with payload data, e.g., using tools like Postman or curl: 
-
-
-curl -X POST http://localhost:8000/payload -d "name=John Doe"

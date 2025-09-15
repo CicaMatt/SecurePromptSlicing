@@ -25,22 +25,3 @@ public class MessageServlet extends HttpServlet {
         // Example: Use JDBC or any ORM framework like Hibernate to insert into DB
     }
 }
-
-// HTML (main.jsp)
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome!</h1>
-    <form action="${pageContext.request.contextPath}/submitMessage" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-*/

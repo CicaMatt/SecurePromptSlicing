@@ -74,16 +74,3 @@ public class LoginApplication {
         });
     }
 }
-
-
-This code uses an in-memory H2 database to store user credentials and provides a simple Swing-based GUI for login functionality. Ensure you have the H2 database dependency added to your project:
-
-
-<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>2.1.214</version>
-</dependency>
-
-
-You can run this Java application with an appropriate IDE or command line setup that supports Java Swing and JDBC.

@@ -21,6 +21,3 @@ public class RedirectHandler {
         System.out.println("Redirect target for URL 2: " + handler.getRedirectTarget(testUrl2));
     }
 }
- 
-
-**Note:** Replace `"your-regex-here"` with the actual regular expression you want to use.

@@ -31,6 +31,3 @@ public class DatabaseChecker {
         }
     }
 }
-
-
-Make sure to replace `yourDatabaseName`, `yourUsername`, `yourPassword`, and the table name `users` with your actual database details.

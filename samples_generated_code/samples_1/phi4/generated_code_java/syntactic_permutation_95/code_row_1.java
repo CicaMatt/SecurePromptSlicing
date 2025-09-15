@@ -53,6 +53,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-**Note:** Ensure that the MySQL JDBC driver is included in your project dependencies to run this code. You also need to replace `your_database`, `your_username`, and `your_password` with actual database credentials. The table `users` should have at least two columns: `username` and `password`.

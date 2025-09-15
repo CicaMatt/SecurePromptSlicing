@@ -24,21 +24,3 @@ public class CheckModServlet extends HttpServlet {
         return "admin".equals(username) && "adminpass".equals(password) && "validsession".equals(session);
     }
 }
-
-// web.xml configuration (to be placed in WEB-INF/web.xml)
-/*
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>CheckModServlet</servlet-name>
-        <servlet-class>CheckModServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CheckModServlet</servlet-name>
-        <url-pattern>/check_mod</url-pattern>
-    </servlet-mapping>
-</web-app>
-*/

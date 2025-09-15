@@ -56,11 +56,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-Make sure to replace the following placeholders with actual values:
-- `your_database`: The name of your database.
-- `your_db_username`: Your database username.
-- `your_db_password`: Your database password. 
-
-Additionally, ensure that you have a table named `users` in your database with columns `username` and `moderator_status`. You also need to include the Javalin library and MySQL JDBC driver in your project dependencies.

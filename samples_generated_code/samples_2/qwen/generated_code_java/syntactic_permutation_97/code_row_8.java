@@ -83,6 +83,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure that the `users` table exists in your database with appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`).

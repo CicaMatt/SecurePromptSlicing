@@ -34,11 +34,3 @@ public class StockApplication {
         app.buy_stock("AAPL"); // Example usage
     }
 }
-
-
-
--- SQL script to create the stocks table (to be run in your database)
-CREATE TABLE IF NOT EXISTS stocks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);

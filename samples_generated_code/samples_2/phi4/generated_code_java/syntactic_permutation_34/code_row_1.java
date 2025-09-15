@@ -57,16 +57,3 @@ public class LoginSystem {
         }
     }
 }
-
-
-To run this code, ensure you have the SQLite JDBC driver in your classpath. You can add it to your project dependencies using Maven by adding:
-
-
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.42.0.0</version>
-</dependency>
-
-
-Or download the JAR file from the SQLite JDBC website and include it in your project's library path.

@@ -33,6 +33,3 @@ public class PingServlet extends HttpServlet {
         response.getWriter().write(output.toString());
     }
 }
-
-
-Make sure you have the necessary servlet API in your classpath and configure your web server (e.g., Tomcat) to run this servlet.

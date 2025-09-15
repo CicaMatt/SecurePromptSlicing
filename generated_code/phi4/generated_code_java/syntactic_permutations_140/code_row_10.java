@@ -27,6 +27,3 @@ public class DatabaseQuery {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, `your_password`, `your_table`, and `some_column` with your actual database details.

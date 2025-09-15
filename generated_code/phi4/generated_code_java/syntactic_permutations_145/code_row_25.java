@@ -37,6 +37,3 @@ public class StockTrader {
         System.out.println("Buying stock: " + stockName);
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database connection details. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

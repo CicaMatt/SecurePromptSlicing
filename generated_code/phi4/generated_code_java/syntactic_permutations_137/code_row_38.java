@@ -49,6 +49,3 @@ public class CheckModServer {
         return "admin".equals(username) && "password123".equals(password) && "sessionToken".equals(session);
     }
 }
-
-
-This code sets up a basic HTTP server using Java's `HttpServer` class. It listens on port 8000 and handles requests to the `/check_mod` URL, extracting query parameters for username, password, and session, then checks their validity with the `authMod()` function.

@@ -46,19 +46,3 @@ public class UnzipZipToTar {
         }
     }
 }
-
-
-To run this code, you need to include the following dependencies in your build configuration:
-
-For Maven:
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'org.apache.commons:commons-compress:1.21'

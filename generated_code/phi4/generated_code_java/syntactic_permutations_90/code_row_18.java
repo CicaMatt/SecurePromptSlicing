@@ -83,26 +83,3 @@ public class PriceCalculatorService {
         }
     }
 }
-
-
-**Dependencies to include in your `pom.xml`:**
-
-
-<dependency>
-    <groupId>org.glassfish.jersey.containers</groupId>
-    <artifactId>jersey-container-jetty-servlet</artifactId>
-    <version>3.0.4</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.13.1</version>
-</dependency>
-<dependency>
-    <groupId>org.glassfish.jersey.media</groupId>
-    <artifactId>jersey-media-jaxb</artifactId>
-    <version>3.0.4</version>
-</dependency>
-
-
-**Note:** Ensure you have the necessary dependencies in your `pom.xml` for a Maven project or include equivalent JARs if using another build tool.

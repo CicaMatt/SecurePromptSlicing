@@ -70,6 +70,3 @@ public class PdfUploader {
         }
     }
 }
-
-
-**Note:** You will need a server-side script to handle the file upload at `http://localhost:8080/upload`. This script should save the uploaded file in a folder named `uploads` on your local machine. Ensure that the server is running and accessible before executing this Java code.

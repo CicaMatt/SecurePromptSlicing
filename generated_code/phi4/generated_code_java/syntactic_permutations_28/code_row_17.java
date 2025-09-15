@@ -46,6 +46,3 @@ public class HttpRedirectServer {
         }
     }
 }
-
-
-**Note**: Replace `"your-regex-here"` with your desired regular expression and adjust `http://redirect-target.url` to match the specific redirect target URL you wish to use. Ensure that this server runs in an environment where the necessary permissions and dependencies are satisfied (e.g., Java HTTP server module).

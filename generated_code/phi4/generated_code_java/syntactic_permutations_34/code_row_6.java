@@ -60,6 +60,3 @@ public class LoginApplication {
         // Actual redirect logic would involve setting the response location in a web application context
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_username`, and `your_db_password` with your actual database name, username, and password respectively. Additionally, ensure that you have the MySQL JDBC driver library included in your project's classpath.

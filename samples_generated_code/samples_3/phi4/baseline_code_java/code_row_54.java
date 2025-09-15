@@ -46,16 +46,3 @@ public class TarUnzipper {
         }
     }
 }
-
-
-Make sure to include the necessary Apache Commons Compress library in your project. You can add it via Maven with:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download the JAR directly if you are not using a build tool like Maven.

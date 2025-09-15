@@ -17,6 +17,3 @@ public class ReadFileFromSafeDirectory {
         }
     }
 }
-
-
-Make sure to replace `/safe/safefile.txt` with the actual file path you intend to read from. Ensure that your application has the necessary permissions to access files in this directory.

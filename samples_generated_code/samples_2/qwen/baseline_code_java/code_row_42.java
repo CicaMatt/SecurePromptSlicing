@@ -53,6 +53,3 @@ public class RegistrationPage {
         return sb.toString();
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can include it via Maven or download the JAR and add it manually.

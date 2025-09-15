@@ -37,6 +37,3 @@ public class TemperatureService {
         System.out.println("Temperature: " + temp);
     }
 }
-
-
-Make sure to replace `username` and `password` with your actual database credentials. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

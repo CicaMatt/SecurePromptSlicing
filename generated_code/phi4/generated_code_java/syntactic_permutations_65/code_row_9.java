@@ -74,6 +74,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("File uploaded successfully!");
     }
 }
-
-
-Make sure your web server (e.g., Apache Tomcat) is running and configured to handle the `/upload` endpoint using the `FileUploadServlet`.

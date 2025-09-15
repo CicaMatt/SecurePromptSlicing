@@ -46,6 +46,3 @@ public class UserRegistration {
         return sb.toString();
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_username"`, and `"your_password"` with your actual database URL, username, and password. Also, ensure that you have a table named `users` with columns `username` and `password`.

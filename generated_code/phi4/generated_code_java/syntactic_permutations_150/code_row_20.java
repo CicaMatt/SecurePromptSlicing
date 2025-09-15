@@ -26,21 +26,3 @@ public class MessageServlet extends HttpServlet {
         // Actual database code would go here.
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Main Page</h1>
-    <form action="${pageContext.request.contextPath}/post" method="POST">
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

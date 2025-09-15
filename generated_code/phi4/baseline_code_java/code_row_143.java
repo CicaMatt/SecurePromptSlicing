@@ -61,6 +61,3 @@ public class UnsubscribeServlet extends HttpServlet {
         System.out.println("Unsubscribing " + email + " from the mailing list.");
     }
 }
-
-
-Note: You need to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure you have the MySQL JDBC driver in your classpath for this code to run. The method `unsubscribeFromMailingList` is a placeholder where you should implement the logic specific to your mailing list service.

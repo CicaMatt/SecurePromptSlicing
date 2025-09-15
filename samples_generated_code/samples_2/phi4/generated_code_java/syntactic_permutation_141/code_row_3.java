@@ -59,6 +59,3 @@ public class WebApp {
         return USER;
     }
 }
-
-
-**Note:** Replace `your_database_url`, `your_username`, and `your_password` with your actual database credentials. Ensure you have the necessary JDBC driver in your classpath.

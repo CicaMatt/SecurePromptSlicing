@@ -42,6 +42,3 @@ public class StockOrderApp {
         // Simulate redirection
     }
 }
-
-
-Make sure to have the MySQL JDBC driver in your classpath, and create a database `stockdb` with a table `orders` having columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the DB_URL, USER, and PASS as needed for your setup.

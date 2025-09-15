@@ -113,6 +113,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note:** Replace `root` and the empty password in the JDBC connection string with your actual MySQL username and password. Ensure that the database and table names match those in your setup, and ensure the JSON library is included in your project dependencies.

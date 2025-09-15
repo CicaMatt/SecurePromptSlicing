@@ -31,19 +31,3 @@ public class Main {
         http.get("/admin_page", (req, res) -> "Admin Page");
     }
 }
-
-
-To run this code, you need to include the Spark Java library in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle`:
-
-
-implementation 'com.sparkjava:spark-core:2.9.3'

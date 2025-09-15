@@ -30,6 +30,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(username) && "secret".equals(password) && "validSessionToken".equals(session);
     }
 }
-
-
-Make sure you have the necessary servlet API in your project dependencies, usually provided by adding `javax.servlet-api` to your Maven `pom.xml` or including it in your classpath if using other build tools.

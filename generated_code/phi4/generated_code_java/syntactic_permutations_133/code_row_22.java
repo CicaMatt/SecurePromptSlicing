@@ -21,10 +21,3 @@ public class HelloWorldApp {
         server.join();
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java environment set up.
-2. Add the required dependencies for Jersey and Grizzly HTTP Server to your project (e.g., via Maven or Gradle).
-3. Compile and run the `HelloWorldApp` class.

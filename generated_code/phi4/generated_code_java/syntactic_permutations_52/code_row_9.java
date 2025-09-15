@@ -62,24 +62,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- index.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index Page</title>
-</head>
-<body>
-    <h1>Welcome to the Login Page</h1>
-    <form action="<%= request.getContextPath() %>/login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>

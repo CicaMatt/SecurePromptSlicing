@@ -67,19 +67,3 @@ class UserController {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database details. Also, ensure that you have the MySQL JDBC driver in your project's dependencies. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-If you are using Gradle, add the following line to your `build.gradle`:
-
-
-implementation 'mysql:mysql-connector-java:8.0.33'

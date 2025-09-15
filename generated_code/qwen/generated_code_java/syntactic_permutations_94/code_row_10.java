@@ -57,6 +57,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath. You can download it from the official MySQL website or add it via a build tool like Maven or Gradle. Additionally, replace `"jdbc:mysql://localhost:3306/your_database_name"`, `"your_db_username"`, and `"your_db_password"` with your actual database URL, username, and password.

@@ -55,37 +55,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form action="submitMessage" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <% if (request.getParameter("status") != null) {
-        String status = request.getParameter("status");
-        if ("success".equals(status)) { %>
-            <p>Message posted successfully!</p>
-    <% } else if ("fail".equals(status)) { %>
-            <p>Failed to post message. Please try again.</p>
-    <% }
-    } %>
-
-</body>
-</html>

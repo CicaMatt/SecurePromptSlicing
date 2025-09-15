@@ -53,47 +53,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post" action="LoginServlet">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" value="Login">
-    </form>
-    <p style="color: red;">
-        <% 
-            String error = request.getParameter("error");
-            if ("invalid_credentials".equals(error)) {
-                out.println("Invalid username or password.");
-            } else if ("database_error".equals(error)) {
-                out.println("Database connection error. Please try again later.");
-            }
-        %>
-    </p>
-</body>
-</html>
 
 
 
-<!-- home.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h2>Welcome to the Home Page!</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -111,31 +75,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-
-</web-app>

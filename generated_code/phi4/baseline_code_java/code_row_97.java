@@ -65,6 +65,3 @@ public class RegistrationServlet extends HttpServlet {
         return false;
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"your_password"` with your actual database connection details. Also, ensure that the required MySQL JDBC driver is included in your project's dependencies.

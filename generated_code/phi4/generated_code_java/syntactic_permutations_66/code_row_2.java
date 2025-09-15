@@ -48,6 +48,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-**Note:** Make sure your web server is properly configured to handle file uploads, and that the necessary dependencies for servlets are included in your project.

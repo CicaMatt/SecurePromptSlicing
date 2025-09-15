@@ -45,5 +45,5 @@ public class Main {
 
 
 
-<!-- src/main/resources/freemarker/template.ftl -->
+
 Hello, ${name}!

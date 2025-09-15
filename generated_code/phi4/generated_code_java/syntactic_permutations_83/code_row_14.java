@@ -23,14 +23,3 @@ public class CheckNameServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable as part of a web application, ensure you have the following setup:
-
-1. **Servlet Container**: Use a servlet container like Apache Tomcat.
-2. **Web Application Structure**:
-   - Place the above Java file in the `src` directory under a package (e.g., `com.example.web`).
-3. **Deployment Descriptor (`web.xml`)**: If not using annotations, configure your servlet in `WEB-INF/web.xml`.
-4. **Build Tool**: Use Maven or Gradle to manage dependencies and build the project.
-
-Ensure you have the necessary environment set up to deploy and run Java web applications.

@@ -46,6 +46,3 @@ public class CheckUserModerator {
         return false;
     }
 }
-
-
-Make sure you have the necessary JDBC driver for your database in your classpath. Replace `someUsername` with the actual username to check. Ensure that the environment variables `DB_URL`, `DB_USER`, and `DB_PASSWORD` are correctly set before running this program.

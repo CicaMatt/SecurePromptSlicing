@@ -59,6 +59,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable, ensure you have a servlet container like Apache Tomcat set up and configured. You also need to place an `admin_page.html` file in your web directory for successful redirection.

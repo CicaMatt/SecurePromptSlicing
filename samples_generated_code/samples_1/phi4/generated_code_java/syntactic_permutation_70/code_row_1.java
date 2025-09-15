@@ -44,9 +44,3 @@ public class FileUploadServlet extends HttpServlet {
 
     }
 }
-
-
-To make this code runnable:
-1. Ensure you have a servlet container like Apache Tomcat.
-2. Include the necessary libraries such as `servlet-api.jar`.
-3. Configure your web.xml or use annotations to map the URL pattern `/upload` to this servlet if using an older version of Java EE.

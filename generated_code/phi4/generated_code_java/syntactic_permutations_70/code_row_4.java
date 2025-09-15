@@ -39,6 +39,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure your web.xml configuration is set up properly, and you have the necessary servlet dependencies in your project's build path. Also, ensure the `uploads` directory exists within your application context or handle its creation if it doesn't exist.

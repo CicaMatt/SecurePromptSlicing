@@ -62,9 +62,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Notes for Running the Code:**
-1. Replace `your_database`, `your_db_user`, and `your_db_password` with your actual MySQL database name, username, and password.
-2. Ensure you have a table named `users` in your database with at least two columns: `username` (VARCHAR) and `password` (VARCHAR).
-3. Add the MySQL JDBC driver to your classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) or include it using a build tool like Maven or Gradle.

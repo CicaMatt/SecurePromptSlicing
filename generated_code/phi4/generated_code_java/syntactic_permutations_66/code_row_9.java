@@ -55,6 +55,3 @@ public class FileUploadApplication {
         return "You successfully uploaded '" + file.getOriginalFilename() + "'";
     }
 }
-
-
-**Note:** To run this code, ensure you have a Spring Boot application set up with the necessary dependencies (e.g., `spring-boot-starter-web`). This example assumes you're using Spring Boot to handle web requests.

@@ -77,6 +77,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Note: Ensure you have the appropriate JDBC driver for MySQL in your classpath and replace `your_database`, `your_db_user`, and `your_db_password` with actual database details. Additionally, implement the actual logic to unsubscribe from a mailing list where indicated by the comment.

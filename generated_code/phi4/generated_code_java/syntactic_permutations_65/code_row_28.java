@@ -56,6 +56,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("<h3>" + message + "</h3>");
     }
 }
-
-
-This servlet should be part of a Java web application project managed by a build tool like Maven or Gradle, and you need to have a corresponding HTML form that posts data to `/upload` endpoint with `enctype="multipart/form-data"` attribute. Ensure the servlet container (like Tomcat) is configured correctly in your development environment.

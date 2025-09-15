@@ -78,6 +78,3 @@ public class TemperatureService {
         }
     }
 }
- 
-
-**Note**: You need to replace the `USER` and `PASS` values with your actual database credentials. Make sure you have the MySQL JDBC driver in your classpath (usually `mysql-connector-java-x.x.xx.jar`). Ensure that the table and column names (`TemperatureData`, `temperature`) match those in your database schema.

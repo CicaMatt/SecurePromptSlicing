@@ -42,31 +42,7 @@ public class SessionPageServlet extends HttpServlet {
     }
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<h2>Login</h2>
-<form method="post" action="LoginPageServlet">
-    Username: <input type="text" name="username"><br><br>
-    Password: <input type="password" name="password"><br><br>
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Session Page</title>
-</head>
-<body>
-<h2>Your session is active</h2>
-<a href="logout">Logout</a>
-</body>
-</html>
 
 import javax.servlet.*;
 import javax.servlet.http.*;

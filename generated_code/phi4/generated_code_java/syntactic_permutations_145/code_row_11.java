@@ -52,6 +52,3 @@ public class StockMarketApp {
         // Add your buy logic here
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is included in your classpath.

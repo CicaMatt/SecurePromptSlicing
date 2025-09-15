@@ -42,9 +42,3 @@ class ProductService {
         return productPrices.getOrDefault(productCode, 0.0);
     }
 }
-
-
-To run this code:
-1. Ensure you have Spring Boot set up in your development environment.
-2. Add necessary dependencies for Spring Web in your `pom.xml` if using Maven or in `build.gradle` if using Gradle.
-3. Use the command `mvn spring-boot:run` (Maven) or `gradlew bootRun` (Gradle) to start the application.

@@ -26,16 +26,3 @@ public class RenderResponse {
         renderResponseFromEnv(request, templateEngine);
     }
 }
-
-
-Note: This code assumes you have Thymeleaf as the template engine. You need to include Thymeleaf dependencies in your project's `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.thymeleaf</groupId>
-    <artifactId>thymeleaf-spring5</artifactId>
-    <version>3.0.15.RELEASE</version>
-</dependency>
-
-
-In a real-world scenario, the `HttpServletRequest` object would be provided by your servlet environment. The template "response" should exist in your Thymeleaf templates directory.

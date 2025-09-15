@@ -65,6 +65,3 @@ public class UnsubscribeServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `yourdatabase`, `username`, and `password` with your actual database name, username, and password. Also, ensure that the MySQL Connector/J driver is included in your project dependencies.

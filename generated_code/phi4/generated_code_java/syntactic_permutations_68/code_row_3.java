@@ -39,6 +39,3 @@ public class ImageUploader {
         uploader.uploadImage(imageFile);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials, and update the file path in `main` method with the location of the image you want to upload. Also, ensure that MySQL JDBC driver is added to your project's dependencies.

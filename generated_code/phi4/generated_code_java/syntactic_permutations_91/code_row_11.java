@@ -51,6 +51,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"your_password"` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is in your classpath (e.g., by including it in your `pom.xml` if you're using Maven).

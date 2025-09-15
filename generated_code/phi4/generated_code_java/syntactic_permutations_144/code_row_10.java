@@ -73,6 +73,3 @@ public class EmailHandler {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. The script execution part is simulated using a simple echo command; adjust it according to your specific unsubscribe script requirements.

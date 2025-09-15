@@ -64,6 +64,3 @@ public class LoginServlet extends HttpServlet {
         return false;
     }
 }
-
-
-Ensure you have a `users` table with columns `username` and `password`, and replace `"your_database"`, `"your_db_user"`, and `"your_db_password"` with your actual database details. Also, create `success.jsp`, `cant_login.jsp`, and `internal_server_error.jsp` for the redirections to work correctly.

@@ -37,6 +37,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"path/to/image/directory"` with the actual path where your images are stored.

@@ -28,28 +28,3 @@ public class ProductPriceApplication {
         }
     }
 }
-
-
-To run this application, you need to have Spring Boot dependencies set up in your `build.gradle` or `pom.xml`. Here's an example of a `build.gradle`:
-
-
-plugins {
-    id 'org.springframework.boot' version '3.1.0'
-    id 'java'
-}
-
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-
-Make sure to have Java 17 or higher installed on your system. Save the main application class as `ProductPriceApplication.java` and place it in a directory structure like `src/main/java/com/example`. Adjust the package name as necessary. Run the application with `gradlew bootRun` if using Gradle, or use Maven equivalent commands.

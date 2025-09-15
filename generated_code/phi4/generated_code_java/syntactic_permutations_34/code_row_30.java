@@ -49,16 +49,3 @@ public class LoginApplication {
         // Implement actual redirection logic here
     }
 }
-
-
-**Note:**  
-- Replace `DB_URL`, `USER`, and `PASS` with your actual database connection details.
-- Ensure that the MySQL JDBC driver is included in your project dependencies. You can add it via Maven or download the JAR file directly:
-  
-  <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
-  </dependency>
-  
-- The `users` table in your database should have at least two columns: `username` and `password`.

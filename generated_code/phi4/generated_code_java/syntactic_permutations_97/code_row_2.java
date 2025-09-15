@@ -60,10 +60,3 @@ public class RegistrationService {
         return false;
     }
 }
-
-
-**Note**: Before running this code, ensure you have the following:
-- A MySQL database with a table named `users` and columns: `username`, `password`, `first_name`, `last_name`, `email`.
-- The necessary JDBC driver for MySQL in your project's classpath.
-- Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password.
-- Include the BCrypt library (org.mindrot:jbcrypt) in your project dependencies.

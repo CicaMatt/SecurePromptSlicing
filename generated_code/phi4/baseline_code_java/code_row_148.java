@@ -70,6 +70,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have a table named `messages` with columns `username` and `message` in your database. Adjust the database URL, username, and password as necessary.

@@ -72,6 +72,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Ensure to replace `DB_URL`, `DB_USER`, and `DB_PASSWORD` with your actual database connection details. Also, ensure that the `users` table exists in your database with columns `username`, `password`, `first_name`, `last_name`, and `email`.

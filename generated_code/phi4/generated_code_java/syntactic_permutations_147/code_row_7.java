@@ -39,6 +39,3 @@ public class StockOrderApp {
         System.out.println("Redirected to stock_view page.");
     }
 }
-
-
-Make sure to replace the `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Additionally, ensure that a MySQL JDBC driver is included in your classpath or project dependencies.

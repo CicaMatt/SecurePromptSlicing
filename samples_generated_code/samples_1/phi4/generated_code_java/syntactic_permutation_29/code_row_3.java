@@ -27,35 +27,3 @@ class RedirectController {
         }
     }
 }
-
-
-To run this application, you need to have Spring Boot and its dependencies set up in your project. Ensure that the `pom.xml` or `build.gradle` file includes Spring Web dependency. Here's an example for a Maven `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-For Gradle, you can add the following to your `build.gradle`:
-
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
-
-tasks.named('bootJar') {
-    enabled = true
-}

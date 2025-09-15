@@ -44,18 +44,3 @@ public class Main {
         }
     }
 }
-
-
-**Dependencies**: Make sure to include the following dependencies in your `pom.xml` file for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.12.0</version>
-    </dependency>
-</dependencies>
-
-
-**Build Tool**: This code uses Javalin for the web server, so ensure you have Java and Maven installed on your system to build and run this application.

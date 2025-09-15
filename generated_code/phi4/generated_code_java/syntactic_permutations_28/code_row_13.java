@@ -27,6 +27,3 @@ public class RedirectHandler {
         System.out.println("Redirect URL: " + handler.handleRedirect(testUrl2));
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you intend to use for matching.

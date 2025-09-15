@@ -28,6 +28,3 @@ public class PostServlet extends HttpServlet {
         // Here you would add the actual code to insert data into a database.
     }
 }
-
-
-To make this servlet work as intended, ensure that your project is set up with a servlet container like Apache Tomcat or Jetty and that necessary configurations are in place. You should replace the `insertUserMessageInDb` method's content with actual database interaction logic according to your setup (e.g., using JDBC).

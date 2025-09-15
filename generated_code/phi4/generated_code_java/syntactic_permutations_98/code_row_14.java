@@ -57,6 +57,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Note: Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. Make sure you have the MySQL JDBC driver in your classpath for this code to work correctly.

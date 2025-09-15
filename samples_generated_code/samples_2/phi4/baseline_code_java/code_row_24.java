@@ -117,6 +117,3 @@ public class RegistrationForm extends JFrame {
         });
     }
 }
-
-
-**Note:** Ensure you have a MySQL database running with a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR). Replace `"jdbc:mysql://localhost:3306/your_database", "root", ""` with your actual database URL, username, and password.

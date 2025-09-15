@@ -78,6 +78,3 @@ public class SubmitMessageServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the necessary MySQL connector JAR in your classpath. Adjust `DB_URL`, `USER`, and `PASS` as per your database configuration.

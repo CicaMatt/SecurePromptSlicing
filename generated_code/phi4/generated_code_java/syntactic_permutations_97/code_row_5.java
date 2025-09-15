@@ -58,18 +58,3 @@ public class Registration {
         }
     }
 }
-
-
-**Note:** Before running this code:
-- Ensure you have a MySQL database set up with the name `yourdatabase`.
-- Replace `yourusername` and `yourpassword` with your actual MySQL credentials.
-- Create a table named `users` in your database with columns: `id`, `username`, `password`, `first_name`, `last_name`, `email`.
-- Add the BCrypt library to your project. You can add it via Maven or download the JAR from its official site.
-
-For Maven, include:
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>

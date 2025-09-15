@@ -71,6 +71,3 @@ public class Registration {
         return BCrypt.gensalt().substring(BCrypt.gensalt().length() - 22);
     }
 }
-
-
-Note: Ensure that your database and table are set up properly. The `users` table should have at least two columns: `username` (VARCHAR) and `password_hash` (VARCHAR). Also, include the BCrypt library in your project dependencies to handle password hashing.

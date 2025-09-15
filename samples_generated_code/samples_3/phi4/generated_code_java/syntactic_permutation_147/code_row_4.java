@@ -119,6 +119,3 @@ public class DatabaseConfig {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath. Adjust database credentials as needed and create a `stock_db` database with an `orders` table to match this code.

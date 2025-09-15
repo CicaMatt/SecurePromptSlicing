@@ -49,6 +49,3 @@ public class SimpleHttpServer {
         }
     }
 }
-
-
-This code sets up a simple HTTP server that listens on port 8080. It creates an `/api` endpoint where it expects URL parameters in the form of key-value pairs (e.g., `?name=John`). It parses these parameters into a dictionary-like structure (`Map<String, String>`) and returns the value associated with the key "name". If no name is provided, it defaults to "Name not provided".

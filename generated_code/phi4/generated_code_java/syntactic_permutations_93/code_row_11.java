@@ -55,9 +55,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Notes:**  
-- Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.
-- Ensure the MySQL JDBC driver is included in your project's classpath. You can add it using Maven or download the JAR file directly from the MySQL website.
-- The table `users` should exist in your database schema with at least two columns: `username` and `password`. Adjust column names as needed.

@@ -50,6 +50,3 @@ public class StockBuyOrder {
         // response.sendRedirect("profile.jsp?username=" + username);
     }
 }
-
-
-Note: Replace `"jdbc:mysql://localhost:3306/your_database", "root", "password"` with your actual database connection details. Ensure that the MySQL JDBC driver is included in your project's dependencies to run this code.

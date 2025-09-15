@@ -66,6 +66,3 @@ public class TemperatureServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-**Note:** Replace `yourDatabaseName`, `yourUsername`, and `yourPassword` with your actual MySQL database name, username, and password. This code requires a MySQL JDBC driver to be included in the classpath and uses Jetty as an embedded server for demonstration purposes. Adjust the server setup according to your production environment needs.

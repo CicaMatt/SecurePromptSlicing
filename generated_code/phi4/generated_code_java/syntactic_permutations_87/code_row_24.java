@@ -52,9 +52,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, make sure you have:
-- A MySQL database named `weather_db` with a table `temperatures` having columns: `latitude`, `longitude`, `date`, and `temperature`.
-- The appropriate JDBC driver (`mysql-connector-java.jar`) in your classpath.
-- A servlet container like Apache Tomcat set up to deploy this web application.

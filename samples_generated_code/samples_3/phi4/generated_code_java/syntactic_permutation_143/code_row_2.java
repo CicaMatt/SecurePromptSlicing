@@ -80,6 +80,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that you have the required dependencies for Spark Java and Jackson in your project configuration (e.g., Maven or Gradle).

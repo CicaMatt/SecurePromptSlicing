@@ -31,25 +31,3 @@ public class MessageServlet extends HttpServlet {
         return List.of("Message 1 from User 1", "Message 2 from User 2");
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <% for (String message : (List<String>) request.getAttribute("messages")) { %>
-        <li><%= message %></li>
-    <% } %>
-</ul>
-<form action="MessageServlet" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>

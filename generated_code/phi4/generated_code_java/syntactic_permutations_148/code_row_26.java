@@ -93,35 +93,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- main.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <form action="post" method="post">
-        Name: <input type="text" name="name"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-
-    <ul>
-        <% 
-            List<PostServlet.Message> messages = (List<PostServlet.Message>) request.getAttribute("messages");
-            if (messages != null) {
-                for (PostServlet.Message msg : messages) {
-                    out.println("<li><strong>" + msg.getName() + "</strong>: " + msg.getMessage() + "</li>");
-                }
-            } 
-        %>
-    </ul>
-</body>
-</html>

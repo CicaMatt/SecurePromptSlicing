@@ -41,6 +41,3 @@ public class MyServlet extends HttpServlet {
         System.out.println("This servlet should be deployed in a servlet container like Apache Tomcat.");
     }
 }
-
-
-Make sure you have the Freemarker library added to your project's dependencies. You also need a file named `template.ftl` in the `/templates` directory of your resources, where `${name}` can be used as a placeholder for the name parameter.

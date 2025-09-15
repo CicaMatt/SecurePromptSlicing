@@ -33,39 +33,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("File uploaded successfully: " + fileName);
     }
 }
-
-
-
-<!-- web.xml should be placed in the WEB-INF directory -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>FileUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload_file</url-pattern>
-    </servlet-mapping>
-</web-app>
-
-
-
-<!-- index.html should be placed in the webapp directory -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-    <h1>Upload File</h1>
-    <form action="upload_file" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

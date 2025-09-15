@@ -112,6 +112,3 @@ public class SimpleHttpServer {
         }
     }
 }
-
-
-Note: Ensure you have the necessary SQLite JDBC driver in your classpath for this code to run. You might also need to create an SQLite database named `test.db` with a table called `messages` having columns `username` and `message`.

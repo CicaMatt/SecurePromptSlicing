@@ -60,6 +60,3 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
     }
 }
-
-
-**Note:** Replace `"your_database_name"`, `"your_db_username"`, and `"your_db_password"` with your actual database details. Ensure you have the necessary JSP files (`success.jsp`, `cant_login.jsp`, `login.jsp`) in place for redirection to work correctly. Additionally, ensure that MySQL JDBC driver is included in your project's classpath.

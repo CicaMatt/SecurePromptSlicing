@@ -25,18 +25,3 @@ public class ImgServer {
         });
     }
 }
-
-
-To run this code:
-- Make sure you have Javalin library included in your project dependencies. If using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.2</version>
-</dependency>
-
-
-- Compile and run the Java code.
-- Access `http://localhost:7000/img?file=yourfilename` in a web browser or HTTP client, replacing `yourfilename` with the name of the file you want to serve.

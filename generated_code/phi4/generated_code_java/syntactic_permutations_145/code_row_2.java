@@ -35,6 +35,3 @@ public class StockPurchase {
         // Additional logic can be added here if needed
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. Ensure you have the MySQL JDBC driver in your classpath.

@@ -24,18 +24,3 @@ public class CheckModServlet extends HttpServlet {
         return USERNAME.equals(username) && PASSWORD.equals(password);
     }
 }
-
-
-Make sure to configure the servlet in your `web.xml`:
-
-
-<web-app>
-    <servlet>
-        <servlet-name>CheckModServlet</servlet-name>
-        <servlet-class>CheckModServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CheckModServlet</servlet-name>
-        <url-pattern>/check_mod</url-pattern>
-    </servlet-mapping>
-</web-app>

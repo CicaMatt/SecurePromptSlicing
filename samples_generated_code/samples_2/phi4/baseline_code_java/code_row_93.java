@@ -40,6 +40,3 @@ public class StockOrderApp {
         }
     }
 }
-
-
-Note: Make sure your MySQL server is running, and the `stockdb` database and `orders` table exist with appropriate columns (`stock_name`, `quantity`). Adjust `DB_URL`, `USER`, and `PASS` as needed for your environment.

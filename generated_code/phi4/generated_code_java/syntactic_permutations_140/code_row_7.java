@@ -37,6 +37,3 @@ public class UsernameChecker {
         System.out.println("Does the username exist? " + exists);
     }
 }
-
-
-Make sure to replace `jdbc:your_database_url`, `your_username`, and `your_password` with your actual database connection details. Also, ensure that you have the necessary JDBC driver in your classpath.

@@ -51,15 +51,3 @@ public class Main {
         return cfg;
     }
 }
-
-
-
-<!-- src/main/resources/hello.ftl -->
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-<h1>Hello, ${name}!</h1>
-</body>
-</html>

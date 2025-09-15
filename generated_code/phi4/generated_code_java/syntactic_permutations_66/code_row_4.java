@@ -33,6 +33,3 @@ public class PdfUploadApplication {
         }
     }
 }
-
-
-This code uses Spring Boot to create a simple web application that accepts PDF files via an API endpoint and saves them in an `uploads` directory. Make sure you have Spring Boot set up with necessary dependencies such as `spring-boot-starter-web`.

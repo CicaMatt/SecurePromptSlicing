@@ -32,17 +32,3 @@ public class Main {
         return render_response_from_env(request, env);
     }
 }
-
-
-
-<!-- src/main/resources/templates/template.ftl -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

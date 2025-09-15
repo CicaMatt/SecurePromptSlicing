@@ -67,19 +67,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.8.9</version>
-</dependency>
-
-<!-- Ensure you have the MySQL JDBC driver in your classpath -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>

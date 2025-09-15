@@ -58,6 +58,3 @@ public class WebApp {
         }
     }
 }
-
-
-Note: Ensure that the MySQL JDBC driver is included in your project's classpath. You may need to add it via Maven or download and include it manually. Also, replace `your_database`, `root`, and `password` with your actual database name and credentials.

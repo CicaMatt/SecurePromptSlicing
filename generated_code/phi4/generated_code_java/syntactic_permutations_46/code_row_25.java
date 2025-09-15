@@ -40,6 +40,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you have the required servlet dependencies in your project and that the servlet container is properly configured. This code assumes that images are stored in a directory named `images` at the root of your web application's context path. Adjust the content type if necessary to match the actual image format (e.g., "image/png" for PNG files).

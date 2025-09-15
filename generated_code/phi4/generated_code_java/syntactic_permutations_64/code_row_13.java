@@ -64,6 +64,3 @@ public class UploadServlet extends HttpServlet {
         return "Uploads PDF files and saves the file path in a MySQL database.";
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, ensure that the `pdf_files` table exists in your database schema with an appropriate column for storing file paths (e.g., a VARCHAR or TEXT type).

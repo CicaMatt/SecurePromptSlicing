@@ -34,9 +34,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         // This class is typically run in a servlet container like Apache Tomcat or Jetty
     }
 }
-
-
-**Note**: 
-- This code assumes you are running it within a servlet container (like Apache Tomcat).
-- The `@WebServlet("/hello")` annotation maps the servlet to the URL `/hello`.
-- To test this, deploy the servlet in a web application server and access `http://localhost:8080/yourAppName/hello?username=YourName`.

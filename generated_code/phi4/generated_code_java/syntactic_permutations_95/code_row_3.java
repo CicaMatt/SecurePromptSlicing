@@ -62,6 +62,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-Ensure your database has a table named `users` with columns `username VARCHAR(255)` and `password VARCHAR(512)`. Adjust the database URL, username, and password as needed. Make sure to add MySQL connector dependency in your project setup if you're using Maven or similar build tools.

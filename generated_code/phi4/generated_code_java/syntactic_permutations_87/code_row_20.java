@@ -63,6 +63,3 @@ public class TemperatureServlet extends HttpServlet {
         return -1;
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath and modify `DB_URL`, `USER`, and `PASS` with appropriate values for your database configuration.

@@ -72,6 +72,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Ensure you have the necessary MySQL JDBC driver and BCrypt library included in your project dependencies. Replace `your_database`, `your_username`, and `your_password` with your actual database details.

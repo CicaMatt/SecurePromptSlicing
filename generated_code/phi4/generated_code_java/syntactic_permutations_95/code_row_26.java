@@ -75,6 +75,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath and a database named `mydatabase` with a table called `users` having columns `username`, `password`. Adjust the `DB_URL`, `USER`, and `PASS` as per your configuration.

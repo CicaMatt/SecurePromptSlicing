@@ -42,6 +42,3 @@ public class UserRegistration {
         return sb.toString();
     }
 }
-
-
-Replace `your_database_name`, `your_db_user`, and `your_db_password` with your actual database credentials. Also, make sure to have the MySQL JDBC driver in your classpath or included as a dependency if you're using a build tool like Maven or Gradle.

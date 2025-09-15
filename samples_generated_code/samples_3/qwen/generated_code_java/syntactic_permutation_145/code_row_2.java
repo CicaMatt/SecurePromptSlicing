@@ -33,6 +33,3 @@ public class StockApp {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Adjust the database URL, user, and password as necessary.

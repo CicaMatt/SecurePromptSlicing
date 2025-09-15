@@ -45,6 +45,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC driver in your classpath. You may need to replace `your_database`, `your_username`, and `your_password` with actual values relevant to your MySQL setup. Also, ensure that the table `images_table` exists with columns `image_name` (VARCHAR) and `image_data` (BLOB).

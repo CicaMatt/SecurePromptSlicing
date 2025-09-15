@@ -31,6 +31,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This Java servlet handles redirection based on user login status and role. Make sure you have the corresponding JSP pages (`login.jsp`, `adminPage.jsp`, `userPage.jsp`) in place for this to work as expected.

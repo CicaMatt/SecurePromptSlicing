@@ -64,36 +64,11 @@ public class DashboardServlet extends HttpServlet {
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-<h1>Login Page</h1>
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-<% if (request.getParameter("error") != null) { %>
-    <p style="color:red">Invalid credentials or not logged in.</p>
-<% } %>
-</body>
-</html>
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-<h1>Welcome to the Dashboard, ${username}!</h1>
-<a href="login?logout=true">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -118,6 +93,3 @@ public class LogoutServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: The `LogoutServlet` is included to handle the logout functionality, which invalidates the session and redirects the user back to the login page with a message.

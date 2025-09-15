@@ -39,9 +39,3 @@ public class WebApp {
         return USER;
     }
 }
-
-
-**Note:** This code assumes you are using Spring Boot for the web application. Make sure to include the necessary dependencies in your `pom.xml` or `build.gradle` file, such as:
-
-- Spring Web
-- MySQL Connector/J (or any other database driver)

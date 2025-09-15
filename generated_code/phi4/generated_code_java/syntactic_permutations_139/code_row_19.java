@@ -40,6 +40,3 @@ public class ModeratorCheck {
         return false;
     }
 }
-
-
-Make sure to replace `"your_database_name"` with the actual name of your database and `"your_username"` with the username you want to check. Also, ensure that your environment variables `DB_USERNAME` and `DB_PASSWORD` are correctly set with your database credentials.

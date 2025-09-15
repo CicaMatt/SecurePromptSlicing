@@ -40,35 +40,3 @@ class PriceController {
         }
     }
 }
-
-
-To run this app, you'll need to include Spring Boot dependencies in your `pom.xml` or build.gradle file:
-
-For Maven (`pom.xml`):
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-For Gradle (`build.gradle`):
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
-
-tasks.named('bootJar') {
-    archiveBaseName.set('price-calculator-app')
-}

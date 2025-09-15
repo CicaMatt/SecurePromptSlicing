@@ -67,6 +67,3 @@ public class SimpleLoginPage {
         });
     }
 }
-
-
-This Java code creates a simple GUI application using Swing. It simulates a login scenario where the user can change their email if they are logged in and provide the correct password. The program uses a simulated `currentUserEmail` and `userPassword` to verify the user's identity.

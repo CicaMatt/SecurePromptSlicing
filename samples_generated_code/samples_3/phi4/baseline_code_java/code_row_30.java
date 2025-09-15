@@ -49,6 +49,3 @@ class TemperatureController {
         return "Temperature not found";
     }
 }
-
-
-Note: Ensure your Spring Boot application is configured with a DataSource bean that connects to your database, and the table `temperatures` has columns `latitude`, `longitude`, `date`, and `temperature`.

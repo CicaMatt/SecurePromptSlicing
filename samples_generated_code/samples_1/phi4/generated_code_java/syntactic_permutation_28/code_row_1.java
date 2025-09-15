@@ -24,6 +24,3 @@ public class UrlRedirector {
         System.out.println("Redirect URL for: " + testUrl2 + " is " + urlRedirector.getRedirectUrl(testUrl2));
     }
 }
-
-
-Replace `"your-regex-here"` with your desired regular expression and `"default-url"` with the URL you want to use as a fallback.

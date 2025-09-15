@@ -21,19 +21,3 @@ public class Main {
         ctx.result(String.format("Email: %s, SSN: %s", email, ssn));
     }
 }
-
-
-To run this code, you'll need to add the Javalin dependency in your build tool:
-
-For Maven, add this to your `pom.xml`:
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.1</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-implementation 'io.javalin:javalin:5.9.1'

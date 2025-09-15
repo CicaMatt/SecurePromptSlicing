@@ -53,34 +53,3 @@ public class IndexServlet extends HttpServlet {
         response.getWriter().write("<html><body><a href='login.html'>Login</a></body></html>");
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-<!-- index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Index Page</title>
-</head>
-<body>
-    <a href='login.html'>Login</a>
-</body>
-</html>
-
-
-To run this code, you need a servlet container like Apache Tomcat. Place the Java files in your web application's `WEB-INF/classes` directory and the HTML files in the root of the web application directory. Update the `web.xml` or use annotations as shown for servlet mapping.

@@ -76,6 +76,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database details.

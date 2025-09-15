@@ -25,25 +25,3 @@ public class CheckModServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-To make this code runnable, you must ensure that it is deployed in a Java servlet container like Apache Tomcat. You will also need to configure the web.xml file properly for the servlet mapping:
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>CheckModServlet</servlet-name>
-        <servlet-class>CheckModServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CheckModServlet</servlet-name>
-        <url-pattern>/check_mod</url-pattern>
-    </servlet-mapping>
-
-</web-app>

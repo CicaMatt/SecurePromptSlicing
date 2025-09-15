@@ -42,25 +42,3 @@ public class Main {
         }
     }
 }
-
-
-**Dependencies in Maven:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-    <dependency>
-        <groupId>spark-java</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-</dependencies>

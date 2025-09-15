@@ -63,6 +63,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Replace `your_database`, `your_username`, and `your_password` with your actual database credentials.

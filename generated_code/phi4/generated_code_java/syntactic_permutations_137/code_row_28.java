@@ -25,6 +25,3 @@ public class CheckModServlet extends HttpServlet {
         return "modUser".equals(username) && "modPass".equals(password) && "validSession".equals(session);
     }
 }
-
-
-Note: You need to configure this servlet in your web application's `web.xml` or use annotations as shown above. Additionally, you must have a server environment like Apache Tomcat to run this code.

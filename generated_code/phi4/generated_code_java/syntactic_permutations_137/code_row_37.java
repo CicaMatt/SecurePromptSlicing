@@ -28,27 +28,3 @@ public class CheckModServlet extends HttpServlet {
         return false;
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>CheckModServlet</servlet-name>
-        <servlet-class>CheckModServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CheckModServlet</servlet-name>
-        <url-pattern>/check_mod</url-pattern>
-    </servlet-mapping>
-
-</web-app>
-
-
-To make this code runnable, ensure it's part of a web application deployed on a servlet container like Apache Tomcat. The `auth_mod` function should be implemented with the actual logic to verify if a user is a moderator.

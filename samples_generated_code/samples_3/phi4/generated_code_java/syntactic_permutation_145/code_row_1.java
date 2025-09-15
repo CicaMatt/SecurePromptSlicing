@@ -34,6 +34,3 @@ public class StockBuyer {
         // Additional logic for buying the stock can be implemented here
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

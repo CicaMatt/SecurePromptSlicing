@@ -46,38 +46,3 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-
-
-<!-- home.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-</body>
-</html>
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat set up and configured. Additionally, replace `your_database`, `root`, and `password` with your actual database name, username, and password. Ensure that your MySQL JDBC driver is included in the classpath.

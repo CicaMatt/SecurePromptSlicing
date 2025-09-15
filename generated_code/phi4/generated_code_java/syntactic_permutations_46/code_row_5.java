@@ -38,6 +38,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this servlet, you need a Java Servlet container like Apache Tomcat. Place the `ImageServlet` class in the appropriate package and ensure your web application has an `/images` directory at its root containing image files. Also, ensure that you have configured your `web.xml` or used annotations to map the servlet properly within your project.

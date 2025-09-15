@@ -44,6 +44,3 @@ public class PdfUploaderApplication {
         return "File uploaded successfully: " + fileName;
     }
 }
-
-
-To run this code, ensure you have Spring Boot set up in your project. You will need dependencies such as `spring-boot-starter-web` and `spring-boot-starter-thymeleaf`. Save the HTML form with a file input field pointing to `/upload` for uploading files to your server.

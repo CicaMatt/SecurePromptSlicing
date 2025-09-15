@@ -38,22 +38,3 @@ class PriceController {
         }
     }
 }
-
-
-To run this Spring Boot application, make sure you have the necessary dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-
-Or in your `build.gradle` if using Gradle:
-
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}

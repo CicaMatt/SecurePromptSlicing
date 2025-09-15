@@ -28,17 +28,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the necessary servlet dependencies in your project's `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-
-Make sure your server is configured to handle servlets and that you have deployed this code appropriately for it to be accessible via the `/http_hello_page` URL path.

@@ -28,25 +28,12 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 
-<!-- home.jsp -->
-<%@ page import="javax.servlet.http.HttpSession" %>
+
+
+
 <%
     HttpSession session = request.getSession(false);
     if (session == null || session.getAttribute("user") == null) {
@@ -55,16 +42,6 @@ public class LoginServlet extends HttpServlet {
     }
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome, <%= session.getAttribute("user") %></h1>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
 
 
@@ -85,6 +62,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-Make sure to configure your web.xml or use annotations (@WebServlet) for servlet mapping. Deploy these files in a Java EE compatible server like Apache Tomcat, and ensure you have the necessary JSP support configured.

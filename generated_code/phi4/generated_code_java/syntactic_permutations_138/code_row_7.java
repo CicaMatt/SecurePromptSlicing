@@ -43,6 +43,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies.

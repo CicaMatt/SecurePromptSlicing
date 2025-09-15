@@ -64,6 +64,3 @@ public class UploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-To make this servlet run, you need to deploy it within a Java web application project. You can use an IDE like IntelliJ IDEA or Eclipse and create a dynamic web project, then add the above code as `UploadServlet.java` in the `src` directory of your project. Configure your web server (like Apache Tomcat) to serve this servlet when accessed at `/upload`.

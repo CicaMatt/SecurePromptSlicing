@@ -35,6 +35,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-Make sure to include the necessary dependencies for `com.sun.net.httpserver.HttpServer` if you're using a build tool like Maven or Gradle. However, this code uses only standard libraries available in Java SE.

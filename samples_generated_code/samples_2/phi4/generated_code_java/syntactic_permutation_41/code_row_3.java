@@ -36,11 +36,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code:
-1. Ensure Java is installed on your machine.
-2. Save the above code in a file named `SimpleWebApp.java`.
-3. Compile it using `javac SimpleWebApp.java`.
-4. Run it with `java SimpleWebApp`.
-5. Visit `http://localhost:8000/info` in a web browser to see the output.

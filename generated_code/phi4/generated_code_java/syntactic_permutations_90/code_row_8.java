@@ -55,18 +55,3 @@ public class ProductService {
         }
     }
 }
-
-
-**Note:** You need to include the following dependencies in your `pom.xml` for Maven or equivalent for Gradle:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.13.3</version>
-</dependency>
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>

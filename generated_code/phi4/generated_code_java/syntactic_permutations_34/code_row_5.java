@@ -113,6 +113,3 @@ public class LoginApplication {
         frame.setVisible(true);
     }
 }
-
-
-Ensure you have the SQLite JDBC driver available in your classpath. This code uses an embedded SQLite database to store user credentials and provides a simple GUI login system using Swing.

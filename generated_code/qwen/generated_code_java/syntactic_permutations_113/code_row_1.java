@@ -37,21 +37,3 @@ public class PingApp {
         });
     }
 }
-
-
-Make sure to add the Spark dependency in your project. If you are using Maven, add this to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-If you are using Gradle, add this to your `build.gradle`:
-
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-}

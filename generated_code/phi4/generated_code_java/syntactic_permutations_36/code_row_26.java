@@ -55,6 +55,3 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         return false;
     }
 }
-
-
-**Note:** Replace `"your_database_name"`, `"your_username"`, and `"your_password"` with your actual database details. Make sure to have the MySQL JDBC driver in your classpath, and ensure you're using secure password storage practices (e.g., hashing passwords) in a real application.

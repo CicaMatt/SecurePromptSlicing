@@ -23,23 +23,3 @@ class InfoController {
                 "</body></html>";
     }
 }
-
-
-**Note:** To run this code, you need to have Spring Boot set up in your project. You can create a new Maven or Gradle project and add the following dependency for Spring Web:
-
-For Maven, include in `pom.xml`:
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-
-For Gradle, include in `build.gradle`:
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
-
-
-Compile and run the application using your IDE or command line tools like Maven (`mvn spring-boot:run`) or Gradle (`gradlew bootRun`).

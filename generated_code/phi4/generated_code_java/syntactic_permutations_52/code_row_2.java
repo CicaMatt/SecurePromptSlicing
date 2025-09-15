@@ -78,6 +78,3 @@ public class WebXmlConfig {
         ctx.getSecurityConstraints().add(security);
     }
 }
-
-
-Note: This code is intended to be used with a Java servlet container like Apache Tomcat. Make sure you have the necessary environment set up, including a web.xml configuration or annotations for servlet mapping as shown in the code above.

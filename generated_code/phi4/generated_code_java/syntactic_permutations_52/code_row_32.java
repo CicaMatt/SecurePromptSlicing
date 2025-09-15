@@ -74,6 +74,3 @@ public class LoginServlet extends HttpServlet {
                 + "</body></html>");
     }
 }
-
-
-To run this code, you need to set up a servlet container like Apache Tomcat and configure your web.xml or use annotations as shown. Make sure the server is running and deploy the application properly.

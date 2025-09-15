@@ -24,15 +24,3 @@ public class RedirectController {
         return target.matches(regex);
     }
 }
-
-
-Make sure you have the necessary Spring dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-
-This code sets up a simple Spring Boot controller to handle redirection based on the target query parameter. If the target matches the regex, it redirects to the target; otherwise, it redirects to the root of the site.

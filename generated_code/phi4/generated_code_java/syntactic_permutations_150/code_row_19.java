@@ -26,23 +26,3 @@ public class PostServlet extends HttpServlet {
         // Implement actual database interaction here (e.g., using JDBC)
     }
 }
-
-// main.jsp
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Main Page</h1>
-    <form action="${pageContext.request.contextPath}/post" method="POST">
-        <label for="message">Message:</label><br>
-        <input type="text" id="message" name="message"><br><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
-*/

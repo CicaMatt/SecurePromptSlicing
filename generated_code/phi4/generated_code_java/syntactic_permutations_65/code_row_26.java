@@ -55,24 +55,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h2>Upload a PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <label for="file">Choose file to upload:</label>
-        <input type="file" id="file" name="file" accept=".pdf" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-**Note:** To run this application, you need a Java servlet container like Apache Tomcat. Make sure to configure your web.xml or use annotations as shown above for the `FileUploadServlet`. Also, ensure that your server environment is set up to handle multipart form data.

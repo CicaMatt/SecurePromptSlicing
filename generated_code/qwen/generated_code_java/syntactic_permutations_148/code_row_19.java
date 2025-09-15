@@ -46,29 +46,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- main.jsp -->
-<%@ page import="java.sql.*" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <% ResultSet messages = (ResultSet) request.getAttribute("messages");
-       while (messages != null && messages.next()) { %>
-        <li><strong><%= messages.getString("username") %>:</strong> <%= messages.getString("message") %></li>
-    <% } %>
-</ul>
-
-<h2>Submit a Message</h2>
-<form method="post" action="MessageServlet">
-    Username: <input type="text" name="username"><br>
-    Message: <input type="text" name="message"><br>
-    <input type="submit" value="Post Message">
-</form>
-</body>
-</html>

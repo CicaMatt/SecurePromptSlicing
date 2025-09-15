@@ -50,12 +50,3 @@ public class WebApp {
                 "<a href='/'>Home</a>";
     }
 }
-
-
-Make sure to include the Spark dependency in your `pom.xml` if you are using Maven:
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>

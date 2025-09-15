@@ -53,29 +53,3 @@ public class HomeServlet extends HttpServlet {
         return messages;
     }
 }
-
-
-
-<!-- WEB-INF/views/home.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Home</title>
-</head>
-<body>
-    <h1>User Messages</h1>
-    <ul>
-        <% 
-            Map<String, String[]> users = (Map<String, String[]>) request.getAttribute("model").get("users");
-            for (String username : users.keySet()) {
-                String[] messages = users.get(username);
-                for (String message : messages) {
-                    out.println("<li>" + username + ": " + message + "</li>");
-                }
-            }
-        %>
-    </ul>
-</body>
-</html>

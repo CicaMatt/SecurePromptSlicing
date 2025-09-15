@@ -39,7 +39,6 @@ public class Application {
 }
 
 
-**pom.xml**
 
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -62,10 +61,7 @@ public class Application {
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>

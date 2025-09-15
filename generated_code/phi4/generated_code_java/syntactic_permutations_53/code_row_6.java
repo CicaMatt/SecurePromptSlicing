@@ -32,6 +32,3 @@ public class LoginRedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-**Note:** Ensure you have a web application structure with `login.jsp`, `admin.jsp`, and `user.jsp` pages available to handle the redirections. Additionally, configure your server environment for servlet support (e.g., using Apache Tomcat or another Java EE server).

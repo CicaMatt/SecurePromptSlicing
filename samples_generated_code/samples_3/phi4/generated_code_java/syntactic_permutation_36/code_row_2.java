@@ -62,6 +62,3 @@ public class LoginPage {
         // Implement redirection logic here
     }
 }
-
-
-**Note**: Replace `"your_database_name"`, `"your_db_username"`, and `"your_db_password"` with your actual database details. Ensure the MySQL JDBC driver is included in your project's classpath.

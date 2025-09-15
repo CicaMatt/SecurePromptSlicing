@@ -59,34 +59,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Dependencies:**
-
-1. JDBC Driver for MySQL
-2. Spark Java Framework
-
-To run the code, include these dependencies in your `build.gradle`:
-
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'mysql:mysql-connector-java:8.0.29'
-}
-
-
-Or in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.29</version>
-    </dependency>
-</dependencies>

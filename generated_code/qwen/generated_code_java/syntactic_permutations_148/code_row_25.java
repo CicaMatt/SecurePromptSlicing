@@ -36,30 +36,3 @@ public class MessageServlet extends HttpServlet {
         return messages;
     }
 }
-
-
-
-<!-- main.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <% List<String> messages = (List<String>) request.getAttribute("messages");
-        if (messages != null) {
-            for (String message : messages) { %>
-                <li><%= message %></li>
-    <%      }
-        } %>
-</ul>
-
-<form action="MessageServlet" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <input type="text" name="message"><br>
-    <input type="submit" value="Post">
-</form>
-</body>
-</html>

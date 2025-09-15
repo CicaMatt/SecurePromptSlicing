@@ -65,13 +65,3 @@ public class RegistrationForm {
         stmt.executeUpdate();
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if using Maven for H2 Database -->
-<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>1.4.200</version>
-    <scope>runtime</scope>
-</dependency>

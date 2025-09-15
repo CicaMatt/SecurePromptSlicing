@@ -51,6 +51,3 @@ public class RegistrationForm {
         return md.digest(password.getBytes());
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Adjust `DB_URL`, `DB_USER`, and `DB_PASSWORD` with your database credentials. The SQL table `users` should have columns `username`, `password`, and `salt`.

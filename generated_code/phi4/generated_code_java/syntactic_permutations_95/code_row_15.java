@@ -59,6 +59,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Note: Ensure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, make sure the MySQL connector library is included in your project dependencies.

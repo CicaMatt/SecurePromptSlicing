@@ -31,6 +31,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-Make sure you have the necessary environment to run this code, as it uses `com.sun.net.httpserver.HttpServer`, which is part of the JDK. Run the application on a machine with Java Development Kit (JDK) installed, and visit `http://localhost:8080/info` in your browser to see the output.

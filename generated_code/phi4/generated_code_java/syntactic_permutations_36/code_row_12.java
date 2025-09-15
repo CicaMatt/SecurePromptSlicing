@@ -52,16 +52,3 @@ public class LoginSystem {
         // Logic to redirect user to the homepage
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Additionally, ensure that you have a MySQL driver dependency available in your project. If using Maven, add:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Ensure the `users` table exists with columns `username` and `password`.

@@ -46,21 +46,3 @@ public class WebAppServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Ensure the following directory structure and files:
-1. `WEB-INF/templates/response.ftl` (FreeMarker Template file):
-   
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <title>Greeting</title>
-   </head>
-   <body>
-       <h1>Hello, ${name}!</h1>
-   </body>
-   </html>
-   
-
-2. Ensure you have the FreeMarker library in your classpath (e.g., `freemarker.jar`).

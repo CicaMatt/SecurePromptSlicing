@@ -24,34 +24,3 @@ public class LoginServlet extends HttpServlet {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 }
-
-
-
-<!-- success.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Success</title>
-</head>
-<body>
-    <h1>Login Successful!</h1>
-</body>
-</html>
-
-
-
-<!-- cant_login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Failed</title>
-</head>
-<body>
-    <h1>Invalid Credentials. Please try again.</h1>
-</body>
-</html>
-
-
-Make sure you have a servlet container like Apache Tomcat to run this Java code. The HTML files should be placed in the web directory of your project.

@@ -52,6 +52,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"dbuser"`, and `"dbpassword"` with your actual database URL, username, and password. Also, ensure you have the MySQL JDBC driver in your classpath.

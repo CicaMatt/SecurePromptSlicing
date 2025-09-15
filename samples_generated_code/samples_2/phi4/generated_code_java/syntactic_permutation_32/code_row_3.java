@@ -27,6 +27,3 @@ class RedirectController {
         }
     }
 }
-
-
-To run this code, ensure you have a Spring Boot environment set up. Save the above code in a file named `RedirectApplication.java`, and use Maven or Gradle for dependency management to include Spring Boot dependencies in your project.

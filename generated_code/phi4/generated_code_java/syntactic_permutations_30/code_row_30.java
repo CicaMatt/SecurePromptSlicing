@@ -23,12 +23,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java Servlet container like Apache Tomcat installed.
-2. Create a web application project in your IDE or manually.
-3. Place the above class into a package under `src/main/java`.
-4. Configure `web.xml` to map the servlet if necessary, although using `@WebServlet("/redirect")` should suffice for annotation-based configuration.
-5. Deploy the application and test by accessing the `/redirect?target=<your_target>` URL.

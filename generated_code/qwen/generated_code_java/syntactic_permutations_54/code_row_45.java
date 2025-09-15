@@ -58,37 +58,3 @@ public class AdminServlet extends HttpServlet {
         out.println("</html>");
     }
 }
-
-
-
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/do_login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AdminServlet</servlet-name>
-        <servlet-class>AdminServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminServlet</servlet-name>
-        <url-pattern>/admin_page</url-pattern>
-    </servlet-mapping>
-
-    <welcome-file-list>
-        <welcome-file>login</welcome-file>
-    </welcome-file-list>
-</web-app>

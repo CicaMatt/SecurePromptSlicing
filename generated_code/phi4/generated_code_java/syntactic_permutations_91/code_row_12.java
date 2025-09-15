@@ -52,21 +52,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you'll need:
-- A servlet container like Apache Tomcat.
-- A MySQL database with a table `users` having columns `username` and `password`.
-- The BCrypt library for password hashing. Add the BCrypt dependency to your project.
-
-For Maven projects, include in your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Ensure MySQL JDBC driver is available on the classpath.

@@ -27,29 +27,3 @@ public class MessageServlet extends HttpServlet {
         // For example, using JDBC or an ORM like Hibernate.
     }
 }
-
-
-
-<!-- Assuming this is part of mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Message Board!</h1>
-    <form action="post" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
-
-        <input type="submit" value="Submit Message">
-    </form>
-</body>
-</html>
-
-
-Note: Make sure you have a servlet container like Apache Tomcat set up to run this code. The `mainPage.jsp` should be deployed in the appropriate directory of your web application.

@@ -46,11 +46,3 @@ public class PDFUploader {
         }
     }
 }
-
-
-
--- SQL script to create the table in MySQL
-CREATE TABLE pdf_files (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    file_path VARCHAR(255) NOT NULL
-);

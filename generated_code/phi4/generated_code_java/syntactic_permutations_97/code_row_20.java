@@ -68,6 +68,3 @@ public class Registration {
         return sb.toString();
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath, and replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure that a table named `users` exists with columns for `username`, `password`, `first_name`, `last_name`, and `email`.

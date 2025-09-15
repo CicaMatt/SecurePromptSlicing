@@ -36,28 +36,3 @@ public class PdfFileUploadApplication {
         }
     }
 }
-
-
-Make sure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-    <!-- Spring Boot DevTools (optional for development) -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-devtools</artifactId>
-        <scope>runtime</scope>
-        <optional>true</optional>
-    </dependency>
-</dependencies>
-
-
-Run the application, and it will start a web server that listens for file uploads. You can test this by sending a POST request to `/upload` with a PDF file in the `file` parameter.

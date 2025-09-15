@@ -35,15 +35,3 @@ class WebServer {
         }, new FreeMarkerEngine());
     }
 }
-
-
-
-<!-- Place this file in the resources/templates directory as hello.ftl -->
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>

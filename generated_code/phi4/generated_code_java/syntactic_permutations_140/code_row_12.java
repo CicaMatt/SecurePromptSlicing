@@ -35,16 +35,3 @@ public class CheckUsernameExists {
         System.out.println("Username exists: " + exists);
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's dependencies. If you're using Maven, you can add the following dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>
-
-
-Adjust the version number as needed based on your specific requirements and available versions.

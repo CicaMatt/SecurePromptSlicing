@@ -57,16 +57,3 @@ public class ZipToTarExtractor {
         }
     }
 }
-
-
-To run this code, you will need Apache Commons Compress library. Make sure your project includes this dependency:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Include it in your `pom.xml` if you are using Maven, or add the appropriate JAR file to your project classpath.

@@ -43,33 +43,3 @@ class WebConfig implements WebMvcConfigurer {
         return resolver;
     }
 }
-
-
-Create a `hello.html` file in the `src/main/resources/WEB-INF/views/` directory with the following content:
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <span th:text="${username}">User</span>!</h1>
-</body>
-</html>
-
-
-Ensure you have the following dependencies in your `pom.xml` for Spring Boot and Thymeleaf:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-</dependencies>

@@ -55,16 +55,3 @@ public class PDFUploader {
         }
     }
 }
-
-
-Ensure you have the MySQL Connector/J dependency in your project. If using Maven, add this to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual MySQL database details. Also, ensure the `pdf_files` table exists in your database with a column named `file_path`.

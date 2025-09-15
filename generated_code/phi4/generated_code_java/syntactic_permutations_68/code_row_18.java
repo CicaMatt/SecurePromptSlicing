@@ -42,6 +42,3 @@ public class ImageUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-This code snippet is designed to be used within a Java web application. It defines a servlet `ImageUploadServlet` that handles POST requests for uploading an image. The image is read from the request, converted into a Base64-encoded string, and then both the image name and its Base64 representation could be stored as needed (e.g., in a database). For demonstration purposes, it simply prints these out. Make sure to configure your web application's `web.xml` or use annotations (`@WebServlet`) correctly for deployment.

@@ -92,6 +92,3 @@ public class StockViewServlet extends HttpServlet {
         response.getWriter().write(html);
     }
 }
-
-
-**Note:** Ensure you have the necessary database setup and replace `yourDatabase`, `username`, and `password` with your actual database name, username, and password in the connection string. Also, make sure to configure your servlet container (e.g., Tomcat) correctly and add the required JDBC driver for MySQL to your classpath.

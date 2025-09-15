@@ -62,8 +62,3 @@ public class RegisterServlet extends HttpServlet {
     }
 
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Make sure you have the necessary JDBC driver for MySQL in your classpath.
-
-Additionally, ensure you have a table named `users` in your database with at least two columns: `username` (VARCHAR) and `password` (VARCHAR).

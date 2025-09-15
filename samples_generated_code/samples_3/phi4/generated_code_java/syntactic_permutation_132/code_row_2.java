@@ -44,6 +44,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to include this servlet in a web project configured with a `web.xml` or using annotations as shown. Deploy it on a compatible Servlet container like Apache Tomcat.

@@ -22,6 +22,3 @@ public class CheckModServlet extends HttpServlet {
         return "expectedValue".equals(value);
     }
 }
-
-
-Note: This code assumes you are using a servlet-based web application. You need to configure the server and deploy it appropriately for it to work.

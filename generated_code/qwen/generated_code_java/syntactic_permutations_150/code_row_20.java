@@ -14,20 +14,3 @@ public class MessageServlet extends HttpServlet {
         // Database insertion logic here
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Main Page</h1>
-    <form action="/post" method="post">
-        <label for="message">Enter your message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

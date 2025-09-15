@@ -28,51 +28,18 @@ public class HomeServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br/>
-    Password: <input type="password" name="password"><br/>
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
 
 
 
-<!-- user.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>User Page</title>
-</head>
-<body>
-<h2>Welcome User!</h2>
-<p>This is the user-specific content.</p>
-<a href="logout">Logout</a>
-</body>
-</html>
 
 
 
-<!-- admin.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-<h2>Welcome Admin!</h2>
-<p>This is the admin-specific content.</p>
-<a href="logout">Logout</a>
-</body>
-</html>
+
+
+
+
+
+
 
 
 
@@ -130,16 +97,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <welcome-file-list>
-        <welcome-file>home</welcome-file>
-    </welcome-file-list>
-</web-app>

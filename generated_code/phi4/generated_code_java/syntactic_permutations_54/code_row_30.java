@@ -50,6 +50,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure your web application is configured correctly in a servlet container like Apache Tomcat, and that you have the necessary dependencies set up for running Servlets.

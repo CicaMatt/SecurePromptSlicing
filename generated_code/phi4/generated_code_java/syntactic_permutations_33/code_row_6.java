@@ -16,22 +16,3 @@ public class UrlRedirector {
         return "";  // This line is never reached due to redirect
     }
 }
-
-
-**Note:** To run this code, you need to include the Spark framework in your project. You can add it as a dependency using Maven or Gradle.
-
-**Maven Dependency:**
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-**Gradle Dependency:**
-
-implementation 'com.sparkjava:spark-core:2.9.3'
-
-
-Ensure you have the Spark framework set up in your environment before running this code.

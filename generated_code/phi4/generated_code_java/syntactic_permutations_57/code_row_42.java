@@ -70,6 +70,3 @@ public class ChangeEmailServlet extends HttpServlet {
         response.getWriter().println("Email updated successfully!");
     }
 }
-
-
-To run this code, you need to set up a servlet container like Apache Tomcat and create the necessary HTML forms (`login.html`, `changeEmailForm.html`) to interact with these endpoints. The above Java servlet handles the email change process after successful login validation.

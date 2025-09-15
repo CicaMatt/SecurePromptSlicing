@@ -41,6 +41,3 @@ public class DatabaseUserCheck {
         return false;
     }
 }
-
-
-Make sure to replace `"yourUsername"` with the actual username you want to check. Also, ensure that the environment variables `DB_URL`, `DB_USER`, and `DB_PASSWORD` are set correctly for your database connection.

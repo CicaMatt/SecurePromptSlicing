@@ -24,9 +24,3 @@ public class TemplateRenderer extends HttpServlet {
         resp.getWriter().write(responseString);
     }
 }
-
-
-To make this code run in a Java web environment:
-- Ensure you have the necessary setup for running Java servlets (like Apache Tomcat).
-- Place this class file into your `src` directory.
-- Compile and deploy it as part of a WAR file or directly on an embedded server.

@@ -59,10 +59,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-To run this code:
-1. Ensure you have a servlet container such as Apache Tomcat.
-2. Place these classes in your Java web project under `src/main/java`.
-3. Configure your `web.xml` or use annotations to map the servlets if needed (annotations are used here).
-4. Deploy and start your application on a server like Tomcat.

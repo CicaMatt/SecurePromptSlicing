@@ -78,6 +78,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-Make sure to replace `"your_database_name"`, `"username"`, and `"password"` with your actual database name, username, and password. Additionally, ensure you have the necessary MySQL JDBC driver in your classpath.

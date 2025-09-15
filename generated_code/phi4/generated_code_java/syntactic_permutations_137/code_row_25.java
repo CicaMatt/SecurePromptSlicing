@@ -27,6 +27,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(username) && "password123".equals(password) && "validSession".equals(session);
     }
 }
-
-
-Make sure to include the necessary web.xml configuration or use servlet annotations as shown above. This code assumes a simple in-memory check for demonstration purposes. In a real application, you would replace this with proper authentication logic, possibly involving database queries and session management.

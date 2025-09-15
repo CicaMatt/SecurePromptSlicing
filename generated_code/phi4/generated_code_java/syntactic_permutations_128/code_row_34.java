@@ -17,6 +17,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. Save the file as `HelloServlet.java`, compile it using `javac -classpath <servlet-api.jar> HelloServlet.java`, and deploy it to your servlet container. Replace `<servlet-api.jar>` with the path to your servlet API JAR file. Ensure that the server is configured correctly to handle requests at `/hello`.

@@ -50,6 +50,3 @@ public class EmailChecker {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"youruser"`, and `"yourpassword"` with your actual database URL, username, and password. Also, replace `"your_script.sh"` with the path to your script.

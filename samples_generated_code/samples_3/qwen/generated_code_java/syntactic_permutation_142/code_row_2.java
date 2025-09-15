@@ -34,16 +34,3 @@ public class UnsubscribeForm {
         }
     }
 }
-
-
-Make sure to replace `yourDatabaseName`, `yourUsername`, and `yourPassword` with your actual database name, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's dependencies. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.32</version>
-</dependency>
-
-
-If you are not using Maven, download the MySQL Connector/J JAR file and add it to your project's build path.

@@ -83,6 +83,3 @@ public class PDFUploader {
         downloadPDF("file.pdf");
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database details. Also, ensure that the table `pdf_files` exists in your database with a column named `file_path`.

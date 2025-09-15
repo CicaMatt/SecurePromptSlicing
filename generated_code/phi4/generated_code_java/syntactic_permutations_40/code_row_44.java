@@ -43,21 +43,3 @@ public class InfoServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-**Dependencies:**
-- You need to have a servlet container like Tomcat or Jetty for running the above code.
-- Add necessary dependencies for Servlet API in your `pom.xml` if you are using Maven:
-  
-  <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
-      <scope>provided</scope>
-  </dependency>
-  
-- Or include the servlet API JAR in your project classpath if you are not using Maven.
-
-**Notes:**
-- The `main` method is provided for testing purposes to simulate a simple server environment.
-- Replace the hardcoded values of `username`, `email`, and `ssn` with actual data retrieval logic as needed.

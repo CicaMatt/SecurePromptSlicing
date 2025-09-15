@@ -65,6 +65,3 @@ public class RegistrationPage {
         return sb.toString();
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Adjust `DB_URL`, `USER`, and `PASS` with your database credentials. The SQL table `users` should be created with appropriate columns matching the insert query.

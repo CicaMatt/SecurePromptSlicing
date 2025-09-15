@@ -59,6 +59,3 @@ public class TemperatureService {
         // Main method for testing purposes
     }
 }
-
-
-Make sure to replace `yourUsername` and `yourPassword` with your actual MySQL database credentials. This code assumes you have a table named `temperatures` in your database with columns `latitude`, `longitude`, `date`, and `temperature`. The MySQL JDBC driver must be included in your project's dependencies for this code to run successfully.

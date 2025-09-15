@@ -34,7 +34,6 @@ public class RedirectApplication {
 }
 
 
-**Maven Dependencies (`pom.xml`):**
 
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -53,7 +52,7 @@ public class RedirectApplication {
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> 
     </parent>
 
     <properties>
@@ -61,10 +60,7 @@ public class RedirectApplication {
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -76,12 +72,3 @@ public class RedirectApplication {
         </plugins>
     </build>
 }
-
-
-To run this application, ensure you have Maven installed and execute:
-
-
-mvn spring-boot:run
-
-
-This will start the Spring Boot application on `http://localhost:8080`. You can test it by accessing `http://localhost:8080/redirect/http://example.com` in your browser or using a tool like `curl`.

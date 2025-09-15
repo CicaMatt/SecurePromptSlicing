@@ -48,6 +48,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure the MySQL JDBC driver is in your classpath. Create a table named `images` with columns `file_name` (VARCHAR), `file_size` (BIGINT), and `file_data` (LONGBLOB) before running this script.

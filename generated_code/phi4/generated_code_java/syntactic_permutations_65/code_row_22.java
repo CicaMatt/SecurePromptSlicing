@@ -44,25 +44,3 @@ public class UploadServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-
-<form action="upload" method="post" enctype="multipart/form-data">
-    <label for="pdfFile">Choose a PDF file:</label>
-    <input type="file" name="pdfFile" id="pdfFile" accept=".pdf" required>
-    <button type="submit">Upload</button>
-</form>
-
-</body>
-</html>
-
-
-Make sure your web server (e.g., Apache Tomcat) is properly configured to run this servlet, and you have set up the necessary directory structure for deployment.

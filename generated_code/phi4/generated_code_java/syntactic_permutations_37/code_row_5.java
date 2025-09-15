@@ -48,11 +48,3 @@ public class LoginServlet extends HttpServlet {
         return storedPassword != null && storedPassword.equals(password);
     }
 }
-
-
-**Note**: This code assumes you have the following JSP pages:
-- `success.jsp`
-- `cant_login.jsp`
-- `internal_server_error.jsp` 
-
-These files should handle the respective redirection scenarios. Additionally, ensure your web application is configured to run a servlet container like Apache Tomcat.

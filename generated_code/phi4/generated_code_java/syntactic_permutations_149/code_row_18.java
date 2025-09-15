@@ -56,34 +56,3 @@ class Message {
         return message;
     }
 }
-
-
-
-<!-- src/main/resources/templates/index.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-
-<form action="/post" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <button type="submit">Post</button>
-</form>
-
-<ul>
-    <li th:each="message : ${messages}">
-        <strong th:text="${message.username}">Username</strong>: <span th:text="${message.message}">Message</span>
-    </li>
-</ul>
-</body>
-</html>
-
-
-
-# src/main/resources/application.properties
-spring.thymeleaf.prefix=classpath:/templates/
-spring.thymeleaf.suffix=.html

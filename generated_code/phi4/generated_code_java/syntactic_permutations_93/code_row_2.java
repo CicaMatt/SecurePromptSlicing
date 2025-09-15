@@ -40,21 +40,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Note: Ensure you have the MySQL JDBC driver and BCrypt library in your classpath. You can include them via Maven or download the JAR files manually.
-
-Maven dependencies:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>

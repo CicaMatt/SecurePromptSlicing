@@ -47,6 +47,3 @@ public class TemperatureServlet extends HttpServlet {
         // This is a placeholder for deploying as a servlet in a web container like Tomcat.
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database details. Additionally, ensure that the appropriate JDBC driver for MySQL is included in your project dependencies.

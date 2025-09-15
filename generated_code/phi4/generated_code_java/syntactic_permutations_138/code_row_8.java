@@ -38,22 +38,3 @@ public class WebApp {
         }
     }
 }
-
-
-Ensure you include the necessary dependencies in your `pom.xml` if using Maven or equivalent for Gradle. You will need at least Spark Java and MySQL Connector for this code to run:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-
-Make sure to replace `your_database`, `username`, and `password` with your actual database details, and configure the port as needed.

@@ -74,6 +74,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to configure your `web.xml` or use annotations as shown above for servlet mapping. Additionally, ensure that the server supports file uploads and has permissions set correctly on the upload directory.

@@ -42,19 +42,3 @@ public class ProductPriceApp {
         }
     }
 }
-
-
-To run this Java web app, ensure you have Javalin as a dependency in your project's build file (e.g., `pom.xml` for Maven or `build.gradle` for Gradle). Here is an example of how to include it using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.3.2</version>
-</dependency>
-
-
-Or, if you're using Gradle:
-
-
-implementation 'io.javalin:javalin:5.3.2'

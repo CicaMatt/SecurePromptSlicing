@@ -95,6 +95,3 @@ public class DownloadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database details. Also, ensure that the servlet container is configured correctly to handle file uploads and downloads.

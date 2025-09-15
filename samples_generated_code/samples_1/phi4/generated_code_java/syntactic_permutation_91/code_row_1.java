@@ -50,9 +50,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: Make sure to have the following set up in your environment:
-- MySQL database server running with a `webapp` database containing a table named `users` with columns `name` and `password`.
-- Apache Commons Codec library included in your project's classpath for hashing functionality.
-- Ensure that servlet API is available, typically by including it via Maven or directly as part of the Java EE SDK.

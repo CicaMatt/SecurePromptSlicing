@@ -40,41 +40,12 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form action="login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-    <c:if test="${not empty param.error}">
-        <p style="color:red;">${param.error}</p>
-    </c:if>
-</body>
-</html>
 
 
 
-<!-- home.jsp -->
-<%@ page import="javax.servlet.http.HttpSession" %>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, <%= request.getSession().getAttribute("username") %>!</h1>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -94,12 +65,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="4.0">
-</web-app>
-
-
-Note: Replace `your_database`, `root`, and `password` with your actual database name, username, and password respectively. Also, ensure you have the MySQL JDBC driver in your classpath.

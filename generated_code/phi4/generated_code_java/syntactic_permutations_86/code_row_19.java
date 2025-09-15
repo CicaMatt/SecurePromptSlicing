@@ -63,6 +63,3 @@ public class TemperatureApp {
         return Optional.empty();
     }
 }
-
-
-**Note:** Replace `your_database`, `root`, and `your_password` with your actual database name, username, and password. Make sure the MySQL JDBC driver is included in your project dependencies.

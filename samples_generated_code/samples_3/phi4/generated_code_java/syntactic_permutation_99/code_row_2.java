@@ -33,16 +33,3 @@ public class UserRegistration {
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }
-
-
-Note: Ensure you have the `jBCrypt` library added to your project's dependencies. You can include it in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Or add the JAR manually to your project's classpath. Also, replace `your_database`, `your_db_user`, and `your_db_password` with actual database details.

@@ -34,6 +34,3 @@ public class RedirectServlet extends HttpServlet {
         // This main method is just a placeholder. In practice, the servlet would be deployed in a Java web server.
     }
 }
-
-
-To run this code, you need to deploy it as part of a Java web application using a servlet container such as Apache Tomcat or Jetty. The `main` method is included only as a placeholder for completeness and is not intended for running the servlet directly.

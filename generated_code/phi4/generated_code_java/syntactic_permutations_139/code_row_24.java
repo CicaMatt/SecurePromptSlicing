@@ -43,6 +43,3 @@ public class ModeratorChecker {
         return false;
     }
 }
-
-
-**Note:** This code assumes you have a table `users` with columns `username` and `is_moderator`. Make sure to replace `"your_database_name"` with your actual database name. Also, ensure that the MySQL JDBC driver is included in your classpath, or use Maven/Gradle to manage dependencies.

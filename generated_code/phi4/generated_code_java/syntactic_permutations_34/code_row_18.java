@@ -78,35 +78,11 @@ public class DashboardServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard!</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -135,6 +111,3 @@ public class LogoutServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database", "root", "password"` with your actual database connection details. Additionally, you'll need a MySQL database named `your_database` and a table `users` with columns `username` and `password`.

@@ -39,6 +39,3 @@ public class LoginServlet extends javax.servlet.http.HttpServlet {
         // This is a placeholder for running the servlet in an actual server environment
     }
 }
-
-
-Make sure to replace `yourDatabaseName`, `yourUsername`, and `yourPassword` with your actual database details. Also, ensure that you have the necessary MySQL connector library included in your project's classpath.

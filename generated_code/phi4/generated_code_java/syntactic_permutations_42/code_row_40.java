@@ -29,6 +29,3 @@ public class InfoServlet extends HttpServlet {
         response.getWriter().write(userInfo.toString());
     }
 }
-
-
-Make sure to configure your web application server (e.g., Apache Tomcat) and include the necessary servlet API dependencies in your project to run this code.

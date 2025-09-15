@@ -31,8 +31,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This Java servlet uses the `HttpSession` to determine if a user is logged in and their role. If no session exists or the "user" attribute is missing, it redirects to the login page. If the user is logged in, it checks for the user type to decide whether to redirect to the admin or user page. The servlet is mapped to `/RedirectServlet` using the `@WebServlet` annotation.
-
-To run this code, you'll need a Java EE compatible server like Apache Tomcat and corresponding JSP pages (`login.jsp`, `userPage.jsp`, and `adminPage.jsp`). This example assumes that during login, session attributes "user" (username) and "userType" ("admin" or another value) are set accordingly.

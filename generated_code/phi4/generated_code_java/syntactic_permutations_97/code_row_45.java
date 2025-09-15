@@ -68,31 +68,3 @@ public class RegistrationPage {
         return false;
     }
 }
-
-
-**Dependencies:**
-
-- Add the following dependencies to your project build file:
-
-  - `mysql-connector-java`: For connecting to MySQL.
-  
-  - `jbcrypt`: For hashing passwords. Include this in your Maven or Gradle project.
-
-**Maven Example:**
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-**Gradle Example:**
-
-implementation 'mysql:mysql-connector-java:8.0.29'
-implementation 'org.mindrot:jbcrypt:0.4'

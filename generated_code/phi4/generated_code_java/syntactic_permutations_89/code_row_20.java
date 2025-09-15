@@ -39,10 +39,3 @@ class ProductService {
         return productPrices.getOrDefault(code, -1.0); // Return -1 if not found
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Spring Boot and necessary dependencies in your `pom.xml` or `build.gradle`.
-2. Create a new Spring Boot project with the above classes.
-3. Run the application.

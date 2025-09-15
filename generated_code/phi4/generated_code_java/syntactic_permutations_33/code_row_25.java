@@ -28,26 +28,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-**Instructions for running the code:**
-
-1. Ensure you have Java and Javalin installed. You can include Javalin in your project using Maven by adding the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.1</version>
-</dependency>
-
-
-2. Save the Java code in a file named `SimpleWebApp.java`.
-
-3. Compile and run your application using:
-   
-   javac SimpleWebApp.java
-   java SimpleWebApp
-   
-
-4. Access the application by navigating to `http://localhost:7000/check-url/<your-url>` in a web browser, replacing `<your-url>` with the URL you want to check.

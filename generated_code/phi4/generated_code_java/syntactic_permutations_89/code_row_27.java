@@ -68,6 +68,3 @@ public class SimpleWebApp {
         server.start();
     }
 }
-
-
-This Java code sets up a simple web application using `com.sun.net.httpserver.HttpServer`. It defines a function to get the price for a product code and a route `/calculate` that calculates the total cost based on the product code and quantity provided as query parameters. The server listens on port 5000.

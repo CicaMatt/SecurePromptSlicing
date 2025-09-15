@@ -24,6 +24,3 @@ public class PingDecorator {
         }
     }
 }
-
-
-This code assumes a Unix-based system for the ping command. For Windows, you might need to change `-c 4` to `-n 4`. Adjust the URL as needed or modify the program to take it as an argument or input from another source.

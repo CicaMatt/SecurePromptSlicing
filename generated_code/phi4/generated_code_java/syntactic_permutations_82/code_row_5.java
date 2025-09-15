@@ -79,6 +79,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run this code, make sure you have the necessary JDK installed. The `com.sun.net.httpserver.HttpServer` class is part of the Java standard library and does not require additional dependencies. Compile and run the program, then visit `http://localhost:8080/api?payload=name=JohnDoe` in your browser or use a tool like curl to test it.

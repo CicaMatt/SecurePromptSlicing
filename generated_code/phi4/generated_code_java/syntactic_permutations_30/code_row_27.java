@@ -21,6 +21,3 @@ public class RedirectServlet extends HttpServlet {
     }
 
 }
-
-
-Ensure you have the necessary Servlet API dependency in your project setup to run this code.

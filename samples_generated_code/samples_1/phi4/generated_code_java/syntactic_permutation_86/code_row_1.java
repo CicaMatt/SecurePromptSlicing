@@ -75,6 +75,3 @@ public class TemperatureService extends HttpServlet {
         return result;
     }
 }
-
-
-Make sure to replace `your_database`, `root`, and `password` with your actual MySQL database name, username, and password. Additionally, ensure that the table `temperature_data` exists in your database with appropriate columns (`latitude`, `longitude`, `year`, `month`, `day`, `grib_file`, and `temperature`).

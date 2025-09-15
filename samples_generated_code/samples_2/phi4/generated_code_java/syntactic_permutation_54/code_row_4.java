@@ -52,6 +52,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println(adminHtml);
     }
 }
-
-
-Note: The above code assumes you are using a Java servlet environment with necessary dependencies configured. Replace `"password123"` and `"admin"` with your actual authentication logic or database lookup for secure applications.

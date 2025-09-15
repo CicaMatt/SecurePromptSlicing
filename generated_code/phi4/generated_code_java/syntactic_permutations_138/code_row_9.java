@@ -57,6 +57,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** Ensure the MySQL JDBC driver is included in your classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) and include it in your project dependencies. Adjust database URL, username, password, and table schema as needed.

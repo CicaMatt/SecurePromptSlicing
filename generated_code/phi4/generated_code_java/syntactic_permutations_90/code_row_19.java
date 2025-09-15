@@ -53,19 +53,3 @@ public class ProductService {
         }
     }
 }
-
-
-Make sure to include the SnakeYAML library in your project dependencies for this code to run. You can add it using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-Or Gradle:
-
-
-implementation 'org.yaml:snakeyaml:1.33'

@@ -79,6 +79,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Make sure to have a MySQL database named `registrationdb` with a table `users` that has the columns `username`, `password`, `firstName`, `lastName`, and `email`. Adjust the `DB_URL`, `USER`, and `PASS` variables as necessary for your database configuration.

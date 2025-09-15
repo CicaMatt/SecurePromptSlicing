@@ -20,30 +20,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this servlet, you need to set up a basic web server environment using Java EE or Spring Boot. The above code assumes you are deploying it in an environment that supports Servlets, such as Apache Tomcat.
-
-Here's a simple `web.xml` configuration if you're not using annotations:
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>RedirectServlet</servlet-name>
-        <servlet-class>RedirectServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>RedirectServlet</servlet-name>
-        <url-pattern>/redirect</url-pattern>
-    </servlet-mapping>
-
-</web-app>
-
-
-Ensure you have a server like Apache Tomcat set up to deploy this web application.

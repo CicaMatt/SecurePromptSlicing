@@ -70,9 +70,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-1. Ensure you have Jetty included in your project dependencies (for testing purposes).
-2. Compile and package the application.
-3. Run the `main` method to start a local server on port 8080.

@@ -48,6 +48,3 @@ public class UploadPdfServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** Ensure you have a MySQL database running with a table `pdf_files` that includes at least one column named `file_path`. Also, make sure to include the necessary JDBC driver in your project's classpath. Adjust the `JDBC_URL`, `USER`, and `PASSWORD` variables as needed for your database setup.

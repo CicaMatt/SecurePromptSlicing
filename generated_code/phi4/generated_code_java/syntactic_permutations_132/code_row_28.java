@@ -21,32 +21,3 @@ class HelloController {
         return "hello";
     }
 }
-
-
-Additionally, create a `templates` directory in the `src/main/resources` folder of your Spring Boot project and add a file named `hello.html` with the following content:
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <span th:text="${username}">User</span>!</h1>
-</body>
-</html>
-
-
-Make sure you have the necessary dependencies for Spring Boot and Thymeleaf in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-</dependencies>

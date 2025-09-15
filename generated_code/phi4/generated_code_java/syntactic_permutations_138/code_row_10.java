@@ -55,21 +55,3 @@ public class WebApp {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath. You can download it from the official site or include it via a build tool like Maven or Gradle.
-
-For Maven, add this dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-
-For Gradle, add this line to your `build.gradle`:
-
-
-implementation 'mysql:mysql-connector-java:8.0.29'

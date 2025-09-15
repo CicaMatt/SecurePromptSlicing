@@ -52,6 +52,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-Make sure to replace `"path/to/your/image.jpg"`, `"jdbc:mysql://localhost:3306/your_database"`, `"your_username"`, and `"your_password"` with the actual file path, database URL, username, and password. Also, ensure that your database has a table named `images` with columns `name` (VARCHAR) and `data` (TEXT or similar type to store base64 strings).

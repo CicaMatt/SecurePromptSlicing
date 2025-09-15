@@ -30,11 +30,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Java and Spring Boot set up in your environment.
-2. Save the code in a file named `WebApp.java`.
-3. Build and run the application using Maven or Gradle (Spring Boot setup).
-4. Access the endpoint at `http://localhost:8080/isModerator?username=yourUsername` to test the functionality.

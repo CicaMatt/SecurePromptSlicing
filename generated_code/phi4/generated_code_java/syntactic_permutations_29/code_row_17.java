@@ -29,6 +29,3 @@ class RedirectController {
         }
     }
 }
-
-
-To run this code, you need to have Spring Boot set up in your project. This includes having the necessary dependencies for Spring Web and Spring Boot Starter in your `pom.xml` or `build.gradle` file.

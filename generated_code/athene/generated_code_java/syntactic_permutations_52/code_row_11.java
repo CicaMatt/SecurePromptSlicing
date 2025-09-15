@@ -21,16 +21,6 @@ public class LoginPageServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String html = """
-                <html>
-                <body>
-                <h2>Login Page</h2>
-                <form method="post" action="login">
-                    Username: <input type="text" name="username"><br>
-                    Password: <input type="password" name="password"><br>
-                    <input type="submit" value="Login">
-                </form>
-                </body>
-                </html>
                 """;
         response.setContentType("text/html");
         response.getWriter().println(html);
@@ -41,12 +31,6 @@ public class LoginPageServlet extends HttpServlet {
 public class IndexPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String html = """
-                <html>
-                <body>
-                <h2>Welcome!</h2>
-                <a href="login">Login</a>
-                </body>
-                </html>
                 """;
         response.setContentType("text/html");
         response.getWriter().println(html);
@@ -59,11 +43,6 @@ public class SecretPageServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("username") != null) {
             String html = """
-                    <html>
-                    <body>
-                    <h2>Secret settings</h2>
-                    </body>
-                    </html>
                     """;
             response.setContentType("text/html");
             response.getWriter().println(html);

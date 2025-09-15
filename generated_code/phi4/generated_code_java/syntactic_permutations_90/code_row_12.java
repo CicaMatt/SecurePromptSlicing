@@ -57,20 +57,3 @@ public class ProductService {
         }
     }
 }
-
-
-To run the code, you need to include dependencies for Javalin and SnakeYAML in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.8.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.0</version>
-    </dependency>
-</dependencies>

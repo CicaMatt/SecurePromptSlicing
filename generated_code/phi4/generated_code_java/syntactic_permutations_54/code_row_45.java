@@ -61,6 +61,3 @@ public class AdminPageServlet extends HttpServlet {
     }
 
 }
-
-
-Ensure you have a web.xml configuration if needed or use annotations as above. Deploy this code in a servlet container like Apache Tomcat.

@@ -44,18 +44,3 @@ public class SimpleApi {
         }
     }
 }
-
-
-To run this code, ensure you have the SnakeYAML library in your classpath. You can include it via Maven or download the jar file directly.
-
-For Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-Compile and run the code using your preferred Java development environment or command line tools.

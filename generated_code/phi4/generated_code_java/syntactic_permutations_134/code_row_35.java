@@ -83,11 +83,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java servlet container like Apache Tomcat set up.
-2. Compile the `HelloServlet` class with `javac`.
-3. Deploy the compiled class to your servlet container.
-4. Access the endpoint by navigating to `http://localhost:8080/yourAppName/hello?username=YourName`. Replace `yourAppName` with the name of your web application directory.

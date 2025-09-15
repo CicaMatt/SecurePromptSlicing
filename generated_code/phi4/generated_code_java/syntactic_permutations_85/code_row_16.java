@@ -74,6 +74,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-Note: You need to have MySQL JDBC driver in your classpath. Replace `username` and `password` with actual database credentials. Also, ensure that the table `sensor_data` exists and has columns `latitude`, `longitude`, and `temperature`.

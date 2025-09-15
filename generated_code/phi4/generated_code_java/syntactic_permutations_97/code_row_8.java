@@ -84,9 +84,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the following setup:
-1. A database named `your_database` with a table `users` having columns: `username`, `password`, `first_name`, `last_name`, and `email`.
-2. MySQL JDBC driver in your project's classpath.
-3. Servlet API available for handling HTTP requests (typically provided by a servlet container like Tomcat).

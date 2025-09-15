@@ -47,6 +47,3 @@ public class StockOrderApp {
         // In a real web application, you would use a framework like Spring MVC or JSF for redirection.
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. This code assumes you have a table named `buy_orders` with columns `stock_name` and `quantity`.

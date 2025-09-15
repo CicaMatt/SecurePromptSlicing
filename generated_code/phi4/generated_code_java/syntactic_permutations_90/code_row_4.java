@@ -44,24 +44,3 @@ public class PriceCalculatorService {
         return unitPrice * (quantity != null ? quantity : 0);
     }
 }
-
-
-To run this code:
-
-1. Add dependencies for Javalin and SnakeYAML to your `pom.xml` if you're using Maven:
-   
-   <dependencies>
-       <dependency>
-           <groupId>io.javalin</groupId>
-           <artifactId>javalin</artifactId>
-           <version>5.6.0</version>
-       </dependency>
-       <dependency>
-           <groupId>org.yaml</groupId>
-           <artifactId>snakeyaml</artifactId>
-           <version>2.3</version>
-       </dependency>
-   </dependencies>
-   
-
-2. Run the `PriceCalculatorService` class as a Java application.

@@ -54,16 +54,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `yourdatabase`, `yourusername`, and `yourpassword` with your actual database name, username, and password. You'll also need a MySQL driver dependency in your project's build path or Maven POM file:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>
-
-
-This code assumes you are using a MySQL database and have created a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR). Also, ensure you have a JSP page named `registrationSuccess.jsp` to redirect users upon successful registration.

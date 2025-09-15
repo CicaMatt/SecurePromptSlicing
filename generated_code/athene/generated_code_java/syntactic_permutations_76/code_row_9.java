@@ -17,6 +17,3 @@ public class MemoryAllocator {
         return p;
     }
 }
- 
-
-Note: The `Arrays.fill` line is a placeholder and not necessary in this context since Java automatically initializes the `status` field to `0`. However, it's included to reflect the intent of setting the status as described. For practical purposes, it can be omitted or replaced with direct assignment as shown.

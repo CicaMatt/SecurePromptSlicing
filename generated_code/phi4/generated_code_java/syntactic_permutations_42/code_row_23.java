@@ -20,32 +20,3 @@ public class WebApp {
         Spark.port(8080);
     }
 }
-
-
-To run this code, you will need to include the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version>
-            <configuration>
-                <source>11</source>
-                <target>11</target>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
-
-
-Make sure to start a Spark session and set up session attributes before calling the `/info` route for testing purposes.

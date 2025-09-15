@@ -32,13 +32,3 @@ public class UsernameChecker {
         }
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.23</version>
-    </dependency>
-</dependencies>

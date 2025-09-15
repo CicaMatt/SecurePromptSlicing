@@ -53,28 +53,3 @@ class FileUploadController {
         return "redirect:/uploadStatus";
     }
 }
-
-
-
-In addition, ensure your `application.properties` contains:
-
-
-spring.mvc.hiddenmethod.filter.enabled=true
-
-
-This setup assumes a basic Spring Boot application. You need to include dependencies for Spring Web and Thymeleaf in your `pom.xml` or equivalent build configuration file. Here is an example snippet for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-</dependencies>
-
-
-This code provides a simple file upload mechanism. For production, you might want to handle more complex scenarios like file validation, larger files, and better error handling.

@@ -24,15 +24,3 @@ public class HelloWorldDecorator {
         return template.replace("{{username}}", (String) model.get("username"));
     }
 }
-
-
-
-<!-- This is a simulated hello.html file -->
-<html>
-<body>
-<h1>Hello, {{username}}!</h1>
-</body>
-</html>
-
-
-Note: The above code simulates rendering a template. In a real-world application, you would use a template engine like Thymeleaf or Freemarker to handle this. The HTML part is provided as a comment within the Java file for clarity and should be placed in an actual `hello.html` file in the resources directory when using a real template engine.

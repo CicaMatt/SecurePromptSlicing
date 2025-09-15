@@ -45,6 +45,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Ensure that you have the MySQL JDBC driver included in your project's classpath and adjust `DB_URL`, `USER`, `PASSWORD`, and `images_table` to match your specific database configuration.

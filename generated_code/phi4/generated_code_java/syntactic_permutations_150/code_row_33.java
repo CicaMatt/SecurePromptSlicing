@@ -28,23 +28,3 @@ public class PostServlet extends HttpServlet {
         // pstmt.executeUpdate();
     }
 }
-
-// In main.jsp
-/*
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Main Page</h1>
-    <form action="post" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-*/

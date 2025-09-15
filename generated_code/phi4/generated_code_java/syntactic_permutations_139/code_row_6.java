@@ -42,6 +42,3 @@ public class ModeratorCheck {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, `your_password`, and `target_username` with the actual values. Also, ensure that you have the MySQL JDBC driver in your classpath.

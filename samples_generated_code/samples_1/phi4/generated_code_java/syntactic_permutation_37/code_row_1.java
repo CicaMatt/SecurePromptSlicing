@@ -48,24 +48,3 @@ public class IndexServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat set up. Place the HTML file in the `webapp` directory and compile the Java classes into the appropriate package structure within your web application.

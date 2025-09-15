@@ -56,6 +56,3 @@ public class AdminPageServlet extends HttpServlet {
         }
     }
 }
-
-
-This code requires a servlet container like Apache Tomcat to run. Ensure your web application is deployed in such an environment.

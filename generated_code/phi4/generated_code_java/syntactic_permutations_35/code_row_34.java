@@ -47,43 +47,9 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-
-    <script>
-        if (new URLSearchParams(window.location.search).get('error')) {
-            alert("Invalid credentials. Please try again.");
-        }
-    </script>
-</body>
-</html>
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-    <p>Hello, <%= request.getSession().getAttribute("username") %></p>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
 
 
@@ -103,6 +69,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC driver in your classpath. Replace `your_database`, `root`, and `password` with your actual database name, username, and password respectively. Also, ensure your `users` table has columns `username` and `password`.

@@ -45,6 +45,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. Ensure you have the necessary JDBC driver in your classpath, for example, MySQL Connector/J if using a MySQL database.

@@ -57,9 +57,3 @@ public class MessageBoard {
         }
     }
 }
-
-
-**Note:** Before running this code, ensure you have the following:
-- A MySQL database named `your_database_name`.
-- A table named `messages` with columns `username` and `message`.
-- The JDBC driver for MySQL (`mysql-connector-java-x.x.xx.jar`) included in your classpath.

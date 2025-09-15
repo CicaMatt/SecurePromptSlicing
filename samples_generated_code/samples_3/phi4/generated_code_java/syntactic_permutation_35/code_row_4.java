@@ -30,42 +30,12 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-
-    <% if (request.getParameter("error") != null) { %>
-        <p>Invalid username or password.</p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- home.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, <%= request.getSession().getAttribute("user") %></h1>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -87,6 +57,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-**Note**: Ensure you have a servlet container like Apache Tomcat set up to run this code. Additionally, ensure `web.xml` is configured or use the `@WebServlet` annotation as shown.

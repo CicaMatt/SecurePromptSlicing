@@ -50,6 +50,3 @@ public class SimpleLogin {
         System.out.println("Redirecting to: " + page);
     }
 }
-
-
-**Note**: Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. For web applications, the handling of HTTP requests and responses would be different, typically using a framework like Spring MVC or JSP/Servlets.

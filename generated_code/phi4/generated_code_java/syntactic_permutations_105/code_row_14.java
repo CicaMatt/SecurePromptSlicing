@@ -44,6 +44,3 @@ public class SecretFileCreator {
         }
     }
 }
-
-
-Note: The `setPosixFilePermissions` method works on Unix-like systems. On Windows, you may need to use different methods for changing file permissions.

@@ -49,16 +49,3 @@ public class TarfileExtractor {
         }
     }
 }
-
-
-**Dependencies:**
-- Apache Commons Compress library (for handling tar and gzip files). You can include it in your project via Maven:
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Ensure the path to `tarFilePath` is updated with the actual path of your `.tar.gz` file before running the code.

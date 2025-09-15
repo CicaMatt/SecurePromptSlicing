@@ -33,10 +33,3 @@ public class UserInfoApp {
         }
     }
 }
-
-
-To run this code:
-1. Ensure you have Java Development Kit (JDK) installed.
-2. Compile the code using `javac UserInfoApp.java`.
-3. Run it with `java UserInfoApp`.
-4. Access the application via a web browser at `http://localhost:8000/info`.

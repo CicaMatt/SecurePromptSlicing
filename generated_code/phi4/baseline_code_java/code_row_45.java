@@ -23,6 +23,3 @@ public class FileReaderFromSafeDirectory {
         }
     }
 }
-
-
-Make sure to replace `"safe_directory/example.txt"` with the actual path of the file you want to read from the safe directory. Ensure that the `safe_directory` and the specified file exist in your project structure.

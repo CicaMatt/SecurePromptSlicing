@@ -24,17 +24,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-**Dependencies:**  
-You will need to include Javalin in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-If you are not using a build tool like Maven, download the Javalin jar from [Maven Central](https://mvnrepository.com/artifact/io.javalin/javalin) and include it in your project's classpath manually.

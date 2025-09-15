@@ -44,21 +44,3 @@ public class HelloWorldApp {
         return template.replace("${username}", gson.toJson(data.get("username")));
     }
 }
-
-
-**hello.html:**
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
-
-
-Ensure you have the `hello.html` file in the same directory as your Java code and include Spark framework dependencies in your project.

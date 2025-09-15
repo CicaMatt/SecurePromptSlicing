@@ -20,25 +20,3 @@ public class PostServlet extends HttpServlet {
         // Implementation to insert the user's message into the database
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome!</h1>
-    <form action="post" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br><br>
-        
-        <button type="submit">Post Message</button>
-    </form>
-</body>
-</html>

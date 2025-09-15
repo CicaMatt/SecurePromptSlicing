@@ -25,19 +25,3 @@ public class RedirectInvalidUrlApp {
         return url != null && (url.startsWith("http://") || url.startsWith("https://"));
     }
 }
-
-
-To run this code, you need to include the Javalin library in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.16.0</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:4.16.0'

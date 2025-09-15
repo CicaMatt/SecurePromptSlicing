@@ -64,18 +64,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Make sure to replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password. Also, ensure that the JDBC driver for your database is included in your project's dependencies. For MySQL, you can add the following dependency if you are using Maven:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-For Gradle, add:
-
-implementation 'mysql:mysql-connector-java:8.0.33'

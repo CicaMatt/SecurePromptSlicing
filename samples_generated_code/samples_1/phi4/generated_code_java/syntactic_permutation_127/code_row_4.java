@@ -28,6 +28,3 @@ public class HelloServlet extends HttpServlet {
         out.flush();
     }
 }
-
-
-To deploy this servlet, you will need a Java web server like Apache Tomcat or Jetty. Ensure your project is configured as a dynamic web application and that the necessary libraries (e.g., `servlet-api.jar`) are included in your build path. The above code assumes deployment on a compatible Servlet 3.0+ container.

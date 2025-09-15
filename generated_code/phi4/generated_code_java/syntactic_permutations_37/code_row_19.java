@@ -42,6 +42,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the necessary MySQL JDBC driver in your classpath, and replace `"yourdatabase"`, `"yourusername"`, and `"yourpassword"` with actual database details. Also, ensure `login_success.jsp` and `cant_login.jsp` exist in your web application for redirection to work properly.

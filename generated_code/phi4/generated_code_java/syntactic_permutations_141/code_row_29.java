@@ -55,6 +55,3 @@ public class WebApp {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_database"`, `"your_username"`, and `"your_password"` with your actual database URL, name, username, and password.

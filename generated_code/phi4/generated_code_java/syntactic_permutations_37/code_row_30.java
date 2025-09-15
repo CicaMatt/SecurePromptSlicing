@@ -59,6 +59,3 @@ public class SimpleLoginPage {
         loginPage.handleLogin(username, password);
     }
 }
-
-
-Note: Make sure to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Also, ensure the MySQL JDBC driver is included in your classpath.

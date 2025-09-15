@@ -36,13 +36,3 @@ class ProductService {
         return yaml.dump(result);
     }
 }
-
-
-Make sure to include SnakeYAML as a dependency in your project. For Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>

@@ -34,6 +34,3 @@ public class StockApp {
         // Additional logic for the buy function can be implemented here
     }
 }
-
-
-Make sure to replace `yourDatabaseUsername` and `yourDatabasePassword` with your actual database credentials. Also, ensure that you have the MySQL JDBC driver in your classpath.

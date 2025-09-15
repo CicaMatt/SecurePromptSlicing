@@ -43,6 +43,3 @@ public class Main {
         System.out.println("Redirecting to main page...");
     }
 }
-
-
-**Note:** Replace `your_database`, `root`, and `password` with your actual database name, username, and password. Ensure that you have a table named `messages` in your database with columns `username` and `message`.

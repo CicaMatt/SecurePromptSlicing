@@ -18,16 +18,3 @@ public class WebApp {
         ctx.result(response);
     }
 }
-
-
-To run this code, you need to include the Javalin dependency in your project. If using Maven, add:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.7.5</version>
-</dependency>
-
-
-Adjust the version number as necessary to get the latest stable release.

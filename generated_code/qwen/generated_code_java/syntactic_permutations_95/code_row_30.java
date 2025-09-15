@@ -62,16 +62,3 @@ public class RegistrationForm {
         return result;
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Also, replace `your_database`, `your_username`, and `your_password` with your actual database credentials. The database table should be created as follows:
-
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARBINARY(74) NOT NULL
-);
-
-
-This code includes user registration, hashing the password with a salt, and storing both in a MySQL database.

@@ -65,37 +65,3 @@ public class UploadServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/result.jsp").forward(request, response);
     }
 }
-
-
-To make this code run, ensure you have the Apache Commons FileUpload and IO libraries included in your project. You can add them as dependencies using Maven:
-
-
-<dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>1.4</version>
-</dependency>
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.11.0</version>
-</dependency>
-
-
-Additionally, create a `result.jsp` file to display the upload result:
-
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload Result</title>
-</head>
-<body>
-    <h1>${message}</h1>
-</body>
-</html>
-
-
-Ensure your server is configured to handle servlets, and the `UPLOAD_DIRECTORY` exists or can be created in your web application context.

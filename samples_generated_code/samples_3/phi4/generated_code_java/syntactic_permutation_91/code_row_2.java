@@ -53,18 +53,3 @@ public class RegisterServlet extends HttpServlet {
         // In reality, this should be deployed on a Java EE server like Apache Tomcat.
     }
 }
-
-
-**Note:** Before running the code:
-1. Ensure you have a MySQL database named `mydatabase` with a table `users` having columns `username` and `password`.
-2. Add the dependency for BCrypt in your project's build tool or include the JAR manually. For Maven, add:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-3. Configure a servlet container like Apache Tomcat to deploy this web application.

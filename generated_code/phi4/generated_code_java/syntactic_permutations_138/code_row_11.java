@@ -46,20 +46,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure you have the necessary dependencies in your project for Javalin and MySQL JDBC connector.
-
-For Maven, add these dependencies:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.12.0</version>
-</dependency>
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>

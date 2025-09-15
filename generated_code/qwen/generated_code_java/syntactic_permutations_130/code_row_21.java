@@ -64,5 +64,5 @@ class Request {
 
 
 
-<!-- src/main/resources/template.ftl -->
+
 Hello, ${name}!

@@ -32,20 +32,7 @@ public class RedirectServlet extends HttpServlet {
 
 
 // login.jsp
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="loginServlet" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
+
 
 
 
@@ -90,32 +77,12 @@ public class LoginServlet extends HttpServlet {
 
 
 // homePage.jsp
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, User!</h1>
-    <a href="logoutServlet">Logout</a>
-</body>
-</html>
+
 
 
 
 // adminPage.jsp
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-    <h1>Welcome, Admin!</h1>
-    <a href="logoutServlet">Logout</a>
-</body>
-</html>
+
 
 
 
@@ -144,6 +111,3 @@ public class LogoutServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Note: This code assumes you have a servlet container like Apache Tomcat to deploy the application. The `RedirectServlet` handles redirection based on user authentication and role. The `LoginServlet` processes login attempts. `logoutServlet` manages session invalidation for logging out. The JSP files (`login.jsp`, `homePage.jsp`, `adminPage.jsp`) are simple pages for demonstration purposes.

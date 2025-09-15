@@ -64,32 +64,3 @@ public class ProductService {
         System.out.println("Server is running at http://localhost:4567/");
     }
 }
-
-
-**Dependencies to be included in your `pom.xml`:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>
-
-
-**Run Instructions:**
-
-1. Ensure you have Java and Maven installed.
-2. Save the code in a file named `ProductService.java`.
-3. Create a `pom.xml` with the above dependencies.
-4. Run `mvn package` to build your project.
-5. Execute `java -cp target/classes ProductService` to start the server.
-6. Use a tool like `curl` or Postman to test:  
-   
-   curl "http://localhost:4567/calculate-price?payload={%20'product_code': 'P001',%20'quantity': 3%20}"

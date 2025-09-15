@@ -54,6 +54,3 @@ public class SubscriptionChecker {
         return true; // Change to false to simulate failure
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials, and update the table name (`subscriptions`) and column names as necessary.

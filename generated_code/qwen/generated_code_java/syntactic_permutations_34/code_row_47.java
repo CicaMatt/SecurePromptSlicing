@@ -41,39 +41,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-<form method="post" action="login">
-    Username: <input type="text" name="username"><br><br>
-    Password: <input type="password" name="password"><br><br>
-    <input type="submit" value="Login">
-</form>
-<% if (request.getAttribute("errorMessage") != null) { %>
-<p style="color:red;"><%= request.getAttribute("errorMessage") %></p>
-<% } %>
-</body>
-</html>
-
-
-
-<!-- dashboard.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-<h2>Welcome to the Dashboard</h2>
-<p>You have successfully logged in.</p>
-<a href="login.jsp">Logout</a>
-</body>
-</html>

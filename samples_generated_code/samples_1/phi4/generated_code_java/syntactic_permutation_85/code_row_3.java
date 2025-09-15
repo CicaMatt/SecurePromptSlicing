@@ -87,6 +87,3 @@ public class TemperatureService {
         server.start();
     }
 }
-
-
-Note: Ensure you have the necessary JDBC driver for MySQL in your classpath, and replace `yourUsername` and `yourPassword` with actual database credentials. The `readings` table is assumed to exist with columns named `latitude`, `longitude`, `date`, and `temperature`.

@@ -60,6 +60,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:your_database_url"`, `"username"`, and `"password"` with your actual database URL, username, and password. Additionally, ensure you have the necessary JDBC driver for your database in your classpath.

@@ -59,6 +59,3 @@ public class LoginApp {
         // Implement redirection logic here
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. Additionally, ensure you have the MySQL JDBC driver in your classpath. This code uses plain text passwords for simplicity; consider using hashed passwords and secure connections in production environments.

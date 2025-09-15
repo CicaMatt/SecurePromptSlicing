@@ -62,6 +62,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure that your MySQL database is configured correctly with the `temperature_data` table and appropriate columns. Adjust `DB_URL`, `USER`, and `PASS` to match your database configuration. This code assumes you are using a servlet container like Apache Tomcat or any other that supports Java Servlets.

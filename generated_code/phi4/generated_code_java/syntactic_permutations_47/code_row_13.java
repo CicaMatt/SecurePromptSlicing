@@ -37,9 +37,3 @@ public class FileServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code:
-
-1. Save it in a Java servlet environment like Apache Tomcat.
-2. Place the file `example.txt` into a folder named `files` under your web application's root directory (e.g., `webapps/YourApp/files/example.txt`).

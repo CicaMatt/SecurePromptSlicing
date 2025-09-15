@@ -43,19 +43,3 @@ public class StockOrderApp {
         System.out.println("Redirecting to stock_view page...");
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath. You can add it using Maven or Gradle, or download the JAR file and include it manually.
-
-For Maven:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'mysql:mysql-connector-java:8.0.27'

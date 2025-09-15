@@ -35,24 +35,3 @@ public class TemplateRenderer {
         // In an actual web application, this would be handled by a servlet container
     }
 }
-
-
-Make sure you have the `mustache-maven-plugin` in your Maven dependencies to use Mustache templates:
-
-
-<dependency>
-    <groupId>com.github.spullara.mustache.java</groupId>
-    <artifactId>compiler</artifactId>
-    <version>0.9.6</version>
-</dependency>
-
-
-And create a `template.mustache` file in the resources directory with content like:
-
-
-<html>
-<head><title>Hello Template</title></head>
-<body>
-  Hello, {{name}}!
-</body>
-</html>

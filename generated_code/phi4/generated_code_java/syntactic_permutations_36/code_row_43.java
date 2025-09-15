@@ -67,6 +67,3 @@ public class LoginSystem {
         // Logic to redirect to the home page
     }
 }
-
-
-Note: Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Ensure that you have a table named `users` in your database with columns `username` and `password`.

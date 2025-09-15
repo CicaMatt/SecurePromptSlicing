@@ -28,39 +28,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-// index.html
-/*
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Message Form</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form method="post" action="MessageServlet">
-        Username: <input type="text" name="username"><br><br>
-        Message: <textarea name="message"></textarea><br><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
-*/
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/MessageServlet</url-pattern>
-    </servlet-mapping>
-</web-app>

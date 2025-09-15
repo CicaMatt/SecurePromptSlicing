@@ -11,6 +11,3 @@ public class StackBufferExample {
         System.out.println(new String(buffer)); // Print the buffer content
     }
 }
-
-
-Note: Java does not allow direct allocation of arrays on the stack. Arrays in Java are always allocated on the heap. The code above allocates a buffer on the heap and fills it with 'A'.

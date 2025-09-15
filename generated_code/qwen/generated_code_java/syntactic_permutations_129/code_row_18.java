@@ -54,5 +54,5 @@ public class ResponseRenderer {
 
 
 
-<!-- src/main/resources/response.ftl -->
+
 Hello, ${name}!

@@ -50,16 +50,3 @@ public class RequestProcessorServlet extends HttpServlet {
         response.getWriter().write("Payload processed successfully.");
     }
 }
-
-
-To run this code, ensure you have the SnakeYAML library in your project dependencies. If using Maven, add:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>2.0</version>
-</dependency>
-
-
-Compile and deploy this code as part of a web application on a servlet container like Apache Tomcat.

@@ -20,21 +20,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.4</version>
-    </dependency>
-</dependencies>
-
-
-
-// Add this to your build.gradle if you are using Gradle
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.4'
-}

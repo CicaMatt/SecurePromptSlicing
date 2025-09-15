@@ -38,6 +38,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure that the servlet container is set up correctly and that you have a URL mapping to `/admin_dashboard` in your web application configuration if this is an actual admin dashboard route you are redirecting to.

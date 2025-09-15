@@ -64,38 +64,3 @@ class HomeServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>SecretServlet</servlet-name>
-        <servlet-class>SecretServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SecretServlet</servlet-name>
-        <url-pattern>/secret</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>HomeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-</web-app>

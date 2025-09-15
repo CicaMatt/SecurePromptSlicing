@@ -63,6 +63,3 @@ public class TemperatureAPI {
         }
     }
 }
-
-
-**Note:** This code is a basic example using `com.sun.net.httpserver.HttpServer`, which is suitable for lightweight applications. For production, consider using frameworks like Spring Boot or Jakarta EE for more robust and scalable solutions.

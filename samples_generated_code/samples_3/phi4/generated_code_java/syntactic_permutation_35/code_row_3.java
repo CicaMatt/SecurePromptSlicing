@@ -44,26 +44,3 @@ public class LoginServlet extends HttpServlet {
         // Main method to run the servlet if needed
     }
 }
-
-
-Make sure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.26</version>
-    </dependency>
-</dependencies>
-
-
-Additionally, ensure your database is set up with a `users` table that has at least the columns `username` and `password`. Adjust the database URL, username, and password as necessary for your environment.
-
-For this servlet to work, you need to have a server like Apache Tomcat running. Ensure your `web.xml` or use annotations (`@WebServlet`) properly configured in your project setup.

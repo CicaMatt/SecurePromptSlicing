@@ -36,23 +36,3 @@ public class TarFileExtractor {
         System.out.println("Extraction complete.");
     }
 }
-
-
-**Dependencies Needed**:  
-To run this code, you need to include the Apache Commons Compress library in your project. You can add it using Maven with the following dependency:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version> <!-- Make sure to check for the latest version -->
-</dependency>
-
-
-Or, if you're using Gradle, add this:
-
-
-implementation 'org.apache.commons:commons-compress:1.21'
-
-
-This code reads a `.tar.gz` file and extracts its contents into `/tmp/unpack`. Make sure to replace `"your-archive.tar.gz"` with the actual path of your tar archive.

@@ -56,6 +56,3 @@ public class RegistrationPage {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }
-
-
-Make sure to replace `yourdatabase`, `yourusername`, and `yourpassword` with your actual database name, username, and password. Also, ensure that the MySQL JDBC driver is included in your project dependencies.

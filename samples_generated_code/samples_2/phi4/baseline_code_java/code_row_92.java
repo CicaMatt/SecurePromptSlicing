@@ -34,10 +34,7 @@ To run this application, you need to have Spring Boot dependencies in your `pom.
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -53,9 +50,7 @@ To run this application, you need to have Spring Boot dependencies in your `pom.
 Or in your `build.gradle` file if using Gradle:
 
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 tasks.named('bootJar') {
     archiveFileName = 'redirect-invalid-url.jar'

@@ -30,12 +30,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-
--- SQL to create the table in your MySQL database
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image_name VARCHAR(255),
-    image_data LONGBLOB
-);

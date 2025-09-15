@@ -28,24 +28,3 @@ public class SimpleWebApp {
         ctx.result(responseHtml);
     }
 }
-
-
-To run this code, you need to include the Javalin dependency in your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.7.0'
-}
-
-
-Or if using Maven, add it to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-Make sure to set the session attributes (`email` and `ssnLast4`) before accessing the `/info` route for the application to work correctly.

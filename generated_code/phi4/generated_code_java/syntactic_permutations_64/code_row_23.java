@@ -64,6 +64,3 @@ public class UploadPdfServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_db_user`, and `your_db_password` with your actual database credentials. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

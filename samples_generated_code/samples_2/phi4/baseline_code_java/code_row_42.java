@@ -57,29 +57,3 @@ public class RegisterServlet extends HttpServlet {
         // This is a placeholder to allow running the servlet as a standalone Java application
     }
 }
-
-
-Make sure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.27</version>
-    </dependency>
-    <!-- Add any other necessary dependencies here -->
-</dependencies>
-
-
-Additionally, ensure your database and table are set up correctly:
-
-
-CREATE DATABASE your_database;
-USE your_database;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(256) NOT NULL
-);

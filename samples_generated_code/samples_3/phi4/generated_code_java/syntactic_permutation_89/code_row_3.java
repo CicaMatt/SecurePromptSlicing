@@ -34,32 +34,3 @@ class PriceController {
         }
     }
 }
-
-
-To run the above Spring Boot application, ensure you have the necessary dependencies in your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-You can package and run the application using Maven:
-
-
-mvn spring-boot:run
-
-
-The application will be accessible at `http://localhost:5000/price`.

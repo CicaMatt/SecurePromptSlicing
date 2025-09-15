@@ -69,30 +69,3 @@ public class CalculatePriceServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-Note: This code assumes you have the necessary dependencies for YAML parsing (`snakeyaml`) and JSON processing (`jackson-databind`). You can include these in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.15</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>11.0.15</version>
-    </dependency>
-</dependencies>

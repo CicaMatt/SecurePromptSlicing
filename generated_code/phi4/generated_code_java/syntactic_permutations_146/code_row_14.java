@@ -60,6 +60,3 @@ public class BuyOrderServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_username`, and `your_password` with the actual database name, username, and password. Ensure that you have a table named `buy_orders` in your MySQL database with columns `username`, `stock_name`, and `quantity`.

@@ -30,20 +30,3 @@ public class HelloServlet extends HttpServlet {
         response.getWriter().write(renderedContent);
     }
 }
-
-
-
-<!-- hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
-
-
-To run this code, ensure you have a Java servlet container like Apache Tomcat set up. Place the `HelloServlet` class in your web application's source directory and the `hello.html` file in the appropriate location (e.g., `webapp/WEB-INF/templates/hello.html`) or adjust paths as needed based on your project structure.

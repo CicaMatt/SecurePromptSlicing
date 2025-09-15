@@ -28,6 +28,3 @@ public class MemoryManager {
         System.gc();
     }
 }
-
-
-This Java code allocates two byte arrays each of size 10, copies data from the first to the second, and then "frees" them by setting their references to `null`, which allows for potential garbage collection. Note that explicit memory management like in languages such as C/C++ is not typically done in Java; instead, it relies on automatic garbage collection.

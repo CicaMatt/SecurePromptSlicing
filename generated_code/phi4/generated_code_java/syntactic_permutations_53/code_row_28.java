@@ -31,51 +31,18 @@ public class RedirectServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-<h2>Please log in</h2>
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br/>
-    Password: <input type="password" name="password"><br/>
-    <button type="submit">Login</button>
-</form>
-</body>
-</html>
 
 
 
-<!-- user.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>User Page</title>
-</head>
-<body>
-<h2>Welcome to the User Page!</h2>
-<p>This is a regular user account.</p>
-<a href="logout">Logout</a>
-</body>
-</html>
 
 
 
-<!-- admin.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-<h2>Welcome to the Admin Page!</h2>
-<p>This is an administrative account.</p>
-<a href="logout">Logout</a>
-</body>
-</html>
+
+
+
+
+
+
 
 
 

@@ -48,6 +48,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         return org.glassfish.embeddable.Config.builder(f).addAsEmbeddedResource("HttpHelloPageServlet", "WEB-INF/web.xml").build();
     }
 }
-
-
-Note: This code assumes you have GlassFish or a compatible embedded server to run the servlet. The `main` method is included for demonstration purposes and allows running the servlet in a standalone Java application. In practice, deployment would typically be done on an actual servlet container.

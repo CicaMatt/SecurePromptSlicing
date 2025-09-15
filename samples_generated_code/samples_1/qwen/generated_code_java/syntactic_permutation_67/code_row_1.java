@@ -26,12 +26,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image_data LONGBLOB NOT NULL
-);
-
-Note: The SQL part is not Java code but is provided for reference to create the necessary table structure in MySQL. Ensure you have a MySQL server running and replace `your_database`, `your_username`, `your_password`, and `path_to_your_image.jpg` with actual values.

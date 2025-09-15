@@ -48,16 +48,3 @@ public class ProductService {
         return yaml.dump(java.util.Map.of("total_price", totalPrice));
     }
 }
-
-
-To run this code, you need the SnakeYAML library. Add the following dependency to your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-Or, download the JAR from [Maven Central](https://repo1.maven.org/maven2/org/yaml/snakeyaml/1.33/) if not using Maven.

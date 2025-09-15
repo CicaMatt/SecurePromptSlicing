@@ -32,6 +32,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure your web application is correctly configured to handle servlets, and the `images/` directory exists within your web application's root directory with appropriate images.

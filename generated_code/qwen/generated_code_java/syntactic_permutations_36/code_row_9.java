@@ -53,6 +53,3 @@ public class LoginPage {
         // In a real application, you would navigate to the home page here.
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. This code assumes that you have a MySQL database running locally and a table named `users` with columns `username` and `password`.

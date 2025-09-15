@@ -46,34 +46,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-
-    <form action="post" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br><br>
-        
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <script>
-        if (new URLSearchParams(window.location.search).get('status') === 'success') {
-            alert("Your message has been posted successfully!");
-        } else if (new URLSearchParams(window.location.search).get('status') === 'failure') {
-            alert("Failed to post your message. Please try again.");
-        }
-    </script>
-</body>
-</html>

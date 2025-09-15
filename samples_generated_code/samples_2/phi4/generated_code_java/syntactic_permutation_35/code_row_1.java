@@ -58,8 +58,3 @@ public class LoginServlet extends HttpServlet {
         conn.close();
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_username`, and `your_db_password` with your actual database details. This code assumes a MySQL database setup. Also ensure that the JDBC driver for MySQL is included in your project's dependencies.
-
-For web deployment, you would typically have an additional configuration file or environment to manage the connection settings and servlet mappings.

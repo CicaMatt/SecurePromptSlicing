@@ -43,25 +43,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("File uploaded successfully: " + fileName);
     }
 }
-
-
-Additionally, ensure you have a simple HTML form for uploading files:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <label for="pdfFile">Choose a PDF file to upload:</label>
-        <input type="file" id="pdfFile" name="pdfFile" accept=".pdf" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Make sure your servlet container (like Apache Tomcat) is configured correctly to handle file uploads and that the `UPLOAD_DIRECTORY` path is writable.

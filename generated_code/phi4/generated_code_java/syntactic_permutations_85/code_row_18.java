@@ -45,6 +45,3 @@ public class TemperatureApi {
         // Start the server or test the API as needed
     }
 }
-
-
-**Note**: Make sure you have the necessary JDBC driver for MySQL in your classpath. Also, replace `yourUsername` and `yourPassword` with your actual database credentials.

@@ -39,18 +39,3 @@ public class PriceCalculator {
         return total;
     }
 }
-
-
-Make sure to include the Jackson library dependencies in your build tool configuration, such as Maven or Gradle. For Maven, add:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.15.0</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-yaml</artifactId>
-    <version>2.15.0</version>
-</dependency>

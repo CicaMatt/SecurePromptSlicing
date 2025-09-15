@@ -23,9 +23,3 @@ public class HomeServlet extends HttpServlet {
         return String.format(template, name);
     }
 }
-
-
-To make this code runnable:
-- Ensure you have a servlet container like Apache Tomcat.
-- Place the above Java file in your web application's `src` directory under an appropriate package.
-- Compile the project and deploy it to the server.

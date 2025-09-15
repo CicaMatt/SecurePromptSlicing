@@ -61,6 +61,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to set up a Java web server (e.g., Apache Tomcat) and deploy this servlet. Ensure the `uploads` directory exists in your web application root or is created dynamically as shown in the code.

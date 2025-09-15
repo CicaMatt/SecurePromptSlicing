@@ -54,16 +54,3 @@ public class ImageUploader {
         uploader.uploadImage("path/to/your/image.jpg");
     }
 }
-
-
-Note: Ensure you have the Apache Commons Codec library in your classpath to use `Base64`. You can include it using Maven:
-
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>
-
-
-Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database details, and ensure the `images` table exists in your database schema.

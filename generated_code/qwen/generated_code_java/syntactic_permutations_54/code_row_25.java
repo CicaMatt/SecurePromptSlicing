@@ -55,30 +55,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-
-<!-- web.xml should be placed in WEB-INF directory -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>AdminPageServlet</servlet-name>
-        <servlet-class>AdminPageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AdminPageServlet</servlet-name>
-        <url-pattern>/admin_page</url-pattern>
-    </servlet-mapping>
-</web-app>

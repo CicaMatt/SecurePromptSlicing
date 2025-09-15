@@ -11,6 +11,3 @@ public class StackBufferAllocation {
         System.out.println("Buffer filled with 'A's: " + new String(buffer));
     }
 }
-
-
-Note: Java does not allow explicit stack allocation of arrays or objects. The above code simulates the desired behavior using heap allocation, which is typical in Java.

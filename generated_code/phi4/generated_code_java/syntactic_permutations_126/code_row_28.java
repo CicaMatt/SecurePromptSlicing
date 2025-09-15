@@ -36,12 +36,3 @@ public class HelloWorldHttpServer {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have JDK installed.
-2. Save the code to a file named `HelloWorldHttpServer.java`.
-3. Compile using: `javac HelloWorldHttpServer.java`
-4. Run using: `java HelloWorldHttpServer`
-5. Use tools like Postman or curl to send a POST request with a body containing a username to `http://localhost:8080/hello`.

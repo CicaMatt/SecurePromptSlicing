@@ -62,6 +62,3 @@ public class SimpleLoginApp {
         // Simulate redirection by displaying a message
     }
 }
-
-
-**Note:** Replace `your_database`, `root`, and `PASS` with your actual database name, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath for this code to run successfully.

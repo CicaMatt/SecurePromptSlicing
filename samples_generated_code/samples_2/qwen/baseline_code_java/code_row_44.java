@@ -66,13 +66,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-
--- SQL to create the users table if it does not exist
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password CHAR(64) NOT NULL, -- SHA-256 hash is 64 hex characters
-    salt BINARY(16) NOT NULL
-);

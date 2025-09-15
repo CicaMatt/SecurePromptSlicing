@@ -59,29 +59,3 @@ public class RegisterServlet extends HttpServlet {
         } catch (SQLException ignored) {}
     }
 }
-
-
-
-<!-- success.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registration Successful</title>
-</head>
-<body>
-    <h1>Your registration was successful!</h1>
-</body>
-</html>
-
-
-
-<!-- error.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registration Error</title>
-</head>
-<body>
-    <h1>An error occurred during registration.</h1>
-</body>
-</html>

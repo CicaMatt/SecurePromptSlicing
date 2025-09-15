@@ -65,21 +65,3 @@ public class HttpDecorator {
         sendResponse(exchange, statusCode, statusMessage, "Not Found");
     }
 }
-
-
-Create a file named `template.html` in the same directory with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, <%= username %>!</h1>
-</body>
-</html>
-
-
-This code sets up an HTTP server that listens on port 8000 and dynamically handles requests to URLs in the format `http://localhost:8000/<username>`. It reads a template file named `template.html` and replaces a placeholder with the actual username. The response is then sent back to the client.

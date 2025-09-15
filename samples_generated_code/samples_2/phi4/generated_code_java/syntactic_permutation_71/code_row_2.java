@@ -41,25 +41,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("Files uploaded successfully.");
     }
 }
-
-
-To run this servlet, you need a Java web server like Apache Tomcat and an `index.html` file for the client-side form. Below is a basic example of such an HTML file:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-    <h2>Upload File</h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" multiple><br><br>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Place the `index.html` file in the `webapp/WEB-INF` directory of your web application. Make sure to configure your server and deploy the application accordingly.

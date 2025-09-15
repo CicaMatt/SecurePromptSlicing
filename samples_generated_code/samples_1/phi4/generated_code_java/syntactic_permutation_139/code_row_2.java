@@ -35,6 +35,3 @@ public class CheckModeratorStatus {
         return false;
     }
 }
-
-
-**Note**: Make sure to replace `"your_database_name"` with the actual database name and ensure that your environment variables `DB_USERNAME` and `DB_PASSWORD` are set correctly. Additionally, you need the MySQL JDBC driver in your classpath for this code to run successfully.

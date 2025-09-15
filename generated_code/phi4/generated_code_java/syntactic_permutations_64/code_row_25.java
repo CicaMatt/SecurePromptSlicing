@@ -56,6 +56,3 @@ public class PdfUploader {
         uploader.uploadPdf(pdfFile);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure you have the MySQL JDBC driver in your classpath.

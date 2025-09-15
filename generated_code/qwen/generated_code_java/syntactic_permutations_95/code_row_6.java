@@ -72,16 +72,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can download it from Maven Central or add the following dependency if using Maven:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>
-
-
-Also, ensure you have a MySQL database set up with a table named `users` having columns `username`, `password_salt`, and `password_hash`.

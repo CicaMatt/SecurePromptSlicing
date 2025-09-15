@@ -59,13 +59,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.32</version>
-    </dependency>
-</dependencies>

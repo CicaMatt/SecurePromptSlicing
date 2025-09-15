@@ -45,16 +45,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note**: You need to replace the placeholders in `url`, `user`, `password`, and SQL table name with actual values according to your MySQL setup. Also, ensure that you have added the MySQL JDBC driver dependency to your project. If using Maven, include this in your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-
-Or download the MySQL Connector/J jar and add it to your project's classpath if not using a build tool like Maven or Gradle.

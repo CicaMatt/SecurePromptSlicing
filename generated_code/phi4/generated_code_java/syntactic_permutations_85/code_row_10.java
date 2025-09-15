@@ -43,19 +43,3 @@ public class TemperatureService {
         System.out.println("Temperature: " + (temperature == Double.NaN ? "Not Found" : temperature));
     }
 }
-
-
-**Note:** Make sure to replace `yourDatabaseUsername` and `yourDatabasePassword` with your actual database credentials. Additionally, ensure the MySQL JDBC driver is included in your classpath. You might need to add the dependency if you're using a build tool like Maven or Gradle:
-
-For Maven:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'mysql:mysql-connector-java:8.0.27'

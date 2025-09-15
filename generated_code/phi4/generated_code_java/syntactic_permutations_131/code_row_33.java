@@ -29,6 +29,3 @@ public class HomeServlet extends HttpServlet {
     }
 
 }
-
-
-To run this code, you will need a servlet container like Apache Tomcat. Deploy the above servlet in your web application and access it via `http://localhost:8080/yourAppName/home?name=YourName`. Adjust the port and context path as necessary.

@@ -55,6 +55,3 @@ public class LoginPage {
         }
     }
 }
-
-
-**Note**: Replace `your_database`, `root`, and `password` with your actual database name, username, and password. Ensure you have the MySQL JDBC driver in your classpath for this code to run correctly.

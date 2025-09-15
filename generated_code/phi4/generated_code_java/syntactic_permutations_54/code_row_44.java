@@ -41,6 +41,3 @@ public class LoginServlet extends HttpServlet {
         return "admin".equals(username);  // Assume "admin" is the only admin account
     }
 }
-
-
-Make sure to configure your web server (like Tomcat) and include necessary JSP files like `admin_page.jsp` in your web application.

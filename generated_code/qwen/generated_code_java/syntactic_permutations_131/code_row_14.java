@@ -41,16 +41,3 @@ public class WebApp {
         Spark.get("/", WebApp::home);
     }
 }
-
-
-
-<!-- Place this file in src/main/resources/freemarker/hello.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

@@ -56,6 +56,3 @@ public class MessagingApp {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath for this code to run. Also, make sure that the database `messages_db` and table `messages` exist with at least one column named `content`. Adjust the database URL, username, and password as necessary for your setup.

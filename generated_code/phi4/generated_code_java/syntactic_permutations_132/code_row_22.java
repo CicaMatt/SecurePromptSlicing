@@ -56,21 +56,3 @@ public class HelloDecoratorServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-Ensure you have the following `hello.html` in your resources directory (`src/main/resources/`):
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <%= username %>!</h1>
-</body>
-</html>
-
-
-This code sets up a simple Jetty server that listens on port 8080. When you visit `/hello/<username>`, it processes the request and renders `hello.html` with the specified username. Ensure to include the necessary dependencies for Jetty in your project, such as Maven or Gradle configurations.

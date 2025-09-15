@@ -53,6 +53,3 @@ class TemperatureController {
         }
     }
 }
-
-
-Note: This code assumes you have a Spring Boot application set up with a datasource configured in `application.properties` or `application.yml`. The table `TemperatureData` should exist in your database schema with columns `latitude`, `longitude`, `date`, and `temperature`.

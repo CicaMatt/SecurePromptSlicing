@@ -77,33 +77,3 @@ public class MainServlet extends HttpServlet {
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <form action="post" method="post">
-        <textarea name="message" rows="4" cols="50"></textarea><br>
-        <button type="submit">Submit Message</button>
-    </form>
-
-    <h2>Messages:</h2>
-    <ul>
-        <% ArrayList<String> messages = (ArrayList<String>) request.getAttribute("messages");
-           if (messages != null) {
-               for (String message : messages) { %>
-                   <li><%= message %></li>
-               <% }
-           } %>
-    </ul>
-</body>
-</html>
-
-
-**Note:** Replace `your_database`, `root`, and `password` with your actual database name, user, and password. Ensure you have the MySQL JDBC driver in your classpath.

@@ -57,12 +57,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven for SQLite dependency -->
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.41.2.1</version>
-</dependency>

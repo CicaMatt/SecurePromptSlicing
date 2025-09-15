@@ -29,6 +29,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This Java servlet handles HTTP requests and redirects users based on their login status and role. It assumes that the user's information is stored in session attributes "user" and "role". The responses are redirected to appropriate JSP pages: `login.jsp`, `userPage.jsp`, or `adminPage.jsp`. Make sure these JSP files exist in your project for this code to function correctly.

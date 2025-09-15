@@ -59,6 +59,3 @@ public class UploadPDFServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: Ensure that you have a MySQL database named `your_database_name` and a table called `pdf_files` with at least one column, `file_path`, of type `VARCHAR`. Modify the constants for database URL, username, and password as necessary. Also ensure your Java project has included dependencies for servlets (like Jetty or Tomcat) and MySQL JDBC driver (`mysql-connector-java`).

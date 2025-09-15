@@ -37,6 +37,3 @@ public class WebApp {
         return PASSWORD;
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath to run this code. You can add it as a Maven dependency or download the JAR file and include it in your project.

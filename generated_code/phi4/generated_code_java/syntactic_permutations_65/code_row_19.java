@@ -47,22 +47,3 @@ public class FileUploadServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/uploadForm.html");
     }
 }
-
-
-Additionally, you need an HTML form to allow the user to select a file for uploading. Save this as `uploadForm.html` in your web application's directory:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>File Upload Form</title>
-</head>
-<body>
-    <h2>Upload PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        Select file to upload:
-        <input type="file" name="file" accept=".pdf"><br><br>
-        <input type="submit" value="Upload">
-    </form>
-</body>
-</html>

@@ -81,6 +81,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Adjust `DB_URL`, `USER`, and `PASS` with your actual database credentials. Also, ensure that a table named `users` exists with columns `username`, `password`, `first_name`, `last_name`, and `email`.

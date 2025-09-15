@@ -39,22 +39,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("File uploaded successfully: " + fileName);
     }
 }
-
-
-Ensure you have the necessary server setup to handle servlets and multipart form data. For instance, using Apache Tomcat or any other Java EE-compatible server should work with this code. Also, ensure your HTML form is set up correctly:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <label for="file">Choose a PDF file:</label>
-        <input type="file" name="file" id="file" accept=".pdf"/>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

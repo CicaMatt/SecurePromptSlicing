@@ -60,21 +60,3 @@ public class DecoratorExample {
         }
     }
 }
-
-
-Make sure to have an `hello.html` file in the same directory with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <username>!</h1>
-</body>
-</html>
-
-
-This code sets up a simple HTTP server that listens on port 8080. When visiting `/hello/<username>`, it reads the `hello.html` file and replaces `<username>` with the actual username from the URL.

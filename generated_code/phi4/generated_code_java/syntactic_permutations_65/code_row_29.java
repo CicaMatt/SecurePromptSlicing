@@ -96,18 +96,3 @@ public class FileUploadApplication {
         return "File uploaded successfully!";
     }
 }
-
-
-Ensure you have the necessary dependencies in your `pom.xml` for a Spring Boot application:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <!-- Add other dependencies here -->
-</dependencies>
-
-
-Run the server and ensure it's listening on port 8080. Then, run the `FileUploader` class to upload a PDF file to your local web server.

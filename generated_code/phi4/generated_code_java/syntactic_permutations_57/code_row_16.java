@@ -75,5 +75,3 @@ public class SimpleLoginPage extends JFrame {
         });
     }
 }
-
-This code creates a simple graphical user interface with Java Swing that allows users to change their email after verifying the old email and password. It uses `JFrame` for the window, `JTextField` for input fields, `JPasswordField` for the password field, and `JButton` for the action trigger. The logic checks if the provided old email matches the stored one and if the entered confirm password is correct before allowing to change the email.

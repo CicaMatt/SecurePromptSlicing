@@ -39,12 +39,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code:
-
-1. Save the file with a `.java` extension, e.g., `SimpleWebApp.java`.
-2. Compile it using `javac SimpleWebApp.java`.
-3. Run it using `java SimpleWebApp`.
-
-Ensure you have Java Development Kit (JDK) installed and configured properly on your machine to compile and run this code. This example uses the built-in HTTP server provided by JDK for simplicity.

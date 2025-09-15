@@ -24,13 +24,3 @@ public class GetNameServlet extends HttpServlet {
     }
 
 }
-
-
-To run this Java servlet, you would need a web server like Apache Tomcat. Here's how to set it up:
-
-1. Create a project in your IDE and add the above code as `GetNameServlet.java`.
-2. Compile the class.
-3. Deploy the compiled class to a servlet container like Apache Tomcat.
-4. Configure Tomcat to serve requests at `/GetName`.
-
-Ensure you have the necessary setup for running Java web applications, including dependencies for servlets if not using an IDE that handles it automatically.

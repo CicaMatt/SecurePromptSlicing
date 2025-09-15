@@ -37,6 +37,3 @@ public class ModeratorCheck {
         }
     }
 }
-
-
-Make sure to replace `"username"` with the actual username you want to check. Also, ensure that the environment variables `DB_URL`, `DB_USER`, and `DB_PASSWORD` are set correctly in your system.

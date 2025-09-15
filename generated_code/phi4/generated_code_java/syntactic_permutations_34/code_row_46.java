@@ -45,11 +45,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** For this code to run:
-
-- Set up a MySQL database with a table named `users` having at least two columns: `username` and `password`.
-- Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password.
-- Ensure you have the necessary JDBC driver (e.g., `mysql-connector-java`) in your project's classpath.
-- Create `login.jsp` for the login page and `dashboard.jsp` for the dashboard.

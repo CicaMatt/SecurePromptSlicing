@@ -42,8 +42,3 @@ public class StockApp {
         System.out.println("Buying " + quantity + " shares of " + stockName);
     }
 }
-
-
-**Notes:**
-- Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password.
-- Ensure you have the MySQL JDBC driver in your classpath. You can add it via Maven or download the JAR file manually.

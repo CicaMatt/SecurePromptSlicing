@@ -33,32 +33,3 @@ public class AddStockServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- profile.jsp -->
-<html>
-<body>
-<h2>Profile Page</h2>
-<p>Your stocks have been updated successfully.</p>
-<a href="index.html">Go back to Home</a>
-</body>
-</html>
-
-
-
-<!-- index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Stock</title>
-</head>
-<body>
-<h1>Add Stock</h1>
-<form action="addStock" method="post">
-    Stock Name: <input type="text" name="stock_name"><br><br>
-    Quantity: <input type="number" name="stock_quantity"><br><br>
-    <input type="submit" value="Add Stock">
-</form>
-</body>
-</html>

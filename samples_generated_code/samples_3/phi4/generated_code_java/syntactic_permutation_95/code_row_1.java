@@ -53,17 +53,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, create a table in your MySQL database as follows:
-
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password_salt VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(512) NOT NULL
-);
-
-
-This code assumes you have the MySQL JDBC driver available in your classpath. You can download it from the official MySQL website or add it to your project using a build tool like Maven or Gradle.

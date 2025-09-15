@@ -51,11 +51,3 @@ public class LoginApplication {
         }
     }
 }
-
-
-**Note:** Before running the code, ensure that you have a MySQL database set up with the following structure:
-
-1. A database named `login_db`.
-2. A table named `users` with columns `username` and `password`.
-
-Additionally, include the MySQL JDBC driver in your project's classpath to connect to the database.

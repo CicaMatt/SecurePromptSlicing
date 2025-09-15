@@ -40,6 +40,3 @@ public class Main {
         return escapedText.toString();
     }
 }
-
-
-To run the code, use a command like `java Main /hello/username`.

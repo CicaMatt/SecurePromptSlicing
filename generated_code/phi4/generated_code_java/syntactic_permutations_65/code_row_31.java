@@ -52,8 +52,3 @@ public class UploadServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-To make this servlet runnable, you need to configure it in your `web.xml` file or use annotations as shown. Ensure that the server supports Servlet 3.0+ for multipart configuration.
-
-Additionally, ensure your HTML form action points to the correct URL mapped to this servlet. If using a framework like Spring Boot, additional configurations might be necessary.

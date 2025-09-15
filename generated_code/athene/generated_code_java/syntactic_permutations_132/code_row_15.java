@@ -34,11 +34,3 @@ public class WebApp {
 
 
 Assuming the `hello.html` file is in the same directory as the Java class and contains a placeholder `{username}`:
-
-
-<!-- hello.html -->
-<html>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>

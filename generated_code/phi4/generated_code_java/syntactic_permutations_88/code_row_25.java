@@ -47,21 +47,3 @@ public class SimpleWebAPI {
         Spark.awaitInitialization();
     }
 }
-
-
-**Dependencies to include in your `pom.xml` for Maven or equivalent dependency management tool:**
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-**Note**: Ensure to include the necessary dependencies in your project setup and start the server before making requests to `/calculate_price`.

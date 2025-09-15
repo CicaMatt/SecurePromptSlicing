@@ -60,35 +60,3 @@ public class Main {
         };
     }
 }
-
-
-Ensure you have the following dependencies in your `pom.xml` for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.freemarker</groupId>
-        <artifactId>freemarker</artifactId>
-        <version>2.3.31</version>
-    </dependency>
-</dependencies>
-
-
-Place your `template.ftl` file in the `/src/main/resources/templates/` directory with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    Hello, ${name}!
-</body>
-</html>

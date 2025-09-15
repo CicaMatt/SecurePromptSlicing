@@ -55,15 +55,3 @@ public class TemplateRenderer {
         return render_response_from_env(env);
     }
 }
-
-
-
-<!-- hello.ftl -->
-<html>
-<head>
-    <title>Hello Template</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

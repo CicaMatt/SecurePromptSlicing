@@ -36,6 +36,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-**Note:** Ensure that `tar` is installed on your system and accessible from the command line. Adjust the path to your tar file in `tarFilePath`.

@@ -52,6 +52,3 @@ public class Registration {
         }
     }
 }
-
-
-**Note**: You need to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also ensure that the MySQL JDBC driver is in your classpath. Create a table named `users` with columns `username` and `password`.

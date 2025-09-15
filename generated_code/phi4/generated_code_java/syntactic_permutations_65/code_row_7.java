@@ -45,10 +45,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().write("File uploaded successfully!");
     }
 }
-
-
-To run this code:
-- Ensure you have a servlet container like Apache Tomcat.
-- Place the above Java class in your web application's `src` directory.
-- Configure the web.xml or use annotations to map the servlet URL pattern as shown.
-- Ensure the server has write permissions for the `uploads` directory.

@@ -63,6 +63,3 @@ public class RegistrationPage {
         return sb.toString();
     }
 }
-
-
-Make sure to replace `yourdatabase`, `yourusername`, and `yourpassword` with your actual database name, username, and password. Also, ensure that the `users` table exists in your database with appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`).

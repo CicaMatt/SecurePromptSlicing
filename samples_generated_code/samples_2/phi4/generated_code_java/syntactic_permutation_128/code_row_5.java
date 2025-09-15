@@ -33,6 +33,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-This code sets up a simple HTTP server using `com.sun.net.httpserver.HttpServer` that listens on port 8000. It handles requests at the `/hello` context by reading the request body and responding with "hello [requestBody]". Make sure to include the necessary dependencies and permissions if you are running this in an environment where `com.sun.net.httpserver` is not available by default, such as a Java EE application server.

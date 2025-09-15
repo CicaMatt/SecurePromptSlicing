@@ -66,10 +66,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-In addition to this Java code, you need the following:
-
-1. A MySQL database named `mydatabase` with a table `users` having columns `username` and `password`.
-2. Ensure that the MySQL JDBC driver (`mysql-connector-java-x.x.xx.jar`) is added to your project's classpath.
-3. Create HTML or JSP pages for user registration input (e.g., `register.html`, `registration-success.jsp`).

@@ -62,19 +62,3 @@ class UserController {
         return "Is moderator: " + isModerator;
     }
 }
-
-
-Make sure to replace `your_database`, `username`, and `password` with your actual database name, username, and password. Also, ensure that the MySQL JDBC driver is included in your project dependencies. If you are using Maven, add this dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>
-
-
-And if you are using Gradle, add this to your `build.gradle`:
-
-
-implementation 'mysql:mysql-connector-java:8.0.23'

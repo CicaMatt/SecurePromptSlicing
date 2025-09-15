@@ -73,10 +73,3 @@ public class Registration {
         }
     }
 }
-
-
-**Note:** Before running this code, ensure you have the following:
-- MySQL JDBC driver in your classpath.
-- BCrypt library included in your project (e.g., via Maven or manually adding the JAR).
-- A database named `your_database` with a table `users` having columns: `username`, `password`, `first_name`, `last_name`, and `email`.
-- Replace `DB_URL`, `USER`, and `PASS` with your actual database credentials.

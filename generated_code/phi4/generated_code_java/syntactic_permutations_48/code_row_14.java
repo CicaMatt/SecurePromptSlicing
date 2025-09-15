@@ -69,6 +69,3 @@ public class ImageServer {
         }
     }
 }
-
-
-Make sure you have the necessary permissions and file paths correctly set to read the files from your server's directory. Also, ensure that your Java environment supports `com.sun.net.httpserver.HttpServer`, which is part of the standard library in JDK 1.6 and later but considered a part of the non-standard API.

@@ -30,6 +30,3 @@ public class CheckModServlet extends HttpServlet {
         return credentials.containsKey(username) && credentials.get(username).equals(password);
     }
 }
-
-
-Note: To deploy this servlet in a Java web application, you must include it in a `web.xml` configuration file or use annotations for servlet 3.0 and above, and ensure your server supports Servlet API (e.g., Apache Tomcat). This code does not handle exceptions beyond the basic IOException for simplicity.

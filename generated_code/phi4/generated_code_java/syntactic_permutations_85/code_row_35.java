@@ -58,30 +58,3 @@ class TemperatureController {
         }
     }
 }
-
-
-To make this code runnable, you need to set up a Spring Boot application with the necessary dependencies in your `pom.xml` or `build.gradle`, and configure a database connection. Here's an example of how you might define the `DataSource` bean:
-
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import javax.sql.DataSource;
-
-@Configuration
-class DataSourceConfig {
-
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/your_database");
-        dataSource.setUsername("your_username");
-        dataSource.setPassword("your_password");
-        return dataSource;
-    }
-}
- 
-
-Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database details.

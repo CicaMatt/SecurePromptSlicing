@@ -53,6 +53,3 @@ public class EmailUnsubscriber {
         return -1; // Return -1 if an error occurs
     }
 }
-
-
-**Note:** Ensure that the `emails.txt` file and `unsubscribe.sh` script exist in the same directory as your Java program. The shell script should be executable (`chmod +x unsubscribe.sh`).

@@ -51,34 +51,3 @@ public class TarUnpacker {
         }
     }
 }
-
-
-**Dependencies:**
-
-To run this code, you need to include the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-compress</artifactId>
-        <version>1.21</version>
-    </dependency>
-    <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>2.11.0</version>
-    </dependency>
-</dependencies>
-
-
-Or in your `build.gradle` if you are using Gradle:
-
-
-dependencies {
-    implementation 'org.apache.commons:commons-compress:1.21'
-    implementation 'commons-io:commons-io:2.11.0'
-}
-
-
-Make sure to replace the placeholder `/path/to/your/tarfile.tar.gz` with the actual path of your tar file.

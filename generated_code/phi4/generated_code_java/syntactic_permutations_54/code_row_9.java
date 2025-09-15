@@ -48,6 +48,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().write("<html><body>Welcome to the Admin Page!</body></html>");
     }
 }
-
-
-**Note**: For this code to run, you must set up a Java web application environment that supports Servlets. The `web.xml` file or equivalent configuration should be set up correctly in your web application directory. Ensure that servlet support is enabled and properly configured in the server (e.g., Apache Tomcat).

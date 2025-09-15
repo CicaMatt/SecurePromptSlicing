@@ -52,6 +52,3 @@ public class DatabaseInfoServlet extends HttpServlet {
         return PASSWORD; // In real applications, do not expose passwords
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat and the MySQL JDBC driver in your classpath. Make sure to replace database connection details with actual values for a working setup.

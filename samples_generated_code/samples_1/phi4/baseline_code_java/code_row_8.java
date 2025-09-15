@@ -34,6 +34,3 @@ public class FileReader {
         }
     }
 }
-
-
-Replace `"path/to/safe/directory"` with the actual path to your safe directory.

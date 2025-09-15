@@ -48,27 +48,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, ensure you have Javalin and Jackson dependencies in your project. If you're using Maven, add the following to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.6.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.3</version>
-    </dependency>
-</dependencies>
-
-
-For Gradle, add the following to your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:4.6.0'
-implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'

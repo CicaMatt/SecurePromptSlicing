@@ -25,6 +25,3 @@ public class CheckModServlet extends HttpServlet {
         return "expectedValue1".equals(param1) && "expectedValue2".equals(param2);
     }
 }
-
-
-Note: Replace `"expectedValue1"` and `"expectedValue2"` with actual values that you consider to be correct.

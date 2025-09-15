@@ -45,19 +45,3 @@ public class SimpleWebApp {
         return prices.getOrDefault(productCode, -1.0);
     }
 }
-
-
-Make sure to include the Javalin dependency in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-Or, if you're using Gradle, in your `build.gradle` file:
-
-
-implementation 'io.javalin:javalin:5.7.0'

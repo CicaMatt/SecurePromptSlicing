@@ -25,11 +25,3 @@ public class RedirectServlet extends HttpServlet {
         System.out.println("Deploy this servlet in a Java EE web container to run it.");
     }
 }
-
-
-To make this code runnable:
-
-1. Save the file as `RedirectServlet.java`.
-2. Compile it using: `javac RedirectServlet.java`
-3. Deploy the compiled class into a web application running on a Java EE-compatible server like Apache Tomcat.
-4. Access the servlet via `http://yourserver/yourapp/redirect?target=http://example.com` to test redirection logic.

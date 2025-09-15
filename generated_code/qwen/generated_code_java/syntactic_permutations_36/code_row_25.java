@@ -64,6 +64,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. Also, ensure that the JDBC driver for your database is included in your project's dependencies.

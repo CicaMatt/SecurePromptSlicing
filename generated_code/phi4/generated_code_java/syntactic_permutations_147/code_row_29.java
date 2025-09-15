@@ -48,6 +48,3 @@ public class StockOrderApp {
         System.out.println("Redirected to stock_view page.");
     }
 }
-
-
-Note: Ensure your MySQL database is running, and the `stockdb` database with a table named `orders` exists. The `orders` table should have at least two columns: `stock_name` (VARCHAR) and `quantity` (INT). Adjust database credentials as necessary.

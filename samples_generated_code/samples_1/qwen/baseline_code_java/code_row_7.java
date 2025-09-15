@@ -66,6 +66,3 @@ public class UnsubscribeForm {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `username`, and `password` with your actual database details. Also, ensure that the MySQL JDBC driver is available in your project's classpath.

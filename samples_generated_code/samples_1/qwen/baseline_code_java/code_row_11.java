@@ -56,6 +56,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that you have a table named `users` with columns `username`, `password`, and `salt` in your database.

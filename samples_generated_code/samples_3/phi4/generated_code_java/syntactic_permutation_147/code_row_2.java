@@ -53,6 +53,3 @@ public class StockOrderApp {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath, and that a database named `stockdb` with a table `orders` having columns `stock_name` (VARCHAR) and `quantity` (INT) exists. Adjust the database URL, user, and password as necessary for your setup.

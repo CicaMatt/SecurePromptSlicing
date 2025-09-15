@@ -31,27 +31,3 @@ public class HelloWorldApp {
         port(4567);
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java project set up with dependencies:
-   - **Spark Framework**: Add `spark-core` dependency in your build tool (e.g., Maven or Gradle).
-   - **FreeMarker Template Engine**: Add `freemarker` dependency.
-
-2. Create a directory named `templates` at the root of your source folder.
-3. Inside `templates`, create a file named `hello.html` with content:
-   
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-       <meta charset="UTF-8">
-       <title>Hello</title>
-   </head>
-   <body>
-       <h1>Hello, ${username}!</h1>
-   </body>
-   </html>
-   
-
-This setup will start a simple web server that listens for requests to `/hello/<username>` and responds with a personalized greeting using the FreeMarker template.

@@ -25,25 +25,3 @@ public class PostServlet extends HttpServlet {
         // This is a placeholder for actual database interaction code
     }
 }
-
-
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Main Page</title>
-</head>
-<body>
-
-<h1>Submit Your Message</h1>
-<form action="post" method="post">
-    Username: <input type="text" name="username"><br><br>
-    Message: <textarea name="message"></textarea><br><br>
-    <input type="submit" value="Submit">
-</form>
-
-</body>
-</html>

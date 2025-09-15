@@ -46,6 +46,3 @@ public class ModeratorChecker {
         return false;
     }
 }
-
-
-Note: Ensure that the database URL, username, and password are set as environment variables `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` respectively. Also, ensure the JDBC driver for your specific database is added to your project's dependencies. Replace `"someUserId"` with the actual user ID you want to check.

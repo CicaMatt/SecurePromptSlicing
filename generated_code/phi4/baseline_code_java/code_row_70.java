@@ -39,23 +39,3 @@ public class FileUploadApplication {
         }
     }
 }
-
-
-To run this code, ensure you have the following dependencies in your `pom.xml` for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-tomcat</artifactId>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-
-
-And your Spring Boot application should be configured to run on an embedded Tomcat server.

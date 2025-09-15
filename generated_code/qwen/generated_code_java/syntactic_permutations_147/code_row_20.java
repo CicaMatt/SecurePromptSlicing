@@ -57,13 +57,3 @@ public class FormServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-
-<!-- success.jsp -->
-<html>
-<body>
-<h2>Order placed successfully!</h2>
-<a href="form">Place another order</a>
-</body>
-</html>

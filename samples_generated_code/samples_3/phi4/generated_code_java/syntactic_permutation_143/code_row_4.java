@@ -52,6 +52,3 @@ public class UnsubscribeServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-**Note**: This code uses Jetty as an embedded server for demonstration purposes. Make sure you have Jetty's dependencies in your project, or adjust the main method to use a different server setup if required.

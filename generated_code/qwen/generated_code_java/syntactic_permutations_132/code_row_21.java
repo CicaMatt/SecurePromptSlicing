@@ -18,10 +18,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-// Assuming hello.html is located in the webapp directory and contains something like:
-// <html>
-// <body>
-//     <h1>Hello, ${username}!</h1>
-// </body>
-// </html>

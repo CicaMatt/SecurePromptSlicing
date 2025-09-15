@@ -68,6 +68,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, user name, and password. You will also need a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR) in your MySQL database for this code to work correctly. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

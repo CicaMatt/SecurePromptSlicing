@@ -44,9 +44,3 @@ public class InfoServlet extends HttpServlet {
         // To run the servlet, you would need to deploy it in a Java EE container like Tomcat or Jetty.
     }
 }
-
-
-To make this code runnable:
-1. Ensure you have a Java EE environment set up (e.g., Apache Tomcat).
-2. Package this servlet into a web application archive (WAR) and deploy it on the server.
-3. Set up session attributes (`username`, `email`, `ssnLast4`) before accessing `/info`.

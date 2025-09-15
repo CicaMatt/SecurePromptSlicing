@@ -34,6 +34,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This servlet assumes you have `login.jsp`, `user.jsp`, and `adm.jsp` pages set up in your web application. The session attribute `"user"` indicates if a user is logged in, and the attribute `"isAdmin"` (as a string that can be parsed to boolean) indicates if the user is an admin.

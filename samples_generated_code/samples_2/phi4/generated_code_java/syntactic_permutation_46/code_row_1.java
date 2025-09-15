@@ -43,6 +43,3 @@ public class ImageServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Ensure the directory `images` exists in your project root and contains image files. This servlet will respond to requests made to `/img?name=filename`, where `filename` is the name of an image file in the `images` directory.

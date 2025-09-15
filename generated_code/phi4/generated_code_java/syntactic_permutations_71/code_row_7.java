@@ -30,6 +30,3 @@ public class HelloWorldServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code, you need a Java servlet container like Apache Tomcat. Deploy the above servlet as part of a web application in your servlet container's `webapps` directory. Make sure to include the necessary configuration files (e.g., `web.xml`) if needed by your environment or server setup.

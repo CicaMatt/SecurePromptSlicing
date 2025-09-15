@@ -50,19 +50,3 @@ class TemperatureController {
         }
     }
 }
-
-
-This code requires a Spring Boot project setup with dependencies such as `spring-boot-starter-web` and `spring-boot-starter-jdbc`. Additionally, you need to configure your database connection in the `application.properties` file. Here's an example configuration:
-
-
-spring.datasource.url=jdbc:mysql://localhost:3306/your_database
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-
-# For PostgreSQL:
-# spring.datasource.url=jdbc:postgresql://localhost:5432/your_database
-# spring.datasource.username=your_username
-# spring.datasource.password=your_password
-
-
-Replace `your_database`, `your_username`, and `your_password` with your actual database details.

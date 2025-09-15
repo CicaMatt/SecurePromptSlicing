@@ -23,24 +23,3 @@ public class MessageServlet extends HttpServlet {
         // Example: Insert into a hypothetical database using JDBC or other methods
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit Message</title>
-</head>
-<body>
-    <form action="/post" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>

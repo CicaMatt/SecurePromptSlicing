@@ -38,6 +38,3 @@ public class UnzipTarArchive {
         }
     }
 }
-
-
-**Note:** Replace `"/path/to/your/tarfile.tar.gz"` with the actual path to your tar file and ensure that `example.txt` is a valid filename within the extracted contents. This code assumes you are running on a Unix-like system where the `tar` command-line utility is available. For Windows, an equivalent tool like 7-Zip's CLI (e.g., `7z.exe`) might be needed.

@@ -41,25 +41,3 @@ public class PostMessageServlet extends HttpServlet {
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Message Board</h1>
-
-    <form action="PostMessage" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-
-    <!-- Add your code here to display messages if needed -->
-    
-</body>
-</html>

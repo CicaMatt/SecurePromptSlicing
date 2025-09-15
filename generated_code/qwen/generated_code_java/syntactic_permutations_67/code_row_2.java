@@ -35,11 +35,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-
--- SQL to create the 'images' table in your MySQL database
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image LONGBLOB NOT NULL
-);

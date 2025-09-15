@@ -45,23 +45,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, ensure you have a Java servlet container such as Apache Tomcat set up. Also, include the H2 database dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>1.4.200</version>
-    <scope>runtime</scope>
-</dependency>
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>
-
-
-Ensure your `web.xml` is configured to map the servlet or use the `@WebServlet` annotation as shown in the code.

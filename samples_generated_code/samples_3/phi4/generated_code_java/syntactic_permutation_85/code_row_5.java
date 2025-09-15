@@ -69,6 +69,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note:** Replace `your_database_url`, `your_db_user`, and `your_db_password` with your actual database connection details. Make sure to include the necessary dependencies for JSON parsing (`jackson-databind`) and JDBC in your project configuration.

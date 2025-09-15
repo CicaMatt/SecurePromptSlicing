@@ -27,6 +27,3 @@ public class FileOperations {
         }
     }
 }
-
-
-**Note:** This code assumes a POSIX-compliant filesystem. If you run it on Windows, permissions handling may not work as expected since Windows does not support `setPosixFilePermissions`.

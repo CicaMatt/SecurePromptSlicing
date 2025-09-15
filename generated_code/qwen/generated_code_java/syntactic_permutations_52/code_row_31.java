@@ -64,38 +64,3 @@ public class IndexPage extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-
-<!-- web.xml if not using annotations -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>LoginPage</servlet-name>
-        <servlet-class>LoginPage</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginPage</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>SecretPage</servlet-name>
-        <servlet-class>SecretPage</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SecretPage</servlet-name>
-        <url-pattern>/secret</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>IndexPage</servlet-name>
-        <servlet-class>IndexPage</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>IndexPage</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-</web-app>

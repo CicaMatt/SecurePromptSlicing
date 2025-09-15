@@ -30,24 +30,3 @@ public class HomeServlet extends HttpServlet {
         return new java.util.ArrayList<>();
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages:</h1>
-<ul>
-    <% for (String message : (java.util.List<String>) request.getAttribute("messages")) { %>
-        <li><%= message %></li>
-    <% } %>
-</ul>
-<form action="/post" method="post">
-    <input type="text" name="message" placeholder="Enter your message" required>
-    <button type="submit">Post Message</button>
-</form>
-</body>
-</html>

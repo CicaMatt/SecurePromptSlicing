@@ -92,27 +92,3 @@ public class LoginServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-**index.html**
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Index</title>
-</head>
-<body>
-    <a href="loginPage">Login</a>
-</body>
-</html>
-
-
-**web.xml**
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-</web-app>

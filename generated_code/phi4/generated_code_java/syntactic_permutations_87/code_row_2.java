@@ -54,10 +54,3 @@ public class TemperatureService {
         return Optional.empty();
     }
 }
-
-
-**Note:** Before running this code, ensure you have the following:
-1. MySQL JDBC driver in your classpath.
-2. A table named `TemperatureData` with columns `latitude`, `longitude`, `date`, and `temperature`.
-3. Replace `your_database`, `your_username`, and `your_password` with actual database details.
-4. Include the Spark Java library for handling HTTP requests.

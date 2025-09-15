@@ -50,41 +50,9 @@ public class LoginController {
 
 // File: src/main/resources/templates/login.html
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login Page</h1>
-
-    <form action="#" th:action="@{/login}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"/><br/>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"/><br/>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <div th:if="${param.error}">
-        <p>Invalid username or password. Please try again.</p>
-    </div>
-</body>
-</html>
 
 // File: src/main/resources/templates/home.html
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-</body>
-</html>
 
 // File: pom.xml (Maven configuration)
 
@@ -103,14 +71,8 @@ public class LoginController {
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+        
+        
     </dependencies>
 
     <build>

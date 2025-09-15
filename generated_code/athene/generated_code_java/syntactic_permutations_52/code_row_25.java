@@ -40,32 +40,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-// login.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head><title>Login</title></head>
-<body>
-<form method="post" action="login">
-    <label>Username:</label><br>
-    <input type="text" name="username"><br>
-    <label>Password:</label><br>
-    <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-<% if (request.getAttribute("errorMessage") != null) { %>
-<p style="color: red;"><%= request.getAttribute("errorMessage") %></p>
-<% } %>
-<a href="secret">Go to Secret Page</a>
-</body>
-</html>
-
-// secret.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head><title>Secret Settings</title></head>
-<body>
-<h1>Secret settings</h1>
-<a href="login">Back to Login</a>
-</body>
-</html>

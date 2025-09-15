@@ -30,11 +30,3 @@ public class UserInfoServlet extends HttpServlet {
                 .append("</html>");
     }
 }
-
-
-To run this code, you need to set up a servlet container like Apache Tomcat. Here's how:
-
-1. Create a new dynamic web project in your IDE (e.g., Eclipse).
-2. Add the above `UserInfoServlet` class to the project.
-3. Configure the server and deploy the application.
-4. Access the application via `http://localhost:8080/yourAppName/info`.

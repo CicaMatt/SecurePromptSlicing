@@ -29,6 +29,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(username) && "password123".equals(password) && "validSession".equals(sessionToken);
     }
 }
-
-
-To make this code runnable, ensure you have the necessary servlet API in your classpath. This can typically be included via Maven or directly in an IDE like Eclipse or IntelliJ IDEA that supports Java EE projects.

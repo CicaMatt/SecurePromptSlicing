@@ -42,6 +42,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you have a `web.xml` configuration file if necessary, and that your project is set up to handle servlets (e.g., using Apache Tomcat as the server). Additionally, replace `"adminpass"` with the actual admin password you want to use.

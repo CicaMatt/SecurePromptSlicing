@@ -44,20 +44,3 @@ public class RenderResponseServlet extends HttpServlet {
         // Cleanup code if needed
     }
 }
-
-
-Make sure to have the FreeMarker library in your classpath, and place a `template.ftl` file inside the `/WEB-INF/templates/` directory of your web application. The `template.ftl` should contain something like:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello ${name}!</h1>
-</body>
-</html>
-
-
-This setup assumes you are using a servlet-based web application.

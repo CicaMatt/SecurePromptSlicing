@@ -67,6 +67,3 @@ public class LoginSystem {
         // In a real application, you would redirect the user using a web framework like Spring or JSF
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Ensure that the MySQL JDBC driver is included in your project's classpath.

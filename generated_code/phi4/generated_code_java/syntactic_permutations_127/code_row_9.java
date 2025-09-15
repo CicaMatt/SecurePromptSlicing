@@ -60,16 +60,3 @@ public class HttpServer {
         return "User";
     }
 }
-
-
-Make sure to have `request.txt` file in the same directory as your Java program. This file should contain an HTTP request with a username parameter like:
-
-
-POST / HTTP/1.1
-Host: localhost
-Content-Type: application/x-www-form-urlencoded
-
-username=JohnDoe&otherParam=value
- 
-
-The response will be written to `response.txt`.

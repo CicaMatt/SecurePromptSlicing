@@ -92,6 +92,3 @@ public class PdfUploadServlet extends HttpServlet {
         doPost(request, response); // Simulate the POST action
     }
 }
-
-
-Note: Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual MySQL database connection details. Also, make sure to configure the necessary servlet mappings in your web.xml file or through annotations if needed.

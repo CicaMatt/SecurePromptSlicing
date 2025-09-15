@@ -68,16 +68,3 @@ public class CalculatePriceServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to set up a Java web server like Apache Tomcat and include the SnakeYAML library in your project dependencies. You can add SnakeYAML using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>2.0</version>
-</dependency>
-
-
-This code assumes you have a web server configured to handle servlets and that the `calculate_price` endpoint is mapped correctly.

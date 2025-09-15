@@ -30,6 +30,3 @@ public class SimpleHttpServer {
         }
     }
 }
-
-
-Make sure to include the necessary libraries for `com.sun.net.httpserver.HttpServer` if they are not already available in your environment. This code sets up a simple HTTP server that listens on port 8000 and responds with an HTML page containing "Hello, World!" when accessed at `/hello`.

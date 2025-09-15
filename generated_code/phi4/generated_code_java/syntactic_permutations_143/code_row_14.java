@@ -64,6 +64,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Make sure you have the `com.sun.net.httpserver.HttpServer` library available in your environment or adjust to use a different HTTP server framework as needed.

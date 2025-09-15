@@ -21,6 +21,3 @@ public class SimpleWebApplication {
         }
     }
 }
-
-
-To make this code run, ensure you have the Spring Boot framework set up in your environment. You can create a new Spring Boot project using start.spring.io and include only the 'Spring Web' dependency. Save the above Java class as `SimpleWebApplication.java` in the appropriate package within the `src/main/java` directory of your project. Then, build and run the application using Maven or Gradle.

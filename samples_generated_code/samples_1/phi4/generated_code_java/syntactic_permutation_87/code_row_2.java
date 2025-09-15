@@ -52,6 +52,3 @@ class TemperatureController {
         }
     }
 }
-
-
-Make sure to include the necessary dependencies in your `pom.xml` or equivalent build configuration file, such as Spring Boot Starter Web and a database driver.

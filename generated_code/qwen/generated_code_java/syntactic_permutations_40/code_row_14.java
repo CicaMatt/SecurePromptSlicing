@@ -39,38 +39,3 @@ public class WebApplication {
         return "Username: " + username + "<br>Email: " + email + "<br>Last 4 of SSN: " + lastFourSSN;
     }
 }
-
-
-Make sure to have the following dependencies in your `pom.xml` for a Maven project:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.session</groupId>
-        <artifactId>spring-session-data-redis</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-And ensure you have a Redis server running locally or configure the connection in `application.properties`:
-
-
-spring.redis.host=localhost
-spring.redis.port=6379

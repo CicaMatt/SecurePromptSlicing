@@ -45,28 +45,3 @@ public class MainServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-
-<!-- web.xml should be placed in WEB-INF directory -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>MainServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MainServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>PostServlet</servlet-name>
-        <servlet-class>PostServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PostServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
-    </servlet-mapping>
-</web-app>

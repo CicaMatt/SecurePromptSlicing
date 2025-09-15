@@ -38,6 +38,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-This code assumes that you are using a servlet-based Java web application and the images directory is in the root of your project. Make sure to configure your server properly to deploy this servlet, typically through `web.xml` or with annotations as shown above.

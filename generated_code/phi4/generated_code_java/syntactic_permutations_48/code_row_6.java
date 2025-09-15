@@ -31,13 +31,3 @@ public class ImageServer {
         });
     }
 }
-
-
-Make sure to include Javalin in your project dependencies, for example using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.15.0</version>
-</dependency>

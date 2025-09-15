@@ -19,6 +19,3 @@ public class MemoryAllocator {
         System.out.println("Person status: " + person.status);
     }
 }
-
-
-Note: The above code includes a workaround to simulate the allocation of memory for an object, but Java does not support pointers or direct memory allocation like C/C++. The `allocateMemory` method is a placeholder and does not actually allocate memory in the same way as in lower-level languages.

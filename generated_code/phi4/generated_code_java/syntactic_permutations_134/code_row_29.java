@@ -52,6 +52,3 @@ public class MainServlet extends HttpServlet {
         System.out.println("This servlet should be run on a web server.");
     }
 }
-
-
-Note: To make this code runnable, you'll need a servlet container such as Apache Tomcat. The `main` method is provided for illustration purposes but isn't meant for standalone execution without a proper servlet environment setup.

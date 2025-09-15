@@ -68,26 +68,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <% for (String msg : (List<String>) request.getAttribute("messages")) { %>
-        <li><%= msg %></li>
-    <% } %>
-</ul>
-
-<form action="/submit" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <button type="submit">Submit</button>
-</form>
-</body>
-</html>

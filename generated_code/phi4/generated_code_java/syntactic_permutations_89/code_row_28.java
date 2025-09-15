@@ -68,19 +68,3 @@ public class PriceApp {
         });
     }
 }
-
-
-To run this code, ensure you have Javalin and Jackson libraries added to your project. If using Maven, include the following in your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.0</version>
-</dependency>
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.14.1</version>
-</dependency>

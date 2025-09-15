@@ -81,6 +81,3 @@ public class MainServlet extends HttpServlet {
         response.getWriter().write(messagesHtml.toString());
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure you have the necessary JDBC driver for MySQL in your classpath.

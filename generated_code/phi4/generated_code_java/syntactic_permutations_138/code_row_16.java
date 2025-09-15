@@ -47,6 +47,3 @@ public class WebApp {
         }
     }
 }
-
-
-Make sure you replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure that the required dependencies for Javalin (`io.javalin:javalin`) and MySQL JDBC driver are included in your project's build configuration (e.g., Maven or Gradle).

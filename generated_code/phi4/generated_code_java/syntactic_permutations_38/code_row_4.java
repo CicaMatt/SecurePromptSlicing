@@ -54,6 +54,3 @@ public class SimpleLogin {
         // In a real application, you would redirect the user back to the login page.
     }
 }
-
-
-**Note**: Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Also, ensure that your database has a table named `users` with columns `username` and `password`. This code uses JDBC for database connection. Ensure you have the MySQL JDBC driver in your classpath.

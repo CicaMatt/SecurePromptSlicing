@@ -39,6 +39,3 @@ public class ImageUploader {
         uploader.uploadImage(imageFile);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies.

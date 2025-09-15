@@ -50,6 +50,3 @@ public class LoginApplication {
         // Logic to redirect back to the login page
     }
 }
-
-
-Make sure you have a MySQL database running with a table named `users` that has columns `username` and `password`. Adjust the `DB_URL`, `USER`, and `PASS` variables as needed for your setup.

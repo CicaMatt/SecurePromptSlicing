@@ -61,6 +61,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** Ensure you have the necessary JDBC driver for MySQL in your classpath and replace `your_database`, `username`, and `password` with actual database details. Also, create a table named `messages` with columns `username` and `message`.

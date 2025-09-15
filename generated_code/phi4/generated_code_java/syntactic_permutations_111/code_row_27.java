@@ -44,6 +44,3 @@ public class WebApp {
         return end != -1 ? url.substring(start, end) : url.substring(start);
     }
 }
-
-
-This code defines a `WebApp` class with a main method that calls the `ping()` function, which executes the ping command using a specified URL. It extracts the hostname from the given URL and stores the output of the ping command in a variable called `output`, which it then returns.

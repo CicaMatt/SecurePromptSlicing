@@ -35,10 +35,3 @@ public class WebApp {
         return "password123"; // In a real application, use secure methods to handle passwords
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Maven or Gradle set up.
-2. Add Spring Boot dependencies to your `pom.xml` (for Maven) or `build.gradle` (for Gradle).
-3. Run the application using a suitable IDE or command line tool like `mvn spring-boot:run` for Maven.

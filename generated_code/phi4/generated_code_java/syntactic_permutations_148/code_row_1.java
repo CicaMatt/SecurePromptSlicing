@@ -97,39 +97,3 @@ public class DisplayMessagesServlet extends HttpServlet {
         return messages;
     }
 }
-
-
-In this code, you'll also need to create a `mainPage.jsp` file that will handle the display of messages. Here's an example:
-
-
-<%@ page import="java.util.ArrayList" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <form action="post" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <button type="submit">Post</button>
-    </form>
-
-    <ul>
-        <% 
-            ArrayList<String[]> messages = (ArrayList<String[]>) request.getAttribute("messages");
-            if (messages != null) {
-                for (String[] messageData : messages) {
-                    out.println("<li><strong>" + messageData[0] + ":</strong> " + messageData[1] + "</li>");
-                }
-            }
-        %>
-    </ul>
-
-</body>
-</html>
-
-
-Make sure to replace `yourDatabase`, `yourDbUser`, and `yourDbPassword` with your actual database name, user, and password. Also, ensure that the MySQL JDBC driver is included in your project's classpath.

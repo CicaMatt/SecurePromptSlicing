@@ -43,36 +43,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- Save this file as register.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <form action="register" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
-
-
-**Note:** To run this code, ensure you have a MySQL database named `webapp` with a table `users` that has columns `username` (VARCHAR) and `password` (VARCHAR). Also, include the BCrypt library in your project dependencies. You can use Maven to add the dependency:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Ensure you have a servlet container like Apache Tomcat set up and configured correctly to deploy this web application.

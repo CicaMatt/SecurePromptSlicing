@@ -27,6 +27,3 @@ public class TemplateRendererServlet extends HttpServlet {
         return String.format(template, name);
     }
 }
-
-
-This code sets up a basic servlet that handles HTTP GET requests. It retrieves the `name` parameter from the request and uses it to render a template stored in the servlet context. The rendered response is then returned to the client. Make sure your web application has the appropriate configuration to map this servlet, typically done via `web.xml` or through annotations.

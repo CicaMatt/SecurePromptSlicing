@@ -36,6 +36,3 @@ public class RedirectWebApp {
         }
     }
 }
-
-
-To run this code, you need to have JDK installed and the `com.sun.net.httpserver.HttpServer` API available. This simple web server listens on port 8080 and handles requests at the `/redirect` endpoint.

@@ -80,6 +80,3 @@ public class LoginServlet {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath. Replace `your_database`, `your_db_user`, and `your_db_password` with actual database details. Adjust the URL for redirection as needed.

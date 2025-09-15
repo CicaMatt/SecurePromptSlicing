@@ -30,16 +30,3 @@ class HandlebarsTemplateEngine extends spark.TemplateViewRoute {
         return super.render(modelAndView);
     }
 }
-
-
-
-<!-- Place this file as resources/templates/hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>

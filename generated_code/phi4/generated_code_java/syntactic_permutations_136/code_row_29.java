@@ -37,6 +37,3 @@ public class CheckModServlet extends HttpServlet {
         doGet(request, response);  // Delegate to the GET method for simplicity
     }
 }
-
-
-Ensure you have a servlet container like Apache Tomcat and include this code in your web application's `WEB-INF` directory. You will also need to configure your `web.xml` or use annotations as shown above with `@WebServlet`. Adjust the correct username and password as needed.

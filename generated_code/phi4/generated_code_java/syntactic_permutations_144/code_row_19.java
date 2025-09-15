@@ -62,6 +62,3 @@ public class EmailChecker {
         return 0;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, replace the logic in `callExternalScript` with the actual code needed to call your external script.

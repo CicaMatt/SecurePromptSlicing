@@ -37,30 +37,3 @@ public class MainServlet extends HttpServlet {
         );
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <% for (String message : (java.util.List<String>) request.getAttribute("messages")) { %>
-            <li><%= message %></li>
-        <% } %>
-    </ul>
-
-    <form action="post" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="message">Message:</label>
-        <input type="text" id="message" name="message" required>
-        <br>
-        <button type="submit">Post Message</button>
-    </form>
-</body>
-</html>

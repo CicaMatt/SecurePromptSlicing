@@ -66,6 +66,3 @@ public class UnsubscribeService {
         System.out.println("Unsubscribed " + email + " from the mailing list.");
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Additionally, ensure you have the MySQL JDBC driver in your classpath, and include Spark framework dependencies for handling HTTP requests.

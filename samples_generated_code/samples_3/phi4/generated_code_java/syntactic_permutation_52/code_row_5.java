@@ -49,6 +49,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. Place the above classes in your Java project and configure it as a web application. Ensure that your `web.xml` or use annotations for servlet mappings as shown.

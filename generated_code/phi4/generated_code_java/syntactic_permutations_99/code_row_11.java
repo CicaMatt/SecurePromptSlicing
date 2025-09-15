@@ -70,6 +70,3 @@ public class UserRegistration {
         return iterations + ":" + Arrays.toString(salt) + ":" + Arrays.toString(hash);
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database connection details. Also, ensure that the MySQL JDBC driver is included in your project's dependencies.

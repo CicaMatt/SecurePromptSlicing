@@ -80,6 +80,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Note: Ensure that you have the SQLite JDBC driver in your classpath. You might need to add it if not already present, using a dependency management tool like Maven or Gradle, or by downloading the JAR file directly from the official site and adding it manually to your project's build path.

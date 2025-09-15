@@ -41,20 +41,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, you need to add the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.10.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.15.2</version>
-    </dependency>
-</dependencies>

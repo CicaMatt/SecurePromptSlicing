@@ -73,6 +73,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, make sure you have a Java servlet container like Apache Tomcat set up. Place the above code in a project with an appropriate directory structure for web applications (e.g., `src/main/java` for source files). Deploy it to your server and navigate to the root URL to see the index page.

@@ -51,29 +51,3 @@ public class StockViewServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-
-<web-app>
-    <display-name>StockApp</display-name>
-
-    <servlet>
-        <servlet-name>BuyOrderServlet</servlet-name>
-        <servlet-class>BuyOrderServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BuyOrderServlet</servlet-name>
-        <url-pattern>/buy_order</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>StockViewServlet</servlet-name>
-        <servlet-class>StockViewServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>StockViewServlet</servlet-name>
-        <url-pattern>/stock_view</url-pattern>
-    </servlet-mapping>
-</web-app>

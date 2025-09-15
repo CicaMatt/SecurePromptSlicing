@@ -53,27 +53,11 @@ public class RegistrationServlet extends HttpServlet {
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration Success</title>
-</head>
-<body>
-    <h1>Registration Successful!</h1>
-</body>
-</html>
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration Error</title>
-</head>
-<body>
-    <h1>Registration Failed. Please try again.</h1>
-</body>
-</html>
+
+
 
 
 
@@ -115,31 +99,3 @@ public class DatabaseConnector {
         return DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form action="register" method="post">
-        Name: <input type="text" name="name"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
-
-
-
-CREATE DATABASE mydatabase;
-USE mydatabase;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    password BINARY(64) NOT NULL
-);

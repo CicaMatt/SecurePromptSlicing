@@ -57,6 +57,3 @@ public class Main {
         ctx.result(htmlContent.toString());
     }
 }
-
-
-Make sure to replace `database_name`, `username`, and `password` with your actual database details. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

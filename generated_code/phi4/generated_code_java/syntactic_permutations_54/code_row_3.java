@@ -46,6 +46,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to set up a Java servlet container like Apache Tomcat and create an `admin_page.jsp` file with the content of your admin page. The servlet will handle both GET and POST requests for the `/login` URL pattern.

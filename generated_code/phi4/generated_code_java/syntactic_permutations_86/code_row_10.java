@@ -55,6 +55,3 @@ public class GetMaxTemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: Ensure that you have a MySQL JDBC driver in your classpath and replace `yourDatabase`, `yourUsername`, and `yourPassword` with actual database credentials. Also, ensure the table name and column names match those used in your database schema.

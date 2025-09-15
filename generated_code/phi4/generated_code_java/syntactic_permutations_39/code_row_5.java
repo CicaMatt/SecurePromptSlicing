@@ -26,42 +26,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-
-    <% if (request.getAttribute("errorMessage") != null) { %>
-        <p style="color:red;"><%= request.getAttribute("errorMessage") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- session.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Session</title>
-</head>
-<body>
-    <h2>Welcome to the Session Page</h2>
-    <p>You have successfully logged in.</p>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -83,6 +52,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-To run this code, you need to set up a Java web server environment like Apache Tomcat and deploy these files in the appropriate directories (`WEB-INF/classes` for servlets and `webapp` for JSPs).

@@ -52,12 +52,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to:
-
-1. Include the MySQL Connector/J and Apache Commons Codec libraries in your project.
-2. Ensure that a database named `your_database` exists with a table called `users`.
-3. The `users` table should have at least two columns: `username` (VARCHAR) and `password` (VARCHAR).
-4. Adjust the connection string, username, and password for your MySQL instance as needed.
-5. Deploy this servlet to a Java EE web container like Apache Tomcat.

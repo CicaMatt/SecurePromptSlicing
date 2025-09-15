@@ -51,6 +51,3 @@ public class MainServlet extends HttpServlet {
         );
     }
 }
-
-
-Make sure to configure your web.xml or use annotations for servlet mapping if needed, and set up a database connection in the `insert_user_message_in_db` method.

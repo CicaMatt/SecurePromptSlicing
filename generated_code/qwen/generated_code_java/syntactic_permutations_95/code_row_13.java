@@ -51,26 +51,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-
--- SQL to create the users table
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARBINARY(256) NOT NULL,
-    salt VARBINARY(16) NOT NULL
-);
-
-
-Ensure you have MySQL JDBC driver in your classpath to run this code. You can add it via Maven dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>
-
-
-Or download the JAR and add it to your project's build path.

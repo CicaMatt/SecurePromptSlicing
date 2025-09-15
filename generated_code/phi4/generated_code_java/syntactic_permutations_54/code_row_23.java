@@ -57,6 +57,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-Make sure that your web application is properly configured with a `web.xml` file or using annotations, and deploy it in a servlet container like Apache Tomcat. The code assumes basic admin credentials for demonstration purposes; you should implement proper authentication and security measures in a real-world application.

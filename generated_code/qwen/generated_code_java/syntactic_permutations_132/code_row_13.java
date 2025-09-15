@@ -26,16 +26,3 @@ public class HelloServer {
         }
     }
 }
-
-
-
-<!-- This file should be located in src/main/resources/templates/hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>

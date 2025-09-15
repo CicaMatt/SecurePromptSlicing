@@ -26,6 +26,3 @@ public class RedirectServlet extends HttpServlet {
         // In practice, you would deploy this to a Java EE application server like Tomcat or Jetty.
     }
 }
-
-
-To run this code, you need to set up a web server like Apache Tomcat. Place the compiled `.class` file into `WEB-INF/classes` of your web application directory structure and configure your `web.xml` or use annotations as shown above for servlet mapping. Deploy your application to the server to test it.

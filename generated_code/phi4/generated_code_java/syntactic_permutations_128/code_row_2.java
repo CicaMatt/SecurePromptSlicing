@@ -21,6 +21,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to set up a Java web server like Apache Tomcat. This servlet should be configured in your `web.xml` or using annotations if supported by your servlet API version.

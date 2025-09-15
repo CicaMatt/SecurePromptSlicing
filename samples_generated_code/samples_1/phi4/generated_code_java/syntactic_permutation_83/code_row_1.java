@@ -25,21 +25,3 @@ class PayloadController {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Maven and JDK installed.
-2. Create a new Spring Boot project, or add the above classes to an existing one.
-3. Add the following dependencies in your `pom.xml` if they are not already present:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-
-4. Run the application using `mvn spring-boot:run`.

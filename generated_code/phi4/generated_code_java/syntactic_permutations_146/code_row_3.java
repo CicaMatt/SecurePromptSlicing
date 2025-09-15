@@ -41,6 +41,3 @@ public class BuyStockServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `yourdatabase`, `yourusername`, and `yourpassword` with the actual database name and credentials. Also, ensure that your MySQL JDBC driver is included in your project dependencies.

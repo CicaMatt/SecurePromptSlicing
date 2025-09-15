@@ -70,16 +70,3 @@ public class WebApp {
 
     }
 }
-
-
-Note: This code uses `com.sun.net.httpserver.HttpServer` which is part of the JDK but not intended for production use. For a real-world application, consider using frameworks like Spring Boot or Jakarta EE. The JSON parsing relies on Jackson's `ObjectMapper`, so you need to include this dependency in your project:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.15.0</version>
-</dependency>
-
-
-Make sure to add the above Maven dependency if you are using a build tool like Maven.

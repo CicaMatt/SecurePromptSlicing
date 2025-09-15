@@ -51,29 +51,3 @@ public class YAMLValidator extends HttpServlet {
         server.start();
     }
 }
-
-
-To run this code, ensure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.28</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.3</version>
-    </dependency>
-</dependencies>
-
-
-This code sets up a simple HTTP server that listens on port 5000 and validates the `payload` parameter in the request as specified.

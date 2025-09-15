@@ -44,30 +44,3 @@ public class RegisterServlet extends HttpServlet {
         response.getWriter().write("User registered successfully.");
     }
 }
-
-
-
-CREATE DATABASE mydatabase;
-
-USE mydatabase;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);
-
-
-To run this code, make sure you have the following:
-- A MySQL server running with a database named `mydatabase` and a table named `users`.
-- The BCrypt library in your classpath. You can add it via Maven by including:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-- A servlet container like Apache Tomcat to deploy the web application.

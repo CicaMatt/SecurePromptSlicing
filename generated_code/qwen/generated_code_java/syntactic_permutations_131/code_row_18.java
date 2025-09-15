@@ -52,5 +52,5 @@ public class Renderer {
 
 
 
-<!-- This is an example FreeMarker template file located at resources/templates/example.ftl -->
+
 Hello, ${name}!

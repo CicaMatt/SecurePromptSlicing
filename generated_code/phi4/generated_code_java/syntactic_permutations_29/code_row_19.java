@@ -25,6 +25,3 @@ public class RedirectServlet extends HttpServlet {
         return target.matches("^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?$");
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat or Jetty, and the necessary `web.xml` configuration if not using annotations. Ensure your environment is set up for Java web applications.

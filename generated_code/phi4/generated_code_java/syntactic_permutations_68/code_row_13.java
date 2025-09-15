@@ -49,6 +49,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, update the path in `new File("path/to/your/image.jpg")` to point to your image file.

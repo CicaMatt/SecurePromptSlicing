@@ -61,38 +61,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-
-
-<!-- welcome.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Welcome, <%= session.getAttribute("user") %></h1>
-</body>
-</html>
-
-
-Make sure to replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password. Also, ensure you have the MySQL JDBC driver in your classpath.

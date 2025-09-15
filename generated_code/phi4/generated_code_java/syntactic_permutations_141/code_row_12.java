@@ -22,21 +22,3 @@ public class WebApp {
     
     // Additional functionality can be added here as needed.
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Additionally, ensure that you have the necessary dependencies in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-Replace the version with the latest available version of `mysql-connector-java` as needed.

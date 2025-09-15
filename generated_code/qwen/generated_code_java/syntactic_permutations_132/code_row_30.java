@@ -20,19 +20,3 @@ public class HelloWorldApp {
         });
     }
 }
-
-
-
-<!-- hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
-
-
-Note: The above code includes a simple in-memory template rendering using StringTemplate. If you are looking for a full-fledged template engine like Thymeleaf or Freemarker, the setup will be different. Also, the HTML part is provided as a comment since it should reside in a separate file named `hello.html`. For the sake of this example, I've embedded the template logic directly into the Java code using StringTemplate.

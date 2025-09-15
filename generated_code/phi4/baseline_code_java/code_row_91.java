@@ -40,38 +40,3 @@ public class RegisterServlet extends HttpServlet {
         return Integer.toString(password.hashCode());
     }
 }
-
-
-
-<!-- registration_form.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form action="register" method="post">
-        Username: <input type="text" name="username" required><br>
-        Password: <input type="password" name="password" required><br>
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
-
-
-
-<!-- registration_success.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registration Successful</title>
-</head>
-<body>
-    <h2>Registration Successful!</h2>
-    <p>You can now log in.</p>
-</body>
-</html>
-
-
-**Note:** Ensure you have the MySQL JDBC driver available in your classpath. Replace `mydatabase`, `root`, and `password` with your actual database name, username, and password. For production use, replace the simple hash function with a stronger hashing algorithm like BCrypt or Argon2.

@@ -26,6 +26,3 @@ class PriceController {
         return productPrices.getOrDefault(productCode, "Product code not found").toString();
     }
 }
-
-
-This Java code uses Spring Boot to create a simple web application that defines a RESTful endpoint to get the price of a product based on its code. Make sure you have the necessary dependencies in your `pom.xml` or `build.gradle` file for Spring Boot and Spring Web.

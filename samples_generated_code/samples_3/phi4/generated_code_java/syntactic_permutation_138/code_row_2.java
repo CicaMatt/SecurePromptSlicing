@@ -50,6 +50,3 @@ public class WebApp {
         return Optional.empty();
     }
 }
-
-
-To make this code runnable, you need to have Spring Boot set up with a DataSource configured in your `application.properties` or `application.yml`, and ensure that your database contains a table named `users` with at least two columns: `id` (integer) and `role` (string). Additionally, dependencies like `spring-boot-starter-web` for creating web applications and `spring-boot-starter-jdbc` for JDBC support should be included in your build configuration file (`pom.xml` or `build.gradle`).

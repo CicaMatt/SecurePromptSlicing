@@ -13,15 +13,3 @@ public class HelloWorldApp {
         }, new FreeMarkerEngine());
     }
 }
-
-import spark.ModelAndView;
-import spark.template.freemarker.FreeMarkerEngine;
-
-import java.util.HashMap;
-
-// hello.html
-// <html>
-//     <body>
-//         <h1>Hello, ${username}!</h1>
-//     </body>
-// </html>

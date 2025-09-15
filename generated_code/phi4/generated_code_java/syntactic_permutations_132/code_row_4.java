@@ -43,18 +43,3 @@ public class HttpServerExample {
         }
     }
 }
-
-
-Ensure you have a file named `hello.html` in the same directory as your Java program, with content similar to:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>

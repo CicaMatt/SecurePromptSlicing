@@ -48,10 +48,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-To run this code:
-1. Make sure you have the JDK installed.
-2. Save the above code in a file named `HttpHelloPage.java`.
-3. Compile it using: `javac HttpHelloPage.java`
-4. Run the server with: `java HttpHelloPage`

@@ -23,19 +23,3 @@ public class SimpleWebApp {
         return url.startsWith("http://example.com") || url.startsWith("https://example.com");
     }
 }
-
-
-To run this code, you need to include the Javalin library in your project. If you're using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-If you're using Gradle, include it in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.7.0'

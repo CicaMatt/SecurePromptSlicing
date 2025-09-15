@@ -30,11 +30,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a servlet container like Apache Tomcat.
-2. Add the above Java class to your web application's `src` directory.
-3. Update your `web.xml` or use annotations as shown for servlet mapping.
-4. Deploy the application and access it via `/http_hello_page?username=<your_username>`.

@@ -31,10 +31,7 @@ Note: The `@GetMapping` and `@PathVariable` annotations are from the Spring Fram
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 
@@ -50,6 +47,3 @@ public class PingApplication {
         SpringApplication.run(PingApplication.class, args);
     }
 }
-
-
-This setup is required for the `@GetMapping` and `@PathVariable` annotations to work as intended.

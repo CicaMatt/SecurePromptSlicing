@@ -43,6 +43,3 @@ class UserCheckController {
         return false;
     }
 }
-
-
-**Note**: This code assumes you have a Spring Boot application set up with a DataSource configured for your database. The `DataSource` bean should be defined in your configuration class, and the database table `users` should have columns `username` and `is_moderator`.

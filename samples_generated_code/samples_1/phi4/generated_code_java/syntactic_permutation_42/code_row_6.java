@@ -29,27 +29,3 @@ public class InfoServlet extends HttpServlet {
         response.getWriter().write(userInfo);
     }
 }
-
-
-To make this servlet runnable, ensure you have a Java web server like Apache Tomcat configured to deploy the application. Here's an example `web.xml` configuration for older versions of Servlets:
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>InfoServlet</servlet-name>
-        <servlet-class>InfoServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>InfoServlet</servlet-name>
-        <url-pattern>/info</url-pattern>
-    </servlet-mapping>
-</web-app>
- 
-
-For modern servlet applications, you can use the `@WebServlet` annotation as shown in the code to specify URL patterns directly.

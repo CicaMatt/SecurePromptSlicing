@@ -20,21 +20,3 @@ public class SimpleWebApp {
         ctx.redirect(urlParam);
     }
 }
-
-
-**Dependencies to include in your `pom.xml` for Maven:**
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.1.0</version>
-    </dependency>
-</dependencies>
-
-
-**Gradle dependencies in `build.gradle`:**
-
-dependencies {
-    implementation 'io.javalin:javalin:5.1.0'
-}

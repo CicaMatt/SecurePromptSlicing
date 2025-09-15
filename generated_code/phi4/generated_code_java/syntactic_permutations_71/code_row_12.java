@@ -26,6 +26,3 @@ public class GreetingServlet extends HttpServlet {
         // you would deploy this servlet in a web server like Tomcat or Jetty.
     }
 }
-
-
-To run this code, you will need to set up a Java web application environment using a servlet container such as Apache Tomcat. Make sure to include your `web.xml` configuration if needed for older servlet versions (Tomcat 9 and above use the `@WebServlet` annotation by default), or deploy it directly through an IDE that supports Java EE projects like Eclipse or IntelliJ IDEA.

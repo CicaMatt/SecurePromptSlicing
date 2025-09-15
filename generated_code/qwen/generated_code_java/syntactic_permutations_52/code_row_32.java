@@ -33,22 +33,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <h2>Welcome to the Login Page</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-    <p>Don't have an account? <a href="#">Register here</a></p>
-</body>
-</html>

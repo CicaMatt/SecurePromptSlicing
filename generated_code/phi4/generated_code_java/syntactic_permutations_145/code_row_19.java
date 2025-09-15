@@ -34,13 +34,3 @@ public class StockTradingApp {
         return true;
     }
 }
-
-
-Make sure to create the SQLite database and table before running this code:
-
-
-CREATE TABLE stocks (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    stock_name TEXT NOT NULL,
-    quantity INTEGER NOT NULL
-);

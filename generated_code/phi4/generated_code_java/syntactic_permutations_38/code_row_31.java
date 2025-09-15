@@ -103,6 +103,3 @@ public class SimpleLogin extends JFrame {
         });
     }
 }
-
-
-Note: This code assumes you have a MySQL database with a table named `users` that contains columns `username` and `password`. You need to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"root"`, and `"password"` with your actual database URL, username, and password. Additionally, make sure the necessary JDBC driver for MySQL is included in your project's classpath or build path.

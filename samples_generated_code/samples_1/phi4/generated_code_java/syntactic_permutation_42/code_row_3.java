@@ -23,30 +23,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, you need to include the Javalin dependency in your project. If using Maven, add the following dependencies to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.12.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.15</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>11.0.15</version>
-    </dependency>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin-session</artifactId>
-        <version>4.12.0</version>
-    </dependency>
-</dependencies>

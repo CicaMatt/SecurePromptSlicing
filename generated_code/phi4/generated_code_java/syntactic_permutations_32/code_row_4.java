@@ -33,10 +33,7 @@ In addition to this code, you need to have the following dependencies in your `p
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -50,21 +47,3 @@ In addition to this code, you need to have the following dependencies in your `p
 
 
 This code sets up a simple Spring Boot web application with a single controller that handles the `/redirect/{url}` route. The `redirectInvalidUrl` method checks if the provided URL starts with `http://example.com` or `https://example.com`. If it does, the user is redirected to that URL; otherwise, an error message is returned.
-
-Please note that you also need a view named `error.html` in your resources/templates directory for rendering the error message. Here's a simple example of what `error.html` could look like:
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Error</title>
-</head>
-<body>
-    <h1>Error</h1>
-    <p th:text="${message}"></p>
-</body>
-</html>
-
-
-This HTML file uses Thymeleaf syntax to display the error message passed from the controller.

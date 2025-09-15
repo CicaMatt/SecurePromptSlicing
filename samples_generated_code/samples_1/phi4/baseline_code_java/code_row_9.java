@@ -23,6 +23,3 @@ public class RedirectServlet extends HttpServlet {
         // Main method for testing purposes, not necessary for deployment
     }
 }
-
-
-This code is a servlet that handles the redirection logic based on the `target` query parameter. It uses the specified regular expression to determine if the user should be redirected to the given target or to the root of the site.

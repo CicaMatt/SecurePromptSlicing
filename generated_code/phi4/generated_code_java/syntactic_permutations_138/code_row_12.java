@@ -38,6 +38,3 @@ public class WebApp {
         ctx.json(Map.of("username", username, "isModerator", isModerator));
     }
 }
-
-
-**Note**: Replace `your_database_name`, `your_username`, and `your_password` with actual database credentials. Also, ensure that you have the Javalin library and MySQL JDBC driver in your project's dependencies.

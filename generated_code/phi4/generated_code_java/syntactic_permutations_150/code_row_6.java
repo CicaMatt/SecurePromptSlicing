@@ -24,26 +24,3 @@ public class SubmitMessageServlet extends HttpServlet {
         // Example placeholder for actual implementation
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-    <form action="SubmitMessage" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>

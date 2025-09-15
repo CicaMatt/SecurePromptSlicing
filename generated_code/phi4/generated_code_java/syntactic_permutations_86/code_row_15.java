@@ -68,6 +68,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database credentials. Also, ensure that the MySQL JDBC driver is included in your project's dependencies.

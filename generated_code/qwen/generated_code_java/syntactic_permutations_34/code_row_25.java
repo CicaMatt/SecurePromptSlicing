@@ -49,46 +49,13 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<form action="LoginServlet" method="post">
-    Username: <input type="text" name="username"><br/>
-    Password: <input type="password" name="password"><br/>
-    <input type="submit" value="Login">
-</form>
-<%
-    String error = request.getParameter("error");
-    if ("invalid_credentials".equals(error)) {
-%>
-<p>Invalid username or password. Please try again.</p>
-<%
-    } else if ("database_error".equals(error)) {
-%>
-<p>A database error occurred. Please try again later.</p>
-<%
-    }
-%>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-<h1>Welcome to the Dashboard, <%= session.getAttribute("username") %>!</h1>
-<a href="logout">Logout</a>
-</body>
-</html>
+
+
+
+
 
 
 
@@ -105,28 +72,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-</web-app>

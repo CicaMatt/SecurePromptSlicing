@@ -76,17 +76,3 @@ public class RegisterServlet extends HttpServlet {
         System.out.println("User registered successfully.");
     }
 }
-
-
-Ensure the following:
-
-- Replace `your_database`, `username`, and `password` with your actual database name, username, and password.
-- Add a table named `users` in your MySQL database with columns `name` (VARCHAR) and `password` (VARCHAR).
-- Include the BCrypt dependency in your build tool configuration file (e.g., Maven's `pom.xml`). Here is an example of how to include it:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>

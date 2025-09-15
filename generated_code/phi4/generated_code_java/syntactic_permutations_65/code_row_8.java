@@ -62,13 +62,3 @@ public class IndexServlet extends HttpServlet {
         );
     }
 }
-
-
-To make this application runnable:
-
-1. Ensure you have Java and a Servlet container like Apache Tomcat set up.
-2. Save these classes in the appropriate package structure, e.g., `com.example`.
-3. Create a `web.xml` configuration or use annotations as shown above to map servlets.
-4. Compile the code into `.class` files.
-5. Place the compiled classes and necessary resources (like `web.xml`) in your web application directory.
-6. Run the server, navigate to `http://localhost:8080/yourAppName`, and upload a PDF file through the provided form.

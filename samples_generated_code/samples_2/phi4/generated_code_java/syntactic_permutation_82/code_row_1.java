@@ -55,6 +55,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** This code uses the `com.sun.net.httpserver.HttpServer` class, which is not intended for production use but works well for simple tasks and demonstrations. For a production-level web application, consider using frameworks like Spring Boot or Jakarta EE with embedded servers. Additionally, ensure you have the necessary JSON processing dependencies in your project (e.g., Java EE's `javax.json`).

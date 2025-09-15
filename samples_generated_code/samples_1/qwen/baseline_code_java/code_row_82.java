@@ -50,37 +50,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;">Invalid username or password.</p>
-    <% } %>
-</body>
-</html>
-
-
-
-<!-- home.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    Welcome, <%= session.getAttribute("username") %>!
-    <br><a href="logout">Logout</a>
-</body>
-</html>

@@ -51,6 +51,3 @@ To run this code:
    mkdir -p {webapp_dir}/WEB-INF/classes
    
 5. Copy the compiled `.class` files from `com/example/` into `{webapp_dir}/WEB-INF/classes/com/example`.
-6. Run the `App.java` using `java com.example.App`.
-
-This code sets up a simple servlet that serves an HTML page and runs it on port 8080 using Tomcat's embedded server capabilities.

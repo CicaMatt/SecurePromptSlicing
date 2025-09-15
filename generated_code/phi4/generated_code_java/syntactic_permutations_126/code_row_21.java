@@ -39,6 +39,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-Make sure you have the necessary permissions to run an HTTP server on your chosen port and that the `com.sun.net.httpserver.HttpServer` class is accessible in your environment.

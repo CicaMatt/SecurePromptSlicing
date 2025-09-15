@@ -54,6 +54,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-Make sure to include the necessary permissions and dependencies for using `com.sun.net.httpserver.HttpServer`, which is part of the Java SE standard library. If running this code on a non-Oracle JDK, ensure that you have access to these classes.

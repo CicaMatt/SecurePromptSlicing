@@ -30,6 +30,3 @@ class InfoController {
                 + "</body></html>";
     }
 }
-
-
-To run this code, ensure you have Spring Boot set up in your development environment. You can generate a new project using the Spring Initializr (https://start.spring.io/) with Web dependency and then replace `src/main/java/com/example/demo/DemoApplication.java` and its controller class with the provided code. Adjust the package name accordingly if needed.

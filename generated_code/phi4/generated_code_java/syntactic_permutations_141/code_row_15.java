@@ -49,6 +49,3 @@ public class WebApp {
         return DB_PASSWORD; 
     }
 }
-
-
-Note: This code is for demonstration purposes. Ensure that you handle passwords securely and avoid hardcoding them in your source files for production applications. Use environment variables or secure vault services to manage sensitive information.

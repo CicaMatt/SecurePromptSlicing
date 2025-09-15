@@ -72,6 +72,3 @@ public class RegistrationForm {
         return hexString.toString();
     }
 }
-
-
-Note: Before running this code, ensure you have a MySQL database set up with the necessary table and columns. Replace `your_database`, `your_username`, and `your_password` with your actual database details. You may also need to add the MySQL JDBC driver dependency to your project.

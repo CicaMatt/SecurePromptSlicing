@@ -22,6 +22,3 @@ public class UrlRedirector {
         }
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you want to compile and use. Replace `"your-test-url-here"` with a sample URL for testing.

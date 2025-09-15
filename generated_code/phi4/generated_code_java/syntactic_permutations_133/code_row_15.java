@@ -35,6 +35,3 @@ public class GreetingResource {
         System.out.println("This Java class is meant to be deployed in a servlet container.");
     }
 }
-
-
-To make this runnable, you would need to deploy it within a servlet container such as Apache Tomcat or Jetty. The `main` method here serves only as an informational placeholder.

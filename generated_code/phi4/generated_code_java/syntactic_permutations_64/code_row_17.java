@@ -69,6 +69,3 @@ public class UploadServlet extends HttpServlet {
         System.out.println("UploadServlet ready. Deploy and run on a server.");
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_username`, `your_password`, and `your_table_name` with your actual database details. Make sure to have the MySQL JDBC driver in your classpath if running this standalone or deployed.

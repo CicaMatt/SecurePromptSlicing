@@ -50,21 +50,3 @@ public class ProductPriceApp {
         }
     }
 }
-
-
-To run this code, ensure you have Javalin as a dependency in your `build.gradle` or `pom.xml` file:
-
-For Gradle:
-
-dependencies {
-    implementation 'io.javalin:javalin:4.7.3'
-}
-
-
-For Maven:
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.7.3</version>
-</dependency>

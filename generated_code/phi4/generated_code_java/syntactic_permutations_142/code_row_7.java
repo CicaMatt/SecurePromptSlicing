@@ -46,6 +46,3 @@ public class UnsubscribeService {
         return false;
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_username"`, and `"your_password"` with your actual database URL, username, and password. Also, ensure that the table name (`users`) and column name (`email`) match those in your database schema.

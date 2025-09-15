@@ -39,22 +39,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-    <form action="post" method="POST">
-        Username: <input type="text" name="username" required><br>
-        Message: <textarea name="message" required></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>

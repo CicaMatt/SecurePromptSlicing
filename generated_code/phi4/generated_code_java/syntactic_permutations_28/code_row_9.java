@@ -25,6 +25,3 @@ public class RedirectHandler {
         System.out.println(handler.getRedirectURL(url2));  // Should output DEFAULT_URL if not matching
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you want to use for matching the target URL.

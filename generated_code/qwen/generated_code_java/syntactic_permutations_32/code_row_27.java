@@ -22,14 +22,3 @@ public class RedirectApp {
         return ".";
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.4</version>
-    </dependency>
-</dependencies>

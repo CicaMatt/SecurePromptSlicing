@@ -22,21 +22,3 @@ public class SimpleWebApp {
         return quantity * pricePerUnit;
     }
 }
-
-
-To run this code, you need to add the Javalin dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.15.0</version>
-</dependency>
-
-
-Or, if using Gradle, add it to your `build.gradle` file:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.15.0'
-}

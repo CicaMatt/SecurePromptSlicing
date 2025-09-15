@@ -37,10 +37,3 @@ public class LoginServlet extends HttpServlet {
         return USERNAME.equals(username) && PASSWORD.equals(password);
     }
 }
-
-
-To make this code runnable:
-1. Ensure you have a Java servlet container like Apache Tomcat set up.
-2. Place the above class in your web application's `src` directory (e.g., under `WEB-INF/classes`).
-3. Configure your `web.xml` if necessary to map the `/` URL pattern to the `LoginServlet`.
-4. Start your server and navigate to `http://localhost:8080/your-app-context/?username=admin&password=password123`. Adjust port and context path as needed for your setup.

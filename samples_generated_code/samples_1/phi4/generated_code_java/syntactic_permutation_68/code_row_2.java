@@ -35,13 +35,3 @@ public class ImageUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.11.0</version>
-</dependency>

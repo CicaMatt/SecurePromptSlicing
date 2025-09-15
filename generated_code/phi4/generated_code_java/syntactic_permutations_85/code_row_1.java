@@ -91,6 +91,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note**: Before running this code, make sure to replace `yourDatabaseUser` and `yourDatabasePassword` with your actual database credentials. Also, ensure that the MySQL JDBC driver is included in your project's dependencies, and that the database schema matches what is expected by the SQL query within the `getTemperatureFromDatabase` method. This example assumes a table named `temperatures` exists with columns for latitude, longitude, date, and temperature.

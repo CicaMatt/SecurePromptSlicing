@@ -42,11 +42,3 @@ class RedirectController {
         }
     }
 }
-
-
-To run this application:
-
-1. Ensure you have Spring Boot dependencies in your `pom.xml` or build file.
-2. Run the `RedirectApplication` class as a Java application.
-
-This code sets up a simple Spring Boot web application with a single route `/redirect`. It uses a regular expression to check if the target URL contains "example.com" and redirects accordingly.

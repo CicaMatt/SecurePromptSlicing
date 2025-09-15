@@ -53,16 +53,3 @@ public class Registration {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure you have the `jbcrypt` library in your classpath for password hashing. You can add it using Maven by including:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Ensure your database schema includes a `users` table with columns: `username`, `password`, `first_name`, `last_name`, and `email`.

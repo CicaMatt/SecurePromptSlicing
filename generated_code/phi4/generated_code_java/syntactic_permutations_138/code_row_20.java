@@ -49,6 +49,3 @@ public class ModeratorCheckApp {
         }
     }
 }
-
-
-**Note:** Replace `"jdbc:your_database_url"`, `"username"`, and `"password"` with your actual database connection details. Also, ensure that the JDBC driver for your database is included in your project's classpath.

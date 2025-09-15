@@ -41,6 +41,3 @@ public class StockOrderApp {
         System.out.println("You are now viewing your stock orders.");
     }
 }
-
-
-Note: Before running this code, ensure you have a MySQL database named `stockdb` and a table called `orders` with columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the database credentials (`DB_URL`, `USER`, `PASS`) as necessary.

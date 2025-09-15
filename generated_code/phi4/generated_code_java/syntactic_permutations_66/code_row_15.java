@@ -50,31 +50,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("<h1>File uploaded successfully!</h1>");
     }
 }
-
-
-
-<!-- Add this to your web.xml or use annotations for servlet mapping -->
-<servlet>
-    <servlet-name>uploadServlet</servlet-name>
-    <servlet-class>FileUploadServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>uploadServlet</servlet-name>
-    <url-pattern>/upload</url-pattern>
-</servlet-mapping>
-
-
-
-<!-- Add this to your pom.xml if using Maven -->
-<dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>1.4</version>
-</dependency>
-
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.8.0</version>
-</dependency>

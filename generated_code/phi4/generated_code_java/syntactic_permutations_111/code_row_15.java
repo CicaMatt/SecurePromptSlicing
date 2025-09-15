@@ -24,6 +24,3 @@ public class WebAppDecorator {
         }
     }
 }
-
-
-Note: The ping command syntax may differ between operating systems. This example assumes a Unix-like system with `-c` to specify the number of echo requests. For Windows, use `"-n"` instead of `"-c"`.

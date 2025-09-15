@@ -55,24 +55,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Upload</title>
-</head>
-<body>
-    <h2>Upload PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf"><br><br>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Make sure your `web.xml` (if using Servlet 2.5) or annotations are properly configured for the servlet to map correctly to `/upload`. Ensure you have a local server running, such as Apache Tomcat, and place these files in the appropriate directories within your web application structure.

@@ -46,10 +46,3 @@ public class UploadPdfServlet extends HttpServlet {
         response.getWriter().write("File " + fileName + " has been uploaded successfully!");
     }
 }
-
-
-To make this code runnable:
-1. Place it in a Java web project.
-2. Ensure you have the necessary servlet API dependencies configured (such as including `javax.servlet`).
-3. Configure your server to map the URL pattern `/uploadPdf` to this servlet.
-4. Make sure your HTML form matches the input name `"pdfFile"` and uses method POST with enctype set to `multipart/form-data`.

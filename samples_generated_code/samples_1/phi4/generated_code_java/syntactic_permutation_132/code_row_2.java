@@ -45,16 +45,6 @@ public class UserServlet extends HttpServlet {
 Ensure you have an HTML file named `template.html` in the same directory as your compiled classes with content similar to:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
 
 
 This code assumes you have a servlet container like Apache Tomcat to deploy the `UserServlet` class. The HTML file should contain `${username}` as a placeholder for dynamic content replacement.

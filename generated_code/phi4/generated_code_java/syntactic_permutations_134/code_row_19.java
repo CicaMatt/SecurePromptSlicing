@@ -36,6 +36,3 @@ public class HelloServlet extends HttpServlet {
                     .replace("/", "&#x2F;");
     }
 }
-
-
-Make sure to have the necessary servlet API dependencies in your project. This code is intended to be deployed in a web application using a servlet container like Apache Tomcat.

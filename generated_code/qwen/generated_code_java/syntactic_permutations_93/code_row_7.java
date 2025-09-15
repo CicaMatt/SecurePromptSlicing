@@ -50,6 +50,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Ensure to replace `your_database`, `username`, and `password` in the JDBC connection string with your actual database name, username, and password. Also, make sure you have a table named `users` with columns `username` and `password`.

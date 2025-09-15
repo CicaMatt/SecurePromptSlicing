@@ -28,6 +28,3 @@ public class WebApp {
         }
     }
 }
-
-
-Make sure to include the necessary dependencies for Jetty in your project's build configuration (e.g., Maven or Gradle).

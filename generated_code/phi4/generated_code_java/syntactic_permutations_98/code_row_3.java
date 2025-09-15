@@ -59,6 +59,3 @@ public class Registration {
         return sb.toString();
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with the actual database name, username, and password. Additionally, ensure that your MySQL Connector/J library is included in your project's classpath for JDBC connection.

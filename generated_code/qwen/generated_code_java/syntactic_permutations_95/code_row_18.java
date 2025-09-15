@@ -109,12 +109,3 @@ public class RegistrationForm extends JFrame {
         });
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven and MySQL -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>

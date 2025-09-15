@@ -61,18 +61,3 @@ public class UnsubscribeService {
         return false;
     }
 }
-
-
-**Notes:**
-- Replace `your_database_name`, `your_username`, and `your_password` with your actual database name, username, and password.
-- Ensure that the MySQL JDBC driver is included in your project dependencies. If you are using Maven, include:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-
-- Adjust the table name and column names in the SQL queries if they differ from `subscribers` and `email`.

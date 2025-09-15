@@ -62,6 +62,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. You also need to have a MySQL server running locally or adjust the connection string for another database server. The users table should be created in advance with appropriate fields: `username`, `password_hash`, and `salt`.

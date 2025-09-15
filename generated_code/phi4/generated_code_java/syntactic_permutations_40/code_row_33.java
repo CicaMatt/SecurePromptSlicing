@@ -41,10 +41,3 @@ plugins {
 repositories {
     mavenCentral()
 }
-
-dependencies {
-    implementation 'io.javalin:javalin:4.8.0'
-}
-
-
-Make sure to set up a session store, such as an in-memory session manager, or configure Javalin with a specific session management strategy if running in production.

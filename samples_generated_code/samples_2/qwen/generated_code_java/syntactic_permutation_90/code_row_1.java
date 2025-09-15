@@ -31,18 +31,3 @@ public class PriceMicroservice {
         }
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.28</version>
-    </dependency>
-</dependencies>

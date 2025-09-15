@@ -31,6 +31,3 @@ public class HttpHelloServer {
         server.start();
     }
 }
-
-
-Make sure to include the necessary library in your classpath if you are using an IDE or build tool like Maven or Gradle. The `com.sun.net.httpserver` package is part of Java's standard library.

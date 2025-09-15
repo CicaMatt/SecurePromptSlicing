@@ -54,6 +54,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-This Java servlet handles file uploads from an HTML form to a specified directory on the server. It checks for PDF files and saves them in the `uploads` folder. Ensure your web server is set up to support multipart requests, and include appropriate error handling as needed.

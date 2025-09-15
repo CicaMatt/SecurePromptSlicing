@@ -49,16 +49,3 @@ public class PayloadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run the above servlet, you'll need to have a Java web server like Apache Tomcat and include the Jackson YAML dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-yaml</artifactId>
-    <version>2.15.0</version>
-</dependency>
-
-
-Make sure to deploy the application on a server that listens on port 5000, or configure your server's ports accordingly.

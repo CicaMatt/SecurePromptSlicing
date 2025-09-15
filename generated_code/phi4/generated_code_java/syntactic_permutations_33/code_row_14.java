@@ -31,7 +31,7 @@ public class RedirectServlet extends HttpServlet {
 
 
 
-<!-- web.xml configuration -->
+
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
@@ -67,6 +67,3 @@ public class WebAppRunner {
         tomcat.getServer().await();
     }
 }
-
-
-To run this code, you need to have Apache Tomcat and the necessary libraries in your classpath. This example uses an embedded Tomcat server for simplicity. You can deploy it on a full-fledged Tomcat server as well by placing the compiled classes and `web.xml` in the appropriate directory structure.

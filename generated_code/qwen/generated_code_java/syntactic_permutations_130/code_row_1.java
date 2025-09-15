@@ -35,29 +35,3 @@ public class WebApp {
         return renderResponseFromEnv(request, response, env);
     }
 }
-
-
-**Note:** Ensure you have the `freemarker` and `spark-core` libraries in your classpath. You can add them via Maven or Gradle if necessary.
-
-For Maven, add these dependencies to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-    <version>2.3.30</version>
-</dependency>
-
-
-For Gradle, add these dependencies to your `build.gradle`:
-
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'org.freemarker:freemarker:2.3.30'
-}

@@ -47,6 +47,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database details. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

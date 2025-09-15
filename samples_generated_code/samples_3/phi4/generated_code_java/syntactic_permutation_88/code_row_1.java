@@ -28,34 +28,3 @@ public class PriceCalculatorAPI {
         });
     }
 }
-
-
-To run this code, you need to include the following dependencies in your project:
-
-1. Spark Java for creating the web API.
-2. SnakeYAML for parsing YAML payloads.
-
-You can add these dependencies to your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>
-
-
-Or to your `build.gradle` if using Gradle:
-
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'org.yaml:snakeyaml:1.33'
-}

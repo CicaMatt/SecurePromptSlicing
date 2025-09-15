@@ -50,11 +50,3 @@ public class UploadPdfServlet extends HttpServlet {
         }
     }
 }
-
-
-This Java servlet handles the uploading of PDF files to an "uploads" folder. It uses annotations to specify that it is a web servlet and sets constraints for multipart form data. The code checks if the uploaded file is a PDF before saving it, ensuring only PDFs are accepted.
-
-To make this runnable:
-- Ensure you have a Java EE (or Jakarta EE) compliant server like Apache Tomcat.
-- Place this class in your project under `src/main/java`.
-- Configure the web application with necessary deployment descriptors or through your IDE's deployment setup.

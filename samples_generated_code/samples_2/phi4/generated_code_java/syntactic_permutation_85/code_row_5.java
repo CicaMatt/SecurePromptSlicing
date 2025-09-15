@@ -61,6 +61,3 @@ public class TemperatureService {
         return Double.NaN;
     }
 }
-
-
-Note: Ensure you have the necessary dependencies in your `build.gradle` or `pom.xml`, such as Spark framework and H2 database driver. This example uses H2 as an in-memory SQL database for simplicity. Adjust the connection URL, username, password, and SQL query according to your actual database setup.

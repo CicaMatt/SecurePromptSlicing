@@ -29,22 +29,3 @@ public class PostMessageServlet extends HttpServlet {
         return true; // Return true if successful, false otherwise
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-    <form action="PostMessageServlet" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Message: <textarea name="message"></textarea><br><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

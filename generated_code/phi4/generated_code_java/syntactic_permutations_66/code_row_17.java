@@ -60,6 +60,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-To use this servlet, you need to set up a Java web application project in an IDE like IntelliJ IDEA or Eclipse. Make sure the `uploads` folder is created at the root of your project directory and that you have configured your server (like Tomcat) correctly. Deploy the application and test it by sending a POST request with a PDF file attached.

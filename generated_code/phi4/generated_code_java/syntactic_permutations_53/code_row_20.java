@@ -30,6 +30,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-This code assumes that you have set up `isLoggedIn` and `role` in the user's session upon successful login. The redirects go to JSP pages named `adminPage.jsp`, `userPage.jsp`, and `loginPage.jsp`. Adjust these as necessary based on your actual file names and paths.

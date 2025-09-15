@@ -26,6 +26,3 @@ public class UserServlet extends HttpServlet {
         response.getWriter().write(renderedTemplate);
     }
 }
-
-
-**Note:** Ensure that the `TEMPLATE_PATH` variable is set to the correct path of your HTML file on the server. The HTML template should include a placeholder like `${username}` where you want the username value to be inserted.

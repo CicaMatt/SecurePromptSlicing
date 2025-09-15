@@ -30,6 +30,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: To run this code as a web application, you must deploy it in a servlet container like Apache Tomcat. Make sure to include the necessary dependencies and configurations for your project setup.

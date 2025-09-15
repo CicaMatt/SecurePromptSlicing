@@ -20,12 +20,3 @@ public class MessageServlet extends HttpServlet {
         // Database insertion logic here
     }
 }
-
-
-
-<!-- Add this form to the appropriate JSP file -->
-<form action="post" method="POST">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>

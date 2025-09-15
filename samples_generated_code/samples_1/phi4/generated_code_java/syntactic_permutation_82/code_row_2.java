@@ -30,16 +30,3 @@ public class Main {
         }
     }
 }
-
-
-To run this code, you need to include the Javalin library in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.8.0</version>
-</dependency>
-
-
-If you are not using Maven, download the Javalin library and add it to your project's classpath.

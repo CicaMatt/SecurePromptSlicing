@@ -40,16 +40,3 @@ public class ProductService {
         return yaml.dump(resultMap);
     }
 }
-
-
-To run this code, you need to include the SnakeYAML library in your project. You can add it as a dependency using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-Or download the JAR file from [Maven Repository](https://mvnrepository.com/artifact/org.yaml/snakeyaml/1.33) and include it in your project classpath.

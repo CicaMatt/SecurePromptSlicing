@@ -62,42 +62,12 @@ public class SessionServlet extends HttpServlet {
 
 
 
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
 
-<!-- session.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Session Page</title>
-</head>
-<body>
-    <h2>Session Page</h2>
-    <% String username = (String) session.getAttribute("username"); %>
-    Welcome, <%= username %>!
-    <br><br>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -116,6 +86,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("index.html");
     }
 }
-
-
-Note: To run this code, you need a Java servlet container like Apache Tomcat. Place the `index.html` and `session.jsp` files in the appropriate directory for your web application (usually under `WebContent` or `webapp`). The servlets should be compiled and deployed as part of your web application.

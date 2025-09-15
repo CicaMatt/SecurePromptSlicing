@@ -26,6 +26,3 @@ public class DatabaseConnection {
         }
     }
 }
-
-
-**Note:** Replace `"your_database_name"`, `"your_username"`, `"your_password"`, and `"your_table"` with actual values. Ensure that the MySQL JDBC driver is included in your project's classpath.

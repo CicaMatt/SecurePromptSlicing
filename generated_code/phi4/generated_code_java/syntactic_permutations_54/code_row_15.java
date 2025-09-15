@@ -34,6 +34,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the necessary servlet API and server setup (like Apache Tomcat) to run this code in a web application environment. The `admin_page.jsp` is assumed to be an existing JSP page that should be created for admin users. Adjust the username and password check logic as needed based on your actual authentication mechanism or database lookup.

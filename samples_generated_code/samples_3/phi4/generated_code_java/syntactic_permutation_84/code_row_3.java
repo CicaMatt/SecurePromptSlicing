@@ -63,18 +63,3 @@ public class PayloadChecker {
         }
     }
 }
-
-
-Note: This code uses `com.fasterxml.jackson.dataformat.yaml.YAMLFactory` for YAML parsing, which requires the Jackson library. Make sure to include the following Maven dependency in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.13.3</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-yaml</artifactId>
-    <version>2.13.3</version>
-</dependency>

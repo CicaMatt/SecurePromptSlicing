@@ -59,6 +59,3 @@ public class RegisterServlet extends HttpServlet {
         return sb.toString();
     }
 }
-
-
-Note: Make sure you have the necessary JDBC driver in your classpath and that the database (`mydatabase`) and table (`users`) exist with appropriate columns (`username` and `password`). Replace `"root"` and `"password"` with your actual MySQL username and password. Additionally, ensure you've configured your servlet container (like Apache Tomcat) to deploy this web application correctly.

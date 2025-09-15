@@ -52,6 +52,3 @@ public class LoginSystem {
         // Simulate redirection by printing a message or open the home page URL
     }
 }
-
-
-*Note: Replace `your_database`, `your_db_user`, and `your_db_password` with actual database name, username, and password. Ensure that your MySQL JDBC driver is included in your project's dependencies.*

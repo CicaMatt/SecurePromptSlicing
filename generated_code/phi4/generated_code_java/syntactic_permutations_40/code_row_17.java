@@ -37,16 +37,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, you will need to include the Javalin library in your project's dependencies. If using Maven, add the following dependency:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.10.0</version>
-</dependency>
-
-
-For testing purposes, you can access `/set-session` to set session variables before accessing `/info`.

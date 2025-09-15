@@ -28,9 +28,3 @@ public class HelloServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-To run this code:
-- You need a Java Servlet container like Apache Tomcat.
-- Place the compiled `.class` file in the `WEB-INF/classes` directory of your web application.
-- Configure your `web.xml` or use annotations for servlet mapping.

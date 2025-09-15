@@ -30,6 +30,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Note: Ensure that your web application includes the necessary JSP files (`login.jsp`, `user.jsp`, and `admin.jsp`) for this servlet to function correctly.

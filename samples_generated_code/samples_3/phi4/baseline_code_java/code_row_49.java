@@ -71,6 +71,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Also, implement the `unsubscribeFromMailingList` method as needed for your mailing list logic.

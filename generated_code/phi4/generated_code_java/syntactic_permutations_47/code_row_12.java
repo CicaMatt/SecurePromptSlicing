@@ -47,6 +47,3 @@ public class FileDownloadServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"path/to/your/file.txt"` with the actual path of your file. The servlet is mapped to URL `/file`, which you can access via `http://localhost:<port>/yourContextPath/file` (replace `<port>` and `yourContextPath` accordingly based on your server setup).

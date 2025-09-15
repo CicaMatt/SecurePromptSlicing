@@ -50,13 +50,3 @@ public class RegistrationForm {
         return hashedPassword;
     }
 }
-
-
-
--- SQL script to create the users table in MySQL
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARBINARY(64) NOT NULL,
-    salt VARBINARY(16) NOT NULL
-);

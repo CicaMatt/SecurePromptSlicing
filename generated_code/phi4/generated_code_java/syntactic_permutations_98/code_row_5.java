@@ -91,6 +91,3 @@ public class RegistrationPage extends JFrame {
         });
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also, ensure the `users` table has columns named `username` and `password_hash`. You need the BCrypt library for hashing passwords; add it as a dependency to your project (e.g., via Maven or manually).

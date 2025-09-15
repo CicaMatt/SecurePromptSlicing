@@ -17,6 +17,3 @@ public class UrlRedirect {
         return matcher.matches() ? targetUrl : DEFAULT_URL;
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you want to use for matching the target URL. Adjust `DEFAULT_URL` as needed.

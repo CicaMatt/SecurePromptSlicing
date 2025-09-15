@@ -37,6 +37,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-This code uses Java Servlets to handle HTTP GET and POST requests for a simple login system. The `doGet` method returns an HTML form for user input, while the `doPost` method processes the login credentials and checks if they match predefined admin credentials.

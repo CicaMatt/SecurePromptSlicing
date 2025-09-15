@@ -51,12 +51,3 @@ public class ArchiveExtractor {
         }
     }
 }
-
-Note: This code requires the Apache Commons Compress library for handling tar files. Add the following dependency to your project's build file:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>

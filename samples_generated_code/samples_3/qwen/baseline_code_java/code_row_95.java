@@ -71,23 +71,3 @@ public class MessageServlet extends HttpServlet {
         return messages;
     }
 }
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <c:forEach var="message" items="${messages}">
-        <li>${message}</li>
-    </c:forEach>
-</ul>
-
-<form action="/post" method="post">
-    <input type="text" name="username" placeholder="Username" required><br>
-    <textarea name="message" placeholder="Message" required></textarea><br>
-    <button type="submit">Send</button>
-</form>
-</body>
-</html>

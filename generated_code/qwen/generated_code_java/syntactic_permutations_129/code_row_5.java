@@ -51,15 +51,3 @@ public class Main {
         return cfg;
     }
 }
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

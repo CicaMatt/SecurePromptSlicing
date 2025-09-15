@@ -26,6 +26,3 @@ public class SafeFileReader {
         }
     }
 }
-
-
-Replace `"path/to/safe/directory"` with the actual path to your safe directory and `requested_file.txt` with the name of the file you want to read.

@@ -28,6 +28,3 @@ public class SecretFile {
         }
     }
 }
-
-
-Note: This code assumes a POSIX-compliant system (like Linux or macOS). On Windows, the `setPosixFilePermissions` method is not supported.

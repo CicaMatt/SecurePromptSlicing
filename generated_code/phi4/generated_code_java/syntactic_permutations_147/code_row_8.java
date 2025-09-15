@@ -62,6 +62,3 @@ public class StockOrderFormServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: This code assumes you have a MySQL database set up with the necessary driver in your classpath and a table named `orders` with at least one column `stock_name`. You should replace the database URL, username, and password with appropriate values for your environment. Also, ensure that the servlet container (e.g., Apache Tomcat) is properly configured to run this code.

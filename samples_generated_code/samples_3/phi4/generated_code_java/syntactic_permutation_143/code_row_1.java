@@ -64,6 +64,3 @@ public class UnsubscribeService {
         // Implement actual mailing list removal logic here
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Make sure to handle any specific exceptions or additional configurations needed for your environment.

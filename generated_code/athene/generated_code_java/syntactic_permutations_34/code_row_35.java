@@ -33,36 +33,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-<%@ page import="javax.servlet.ServletException, javax.servlet.http.HttpServlet, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="Login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color: red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome to the Dashboard!</h1>
-    <a href="login.jsp">Logout</a>
-</body>
-</html>

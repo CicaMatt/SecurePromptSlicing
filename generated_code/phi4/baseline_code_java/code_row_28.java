@@ -20,6 +20,3 @@ public class UrlRedirect {
         return DEFAULT_URL;
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you intend to use.

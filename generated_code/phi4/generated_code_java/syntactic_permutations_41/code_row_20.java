@@ -24,6 +24,3 @@ public class SimpleWebApp {
         server.start();
     }
 }
-
-
-**Note:** The code above is for demonstration purposes only. Exposing sensitive information such as social security numbers and email addresses in a web application is against best practices and poses significant privacy and security risks. Always ensure compliance with data protection regulations like GDPR or CCPA when handling personal data.

@@ -38,12 +38,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-
--- SQL to create the 'images' table in your database
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    data TEXT
-);

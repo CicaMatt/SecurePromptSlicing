@@ -43,6 +43,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Additionally, ensure that the BCrypt library is included in your project dependencies for password hashing.

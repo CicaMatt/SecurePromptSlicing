@@ -87,6 +87,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-**Note:** Replace `path_to_your_database.db` with the actual path to your SQLite database. Ensure that you have the necessary JDBC driver for SQLite in your classpath. This example uses an embedded HTTP server from Java's standard library and SQLite for simplicity, but you might need to adapt it for a production environment with more robust solutions like Spring Boot or similar frameworks for web services, along with a more scalable database system.

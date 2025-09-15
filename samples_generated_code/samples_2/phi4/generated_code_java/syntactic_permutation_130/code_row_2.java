@@ -18,13 +18,3 @@ public class WebApp {
         return renderResponseFromEnv(env, request.queryParams());
     }
 }
-
-
-Make sure to include the Spark Java library in your project dependencies. For Maven, you can add:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>

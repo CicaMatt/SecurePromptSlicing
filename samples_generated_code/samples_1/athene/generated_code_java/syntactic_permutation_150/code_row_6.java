@@ -15,17 +15,3 @@ public class MessageServlet {
         // Implementation for inserting the message into the database
     }
 }
-
-// HTML Form to submit a message
-// This would typically be in a JSP or HTML file, not in Java code.
-// However, here it is provided for completeness.
-
-<html>
-<body>
-<form action="MessageServlet" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>

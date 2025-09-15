@@ -38,21 +38,3 @@ public class StockMarketApp {
         System.out.println("Buy function called with stock: " + stockName);
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath. You may need to add it as a dependency if you're using a build tool like Maven or Gradle.
-
-For Maven, add this dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>
-
-
-For Gradle, add this line to your `build.gradle`:
-
-
-implementation 'mysql:mysql-connector-java:8.0.28'

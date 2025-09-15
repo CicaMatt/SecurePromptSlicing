@@ -47,20 +47,3 @@ public class ProductService {
         return yaml.dump(result);
     }
 }
-
-
-**Maven Dependencies:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.29</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.4</version>
-    </dependency>
-</dependencies>

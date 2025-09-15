@@ -49,23 +49,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-Make sure to include the necessary dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.9.1</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.29</version>
-    </dependency>
-</dependencies>
-
-
-Replace `your_database`, `your_username`, and `your_password` with your actual database details.

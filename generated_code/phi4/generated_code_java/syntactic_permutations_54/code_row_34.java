@@ -51,6 +51,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println(htmlContent);
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. Ensure your `web.xml` is configured properly if not using annotations, and deploy it as part of a web application.

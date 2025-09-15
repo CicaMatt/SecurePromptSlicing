@@ -40,37 +40,3 @@ class ProductController {
         }
     }
 }
-
-
-To run this application:
-
-1. Ensure you have Spring Boot dependencies set up in your `pom.xml` file.
-2. Use Maven or Gradle to build and run the application.
-
-Example `pom.xml` snippet for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-Run the application with:
-
-
-mvn spring-boot:run
-
-
-Access the endpoints at `http://localhost:5000/product/{code}` and `http://localhost:5000/calculate?code={code}&quantity={number}`.

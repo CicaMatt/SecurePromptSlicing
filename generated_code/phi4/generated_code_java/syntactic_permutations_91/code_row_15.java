@@ -52,6 +52,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath and a database named `webapp` with a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR).

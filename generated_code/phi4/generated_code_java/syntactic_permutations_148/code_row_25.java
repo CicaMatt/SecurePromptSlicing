@@ -60,34 +60,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Display Messages</title>
-</head>
-<body>
-
-<h1>Messages</h1>
-<ul>
-    <%
-        ArrayList<String> messages = (ArrayList<String>) request.getAttribute("messages");
-        if (messages != null) {
-            for (String message : messages) {
-                out.println("<li>" + message + "</li>");
-            }
-        } else {
-            out.println("<li>No messages to display.</li>");
-        }
-    %>
-</ul>
-
-<a href="mainPage.jsp">Back to Main Page</a>
-
-</body>
-</html>

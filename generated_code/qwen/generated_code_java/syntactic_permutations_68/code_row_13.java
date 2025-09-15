@@ -36,12 +36,3 @@ public class ImageUploader {
         uploader.uploadImage("path/to/your/image.jpg");
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>

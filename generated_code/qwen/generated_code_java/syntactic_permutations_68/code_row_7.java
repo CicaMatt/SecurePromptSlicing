@@ -42,6 +42,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) or include it via a build tool like Maven or Gradle.

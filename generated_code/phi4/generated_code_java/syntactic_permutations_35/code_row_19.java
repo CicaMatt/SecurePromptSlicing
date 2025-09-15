@@ -57,9 +57,3 @@ public class LoginServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-This code assumes:
-- You have a MySQL database with a `users` table having at least two columns: `username` and `password`.
-- The database URL is `jdbc:mysql://localhost:3306/yourdatabase`, username is `dbuser`, and password is `dbpassword`. Modify these according to your setup.
-- `home.jsp` exists as the home page after successful login, and `login.html` is your login form page.

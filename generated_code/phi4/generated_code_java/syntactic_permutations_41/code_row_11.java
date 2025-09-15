@@ -32,10 +32,7 @@ Make sure to include the following in your `pom.xml` if you are using Maven:
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -51,9 +48,7 @@ Make sure to include the following in your `pom.xml` if you are using Maven:
 For Gradle, include in your `build.gradle`:
 
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 tasks.named('test') {
     useJUnitPlatform()

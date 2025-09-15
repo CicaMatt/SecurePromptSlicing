@@ -31,6 +31,3 @@ public class FileServerApplication {
         }
     }
 }
-
-
-Ensure to replace `"path/to/your/folder"` with the actual path to your folder containing the files.

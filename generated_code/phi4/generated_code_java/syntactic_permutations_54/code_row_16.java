@@ -40,6 +40,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().write(adminHtml);
     }
 }
-
-
-To run this code, you need a servlet container such as Apache Tomcat. Place this code in the appropriate directory structure for your web application (e.g., `WEB-INF/classes`), compile it, and deploy it to the server. Ensure that the servlet API is included in your classpath.

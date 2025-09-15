@@ -50,6 +50,3 @@ public class LoginApplication {
         // Simulate redirection
     }
 }
-
-
-**Note:** This code is a simplified simulation of the login process. In a real application, you should use hashed passwords and a web framework for handling HTTP requests and responses. Additionally, ensure your database credentials are securely managed.

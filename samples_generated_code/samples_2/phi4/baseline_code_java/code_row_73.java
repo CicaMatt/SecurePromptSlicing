@@ -38,6 +38,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-**Note**: Make sure to replace `your_database_name`, `your_db_user`, and `your_db_password` with your actual database details. Also, ensure you have the necessary JDBC driver for MySQL (`mysql-connector-java`) and BCrypt library (`jbcrypt`) in your classpath.

@@ -29,6 +29,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this servlet work, you need to have a web server like Apache Tomcat set up. You also need to include the necessary libraries for running a Java Servlet application in your project's classpath.

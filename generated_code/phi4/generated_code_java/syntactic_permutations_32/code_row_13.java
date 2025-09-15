@@ -28,25 +28,3 @@ class RedirectController {
         }
     }
 }
-
-
-
-<!-- src/main/resources/templates/error.html -->
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Error</title>
-</head>
-<body>
-    <h1>Error Page</h1>
-    <p th:text="${message}"></p>
-</body>
-</html>
-
-
-
-# src/main/resources/application.properties
-
-spring.mvc.view.prefix=/templates/
-spring.mvc.view.suffix=.html

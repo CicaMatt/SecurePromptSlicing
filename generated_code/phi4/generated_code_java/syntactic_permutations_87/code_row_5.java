@@ -51,6 +51,3 @@ class TemperatureController {
         }
     }
 }
-
-
-To run this code, make sure you have a Spring Boot setup with dependencies on `spring-boot-starter-web` and `spring-boot-starter-jdbc`. Additionally, configure the data source to connect to your database. You might need a table named `temperatures` with columns `latitude`, `longitude`, `date`, and `temperature` in your database.

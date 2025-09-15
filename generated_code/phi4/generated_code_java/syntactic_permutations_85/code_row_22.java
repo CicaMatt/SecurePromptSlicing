@@ -79,6 +79,3 @@ class TemperatureController {
         }
     }
 }
-
-
-This code assumes you have a Spring Boot application configured with a `DataSource` bean for connecting to your database. Make sure to include the necessary dependencies in your `pom.xml` or `build.gradle` file for Spring Web and Database connectivity.

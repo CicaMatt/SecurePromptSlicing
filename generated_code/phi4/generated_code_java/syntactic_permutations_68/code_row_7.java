@@ -52,6 +52,3 @@ public class ImageUploader {
         uploader.uploadImage("/path/to/your/image.jpg");
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` in the `DB_URL`, `USER`, and `PASS` constants with the actual database name, username, and password respectively. Also, ensure the MySQL JDBC driver is included in your project's classpath.

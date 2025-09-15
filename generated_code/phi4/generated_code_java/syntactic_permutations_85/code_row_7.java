@@ -44,6 +44,3 @@ public class TemperatureFetcher {
         System.out.println("Temperature: " + temperature);
     }
 }
-
-
-**Note:** Make sure to replace `yourUsername` and `yourPassword` with your actual MySQL username and password. Ensure that the MySQL JDBC driver is included in your project's classpath.

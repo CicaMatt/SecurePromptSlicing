@@ -92,6 +92,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `root`, and `password` with your actual database name, username, and password. Ensure you have the necessary MySQL JDBC driver in your classpath.

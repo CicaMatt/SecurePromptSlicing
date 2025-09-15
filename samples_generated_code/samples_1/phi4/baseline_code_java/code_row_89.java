@@ -21,6 +21,3 @@ public class RedirectHandler {
         System.out.println(getRedirectUrl(exampleUrl2)); // Will output DEFAULT_URL
     }
 }
-
-
-Replace `"your-regex-pattern-here"` with the actual regular expression you want to use.

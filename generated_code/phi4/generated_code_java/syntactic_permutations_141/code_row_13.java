@@ -44,6 +44,3 @@ public class WebApp {
         }
     }
 }
-
-
-Make sure to replace placeholders like `localhost`, `mydatabase`, `username`, and `password` with your actual configuration details. Additionally, ensure that you have the MySQL JDBC driver in your classpath when running this application.

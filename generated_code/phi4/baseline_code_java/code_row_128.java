@@ -27,8 +27,3 @@ public class HelloServlet extends HttpServlet {
         out.println("Hello " + username);
     }
 }
-
-
-To run this code, you will need to have a servlet container such as Apache Tomcat. Save the above Java class in your `src` directory under a package (e.g., `com.example`). Adjust your project structure and build path accordingly if using an IDE like IntelliJ or Eclipse.
-
-In addition, ensure that your `web.xml` is configured properly to map the servlet URL pattern `/http_hello_page`, or rely on the `@WebServlet("/http_hello_page")` annotation as shown above. Deploy the application to a server such as Tomcat and access it through the appropriate URL (e.g., `http://localhost:8080/yourAppContext/http_hello_page?username=YourName`).

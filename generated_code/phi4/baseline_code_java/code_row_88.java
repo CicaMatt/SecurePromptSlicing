@@ -35,34 +35,3 @@ public class PriceCalculator {
         return quantity * pricePerUnit;
     }
 }
-
-
-### Dependencies
-
-To run the above code, you need to include the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>
-
-
-### How to Run
-
-1. Save the Java code in a file named `PriceCalculator.java`.
-2. Ensure you have Maven installed.
-3. Create a `pom.xml` with the above dependencies.
-4. Compile and run using:
-   
-   mvn compile exec:java -Dexec.mainClass=PriceCalculator
-   
-5. Access the API at `http://localhost:4567/calculate_price?payload={%20"product_code": "XYZ",%20"quantity": 3%20}`.

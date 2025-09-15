@@ -31,6 +31,3 @@ public class CheckModerator {
         }
     }
 }
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_username"`, and `"your_password"` with your actual database URL, username, and password. Also, adjust the table name `users` and column names `username` and `is_moderator` to match your database schema.

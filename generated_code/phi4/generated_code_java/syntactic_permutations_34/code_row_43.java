@@ -66,13 +66,3 @@ public class LoginApplication {
         }
     }
 }
-
-
-**Note:** To run this code, make sure you have the SQLite JDBC driver in your classpath. You can download it from [SQLite JDBC](https://github.com/xerial/sqlite-jdbc). Save the file as `LoginApplication.java` and compile and run using:
-
-
-javac LoginApplication.java
-java LoginApplication
-
-
-This code sets up a simple SQLite database, creates a table for users if it doesn't exist, inserts a sample user, and provides a basic console-based login mechanism.

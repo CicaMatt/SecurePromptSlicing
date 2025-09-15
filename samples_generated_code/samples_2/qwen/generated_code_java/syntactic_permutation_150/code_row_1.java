@@ -17,19 +17,3 @@ public class MessageServlet extends HttpServlet {
         System.out.println("Inserting into DB: User - " + username + ", Message - " + message);
     }
 }
-
-// index.html
-// <!DOCTYPE html>
-// <html>
-// <head>
-//     <title>Message Board</title>
-// </head>
-// <body>
-//     <h1>Submit a Message</h1>
-//     <form action="post" method="post">
-//         Username: <input type="text" name="username"><br><br>
-//         Message: <textarea name="message"></textarea><br><br>
-//         <input type="submit" value="Submit">
-//     </form>
-// </body>
-// </html>

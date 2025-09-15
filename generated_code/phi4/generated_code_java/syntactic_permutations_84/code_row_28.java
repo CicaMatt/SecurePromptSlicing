@@ -54,6 +54,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, ensure you have the appropriate permissions to open a server socket on port 5000. You may need to execute your Java program with administrative privileges depending on your operating system and firewall settings.

@@ -51,17 +51,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can add it via Maven dependency or download the JAR and add it manually:
-
-Maven Dependency:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure the table name and column names match those in your database schema.

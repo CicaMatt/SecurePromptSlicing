@@ -43,6 +43,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("File uploaded successfully!");
     }
 }
-
-
-To run this code, you need to have a Java EE or Jakarta EE compatible server like Apache Tomcat. Ensure that your web application is correctly configured to handle servlets and multipart requests.

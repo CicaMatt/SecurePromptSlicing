@@ -37,6 +37,3 @@ public class RedirectServlet extends HttpServlet {
         return url.startsWith("http://") || url.startsWith("https://");
     }
 }
-
-
-Make sure to have the necessary servlet API library in your classpath when running this code. You can deploy it using a servlet container like Apache Tomcat.

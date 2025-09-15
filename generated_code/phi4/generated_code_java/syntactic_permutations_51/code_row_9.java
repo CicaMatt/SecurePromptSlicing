@@ -59,18 +59,3 @@ public class TarExtractor {
         return Files.readString(filePath);
     }
 }
-
-
-**Dependencies:**
-- Apache Commons Compress library for handling TAR files.
-- Add the following dependency to your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-**Note:** Replace `"path/to/your/archive.tar.gz"` with the actual path to your TAR.GZ file.

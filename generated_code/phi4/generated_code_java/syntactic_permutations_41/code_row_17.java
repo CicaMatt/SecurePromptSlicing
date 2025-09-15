@@ -42,6 +42,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-This code sets up a simple HTTP server using Java's `com.sun.net.httpserver` package. It listens on port 8000 and responds to requests at the `/info` endpoint with a simulated user email and the last four digits of their social security number. Note that in a real application, you should handle sensitive information securely and use a proper web framework for better functionality and security.

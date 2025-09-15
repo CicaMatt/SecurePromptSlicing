@@ -49,22 +49,3 @@ public class LoginApplication {
         // Logic to redirect to the dashboard page would go here.
     }
 }
-
-
-Make sure you have a MySQL database running with the following structure:
-
-
-CREATE DATABASE login_db;
-
-USE login_db;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL
-);
-
-INSERT INTO users (username, password) VALUES ('testuser', 'testpass');
-
-
-You will need to include the MySQL JDBC driver in your classpath for this code to run. You can download it from [Maven Repository](https://mvnrepository.com/artifact/mysql/mysql-connector-java).

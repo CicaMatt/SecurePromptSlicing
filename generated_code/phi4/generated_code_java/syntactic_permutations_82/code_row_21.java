@@ -17,19 +17,3 @@ public class WebApp {
         });
     }
 }
-
-
-To run this code, you need to have the `spark-core` library as a dependency. If you're using Maven, include:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-For Gradle, add:
-
-
-implementation 'com.sparkjava:spark-core:2.9.3'

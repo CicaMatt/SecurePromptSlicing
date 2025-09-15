@@ -50,17 +50,3 @@ public class Main {
         }
     }
 }
-
-
-
-<!-- This is the content of home.ftl located in src/main/resources/templates/home.ftl -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

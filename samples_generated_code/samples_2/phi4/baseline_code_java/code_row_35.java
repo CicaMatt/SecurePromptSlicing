@@ -43,6 +43,3 @@ public class TemperatureService {
         System.out.println("Temperature: " + (temperature != Double.NaN ? temperature : "Not Available"));
     }
 }
-
-
-**Note:** Replace `yourDatabaseUsername` and `yourDatabasePassword` with your actual database credentials. Ensure that the MySQL JDBC driver is included in your classpath for this code to run successfully.

@@ -26,19 +26,3 @@ public class PriceCalculatorApp {
         return unitPrice * quantity;
     }
 }
-
-
-To run this code, you'll need to include the Javalin library in your project. You can add it using Maven by adding the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.1</version>
-</dependency>
-
-
-Or, if you're using Gradle, add it to your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.9.1'

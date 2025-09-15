@@ -58,6 +58,3 @@ public class UserRegistration {
         return DatatypeConverter.printHexBinary(hashedPassword);
     }
 }
-
-
-Make sure to replace `yourDatabase`, `yourUsername`, and `yourPassword` with your actual database details. Also, ensure the MySQL JDBC driver is included in your project's dependencies.

@@ -49,6 +49,3 @@ public class HomeServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** Ensure that you have a `template.ftl` file in the `/WEB-INF/templates/` directory. The FreeMarker library should be included as a dependency in your project for this code to work correctly.

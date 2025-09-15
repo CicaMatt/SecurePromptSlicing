@@ -73,26 +73,3 @@ public class WebApplication {
         SpringApplication.run(WebApplication.class, args);
     }
 }
-
-
-**Note:** This setup assumes you are using Spring Boot for your web application. Ensure you have the necessary dependencies in your `pom.xml` or build.gradle file:
-
-For Maven (`pom.xml`):
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <!-- Other dependencies -->
-</dependencies>
-
-
-For Gradle (`build.gradle`):
-
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    // Other dependencies
-}

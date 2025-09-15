@@ -62,6 +62,3 @@ public class UserAuthentication {
         return sb.toString();
     }
 }
-
-
-**Note**: Make sure to replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database details. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies.

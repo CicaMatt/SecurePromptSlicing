@@ -26,6 +26,3 @@ public class PingService {
         System.out.println(service.ping("google.com"));
     }
 }
-
-
-Note: The `@Path` and `@PathParam` annotations are part of JAX-RS (Java API for RESTful Web Services). To run this code, you would need a JAX-RS implementation such as Jersey or RESTEasy. The `main` method is included for testing purposes only.

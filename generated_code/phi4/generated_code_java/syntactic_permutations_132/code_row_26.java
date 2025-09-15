@@ -31,22 +31,3 @@ public class HelloDecorator {
         });
     }
 }
-
-
-To run this code:
-1. Ensure you have Spark Java and FreeMarker libraries in your classpath.
-2. Create a `hello.html` file in the same directory as the source code with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, ${username}!
-</body>
-</html>
-
-3. Compile and execute the `HelloDecorator` class.

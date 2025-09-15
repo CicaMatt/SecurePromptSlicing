@@ -64,33 +64,3 @@ public class IndexServlet extends HttpServlet {
         response.getWriter().write("<html><body>Welcome! <a href='login.html'>Login</a></body></html>");
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-    Welcome! <a href="login.html">Login</a>
-</body>
-</html>

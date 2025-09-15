@@ -64,6 +64,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-This code sets up an HTTP server that listens for GET requests on the `/unsubscribe` endpoint. It checks if the email is present in a mock database and unsubscribes it if found, returning appropriate responses based on whether the operation was successful or not.

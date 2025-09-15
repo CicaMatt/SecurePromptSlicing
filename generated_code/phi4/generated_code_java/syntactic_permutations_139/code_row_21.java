@@ -43,6 +43,3 @@ public class ModeratorChecker {
         return false;
     }
 }
-
-
-Make sure to replace `"yourUserId"` with the appropriate user ID you want to check. Also, ensure that your database driver is available in the classpath when running this code.

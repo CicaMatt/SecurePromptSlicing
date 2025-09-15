@@ -23,22 +23,3 @@ public class Main {
         });
     }
 }
-
-
-To run this code, ensure you have Javalin as a dependency in your project. If using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.1</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.7.1'
-
-
-Start the application, and visit `http://localhost:7000/hello/yourname` to see it in action.

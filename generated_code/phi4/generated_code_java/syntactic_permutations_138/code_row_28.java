@@ -47,6 +47,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `username`, and `password` with your actual database name, username, and password. Make sure you have the necessary MySQL JDBC driver in your classpath (e.g., via Maven or Gradle).

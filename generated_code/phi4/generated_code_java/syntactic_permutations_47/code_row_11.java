@@ -55,24 +55,3 @@ public class FileDownloadServlet extends HttpServlet {
         }
     }
 }
-
-
-**Dependencies:**
-- Jetty Server for running the servlet locally (for testing purposes).
-
-Add the following dependencies to your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>9.4.44.v20210927</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>9.4.44.v20210927</version>
-</dependency>
-
-
-Replace `"path/to/your/file.txt"` with the actual path to your file.

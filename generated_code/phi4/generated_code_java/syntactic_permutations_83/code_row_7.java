@@ -24,27 +24,3 @@ public class CheckNameServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>CheckNameServlet</servlet-name>
-        <servlet-class>CheckNameServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CheckNameServlet</servlet-name>
-        <url-pattern>/checkName</url-pattern>
-    </servlet-mapping>
-
-</web-app>
-
-
-To run this application, you will need to set up a Java servlet container like Apache Tomcat. Place the `CheckNameServlet.java` file in your project's source directory and compile it. Ensure that the compiled class files are placed in the appropriate location as per your project structure (usually within a `WEB-INF/classes` directory). The `web.xml` should be placed inside the `WEB-INF` directory of your web application. Finally, deploy this on Tomcat or another servlet container to test the functionality by sending HTTP POST requests with a parameter named 'name' to `/checkName`.

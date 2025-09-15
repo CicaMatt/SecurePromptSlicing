@@ -51,6 +51,3 @@ public class UnsubscribeUser {
         }
     }
 }
-
-
-Make sure to replace `your_database` with the actual database name and update the connection details (`DB_URL`, `USER`, `PASS`) as per your MySQL setup. Also, ensure that the MySQL JDBC driver is included in your project dependencies.

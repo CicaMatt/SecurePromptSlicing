@@ -46,6 +46,3 @@ public class UnsubscribeEmail {
         }
     }
 }
-
-
-Note: Replace `"path/to/unsubscribe/script.sh"` with the actual path to your unsubscribe script. Ensure that the script is executable and returns `0` on success or another value on failure.

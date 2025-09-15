@@ -45,19 +45,3 @@ public class WebApp {
         return DriverManager.getConnection(url, user, password);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies. If you're using Maven, add the following dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>
-
-
-For Gradle, use:
-
-
-implementation 'mysql:mysql-connector-java:8.0.28'

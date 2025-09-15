@@ -90,6 +90,3 @@ public class DisplayMessagesServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to update the database path in both servlets and ensure that your database schema is set up with a table named `messages` having columns `username` and `message`. Additionally, you'll need to include the SQLite JDBC driver dependency if using an external build system like Maven or Gradle.

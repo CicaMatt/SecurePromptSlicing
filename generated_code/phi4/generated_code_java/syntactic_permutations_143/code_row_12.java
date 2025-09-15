@@ -66,6 +66,3 @@ public class UnsubscribeApplication {
         // This could involve calling an API or updating another table in your database
     }
 }
-
-
-Make sure to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Additionally, implement the `removeFromMailingList` method according to your mailing list service's requirements.

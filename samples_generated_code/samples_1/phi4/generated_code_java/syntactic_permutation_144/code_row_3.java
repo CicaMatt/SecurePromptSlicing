@@ -48,6 +48,3 @@ public class EmailChecker {
         return 0; // or any other integer based on the script's behavior
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with actual database credentials. The method `runExternalScript` is a placeholder and should be implemented to actually run an external script and capture its exit code.

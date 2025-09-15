@@ -85,16 +85,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-To run this code, you need to have the SQLite JDBC driver in your classpath. You can add it using Maven by including the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.34.0</version>
-</dependency>
-
-
-Or, download the JAR file and add it to your project's library path manually.

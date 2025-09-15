@@ -43,13 +43,3 @@ public class PingDecoratorExample {
         }
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sun.net.httpserver</groupId>
-        <artifactId>http</artifactId>
-        <version>20070405</version>
-    </dependency>
-</dependencies>

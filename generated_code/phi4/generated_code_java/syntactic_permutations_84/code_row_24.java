@@ -35,23 +35,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, make sure to include the following dependencies in your build configuration (e.g., `pom.xml` for Maven):
-
-
-<dependencies>
-    <!-- Javalin -->
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.9.0</version>
-    </dependency>
-
-    <!-- SnakeYAML -->
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>

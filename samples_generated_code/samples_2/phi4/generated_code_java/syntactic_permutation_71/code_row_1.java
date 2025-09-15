@@ -61,6 +61,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-To run this code, ensure you have a Java servlet container like Apache Tomcat installed and configured. Create the necessary directories and deploy your web application correctly.

@@ -84,22 +84,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- displayMessages.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Display Messages</title>
-</head>
-<body>
-<h2>Messages:</h2>
-<ul>
-    <% List<PostServlet.Message> messages = (List<PostServlet.Message>) request.getAttribute("messages");
-       for (PostServlet.Message msg : messages) { %>
-        <li><strong><%= msg.getUsername() %>:</strong> <%= msg.getMessage() %></li>
-    <% } %>
-</ul>
-</body>
-</html>

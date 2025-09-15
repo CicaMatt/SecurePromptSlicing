@@ -57,16 +57,3 @@ public class AdminPageServlet extends HttpServlet {
         resp.getWriter().write("<html><body>Welcome to the admin page!</body></html>");
     }
 }
-
-
-
-<!-- web.xml configuration -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-</web-app>
-
-
-Note: Ensure you have the necessary servlet API and server setup, such as using Apache Tomcat or similar, to run this code.

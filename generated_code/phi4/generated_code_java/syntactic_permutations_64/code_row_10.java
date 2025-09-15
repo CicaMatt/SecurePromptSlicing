@@ -38,18 +38,3 @@ public class PdfUploader {
         }
     }
 }
-
-
-Note: Make sure you have the MySQL JDBC Driver in your classpath. You can add it via Maven or download the JAR file and include it manually.
-
-For Maven, add this dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>
-
-
-Replace `your_database`, `your_username`, and `your_password` with your actual database details, and ensure the table `pdf_files` exists in your database schema with a column `file_path`.

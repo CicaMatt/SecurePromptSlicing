@@ -71,6 +71,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-This Java Servlet code requires a MySQL database running locally with a database named `webapp` and a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR). The JDBC driver for MySQL must be in the classpath. Adjust the database credentials as needed.

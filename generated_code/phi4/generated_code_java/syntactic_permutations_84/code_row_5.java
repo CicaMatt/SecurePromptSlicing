@@ -57,13 +57,3 @@ public class PayloadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you will need to set up a servlet container like Apache Tomcat and include the `jackson-dataformat-yaml` library in your project's dependencies. Here is an example Maven dependency:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-yaml</artifactId>
-    <version>2.15.0</version>
-</dependency>

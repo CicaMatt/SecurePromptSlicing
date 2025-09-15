@@ -37,6 +37,3 @@ public class FileUploader {
         }
     }
 }
-
-
-Note: Make sure your web server is configured to handle file uploads at the specified endpoint (`/upload`) and that it is running on `localhost` with port `8080`. Adjust the `filePath` variable accordingly to point to your PDF file.

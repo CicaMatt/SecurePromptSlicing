@@ -52,6 +52,3 @@ public class ImageServer {
         }
     }
 }
-
-
-Ensure you have a directory named `images` in the same location as your Java program, containing the image files you wish to serve.

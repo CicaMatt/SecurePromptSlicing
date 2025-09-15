@@ -27,16 +27,3 @@ public class Main {
         return env.render(new ModelAndView(model, "index"));
     }
 }
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-<h1>Hello, <span th:text="${name}">World</span>!</h1>
-</body>
-</html>
-
-<!-- Place the above HTML in src/main/resources/templates/index.html -->

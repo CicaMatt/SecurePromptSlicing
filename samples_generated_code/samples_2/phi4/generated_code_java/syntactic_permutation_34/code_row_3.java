@@ -67,45 +67,13 @@ public class DashboardServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-<form action="LoginServlet" method="post">
-    Username: <input type="text" name="username"><br><br>
-    Password: <input type="password" name="password"><br><br>
-    <input type="submit" value="Login">
-</form>
-
-<% if (request.getParameter("error") != null) { %>
-<p style="color:red;"><%= request.getParameter("error") %></p>
-<% } %>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Dashboard</title>
-</head>
-<body>
-<h1>Welcome to your Dashboard!</h1>
-<a href="LogoutServlet">Logout</a>
-</body>
-</html>
+
+
+
+
 
 
 
@@ -126,6 +94,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-**Note:** Ensure you replace `"jdbc:mysql://localhost:3306/your_database_name"`, `"root"`, and `"your_password"` with your actual database URL, username, and password. Also, ensure the `users` table in your database has columns for `username` and `password`.

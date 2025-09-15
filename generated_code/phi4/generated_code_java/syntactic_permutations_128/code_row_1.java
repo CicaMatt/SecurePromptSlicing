@@ -77,6 +77,3 @@ public class HttpServer {
         }
     }
 }
-
-
-This code sets up a basic HTTP server that listens on port 8080. It reads the request from the client, parses it for the username from the query string, constructs a "hello [username]" message, and sends this response back to the client. The server handles one connection at a time in a blocking manner for simplicity.

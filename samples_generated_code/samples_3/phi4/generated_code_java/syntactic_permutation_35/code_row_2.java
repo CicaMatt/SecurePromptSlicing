@@ -46,43 +46,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-    <p>Hello, <%= request.getSession().getAttribute("username") %></p>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -101,6 +69,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-**Note:** Replace `yourDatabase`, `yourDBUser`, and `yourDBPassword` with your actual database name, user, and password. Also, ensure that you have a table named `users` with columns `username` and `password`.

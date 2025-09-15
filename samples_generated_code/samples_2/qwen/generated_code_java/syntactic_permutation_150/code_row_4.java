@@ -44,19 +44,3 @@ public class MessageServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-/* web.xml configuration
-<web-app>
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
-    </servlet-mapping>
-    <welcome-file-list>
-        <welcome-file></welcome-file>
-    </welcome-file-list>
-</web-app>
-*/

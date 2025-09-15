@@ -69,28 +69,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have the Jetty server and Servlet API dependencies in your project's classpath.
-2. Save the code to a file, for example `FileUploadServer.java`.
-3. Compile it with `javac FileUploadServer.java`.
-4. Run the compiled class with `java FileUploadServer`.
-
-Make sure you have an HTML form that matches this servlet path and uses `POST` method with `enctype="multipart/form-data"` to allow file uploads:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-<form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <button type="submit">Upload</button>
-</form>
-</body>
-</html>

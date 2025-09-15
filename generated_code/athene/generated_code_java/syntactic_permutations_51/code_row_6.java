@@ -40,16 +40,3 @@ public class TarFileHandler {
         }
     }
 }
-
-
-Note: The `TarArchiveInputStream` class is part of the Apache Commons Compress library, which needs to be included in your project. Add the following dependency to your Maven `pom.xml`:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-If you are not using a build tool, download the JAR from the Apache Commons Compress site and add it to your classpath.

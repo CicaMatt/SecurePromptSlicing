@@ -46,15 +46,3 @@ public class TarExtractor {
         }
     }
 }
-
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
-// Add this dependency to your pom.xml if you are using Maven
-/*
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-*/

@@ -36,6 +36,3 @@ public class PingServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to include this servlet in a web application and deploy it using an appropriate server like Apache Tomcat. Adjust the `url` variable as needed.

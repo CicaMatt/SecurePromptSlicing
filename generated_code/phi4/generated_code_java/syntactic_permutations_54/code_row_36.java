@@ -44,6 +44,3 @@ public class LoginServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-To run this code, you will need to set up a web application environment using a servlet container like Apache Tomcat. You also need to create `adminPage.jsp` or modify the redirection URL accordingly. The example assumes a simple hardcoded check for admin credentials. In a real-world scenario, replace it with an actual user management system.

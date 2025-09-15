@@ -57,16 +57,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_db_user"`, and `"your_db_password"` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's dependencies. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-If you are not using Maven, download the JDBC driver from the MySQL website and add it to your project's build path.

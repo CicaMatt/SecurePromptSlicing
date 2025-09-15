@@ -28,16 +28,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, make sure you have the Javalin library added to your project. You can add it via Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-Or download the JAR from [Maven Central](https://mvnrepository.com/artifact/io.javalin/javalin) and include it in your classpath.

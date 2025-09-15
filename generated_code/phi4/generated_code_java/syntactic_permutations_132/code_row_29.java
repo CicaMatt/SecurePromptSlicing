@@ -48,15 +48,6 @@ public class HttpServerExample {
 Ensure you have a file named `hello.html` in the same directory as this Java program, containing content like:
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
 
 
 This code sets up a simple HTTP server that listens for requests on port 8000. When someone visits `/hello/<username>`, it replaces `${username}` in `hello.html` with the actual username and sends it back as an HTTP response.

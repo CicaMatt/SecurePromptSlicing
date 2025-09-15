@@ -33,12 +33,3 @@ public class StockApp {
         app.buy_stock("AAPL", 10);
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>

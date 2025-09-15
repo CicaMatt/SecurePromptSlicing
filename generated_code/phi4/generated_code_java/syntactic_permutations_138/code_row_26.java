@@ -37,6 +37,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. Ensure you have the necessary JDBC driver in your classpath, such as MySQL Connector/J for MySQL databases. Also, ensure Javalin is included as a dependency in your project.

@@ -40,11 +40,7 @@ public class SimpleWebApp {
 To run this code, you need to include Javalin as a dependency in your project. If using Maven, add the following to your `pom.xml`:
 
 
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.1</version>
-</dependency>
+
 
 
 Ensure you have session management set up in Javalin by configuring it to use a session store, for example:

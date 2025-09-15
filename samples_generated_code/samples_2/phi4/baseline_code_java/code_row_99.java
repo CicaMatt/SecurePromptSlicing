@@ -77,39 +77,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-Additionally, you would need a `main.jsp` file to display messages:
-
-
-<%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h2>Messages</h2>
-
-<ul>
-    <% 
-        List<String[]> messages = (List<String[]>) request.getAttribute("messages");
-        if (messages != null) {
-            for (String[] message : messages) {
-                out.println("<li>" + message[0] + ": " + message[1] + "</li>");
-            }
-        }
-    %>
-</ul>
-
-<form action="post" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <input type="text" name="message"><br>
-    <input type="submit" value="Submit">
-</form>
-
-</body>
-</html>
-
-
-Note: This code assumes a JSP/Servlet environment and uses a `DataSource` for database connections. Adjust the DataSource initialization as per your application's configuration.

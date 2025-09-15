@@ -52,6 +52,3 @@ public class SimpleLoginApp {
         // Logic to redirect back to the login page
     }
 }
-
-
-This Java program simulates a simple login mechanism by checking user credentials against a MySQL database named `login_db` with a table called `users`. Ensure you have the MySQL JDBC driver in your classpath and replace `DB_URL`, `USER`, and `PASS` with actual values for your setup.

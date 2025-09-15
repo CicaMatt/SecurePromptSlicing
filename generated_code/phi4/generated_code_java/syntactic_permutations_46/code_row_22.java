@@ -48,6 +48,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-This code uses a Java Servlet to serve images. It assumes that the image files are located in a directory named `images` at the root of your web application's context path. Make sure to deploy this servlet correctly within a Java EE or Jakarta EE compatible server such as Apache Tomcat, and ensure that the `/images/` directory exists under your web application's deployment directory with appropriate read permissions for the server process. Adjust MIME type in `@Produces("image/*")` based on specific image formats you're serving (e.g., "image/jpeg", "image/png").

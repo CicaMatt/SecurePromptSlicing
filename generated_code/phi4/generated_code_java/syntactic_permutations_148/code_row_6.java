@@ -57,9 +57,3 @@ public class DisplayMessagesServlet extends HttpServlet {
         };
     }
 }
-
-
-In this code:
-- `MessageServlet` handles the POST request to submit a message.
-- `insert_user_message_in_db()` is a placeholder function that simulates inserting into a database.
-- `DisplayMessagesServlet` fetches and displays messages. It forwards requests to a JSP page (`display.jsp`) which you'd need to implement separately for displaying messages.

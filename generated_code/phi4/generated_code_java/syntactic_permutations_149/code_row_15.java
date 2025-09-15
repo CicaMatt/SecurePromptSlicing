@@ -53,19 +53,3 @@ public class Main {
         messages.add(new UserMessage(username, message));
     }
 }
-
-
-Make sure to add Javalin as a dependency in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.9.0</version>
-</dependency>
-
-
-Or add it to your `build.gradle` file if you're using Gradle:
-
-
-implementation 'io.javalin:javalin:4.9.0'

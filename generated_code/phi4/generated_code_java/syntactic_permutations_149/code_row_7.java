@@ -46,12 +46,3 @@ public class App {
         ctx.result(response.toString());
     }
 }
-
-
-Make sure you have Javalin in your dependencies, for example using Maven:
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.3.0</version>
-</dependency>

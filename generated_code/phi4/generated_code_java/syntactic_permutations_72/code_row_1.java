@@ -40,24 +40,3 @@ public class FileUploader {
         }
     }
 }
-
-
-**Dependencies:**
-
-Add the following to your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>1.4</version>
-</dependency>
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-
-If you are not using Maven, download the JAR files for `commons-fileupload` and `javax.servlet-api` from their respective repositories or Maven Central.

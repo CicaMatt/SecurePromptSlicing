@@ -54,11 +54,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you have the following:
-
-1. A MySQL database with a table `users` that includes columns `username` and `password`.
-2. A JSP file named `success.jsp`.
-3. A JSP file named `cant_login.jsp`.
-4. Include the necessary JDBC driver in your classpath (e.g., `mysql-connector-java.jar`).

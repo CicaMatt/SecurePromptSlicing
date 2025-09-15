@@ -32,6 +32,3 @@ public class PingDecorator {
         }
     }
 }
-
-
-**Note:** The `ping` command and its options (`-c 4`) are specific to Unix-like systems. For Windows, you might use `"ping", "-n", "4"` instead. Adjust the target address in the `command` array as necessary for your use case.

@@ -40,6 +40,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Note:** Before running the code, ensure you have the MySQL JDBC driver in your classpath and a database named `your_database` with a table `users` that has columns `username` and `password`. Also, include Spring Security's BCrypt library in your project dependencies.

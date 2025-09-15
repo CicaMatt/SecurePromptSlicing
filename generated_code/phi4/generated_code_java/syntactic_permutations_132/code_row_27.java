@@ -34,28 +34,3 @@ public class Main {
         }
     }
 }
-
-
-Make sure you have a `hello.html` file in the same directory with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>
-
-
-Additionally, add the following dependency to your `pom.xml` for Spark framework:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>

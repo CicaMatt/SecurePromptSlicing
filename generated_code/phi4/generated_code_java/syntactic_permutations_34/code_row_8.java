@@ -57,6 +57,3 @@ public class SimpleLoginSystem {
         // Logic for redirecting back to the login page
     }
 }
-
-
-Ensure you have an H2 database set up with a table named `users` containing columns `username` and `password`. You can run this code in your Java environment, making sure you have the H2 JDBC driver available.

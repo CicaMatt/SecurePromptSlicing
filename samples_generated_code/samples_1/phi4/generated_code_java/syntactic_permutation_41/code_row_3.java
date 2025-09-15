@@ -28,21 +28,3 @@ public class InfoApp {
         ctx.result(responseHtml);
     }
 }
-
-
-To run this application, you need to include the Javalin dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.2</version>
-</dependency>
-
-
-Or add it to your `build.gradle` if using Gradle:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.9.2'
-}

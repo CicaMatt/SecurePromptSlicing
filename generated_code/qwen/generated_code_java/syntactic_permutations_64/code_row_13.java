@@ -53,11 +53,3 @@ public class PDFUploader {
         }
     }
 }
-
-
-
--- SQL script to create the pdf_files table
-CREATE TABLE IF NOT EXISTS pdf_files (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    file_path VARCHAR(255) NOT NULL
-);

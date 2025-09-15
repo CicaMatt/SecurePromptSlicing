@@ -57,16 +57,3 @@ public class RegistrationServlet extends HttpServlet {
         return DriverManager.getConnection(url, user, password);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that the BCrypt library is included in your project dependencies. You can add it using Maven by adding:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-To your `pom.xml` file if you are using Maven, or download the JAR and include it in your project classpath otherwise.

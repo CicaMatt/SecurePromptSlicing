@@ -58,6 +58,3 @@ public class BuyStockServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-Note: Replace `"yourDatabaseName"`, `"yourUsername"`, and `"yourPassword"` with your actual database name, username, and password. Also, ensure that the `buy_orders` table exists in your database schema with appropriate columns (`username`, `stock_name`, `stock_quantity`).

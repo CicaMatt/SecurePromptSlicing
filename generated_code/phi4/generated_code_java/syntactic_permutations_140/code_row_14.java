@@ -36,6 +36,3 @@ public class DatabaseCheck {
         System.out.println("Exists: " + exists);
     }
 }
-
-
-Replace `your_database_name`, `your_username`, `your_password`, and `your_table_name` with your actual database details. Also, ensure that the JDBC driver for MySQL is included in your project dependencies.

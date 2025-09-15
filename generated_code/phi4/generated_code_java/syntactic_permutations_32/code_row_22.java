@@ -29,26 +29,3 @@ class RedirectController {
     }
 
 }
-
-
-
-<!-- src/main/resources/templates/error.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Error</title>
-</head>
-<body>
-    <h1>Error</h1>
-    <p th:text="${message}">Error message goes here.</p>
-</body>
-</html>
-
-
-
-# src/main/resources/application.properties
-spring.thymeleaf.prefix=classpath:/templates/
-spring.thymeleaf.suffix=.html
-spring.mvc.view.prefix=/WEB-INF/views/
-spring.mvc.view.suffix=.jsp

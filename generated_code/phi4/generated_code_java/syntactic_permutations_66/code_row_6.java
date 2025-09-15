@@ -60,29 +60,3 @@ public class PdfUploader {
         }
     }
 }
-
-
-**Instructions for running this code:**
-
-1. Ensure you have Apache PDFBox library available in your project. You can add it via Maven by including:
-
-
-<dependency>
-    <groupId>org.apache.pdfbox</groupId>
-    <artifactId>pdfbox</artifactId>
-    <version>2.0.24</version>
-</dependency>
-
-
-Or download the JAR from https://pdfbox.apache.org/download.cgi and include it in your project's classpath.
-
-2. Compile the Java code using:
-
-
-javac PdfUploader.java
-
-
-3. Run the compiled Java program with a path to an existing PDF file as an argument:
-
-
-java PdfUploader /path/to/your/file.pdf

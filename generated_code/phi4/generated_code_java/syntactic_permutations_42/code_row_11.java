@@ -26,21 +26,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-Make sure to include the following dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.9.1</version>
-    </dependency>
-</dependencies>
-
-
-Or, if you are using Gradle, include this in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.9.1'

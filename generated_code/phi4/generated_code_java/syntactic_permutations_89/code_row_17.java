@@ -58,13 +58,3 @@ public class ProductPriceApp {
         return unitPrice * quantity;
     }
 }
-
-
-Make sure to include the Javalin dependency in your `pom.xml` or build script:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>

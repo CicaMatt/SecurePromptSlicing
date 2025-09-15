@@ -76,6 +76,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-**Note:** Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that the `users` table exists in your database with appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`). You will also need to include the BCrypt library in your project dependencies for password hashing.

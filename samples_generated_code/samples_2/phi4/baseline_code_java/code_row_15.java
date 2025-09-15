@@ -110,6 +110,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-**Note:** You need to have the MySQL JDBC driver in your classpath. Adjust the database URL, username, and password as per your configuration. Also, ensure that the table `temperature_data` and column `temperature` exist in your MySQL database with appropriate data types.

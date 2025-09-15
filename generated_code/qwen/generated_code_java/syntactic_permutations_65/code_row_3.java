@@ -65,21 +65,3 @@ public class FileUploadServlet extends HttpServlet {
         tomcat.getServer().await();
     }
 }
-
-
-
-<!-- src/main/webapp/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-    <h2>Upload PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="application/pdf" required/>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

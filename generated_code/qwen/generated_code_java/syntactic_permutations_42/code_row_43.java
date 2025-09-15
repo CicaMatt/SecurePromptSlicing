@@ -17,12 +17,3 @@ public class SimpleWebApp {
         return "Username: " + username + ", Email: " + email + ", SSN: " + ssn;
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>

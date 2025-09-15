@@ -46,18 +46,3 @@ public class InfoServlet extends HttpServlet {
         response.getWriter().write(info);
     }
 }
-
-
-To run this code, you'll need to include the Jetty library in your project dependencies. If using Maven, add:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

@@ -45,6 +45,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Make sure the images folder (`/images`) is correctly placed relative to your web application directory, and ensure that you have configured your servlet container properly.

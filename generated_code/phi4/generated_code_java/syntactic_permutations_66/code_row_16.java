@@ -46,20 +46,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-Ensure that you have the necessary servlet and multipart dependencies in your project. If using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>apache-jsp</artifactId>
-    <version>9.4.44.v20210927</version>
-</dependency>

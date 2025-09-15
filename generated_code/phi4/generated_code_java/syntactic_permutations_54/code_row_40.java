@@ -89,16 +89,3 @@ public class DoLoginServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Page</title>
-</head>
-<body>
-    <h1>Welcome, Admin!</h1>
-</body>
-</html>

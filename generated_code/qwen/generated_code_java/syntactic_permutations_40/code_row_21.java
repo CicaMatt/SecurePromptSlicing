@@ -53,28 +53,3 @@ public class SetSessionServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>InfoServlet</servlet-name>
-        <servlet-class>InfoServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>InfoServlet</servlet-name>
-        <url-pattern>/info</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>SetSessionServlet</servlet-name>
-        <servlet-class>SetSessionServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SetSessionServlet</servlet-name>
-        <url-pattern>/setSession</url-pattern>
-    </servlet-mapping>
-</web-app>

@@ -94,16 +94,3 @@ public class SimpleHttpServer {
         }
     }
 }
-
-
-Make sure to have the H2 database driver in your classpath. You can download it from [H2 Database Downloads](https://h2database.com/html/download.html) or include it via Maven/Gradle if you are using a build tool. Also, create the `messages` table in the H2 database beforehand:
-
-
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255),
-    message TEXT
-);
-
-
-This code sets up a simple HTTP server that handles POST requests to `/post`, inserts the message into an H2 database, and redirects back to the root path. The root path displays all messages stored in the database.

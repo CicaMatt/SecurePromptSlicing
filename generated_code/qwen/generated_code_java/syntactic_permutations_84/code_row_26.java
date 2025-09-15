@@ -61,12 +61,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if using Maven -->
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>

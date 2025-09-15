@@ -78,33 +78,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <% String error = request.getParameter("error"); %>
-    <% if (error != null) { %>
-        <p style="color:red;">Invalid username or password.</p>
-    <% } %>
-    <form method="post" action="login">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>

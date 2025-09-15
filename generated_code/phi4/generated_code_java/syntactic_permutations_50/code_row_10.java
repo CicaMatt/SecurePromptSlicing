@@ -59,6 +59,3 @@ public class ExtractZipToTar {
         }
     }
 }
-
-
-This code snippet is designed to extract a `.zip` file that contains a gzipped tar archive (`archive.zip`) into the `/tmp/unpack` directory. It uses Apache Commons Compress library for handling compressed files, which you will need to include in your project's dependencies (e.g., via Maven or Gradle) for this code to run successfully.

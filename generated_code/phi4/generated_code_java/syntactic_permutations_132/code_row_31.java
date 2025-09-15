@@ -58,16 +58,6 @@ public class Main {
 Save this code in a file named `Main.java` and ensure there is an accompanying HTML template file named `hello.html`. The `hello.html` should contain the placeholder `{username}`, like so:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>
 
 
 This setup will start a server on port 8000 and handle requests to `/hello/<username>`, replacing `{username}` in the `hello.html` template with the actual username provided in the URL.

@@ -102,6 +102,3 @@ public class PostMessageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"yourDatabaseName"`, `"yourUsername"`, and `"yourPassword"` with your actual database details. Additionally, you will need a MySQL JDBC driver in your classpath for this code to run successfully.

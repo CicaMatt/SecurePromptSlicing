@@ -24,11 +24,3 @@ public class CheckNameServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-To make this code runnable in a web application environment like Apache Tomcat:
-
-1. Create a new dynamic web project in your IDE (e.g., Eclipse, IntelliJ).
-2. Add the above servlet class to `src/main/java` folder.
-3. Ensure you have a `web.xml` configuration file or use annotations as shown for servlet mapping.
-4. Deploy the application to a suitable Java EE server like Apache Tomcat.

@@ -56,6 +56,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Note: Ensure the MySQL JDBC driver is included in your project's classpath. Also, create a database `registration_db` and table `users` with columns `username`, `password_hash`, and `salt`. Adjust the database URL, username, and password as needed for your environment.

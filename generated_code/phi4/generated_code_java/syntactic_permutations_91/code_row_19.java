@@ -44,6 +44,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also ensure the `users` table is created in your database as needed. You need Apache Commons Codec library for hashing; include it in your project dependencies.

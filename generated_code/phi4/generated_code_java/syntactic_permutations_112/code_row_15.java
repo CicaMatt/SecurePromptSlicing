@@ -40,6 +40,3 @@ public class CommandExecutorServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure to configure your web server (like Apache Tomcat) and add the necessary servlet API dependency if you are using a build tool like Maven or Gradle.

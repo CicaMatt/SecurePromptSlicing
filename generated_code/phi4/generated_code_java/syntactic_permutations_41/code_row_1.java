@@ -28,16 +28,3 @@ public class InfoApp {
         ctx.result(response);
     }
 }
-
-
-Note: You need to include the Javalin library in your project's dependencies. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-If you're not using a build tool like Maven or Gradle, make sure to download and include the Javalin jar in your project's classpath manually.

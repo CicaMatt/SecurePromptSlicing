@@ -56,20 +56,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- Add this to your web.xml if not using annotations -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>TemperatureServlet</servlet-name>
-        <servlet-class>TemperatureServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TemperatureServlet</servlet-name>
-        <url-pattern>/api/temperature_for_location</url-pattern>
-    </servlet-mapping>
-</web-app>

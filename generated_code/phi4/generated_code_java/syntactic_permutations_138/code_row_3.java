@@ -52,6 +52,3 @@ public class WebApp {
                 });
     }
 }
-
-
-Make sure to replace `"your_database_name"`, `"your_username"`, and `"your_password"` with actual values for your PostgreSQL database. Also, ensure the `users` table exists in your database with at least a `username` column and a `role` column.

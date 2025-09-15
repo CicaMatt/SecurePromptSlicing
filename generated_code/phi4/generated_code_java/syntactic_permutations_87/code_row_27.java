@@ -61,6 +61,3 @@ public class Main {
         return Double.NaN; // Return NaN to indicate temperature not found
     }
 }
-
-
-Make sure to replace `"jdbc:your_database_url"`, `"your_db_user"`, and `"your_db_password"` with your actual database connection details. Additionally, ensure that the `temperatures` table in your database has columns for `latitude`, `longitude`, `date`, and `temperature`.

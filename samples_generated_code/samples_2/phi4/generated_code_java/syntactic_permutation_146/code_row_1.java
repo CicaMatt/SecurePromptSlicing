@@ -44,6 +44,3 @@ public class StockBuyOrder {
         System.out.println("Redirecting to profile page...");
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_db_user`, and `your_db_password` with your actual database details. This code assumes you have a table named `buy_orders` with columns `stock_name` (VARCHAR) and `quantity` (INT). For redirection, typically server-side logic is used in web applications, but here it's simulated with a print statement.

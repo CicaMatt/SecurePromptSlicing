@@ -56,6 +56,3 @@ public class ImageServer {
         }
     }
 }
-
-
-Make sure to place your image files in the same directory as `ImageServer.class` or adjust the path accordingly. The server will be listening on port 8000.

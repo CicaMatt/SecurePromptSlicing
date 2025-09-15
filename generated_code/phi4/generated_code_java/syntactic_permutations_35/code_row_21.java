@@ -64,6 +64,3 @@ public class LoginServlet extends HttpServlet {
         return false; // User not found
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's dependencies. The `home.jsp` should be a valid JSP file representing the home page after successful login.

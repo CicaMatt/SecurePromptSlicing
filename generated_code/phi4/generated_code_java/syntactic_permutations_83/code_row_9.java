@@ -60,6 +60,3 @@ public class WebApplication {
         }
     }
 }
-
-
-To run the code, you need to have Java installed on your machine and include `com.sun.net.httpserver.HttpServer` which is part of the standard library in JDK. You can compile it using `javac WebApplication.java` and run it with `java WebApplication`. Then access the server at `http://localhost:8000/` using a tool like Postman or curl to send POST requests.

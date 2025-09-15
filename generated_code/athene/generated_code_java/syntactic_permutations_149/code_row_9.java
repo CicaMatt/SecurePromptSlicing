@@ -60,25 +60,3 @@ public class HomeServlet extends HttpServlet {
         return messages;
     }
 }
-
-
-
-<!-- /WEB-INF/views/home.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <form action="/post" method="post">
-        <input type="text" name="message" placeholder="Enter your message" required>
-        <button type="submit">Post Message</button>
-    </form>
-    <ul>
-        <% for (String message : (List<String>) request.getAttribute("messages")) { %>
-            <li><%= message %></li>
-        <% } %>
-    </ul>
-</body>
-</html>

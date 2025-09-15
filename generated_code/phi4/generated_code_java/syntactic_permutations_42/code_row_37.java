@@ -64,13 +64,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-Make sure to include the Javalin dependency in your `pom.xml` file:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.0</version>
-</dependency>

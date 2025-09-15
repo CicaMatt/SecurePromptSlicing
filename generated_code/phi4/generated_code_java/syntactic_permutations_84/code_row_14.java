@@ -38,33 +38,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, ensure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.6.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.0</version>
-    </dependency>
-</dependencies>
-
-
-Or in your `build.gradle` if using Gradle:
-
-
-implementation 'io.javalin:javalin:5.6.0'
-implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-implementation 'org.yaml:snakeyaml:2.0'

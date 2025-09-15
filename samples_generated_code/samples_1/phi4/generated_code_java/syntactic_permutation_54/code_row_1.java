@@ -56,6 +56,3 @@ public class AdminPageServlet extends HttpServlet {
     }
 
 }
-
-
-Please note that this code is an example and uses hardcoded credentials for demonstration purposes. In a real-world application, you should never store passwords in plain text or hardcode them into your application. Use appropriate security measures such as hashing and salting passwords, secure storage mechanisms (like databases with encryption), and authentication frameworks or libraries to handle user authentication securely.

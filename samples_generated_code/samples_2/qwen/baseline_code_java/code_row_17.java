@@ -19,22 +19,3 @@ public class UserInfoServlet extends HttpServlet {
         response.getWriter().write(String.format("Username: %s\nEmail: %s\nSSN: %s", username, email, ssn));
     }
 }
-
-
-
-<!-- web.xml if not using annotations -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-
-    <servlet>
-        <servlet-name>UserInfoServlet</servlet-name>
-        <servlet-class>UserInfoServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>UserInfoServlet</servlet-name>
-        <url-pattern>/info</url-pattern>
-    </servlet-mapping>
-</web-app>

@@ -45,19 +45,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-Note: To run this code, you will need the Jetty library in your classpath. You can include it via Maven or download the JAR files directly from the [Jetty website](https://www.eclipse.org/jetty/). Here's a sample Maven dependency if using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.14</version>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.14</version>
-</dependency>

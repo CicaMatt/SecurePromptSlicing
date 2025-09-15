@@ -53,6 +53,3 @@ public class LoginApplication {
         // Logic to redirect back to the login page
     }
 }
-
-
-**Note:** Replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password. Ensure that MySQL JDBC Driver is included in your project's classpath.

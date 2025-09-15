@@ -59,6 +59,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/registration_db"`, `"root"`, and `"password"` with your actual database URL, user, and password. Also, ensure that the `users` table exists in your database with `username` and `password` columns.

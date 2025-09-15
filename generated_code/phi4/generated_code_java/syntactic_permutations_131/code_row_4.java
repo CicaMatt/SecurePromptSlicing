@@ -30,21 +30,3 @@ public class WebApp {
         return mustache.execute(new java.io.StringWriter(), Map.of("name", name)).toString();
     }
 }
-
-
-**Dependencies:**
-
-To run this code, you will need to include the `mustache.java` library. If using Maven, add the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.github.spullara.mustache.java</groupId>
-    <artifactId>compiler</artifactId>
-    <version>0.9.6</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-
-implementation 'com.github.spullara.mustache.java:compiler:0.9.6'

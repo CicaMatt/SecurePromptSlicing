@@ -37,6 +37,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-This code snippet should be included in a Java web application running on a servlet container like Apache Tomcat. Make sure to configure your `web.xml` or use annotations as shown to map the servlet correctly.

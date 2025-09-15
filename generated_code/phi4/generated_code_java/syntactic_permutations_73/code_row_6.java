@@ -35,13 +35,3 @@ public class PersonMemoryAllocator {
     }
     */
 }
-
-
-To compile and run this code:
-
-1. Save the Java part in a file named `PersonMemoryAllocator.java`.
-2. Compile the Java code using `javac PersonMemoryAllocator.java`.
-3. Implement the native method in C/C++ as shown in the comment block.
-4. Create a header file with `javah -jni PersonMemoryAllocator` (if needed for older JDK versions).
-5. Compile the C/C++ code into a shared library (e.g., `libPersonAllocator.so` on Linux or `PersonAllocator.dll` on Windows).
-6. Run the Java program using `java PersonMemoryAllocator`.

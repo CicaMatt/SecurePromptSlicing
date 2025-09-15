@@ -22,22 +22,3 @@ public class RedirectServlet extends HttpServlet {
         return url != null && url.contains(VALID_DOMAIN);
     }
 }
-
-
-
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-
-<web-app>
-    <display-name>RedirectApp</display-name>
-
-    <servlet>
-        <servlet-name>RedirectServlet</servlet-name>
-        <servlet-class>RedirectServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>RedirectServlet</servlet-name>
-        <url-pattern>/redirect</url-pattern>
-    </servlet-mapping>
-
-</web-app>

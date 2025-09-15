@@ -35,12 +35,3 @@ public class UnsubscribeForm {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven for MySQL JDBC driver dependency -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>

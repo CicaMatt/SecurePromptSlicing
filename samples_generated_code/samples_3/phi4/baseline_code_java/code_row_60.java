@@ -62,6 +62,3 @@ public class Registration {
         }
     }
 }
-
-
-Ensure you replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Also, ensure the table `users` exists in your database schema with appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`).

@@ -46,6 +46,3 @@ public class Registration {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. You must also have a MySQL JDBC driver in your classpath for this code to run successfully. Additionally, you need the jBCrypt library included in your project to hash passwords using BCrypt.

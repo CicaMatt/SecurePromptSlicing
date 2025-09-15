@@ -72,39 +72,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <c:forEach var="message" items="${messages}">
-        <li>${message}</li>
-    </c:forEach>
-</ul>
-
-<form action="/submitMessage" method="post">
-    Username:<br>
-    <input type="text" name="username"><br>
-    Message:<br>
-    <textarea name="message" rows="4" cols="50"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
-
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <welcome-file-list>
-        <welcome-file>/</welcome-file>
-    </welcome-file-list>
-</web-app>

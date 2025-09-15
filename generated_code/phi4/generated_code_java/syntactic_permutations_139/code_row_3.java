@@ -42,6 +42,3 @@ public class ModeratorCheck {
         return false;
     }
 }
-
-
-Note: Replace `"jdbc:mysql://localhost:3306/your_database_name"` with your actual database URL. Ensure the environment variables `DB_USERNAME` and `DB_PASSWORD` are set in your system or application runtime environment.

@@ -19,19 +19,3 @@ public class HelloWorldApp {
         return templateBuilder.toString();
     }
 }
-
-
-
-<!-- hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
-
-
-Note: The HTML part is provided for reference as per your request, but it won't be directly used in the Java code since we are building the response string manually. If you want to use an actual template engine like Thymeleaf or FreeMarker, additional setup would be required.

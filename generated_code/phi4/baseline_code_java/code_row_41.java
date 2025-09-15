@@ -32,23 +32,11 @@ class InfoController {
 
 
 
-<!-- src/main/resources/templates/info.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>User Information</title>
-</head>
-<body>
-    <h1>User Information</h1>
-    <p>Username: <span th:text="${username}"></span></p>
-    <p>Email: <span th:text="${email}"></span></p>
-    <p>Last 4 Digits of SSN: <span th:text="${ssnLast4Digits}"></span></p>
-</body>
-</html>
 
 
 
-<!-- build.gradle -->
+
+
 plugins {
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -63,21 +51,8 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+
 
 test {
     useJUnitPlatform()
 }
-
-
-
-# src/main/resources/application.properties
-spring.thymeleaf.prefix=classpath:/templates/
-spring.thymeleaf.suffix=.html
-spring.thymeleaf.mode=HTML
-spring.thymeleaf.encoding=UTF-8
-spring.resources.add-mappings=false

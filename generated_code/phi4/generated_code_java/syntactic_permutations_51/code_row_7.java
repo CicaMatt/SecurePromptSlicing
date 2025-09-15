@@ -44,16 +44,3 @@ public class TarUnpacker {
         }
     }
 }
-
-
-Make sure to include the `commons-compress` library in your project dependencies. You can add it using Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download and include the JAR file directly if you are not using a build tool like Maven or Gradle.

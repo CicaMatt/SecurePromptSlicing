@@ -39,9 +39,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-To run this code:
-1. Replace `your_database`, `your_username`, and `your_password` with your actual database details.
-2. Ensure the MySQL JDBC driver is included in your project dependencies, either by adding it to your build path or including it as a Maven/Gradle dependency.
-3. Make sure you have a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR).

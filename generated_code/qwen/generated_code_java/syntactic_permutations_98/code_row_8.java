@@ -85,6 +85,3 @@ public class RegistrationPage extends JFrame {
         new RegistrationPage().setVisible(true);
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `""` with your actual database URL, username, and password. Also, ensure that the MySQL JDBC driver is in your classpath for this code to run successfully.

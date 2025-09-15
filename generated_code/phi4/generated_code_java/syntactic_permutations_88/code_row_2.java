@@ -57,29 +57,3 @@ public class SimpleWebApi {
         }
     }
 }
-
-
-To run this code, ensure you have the Spark framework and SnakeYAML dependencies in your classpath or build configuration:
-
-
-<!-- In pom.xml for Maven -->
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.29</version>
-</dependency>
-
-
-Or, for Gradle:
-
-
-// In build.gradle
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'org.yaml:snakeyaml:1.29'
-}

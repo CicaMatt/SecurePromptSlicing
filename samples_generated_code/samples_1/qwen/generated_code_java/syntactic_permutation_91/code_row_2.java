@@ -50,16 +50,3 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- registrationSuccess.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Registration Successful</title>
-</head>
-<body>
-    <h2>Registration successful!</h2>
-</body>
-</html>

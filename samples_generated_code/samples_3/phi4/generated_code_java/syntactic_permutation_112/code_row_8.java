@@ -36,6 +36,3 @@ public class PingServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. Make sure to configure your web application's `web.xml` to map the `PingServlet` to the desired URL pattern. Also, ensure that the server has permissions to execute the `ping` command and that it is available in the system's PATH.

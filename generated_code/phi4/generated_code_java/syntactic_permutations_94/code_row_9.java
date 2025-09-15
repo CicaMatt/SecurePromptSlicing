@@ -35,6 +35,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-**Note**: Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Make sure to add the BCrypt library dependency in your project setup (e.g., via Maven or Gradle).

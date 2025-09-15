@@ -119,6 +119,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-Note: The `TarArchiveInputStream` and `TarArchiveEntry` classes are placeholders. You would need to implement the actual logic for parsing tar entries according to the tar file format specification.

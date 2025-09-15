@@ -41,6 +41,3 @@ public class TarFileExtractor {
         Files.copy(sourcePath, destPath.resolve("extracted-content.txt"));
     }
 }
-
-
-Note: This code simulates reading and writing a `.tar.gz` file using Java's built-in `GZIPOutputStream`. For actual tar file extraction, you would typically use an external library like Apache Commons Compress. The above code demonstrates the basic structure without relying on such libraries.

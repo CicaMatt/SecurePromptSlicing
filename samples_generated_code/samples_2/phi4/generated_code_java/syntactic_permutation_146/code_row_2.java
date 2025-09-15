@@ -50,6 +50,3 @@ public class BuyOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"your_database_name"`, `"your_db_username"`, and `"your_db_password"` with your actual database details. Additionally, ensure that the `profile.jsp` exists for redirection after a successful buy order insertion.

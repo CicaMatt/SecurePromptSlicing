@@ -23,6 +23,3 @@ public class RedirectHandler {
         System.out.println(handler.getRedirectUrl(targetUrl2));
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you intend to use.

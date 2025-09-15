@@ -87,6 +87,3 @@ public class SendMessageServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have a `DataSource` configured in your servlet context, and create the corresponding JSP page (`viewMessages.jsp`) to display messages.

@@ -31,6 +31,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(username) && "password123".equals(password) && "validSession".equals(session);
     }
 }
-
-
-Note: Ensure you have the necessary servlet environment set up to run this code, such as a compatible server (e.g., Apache Tomcat). The `auth_mod` function is implemented with placeholder logic; replace it with actual authentication checks.

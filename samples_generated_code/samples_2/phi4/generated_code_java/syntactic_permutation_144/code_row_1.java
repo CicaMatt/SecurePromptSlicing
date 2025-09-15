@@ -58,6 +58,3 @@ public class EmailHandler {
         return 0;
     }
 }
-
-
-Make sure to replace `your_database`, `username`, `password`, and `"path/to/unsubscribe_script.sh"` with your actual database name, username, password, and script path respectively. Also ensure that the MySQL JDBC driver is available in your classpath.

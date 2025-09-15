@@ -35,38 +35,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().write("File uploaded successfully: " + fileName);
     }
 }
-
-
-Make sure to have a web.xml configuration or use annotations for servlet mapping, and include the necessary dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>jakarta.servlet</groupId>
-        <artifactId>jakarta.servlet-api</artifactId>
-        <version>5.0.0</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-
-
-And a basic `web.xml` configuration might look like this:
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_5_0.xsd"
-         version="5.0">
-
-    <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>FileUploadServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-
-</web-app>

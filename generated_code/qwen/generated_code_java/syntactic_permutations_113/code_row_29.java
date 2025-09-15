@@ -36,5 +36,3 @@ public class PingDecorator {
         System.out.println(decorator.ping());
     }
 }
-
-import org.springframework.web.bind.annotation.RequestMapping;

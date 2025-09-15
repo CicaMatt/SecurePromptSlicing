@@ -68,6 +68,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"your_database_name"`, `"your_username"`, and `"your_password"` with your actual database details. Also, ensure that the `messages` table exists in your database schema with columns `username` and `message`.

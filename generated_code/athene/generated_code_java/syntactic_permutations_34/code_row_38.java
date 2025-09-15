@@ -39,37 +39,10 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<%@ page import="javax.servlet.http.HttpSession" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="Login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-    <% String error = (String) request.getAttribute("error");
-       if (error != null) { %>
-           <p><%= error %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome, <%= session.getAttribute("username") %>!</h1>
-    <a href="Logout">Logout</a>
-</body>
-</html>
+
 
 
 

@@ -64,7 +64,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-### Additional Setup
-Ensure you have a web application server like Apache Tomcat set up and configured. Also, make sure your `web.xml` (if necessary) or annotations are used properly for servlet mappings. The above code assumes the use of annotation-based configuration (`@WebServlet`). If you're using an older version of Servlet API, consider adjusting configurations in `web.xml`.

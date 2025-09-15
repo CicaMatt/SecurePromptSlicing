@@ -61,6 +61,3 @@ public class UnsubscribeService {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure you have the MySQL JDBC driver included in your project's classpath.

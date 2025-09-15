@@ -64,66 +64,18 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="LoginServlet" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color: red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard!</h2>
-    <p>Hello, <%= session.getAttribute("user") %></p>
-    <a href="logout.jsp">Logout</a>
-</body>
-</html>
+
+
 
 
 
 // logout.jsp (Java code for logging out)
-<%@ page import = "javax.servlet.http.HttpSession"%>
+
 <%
     HttpSession session = request.getSession(false);
     if(session != null){
         session.invalidate();
     }
-%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Logout</title>
-</head>
-<body>
-    <h2>You have been logged out successfully!</h2>
-    <a href="login.jsp">Login Again</a>
-</body>
-</html>
-
-
-**Note:** Replace `"yourdatabase"`, `"root"`, and `"password"` with your actual database name, username, and password respectively. Make sure you have the MySQL JDBC driver in your project's classpath.

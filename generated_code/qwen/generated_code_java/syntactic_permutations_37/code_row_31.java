@@ -43,36 +43,3 @@ public class LoginPageServlet extends HttpServlet {
         }
     }
 }
-
-// success.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Success</title>
-</head>
-<body>
-<h2>Login Successful!</h2>
-</body>
-</html>
-
-// cant_login.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Cant Login</title>
-</head>
-<body>
-<h2>Invalid username or password.</h2>
-</body>
-</html>
-
-// internal_server_error.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Internal Server Error</title>
-</head>
-<body>
-<h2>Internal Server Error occurred. Please try again later.</h2>
-</body>
-</html>

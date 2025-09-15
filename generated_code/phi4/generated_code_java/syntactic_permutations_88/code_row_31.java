@@ -38,19 +38,3 @@ public class PriceCalculator {
         }
     }
 }
-
-
-To run this code, you need to include the SnakeYAML library in your project. You can add it using Maven by including the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-Or, if you're using Gradle, add this to your `build.gradle`:
-
-
-implementation 'org.yaml:snakeyaml:1.33'

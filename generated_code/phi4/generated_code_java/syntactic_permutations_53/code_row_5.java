@@ -30,51 +30,14 @@ public class RedirectServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Please log in</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
-<!-- userPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Page</title>
-</head>
-<body>
-    <h2>Welcome to the User Page!</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
-<!-- adminPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Page</title>
-</head>
-<body>
-    <h2>Welcome to the Admin Page!</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
-<!-- loginServlet.jsp -->
-<%@ page import="javax.servlet.http.*, javax.servlet.*" %>
+
+
+
+
+
 <%
     String username = request.getParameter("username");
     String password = request.getParameter("password");
@@ -95,12 +58,10 @@ public class RedirectServlet extends HttpServlet {
     }
 %>
 
-<!-- logout.jsp -->
-<%@ page import="javax.servlet.http.*" %>
+
+
 <%
     HttpSession session = request.getSession(false);
     if (session != null) {
         session.invalidate();
     }
-    response.sendRedirect("login.jsp");
-%>

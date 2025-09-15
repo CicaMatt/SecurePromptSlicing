@@ -32,6 +32,3 @@ public class PingServlet extends HttpServlet {
         response.getWriter().write(output.toString()); // Return the ping result to browser
     }
 }
-
-
-This code defines a servlet `PingServlet` that listens for GET requests on `/ping`. When accessed, it pings the specified URL (`google.com`) using the system command and returns the output to the requester. Make sure your web application is properly configured in a Java EE container like Tomcat to run this servlet.

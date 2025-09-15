@@ -66,6 +66,3 @@ public class LoginApplication {
         // Logic for redirection would be implemented here
     }
 }
-
-
-Note: You need to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies.

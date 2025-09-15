@@ -77,6 +77,3 @@ public class PDFManager {
         }
     }
 }
-
-
-Make sure to replace `yourdatabase`, `yourusername`, and `yourpassword` with your actual MySQL database credentials. Also, ensure that the `pdf_files` table exists in your database with at least `id` (auto-increment primary key) and `file_path` columns.

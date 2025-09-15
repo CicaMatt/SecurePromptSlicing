@@ -27,25 +27,3 @@ public class PostServlet extends HttpServlet {
         System.out.println("Inserting into DB: Username - " + username + ", Message - " + message);
     }
 }
-
-// In mainPage.jsp or equivalent HTML/JSF file:
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <form action="post" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-*/

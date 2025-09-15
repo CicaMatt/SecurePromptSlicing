@@ -42,21 +42,3 @@ public class ModeratorCheck {
         return Optional.empty();
     }
 }
-
-
-Make sure to include the MySQL JDBC driver in your project dependencies. If you're using Maven, add this to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version> <!-- Use the appropriate version -->
-</dependency>
-
-
-For Gradle, include in your `build.gradle`:
-
-
-dependencies {
-    implementation 'mysql:mysql-connector-java:8.0.29' // Use the appropriate version
-}

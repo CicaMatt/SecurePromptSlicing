@@ -67,6 +67,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_username`, and `your_db_password` with your actual database name, username, and password. Make sure to have the MySQL JDBC driver in your classpath.

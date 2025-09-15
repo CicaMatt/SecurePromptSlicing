@@ -59,21 +59,3 @@ public class Main {
         }
     }
 }
-
-
-Create a file named `hello.html` in the same directory with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>
-
-
-This code sets up an HTTP server that listens on port 8080 and responds to the URL pattern `/hello/<username>` by rendering a template with the username included.

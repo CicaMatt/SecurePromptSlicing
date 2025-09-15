@@ -69,31 +69,3 @@ public class SubmitMessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- displayMessages.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Display Messages</title>
-</head>
-<body>
-<h2>Messages:</h2>
-<ul>
-    <% 
-        ArrayList<String> messages = (ArrayList<String>) request.getAttribute("messages");
-        for(String message : messages) {
-            out.println("<li>" + message + "</li>");
-        }
-    %>
-</ul>
-<a href="mainPage.jsp">Back to Main Page</a>
-</body>
-</html>
-
-
-Make sure you replace `yourDatabase`, `username`, and `password` with your actual database name, username, and password. Also ensure the table `messages` exists in your database schema with appropriate columns for `username` and `message`.

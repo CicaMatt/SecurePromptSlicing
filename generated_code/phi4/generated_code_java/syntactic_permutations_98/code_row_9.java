@@ -69,6 +69,3 @@ public class RegisterServlet extends HttpServlet {
         Class.forName("com.mysql.cj.jdbc.Driver");
     }
 }
-
-
-Ensure that you have the necessary MySQL JDBC driver in your classpath when running this code. Also, replace `your_database`, `your_username`, and `your_password` with actual database name, username, and password respectively.

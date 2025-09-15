@@ -74,6 +74,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to include the SQLite JDBC driver in your classpath. You can download it from [https://github.com/xerial/sqlite-jdbc](https://github.com/xerial/sqlite-jdbc) or use a dependency management tool like Maven or Gradle to manage dependencies.

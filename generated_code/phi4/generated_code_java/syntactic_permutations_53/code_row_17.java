@@ -28,6 +28,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This code defines a servlet that checks if the user is logged in and redirects them to appropriate pages based on their role. It assumes that the session attribute `user` indicates an authenticated user and `role` determines whether they are an admin. Adjust the paths (`login.jsp`, `admin.jsp`, `user.jsp`) as necessary for your project structure.

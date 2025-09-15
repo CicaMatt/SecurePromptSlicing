@@ -52,19 +52,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-**Note:** This code requires the `commons-compress` library to handle tar and gzip files. You can add it to your project by including the following dependency in your Maven `pom.xml`:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or, if you're using Gradle, add this to your `build.gradle`:
-
-
-implementation 'org.apache.commons:commons-compress:1.21'

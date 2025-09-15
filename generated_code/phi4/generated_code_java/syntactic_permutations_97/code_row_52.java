@@ -50,9 +50,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-**Note**: Before running this code, ensure you have:
-- MySQL JDBC Driver in your classpath.
-- A database named `your_database` with a table `users` having columns: `username`, `password`, `first_name`, `last_name`, and `email`.
-- Replace the `DB_URL`, `USER`, and `PASS` values with your actual database credentials.

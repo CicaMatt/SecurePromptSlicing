@@ -37,6 +37,3 @@ class TemperatureController {
         return Math.random() * 40;  // Random mock value between 0 and 40 degrees Celsius
     }
 }
-
-
-**Note**: To run this code, you need to have a Spring Boot environment set up. You can create a new project using Spring Initializr with dependencies for `Spring Web`. Then, replace the main application class content with the above code. This example assumes that the logic to find maximum temperature is abstracted in a placeholder method (`findMaxTemperature`) which should be replaced with actual data retrieval and computation logic based on your specific requirements and data sources.

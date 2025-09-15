@@ -37,6 +37,3 @@ public class StockApp {
         System.out.println("Executing buy function for: " + stockName);
     }
 }
-
-
-Make sure to replace `yourUsername` and `yourPassword` with your actual database credentials. Also, ensure that you have the MySQL JDBC driver in your classpath.

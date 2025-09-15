@@ -23,18 +23,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code:
-1. Ensure you have Java installed on your system.
-2. Add Javalin to your project dependencies. If using Maven, add the following to your `pom.xml`:
-
-   
-   <dependency>
-       <groupId>io.javalin</groupId>
-       <artifactId>javalin</artifactId>
-       <version>4.6.0</version>
-   </dependency>
-   
-
-3. Compile and run the Java file using your preferred method (e.g., `javac` and `java` commands, or through an IDE).

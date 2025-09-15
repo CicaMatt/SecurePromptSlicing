@@ -36,6 +36,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Note: Ensure you have `login.jsp`, `userPage.jsp`, and `adminPage.jsp` in your web application for this code to function correctly. The session attributes `"user"` and `"role"` should be set upon login with appropriate values (e.g., "username" for the user and "admin" or other roles).

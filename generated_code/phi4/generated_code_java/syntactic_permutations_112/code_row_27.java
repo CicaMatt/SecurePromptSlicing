@@ -42,6 +42,3 @@ public class PingServlet extends HttpServlet {
         return output.toString();
     }
 }
-
-
-Make sure to replace `"example.com"` with the URL you want to ping. The code is designed for a servlet environment, typically used in Java-based web applications like those using Apache Tomcat or similar servers.

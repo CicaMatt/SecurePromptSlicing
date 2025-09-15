@@ -47,10 +47,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To use this servlet:
-
-1. Place it in the appropriate package directory within your web application.
-2. Ensure there's a folder named `images` inside the `webapp/` directory of your project where images will be stored.
-3. Access the servlet via URL like: `http://<yourserver>/<context-root>/image?file=<filename>`, replacing `<yourserver>`, `<context-root>`, and `<filename>` with appropriate values.

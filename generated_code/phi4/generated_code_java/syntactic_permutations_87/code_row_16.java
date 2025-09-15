@@ -97,6 +97,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database connection details. Ensure that you have the necessary MySQL JDBC driver in your classpath.

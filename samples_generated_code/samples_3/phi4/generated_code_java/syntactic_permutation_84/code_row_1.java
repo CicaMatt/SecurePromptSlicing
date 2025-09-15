@@ -49,28 +49,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, you need to include the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.14.1</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.14.1</version>
-    </dependency>
-</dependencies>
-
-
-Make sure to have Java and Maven installed, then build and run the application using `mvn compile exec:java -Dexec.mainClass=SimpleWebApp`.

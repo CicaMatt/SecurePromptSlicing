@@ -33,6 +33,3 @@ public class SimpleHttpServer {
         System.out.println("Server is listening on port 8000");
     }
 }
-
-
-Make sure to include the `com.sun.net.httpserver.HttpServer` library in your classpath. This code sets up a basic HTTP server that listens for requests at `/hello`. It extracts the username from the query parameters and returns an HTML response greeting the user by name.

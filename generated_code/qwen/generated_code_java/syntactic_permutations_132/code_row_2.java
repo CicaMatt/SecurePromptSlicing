@@ -34,16 +34,3 @@ public class HelloWorld {
         return writer.toString();
     }
 }
-
-
-
-<!-- src/main/resources/hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>

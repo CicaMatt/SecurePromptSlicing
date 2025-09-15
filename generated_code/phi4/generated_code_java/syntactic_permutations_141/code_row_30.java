@@ -38,6 +38,3 @@ public class WebApp {
         return "myUsername";
     }
 }
-
-
-**Note**: Ensure that the MySQL JDBC driver is included in your project's dependencies. This can typically be done by adding it to your `pom.xml` file if you're using Maven, or manually including the JAR in your classpath.

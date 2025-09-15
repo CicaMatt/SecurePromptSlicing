@@ -60,16 +60,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Ensure you have MySQL JDBC driver in your classpath. If using Maven, add this dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database details. Also, ensure the `users` table exists in your database with appropriate columns (`username` and `password`).

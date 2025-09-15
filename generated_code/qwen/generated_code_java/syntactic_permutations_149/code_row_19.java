@@ -79,26 +79,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- WEB-INF/views/messages.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <% for (String message : (List<String>) request.getAttribute("messages")) { %>
-        <li><%= message %></li>
-    <% } %>
-</ul>
-<form action="/post" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <input type="text" name="message"><br>
-    <input type="submit" value="Post">
-</form>
-</body>
-</html>

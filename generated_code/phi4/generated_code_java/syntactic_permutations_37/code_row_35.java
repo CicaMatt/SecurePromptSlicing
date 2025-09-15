@@ -56,9 +56,3 @@ public class LoginServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-In this code:
-- Replace `yourDatabaseName` with the actual database name.
-- Replace `"root"` and `"yourPassword"` with your MySQL username and password. 
-- Ensure you have a table named `users` in your database containing columns `username` and `password`.

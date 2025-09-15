@@ -39,24 +39,3 @@ public class PriceCalculatorMicroservice {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you're using Maven -->
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.4</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.30</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.5</version>
-    </dependency>
-</dependencies>

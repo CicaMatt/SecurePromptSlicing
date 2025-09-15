@@ -53,6 +53,3 @@ public class TemperatureService {
         // For example, you could use Jersey or another JAX-RS implementation to start the server.
     }
 }
-
-
-Ensure you replace `DB_URL`, `USER`, and `PASS` with actual database connection details. Additionally, you'll need a running MySQL instance with a table named `temperatures` containing columns `latitude`, `longitude`, `date`, and `temperature`. You should also set up your server to handle JAX-RS requests using an appropriate framework like Jersey.

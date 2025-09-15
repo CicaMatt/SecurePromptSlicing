@@ -31,22 +31,3 @@ public class MessageServlet extends HttpServlet {
         System.out.println("Inserting into DB: " + "Username = " + username + ", Message = " + message);
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form action="post" method="POST">
-        Username: <input type="text" name="username"><br><br>
-        Message: <textarea name="message"></textarea><br><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

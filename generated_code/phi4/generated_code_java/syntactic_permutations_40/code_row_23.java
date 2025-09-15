@@ -33,6 +33,3 @@ public class InfoServlet extends HttpServlet {
         response.getWriter().write("</body></html>");
     }
 }
-
-
-This code assumes you have a servlet container like Apache Tomcat to run it. Make sure your session variables `username`, `email`, and `ssn` are set before accessing the `/info` route.

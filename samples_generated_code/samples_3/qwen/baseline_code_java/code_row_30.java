@@ -51,20 +51,3 @@ public class TemperatureForLocationServlet extends HttpServlet {
         return -999; // Return a default value or handle error appropriately
     }
 }
-
-
-
-<!-- Add this to your web.xml if not using annotations -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <servlet>
-        <servlet-name>TemperatureForLocationServlet</servlet-name>
-        <servlet-class>TemperatureForLocationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TemperatureForLocationServlet</servlet-name>
-        <url-pattern>/api/temperature_for_location</url-pattern>
-    </servlet-mapping>
-</web-app>

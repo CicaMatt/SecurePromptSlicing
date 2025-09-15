@@ -51,10 +51,3 @@ public class Main {
         });
     }
 }
-
-
-To run this application:
-1. Ensure you have Javalin and any necessary dependencies installed in your project.
-2. Compile the Java code.
-3. Run the compiled code, and then access `http://localhost:7000/login` to simulate a login and obtain a session ID.
-4. Use the obtained session ID as a cookie to visit `http://localhost:7000/info`.

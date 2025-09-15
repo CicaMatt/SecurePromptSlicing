@@ -24,11 +24,3 @@ public class SimpleScriptToDatabase {
         }
     }
 }
-
-
-
--- SQL to create the table in your MySQL database
-CREATE TABLE IF NOT EXISTS scripts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    content TEXT NOT NULL
-);

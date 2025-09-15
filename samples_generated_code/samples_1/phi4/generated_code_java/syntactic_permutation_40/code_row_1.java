@@ -35,6 +35,3 @@ public class InfoServlet extends HttpServlet {
         response.getWriter().write("</body></html>");
     }
 }
-
-
-To run this code, you must have a servlet container like Apache Tomcat. Create a web application and place the `InfoServlet` class in an appropriate package within the `WEB-INF/classes` directory. Ensure session attributes `username`, `email`, and `ssnLast4` are set before accessing `/info`.

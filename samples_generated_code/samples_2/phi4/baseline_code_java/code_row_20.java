@@ -70,39 +70,3 @@ public class ProductService {
         });
     }
 }
-
-
-**Dependencies:**
-
-- Javalin for the web framework.
-- SnakeYAML for parsing YAML.
-- Jackson Databind for JSON to YAML conversion.
-
-To run this code, include the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.9.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.14.1</version>
-    </dependency>
-</dependencies>
-
-
-Or, if you are using Gradle, include:
-
-
-implementation 'io.javalin:javalin:5.9.1'
-implementation 'org.yaml:snakeyaml:2.0'
-implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'

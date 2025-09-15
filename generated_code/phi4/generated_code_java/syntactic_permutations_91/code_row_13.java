@@ -60,11 +60,3 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 }
-
-
-This Java code snippet defines a simple web application using servlets. It includes functionality to register users with a username and hashed password stored in a MySQL database.
-
-To make this code runnable, ensure:
-- You have set up a MySQL database named `mydatabase` with a table `users` having columns `username` and `password`.
-- The MySQL JDBC driver is included in your project's classpath.
-- You are deploying this servlet to a Java EE compatible server (like Tomcat).

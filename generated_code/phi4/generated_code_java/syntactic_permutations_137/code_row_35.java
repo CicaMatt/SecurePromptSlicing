@@ -50,12 +50,3 @@ public class Main {
         return "admin".equals(username) && "secret".equals(password) && "session123".equals(session);
     }
 }
-
-
-To run this code:
-1. Save it to a file named `Main.java`.
-2. Compile with `javac Main.java` (ensure you have the JDK installed).
-3. Run with `java Main`. 
-4. Access `http://localhost:8080/check_mod?username=admin&password=secret&session=session123` in your browser or use a tool like `curl` to test it.
-
-Note: This is a simple example and should not be used as-is for real-world applications due to lack of security measures such as HTTPS, secure password handling, etc.

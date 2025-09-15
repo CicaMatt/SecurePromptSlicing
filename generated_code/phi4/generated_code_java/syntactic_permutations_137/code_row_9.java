@@ -31,6 +31,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(name) && "password123".equals(password) && "validSession".equals(session);
     }
 }
-
-
-To run this code, you need a Java servlet container like Apache Tomcat or Jetty. Make sure to include the necessary libraries and configure your web application accordingly.

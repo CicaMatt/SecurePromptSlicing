@@ -63,40 +63,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- home.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <h2>Welcome, <%= request.getSession().getAttribute("user") %>!</h2>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -123,6 +94,3 @@ public class LogoutServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Note: Replace `"jdbc:mysql://localhost:3306/your_database"`, `"db_user"`, and `"db_password"` with your actual database URL, username, and password. Also, ensure you have the MySQL JDBC driver in your classpath.

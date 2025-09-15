@@ -45,6 +45,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** This code is a simple example and assumes the usage of MySQL. For production use, consider using connection pooling libraries like HikariCP or Apache DBCP and secure sensitive information such as database passwords properly.

@@ -51,6 +51,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Note: Replace `"your_database_name"`, `"your_username"`, and `"your_password"` with your actual database details. Ensure the `subscribers` table exists in your database and has an `email` column for this code to function correctly.

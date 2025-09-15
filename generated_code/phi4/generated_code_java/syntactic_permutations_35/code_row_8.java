@@ -48,6 +48,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_db_user"`, and `"your_db_password"` with your actual database URL, user, and password. Also, ensure you have the MySQL JDBC driver in your classpath.

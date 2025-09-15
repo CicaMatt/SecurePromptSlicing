@@ -93,6 +93,3 @@ public class RegistrationForm extends JFrame implements ActionListener {
         new RegistrationForm();
     }
 }
-
-
-Ensure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"user"`, and `"password"` with your actual database URL, username, and password. Also, make sure you have the MySQL JDBC driver in your classpath.

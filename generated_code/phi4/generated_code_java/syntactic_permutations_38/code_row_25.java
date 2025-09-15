@@ -64,6 +64,3 @@ public class SimpleLogin {
         // Here you would typically redirect the user in a web application context.
     }
 }
-
-
-**Note**: Replace `your_database_name`, `root`, and `password` with your actual database name, username, and password. This code assumes that you have a MySQL database running locally on port 3306 and a table named `users` with columns `username` and `password`.

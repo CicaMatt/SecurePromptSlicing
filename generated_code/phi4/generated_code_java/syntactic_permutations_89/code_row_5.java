@@ -36,19 +36,3 @@ public class ProductPriceApp {
         });
     }
 }
-
-
-To run this code, ensure you have the Javalin library added to your project's dependencies. You can include it in a Maven `pom.xml` like this:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.0</version>
-</dependency>
-
-
-Or, if using Gradle:
-
-
-implementation 'io.javalin:javalin:5.9.0'

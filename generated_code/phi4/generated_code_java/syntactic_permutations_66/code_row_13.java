@@ -49,32 +49,3 @@ public class PdfUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-Make sure to configure your web server and include necessary dependencies like a Servlet API in your project setup, for instance using Maven:
-
-
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>4.0.1</version>
-    <scope>provided</scope>
-</dependency>
-
-
-Ensure that you have an HTML form to upload the file, as well:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <form action="/uploadPdf" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">Upload PDF</button>
-    </form>
-</body>
-</html>

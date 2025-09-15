@@ -57,17 +57,3 @@ public class RegisterServlet extends HttpServlet {
         return sb.toString();
     }
 }
-
-
-
-<!-- registrationSuccess.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration Success</title>
-</head>
-<body>
-    <h1>Registration Successful!</h1>
-    <p>Your account has been created successfully.</p>
-</body>
-</html>

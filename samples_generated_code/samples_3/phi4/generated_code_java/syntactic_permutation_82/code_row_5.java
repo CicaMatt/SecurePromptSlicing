@@ -39,16 +39,3 @@ public class PayloadServlet extends HttpServlet {
         return new org.json.JSONObject(payload).toMap();
     }
 }
-
-
-Note: This code requires additional dependencies to run. Add `org.json:json` library to your project to use `JSONObject`. You can add this dependency in Maven as follows:
-
-
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-</dependency>
-
-
-Make sure the web application is deployed on a servlet container like Apache Tomcat.

@@ -39,6 +39,3 @@ public class StockOrderApp {
         }
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database connection details. Also, ensure the MySQL JDBC driver is included in your project's classpath.

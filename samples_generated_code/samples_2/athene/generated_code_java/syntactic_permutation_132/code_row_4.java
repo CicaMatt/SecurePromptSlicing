@@ -21,6 +21,3 @@ public class HelloWorldApp {
         });
     }
 }
-
-
-Note: The above code assumes that the `FreeMarkerEngine` is capable of rendering a template from a string and that the `Template` class has a constructor accepting a filename and a map of attributes. In practice, you would need to configure FreeMarker properly and use a `Template` object loaded from a file or resource. However, for simplicity and direct runnability, this code provides a close approximation.

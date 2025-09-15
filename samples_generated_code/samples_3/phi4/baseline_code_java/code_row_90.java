@@ -49,6 +49,3 @@ public class HelloServlet extends HttpServlet {
         return output.toString();
     }
 }
-
-
-Make sure you have the necessary servlet API library in your project's classpath to run this code. This example assumes usage within a Java web application, specifically one configured with a servlet container like Apache Tomcat.

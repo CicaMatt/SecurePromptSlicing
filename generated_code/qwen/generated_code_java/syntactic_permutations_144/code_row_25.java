@@ -44,6 +44,3 @@ public class EmailUnsubscriber {
         Runtime.getRuntime().exec("your_script_path.sh " + email);
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, `your_password`, and `your_script_path.sh` with your actual database details and script path.

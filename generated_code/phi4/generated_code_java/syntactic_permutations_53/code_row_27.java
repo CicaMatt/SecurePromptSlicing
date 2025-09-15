@@ -27,6 +27,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-This code assumes you have three JSP pages: `login.jsp`, `user.jsp`, and `admin.jsp`. It checks the session for a logged-in user and redirects accordingly. If the user is not logged in, they are redirected to the login page. If the user is an admin, they are redirected to the admin page; otherwise, they go to the user page.

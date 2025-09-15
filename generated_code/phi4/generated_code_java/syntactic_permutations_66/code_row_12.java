@@ -52,6 +52,3 @@ public class PdfUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-This code snippet defines a servlet `PdfUploadServlet` that handles file uploads. The uploaded PDF files are saved in an "uploads" directory within the web application's context path. The servlet is configured to handle multipart requests, with specific limits on file and request sizes. Adjust these size parameters as needed. Make sure your project has the necessary dependencies for running a Java servlet (typically provided by a Java EE or Jakarta EE container like Tomcat).

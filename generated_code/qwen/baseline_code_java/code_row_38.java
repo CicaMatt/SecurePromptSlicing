@@ -47,44 +47,13 @@ public class LoginPageServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;">Invalid username or password.</p>
-    <% } %>
-    <form action="LoginPageServlet" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard, <%= session.getAttribute("username") %>!</h2>
-    <form action="LogoutServlet" method="post">
-        <input type="submit" value="Logout">
-    </form>
-</body>
-</html>
+
+
+
+
 
 
 
@@ -101,34 +70,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>LoginPageServlet</servlet-name>
-        <servlet-class>LoginPageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginPageServlet</servlet-name>
-        <url-pattern>/LoginPageServlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/LogoutServlet</url-pattern>
-    </servlet-mapping>
-
-    <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
-    </welcome-file-list>
-</web-app>

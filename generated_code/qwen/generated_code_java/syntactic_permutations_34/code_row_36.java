@@ -48,31 +48,3 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class LoginServletConfig extends HttpServlet {}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form method="post" action="LoginServlet">
-        Username: <input type="text" name="username"><br/>
-        Password: <input type="password" name="password"><br/>
-        <input type="submit" value="Login">
-    </form>
-    <% if ("1".equals(request.getParameter("error"))) { %>
-        <p style="color:red;">Invalid username or password.</p>
-    <% } %>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Welcome, <%= request.getSession().getAttribute("username") %>!</h1>
-    <a href="logout.jsp">Logout</a>
-</body>
-</html>

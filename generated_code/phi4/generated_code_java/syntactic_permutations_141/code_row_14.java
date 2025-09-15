@@ -42,6 +42,3 @@ public class WebApp {
         return PASSWORD;
     }
 }
-
-
-**Note:** This code assumes a MySQL database. Adjust the `DB_URL`, `USER`, and `PASSWORD` variables to match your actual database credentials. Make sure you have the MySQL JDBC driver in your project's classpath.

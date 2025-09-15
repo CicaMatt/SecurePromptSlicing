@@ -49,34 +49,3 @@ public class RegisterServlet extends HttpServlet {
     }
 
 }
-
-
-This Java servlet assumes you have a MySQL database set up with the following details:
-- Database name: `mydatabase`
-- Table name: `users` with columns `username` (VARCHAR) and `password` (VARCHAR)
-- User credentials for the database: username `root`, password `password` 
-
-You'll need to create an HTML form that posts data to `/register`. Here's a simple example:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <form action="/register" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
-
-
-Ensure you have the appropriate JDBC driver in your classpath and configure a servlet container like Apache Tomcat to run this application.

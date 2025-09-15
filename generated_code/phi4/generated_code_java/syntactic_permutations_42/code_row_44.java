@@ -22,30 +22,3 @@ class InfoController {
         return String.format("Username: %s, Email: %s, SSN: %s", username, email, ssn);
     }
 }
-
-
-To run this code:
-
-1. Create a new Maven project.
-2. Add the following dependencies to your `pom.xml` file:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-3. Add the provided Java code to your project.
-4. Run the application using `mvn spring-boot:run`.

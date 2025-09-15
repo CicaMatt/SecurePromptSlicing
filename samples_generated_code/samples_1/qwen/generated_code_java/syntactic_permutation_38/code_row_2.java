@@ -44,29 +44,3 @@ public class LoginPageServlet extends HttpServlet {
         }
     }
 }
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="LoginPageServlet" method="post">
-        Username: <input type="text" name="username"><br/>
-        Password: <input type="password" name="password"><br/>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-
-<!-- dashboard.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    Welcome to your Dashboard, <%= session.getAttribute("username") %>!
-</body>
-</html>

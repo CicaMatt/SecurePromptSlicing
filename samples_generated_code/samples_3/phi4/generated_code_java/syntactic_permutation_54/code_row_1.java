@@ -70,19 +70,3 @@ public class DoLoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-<h1>Welcome Admin!</h1>
-<p>You have successfully logged in.</p>
-</body>
-</html>
-
-
-**Note:** Make sure you have a servlet container like Apache Tomcat set up to run this code. Also, ensure the `web.xml` file or equivalent annotations are properly configured if needed for your deployment environment. Adjust the username and password checks as per your security requirements.

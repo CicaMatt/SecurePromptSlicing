@@ -73,6 +73,3 @@ public class SimpleRegistration {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is in your classpath. The table `users` should have columns: `username`, `password`, `first_name`, `last_name`, and `email`.

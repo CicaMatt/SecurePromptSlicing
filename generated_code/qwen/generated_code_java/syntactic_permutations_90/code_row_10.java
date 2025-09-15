@@ -43,12 +43,3 @@ public class PriceCalculatorService {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you're using Maven -->
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.29</version>
-</dependency>

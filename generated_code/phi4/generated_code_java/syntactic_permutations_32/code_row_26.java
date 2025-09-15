@@ -27,10 +27,7 @@ To run this application, ensure you have Spring Boot dependencies in your `pom.x
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -46,13 +43,8 @@ To run this application, ensure you have Spring Boot dependencies in your `pom.x
 Or in `build.gradle` if using Gradle:
 
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 tasks.named('bootJar') {
     enabled = true
 }
-
-
-Run the application with `mvn spring-boot:run` for Maven or `gradlew bootRun` for Gradle.

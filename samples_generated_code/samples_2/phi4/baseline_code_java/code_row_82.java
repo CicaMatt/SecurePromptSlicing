@@ -35,6 +35,3 @@ class NameController {
         }
     }
 }
-
-
-To run this application, make sure you have Spring Boot set up in your environment. You can package and run it using Maven or Gradle as per your project setup.

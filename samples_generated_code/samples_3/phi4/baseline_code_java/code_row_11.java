@@ -43,17 +43,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-**Dependencies (for Maven):**
-
-Add the following dependencies to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.14.0</version>
-    </dependency>
-</dependencies>

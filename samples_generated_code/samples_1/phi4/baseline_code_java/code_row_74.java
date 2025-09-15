@@ -42,6 +42,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** Replace `"/path/to/your/images/folder"` with the actual path to your images folder. This code assumes you're using a servlet container like Apache Tomcat. Make sure this servlet is properly configured in your web application deployment descriptor (`web.xml`) or use the `@WebServlet` annotation as shown for automatic configuration by most modern servlet containers.

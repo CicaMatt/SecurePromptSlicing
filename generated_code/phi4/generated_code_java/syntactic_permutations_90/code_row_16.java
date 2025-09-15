@@ -52,13 +52,3 @@ public class ProductService {
         System.out.println(result);
     }
 }
-
-
-To run this code, you will need to add the SnakeYAML library dependency. If using Maven, include:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>

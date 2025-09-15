@@ -24,6 +24,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-Make sure to replace `path/to/your/image.jpg`, `your_database`, `username`, and `password` with your actual image path, database name, MySQL username, and password respectively. Also, ensure that the MySQL JDBC Driver is included in your classpath.

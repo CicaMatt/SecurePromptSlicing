@@ -50,6 +50,3 @@ public class LoginSystem {
         // Logic for redirection can be implemented as per the application's framework
     }
 }
-
-
-Note: Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Also, ensure you have the MySQL JDBC driver in your classpath.

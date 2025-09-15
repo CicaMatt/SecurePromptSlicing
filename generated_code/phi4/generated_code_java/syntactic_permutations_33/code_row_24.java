@@ -23,6 +23,3 @@ public class RedirectServlet extends HttpServlet {
         return url != null && url.contains("example.com");
     }
 }
-
-
-Ensure you have the necessary setup to run a Java servlet, such as a servlet container (e.g., Apache Tomcat), and configure your web.xml or use annotations for mapping.

@@ -44,27 +44,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("File uploaded successfully: " + fileName);
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a Java servlet container like Apache Tomcat installed.
-2. Create a web application project in your IDE (e.g., Eclipse).
-3. Add the above `FileUploadServlet.java` file to the `src` directory of your project.
-4. Configure your `web.xml` or use annotations as shown for servlet mapping.
-5. Ensure you have an HTML form that posts a file to `/upload`.
-
-Example HTML form:
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>File Upload</title>
-</head>
-<body>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

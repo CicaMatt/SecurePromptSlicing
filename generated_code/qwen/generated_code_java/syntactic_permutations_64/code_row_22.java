@@ -83,6 +83,3 @@ public class PDFHandler {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database credentials. Also, ensure that the `path_to_your_pdf_file.pdf` is replaced with the actual path to a PDF file you want to upload for testing.

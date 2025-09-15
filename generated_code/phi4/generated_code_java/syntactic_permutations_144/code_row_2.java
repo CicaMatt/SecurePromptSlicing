@@ -48,6 +48,3 @@ public class EmailUnsubscriber {
         return (exitCode == 0) ? 1 : 0;
     }
 }
-
-
-Note: Replace `your_database`, `your_username`, `your_password`, and `your_unsubscribe_script.sh` with your actual database name, username, password, and script path respectively. Ensure the MySQL JDBC driver is in your classpath.

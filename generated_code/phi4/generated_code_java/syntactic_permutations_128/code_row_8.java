@@ -32,6 +32,3 @@ public class GreetUserServlet extends HttpServlet {
         }
     }
 }
-
-
-To use this code in a servlet container like Apache Tomcat, you would need to configure the web.xml file or use annotations as shown above with `@WebServlet("/GreetUser")` to map requests to this servlet. This Java class should be compiled and placed in the appropriate directory within your web application for deployment.

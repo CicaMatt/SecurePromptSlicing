@@ -81,6 +81,3 @@ public class TemperatureApp {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, ensure the MySQL JDBC driver is included in your project's classpath.

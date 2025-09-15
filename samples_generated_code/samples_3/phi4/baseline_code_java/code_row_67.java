@@ -39,16 +39,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Ensure you have the Apache Commons Codec library included in your project to use `DigestUtils`. You can add it via Maven:
-
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>
-
-
-Replace the database URL, username, and password with your actual MySQL credentials. Make sure to have a table named `users` with columns `username` and `password`.

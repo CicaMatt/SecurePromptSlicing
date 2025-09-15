@@ -46,6 +46,3 @@ public class DoLoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have a `admin_page.jsp` in your web application directory to handle the redirection. This code assumes basic hardcoded credentials for demonstration purposes, which is not secure for real-world applications. Use proper authentication mechanisms such as hashing passwords and storing them securely.

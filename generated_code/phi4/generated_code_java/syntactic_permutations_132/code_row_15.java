@@ -68,21 +68,3 @@ public class HttpDecorator {
         }
     }
 }
-
-
-Create a `hello.html` file in the `src/main/resources/templates/` directory with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
-
-
-Make sure your project structure reflects the above file paths. The `HttpServer` class from `com.sun.net.httpserver` package is part of Java's standard library and does not require additional dependencies.

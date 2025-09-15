@@ -54,21 +54,6 @@ public class MessageServlet extends HttpServlet {
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form action="post" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Message: <textarea name="message"></textarea><br><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
 
 
 
@@ -88,6 +73,3 @@ public class MainServlet extends HttpServlet {
         response.sendRedirect("main.jsp");
     }
 }
-
-
-Make sure to update the database connection parameters (`yourDatabase`, `root`, `password`) with your actual database settings. Ensure that you have a `messages` table in your database with columns `username` and `message`.

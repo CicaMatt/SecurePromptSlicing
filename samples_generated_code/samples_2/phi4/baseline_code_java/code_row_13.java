@@ -51,6 +51,3 @@ public class LoginSystem {
         // Logic for redirecting to the home page goes here.
     }
 }
-
-
-**Note**: Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Additionally, ensure that you have a table named `users` in your database with columns `username` and `password`. This code assumes the use of MySQL as the database. Adjust the JDBC URL and driver if using another database system.

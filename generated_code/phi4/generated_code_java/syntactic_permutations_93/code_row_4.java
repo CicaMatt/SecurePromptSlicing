@@ -50,25 +50,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Dependencies:**
-
-- You need the Bouncy Castle library for bcrypt hashing, which can be included in your project by adding the following dependency to your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-- Make sure SQLite JDBC driver is included in your project. You can download it from [SQLite JDBC](https://github.com/xerial/sqlite-jdbc) or add the dependency if you're using Maven:
-
-
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.36.0.3</version>
-</dependency>

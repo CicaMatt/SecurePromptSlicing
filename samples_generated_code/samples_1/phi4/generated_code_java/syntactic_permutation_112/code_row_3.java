@@ -45,6 +45,3 @@ public class PingDecoratorServlet extends HttpServlet {
         // Clean up any resources if needed
     }
 }
-
-
-Make sure to configure this servlet in your `web.xml` or use annotations for configuration based on your setup. Additionally, ensure you have the necessary permissions and environment configurations to execute system commands from within a Java application.

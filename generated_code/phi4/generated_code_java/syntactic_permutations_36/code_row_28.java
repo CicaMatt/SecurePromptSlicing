@@ -50,6 +50,3 @@ public class LoginSystem {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Make sure the MySQL JDBC driver is available in your classpath. Adjust the table and column names as per your database schema.

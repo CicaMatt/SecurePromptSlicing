@@ -140,20 +140,3 @@ public class DatabaseConnectionFilter implements Filter {
     @Override
     public void destroy() {}
 }
-
-
-To run this code, you need to set up a MySQL database with the following schema:
-
-
-CREATE DATABASE mydb;
-
-USE mydb;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(64) NOT NULL
-);
-
-
-Also, ensure you have the MySQL JDBC driver in your classpath.

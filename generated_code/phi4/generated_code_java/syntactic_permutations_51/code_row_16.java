@@ -57,16 +57,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-**Note**: This code relies on Apache Commons Compress library. To run this program, you need to include the library in your project's dependencies. You can add it using Maven with:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download the JAR files from [Maven Central](https://mvnrepository.com/artifact/org.apache.commons/commons-compress).

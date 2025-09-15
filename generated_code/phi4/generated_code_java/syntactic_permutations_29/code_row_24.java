@@ -17,23 +17,3 @@ public class RedirectApp {
         });
     }
 }
-
-
-To run this code, you need to include the Javalin dependency in your project's build file.
-
-For Maven, add this to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.13.6</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.13.6'
-}

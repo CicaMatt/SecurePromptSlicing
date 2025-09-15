@@ -92,25 +92,3 @@ class Message {
         return message;
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-<ul>
-    <c:forEach var="message" items="${messages}">
-        <li><strong>${message.username}:</strong> ${message.message}</li>
-    </c:forEach>
-</ul>
-<form action="/post" method="post">
-    Username: <input type="text" name="username" required><br>
-    Message: <textarea name="message" rows="4" cols="50" required></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>

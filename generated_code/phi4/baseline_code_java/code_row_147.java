@@ -55,6 +55,3 @@ public class StockOrderApp {
         // and handle the redirection there.
     }
 }
-
-
-**Note**: Ensure that your MySQL database is running, and replace `localhost`, `stock_db`, `root`, and `password` with your actual database host, name, username, and password. You will also need to have a table named `orders` in the `stock_db` database with at least two columns: `stock_name` (VARCHAR) and `quantity` (INT).

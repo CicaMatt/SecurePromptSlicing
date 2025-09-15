@@ -41,25 +41,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Note: Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that the MySQL JDBC driver is included in your project's dependencies. You can use Maven or Gradle for this purpose:
-
-For Maven:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'mysql:mysql-connector-java:8.0.27'
-implementation 'org.mindrot:jbcrypt:0.4'

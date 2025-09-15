@@ -59,6 +59,3 @@ public class HelloServlet extends HttpServlet {
         return encoded.toString();
     }
 }
-
-
-To run this code, ensure you have a servlet container such as Apache Tomcat set up and configured. Place the `HelloServlet` class in your web application's source directory. Then deploy the application to the server to handle requests at `/hello/{username}`.

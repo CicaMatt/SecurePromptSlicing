@@ -66,19 +66,3 @@ public class Registration {
         return "Registration failed.";
     }
 }
- 
-
-**Note:** Before running the code, ensure that:
-- You have a MySQL database set up with the appropriate credentials.
-- The database contains a table named `users` with columns: `username`, `password`, `first_name`, `last_name`, and `email`.
-- The BCrypt library is included in your project (usually via Maven or Gradle). If using Maven, add:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database credentials.

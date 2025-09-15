@@ -17,6 +17,3 @@ public class HelloWorldServlet extends HttpServlet {
         System.out.println("Hello, World!");
     }
 }
-
-
-To run this code, you need a Java servlet container like Apache Tomcat. Save the file as `HelloWorldServlet.java`, compile it using `javac` with the appropriate classpath for your servlet API, and deploy it to your servlet container.

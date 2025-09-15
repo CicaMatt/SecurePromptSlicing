@@ -54,14 +54,3 @@ public class StockFormServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-<h2>Stock Orders</h2>
-<p>Order placed successfully!</p>
-</body>
-</html>

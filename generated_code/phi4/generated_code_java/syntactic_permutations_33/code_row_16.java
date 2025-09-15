@@ -26,6 +26,3 @@ public class UrlRedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-This code assumes you are using a servlet container like Apache Tomcat and have the appropriate `web.xml` configuration or use the `@WebServlet` annotation to define your servlet mapping. Make sure your project is set up as a web application in an IDE that supports Java EE, such as Eclipse or IntelliJ IDEA, with necessary libraries for servlets included.

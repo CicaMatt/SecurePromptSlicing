@@ -69,6 +69,3 @@ public class Registration {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Ensure that the `users` table exists in your database with columns: `username`, `password`, `first_name`, `last_name`, `email`. Also, include the `jbcrypt` library for password hashing.

@@ -24,6 +24,3 @@ public class UrlRedirector {
         return URL_PATTERN.matcher(url.toString()).matches();
     }
 }
- 
-
-Replace `"your-regex-here"` with the actual regular expression you intend to use.

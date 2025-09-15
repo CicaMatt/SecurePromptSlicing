@@ -25,14 +25,3 @@ class InfoController {
                 "</body></html>";
     }
 }
-
-
-To make this application runnable, you'll need to set up a Spring Boot project. Here are the steps:
-
-1. **Set Up Project**: Use Spring Initializr (https://start.spring.io/) to generate a Maven or Gradle project with the "Spring Web" dependency.
-
-2. **Add Code**: Replace the generated `Application.java` and any controller files with the code above.
-
-3. **Run Application**: Execute the application using your IDE or from the command line with `mvn spring-boot:run` (for Maven) or `gradle bootRun` (for Gradle).
-
-4. **Access**: Visit `http://localhost:8080/info?email=user@example.com&ssnLastFour=1234` in a web browser to see the output. Adjust parameters as needed.

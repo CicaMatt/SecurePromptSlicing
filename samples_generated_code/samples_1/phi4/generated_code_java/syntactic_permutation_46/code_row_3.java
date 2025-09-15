@@ -42,6 +42,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To use this servlet, make sure to configure it in your `web.xml` or use annotations like `@WebServlet("/img")`. Ensure the `/images` directory exists within your web application's root and contains the images you want to serve.

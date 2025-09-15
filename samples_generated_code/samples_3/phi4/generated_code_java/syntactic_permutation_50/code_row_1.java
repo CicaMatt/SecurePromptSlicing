@@ -64,13 +64,3 @@ public class ExtractArchive {
         }
     }
 }
-
-
-To run this code, ensure you have the following dependencies added to your project (using Maven):
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>

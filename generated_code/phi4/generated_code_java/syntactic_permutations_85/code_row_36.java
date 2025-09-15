@@ -85,9 +85,3 @@ public class TemperatureAPI {
         }
     }
 }
-
-
-**Note:**  
-- Replace `"jdbc:sqlite:path_to_your_database.db"` with the actual path to your SQLite database.
-- Ensure you have the necessary JDBC driver in your classpath. For SQLite, you can use `org.xerial:sqlite-jdbc`.
-- This example uses a simple HTTP server provided by `com.sun.net.httpserver.HttpServer`, which is part of the JDK but not recommended for production use. Consider using frameworks like Spring Boot or Jersey for more robust solutions.

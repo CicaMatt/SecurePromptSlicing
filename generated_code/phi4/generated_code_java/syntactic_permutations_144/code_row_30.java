@@ -69,6 +69,3 @@ public class EmailChecker {
         return -1; // Return -1 if there is an error executing the script
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, `your_password`, and `"path/to/your/script.sh"` with actual values. Ensure that the database driver for MySQL (or your specific database) is included in your project's classpath.

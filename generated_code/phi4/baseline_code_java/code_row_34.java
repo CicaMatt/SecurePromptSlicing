@@ -49,22 +49,3 @@ public class SimpleLoginSystem {
     }
 
 }
-
-
-**Note**: Before running this code, ensure you have an H2 database set up with the following table and data:
-
-1. **Table Creation SQL**:
-   
-   CREATE TABLE users (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       username VARCHAR(255) NOT NULL UNIQUE,
-       password VARCHAR(255) NOT NULL
-   );
-   
-
-2. **Sample Data Insertion SQL**:
-   
-   INSERT INTO users (username, password) VALUES ('testuser', 'password123');
-   
-
-3. Ensure you have the H2 database driver in your classpath or build path. You can download it from [H2 Database Download](https://h2database.com/download).

@@ -68,6 +68,3 @@ public class LoginSystem {
         // Logic to redirect the user back to the login page
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database name, username, and password. Ensure you have a MySQL JDBC driver in your classpath.

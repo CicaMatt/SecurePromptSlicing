@@ -33,16 +33,3 @@ public class WebApp {
         return dictionary;
     }
 }
-
-
-To run this code, ensure you have the Javalin library in your classpath. You can add it to a Maven project by including:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-Or download the JAR file from [Javalin's GitHub releases](https://github.com/tipsy/javalin/releases) and include it in your project manually.

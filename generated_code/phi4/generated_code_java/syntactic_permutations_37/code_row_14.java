@@ -95,6 +95,3 @@ public class CantLoginServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-Ensure you have a `web.xml` or use the `@WebServlet` annotations as above, and deploy this in a servlet container like Apache Tomcat.

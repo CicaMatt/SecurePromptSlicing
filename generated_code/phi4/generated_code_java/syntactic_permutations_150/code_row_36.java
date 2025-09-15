@@ -27,22 +27,3 @@ public class MessageServlet extends HttpServlet {
         return true; // Placeholder for demonstration purposes
     }
 }
-
-// mainPage.jsp (Assuming you have a JSP file to render the form)
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-    <form action="submitMessage" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
-*/

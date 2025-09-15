@@ -53,6 +53,3 @@ public class SimpleLoginPage {
         out.close();
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC driver in your classpath. Replace `your_database`, `your_db_user`, and `your_db_password` with actual database details. The HTML files `success_page.html`, `cant_login.html`, and `internal_server_error.html` should exist in the same directory as this script for redirection to work correctly.

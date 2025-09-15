@@ -54,19 +54,3 @@ public class TarFileUnpacker {
     }
 
 }
-
-
-Note: The above code assumes the availability of a `TarArchiveInputStream` class for reading `.tar.gz` files. In reality, you would need an additional library such as Apache Commons Compress to provide this functionality in Java. You can include it via Maven or Gradle:
-
-For Maven:
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'org.apache.commons:commons-compress:1.21'

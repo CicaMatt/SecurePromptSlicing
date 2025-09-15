@@ -49,6 +49,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedBytes);
     }
 }
-
-
-Make sure to replace `your_database` with your actual database name, and adjust the database connection parameters (`USER`, `PASS`) as necessary. Ensure that you have a MySQL driver in your classpath or build path for this code to run successfully.

@@ -30,6 +30,3 @@ public class FileUploadServlet extends HttpServlet {
     }
 
 }
-
-
-This Java servlet code is designed to handle file uploads in a web application. It uses the `@MultipartConfig` annotation to indicate that it expects requests with `multipart/form-data` content type, which are typically used for uploading files. The `doPost` method handles POST requests by extracting the uploaded file from the request, determining its name, and saving it to an "uploads" directory within the web application's context path. Ensure your servlet container (like Tomcat) is properly set up to run this servlet code.

@@ -43,28 +43,3 @@ public class WebApp {
         }
     }
 }
-
-
-Note: To run this code, you need to include the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.7.5</version>
-    </dependency>
-    <dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-        <version>5.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>42.3.1</version>
-    </dependency>
-</dependencies>
-
-
-Ensure your database credentials and URL are correctly set in the `configureDatabase` method.

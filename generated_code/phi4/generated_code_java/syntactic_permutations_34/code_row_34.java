@@ -57,23 +57,3 @@ public class LoginApplication {
         }
     }
 }
-
-
-**Dependencies:**
-
-- **H2 Database**: Ensure that you have H2 database installed and configured.
-- **JDBC Driver for H2**: Include the H2 JDBC driver in your classpath. You can download it from [here](http://www.h2database.com/downloads.html).
-
-To create a `users` table for testing, use:
-
-
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL
-);
-
-INSERT INTO users (username, password) VALUES ('testUser', 'password123');
-
-
-This setup assumes the database is already set up with H2 and contains a `users` table. Adjust the connection URL and credentials as needed for your environment.

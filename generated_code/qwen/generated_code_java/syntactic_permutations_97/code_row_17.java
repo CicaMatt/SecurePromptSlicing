@@ -70,6 +70,3 @@ public class RegistrationPage {
         return false;
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database credentials. Also, ensure that you have the MySQL JDBC driver in your classpath. In a real-world application, passwords should be hashed before storing them in the database for security reasons.

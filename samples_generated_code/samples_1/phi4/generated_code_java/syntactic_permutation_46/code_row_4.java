@@ -39,6 +39,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** Ensure your web server is properly configured to serve images from the `/images/` directory relative to your application's context path.

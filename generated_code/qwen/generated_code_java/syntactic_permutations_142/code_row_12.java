@@ -44,17 +44,3 @@ public class UnsubscribeForm {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can include it via Maven dependency or by downloading the JAR file and adding it to your project's build path.
-
-Maven dependency:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.

@@ -34,6 +34,3 @@ public class PostServlet extends HttpServlet {
         // Main method is not necessary for a servlet
     }
 }
-
-
-Note: Ensure you have the required database driver and connection setup in your project to make `insert_user_message_in_db` functional. Adjust the redirection path according to your application's structure.

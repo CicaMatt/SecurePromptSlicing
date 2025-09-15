@@ -44,21 +44,3 @@ public class SimpleWebApp {
         ctx.sessionAttribute("userSession", sessionData);
     }
 }
-
-
-To use this code, ensure you have Javalin in your project's dependencies. You can add it via Maven or Gradle.
-
-For Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.1.0</version>
-</dependency>
-
-
-For Gradle:
-
-
-implementation 'io.javalin:javalin:5.1.0'

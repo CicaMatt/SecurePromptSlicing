@@ -47,6 +47,3 @@ public class DatabaseCheck {
         System.out.println("Result: " + result);
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/yourdatabase"`, `"username"`, `"password"`, `"your_table"`, and `"path/to/your/script.sh"` with your actual database URL, credentials, table name, and script path respectively.

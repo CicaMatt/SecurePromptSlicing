@@ -52,6 +52,3 @@ public class MainServlet extends HttpServlet {
         );
     }
 }
-
-
-This code includes a servlet `MessageServlet` to handle the form submission and another servlet `MainServlet` to display the form on the main page. Make sure you have a proper web.xml configuration or use annotations for deployment in a Java EE environment. Adjust the database insertion logic as needed for your actual database setup.

@@ -30,23 +30,3 @@ public class WebApp {
         ctx.result(response);
     }
 }
-
-
-To run this code, you need to have Javalin as a dependency. If you're using Maven, add the following to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.1.0</version>
-    </dependency>
-</dependencies>
-
-
-If you're using Gradle, add the following to your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.1.0'
-}

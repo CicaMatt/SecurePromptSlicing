@@ -60,6 +60,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-**Note:** To run this code, it needs to be deployed in a Java web application environment that supports servlets (like Apache Tomcat). Make sure you have configured your `web.xml` or use annotations as shown for servlet mapping.

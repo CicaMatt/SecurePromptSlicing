@@ -65,6 +65,3 @@ public class RegistrationForm {
         return hexString.toString();
     }
 }
-
-
-Ensure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure that the `users` table exists in your database with columns `username`, `password_salt`, and `password_hash`.

@@ -60,21 +60,3 @@ public class HttpDecoratorExample {
         }
     }
 }
-
-
-Create a file named `hello.html` in the same directory as your Java code with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>
-
-
-Make sure to run your Java program on a platform that supports `com.sun.net.httpserver.HttpServer`. This example uses the built-in HTTP server from JDK.

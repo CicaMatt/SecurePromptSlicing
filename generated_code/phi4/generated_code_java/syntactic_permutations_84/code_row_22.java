@@ -85,16 +85,3 @@ public class PayloadServlet extends HttpServlet {
         server.start();
     }
 }
-
-
-This code uses the `com.sun.net.httpserver.HttpServer` class to create a simple HTTP server that listens on port 5000. It also uses the SnakeYAML library to parse YAML content and Jackson for JSON processing, although not directly used in this snippet. Make sure you have these dependencies included in your project:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.28</version>
-</dependency>
-
-
-For running the code, you'll need to include a servlet API and potentially other libraries depending on your execution environment. The `main` method sets up an HTTP server for demonstration purposes, which can be replaced with a proper deployment in a production environment using servers like Tomcat or Jetty.

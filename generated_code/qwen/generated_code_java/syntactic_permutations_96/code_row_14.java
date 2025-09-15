@@ -61,12 +61,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-
--- SQL to create the users table, should be run in your database before executing the Java code.
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);

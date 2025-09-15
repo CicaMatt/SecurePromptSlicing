@@ -49,16 +49,3 @@ public class TarExtractor {
         }
     }
 }
-
-
-Note: You need to include the Apache Commons Compress library in your project dependencies. If you are using Maven, add the following dependency:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Replace `/path/to/your/tarfile.tar.gz` with the actual path to your tar file.

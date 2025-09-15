@@ -45,20 +45,3 @@ public class ProductService {
         System.out.println(outputYaml);
     }
 }
-
-
-**Dependencies to include in your `pom.xml` if using Maven:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.29</version>
-    </dependency>
-</dependencies>

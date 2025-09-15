@@ -31,10 +31,3 @@ public class PingServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code in a Java web application:
-1. Ensure you have a servlet container like Apache Tomcat.
-2. Place the `PingServlet` class into your project's source directory.
-3. Update your web.xml or use annotations (as shown) to map the servlet to the desired URL pattern.
-4. Deploy the application on the servlet container and access it via `<server-context-root>/ping`.

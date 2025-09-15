@@ -51,20 +51,3 @@ public class PriceCalculatorApp {
         }
     }
 }
-
-
-To run this code, ensure you have the Javalin library included in your project dependencies:
-
-
-<!-- Maven dependency -->
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.6.0</version>
-</dependency>
-
-<!-- Gradle dependency -->
-implementation 'io.javalin:javalin:4.6.0'
-
-
-This code sets up a simple web server using Javalin, listening on port 5000, and defines routes to get the price of a product by its code and calculate the total cost based on quantity.

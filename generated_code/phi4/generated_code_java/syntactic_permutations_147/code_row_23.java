@@ -52,6 +52,3 @@ public class StockOrderApp {
         System.out.println("Redirecting to stock_view page...");
     }
 }
-
-
-Make sure the MySQL JDBC driver is included in your classpath, and a database named `stockdb` with a table `orders` having columns `stock_name` (VARCHAR) and `quantity` (INT) exists.

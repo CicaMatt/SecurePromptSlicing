@@ -57,6 +57,3 @@ public class WebApp {
         return false;
     }
 }
-
-
-Make sure you have the MySQL JDBC driver in your classpath, and replace `your_database`, `your_username`, `your_password`, and `some_user_id` with actual values.

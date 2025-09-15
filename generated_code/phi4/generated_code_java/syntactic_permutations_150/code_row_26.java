@@ -41,29 +41,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Message Board</h1>
-    <form action="post" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-
-    <!-- Optional: Display existing messages -->
-</body>
-</html>
-
-
-Note: Ensure your database is set up with a table named `messages` having columns `username` and `message`. Adjust the JDBC URL, username, and password as necessary.

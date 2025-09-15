@@ -55,6 +55,3 @@ public class SimpleLoginPage {
         // response.sendRedirect(page + ".jsp");
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. This code simulates input handling; in a real scenario, you would capture user input from an HTML form.

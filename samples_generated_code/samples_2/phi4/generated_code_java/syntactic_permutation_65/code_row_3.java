@@ -52,25 +52,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().write("File uploaded successfully.");
     }
 }
-
-
-Make sure to include the following HTML form for uploading files:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h2>Upload a PDF file</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Ensure your web server is set up to handle servlets, and the `FileUploadServlet` is properly mapped in your `web.xml` or using annotations as shown.

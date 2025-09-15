@@ -49,6 +49,3 @@ public class EmailHandler {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that the stored procedure `UnsubscribeEmail` exists in your database schema.

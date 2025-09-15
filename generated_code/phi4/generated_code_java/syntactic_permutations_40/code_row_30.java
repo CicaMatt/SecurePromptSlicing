@@ -24,16 +24,3 @@ public class WebApp {
         ctx.result("Email: " + email + ", Last 4 digits of SSN: " + last4SSN);
     }
 }
-
-
-To run this code, you need to include the Javalin library in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.0</version>
-</dependency>
-
-
-Make sure to set up your project with Javalin and Java 11 or higher.

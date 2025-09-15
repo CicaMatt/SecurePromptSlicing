@@ -21,17 +21,3 @@ public class HelloServlet extends HttpServlet {
         out.println("Hello " + username);
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. Make sure to configure the servlet in your `web.xml` or use annotations for mapping. Here's an example using annotations:
-
-
-import javax.servlet.annotation.WebServlet;
-
-@WebServlet("/hello")
-public class HelloServlet extends HttpServlet {
-    // Existing methods...
-}
-
-
-Place this code in a Java web application project, deploy it on a server like Tomcat, and access it via `http://yourserver/hello?username=YourName`.

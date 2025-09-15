@@ -83,6 +83,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-Before running the code, ensure you replace `your_database`, `username`, and `password` with your actual MySQL database name, username, and password. Also, make sure that the MySQL JDBC driver is available in the classpath. You might need to download it separately if not already included in your environment.

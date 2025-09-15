@@ -41,23 +41,3 @@ public class ProductService {
         return 0.0;
     }
 }
-
-
-Ensure you have the following dependencies in your `pom.xml` for Maven or equivalent setup if using a different build tool:
-
-
-<dependencies>
-    <!-- Spark Java dependency -->
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-
-    <!-- SnakeYAML dependency -->
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>

@@ -42,6 +42,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-This code includes two servlets: `LoginServlet` for handling GET and POST requests, and `AdminPageServlet` for serving the admin page. The code assumes a simple hardcoded check for username "admin" with password "password123". Make sure to configure your web server (e.g., Apache Tomcat) appropriately to run this servlet.

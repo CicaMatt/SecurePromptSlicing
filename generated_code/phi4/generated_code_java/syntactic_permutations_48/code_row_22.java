@@ -53,6 +53,3 @@ public class ImageServer {
         }
     }
 }
-
-
-This code sets up an HTTP server that listens on port 8000 and handles requests to the `/img` route. It expects a `file` parameter in the URL specifying the path of an image file, reads the binary data from this file, and sends it as a response with the appropriate `Content-Type`. Ensure you have permission to access the files specified by the `file` parameter when using this code.

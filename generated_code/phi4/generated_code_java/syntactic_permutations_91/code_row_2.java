@@ -63,6 +63,3 @@ public class RegisterServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-Note: This code assumes you have a MySQL database running with a `users` table having at least two columns: `username` and `password`. You need to replace `"your_database_name"`, `"your_db_user"`, and `"your_db_password"` with your actual database details. Also, ensure that the BCrypt library (`jbcrypt`) is included in your project's dependencies.

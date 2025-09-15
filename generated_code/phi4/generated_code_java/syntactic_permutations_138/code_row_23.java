@@ -51,20 +51,3 @@ public class WebApp {
         }
     }
 }
-
-
-Note: Make sure to include the necessary dependencies in your `pom.xml` if you are using Maven. Here is an example of how you might set it up:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.6.0</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.29</version>
-    </dependency>
-</dependencies>

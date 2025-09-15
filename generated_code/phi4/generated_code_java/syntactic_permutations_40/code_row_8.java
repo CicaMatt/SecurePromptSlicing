@@ -28,18 +28,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-**Dependencies (Maven):**
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.9.1</version>
-    </dependency>
-</dependencies>
-
-
-Make sure to add the above Maven dependencies in your `pom.xml` file if you are using Maven as a build tool.

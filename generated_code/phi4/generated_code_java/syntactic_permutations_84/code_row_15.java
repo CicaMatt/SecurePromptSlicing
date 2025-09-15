@@ -87,23 +87,3 @@ public class SimpleWebApp {
         clientSocket.getOutputStream().write(response.toString().getBytes());
     }
 }
-
-
-Dependencies needed:
-- Jackson library for YAML parsing.
-  
-Add the following dependencies to your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-</dependencies>

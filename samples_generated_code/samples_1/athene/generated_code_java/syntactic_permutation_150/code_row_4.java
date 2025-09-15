@@ -20,11 +20,3 @@ public class MessageServlet extends HttpServlet {
         // Implementation of database insertion logic
     }
 }
-
-// HTML form to be included in the main page
-// Note: This is not Java code but should be placed in your main page template.
-// <form action="post" method="post">
-//     <input type="text" name="username" placeholder="Username" required>
-//     <textarea name="message" placeholder="Message" required></textarea>
-//     <button type="submit">Submit</button>
-// </form>

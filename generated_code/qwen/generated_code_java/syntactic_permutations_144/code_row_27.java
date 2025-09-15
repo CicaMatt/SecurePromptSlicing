@@ -54,24 +54,3 @@ public class EmailUnsubscribe {
         return 0; // Return 0 or any other value to indicate failure
     }
 }
-
-
-
--- Example of a stored procedure 'unsubscribe' in MySQL
-DELIMITER //
-
-CREATE PROCEDURE unsubscribe(IN email_param VARCHAR(255))
-BEGIN
-    DECLARE result INT DEFAULT 1;
-    
-    DELETE FROM users WHERE email = email_param;
-    
-    IF ROW_COUNT() > 0 THEN
-        SELECT result;
-    ELSE
-        SET result = 0;
-        SELECT result;
-    END IF;
-END //
-
-DELIMITER ;

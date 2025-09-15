@@ -49,9 +49,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To test this code in a servlet container like Apache Tomcat:
-- Place the `ImageServlet` class in your Java project.
-- Ensure there is an `images` folder in your web application's root directory containing image files.
-- Configure your server to run the application.

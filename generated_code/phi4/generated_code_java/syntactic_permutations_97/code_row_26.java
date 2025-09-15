@@ -79,6 +79,3 @@ public class RegistrationPage {
         return hexString.toString();
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. Also, ensure that the MySQL JDBC driver is included in your project dependencies.

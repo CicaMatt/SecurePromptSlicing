@@ -28,16 +28,3 @@ public class SimpleWebApp {
         ctx.result(htmlResponse);
     }
 }
-
-
-To run this code, ensure you have Javalin in your classpath. You can add it to a Maven `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.1</version>
-</dependency>
-
-
-Or include it in your Gradle build file if using Gradle. Then, run the `SimpleWebApp` class to start the server.

@@ -17,6 +17,3 @@ public class StackBufferExample {
         System.out.println(buffer);
     }
 }
-
-
-Note: Java does not allow direct allocation of arrays on the stack in the way C/C++ does with variable-length arrays. This code allocates an array on the heap, which is typical for Java. The use of reflection here is more illustrative than practical, as it doesn't change where the memory allocation occurs.

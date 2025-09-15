@@ -25,18 +25,3 @@ public class Main {
         }
     }
 }
-
-
-To run this code, you will need to include the Jetty server dependency in your project. If using Maven, add:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.12</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.12</version>
-</dependency>

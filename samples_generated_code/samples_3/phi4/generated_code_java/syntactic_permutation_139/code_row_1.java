@@ -39,6 +39,3 @@ public class ModeratorCheck {
         System.out.println("Is user a moderator? " + isModerator);
     }
 }
-
-
-Note: Make sure to include the MySQL JDBC driver in your project dependencies to run this code.

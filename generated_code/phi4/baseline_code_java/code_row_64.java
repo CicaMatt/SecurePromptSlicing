@@ -63,6 +63,3 @@ public class PDFUploader {
         }
     }
 }
-
-
-Note: Replace `your_database_name`, `your_username`, and `your_password` with your actual MySQL database name, username, and password. Ensure the `pdf_files` table exists in your database with at least one column named `file_path`.

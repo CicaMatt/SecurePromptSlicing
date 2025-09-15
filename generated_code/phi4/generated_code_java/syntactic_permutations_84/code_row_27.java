@@ -72,30 +72,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, you need to include the following dependencies in your project:
-
-- Jetty server: For creating a simple web server.
-- Jackson YAML: For parsing YAML payloads.
-
-You can add these dependencies using Maven by including them in your `pom.xml` file:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.12</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>11.0.12</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.13.3</version>
-    </dependency>
-</dependencies>

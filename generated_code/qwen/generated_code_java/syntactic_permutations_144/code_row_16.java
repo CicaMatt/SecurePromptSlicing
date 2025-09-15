@@ -41,6 +41,3 @@ public class EmailUnsubscribingService {
         return true; // Simulate successful execution of the script
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, adjust the `callUnsubscribeScript` method to properly execute your external script.

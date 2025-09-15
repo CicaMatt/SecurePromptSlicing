@@ -36,6 +36,3 @@ public class MemoryAllocation {
 JNIEXPORT jlong JNICALL Java_MemoryAllocation_getDirectBufferAddress(JNIEnv *env, jobject obj, jobject buffer) {
     return (jlong)((char*) (*env)->GetDirectBufferAddress(env, buffer));
 }
-
-
-Note: The above code includes a native method to get the direct memory address of a `ByteBuffer`. This requires compiling the C code into a shared library and ensuring it is accessible to Java via `System.loadLibrary()`. This step is not included in the Java code but is necessary for the complete solution.

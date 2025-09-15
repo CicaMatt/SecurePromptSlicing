@@ -53,6 +53,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure you have the necessary servlet API in your project dependencies, typically included if using a Java EE server like Apache Tomcat. This code uses simple hardcoded validation and session management for demonstration purposes. In a real application, use secure password handling and user authentication mechanisms.

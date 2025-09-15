@@ -44,34 +44,3 @@ public class HelloServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-Note: You need to have Jetty as a dependency in your project for this code to run:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.14</version>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.14</version>
-</dependency>
-
-
-Ensure that the `hello.html` file is placed in `src/main/resources/` with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>

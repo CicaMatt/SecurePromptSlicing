@@ -33,24 +33,3 @@ public class SimpleWebApp {
         ctx.result(responseHtml);
     }
 }
-
-
-Note: This code requires the Javalin library. To run this application, include the following dependency in your `build.gradle` or `pom.xml`.
-
-For Gradle:
-
-dependencies {
-    implementation 'io.javalin:javalin:5.9.0'
-}
-
-
-For Maven:
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.0</version>
-</dependency>
-
-
-Make sure to add session management capabilities by setting up a session store or using Javalin's default in-memory session store if you're just testing locally.

@@ -47,10 +47,7 @@ To make this code runnable, you need to set up a Spring Boot project with the ne
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -62,6 +59,3 @@ To make this code runnable, you need to set up a Spring Boot project with the ne
         </plugins>
     </build>
 }
-
-
-This setup includes the necessary Spring Boot dependencies to run a simple web application with the specified functionality.

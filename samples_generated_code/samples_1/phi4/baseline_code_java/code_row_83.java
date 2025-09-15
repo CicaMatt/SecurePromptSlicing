@@ -66,6 +66,3 @@ public class SimpleWebApplication {
         }
     }
 }
-
-
-**Note:** To run this code, ensure you have the necessary permissions and dependencies as it uses `com.sun.net.httpserver.HttpServer`, which is part of Java's standard library but not officially supported for production use. This example is intended for educational purposes.

@@ -33,10 +33,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java servlet container (like Apache Tomcat) set up.
-2. Compile the Java class using `javac`.
-3. Deploy it in your servlet container following its deployment instructions, typically by placing the compiled class in the appropriate directory within your web application's structure.

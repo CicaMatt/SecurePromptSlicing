@@ -44,21 +44,3 @@ public class WebApp {
         return map;
     }
 }
-
-
-**Note:** For this code to run, you need the Javalin library. You can include it in your `pom.xml` for Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.14.0</version>
-</dependency>
-
-
-Or add the following to your `build.gradle` if you're using Gradle:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.14.0'
-}

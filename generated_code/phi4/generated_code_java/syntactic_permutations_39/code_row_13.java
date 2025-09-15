@@ -62,8 +62,3 @@ public class SessionPageServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-- Place it in a Java web project.
-- Ensure you have a servlet container like Apache Tomcat set up to serve the application.

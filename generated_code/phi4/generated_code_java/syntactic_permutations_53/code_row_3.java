@@ -25,6 +25,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-This servlet assumes that when a user logs in, their username and role are stored in the session attributes "user" and "role", respectively. The `login.jsp`, `user.jsp`, and `admin.jsp` pages need to exist for this code to function correctly.

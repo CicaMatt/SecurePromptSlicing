@@ -67,6 +67,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with the actual database name, username, and password. Also, ensure that your MySQL server is running and accessible at `localhost:3306`. The `users` table should be created in your database with columns matching those used in the SQL statements (`username`, `password`, `first_name`, `last_name`, `email`).

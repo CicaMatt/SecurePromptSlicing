@@ -27,12 +27,3 @@ public class CheckModServlet extends HttpServlet {
         return USERNAME.equals(username) && PASSWORD.equals(password);
     }
 }
-
-
-To make this servlet runnable:
-
-1. Ensure you have a Java servlet container like Apache Tomcat installed.
-2. Place the above code in a file named `CheckModServlet.java`.
-3. Compile it using: `javac CheckModServlet.java`.
-4. Deploy it to your servlet container, following its specific deployment instructions (usually involving placing it in a web application directory).
-5. Access it via the URL pattern `/check_mod?username=<your-username>&password=<your-password>`.

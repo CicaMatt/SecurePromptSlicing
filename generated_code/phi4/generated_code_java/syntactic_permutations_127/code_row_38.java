@@ -28,6 +28,3 @@ public class HelloServlet extends HttpServlet {
         out.println("Hello " + username);
     }
 }
-
-
-Note: This code assumes you have a servlet container like Apache Tomcat set up to run the servlet. The servlet annotation `@WebServlet("/hello")` maps the servlet to handle requests at `/hello`. The username is expected as a query parameter, e.g., `/hello?username=John`.

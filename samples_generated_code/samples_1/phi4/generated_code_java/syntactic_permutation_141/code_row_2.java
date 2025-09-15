@@ -36,6 +36,3 @@ public class WebApp {
         // Add your logic here
     }
 }
-
-
-This code includes the necessary imports and defines a simple Java application that connects to a database and performs an action. Make sure to replace `"jdbc:your_database_url"`, `"your_database_user"`, and `"your_database_password"` with actual values appropriate for your database setup.

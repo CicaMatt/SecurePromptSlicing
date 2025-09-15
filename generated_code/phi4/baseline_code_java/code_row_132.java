@@ -64,16 +64,6 @@ public class HttpDecoratorExample {
 Make sure you have a `hello.html` file in the same directory as your Java program. The content of `hello.html` might look like this:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {{username}}!
-</body>
-</html>
 
 
 The placeholder `{{username}}` in the HTML file will be replaced with the actual username from the URL.

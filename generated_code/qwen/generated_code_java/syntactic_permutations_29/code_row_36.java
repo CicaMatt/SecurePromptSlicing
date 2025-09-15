@@ -31,13 +31,3 @@ public class RedirectServlet extends HttpServlet {
         tomcat.getServer().await();
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>org.apache.tomcat.embed</groupId>
-    <artifactId>tomcat-embed-core</artifactId>
-    <version>9.0.62</version>
-    <scope>provided</scope>
-</dependency>

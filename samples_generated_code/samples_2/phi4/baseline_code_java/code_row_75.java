@@ -47,11 +47,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run this code:
-1. Make sure you have Java installed.
-2. Save the code to a file named `WebApp.java`.
-3. Compile it using: `javac WebApp.java`
-4. Run it with: `java WebApp`
-5. Test by navigating to `http://localhost:8000/api?name=YourName` in your web browser or using a tool like curl.

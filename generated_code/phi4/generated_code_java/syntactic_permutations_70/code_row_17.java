@@ -37,33 +37,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-**Additional Setup:**
-
-1. **Directory Structure:** Ensure you have a directory named `uploads` in the web application's root directory to store the uploaded files.
-
-2. **Web Deployment Descriptor (`web.xml`):**
-   If not using annotations, configure your servlet in `web.xml`.
-
-3. **HTML Form for Uploading Files:**
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-    <form action="uploadFile" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-4. **Server Setup:** Deploy this code to a Java servlet container like Apache Tomcat.
-
-5. **Dependencies:** Ensure you have the necessary libraries for running servlets, typically provided by your server or included in a build tool configuration (e.g., Maven/Gradle).

@@ -54,66 +54,20 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Login</title>
-</head>
-<body>
-
-<% if (request.getParameter("error") != null) { %>
-    <p style="color:red;">Invalid credentials. Please try again.</p>
-<% } %>
-
-<form action="LoginServlet" method="post">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Dashboard</title>
-</head>
-<body>
-
-<h1>Welcome, <%= request.getSession().getAttribute("user") %></h1>
-<a href="logout.jsp">Logout</a>
-
-</body>
-</html>
 
 
 
-<!-- logout.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+
+
+
+
 <%
     HttpSession session = request.getSession(false);
     if (session != null) {
         session.invalidate();
     }
-%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Logout</title>
-</head>
-<body>
-<h1>You have been logged out.</h1>
-<a href="login.jsp">Login again</a>
-</body>
-</html>

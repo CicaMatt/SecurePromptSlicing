@@ -53,6 +53,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Also, ensure that the `users` table in your database has at least two columns: `username` and `salted_hash`. You will need to add the Bouncy Castle library as a dependency for BCrypt if it's not already included in your project setup.

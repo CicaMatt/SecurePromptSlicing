@@ -47,6 +47,3 @@ public class SimpleLoginPage {
         System.out.println("Redirecting to: " + page);
     }
 }
-
-
-Note: This example assumes you have a MySQL database with a table named `users` that has columns `username` and `password`. The JDBC driver for MySQL needs to be included in your project's dependencies. Adjust the database URL, username, password, and other details as necessary for your setup.

@@ -65,6 +65,3 @@ public class EmailUnsubscriber {
         return 0;
     }
 }
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/yourDatabase"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, replace `"path/to/unsubscribeScript.sh"` with the path to your unsubscribe script.

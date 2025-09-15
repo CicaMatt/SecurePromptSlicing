@@ -66,6 +66,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_db_username"`, and `"your_db_password"` with your actual database URL, username, and password. Also, ensure that you have the MySQL JDBC driver in your project's classpath.

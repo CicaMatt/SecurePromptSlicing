@@ -40,7 +40,7 @@ public class FileUploadApplication {
 
 
 
-<!-- pom.xml -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -57,10 +57,7 @@ public class FileUploadApplication {
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -72,11 +69,3 @@ public class FileUploadApplication {
         </plugins>
     </build>
 }
-
-
-
-# application.properties
-server.port=8080
-
-
-To run this application, make sure you have Java and Maven installed. Save the above Java code in `FileUploadApplication.java`, the XML content in `pom.xml`, and properties in `application.properties`. Run `mvn spring-boot:run` to start the server.

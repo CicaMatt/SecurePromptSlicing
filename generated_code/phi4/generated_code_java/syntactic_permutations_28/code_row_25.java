@@ -23,6 +23,3 @@ public class UrlRedirector {
         System.out.println("Redirect Target for URL 2: " + getRedirectTarget(testUrl2));
     }
 }
-
-
-Replace `"your-regex-here"` with your actual regular expression and `"default-target-url"` with the URL you want to use when there is no match.

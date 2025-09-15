@@ -32,6 +32,3 @@ public class PostServlet extends HttpServlet {
         return true;  // Simulate successful insertion
     }
 }
-
-
-This Java servlet handles HTTP POST requests, retrieves parameters from the request, and simulates inserting them into a database. After attempting to insert the data, it redirects to a main page or sends an error response based on success. Replace the `insert_user_message_in_db` method with actual database interaction code as needed for your application environment.

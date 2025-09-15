@@ -92,6 +92,3 @@ public class WebAppLauncher {
         tomcat.getServer().await();
     }
 }
-
-
-**Note:** Replace `"C:/path/to/your/webapp"` with the actual path to your web application directory. The `insertUserMessageInDb` and `getMessageDisplayHtml` methods are mocks for demonstration purposes; you would need a real database connection logic in place of these examples.

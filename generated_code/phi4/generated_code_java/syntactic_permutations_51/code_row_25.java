@@ -57,16 +57,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-**Note:** This code uses Apache Commons Compress library to handle TAR and GZIP formats. You need to include the following dependency in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Make sure to replace `"/path/to/your/file.tar.gz"` with the actual path of your TAR.GZ file before running the program.

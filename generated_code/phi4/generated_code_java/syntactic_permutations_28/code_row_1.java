@@ -26,6 +26,3 @@ public class RedirectService {
         }
     }
 }
-
-
-Replace `"your-regex-here"` with your actual regular expression that matches the target URLs you're interested in.

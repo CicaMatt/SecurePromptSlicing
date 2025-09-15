@@ -68,21 +68,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code fully functional:
-
-1. Ensure you have a MySQL database set up with the following table:
-   
-   CREATE TABLE messages (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       username VARCHAR(255) NOT NULL,
-       message TEXT NOT NULL
-   );
-   
-
-2. Configure your `DB_URL`, `USER`, and `PASS` variables accordingly.
-
-3. Create two JSP files: `mainPage.jsp` (redirect target after posting a message) and `displayMessages.jsp` (to display messages).
-
-4. Deploy this code in a Java web application server like Apache Tomcat.

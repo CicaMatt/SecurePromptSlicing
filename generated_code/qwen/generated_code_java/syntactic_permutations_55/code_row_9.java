@@ -68,25 +68,3 @@ public class WebAppServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>WebAppServlet</servlet-name>
-        <servlet-class>WebAppServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>WebAppServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-        <url-pattern>/do_login</url-pattern>
-        <url-pattern>/index</url-pattern>
-        <url-pattern>/user_page</url-pattern>
-        <url-pattern>/admin_page</url-pattern>
-    </servlet-mapping>
-</web-app>

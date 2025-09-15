@@ -63,6 +63,3 @@ public class UploadServlet extends HttpServlet {
         // This is a placeholder for running the servlet in a server environment
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database details. Also, ensure that you have set up a table named `pdf_files` with columns `filename` and `filepath`.

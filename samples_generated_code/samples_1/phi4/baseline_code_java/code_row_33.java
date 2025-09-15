@@ -42,19 +42,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("<h1>File uploaded successfully!</h1>");
     }
 }
-
-
-To make this code runnable, ensure you have a servlet container like Apache Tomcat set up, and include the necessary dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency>
-</dependencies>
-
-
-Additionally, configure your `web.xml` or use annotations to map the servlet as shown in the code above.

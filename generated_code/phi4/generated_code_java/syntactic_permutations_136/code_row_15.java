@@ -35,6 +35,3 @@ public class CheckModServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-Ensure that you have the necessary setup to run a servlet-based application. This includes having a Java EE compatible server like Tomcat and the appropriate `web.xml` or using annotations for configuration as shown in the code.

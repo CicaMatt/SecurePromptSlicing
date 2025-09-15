@@ -38,6 +38,3 @@ public class StockTransaction {
         transaction.buy_stock("AAPL", 10); // Example usage
     }
 }
-
-
-**Note:** Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Ensure that you have the MySQL JDBC driver in your classpath.

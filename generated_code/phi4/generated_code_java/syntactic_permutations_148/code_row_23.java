@@ -52,6 +52,3 @@ public class MainPageServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-**Note:** The above code assumes you have a servlet environment set up, like Apache Tomcat, and that `mainPage.jsp` or `MainPageServlet` is the entry point for displaying messages. Adjust paths and logic to fit your actual setup.

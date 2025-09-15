@@ -50,6 +50,3 @@ public class PdfUploadServlet extends HttpServlet {
         response.sendRedirect("success.jsp"); // Redirect to a success page
     }
 }
-
-
-Make sure to replace `/path/to/uploads` with the actual path where you want to store uploaded files and update the database connection details (`DB_URL`, `USER`, `PASS`). Also, ensure your MySQL table `pdf_files` is created with at least one column named `file_path`.

@@ -51,24 +51,3 @@ public class FileUploadServlet extends HttpServlet {
         return "File Upload Servlet";
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload File</title>
-</head>
-<body>
-<h2>Upload a file:</h2>
-<form action="upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <br><br>
-    <button type="submit">Upload</button>
-</form>
-</body>
-</html>
-
-
-To run this application, you need a Java EE compatible server like Apache Tomcat or Jetty. Make sure to place the HTML file in the web application's root directory and configure your server accordingly.

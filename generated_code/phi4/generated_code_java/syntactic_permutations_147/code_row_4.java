@@ -57,6 +57,3 @@ public class StockOrderApp {
         System.out.println("Welcome to the Stock View Page!");
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Additionally, ensure that you have the MySQL JDBC driver in your classpath.

@@ -40,12 +40,3 @@ public class WebApp {
         }
     }
 }
-
-
-
-<!-- Add this dependency in your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.32</version>
-</dependency>

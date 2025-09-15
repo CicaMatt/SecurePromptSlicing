@@ -52,6 +52,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note:** Replace `jdbc:your_database_url`, `your_db_username`, and `your_db_password` with your actual database URL, username, and password. Ensure that the JDBC driver for your specific database is included in your project dependencies.

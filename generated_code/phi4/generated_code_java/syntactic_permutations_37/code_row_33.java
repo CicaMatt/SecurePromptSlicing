@@ -104,6 +104,3 @@ public class LoginPage extends javax.swing.JFrame {
         java.awt.Desktop.getDesktop().browse(java.net.URI.create("http://localhost/cant_login"));
     }
 }
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"password"` with your actual database URL, username, and password. Ensure the MySQL JDBC driver is included in your project's classpath.

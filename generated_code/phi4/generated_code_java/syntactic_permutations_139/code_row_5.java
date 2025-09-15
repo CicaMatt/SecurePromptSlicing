@@ -42,16 +42,3 @@ public class ModeratorChecker {
         return Optional.empty();
     }
 }
-
-
-**Note**: Ensure that you have the MySQL JDBC driver in your classpath. You can add it via Maven by including:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>
-
-
-Replace `your_database_name` with the actual name of your database. Ensure that your environment variables `DB_USERNAME` and `DB_PASSWORD` are set correctly.

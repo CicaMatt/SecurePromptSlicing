@@ -59,6 +59,3 @@ public class UnsubscribeService {
         return "User is not subscribed.";
     }
 }
-
-
-Make sure to replace `your_database`, `username`, and `password` with your actual database credentials, and ensure that the MySQL JDBC driver is available in your classpath.

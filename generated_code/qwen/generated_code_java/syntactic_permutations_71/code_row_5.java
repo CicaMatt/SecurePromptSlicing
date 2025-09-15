@@ -61,32 +61,3 @@ public class IndexServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-    <servlet>
-        <servlet-name>IndexServlet</servlet-name>
-        <servlet-class>IndexServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>IndexServlet</servlet-name>
-        <url-pattern>/index</url-pattern>
-    </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>FileUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-    
-    <welcome-file-list>
-        <welcome-file>index</welcome-file>
-    </welcome-file-list>
-</web-app>

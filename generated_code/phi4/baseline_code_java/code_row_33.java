@@ -25,10 +25,3 @@ public class RedirectServlet extends HttpServlet {
         // Typically, web applications are deployed to a full Java EE application server.
     }
 }
-
-
-To run this code as part of a Java web application:
-
-1. Include it in a project that has a servlet container (e.g., Apache Tomcat).
-2. Configure your `web.xml` or use annotations for servlet mapping if required by the container.
-3. Deploy and access through a URL like: `http://localhost:8080/YourAppName/redirect?url=http://example.com/somepage`.

@@ -46,14 +46,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven for managing dependencies -->
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.33</version>
-    </dependency>
-</dependencies>

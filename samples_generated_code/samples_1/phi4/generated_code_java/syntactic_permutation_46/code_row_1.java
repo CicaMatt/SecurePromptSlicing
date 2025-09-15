@@ -47,6 +47,3 @@ import javax.servlet.annotation.WebServlet;
 public class ImageServlet extends HttpServlet {
     // Existing code here...
 }
-
-
-Make sure the images are placed in a directory named `img` at the root context path of your web application.

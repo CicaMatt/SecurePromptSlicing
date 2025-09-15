@@ -24,21 +24,3 @@ public class RedirectApp {
         return pattern.matcher(url).matches();
     }
 }
-
-
-To run this code, make sure you have Javalin added as a dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.0</version>
-</dependency>
-
-
-Or, in your `build.gradle` if using Gradle:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.9.0'
-}

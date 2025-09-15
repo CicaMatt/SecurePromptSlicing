@@ -70,6 +70,3 @@ public class HelloDecoratorServlet extends HttpServlet {
         // ...
     }
 }
-
-
-**Note:** This is a simplified servlet code. In a real-world application, you'd use a framework like Spring or JSF for better template management and HTTP request handling. The `main` method and mock classes are included to allow the example to be run as a simple standalone Java program for demonstration purposes.

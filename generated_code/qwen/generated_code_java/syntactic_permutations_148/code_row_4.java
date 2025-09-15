@@ -58,22 +58,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-<!-- main.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Chat Room</title>
-</head>
-<body>
-<h1>Messages</h1>
-<div id="messages">
-    ${messages}
-</div>
-<form action="MessageServlet" method="post">
-    <input type="text" name="username" placeholder="Username" required/>
-    <textarea name="message" placeholder="Type your message here..." required></textarea>
-    <button type="submit">Send</button>
-</form>
-</body>
-</html>

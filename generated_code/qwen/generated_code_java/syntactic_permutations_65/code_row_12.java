@@ -57,20 +57,3 @@ public class FileUploadServlet extends HttpServlet {
         // This is just a placeholder, as Servlets are run on servers and not directly from the main method.
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h1>Upload PDF File</h1>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf"/>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

@@ -37,22 +37,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-// main.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Submit Your Message</h1>
-<form action="post" method="post">
-    Username: <input type="text" name="username"><br><br>
-    Message: <textarea name="message"></textarea><br><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
-
-
-Make sure to replace `"yourdatabase"`, `"dbuser"`, and `"dbpassword"` with your actual database details. Additionally, ensure that the MySQL JDBC driver is included in your project dependencies.

@@ -51,13 +51,3 @@ public class RegistrationForm {
         return hashedPassword;
     }
 }
-
-
-
--- SQL to create the users table in your database
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password_hash BINARY(64) NOT NULL,
-    salt BINARY(16) NOT NULL
-);

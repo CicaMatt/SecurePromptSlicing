@@ -58,24 +58,3 @@ public class ListenerServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat. Here are the steps to set it up:
-
-1. **Create a Java Web Application Project**: Use an IDE like IntelliJ IDEA or Eclipse and create a new Maven/Gradle project with a WAR packaging.
-
-2. **Add Dependencies**: Ensure your `pom.xml` (for Maven) includes dependencies for servlet API:
-   
-   <dependency>
-       <groupId>javax.servlet</groupId>
-       <artifactId>javax.servlet-api</artifactId>
-       <version>4.0.1</version>
-       <scope>provided</scope>
-   </dependency>
-   
-
-3. **Deploy the Application**: Package your application into a WAR file and deploy it to Tomcat.
-
-4. **Start Tomcat**: Run your Tomcat server, typically by executing `bin/startup.sh` (or `.bat` on Windows).
-
-5. **Test Your Endpoint**: Access `http://localhost:5000/yourAppName/listener?payload=Create` or any other payload to see the responses.

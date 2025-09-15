@@ -29,11 +29,3 @@ public class InfoServlet extends HttpServlet {
         // In practice, this would be deployed to a servlet container like Tomcat or Jetty.
     }
 }
-
-
-To run this code:
-
-1. You need to set up a web server that supports Servlets, such as Apache Tomcat or Jetty.
-2. Place the `InfoServlet` class in your web application's directory structure, typically under `src/main/java`.
-3. Configure your `web.xml` file to map the servlet URL pattern `/info` to this class, if not using annotations.
-4. Deploy and run your web application on the server.

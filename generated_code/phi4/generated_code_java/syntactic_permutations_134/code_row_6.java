@@ -59,6 +59,3 @@ public class HelloServlet extends HttpServlet {
         return escaped.toString();
     }
 }
-
-
-Make sure your environment is set up with a servlet container like Apache Tomcat to run this code. The `@WebServlet("/hello/*")` annotation maps all URLs of the form `/hello/username` to this servlet, which then processes and responds with an HTML-safe greeting message.

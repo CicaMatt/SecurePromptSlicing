@@ -66,19 +66,3 @@ public class TarExtractor {
         return signature[0] == (byte) 'B' && signature[1] == (byte) 'Z' && signature[2] == (byte) 'h';
     }
 }
-
-
-Make sure to add the Apache Commons Compress library dependency in your build tool configuration. For Maven, include:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-For Gradle:
-
-
-implementation 'org.apache.commons:commons-compress:1.21'

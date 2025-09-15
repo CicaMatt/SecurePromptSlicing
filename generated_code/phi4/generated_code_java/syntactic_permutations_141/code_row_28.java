@@ -42,31 +42,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:** To run this code, you need to include the Spring Boot and MySQL JDBC driver dependencies in your `pom.xml` file. Here's a sample configuration for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <scope>runtime</scope>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-Ensure you have a MySQL server running and replace `myDatabase`, `myUser`, and `myPassword` with your actual database name, user, and password.

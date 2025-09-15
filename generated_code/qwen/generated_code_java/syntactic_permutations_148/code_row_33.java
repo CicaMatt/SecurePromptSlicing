@@ -19,22 +19,3 @@ public class MessageServlet extends HttpServlet {
         // Actual database insertion logic should be implemented here
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Welcome to the Main Page</h1>
-<form action="MessageServlet" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username"><br><br>
-    <label for="message">Message:</label>
-    <textarea id="message" name="message"></textarea><br><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>

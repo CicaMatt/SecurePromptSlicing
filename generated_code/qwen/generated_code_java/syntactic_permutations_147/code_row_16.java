@@ -70,35 +70,3 @@ public class StockViewServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/stock_view.jsp").forward(request, response);
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock Orders</title>
-</head>
-<body>
-<h1>Stock Orders</h1>
-${orders}
-<a href="order_form.jsp">Place New Order</a>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>New Order</title>
-</head>
-<body>
-<h1>Place a New Order</h1>
-<form action="buy_order" method="post">
-    Stock Name: <input type="text" name="stockName"><br><br>
-    Quantity: <input type="number" name="quantity"><br><br>
-    <input type="submit" value="Submit Order">
-</form>
-<a href="stock_view.jsp">View Orders</a>
-</body>
-</html>

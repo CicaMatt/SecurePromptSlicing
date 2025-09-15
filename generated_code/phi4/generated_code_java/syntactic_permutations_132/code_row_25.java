@@ -40,20 +40,3 @@ public class HelloServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-
-<!-- src/main/webapp/templates/hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <%username%>!</h1>
-</body>
-</html>
-
-
-**Note:** Ensure that the `hello.html` file is placed in the `src/main/webapp/templates/` directory of your web application. This setup assumes you are using a Java servlet-based web application framework such as Apache Tomcat or any other compatible server for running Servlets.

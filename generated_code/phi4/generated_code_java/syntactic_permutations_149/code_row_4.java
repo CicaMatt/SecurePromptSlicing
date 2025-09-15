@@ -65,31 +65,3 @@ public class MessageServlet extends HttpServlet {
         return messages;
     }
 }
-
-
-
-<!-- display.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <% List<String> messages = (List<String>) request.getAttribute("messages");
-           if (messages != null) {
-               for (String msg : messages) { %>
-                   <li><%= msg %></li>
-            <%  }
-           } else { %>
-               <li>No messages to display.</li>
-        <%  } %>
-    </ul>
-</body>
-</html>
-
-
-Make sure to replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

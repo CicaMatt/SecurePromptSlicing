@@ -41,11 +41,6 @@ public class WebApp {
         try {
             // Simulate reading from a file
             String templateContent = """
-                <html>
-                <body>
-                    Hello, {{username}}!
-                </body>
-                </html>
                 """;
             for (Map.Entry<String, Object> entry : model.entrySet()) {
                 templateContent = templateContent.replace("{{" + entry.getKey() + "}}", entry.getValue().toString());

@@ -53,38 +53,3 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <servlet-class>RegistrationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>RegistrationServlet</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-</web-app>
-
-
-
-<!-- register.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form action="register" method="post">
-        Name: <input type="text" name="name"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>

@@ -27,13 +27,3 @@ public class ImageServer {
         });
     }
 }
-
-
-Make sure you have Javalin and its dependencies in your project. You can add them using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.3.2</version>
-</dependency>

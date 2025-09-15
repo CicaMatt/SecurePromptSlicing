@@ -29,6 +29,3 @@ public class CheckModServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-Note: To run this code, you need a servlet container like Apache Tomcat. The `isCorrectCredentials` method should be replaced with the actual logic for checking user credentials in your application.

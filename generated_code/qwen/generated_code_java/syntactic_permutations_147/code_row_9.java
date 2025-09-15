@@ -33,37 +33,3 @@ public class BuyOrderServlet extends HttpServlet {
         response.sendRedirect("stock_view.jsp");
     }
 }
-
-
-
-<!-- stock_view.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-    <h1>Stock Orders</h1>
-    <!-- Add code here to display stock orders from the database if needed -->
-</body>
-</html>
-
-
-
-<!-- buy_stock.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Buy Stock</h1>
-    <form action="buy_order" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br><br>
-        <input type="submit" value="Submit Order">
-    </form>
-</body>
-</html>

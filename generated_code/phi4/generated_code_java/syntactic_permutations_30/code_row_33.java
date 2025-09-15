@@ -20,6 +20,3 @@ public class RedirectServlet extends HttpServlet {
     }
 
 }
-
-
-Make sure to configure this servlet in your web application deployment descriptor (`web.xml`) or using the `@WebServlet` annotation as shown, and deploy it in a compatible servlet container like Apache Tomcat.

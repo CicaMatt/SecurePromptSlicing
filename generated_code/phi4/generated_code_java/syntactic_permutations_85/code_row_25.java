@@ -98,6 +98,3 @@ public class TemperatureApi {
         }
     }
 }
- 
-
-Note: Replace `"username"` and `"password"` with the actual database username and password. Adjust the SQL query according to your table structure if necessary.

@@ -38,6 +38,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_username`, and `your_password` with your actual database details. Ensure that the MySQL JDBC driver is included in your project's classpath.

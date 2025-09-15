@@ -25,6 +25,3 @@ public class FileWithPermissions {
         }
     }
 }
-
-
-This code assumes a Unix-like operating system for setting file permissions. If running on Windows, the approach to set restrictive permissions would differ.

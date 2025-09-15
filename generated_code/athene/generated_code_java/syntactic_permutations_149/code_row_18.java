@@ -33,21 +33,3 @@ public class DisplayServlet extends HttpServlet {
         return new java.util.ArrayList<>();
     }
 }
-
-
-
-<!-- /WEB-INF/views/display.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <% for (java.util.Map<String, String> message : (java.util.List<java.util.Map<String, String>>) request.getAttribute("messages")) { %>
-            <li><%= message.get("username") %> - <%= message.get("message") %></li>
-        <% } %>
-    </ul>
-</body>
-</html>

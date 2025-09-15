@@ -21,26 +21,3 @@ public class UserInfoApp {
         return "Username: " + username + ", Email: " + email + ", SSN (last 4): " + ssn.substring(ssn.length() - 4);
     }
 }
-
-
-Make sure you have the following in your `pom.xml` for a Spring Boot application:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-Save the Java code in a file named `UserInfoApp.java` and ensure you have Maven set up to build and run this Spring Boot application.

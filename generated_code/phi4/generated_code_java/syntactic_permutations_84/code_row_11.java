@@ -53,28 +53,3 @@ public class PayloadServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-This code uses the Jetty web server to handle HTTP requests. It listens on port 5000 and checks for a `payload` parameter in the request. If present, it parses the payload as YAML and performs the specified checks. Make sure you have the necessary dependencies in your project:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.14.0</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

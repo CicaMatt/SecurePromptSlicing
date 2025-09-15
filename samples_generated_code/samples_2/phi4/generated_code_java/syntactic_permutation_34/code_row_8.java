@@ -58,6 +58,3 @@ public class LoginApp {
         }
     }
 }
-
-
-**Note**: Replace `yourDatabaseName`, `yourUsername`, and `yourPassword` with your actual database name, username, and password. Ensure that you have the MySQL JDBC driver in your classpath or build path for this code to run successfully.

@@ -52,11 +52,3 @@ sourceCompatibility = '17'
 repositories {
     mavenCentral()
 }
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-
-This code sets up a simple Spring Boot application with a single route `/info` that returns user information stored in the session.

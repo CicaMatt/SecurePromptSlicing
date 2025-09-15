@@ -26,11 +26,3 @@ public class CheckNameServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a Java servlet container like Apache Tomcat set up.
-2. Place the above class in your web application's `src` directory under the appropriate package.
-3. Configure your `web.xml` or use annotations for servlet mapping (already done with `@WebServlet("/checkName")`).
-4. Deploy and run your web application on a server like Tomcat.

@@ -34,36 +34,9 @@ public class LoginServlet extends HttpServlet {
 }
 
 // login.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 // session.jsp
-<%@ page import="javax.servlet.http.HttpSession" %>
-<html>
-<head><title>Session Page</title></head>
-<body>
-    <% 
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("user") != null) {
-            out.println("<h1>Welcome, " + session.getAttribute("user") + "</h1>");
-            out.println("<a href='logout'>Logout</a>");
-        } else {
-            response.sendRedirect("login.html");
-        }
-    %>
-</body>
-</html>
+
 
 // Logout Servlet
 @WebServlet("/logout")
@@ -80,8 +53,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 }
-
-
-To run this code:
-1. Place these files in a Java web application project.
-2. Ensure you have the necessary server setup like Apache Tomcat or any other servlet container to deploy and test your application.

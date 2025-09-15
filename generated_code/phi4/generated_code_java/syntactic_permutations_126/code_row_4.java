@@ -43,6 +43,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-Make sure to include the necessary Java HTTP server library (`com.sun.net.httpserver`) in your environment or classpath. This code can be executed directly if you have a compatible JDK installed.

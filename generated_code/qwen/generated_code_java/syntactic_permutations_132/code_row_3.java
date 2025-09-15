@@ -18,17 +18,7 @@ public class HelloWorld {
 
 
 
-<!-- src/main/resources/spark/template/hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>
+
 
 
 
@@ -53,27 +43,3 @@ public class HelloWorld {
         }, new MustacheTemplateEngine());
     }
 }
-
-
-
-<!-- pom.xml -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>HelloWorldApp</groupId>
-    <artifactId>HelloWorldApp</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-core</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-template-mustache</artifactId>
-            <version>2.9.3</version>
-        </dependency>
-    </dependencies>
-</project>

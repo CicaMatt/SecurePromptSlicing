@@ -53,8 +53,3 @@ public class LoginServlet extends HttpServlet {
         // This is just to demonstrate a standalone environment. Servlets are typically run in a container.
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_username`, and `your_db_password` with your actual database name, username, and password.
-
-This code assumes you have JSP files named `success.jsp`, `cant_login.jsp`, and `internal_server_error.jsp` for redirection. Also, ensure you have the MySQL JDBC driver in your classpath.

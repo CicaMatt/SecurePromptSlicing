@@ -37,16 +37,3 @@ public class Main {
         return render_response_from_env(request, cfg);
     }
 }
-
-
-
-<!-- src/main/resources/freemarker/hello.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

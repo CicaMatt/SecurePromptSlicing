@@ -64,26 +64,7 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
 
-    <c:if test="${not empty param.error}">
-        <p style="color:red;">${param.error}</p>
-    </c:if>
-</body>
-</html>
 
 
 
@@ -114,19 +95,7 @@ public class DashboardServlet extends HttpServlet {
 
 
 
-<!-- dashboard.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard!</h2>
-    <p>You are logged in as: ${sessionScope.user}</p>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
 
 
 
@@ -153,8 +122,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-Ensure that you have the necessary JDBC driver in your project's classpath and the database with `users` table properly set up. Also, update the database URL, username, and password as per your MySQL setup. The `dashboard.jsp` file should be protected to ensure only authenticated users can access it.
-
-This code assumes a JSP-based front-end and uses Java Servlets for handling HTTP requests. You will need to configure this in a servlet container like Apache Tomcat.

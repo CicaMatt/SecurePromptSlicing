@@ -56,34 +56,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- register.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form action="register" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
-
-
-
-<!-- success.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Success</title>
-</head>
-<body>
-    <h2>Registration Successful!</h2>
-</body>
-</html>

@@ -60,6 +60,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-Note: Before running the code, replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Ensure that you have a table named `subscribers` in your database with at least an `email` column. Also, ensure that you have added MySQL JDBC Driver to your project's classpath or dependencies if using Maven/Gradle for this code to work correctly.

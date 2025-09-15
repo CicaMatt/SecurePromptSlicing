@@ -59,6 +59,3 @@ public class UnsubscribeServlet extends HttpServlet {
         // This could involve calling an external API or updating another table
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database details. Additionally, implement the `unsubscribeUser` method according to how you manage your mailing lists.

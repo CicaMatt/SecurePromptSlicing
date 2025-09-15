@@ -25,6 +25,3 @@ public class WebApp {
         return "MyWebAppServer";
     }
 }
-
-
-This Java code sets up a simple web application framework that connects to a MySQL database and defines functions for obtaining the database connection and server name. Make sure to replace `your_database`, `username`, and `password` with your actual database details.

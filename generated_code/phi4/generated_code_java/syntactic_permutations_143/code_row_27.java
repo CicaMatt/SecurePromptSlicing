@@ -53,6 +53,3 @@ public class UnsubscribeServlet extends HttpServlet {
         // For testing purposes, you can use a main method to simulate the servlet.
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that your MySQL JDBC driver is included in your project's classpath.

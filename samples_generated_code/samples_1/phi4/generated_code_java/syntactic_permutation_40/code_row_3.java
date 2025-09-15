@@ -114,6 +114,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-**Note**: The `HttpServer` class is part of the JDK and not meant for full-featured web applications. For production-grade apps, consider using frameworks like Spring Boot or Java EE with a suitable server like Tomcat or Jetty. This example simulates session handling in a very basic manner; real-world applications should use more robust solutions for session management.

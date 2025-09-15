@@ -22,6 +22,3 @@ public class SimpleScript {
         }
     }
 }
-
-
-**Note:** Replace `your_database_name`, `your_username`, `your_password`, `your_table_name`, and the column names with your actual database details. Make sure you have the MySQL JDBC driver in your classpath.

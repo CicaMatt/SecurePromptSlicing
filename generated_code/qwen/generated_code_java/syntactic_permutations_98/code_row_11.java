@@ -114,6 +114,3 @@ public class RegistrationPage extends JFrame {
         });
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. Replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure that a table named `users` exists with columns `username` and `password`.

@@ -54,26 +54,3 @@ public class StockViewServlet extends HttpServlet {
         response.getWriter().write("Stock view page");
     }
 }
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        <label for="stockName">Stock Name:</label><br>
-        <input type="text" id="stockName" name="stockName"><br>
-        
-        <label for="quantity">Quantity:</label><br>
-        <input type="number" id="quantity" name="quantity"><br><br>
-
-        <input type="submit" value="Buy Stock">
-    </form>
-</body>
-</html>
-
-
-Ensure you have the MySQL JDBC driver in your classpath and replace `"your_database"`, `"username"`, and `"password"` with your actual database details.

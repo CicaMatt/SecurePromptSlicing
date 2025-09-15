@@ -54,16 +54,3 @@ public class UnzipTarArchive {
         }
     }
 }
-
-
-Note: This code requires the Apache Commons Compress library. You can add it to your project via Maven by including:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download the jar from [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/) and add it to your project's classpath manually.

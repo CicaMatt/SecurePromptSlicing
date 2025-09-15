@@ -46,21 +46,3 @@ public class HttpDecorator {
         }
     }
 }
-
-
-Make sure to have a file named `hello.html` in the same directory as your Java program. The content of `hello.html` should look like this:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {username}!
-</body>
-</html>
-
-
-This Java program sets up an HTTP server that listens for requests on `/hello/<username>` and returns a rendered HTML template with the username included.

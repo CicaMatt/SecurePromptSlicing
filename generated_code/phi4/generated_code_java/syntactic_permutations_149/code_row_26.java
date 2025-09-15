@@ -22,16 +22,3 @@ public class Main {
         System.out.println("Inserting into DB: " + "Username: " + username + ", Message: " + message);
     }
 }
-
-
-Make sure you have Javalin in your project dependencies to run this code:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.1.0</version> <!-- Use the latest version -->
-</dependency>
-
-
-This code uses Javalin, a lightweight web framework for Java. The `insertUserMessageInDB` function is a placeholder; you will need to implement actual database interaction according to your setup.

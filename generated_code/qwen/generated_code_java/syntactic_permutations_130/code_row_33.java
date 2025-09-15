@@ -39,15 +39,3 @@ public class Main {
         return render_response_from_env(env, request, response);
     }
 }
-
-
-
-<!-- src/main/resources/templates/hello.ftl -->
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

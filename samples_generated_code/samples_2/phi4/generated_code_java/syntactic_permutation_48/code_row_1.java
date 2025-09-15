@@ -51,16 +51,3 @@ public class ImgServer {
         }
     }
 }
-
-
-Make sure to include the Spark Java library in your project dependencies. For example, if you're using Maven, add:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-If you're using another dependency management tool, adjust accordingly to include Spark Java.

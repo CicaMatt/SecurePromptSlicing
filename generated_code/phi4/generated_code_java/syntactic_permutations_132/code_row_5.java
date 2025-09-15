@@ -45,21 +45,3 @@ public class HttpDecoratorExample {
         }
     }
 }
-
-
-To run this code, ensure you have a file named `hello.html` in the same directory as your Java program with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>
-
-
-This code sets up an HTTP server that listens on port 8000 and handles requests to the `/hello/<username>` URL by rendering a template with the username.

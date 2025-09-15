@@ -30,6 +30,3 @@ public class ApiServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: To run this code, you will need a servlet container like Apache Tomcat. Place the above Java file in your web application's `src` directory, ensure the appropriate dependencies are available (e.g., Servlet API), and configure your project accordingly to deploy it as a WAR file.

@@ -76,6 +76,3 @@ public class CheckAndUnsubscribe {
         }
     }
 }
-
-
-**Note:** Replace `DB_URL`, `USER`, `PASS`, and the script path in `callUnsubscribeScript` with actual values. Ensure that your database driver is correctly set up in your project's classpath.

@@ -36,6 +36,3 @@ public class StockBuyer {
         System.out.println("Buying stock: " + stockName);
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/stockdb"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath.

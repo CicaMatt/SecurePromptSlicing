@@ -49,30 +49,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Additionally, ensure your web application is configured to use a servlet container like Apache Tomcat. You also need to set up the database schema as follows:
-
-
-CREATE DATABASE IF NOT EXISTS webapp;
-
-USE webapp;
-
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
-
-
-Make sure you have `bcrypt` library in your project's dependencies. You can add it using Maven by including:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Ensure that the database URL, username, and password are configured correctly as per your setup in `DriverManager.getConnection`.

@@ -44,16 +44,3 @@ public class WebApp {
         }
     }
 }
-
-
-
-<!-- This should be placed in src/main/resources/templates/template.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

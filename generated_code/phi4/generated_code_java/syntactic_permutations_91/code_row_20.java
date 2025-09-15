@@ -67,6 +67,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this servlet, ensure you have a MySQL database running locally with a table named `users` having columns `username` and `password`. Adjust the `DB_URL`, `USER`, and `PASS` constants to match your database configuration. Also, set up a JSP file named `registration_success.jsp` for successful registration redirection.

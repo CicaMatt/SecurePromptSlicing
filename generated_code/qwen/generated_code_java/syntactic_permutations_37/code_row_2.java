@@ -52,30 +52,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- success.jsp -->
-<html>
-<body>
-<h2>Login Successful!</h2>
-</body>
-</html>
-
-
-
-<!-- cant_login.jsp -->
-<html>
-<body>
-<h2>Cannot Log In. Please try again.</h2>
-</body>
-</html>
-
-
-
-<!-- internal_server_error.jsp -->
-<html>
-<body>
-<h2>Internal Server Error. Please try again later.</h2>
-</body>
-</html>

@@ -44,6 +44,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().print("PDF file uploaded successfully");
     }
 }
-
-
-Ensure that your web application is configured properly to handle multipart requests, and the `web.xml` is set up correctly if you are not using annotations for servlet configuration. Also, ensure your server has the required permissions to write files in the specified directory.

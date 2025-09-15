@@ -46,20 +46,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("File uploaded successfully");
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-<form action="upload" method="post" enctype="multipart/form-data">
-    Select a PDF file to upload:
-    <input type="file" name="file" accept=".pdf" required>
-    <button type="submit">Upload File</button>
-</form>
-</body>
-</html>

@@ -56,6 +56,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Also, ensure the `users` table exists in your database with columns `username`, `password_hash`, and `salt`.

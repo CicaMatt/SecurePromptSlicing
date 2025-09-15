@@ -73,6 +73,3 @@ public class Main {
         System.out.println("Setup complete. Run this in a Java EE environment with servlet support.");
     }
 }
-
-
-**Note**: For running the code, you need to deploy it on a server that supports servlets such as Apache Tomcat or any other compatible Servlet container. This example uses a simple `Map` for demonstration purposes to simulate database storage. In a real-world application, replace this with actual database interactions.

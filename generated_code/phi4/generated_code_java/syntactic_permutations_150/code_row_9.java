@@ -27,24 +27,3 @@ public class MessageServlet extends HttpServlet {
         return true;
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Submit Your Message</h1>
-<form action="submitMessage" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
-
-
-Note: The database connection and actual insert logic are not included in the `insertUserMessageInDb` method. In a real-world application, you would use JDBC or another database interaction library to connect to your database and execute an INSERT statement with prepared statements to avoid SQL injection.

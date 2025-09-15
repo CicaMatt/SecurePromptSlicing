@@ -15,18 +15,3 @@ public class WebApp {
         });
     }
 }
-
-
-To run this code:
-1. Ensure you have Java installed on your system.
-2. Add Javalin as a dependency in your project. If using Maven, add the following to `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.10.0</version>
-</dependency>
-
-
-3. Compile and run your Java application.

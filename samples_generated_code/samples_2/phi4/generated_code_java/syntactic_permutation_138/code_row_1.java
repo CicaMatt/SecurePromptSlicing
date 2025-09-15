@@ -61,18 +61,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Dependencies:**
-- Ensure you have the MySQL JDBC driver in your classpath. You can include it using Maven or download it manually.
-  
-**Maven Dependency:**
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database details. Ensure the table structure matches the query used in the code.

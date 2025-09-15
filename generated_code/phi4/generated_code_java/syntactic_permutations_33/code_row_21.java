@@ -21,24 +21,3 @@ public class RedirectApp {
         }
     }
 }
-
-
-To make this code runnable, you need to set up a Spring Boot project. You can do this using Spring Initializr (https://start.spring.io/) by selecting Web as the dependency.
-
-1. Create a new directory for your project and navigate into it.
-2. Use `Spring Initializr` to generate a basic Spring Boot project with Web starter.
-3. Replace the generated `RedirectApp.java` file with the code above.
-4. Run the application using `mvn spring-boot:run` or by running the main method directly if you are using an IDE.
-
-Ensure your `pom.xml` includes the necessary dependencies for Spring Boot and web support:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-
-This setup will create a simple web application that listens on `/redirect` and checks if the provided URL contains `example.com`.

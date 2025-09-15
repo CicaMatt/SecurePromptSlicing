@@ -70,9 +70,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** 
-- You need to configure the database URL (`url`), username (`dbUsername`), and password (`dbPassword`) according to your setup.
-- Ensure that you have a `users` table in your database with columns `username` and `password`.
-- The MySQL Connector/J driver should be included in your project's dependencies.

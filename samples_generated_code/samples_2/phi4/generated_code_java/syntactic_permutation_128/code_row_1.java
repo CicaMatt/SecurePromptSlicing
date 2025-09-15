@@ -80,6 +80,3 @@ public class HttpServer {
         return "Guest";
     }
 }
-
-
-This Java code sets up a simple HTTP server that listens for incoming connections on port 8080. When it receives a request, it reads the request body to extract a username and responds with "hello [username]". If no username is provided, it defaults to "Guest".

@@ -79,6 +79,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-**Note:** This code requires the SQLite JDBC driver to be available in your classpath. You can download it from [SQLite JDBC](https://github.com/xerial/sqlite-jdbc).

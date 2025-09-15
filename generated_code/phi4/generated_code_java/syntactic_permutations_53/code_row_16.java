@@ -37,6 +37,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To make this servlet functional, ensure you have the necessary JSP files (`login.jsp`, `user.jsp`, and `admin.jsp`) in your web application's directory structure. Additionally, configure your `web.xml` or use annotations to map this servlet to a URL pattern as needed for your deployment environment.

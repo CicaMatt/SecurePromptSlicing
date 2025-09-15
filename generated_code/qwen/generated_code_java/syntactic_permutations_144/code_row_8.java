@@ -43,6 +43,3 @@ public class EmailUnsubscribe {
         }
     }
 }
-
-
-Make sure to replace `"path/to/your/script.sh"` with the actual path to your script and `"example@example.com"` with the email you want to check.

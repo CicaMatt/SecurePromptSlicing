@@ -22,6 +22,3 @@ public class UrlRedirector {
         System.out.println(getRedirectUrl(testUrl2));
     }
 }
-
-
-Replace `"your-regex-pattern-here"` with the actual regular expression pattern you intend to use for matching URLs.

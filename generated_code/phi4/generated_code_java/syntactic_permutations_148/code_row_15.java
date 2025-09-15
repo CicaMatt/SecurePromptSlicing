@@ -81,6 +81,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-For this code to work, ensure you have a MySQL database set up with the appropriate `messages` table schema and that your JSP files (`main.jsp` and `displayMessages.jsp`) are properly configured. Additionally, include any necessary JDBC driver dependencies in your project configuration or build file (like Maven's `pom.xml`).

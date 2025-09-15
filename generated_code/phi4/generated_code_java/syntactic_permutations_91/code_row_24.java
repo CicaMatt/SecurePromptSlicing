@@ -52,11 +52,3 @@ public class RegisterServlet extends HttpServlet {
         return sb.toString();
     }
 }
-
-
-Additionally, ensure that your web application includes:
-
-1. A `registrationSuccess.html` file to redirect users upon successful registration.
-2. The MySQL connector JAR in your classpath (e.g., `mysql-connector-java.jar`).
-
-This servlet assumes you have a database setup with a table named `users` having columns `username` and `password`. Replace `"your_database_name"`, `"your_db_username"`, and `"your_db_password"` with appropriate values for your environment.

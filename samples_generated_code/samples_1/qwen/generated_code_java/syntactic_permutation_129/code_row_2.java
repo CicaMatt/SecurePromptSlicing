@@ -42,15 +42,3 @@ public class Main {
         return render_response_from_env(cfg, request);
     }
 }
-
-
-
-<!-- This is the hello.ftl file which should be placed in src/main/resources/templates -->
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

@@ -57,6 +57,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to include the necessary configuration in your `web.xml` or use annotations as shown above, and ensure that the servlet container (like Apache Tomcat) is properly set up to run this code.

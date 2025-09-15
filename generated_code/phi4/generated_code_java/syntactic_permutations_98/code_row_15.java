@@ -60,6 +60,3 @@ public class RegistrationServlet extends HttpServlet {
         // Set up a basic server or testing framework if required
     }
 }
-
-
-Note: This code assumes you have set up a MySQL database with a table named `users` that has columns `username` and `password`. You will need to replace the database connection details (`DB_URL`, `USER`, `PASS`) with your actual database credentials. Also, ensure you have the necessary MySQL JDBC driver in your classpath.

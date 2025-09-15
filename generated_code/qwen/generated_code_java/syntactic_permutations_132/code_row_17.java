@@ -35,16 +35,3 @@ public class HelloWorldApp {
         return contentBuilder.toString();
     }
 }
-
-
-hello.html
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>

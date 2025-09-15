@@ -69,21 +69,3 @@ public class StockViewServlet extends HttpServlet {
         response.getWriter().write("Stock View Page");
     }
 }
-
-
-In addition to this servlet code, ensure your `web.xml` is configured if not using annotations for servlet mapping, and that MySQL JDBC driver is included in your project dependencies. Also, create a form for submitting data as follows:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Buy Order Form</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        Stock Name: <input type="text" name="stock_name"><br>
-        Quantity: <input type="number" name="quantity"><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

@@ -33,6 +33,3 @@ class InfoController {
                 + "</body></html>";
     }
 }
-
-
-This code uses Spring Boot to create a simple web application. It defines a single route `/info` that accepts `username`, `email`, and `ssn` as query parameters and returns an HTML page displaying the requested information. Make sure you have Spring Boot dependencies configured in your build system (like Maven or Gradle) to run this code.

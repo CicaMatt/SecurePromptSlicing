@@ -62,6 +62,3 @@ public class EmailChecker {
         return exitCode == 0 ? 1 : 0; // Assuming the script returns 0 on success.
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, `your_password`, and `path/to/unsubscribe_script.sh` with your actual database details and script path.

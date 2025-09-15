@@ -68,6 +68,3 @@ public class Registration {
         }
     }
 }
-
-
-**Note**: Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Additionally, ensure you have the Bcrypt library (e.g., `jbcrypt`) in your classpath to hash passwords using BCrypt. You may need to create a table named `users` with appropriate columns (`first_name`, `last_name`, `email`, `username`, `password`).

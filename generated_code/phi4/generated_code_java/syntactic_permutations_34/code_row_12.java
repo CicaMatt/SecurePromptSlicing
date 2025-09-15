@@ -62,40 +62,10 @@ INSERT INTO users (username, password) VALUES ('testuser', 'testpass');
 
 // login.jsp
 /* 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <% if (request.getParameter("error") != null) { %>
-        <p>Invalid username or password.</p>
-    <% } %>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 */
 
 // dashboard.jsp
 /* 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard</h2>
-    <p>Hello, <%= request.getSession().getAttribute("user") %></p>
-    <a href="logout">Logout</a>
-</body>
-</html>
 */
 
 // LogoutServlet.java

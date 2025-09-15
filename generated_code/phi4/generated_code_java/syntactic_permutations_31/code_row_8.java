@@ -27,6 +27,3 @@ public class RedirectServlet extends HttpServlet {
         System.out.println("Deploy this servlet to a Java EE container.");
     }
 }
-
-
-**Note:** This code is intended to run as part of a web application within a Java EE container like Apache Tomcat. The `main` method indicates that the servlet should be deployed rather than executed standalone, and it does not start any server itself.

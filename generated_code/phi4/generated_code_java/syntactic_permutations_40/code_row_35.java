@@ -78,9 +78,3 @@ public class SimpleWebApp {
     }
 
 }
-
-
-To test this application:
-1. Start the server.
-2. Simulate a session by calling `createSession("some-session-id", "JohnDoe", "1234")`.
-3. Access `http://localhost:8000/info` with an additional header `Session-Id: some-session-id`.

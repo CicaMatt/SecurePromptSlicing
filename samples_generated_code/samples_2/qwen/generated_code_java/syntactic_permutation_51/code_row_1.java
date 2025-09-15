@@ -31,19 +31,3 @@ public class TarExtractor {
         }
     }
 }
-
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
-// To run this code, you need to include the Apache Commons Compress library.
-// You can add it as a Maven dependency in your pom.xml:
-//
-// <dependency>
-//     <groupId>org.apache.commons</groupId>
-//     <artifactId>commons-compress</artifactId>
-//     <version>1.21</version>
-// </dependency>
-//
-// Or download the jar and add it to your project's classpath manually.
-//
-// Note: Replace "path/to/your/archive.tar.gz" with the actual path to your tar archive file.

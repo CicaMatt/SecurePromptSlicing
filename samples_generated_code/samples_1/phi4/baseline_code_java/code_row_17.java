@@ -40,9 +40,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Note:
-- Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.
-- Ensure that the MySQL JDBC driver is included in your classpath. You can download it from the [MySQL Connector/J website](https://dev.mysql.com/downloads/connector/j/).
-- The `jbcrypt` library is used for hashing passwords; ensure it's available in your project by adding its dependency to your build tool or downloading it manually.

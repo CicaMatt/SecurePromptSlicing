@@ -43,13 +43,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-Note: The above code uses the Apache Commons Compress library for handling Tar archives. Ensure you include this dependency in your project:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>

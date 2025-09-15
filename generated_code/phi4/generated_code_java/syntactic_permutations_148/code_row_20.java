@@ -74,6 +74,3 @@ public class MessageBoard {
         }
     }
 }
-
-
-Make sure you have the SQLite JDBC driver in your classpath to run this code. You can download it from [here](https://www.sqlite.org/download.html).

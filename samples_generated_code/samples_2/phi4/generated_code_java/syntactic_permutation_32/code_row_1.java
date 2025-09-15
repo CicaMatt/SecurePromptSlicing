@@ -45,29 +45,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code:
-1. Ensure you have Java and Maven installed.
-2. Add `eclipse.jetty:jetty-server` as a dependency in your `pom.xml`.
-3. Compile and run the application.
-
-Example `pom.xml`:
-
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>simple-web-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>11.0.12</version>
-        </dependency>
-    </dependencies>
-</project>

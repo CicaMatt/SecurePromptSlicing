@@ -74,17 +74,3 @@ public class ProductService {
         System.out.println("Server started on port 8000");
     }
 }
-
-
-**Dependencies:**
-- `snakeyaml`: You need to include the SnakeYAML library in your project. If you're using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.30</version>
-</dependency>
-
-
-- Make sure to run this code on a system where `com.sun.net.httpserver.HttpServer` is available (Java SE 6 or later).

@@ -73,9 +73,3 @@ public class Registration {
         return stringBuffer.toString();
     }
 }
-
-
-**Note:** 
-1. Ensure that you have a MySQL database set up with the necessary table (`users`) and columns (`username`, `password`, `last_name`, `email`).
-2. Replace `DB_URL`, `DB_USER`, and `DB_PASSWORD` with your actual database credentials.
-3. Add the MySQL JDBC driver to your project's classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) or use a build tool like Maven or Gradle to manage dependencies.

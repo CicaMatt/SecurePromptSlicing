@@ -41,6 +41,3 @@ public class ImageServlet extends HttpServlet {
         System.out.println("ImageServlet ready to be deployed.");
     }
 }
-
-
-Note: To run this code in an actual Java web application, you need to configure it properly in your `web.xml` or use annotations and ensure that the servlet is part of a running servlet container like Apache Tomcat. The file path `/images/` should exist within your web application context directory.

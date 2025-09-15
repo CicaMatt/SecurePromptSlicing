@@ -48,22 +48,3 @@ public class RegistrationForm {
         return skf.generateSecret(spec).getEncoded();
     }
 }
-
-
-
--- SQL to create the users table
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARBINARY(256) NOT NULL,
-    salt VARBINARY(16) NOT NULL
-);
-
-
-
-<!-- pom.xml dependency for MySQL Connector -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>

@@ -57,6 +57,3 @@ public class BuyStockServlet extends HttpServlet {
         response.sendRedirect("buy_stock_form.jsp");
     }
 }
-
-
-Make sure to replace `"yourdatabase"`, `"yourusername"`, and `"yourpassword"` with your actual database name, username, and password. Additionally, ensure that `BuyOrders` table exists in your database with appropriate columns (`username`, `stock_name`, `stock_quantity`).

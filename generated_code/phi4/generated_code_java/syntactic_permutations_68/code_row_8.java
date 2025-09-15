@@ -45,6 +45,3 @@ public class ImageUploader {
         uploadImage(imagePath, imageName);
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASSWORD` with your actual database URL, username, and password. Additionally, ensure the MySQL JDBC driver is available in your classpath.

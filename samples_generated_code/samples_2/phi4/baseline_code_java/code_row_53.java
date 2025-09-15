@@ -59,20 +59,3 @@ public class Main {
         return sb.toString();
     }
 }
-
-
-To run this code:
-
-1. Make sure you have Javalin and H2 Database libraries in your classpath.
-2. Create an H2 database file `test` with a table named `messages`.
-3. The `messages` table should have columns: `id`, `username`, and `message`. You can create it using the following SQL:
-
-
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255),
-    message TEXT
-);
-
-
-4. Run the Java application.

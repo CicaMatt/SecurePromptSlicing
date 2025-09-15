@@ -33,9 +33,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this servlet:
-1. You need a Java web server like Apache Tomcat.
-2. Create a `web.xml` configuration file and map the servlet to a URL pattern.
-3. Deploy the application on the server.

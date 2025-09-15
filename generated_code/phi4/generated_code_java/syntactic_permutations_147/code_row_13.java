@@ -58,37 +58,3 @@ public class IndexServlet extends HttpServlet {
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- index.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Enter Order Details</h1>
-    <form action="buy_order" method="post">
-        Stock Symbol: <input type="text" name="stock_symbol"><br><br>
-        Quantity: <input type="number" name="quantity"><br><br>
-        <input type="submit" value="Submit Order">
-    </form>
-</body>
-</html>
-
-
-
-<!-- stock_view.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-    <h1>Order Submitted Successfully!</h1>
-</body>
-</html>
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure you have the MySQL JDBC driver in your project's classpath.

@@ -28,19 +28,3 @@ public class WebApp {
         server.join();
     }
 }
-
-
-To run this code, you need to include the Jetty library in your project dependencies. You can add it using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

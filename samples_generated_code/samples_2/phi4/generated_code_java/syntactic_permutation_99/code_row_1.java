@@ -35,24 +35,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Dependencies:**
-- You need to add the `jBCrypt` library for hashing passwords. If you're using Maven, include:
-  
-  <dependency>
-      <groupId>org.mindrot</groupId>
-      <artifactId>jbcrypt</artifactId>
-      <version>0.4</version>
-  </dependency>
-  
-- Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.
-- Ensure the MySQL JDBC driver is included in your project's classpath. If using Maven, include:
-  
-  <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.26</version>
-  </dependency>
-  
-- Make sure you have a table named `users` with columns `username` and `password`. Adjust the SQL query if your schema is different.

@@ -26,19 +26,3 @@ public class SimpleWebApp {
         ctx.result(responseHtml);
     }
 }
-
-
-Note: This code uses Javalin, a simple Java and Kotlin web framework. You need to include the Javalin dependency in your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-Or, include it in your `build.gradle` if you're using Gradle:
-
-
-implementation 'io.javalin:javalin:5.6.0'

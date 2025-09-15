@@ -76,6 +76,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to configure your `web.xml` or use the `@WebServlet` annotation as shown, and replace the database connection details (`jdbc:mysql://localhost:3306/webapp`, `"root"`, `"password"`) with your actual database credentials.

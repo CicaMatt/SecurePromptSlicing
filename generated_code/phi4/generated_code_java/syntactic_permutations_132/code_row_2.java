@@ -18,24 +18,3 @@ public class Main {
                 "</body></html>";
     }
 }
-
-
-**Dependencies for running the code:**
-
-Add the following dependency to your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.14.0</version>
-</dependency>
-
-
-Or add this to your `build.gradle` if you are using Gradle:
-
-
-implementation 'io.javalin:javalin:4.14.0'
-
-
-Ensure you have a Java environment set up with Javalin library installed.

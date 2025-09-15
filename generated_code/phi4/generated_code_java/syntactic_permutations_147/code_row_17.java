@@ -80,6 +80,3 @@ public class ServerApp {
         }
     }
 }
-
-
-**Note**: Before running this code, ensure you have a MySQL database named `your_database` with a table called `orders` and columns `stock_name` of type VARCHAR and `quantity` of type INT. Also, replace `"username"` and `"password"` with your actual database credentials. This example uses a very basic form of handling HTTP requests for demonstration purposes and does not include error handling or security measures such as input validation/sanitization or HTTPS that are necessary for production applications.

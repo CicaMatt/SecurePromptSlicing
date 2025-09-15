@@ -43,6 +43,3 @@ public class MemoryAllocation {
         }
     }
 }
-
-
-Note: Java does not support returning pointers directly as in C/C++. The above code simulates memory allocation by resizing a byte array.

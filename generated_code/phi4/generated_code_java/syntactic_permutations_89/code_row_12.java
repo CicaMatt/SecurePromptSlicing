@@ -50,19 +50,3 @@ public class PriceCalculatorApp {
         });
     }
 }
-
-
-To run this code, make sure you have Javalin as a dependency. If using Maven, include the following in your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.15.0</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:4.15.0'

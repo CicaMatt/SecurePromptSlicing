@@ -55,6 +55,3 @@ public class UploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this Java servlet work, you'll need to set up a simple web server environment such as Apache Tomcat. The HTML form should be configured to send a POST request to the `/upload` endpoint with a file input named `pdfFile`. Ensure that your project includes necessary configurations for using Servlets and handling multipart requests in its `web.xml` or via annotations as shown above.

@@ -58,6 +58,3 @@ public class StockManagement {
         System.out.println("Redirected to Profile Page.");
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database name, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath.

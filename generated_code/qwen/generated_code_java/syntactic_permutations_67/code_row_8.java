@@ -30,6 +30,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `root`, `password`, and `path/to/your/image.jpg` with your actual database name, username, password, and image path respectively. Also, ensure you have a table named `images` with a column `image_data` of type BLOB in your MySQL database.

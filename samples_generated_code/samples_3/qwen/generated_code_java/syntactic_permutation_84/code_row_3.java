@@ -63,17 +63,3 @@ public class Server {
         clientSocket.close();
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if using Maven -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.13.0</version>
-</dependency>
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.29</version>
-</dependency>

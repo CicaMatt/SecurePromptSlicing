@@ -53,6 +53,3 @@ public class FileUploadServlet extends HttpServlet {
         return "";
     }
 }
-
-
-Ensure your web application is properly configured to handle file uploads, and that the necessary libraries are included in your build path or `pom.xml` if using Maven.

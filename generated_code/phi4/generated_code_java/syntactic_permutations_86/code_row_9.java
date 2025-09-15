@@ -59,6 +59,3 @@ public class MaxTemperatureServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-**Note:** Replace `your_database`, `username`, `password`, and `your_table` with your actual database name, username, password, and table name. Ensure that the MySQL JDBC driver is included in your project's dependencies.

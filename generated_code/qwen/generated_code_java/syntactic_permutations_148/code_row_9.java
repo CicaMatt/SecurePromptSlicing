@@ -63,24 +63,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- main.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Messages</h1>
-${messages}
-
-<h2>Post a Message</h2>
-<form method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Post">
-</form>
-</body>
-</html>

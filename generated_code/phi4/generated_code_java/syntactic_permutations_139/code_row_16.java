@@ -36,6 +36,3 @@ public class CheckModeratorStatus {
         }
     }
 }
-
-
-**Note:** Replace `"your_database_name"` with the actual name of your database and update `userId` with the ID of the user you want to check. Ensure that MySQL Connector/J is included in your project's dependencies for this code to work.

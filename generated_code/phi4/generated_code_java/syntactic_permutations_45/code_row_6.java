@@ -29,6 +29,3 @@ public class SafeDirectoryReader {
         }
     }
 }
-
-
-Make sure to replace `"path/to/safe/directory"` with the actual path of your safe directory.

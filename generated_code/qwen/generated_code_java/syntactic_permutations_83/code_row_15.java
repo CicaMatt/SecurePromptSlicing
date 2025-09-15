@@ -21,20 +21,3 @@ public class NameCheckServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>NameCheckServlet</servlet-name>
-        <servlet-class>NameCheckServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>NameCheckServlet</servlet-name>
-        <url-pattern>/checkName</url-pattern>
-    </servlet-mapping>
-</web-app>

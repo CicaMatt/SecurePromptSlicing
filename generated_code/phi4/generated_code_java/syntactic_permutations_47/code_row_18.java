@@ -44,6 +44,3 @@ public class ImageServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure to update the `IMAGES_FOLDER` variable with the actual path to your images folder. This code assumes you are deploying this in a servlet container such as Apache Tomcat.

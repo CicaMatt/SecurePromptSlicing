@@ -41,25 +41,3 @@ public class HelloServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure the directory structure is as follows:
-
-YourProject
-└── WEB-INF
-    └── templates
-        └── hello.html
-
-
-Content of `hello.html`:
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>

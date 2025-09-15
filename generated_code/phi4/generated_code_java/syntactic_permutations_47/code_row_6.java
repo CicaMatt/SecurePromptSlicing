@@ -30,6 +30,3 @@ public class ImageServlet extends HttpServlet {
         java.nio.file.Files.copy(file.toPath(), response.getOutputStream());
     }
 }
-
-
-To make this code runnable, ensure you have a Java servlet container like Apache Tomcat set up and properly configured. Place the above class in your web application's `src` directory (or appropriate package location), compile it, and deploy it to your server. The images should be placed in an "images" folder at the root of your web context for this code to work as expected.

@@ -20,38 +20,10 @@ public class LoginPageServlet extends HttpServlet {
 }
 
 // login.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<h2>Login</h2>
-<form method="post" action="login">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-<%
-    if(request.getAttribute("error") != null) {
-        out.println("<p style='color:red;'>"+request.getAttribute("error")+"</p>");
-    }
-%>
-</body>
-</html>
+
 
 // session.jsp
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Session Page</title>
-</head>
-<body>
-<h2>Welcome, <%=session.getAttribute("user")%>!</h2>
-<p>This is your session page.</p>
-<a href="logout">Logout</a>
-</body>
-</html>
+
 
 // LogoutServlet.java
 import javax.servlet.*;

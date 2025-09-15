@@ -100,6 +100,3 @@ public class SimpleHttpServer {
         }
     }
 }
-
-
-Ensure you have the SQLite JDBC driver in your classpath to run this code. You might need to add it via a build tool like Maven or manually download and include the JAR file.

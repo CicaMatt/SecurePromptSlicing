@@ -35,30 +35,3 @@ class PayloadController {
         return "Name not found";
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java Development Kit (JDK) installed.
-2. Use Maven to manage dependencies and build the project.
-3. Add Spring Boot dependencies in `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-4. Run the application using `mvn spring-boot:run`.

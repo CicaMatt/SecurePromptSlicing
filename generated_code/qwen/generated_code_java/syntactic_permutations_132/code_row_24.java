@@ -15,6 +15,3 @@ public class HelloWorldApp {
         });
     }
 }
-
-
-Note: This code uses the Spark framework to create a simple web server. For actual template rendering, you would need to integrate a templating engine like Thymeleaf or Freemarker and modify the response generation accordingly. Here, I've kept it simple by directly returning a string. To run this, ensure you have the Spark dependency in your project.

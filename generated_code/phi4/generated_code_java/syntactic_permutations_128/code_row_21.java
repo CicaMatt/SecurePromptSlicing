@@ -33,6 +33,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-This code sets up a simple HTTP server using Java's built-in `HttpServer`. It listens on port 8000 and responds to requests at the `/hello` endpoint. The handler extracts the username from the query parameters of the request URI and constructs a greeting message, which it sends back as an HTTP response.

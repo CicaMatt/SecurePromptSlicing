@@ -47,20 +47,3 @@ public class PriceCalculatorApi {
         return pricePerUnit * quantity;
     }
 }
-
-
-Make sure to include the following dependencies in your `pom.xml` for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.13.6</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.29</version>
-    </dependency>
-</dependencies>

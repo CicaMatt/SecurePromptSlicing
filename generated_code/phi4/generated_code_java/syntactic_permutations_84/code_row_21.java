@@ -38,20 +38,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-Make sure to include the necessary dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.10.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>2.0</version>
-    </dependency>
-</dependencies>

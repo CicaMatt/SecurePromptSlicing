@@ -40,6 +40,3 @@ public class ImageCheckerServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to place this servlet in a Java web application project structure with a properly configured `web.xml` or using annotations, and have the images folder within your web application context.

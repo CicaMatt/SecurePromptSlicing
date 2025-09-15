@@ -61,27 +61,3 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration Success</title>
-</head>
-<body>
-<h2>Registration Successful!</h2>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Registration Error</title>
-</head>
-<body>
-<h2>Registration Failed. Please try again.</h2>
-</body>
-</html>

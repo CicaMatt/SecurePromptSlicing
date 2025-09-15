@@ -35,18 +35,3 @@ public class ProductPriceApp {
         }
     }
 }
-
-
-To run this Java program:
-
-1. Ensure you have Javalin library included in your project.
-2. You can add the dependency to your `pom.xml` if using Maven:
-   
-   <dependency>
-       <groupId>io.javalin</groupId>
-       <artifactId>javalin</artifactId>
-       <version>5.3.1</version>
-   </dependency>
-   
-
-3. Compile and run the Java application.

@@ -69,6 +69,3 @@ public class PostMessageServlet extends HttpServlet {
         }
     }
 }
-
-
-This code assumes you have a database running with the necessary `messages` table. You will need to replace `mydatabase`, `username`, and `password` with your actual database name, username, and password, respectively. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

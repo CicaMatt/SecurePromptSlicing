@@ -55,6 +55,3 @@ public class LoginSystem {
         // Logic for redirection can be added here
     }
 }
-
-
-Note: Replace `your_database`, `root`, and `password` with your actual database name, username, and password. Make sure the MySQL Connector/J is included in your project's classpath.

@@ -48,6 +48,3 @@ public class LoginSystem {
         return false;
     }
 }
-
-
-**Note:** Make sure to replace `your_database`, `your_username`, and `your_password` with actual database details. Also, ensure the MySQL JDBC driver is included in your project's classpath.

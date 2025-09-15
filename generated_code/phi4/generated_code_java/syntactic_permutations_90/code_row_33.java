@@ -44,13 +44,3 @@ public class PricingService {
         System.out.println(resultYaml);
     }
 }
-
-
-To run this code, ensure you have the SnakeYAML library available in your project. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>2.0</version>
-</dependency>

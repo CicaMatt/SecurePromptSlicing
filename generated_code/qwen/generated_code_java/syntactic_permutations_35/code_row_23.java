@@ -43,31 +43,3 @@ public class LoginServletConfig extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br/>
-        Password: <input type="password" name="password"><br/>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h2>Welcome to the Home Page!</h2>
-</body>
-</html>

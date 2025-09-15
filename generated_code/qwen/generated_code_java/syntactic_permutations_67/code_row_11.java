@@ -36,18 +36,3 @@ public class ImageDisplayer {
         frame.setVisible(true);
     }
 }
-
-
-
-<!-- pom.xml for Maven project -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>ImageDisplayer</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <dependencies>
-        <!-- No additional dependencies are required for this simple Java application -->
-    </dependencies>
-</project>

@@ -38,10 +38,3 @@ public class BuyOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure the following:
-- Replace `"your_database"`, `"root"`, and `"password"` with your actual database name, username, and password.
-- Set up a table named `orders` in your database with columns `stock_name` (VARCHAR) and `quantity` (INT).
-- The HTML form must have `method="POST"` and action should point to the servlet URL mapping `/buy_order`.
-- Ensure you've set up JDBC driver for MySQL (or any other DBMS) as a dependency.

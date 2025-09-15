@@ -51,6 +51,3 @@ public class LoginSystem {
         // Logic to redirect to the home page goes here
     }
 }
-
-
-Make sure you replace `your_database`, `root`, and `password` with your actual database name, username, and password. Additionally, ensure that your MySQL JDBC driver is included in your project's classpath.

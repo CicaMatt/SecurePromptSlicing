@@ -60,18 +60,3 @@ public class HelloWorldDecorator {
 
 
 Make sure the `hello.html` file is in the same directory as your Java program and contains placeholders like `{{username}}`. For example:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>
-
-
-Run the Java program and visit `http://localhost:8080/hello/YourName` in a web browser to see it in action.

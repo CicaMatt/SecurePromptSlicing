@@ -35,7 +35,7 @@ class HelloController {
 
 
 
-<!-- pom.xml -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -51,10 +51,7 @@ class HelloController {
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -66,16 +63,3 @@ class HelloController {
         </plugins>
     </build>
 }
-
-
-
-<!-- src/main/webapp/WEB-INF/views/hello.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, <span th:text="${username}">User</span>!</h1>
-</body>
-</html>

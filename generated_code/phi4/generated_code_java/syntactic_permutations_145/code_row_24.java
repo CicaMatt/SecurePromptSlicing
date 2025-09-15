@@ -34,6 +34,3 @@ public class StockApp {
         // Additional logic can be implemented here
     }
 }
-
-
-Make sure to replace `stock_db`, `root`, and `password` with your actual database name, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath.

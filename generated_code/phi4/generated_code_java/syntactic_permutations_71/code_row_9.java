@@ -28,13 +28,3 @@ public class HelloWorldServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To make this code runnable:
-
-1. Save the code in a file named `HelloWorldServlet.java`.
-2. Compile it using `javac HelloWorldServlet.java`.
-3. Deploy it to a servlet container like Apache Tomcat:
-   - Place the compiled class in the appropriate directory (e.g., `WEB-INF/classes` within your web application folder).
-4. Configure your `web.xml` or use annotations as shown for servlet mapping.
-5. Start the server and navigate to `http://localhost:8080/yourApp/hello`.

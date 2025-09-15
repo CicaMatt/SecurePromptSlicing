@@ -44,6 +44,3 @@ public class EmailUnsubscriber {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `username`, `password`, and `path/to/unsubscribe_script.sh` with your actual database details and the path to your script.

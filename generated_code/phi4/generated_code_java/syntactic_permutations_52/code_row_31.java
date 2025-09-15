@@ -57,63 +57,15 @@ public class IndexServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
 
 
 
-<!-- secret.jsp -->
-<%@ page import="javax.servlet.http.HttpSession" %>
+
+
+
 <%
     HttpSession session = request.getSession(false);
     if (session == null || session.getAttribute("username") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
-%>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Secret Page</title>
-</head>
-<body>
-<h2>Welcome to the Secret Page</h2>
-<p>You are logged in as: <%= session.getAttribute("username") %></p>
-<a href="<%= request.getContextPath() %>">Back to Home</a>
-</body>
-</html>
-
-
-
-<!-- index.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-<h1>Welcome to the Home Page</h1>
-<a href="login.jsp">Login</a><br>
-<p>Secret settings</p>
-</body>
-</html>
-
-
-**Note:** This code assumes you have a web server set up with support for servlets (e.g., Apache Tomcat). Ensure your project is correctly configured to run these servlets and JSP files.

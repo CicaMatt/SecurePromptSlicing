@@ -46,5 +46,5 @@ public class TemplateRenderer {
 
 
 
-<!-- src/main/resources/template.ftl -->
+
 Hello, ${name}!

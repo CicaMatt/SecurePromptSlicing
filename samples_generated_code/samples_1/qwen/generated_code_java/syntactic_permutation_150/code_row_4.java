@@ -67,28 +67,3 @@ public class WebServlet extends HttpServlet {
         new MainServlet().doGet(request, response);
     }
 }
-
-
-
-<!-- web.xml -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-
-    <servlet>
-        <servlet-name>WebServlet</servlet-name>
-        <servlet-class>.WebServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>WebServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>WebServlet</servlet-name>
-        <url-pattern>/index.html</url-pattern>
-    </servlet-mapping>
-</web-app>

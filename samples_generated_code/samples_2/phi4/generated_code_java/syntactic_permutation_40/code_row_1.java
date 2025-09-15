@@ -42,6 +42,3 @@ public class InfoServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable, ensure you have a Java web application environment set up with servlet support. This typically involves using a framework like Apache Tomcat or any other servlet container. You also need to configure the `web.xml` file if necessary or rely on annotations as shown in the code above for routing. Ensure that the session variables (`username`, `email`, and `ssn_last_4`) are set before accessing this route.

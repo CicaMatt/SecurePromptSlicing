@@ -90,6 +90,3 @@ public class RegistrationPage {
         return hexString.toString();
     }
 }
-
-
-Make sure to replace the database connection details (`DB_URL`, `USER`, and `PASS`) with your own MySQL configuration. Additionally, ensure that your MySQL server is running and that you have a table named `users` in your specified database with columns: `username`, `password`, `first_name`, `last_name`, and `email`.

@@ -46,6 +46,3 @@ public class LoginApplication {
         System.out.println("Please go back to the login page.");
     }
 }
-
-
-Make sure to replace `yourDatabaseName`, `root`, and `yourPassword` with your actual database name and credentials. Additionally, in a real-world scenario, you should handle passwords securely (e.g., hashing) and manage user sessions properly.

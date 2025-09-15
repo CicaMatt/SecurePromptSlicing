@@ -64,6 +64,3 @@ public class TemplateRenderer {
         return renderedTemplate;
     }
 }
-
-
-This Java code uses mock classes to simulate `HttpServletRequest` and `HttpServletResponse` for demonstration purposes. In a real web application, you would use a web framework like Spring MVC or Jakarta EE to handle HTTP requests and responses.

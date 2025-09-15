@@ -28,34 +28,3 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("login.html").forward(request, response);
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<form action="login" method="post">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
-
-
-
-<!-- session.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Session Page</title>
-</head>
-<body>
-<h1>Welcome to the Session Page!</h1>
-<a href="login">Logout</a>
-</body>
-</html>

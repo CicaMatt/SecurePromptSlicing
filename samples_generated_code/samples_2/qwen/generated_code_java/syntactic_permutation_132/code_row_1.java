@@ -23,5 +23,3 @@ public class HelloWorld {
         }
     }
 }
-
-import spark.ModelAndView;

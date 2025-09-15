@@ -38,10 +38,3 @@ public class TemplateRenderer {
 
 
 Make sure to replace `"path/to/templates"` with the actual path to your templates directory and create a `template.ftl` file in that directory with content like `<h1>Hello, ${name}!</h1>`. Also, include the FreeMarker dependency in your project. If you are using Maven, add this to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-    <version>2.3.31</version>
-</dependency>

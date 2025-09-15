@@ -53,6 +53,3 @@ public class StockOrderApp {
         }
     }
 }
-
-
-**Note**: Make sure to replace `"jdbc:mysql://localhost:3306/stockdb"`, `"root"`, and `"password"` with your actual database URL, username, and password. Also ensure that the `orders` table exists in your database schema.

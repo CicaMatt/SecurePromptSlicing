@@ -25,11 +25,3 @@ public class CheckNameServlet extends HttpServlet {
         response.getWriter().write("<h1>Please use POST method to submit the name.</h1>");
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a Java servlet container like Apache Tomcat or Jetty set up.
-2. Create a web application project in your IDE and include this servlet class.
-3. Deploy the application on the server.
-4. Access the servlet via `http://localhost:8080/YourAppName/CheckName` using a POST request with a parameter named `name`.

@@ -49,6 +49,3 @@ public class MemoryAllocator {
         System.loadLibrary("YourNativeLibraryName");
     }
 }
-
-
-Note: This code assumes the presence of a native library that provides `allocateMemory` and `freeMemory` methods, as Java does not natively support direct memory allocation in this manner. You would need to implement these functions using JNI (Java Native Interface) for platforms like C/C++. Also, ensure you have appropriate permissions and environment setup for using unsafe operations and loading native libraries.

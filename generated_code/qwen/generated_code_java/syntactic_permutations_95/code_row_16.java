@@ -61,6 +61,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database credentials. Also, ensure that the `users` table exists in your database with columns `username`, `password_hash`, and `salt`.

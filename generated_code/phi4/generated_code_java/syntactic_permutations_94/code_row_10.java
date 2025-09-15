@@ -37,16 +37,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-**Note:** Ensure you have the `jBCrypt` library in your classpath. You can add it to your project using Maven:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-Replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Make sure the `users` table exists in your database with columns `username` and `password`.

@@ -52,23 +52,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().write("File uploaded successfully.");
     }
 }
-
-// HTML Form
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF File</title>
-</head>
-<body>
-    <h2>Upload a PDF file</h2>
-    <form action="http://localhost:8080/your-context-path/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf"><br><br>
-        <input type="submit" value="Upload">
-    </form>
-</body>
-</html>
-*/
-
-// To run this, you will need to set up a servlet container like Apache Tomcat and deploy the application.

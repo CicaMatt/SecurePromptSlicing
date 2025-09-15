@@ -45,6 +45,3 @@ public class HttpHelloServer {
         }
     }
 }
-
-
-**Note**: This code uses `com.sun.net.httpserver.HttpServer`, which is a simple HTTP server available in Java SE. It may not be suitable for production use due to limited features and scalability. For more robust solutions, consider using frameworks like Spring Boot or Apache Tomcat.

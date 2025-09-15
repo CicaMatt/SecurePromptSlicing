@@ -26,16 +26,3 @@ public class ImageServer {
         });
     }
 }
-
-
-To run this code, you'll need to include the Spark Java library in your project. If you're using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-If you are not using Maven, download the Spark Java library JAR and include it in your project's build path manually.

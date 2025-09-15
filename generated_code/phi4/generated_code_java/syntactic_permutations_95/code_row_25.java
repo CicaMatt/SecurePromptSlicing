@@ -52,14 +52,3 @@ public class RegistrationForm {
         return BCrypt.checkpw(enteredPassword, hashedPassword + salt);
     }
 }
-
-
-**Note**: Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, ensure you have the BCrypt library available in your project, which can be included via Maven or other dependency management tools.
-
-
-<!-- Add this to your pom.xml if using Maven -->
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>

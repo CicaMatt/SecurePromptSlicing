@@ -29,6 +29,3 @@ public class ResponseRenderer {
         return response;
     }
 }
-
-
-This code provides a basic structure for handling HTTP requests to extract parameters and simulate rendering templates. In a real-world scenario, you would integrate this with a web framework like Spring Boot or Java EE to handle incoming requests and responses properly.

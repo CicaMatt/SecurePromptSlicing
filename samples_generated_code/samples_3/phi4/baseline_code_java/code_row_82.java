@@ -60,8 +60,3 @@ public class LoginServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-**Note:** Replace `"your_database"`, `"root"`, and `"password"` with your actual database name, username, and password. Ensure the MySQL JDBC driver is included in your project's classpath.
-
-Also, you need to create `success.jsp` and `cant_login.jsp` for redirection purposes.

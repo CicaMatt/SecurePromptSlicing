@@ -29,6 +29,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         out.println("Hello " + username);
     }
 }
-
-
-To make this code runnable, ensure you have a servlet container like Apache Tomcat set up. Deploy the above Java class in a web application on the server. Access it via `http://<server>:<port>/yourAppName/http_hello_page?username=<desired_name>`.

@@ -41,22 +41,3 @@ public class WebApp {
         return "password"; // In a real application, use environment variables or secure vaults.
     }
 }
-
-
-To run this code, you need to have the following dependencies in your `pom.xml` for a Maven project:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <scope>runtime</scope>
-    </dependency>
-</dependencies>
-
-
-Make sure to replace the database connection details with your actual configuration.

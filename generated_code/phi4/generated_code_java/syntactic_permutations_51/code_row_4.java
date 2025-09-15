@@ -64,16 +64,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-Note: This code uses Apache Commons Compress library for handling tar files. You need to include the dependency in your project:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-For GZIP, Java's built-in `GZIPInputStream` is used. Adjust the file paths as needed for your specific use case.

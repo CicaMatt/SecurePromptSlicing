@@ -39,27 +39,3 @@ public class BuyOrderServlet extends HttpServlet {
         // This is just a placeholder. Actual servlets run on servers.
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name"><br><br>
-
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Additionally, ensure that the servlet container (e.g., Apache Tomcat) is set up properly on your machine or server.

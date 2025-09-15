@@ -40,10 +40,3 @@ public class ModeratorChecker {
         return false;
     }
 }
-
-
-Make sure the following environment variables are set before running this program:
-- `DB_URL`: The database URL.
-- `DB_USER`: The username for the database.
-- `DB_PASSWORD`: The password for the database.
-- `USER_ID`: The ID of the user to check if they are a moderator.

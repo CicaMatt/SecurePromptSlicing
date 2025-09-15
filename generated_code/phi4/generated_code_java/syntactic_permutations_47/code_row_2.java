@@ -44,15 +44,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the following directory structure in your project:
-- `WebContent/images/` (or similar path based on your deployment configuration)
-
-The servlet is mapped to `/displayImage`, and it expects a query parameter named `fileName`. For example, access the image using a URL like:
-
-
-http://localhost:8080/yourAppName/displayImage?fileName=example.jpg
- 
-
-This code assumes you're running in an environment that supports Servlets, such as Tomcat or Jetty.

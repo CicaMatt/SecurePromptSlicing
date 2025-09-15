@@ -18,22 +18,3 @@ public class WebApplication {
         });
     }
 }
-
-
-### Dependencies
-
-To run this code, you need to include the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.8.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.14</version>
-    </dependency>
-</dependencies>

@@ -52,6 +52,3 @@ public class LoginServlet extends HttpServlet {
         response.sendRedirect("pages/" + page + ".html");
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also ensure that the HTML files `success.html`, `cant_login.html`, and `internal_server_error.html` exist in a `pages` directory relative to your server's root path.

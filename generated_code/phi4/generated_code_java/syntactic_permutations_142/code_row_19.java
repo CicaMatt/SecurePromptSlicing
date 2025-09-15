@@ -60,6 +60,3 @@ public class UnsubscribeApp {
         }
     }
 }
- 
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. You also need the MySQL JDBC driver in your classpath for this code to run properly.

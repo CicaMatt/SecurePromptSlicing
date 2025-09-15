@@ -76,6 +76,3 @@ public class RegistrationForm {
         return hashedInputPassword.equals(parts[0]);
     }
 }
-
-
-**Note:** Before running this code, ensure you have set up a MySQL database and created a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR). Additionally, replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.

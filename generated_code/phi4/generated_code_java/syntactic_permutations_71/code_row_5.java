@@ -38,29 +38,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a Java servlet container, such as Apache Tomcat, set up.
-2. Place the above code in a `.java` file within your web application's `src` directory under an appropriate package.
-3. Compile and deploy your web application to the server.
-4. Use an HTML form with `enctype="multipart/form-data"` and an `<input type="file" name="file">` field to post files to `/upload`.
-
-Example of a simple HTML form for uploading:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>File Upload</title>
-</head>
-<body>
-    <h2>Upload File</h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>

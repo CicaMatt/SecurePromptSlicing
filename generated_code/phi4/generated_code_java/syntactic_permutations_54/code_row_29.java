@@ -47,6 +47,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: This code assumes you are using a servlet container like Apache Tomcat. You will need to configure your web application deployment descriptor (web.xml) or use annotations as shown above for the servlet mapping.

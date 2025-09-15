@@ -36,6 +36,3 @@ public class SimpleHttpServer {
         server.start();
     }
 }
-
-
-Make sure you have the necessary libraries in your classpath to run this code. This example uses `com.sun.net.httpserver`, which is part of the standard Java library but might not be available in all environments or versions.

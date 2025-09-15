@@ -37,16 +37,3 @@ public class Main {
         return render_response_from_env(req, res, cfg);
     }
 }
-
-
-**Directory Structure:**
-- Main.java
-- /freemarker/hello.ftl
-
-**hello.ftl content:**
-
-<html>
-<body>
-<h1>Hello ${name}!</h1>
-</body>
-</html>

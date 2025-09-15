@@ -22,6 +22,3 @@ public class UrlRedirect {
         }
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you intend to use for matching the URLs.

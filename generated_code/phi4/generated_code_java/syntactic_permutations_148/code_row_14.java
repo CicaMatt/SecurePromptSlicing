@@ -86,38 +86,3 @@ public class PostServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- displayMessages.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Display Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <% 
-            ArrayList<PostServlet.Message> messages = (ArrayList<PostServlet.Message>) request.getAttribute("messages");
-            if (messages != null) {
-                for (PostServlet.Message msg : messages) { 
-        %>
-            <li><strong><%= msg.getName() %></strong>: <%= msg.getMessage() %></li>
-        <% 
-                }
-            } else {
-        %>
-            <li>No messages found.</li>
-        <% 
-            }
-        %>
-    </ul>
-</body>
-</html>
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure that the MySQL JDBC driver is included in your project's classpath.

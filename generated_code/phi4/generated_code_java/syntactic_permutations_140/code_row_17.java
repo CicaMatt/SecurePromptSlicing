@@ -34,6 +34,3 @@ public class UsernameExistsChecker {
         System.out.println("Does username exist? " + exists);
     }
 }
-
-
-**Note**: Replace `your_database`, `your_username`, and `your_password` with your actual database name, MySQL username, and password. Also ensure that the MySQL JDBC driver is included in your classpath.

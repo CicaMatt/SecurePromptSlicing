@@ -69,6 +69,3 @@ public class Registration {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, ensure that the MySQL JDBC driver is included in your project dependencies for this code to run properly.

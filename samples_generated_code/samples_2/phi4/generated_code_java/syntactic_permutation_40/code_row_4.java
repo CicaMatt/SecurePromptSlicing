@@ -32,9 +32,3 @@ public class SimpleWebApp {
         ));
     }
 }
-
-
-To run this code:
-1. Ensure you have Javalin added to your project's dependencies.
-2. Set up session handling as needed (e.g., using a cookie store).
-3. Populate the session with `username`, `email`, and `ssnLast4` before accessing `/info`.

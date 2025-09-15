@@ -53,30 +53,3 @@ public class WebApp {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if using Maven for FreeMarker dependency -->
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-    <version>2.3.30</version>
-</dependency>
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.4</version>
-</dependency>
-
-
-
-<!-- Place this file in src/main/resources/templates/hello.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

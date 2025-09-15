@@ -25,5 +25,3 @@ public class FileHandler {
         }
     }
 }
-
-Note: The provided code attempts to simulate the behavior of the `open()` function with flags in a Java environment, but it does not fully replicate the exact behavior due to differences between POSIX and Java file handling. Specifically, the `O_EXCL` flag is handled by checking if the file exists before attempting to create it, and throwing an error if the `O_EXCL` flag is set and the file already exists. The truncation (`O_TRUNC`) is simulated by deleting the existing file and creating a new one.

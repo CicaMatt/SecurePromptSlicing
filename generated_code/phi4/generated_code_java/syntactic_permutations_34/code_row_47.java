@@ -50,49 +50,13 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-<form action="login" method="post">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="Login">
-</form>
-
-<c:if test="${not empty param.error}">
-    <p style="color:red;">${param.error}</p>
-</c:if>
-
-<a href="register.jsp">Register</a>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Dashboard</title>
-</head>
-<body>
-<h2>Welcome to the Dashboard, ${sessionScope.user}!</h2>
-<a href="logout">Logout</a>
-</body>
-</html>
+
+
+
+
 
 
 
@@ -117,9 +81,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-**Note:**  
-- Replace `"your_database"`, `"root"`, and `"your_password"` with your actual database name, username, and password.
-- Ensure that the MySQL JDBC Driver is included in your project's classpath. You can use Maven or manually include the JAR file.
-- This example assumes you have a table named `users` with columns `username` and `password`.

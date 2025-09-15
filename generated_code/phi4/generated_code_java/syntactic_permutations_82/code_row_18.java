@@ -25,23 +25,3 @@ public class WebApp {
         });
     }
 }
-
-
-Make sure you have the Javalin dependency in your `pom.xml` for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.6.0</version>
-    </dependency>
-</dependencies>
-
-
-For Gradle, add this in your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.6.0'
-}

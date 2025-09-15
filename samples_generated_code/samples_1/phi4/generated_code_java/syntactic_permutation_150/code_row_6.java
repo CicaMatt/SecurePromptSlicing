@@ -53,24 +53,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit Message</title>
-</head>
-<body>
-    <form action="submitMessage" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br><br>
-        
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br><br>
-        
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>

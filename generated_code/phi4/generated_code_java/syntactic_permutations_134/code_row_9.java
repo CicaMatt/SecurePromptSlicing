@@ -41,6 +41,3 @@ public class HelloServlet extends HttpServlet {
         // This is just a placeholder. In a real servlet container, the server would start and handle requests.
     }
 }
-
-
-This code defines a `HelloServlet` that handles HTTP GET requests for URLs matching `/hello/username`. It escapes special characters in the username to produce HTML-safe sequences and returns a greeting message. Note that this example assumes it will be deployed on a servlet container like Apache Tomcat or Jetty. The `main` method is included as a placeholder; typically, servlets are managed by the server's lifecycle rather than being started from a main method.

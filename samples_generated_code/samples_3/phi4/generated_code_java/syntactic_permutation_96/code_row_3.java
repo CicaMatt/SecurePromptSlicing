@@ -61,6 +61,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Also, ensure the necessary JDBC driver for MySQL is included in your project's dependencies.

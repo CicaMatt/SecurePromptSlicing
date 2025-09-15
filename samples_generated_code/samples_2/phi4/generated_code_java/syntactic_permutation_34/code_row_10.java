@@ -45,40 +45,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Log In">
-    </form>
-
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome to the Dashboard!</h2>
-    <p>Hello, <%= session.getAttribute("username") %>!</p>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
 
 
 
@@ -101,6 +72,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-**Note**: Ensure you have the necessary MySQL JDBC driver in your classpath. Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Also, make sure to create a table named `users` with columns `username` and `password`.

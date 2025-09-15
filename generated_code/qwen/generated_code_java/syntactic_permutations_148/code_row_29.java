@@ -18,21 +18,3 @@ public class MessageServlet extends HttpServlet {
         // Actual database insertion logic should go here
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Display Messages</title>
-</head>
-<body>
-<h1>Messages:</h1>
-<ul>
-    <!-- Dummy list item to simulate message display -->
-    <li>User: John, Message: Hello World!</li>
-    <!-- Actual logic to fetch and display messages from the database should go here -->
-</ul>
-<a href="postMessage.jsp">Add New Message</a>
-</body>
-</html>

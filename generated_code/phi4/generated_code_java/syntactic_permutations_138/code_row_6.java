@@ -41,6 +41,3 @@ public class ModeratorCheckServlet extends HttpServlet {
         // This is a placeholder for the server setup, typically handled by a servlet container like Tomcat or Jetty.
     }
 }
-
-
-Ensure you have the necessary JDBC driver in your classpath and configure your database connection details accordingly. The code assumes using MySQL as the database. Adjust the JDBC URL, username, password, and database schema as needed for your specific setup.

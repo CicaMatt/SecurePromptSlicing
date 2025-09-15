@@ -47,23 +47,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Dependencies to include in your `pom.xml` for Maven:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.3.1</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.27</version>
-    </dependency>
-</dependencies>
-
-
-**Replace `your_database`, `your_username`, and `your_password` with your actual database details.**

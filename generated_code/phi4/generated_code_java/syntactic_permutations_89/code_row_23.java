@@ -32,18 +32,3 @@ public class ProductPriceApp {
         });
     }
 }
-
-
-To run this code:
-- Ensure you have Javalin in your classpath. You can include it in a Maven project with the following dependency:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.8.1</version>
-</dependency>
-
-
-- Compile and run your Java application.
-- Access `http://localhost:5000/price/A1` to get the price for product code "A1".

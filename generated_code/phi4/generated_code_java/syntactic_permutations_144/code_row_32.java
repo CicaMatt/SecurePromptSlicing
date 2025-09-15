@@ -50,6 +50,3 @@ public class EmailChecker {
         return true;
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"your_username"`, and `"your_password"` with your actual database URL, username, and password. Also, replace `"path/to/unsubscribe_script.sh"` with the path to your unsubscribe script.

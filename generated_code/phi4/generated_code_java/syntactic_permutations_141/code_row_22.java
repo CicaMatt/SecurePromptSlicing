@@ -33,6 +33,3 @@ public class WebApp {
         System.out.println("This is an example function.");
     }
 }
-
-
-**Note:** Replace `"yourDatabaseName"`, `"username"`, and `"password"` with your actual database details. Make sure to include the necessary dependencies in your `pom.xml` or `build.gradle` file for Spring Boot and MySQL JDBC driver.

@@ -67,18 +67,3 @@ public class TarExtractor {
         return fileInputStream;
     }
 }
-
-
-Note: Ensure you have the following dependencies in your project:
-
-- Apache Commons Compress library for handling TAR and compression formats. You can add it via Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download the JAR from [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/).

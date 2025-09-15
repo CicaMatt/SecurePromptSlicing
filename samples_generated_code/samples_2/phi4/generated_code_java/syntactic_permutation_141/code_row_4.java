@@ -41,20 +41,3 @@ public class WebApp {
         return "mypassword"; // In a real application, use environment variables or secure storage for passwords
     }
 }
-
-
-Make sure to include the following dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.29</version>
-    </dependency>
-</dependencies>

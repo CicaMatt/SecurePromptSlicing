@@ -64,18 +64,3 @@ public class HelloWorldDecorator {
         }
     }
 }
-
-
-To run this code, ensure you have a `hello.html` file in the same directory with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello <%= username %>!
-</body>
-</html>

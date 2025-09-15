@@ -25,24 +25,3 @@ public class SimpleWebApp {
         ctx.result(response);
     }
 }
-
-
-To run this code, you will need the following dependencies added to your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.7.0</version>
-    </dependency>
-</dependencies>
-
-
-Or add the following to your `build.gradle` if using Gradle:
-
-
-implementation 'io.javalin:javalin:5.7.0'
-
-
-Make sure you have Javalin in your classpath and then run the `SimpleWebApp` main method to start the server.

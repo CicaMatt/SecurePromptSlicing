@@ -51,6 +51,3 @@ public class EmailUnsubscriber {
         return success ? 0 : 1;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with actual database details. The unsubscribe script is simulated using a random boolean for demonstration purposes.

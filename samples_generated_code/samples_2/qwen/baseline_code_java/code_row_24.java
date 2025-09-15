@@ -54,12 +54,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hash);
     }
 }
-
-
-
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    salt BINARY(16) NOT NULL
-);

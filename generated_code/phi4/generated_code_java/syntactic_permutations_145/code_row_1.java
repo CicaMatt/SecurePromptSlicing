@@ -34,6 +34,3 @@ public class StockTradingApp {
         buy_stock("AAPL", 10);
     }
 }
-
-
-Make sure to replace `localhost:3306`, `stock_db`, `root`, and `password` with your actual database connection details. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

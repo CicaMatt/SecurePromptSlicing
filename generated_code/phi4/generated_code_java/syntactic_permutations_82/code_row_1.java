@@ -22,29 +22,3 @@ class ApiController {
         return payload.getOrDefault("name", "Name not provided");
     }
 }
-
-
-To run this code:
-
-1. Make sure you have Spring Boot and its dependencies set up in your project.
-2. Add the following to your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-3. Run the `WebApplication` class as a Java application.

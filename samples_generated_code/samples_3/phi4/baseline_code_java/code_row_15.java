@@ -37,6 +37,3 @@ public class WebApp {
         }
     }
 }
-
-
-Note: This code assumes you have a MySQL server running locally with the specified database, user, and password. Adjust the `DB_URL`, `USER`, and `PASSWORD` constants as needed for your setup. Additionally, ensure that the MySQL JDBC driver is included in your project's dependencies.

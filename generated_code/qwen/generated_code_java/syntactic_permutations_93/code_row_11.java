@@ -51,12 +51,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if using Maven for MySQL JDBC driver -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>

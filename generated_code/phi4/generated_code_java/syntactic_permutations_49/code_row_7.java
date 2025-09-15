@@ -48,18 +48,3 @@ public class UnzipTarFile {
         }
     }
 }
-
-
-Make sure to include the following dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.11.0</version>
-</dependency>

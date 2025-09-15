@@ -48,8 +48,3 @@ public class ImageServlet extends HttpServlet {
         inStream.close();
     }
 }
-
-
-**Notes:**
-- Replace `"path/to/images/folder"` with the actual path to your images folder.
-- Ensure that your servlet container (e.g., Tomcat) is properly set up and running.

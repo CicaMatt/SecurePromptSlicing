@@ -42,12 +42,3 @@ public class ModeratorChecker {
         return Optional.empty();
     }
 }
-
-
-Ensure that the following environment variables are set before running this program:
-
-- `DB_URL`: The JDBC URL of your database.
-- `DB_USERNAME`: The username for connecting to the database.
-- `DB_PASSWORD`: The password for connecting to the database.
-
-Additionally, make sure you have the appropriate JDBC driver in your classpath.

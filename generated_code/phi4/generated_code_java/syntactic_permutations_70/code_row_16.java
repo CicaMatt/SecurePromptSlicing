@@ -44,6 +44,3 @@ public class FileUploadServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }
-
-
-This code requires a web server environment like Apache Tomcat and assumes that you have set up your project to compile servlets. Make sure the `uploads` directory is writable by your application server.

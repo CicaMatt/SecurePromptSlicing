@@ -67,18 +67,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Ensure you have the following:
-- A MySQL database with a table named `users` having columns: `first_name`, `last_name`, `username`, `email`, `password_hash`.
-- Add the BCrypt library dependency to your project. You can include it in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-- Update the database URL, username, and password with your actual database credentials.

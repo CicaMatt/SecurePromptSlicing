@@ -20,21 +20,3 @@ public class HelloDecoratorApp {
         });
     }
 }
-
-
-
-<!-- This file should be saved as resources/templates/hello.stg -->
-group hello;
-
-hello(username) ::= <<
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, <username>!</h1>
-</body>
-</html>
->>

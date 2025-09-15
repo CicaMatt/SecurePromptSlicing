@@ -83,13 +83,3 @@ public class RegistrationLogin {
         }
     }
 }
-
-
-
--- SQL to create the users table, run this in your MySQL database
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(128) NOT NULL,
-    salt BINARY(16) NOT NULL
-);

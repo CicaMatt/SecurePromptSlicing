@@ -49,16 +49,3 @@ public class PayloadServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: To make the above code runnable, ensure that you have the necessary dependencies in your project. If using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-yaml</artifactId>
-    <version>2.15.0</version>
-</dependency>
-
-
-Additionally, configure a servlet container like Apache Tomcat to deploy the web application and set it to listen on port 5000 in its server configuration file (e.g., `server.xml`).

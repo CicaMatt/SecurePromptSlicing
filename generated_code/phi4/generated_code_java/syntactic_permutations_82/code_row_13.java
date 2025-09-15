@@ -55,6 +55,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run this code, you need to have the `com.sun.net.httpserver` package available in your Java environment. This is typically included by default in JDK installations. Save the code in a file named `WebApp.java`, compile it using `javac WebApp.java`, and run it with `java WebApp`. Access the server at `http://localhost:8000/getPayload?name=YourName` to test its functionality.

@@ -40,6 +40,3 @@ public class StockOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you replace `"jdbc:mysql://localhost:3306/yourDatabase"`, `"root"`, and `""` with your actual database URL, username, and password. The SQL table `buy_orders` is assumed to have columns `username`, `stock_name`, and `stock_quantity`. Adjust according to your schema as necessary.

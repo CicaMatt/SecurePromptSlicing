@@ -51,6 +51,3 @@ public class EmailUnsubscriber {
         return 1; // Assuming the script returns 1 for success
     }
 }
-
-
-Make sure to replace `yourDatabase`, `yourUsername`, and `yourPassword` with your actual database credentials. Additionally, you'll need to have the MySQL JDBC driver in your classpath.

@@ -56,6 +56,3 @@ public class AdminPageServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-Note: You need a servlet container like Apache Tomcat to run this code. Ensure you have `web.xml` properly configured or use annotations as shown above for defining servlet mappings. Also, replace `"adminpass"` with your actual admin password logic.

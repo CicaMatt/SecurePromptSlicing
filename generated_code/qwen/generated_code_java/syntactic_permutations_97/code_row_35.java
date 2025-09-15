@@ -81,14 +81,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-
-<!-- pom.xml if you are using Maven, add the MySQL Connector dependency -->
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.33</version>
-    </dependency>
-</dependencies>

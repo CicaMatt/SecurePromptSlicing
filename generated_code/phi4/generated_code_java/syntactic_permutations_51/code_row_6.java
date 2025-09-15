@@ -61,16 +61,3 @@ public class TarFileExtractor {
         }
     }
 }
-
-
-Make sure to include the necessary Apache Commons Compress library in your project dependencies. You can add it via Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or download the JAR from the [Apache Commons Compress website](https://commons.apache.org/proper/commons-compress/) and add it to your project's classpath.

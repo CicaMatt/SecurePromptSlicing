@@ -23,19 +23,3 @@ public class RedirectApp {
         app.get("/", ctx -> ctx.result("Welcome to the home page."));
     }
 }
-
-
-To run this code, make sure you have Javalin included in your project dependencies. If using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-Alternatively, if you're using Gradle, include this in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.7.0'

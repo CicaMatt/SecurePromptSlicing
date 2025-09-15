@@ -38,6 +38,3 @@ public class FileAnalyzer {
         return words.length;
     }
 }
-
-
-Make sure to replace `"example.txt"` with the path to your actual file. This program uses `BufferedReader` for efficient reading of the file and calculates the number of lines, words, and characters.

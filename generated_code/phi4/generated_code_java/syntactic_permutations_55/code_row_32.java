@@ -45,18 +45,3 @@ public class Main {
         return "Welcome Admin! This is your control panel.";
     }
 }
-
-
-To run this code, make sure you have the Spark Java framework and its dependencies configured in your project. You can include Spark via Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-</dependencies>
-
-
-Alternatively, you may download the jar directly from Spark's GitHub releases page if not using Maven.

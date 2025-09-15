@@ -66,34 +66,3 @@ public class DashboardServlet extends HttpServlet {
         }
     }
 }
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<h2>Login</h2>
-<form method="post" action="LoginServlet">
-    Username: <input type="text" name="username"><br/>
-    Password: <input type="password" name="password"><br/>
-    <input type="submit" value="Login">
-</form>
-<%
-    String error = request.getParameter("error");
-    if ("invalid_credentials".equals(error)) {
-%>
-<p>Invalid username or password. Please try again.</p>
-<%
-    } else if ("database_error".equals(error)) {
-%>
-<p>A database error occurred. Please try again later.</p>
-<%
-    } else if ("not_logged_in".equals(error)) {
-%>
-<p>You must be logged in to view this page.</p>
-<%
-    }
-%>
-</body>
-</html>

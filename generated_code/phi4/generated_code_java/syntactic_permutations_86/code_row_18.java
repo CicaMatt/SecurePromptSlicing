@@ -106,6 +106,3 @@ public class TemperatureWebApp {
         }
     }
 }
-
-
-Note: Replace `your_database`, `your_username`, and `your_password` with your actual MySQL database name, username, and password. Ensure the necessary MySQL connector JAR is included in your classpath.

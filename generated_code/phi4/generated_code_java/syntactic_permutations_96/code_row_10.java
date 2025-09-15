@@ -63,6 +63,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-**Note**: Replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Ensure that the MySQL connector library is included in your classpath.

@@ -61,6 +61,3 @@ public class EmailHandler {
         return Math.random() > 0.5; // Randomly decide success or failure for simulation
     }
 }
-
-
-**Note:** Replace `DB_URL`, `USER`, `PASS` with your actual database credentials, and ensure the MySQL JDBC driver is available in your classpath. The script execution logic should be replaced with actual code to execute a system command or call another service that handles unsubscription.

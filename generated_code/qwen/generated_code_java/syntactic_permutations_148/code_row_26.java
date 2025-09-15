@@ -62,25 +62,3 @@ public class MessageServlet extends HttpServlet {
         } catch (SQLException ignored) {}
     }
 }
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Message Board</title>
-</head>
-<body>
-<h1>Welcome to the Message Board</h1>
-
-<form method="post" action="MessageServlet">
-    Name: <input type="text" name="name"><br/>
-    Message: <textarea name="message"></textarea><br/>
-    <input type="submit" value="Post Message"/>
-</form>
-
-<div>
-    ${messages}
-</div>
-</body>
-</html>

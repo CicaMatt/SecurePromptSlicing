@@ -46,6 +46,3 @@ public class BuyOrderExample {
         // In a real web application, this would be handled differently.
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Ensure the MySQL JDBC driver is available in your classpath.

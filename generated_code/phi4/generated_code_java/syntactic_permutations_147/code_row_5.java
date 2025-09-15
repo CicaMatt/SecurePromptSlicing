@@ -34,28 +34,3 @@ public class BuyOrderServlet extends HttpServlet {
         response.sendRedirect("stock_view");
     }
 }
-
-
-
-<!-- HTML form to submit stock name and quantity -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        <label for="stock">Stock Name:</label>
-        <input type="text" id="stock" name="stock" required><br><br>
-        
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min="1" required><br><br>
-
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
-
-
-Make sure to replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database credentials. Additionally, ensure that the database table `orders` exists with appropriate columns for `stock_name` and `quantity`.

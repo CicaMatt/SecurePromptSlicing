@@ -83,6 +83,3 @@ public class RegistrationPage extends JFrame {
         });
     }
 }
-
-
-Ensure to replace `"jdbc:mysql://localhost:3306/your_database_name"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath.

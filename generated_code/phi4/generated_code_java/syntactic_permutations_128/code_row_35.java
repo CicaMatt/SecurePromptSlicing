@@ -29,6 +29,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat set up. Place the class in your web application's `WEB-INF/classes` directory or package it into a `.jar` and include it in `WEB-INF/lib`. Configure your `web.xml` to map the URL pattern `/http_hello_page` to this servlet if not using annotations.

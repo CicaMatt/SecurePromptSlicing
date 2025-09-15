@@ -41,6 +41,3 @@ public class ModeratorCheck {
         return Optional.empty();
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC driver in your classpath, and replace `your_database_name` with the actual name of your database. Adjust the query if your schema differs.

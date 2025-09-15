@@ -29,6 +29,3 @@ public class EmailUnsubscriber {
         }
     }
 }
-
-
-Make sure to replace `"path/to/unsubscribe-script.sh"` with the actual path to your script. The script should accept an email as a command-line argument and return `0` on successful unsubscription.

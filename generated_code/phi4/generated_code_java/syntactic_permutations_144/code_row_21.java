@@ -65,6 +65,3 @@ public class EmailChecker {
         // For real implementation, uncomment the above block and replace "path/to/your/script.sh" with your script path
     }
 }
-
-
-**Note:** You need to replace `DB_URL`, `USER`, `PASS`, and `"path/to/your/script.sh"` with actual values. Ensure that MySQL JDBC driver is included in your project dependencies for database connectivity. Adjust the script execution logic as per your requirements.

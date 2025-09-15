@@ -44,22 +44,3 @@ public class PostServlet extends HttpServlet {
         request.getRequestDispatcher("mainPage.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome!</h1>
-
-    <form action="post" method="POST">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

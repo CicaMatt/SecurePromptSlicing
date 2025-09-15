@@ -24,6 +24,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         response.getWriter().write(greeting);
     }
 }
-
-
-Note: To run this code, you must have a servlet container like Apache Tomcat or Jetty and configure your web application to use it. The `@WebServlet` annotation is used for mapping the URL path `/http_hello_page`. Make sure you include necessary dependencies in your project build file (e.g., Maven `pom.xml` or Gradle `build.gradle`) for servlet support.

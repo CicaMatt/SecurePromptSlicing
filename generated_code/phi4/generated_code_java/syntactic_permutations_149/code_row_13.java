@@ -20,19 +20,3 @@ public class Main {
         });
     }
 }
-
-
-To run this code, you need to include Javalin in your project dependencies. If using Maven, add the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.8.0</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle` file:
-
-
-implementation 'io.javalin:javalin:5.8.0'

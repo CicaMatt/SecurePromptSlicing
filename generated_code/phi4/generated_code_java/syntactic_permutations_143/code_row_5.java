@@ -90,6 +90,3 @@ public class UnsubscribeService {
         }
     }
 }
-
-
-**Note:** Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database connection details. Also, ensure that you have the MySQL JDBC driver in your classpath or dependencies to run this code successfully.

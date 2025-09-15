@@ -98,6 +98,3 @@ public class Server {
         tomcat.getServer().await();
     }
 }
-
-
-Note: Ensure the servlet container (like Apache Tomcat) is set up correctly to run these servlets. The `Server` class assumes you are running a standalone server setup using Tomcat's embedded capabilities. Adjust paths and configurations as necessary for your specific environment.

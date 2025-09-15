@@ -55,6 +55,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().write("<html><body>Welcome to the admin page!</body></html>");
     }
 }
-
-
-Note: This code assumes you are using a servlet-based Java web application. Make sure your `web.xml` is configured appropriately or use the `@WebServlet` annotation as shown above. The admin check function is simplified and should be replaced with actual authentication logic.

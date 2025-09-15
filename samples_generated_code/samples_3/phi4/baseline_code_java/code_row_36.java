@@ -19,6 +19,3 @@ public class RedirectService {
         System.out.println("Redirect URL 2: " + getRedirectUrl(url2));
     }
 }
- 
-
-Replace `"your-regex-here"` with the actual regular expression you want to use.

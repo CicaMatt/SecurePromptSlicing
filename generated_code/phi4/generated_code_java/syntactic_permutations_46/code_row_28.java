@@ -30,9 +30,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable:
-1. Place it in a Java web project (e.g., using Apache Tomcat).
-2. Ensure the `images` directory is available at the root of your web application.
-3. Configure your web.xml to map `/img/*` to this servlet, or use annotations if supported by your servlet version.

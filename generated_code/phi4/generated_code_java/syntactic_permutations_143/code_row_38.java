@@ -48,6 +48,3 @@ public class UnsubscribeService {
         // you need to configure your server settings and dependencies.
     }
 }
-
-
-**Note:** You will need to set up a web server (e.g., Jersey or RESTEasy) and include necessary dependencies in your project to make this code runnable. Additionally, replace `your_database`, `your_username`, and `your_password` with actual database credentials.

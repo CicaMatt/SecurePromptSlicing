@@ -30,22 +30,3 @@ public class WebApp {
         });
     }
 }
-
-
-**Note:** To run this code, you need to include the Javalin dependency in your project. If using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.0</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.0.0'
-
-
-This code sets up a simple web server with Javalin that listens on port 7000. The `/info` route retrieves session attributes and returns them as a string. A `/set-session` route is provided to set the session variables for demonstration purposes.

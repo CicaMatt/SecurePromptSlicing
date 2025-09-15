@@ -32,23 +32,3 @@ public class BuyOrderServlet extends HttpServlet {
         response.sendRedirect("stock_view");
     }
 }
-
-// HTML Form Example
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br>
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
-*/

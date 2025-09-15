@@ -36,13 +36,3 @@ public class FileUploader {
         }
     }
 }
-
-
-Make sure you include the Apache Commons IO library in your project. If using Maven, add this dependency:
-
-
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.11.0</version>
-</dependency>

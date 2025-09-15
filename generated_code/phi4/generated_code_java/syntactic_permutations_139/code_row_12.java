@@ -40,6 +40,3 @@ public class CheckModerator {
         return false;
     }
 }
-
-
-**Note:** Replace `"your_user_id_here"` with the actual user ID you want to check. Ensure that your environment variables `DB_USERNAME`, `DB_PASSWORD`, and `DB_URL` are set correctly before running this code.

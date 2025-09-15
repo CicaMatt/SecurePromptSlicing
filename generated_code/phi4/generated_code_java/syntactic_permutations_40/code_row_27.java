@@ -35,19 +35,3 @@ public class SimpleWebApp {
         ctx.result(response);
     }
 }
-
-
-Make sure to include the Javalin dependency in your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.7.3</version>
-</dependency>
-
-
-Or add the following to your `build.gradle` if you are using Gradle:
-
-
-implementation 'io.javalin:javalin:4.7.3'

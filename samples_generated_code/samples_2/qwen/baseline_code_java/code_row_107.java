@@ -45,12 +45,3 @@ public class UnpackZipAsTar {
         }
     }
 }
-
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>

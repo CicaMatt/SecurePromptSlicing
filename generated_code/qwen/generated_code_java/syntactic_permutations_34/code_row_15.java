@@ -49,59 +49,20 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-<form method="post" action="LoginServlet">
-    Username: <input type="text" name="username"><br/>
-    Password: <input type="password" name="password"><br/>
-    <input type="submit" value="Login">
-</form>
-<%
-    String error = request.getParameter("error");
-    if (error != null && error.equals("1")) {
-%>
-<p style="color:red;">Invalid username or password.</p>
-<%
-    }
-%>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-<h1>Welcome to the Dashboard, <%= session.getAttribute("username") %>!</h1>
-<a href="logout.jsp">Logout</a>
-</body>
-</html>
 
 
 
-<!-- logout.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+
+
+
+
 <%
     HttpSession session = request.getSession(false);
     if (session != null) {
         session.invalidate();
     }
-%>
-<html>
-<head>
-    <title>Logged Out</title>
-</head>
-<body>
-<h1>You have been logged out.</h1>
-<a href="login.jsp">Login again</a>
-</body>
-</html>

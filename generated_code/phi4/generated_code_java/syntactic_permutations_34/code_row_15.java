@@ -55,6 +55,3 @@ public class LoginApplication {
         }
     }
 }
-
-
-Make sure you have a MySQL database set up with a `login_db` schema and a table named `users` having columns `username` and `password`. You can adjust the `DB_URL`, `USER`, and `PASS` constants to match your database configuration.

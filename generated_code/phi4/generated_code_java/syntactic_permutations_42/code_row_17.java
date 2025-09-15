@@ -25,28 +25,3 @@ class InfoController {
         return "Username: " + username + ", Email: " + email + ", SSN: " + ssn;
     }
 }
-
-
-To run this code, you need to have the Spring Boot dependencies in your `pom.xml` or `build.gradle`. Here's an example for a Maven project:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-</dependencies>
-
-
-For Gradle:
-
-
-implementation 'org.springframework.boot:spring-boot-starter-web'
-implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-
-Make sure to have Spring Boot set up in your project, and you can run the application using `mvn spring-boot:run` for Maven or `gradle bootRun` for Gradle.

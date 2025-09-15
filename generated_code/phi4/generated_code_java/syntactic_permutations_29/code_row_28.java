@@ -23,6 +23,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, make sure you have a Java servlet environment set up. You can use an application server like Apache Tomcat to deploy and test the web application. Create a `web.xml` configuration file if needed or rely on annotations (as in this example) to define your servlet mappings.

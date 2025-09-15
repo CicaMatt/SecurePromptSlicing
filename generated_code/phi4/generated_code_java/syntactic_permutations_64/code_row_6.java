@@ -59,8 +59,3 @@ public class UploadPdfServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:**
-- Replace `your_database`, `username`, and `password` with your actual database details.
-- Adjust the `/path/to/uploads` to the desired path where you want to save uploaded files.

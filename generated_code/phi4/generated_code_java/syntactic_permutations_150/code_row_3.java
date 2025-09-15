@@ -66,6 +66,3 @@ public class MessageApp {
         Runtime.getRuntime().exec("xdg-open http://localhost:8080/main");
     }
 }
-
-
-**Note:** This code simulates a web form submission through console input and demonstrates database insertion using JDBC. The redirection part is simulated for demonstration purposes, as true HTTP handling would require a web server setup such as Spring Boot or another framework in Java, which cannot be fully demonstrated with standalone Java code without additional context. Additionally, replace `"your_database"`, `"username"`, and `"password"` with your actual database details, and ensure the MySQL JDBC driver is included in your project dependencies for this to run successfully.

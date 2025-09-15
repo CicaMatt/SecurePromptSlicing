@@ -38,21 +38,3 @@ public class MainServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-
-<!-- index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-<h1>Welcome to the Message Board</h1>
-<form action="submitMessage" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>

@@ -62,6 +62,3 @@ public class Registration {
         return false;
     }
 }
-
-
-**Note**: Make sure to replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Ensure you have a table named `users` with columns: `username`, `password`, `first_name`, `last_name`, and `email`. The BCrypt library should also be included in your project dependencies for hashing passwords.

@@ -70,6 +70,3 @@ public class RegistrationPage {
         return sb.toString();
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Also, ensure that you have a MySQL database named `registration_db` and a table named `users` with the appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`).

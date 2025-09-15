@@ -35,6 +35,3 @@ public class UserAuthServlet extends HttpServlet {
                 && username.equals("admin") && password.equals("admin") && session.equals("admin");
     }
 }
-
-
-Note: This code assumes a basic setup with Java Servlets. You would need to deploy this in a servlet container like Apache Tomcat, and set up the necessary configurations in `web.xml` or via annotations as shown above.

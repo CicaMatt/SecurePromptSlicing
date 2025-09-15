@@ -37,6 +37,3 @@ public class ModeratorCheck {
         return false;
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual database name, username, and password. Also, adjust the table name (`users`) and column names (`username`, `is_moderator`) according to your schema if they differ.

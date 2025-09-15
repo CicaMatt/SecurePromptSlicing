@@ -52,6 +52,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Also, ensure you have the MySQL JDBC driver in your classpath or include it as a dependency if using a build tool like Maven or Gradle.

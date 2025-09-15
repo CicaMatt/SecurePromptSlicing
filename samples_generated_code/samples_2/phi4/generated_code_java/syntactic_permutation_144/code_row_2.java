@@ -42,6 +42,3 @@ public class EmailUnsubscribeChecker {
         }
     }
 }
-
-
-**Note:** Replace `"path/to/unsubscribe_script.sh"` with the actual path to your unsubscribe script. The `emailExists` method is a placeholder and should be implemented to check if an email exists in your system.

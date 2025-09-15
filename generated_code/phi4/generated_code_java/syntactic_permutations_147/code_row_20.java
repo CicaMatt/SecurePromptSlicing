@@ -41,36 +41,3 @@ public class BuyOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br><br>
-
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min="1" required><br><br>
-
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
-
-
-
--- SQL to create the orders table
-CREATE TABLE IF NOT EXISTS orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    stock_name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL
-);
-
-
-**Note**: Replace `your_database`, `username`, and `password` with your actual database name, username, and password. Ensure you have the MySQL JDBC driver in your classpath.

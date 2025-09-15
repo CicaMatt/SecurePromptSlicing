@@ -48,6 +48,3 @@ public class TemperatureApiApplication {
         return new Gson().toJson(Map.of("error", "No data found"));
     }
 }
-
-
-Note: This code assumes you have a Spring Boot project set up with the necessary dependencies for Spring Web and MySQL. Make sure your `application.properties` or `application.yml` is configured properly to connect to your MySQL database.
