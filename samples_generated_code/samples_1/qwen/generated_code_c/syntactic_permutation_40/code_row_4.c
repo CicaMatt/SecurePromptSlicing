@@ -65,6 +65,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-Please note that this code uses the Mongoose library for handling HTTP requests. Make sure to have Mongoose installed and properly linked when compiling this program.

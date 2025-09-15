@@ -58,10 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-### Notes:
-- Ensure the MySQL and OpenSSL libraries are installed on your system.
-- Compile with: `gcc -o webapp webapp.c $(mysql_config --cflags --libs) -lssl -lcrypto`
-- Create a database named `test_db` and a table `users` with columns `username` (VARCHAR(50)) and `password` (CHAR(64)).
-- Adjust the server, user, password, and database variables as needed.

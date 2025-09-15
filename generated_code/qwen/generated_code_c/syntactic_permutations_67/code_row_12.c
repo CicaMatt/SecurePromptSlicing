@@ -67,6 +67,3 @@ int main(int argc, char **argv)
 
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"database_name"` with your MySQL credentials and database name. Also, ensure that the `images` table exists in your database with a column named `data` of type `BLOB`.

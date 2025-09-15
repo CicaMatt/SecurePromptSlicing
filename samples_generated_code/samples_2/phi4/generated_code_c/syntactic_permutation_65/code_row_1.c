@@ -46,9 +46,3 @@ int main() {
     
     return EXIT_SUCCESS;
 }
-
-
-**Notes:**
-- The code above is a simulation of handling an HTML form and saving the uploaded PDF. 
-- A real web server would require more complex setup, such as using libraries like `libmicrohttpd` or integrating with frameworks for HTTP request handling.
-- This example uses simple file operations to demonstrate how files might be handled once received.

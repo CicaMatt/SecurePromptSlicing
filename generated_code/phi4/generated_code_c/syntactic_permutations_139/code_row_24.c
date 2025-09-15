@@ -58,6 +58,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to link against the MySQL client library when compiling, e.g., using `gcc -o program program.c $(mysql_config --cflags --libs)`. Replace `'target_username'` with the actual username you want to check.

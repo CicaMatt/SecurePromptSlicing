@@ -56,6 +56,3 @@ int main() {
     handle_route("example_user");
     return 0;
 }
-
-
-Note: Replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your actual database connection details.

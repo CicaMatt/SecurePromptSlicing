@@ -38,6 +38,7 @@ void user_page() {
 
 void admin_page() {
     printf("GET request to admin page\n");
+}
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {

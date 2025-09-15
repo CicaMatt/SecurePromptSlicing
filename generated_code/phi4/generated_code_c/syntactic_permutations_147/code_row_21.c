@@ -52,13 +52,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-To compile and run this code:
-1. Ensure you have MySQL server installed and running.
-2. Create a database named `stockdb` and a table named `buy_orders` with columns `stock_name` (VARCHAR) and `quantity` (INT).
-3. Install the MySQL C API library (`libmysqlclient-dev` on Debian-based systems).
-4. Compile using: `gcc -o buy_order buy_order.c $(mysql_config --cflags --libs)`
-5. Run the program: `./buy_order`
-
-Make sure to configure your database credentials accordingly.

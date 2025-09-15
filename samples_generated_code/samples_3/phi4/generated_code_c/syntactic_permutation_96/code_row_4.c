@@ -94,6 +94,3 @@ int storeCredentials(const char *username, const unsigned char *hashedPassword) 
 
     return 0; // Return 0 on success, non-zero on failure
 }
-
-
-**Note**: This code uses OpenSSL for hashing the password and assumes you have OpenSSL installed. For a real application, make sure to handle errors more gracefully and securely manage user input.

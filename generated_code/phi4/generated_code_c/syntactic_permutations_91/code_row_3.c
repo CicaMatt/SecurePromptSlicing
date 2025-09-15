@@ -58,13 +58,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to:
-
-1. Have MySQL server running and a database named `webapp` with a table `users`.
-2. Table `users` should have columns: `username VARCHAR(50)` and `password BINARY(32)`.
-3. Install the necessary libraries (`mysqlclient`, OpenSSL).
-4. Compile the program using:
-   
-   gcc -o register_app your_file.c -lmysqlclient -lcrypto

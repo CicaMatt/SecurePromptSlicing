@@ -65,6 +65,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"username"`, `"password"`, and `"database_name"` with your actual database connection details.

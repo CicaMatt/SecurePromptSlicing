@@ -68,6 +68,3 @@ void login(const char* username, const char* password) {
     mysql_free_result(res);
     mysql_close(conn);
 }
-
-
-Note: Replace `"localhost"`, `"root"`, `"your_password"`, and `"your_database"` with your actual database credentials. Ensure MySQL is installed and configured properly on your system.

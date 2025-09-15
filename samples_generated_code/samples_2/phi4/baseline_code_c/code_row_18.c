@@ -88,9 +88,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to:
-
-1. Replace `"root"`, `""` (password), and `"testdb"` with your MySQL username, password, and database name.
-2. Ensure the `users` table exists in your database with appropriate columns (`username`, `password`, `first_name`, `last_name`, `email`).

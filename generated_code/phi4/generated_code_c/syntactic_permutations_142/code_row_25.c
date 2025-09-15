@@ -81,6 +81,3 @@ void unsubscribe(const char *email) {
     // Close the connection
     mysql_close(conn);
 }
-
-
-**Note**: Replace `localhost`, `username`, `password`, and `database_name` with your actual MySQL server details. Make sure to have a table named `subscribers` with at least an `email` column for this code to work properly. Also, ensure that the MySQL client library is installed on your system before compiling and running this program. You can compile it using a command like `gcc -o unsubscribe unsubscribe.c $(mysql_config --cflags --libs)`.

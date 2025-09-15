@@ -45,11 +45,3 @@ int main() {
 
     return 0;
 }
-
-
-To make this code runnable:
-
-1. Create a directory named `uploads` in the same directory as your program.
-2. Ensure that you have an example input file, such as `example.txt`, in the same directory as your executable.
-3. Compile the program using a C compiler like GCC: `gcc -o upload_app your_file_name.c`.
-4. Run the compiled application: `./upload_app`.

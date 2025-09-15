@@ -79,18 +79,3 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-
-
-To compile this code, you need to have the `libevent` library installed. You can typically install it via your package manager or download and build from source. Here is an example of how you might compile the program on a Unix-like system:
-
-
-gcc -o webapp main.c -levent
-
-
-Run the compiled binary using:
-
-
-./webapp
-
-
-Visit `http://localhost:8080/info` in your browser to see the output.

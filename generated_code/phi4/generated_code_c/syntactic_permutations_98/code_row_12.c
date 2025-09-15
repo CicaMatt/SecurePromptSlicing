@@ -47,6 +47,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Note: This code assumes you have OpenSSL installed and linked appropriately for SHA-256 hashing. The `executeSQL` function is commented out because actual database interaction would depend on additional libraries like MySQL or SQLite, which are not included here due to the focus on hashing and preparing SQL statements.

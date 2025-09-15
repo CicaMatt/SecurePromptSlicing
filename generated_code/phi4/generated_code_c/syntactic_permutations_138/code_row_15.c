@@ -69,13 +69,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-To compile and run this code, you'll need a C compiler like `gcc`:
-
-
-gcc -o webapp webapp.c
-./webapp
-
-
-This basic server listens on port 8080 and responds to `GET /hello` requests with "Hello, World!" and returns a 404 for other paths.

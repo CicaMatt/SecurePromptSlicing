@@ -28,10 +28,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-
-
-To compile and run the code, use:
-
-
-gcc -o webapp webapp.c
-./webapp /info

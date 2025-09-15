@@ -51,15 +51,3 @@ int main(int argc, char **argv) {
     curl_global_cleanup();
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code, you need to have the libcurl library installed. Use the following command to compile:
-
-
-gcc -o web_redirect web_redirect.c -lcurl
-
-
-Run it with a URL as an argument:
-
-
-./web_redirect <url>

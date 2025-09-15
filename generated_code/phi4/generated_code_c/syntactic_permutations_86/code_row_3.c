@@ -111,9 +111,3 @@ int main(void) {
 
     return 0;
 }
-
-
-Make sure to link against the MySQL and cURL libraries when compiling this program. For example:
-
-
-gcc -o app main.c $(mysql_config --cflags --libs) -lcurl

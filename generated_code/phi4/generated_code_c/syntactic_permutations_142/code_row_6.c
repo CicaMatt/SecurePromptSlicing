@@ -68,22 +68,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have the MySQL client library installed. You can typically install it using a package manager like `apt` on Ubuntu:
-
-
-sudo apt-get update
-sudo apt-get install libmysqlclient-dev
-
-
-Then compile the program with:
-
-
-gcc -o unsubscribe_program your_program.c $(mysql_config --cflags --libs)
-
-
-And run it with:
-
-
-./unsubscribe_program

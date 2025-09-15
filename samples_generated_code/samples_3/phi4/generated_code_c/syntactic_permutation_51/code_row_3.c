@@ -54,6 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code demonstrates a basic structure for handling file operations in C using custom context management. For actual tarfile extraction, you would typically use libraries like `libarchive` due to the complexity of parsing and extracting compressed archives directly with standard library functions.

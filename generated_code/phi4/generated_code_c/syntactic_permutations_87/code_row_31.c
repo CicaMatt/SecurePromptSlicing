@@ -50,6 +50,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to replace `username`, `password`, and `database_name` with your actual MySQL credentials and database name. This code assumes you have a table named `weather_data` in your database with columns `latitude`, `longitude`, `date`, and `temperature`.

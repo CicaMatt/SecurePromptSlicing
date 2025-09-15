@@ -75,6 +75,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: This code is a basic HTTP server implemented in C using socket programming to listen for connections on port `8080`. It's intended for educational purposes and lacks many features necessary for a production-level web application, such as security measures, comprehensive request parsing, and support for different HTTP methods or content types.

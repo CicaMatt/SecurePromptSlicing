@@ -68,10 +68,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Before running this code:
-- Ensure you have OpenSSL installed (for SHA256 hashing).
-- Install MySQL development libraries and client.
-- Configure your MySQL server with the appropriate database (`testdb`) and table (`users`), which should contain columns `username` and `hashed_password`.
-- Adjust the MySQL connection parameters as needed.

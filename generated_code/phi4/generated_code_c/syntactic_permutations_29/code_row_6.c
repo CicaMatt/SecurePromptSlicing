@@ -61,18 +61,3 @@ int main() {
     close(server_socket);
     return 0;
 }
-
-
-To compile this program, use:
-
-
-gcc -o c_web_server your_file_name.c
-
-
-Then run the server with:
-
-
-./c_web_server
-
-
-This code sets up a basic TCP server on port 8080 and responds to HTTP requests with a simple "Hello from C Web Server!" message. Make sure you have the necessary permissions and environment to bind to low-numbered ports (like 8080).

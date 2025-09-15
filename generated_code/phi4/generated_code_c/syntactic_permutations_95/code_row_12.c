@@ -99,9 +99,3 @@ int main() {
     free(hashed_password);
     return 0;
 }
-
-
-Note: The code above uses OpenSSL for hashing and generating random salts. Ensure you have the OpenSSL library installed and linked during compilation:
-
-
-gcc -o registration_form registration_form.c -lcrypto

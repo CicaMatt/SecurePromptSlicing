@@ -47,15 +47,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have OpenSSL installed. Use the following command to compile:
-
-
-gcc -o register_app main.c -lcrypto
-
-
-Then execute the program:
-
-
-./register_app

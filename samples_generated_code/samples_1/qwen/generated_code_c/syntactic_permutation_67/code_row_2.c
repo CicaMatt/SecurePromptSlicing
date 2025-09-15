@@ -68,11 +68,3 @@ int main(int argc, char **argv) {
     mysql_close(con);
     exit(0);
 }
-
-
-
--- SQL to create the table for storing images
-CREATE TABLE IF NOT EXISTS images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    data LONGBLOB NOT NULL
-);

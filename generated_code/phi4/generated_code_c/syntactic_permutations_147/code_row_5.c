@@ -53,6 +53,3 @@ void execute_query(MYSQL *conn, const char *query) {
         exit(EXIT_FAILURE);
     }
 }
-
-
-Note: Replace `"localhost"`, `"root"`, `"password"`, and `"stock_db"` with your actual MySQL server host, username, password, and database name. Ensure the `orders` table exists in your database schema before running this code.

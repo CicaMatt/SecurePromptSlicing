@@ -172,19 +172,3 @@ int main(int argc, char* argv[]) {
     mysql_close(conn);
     return EXIT_SUCCESS;
 }
- 
-
-**Note:** Before running the code, ensure you have a MySQL server installed and running with a database named `testdb` and a table `users` defined as follows:
-
-
-CREATE DATABASE testdb;
-
-USE testdb;
-
-CREATE TABLE users (
-    username VARCHAR(255) PRIMARY KEY,
-    password_hash UNSIGNED LONG
-);
-
-
-Also, adjust the MYSQL_USER and MYSQL_PASS constants in the code to match your MySQL server's credentials.

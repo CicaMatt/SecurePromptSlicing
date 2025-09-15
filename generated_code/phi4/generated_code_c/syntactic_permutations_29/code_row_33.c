@@ -45,12 +45,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code:
-
-gcc -o simple_redirect simple_redirect.c
-./simple_redirect "http://example.com/path"
-
-
-This will simulate a web server redirect based on whether the target URL contains `example.com`.

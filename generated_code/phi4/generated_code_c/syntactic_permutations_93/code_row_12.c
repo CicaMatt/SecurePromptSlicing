@@ -85,15 +85,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have OpenSSL installed on your system. You can generally install it using a package manager like `apt` on Ubuntu (`sudo apt-get install libssl-dev`) or Homebrew on macOS (`brew install openssl`). Then compile the program with:
-
-
-gcc -o password_hasher password_hasher.c -lssl -lcrypto
-
-
-Run it using:
-
-
-./password_hasher

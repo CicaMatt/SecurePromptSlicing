@@ -56,6 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-Replace `"your_database_name"` with the actual name of your database, and adjust `SERVER`, `USER`, and `PASSWORD` as needed for your environment. Make sure that you have MySQL client library installed and linked when compiling this code, typically using `-lmysqlclient`.

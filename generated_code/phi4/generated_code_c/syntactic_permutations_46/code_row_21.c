@@ -46,9 +46,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To run this code:
-- Save it in a file named `server.c`.
-- Compile using: `gcc server.c -o server`
-- Run with an HTTP request simulator or by calling directly with command-line arguments for testing, e.g., `./server /img image_name.jpg`.

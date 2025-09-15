@@ -72,6 +72,3 @@ char* unzGetCurrentFileInfoInternal(void *handle, char *szFileName, void **fileS
     strcpy(szFileName, "example.txt");
     return strdup("Extracted example.txt");
 }
-
-
-**Note**: This code provides a skeleton for extracting files from a `.zip` file in C. The actual decompression logic is not implemented and would require integration with a library like `minizip` or similar to handle ZIP file operations properly.

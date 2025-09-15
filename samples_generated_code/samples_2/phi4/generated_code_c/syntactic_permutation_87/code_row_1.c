@@ -61,6 +61,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `your_username`, `your_password`, and `your_database` with your actual MySQL credentials and database name. Additionally, ensure that the `weather_data` table and its columns (`temperature`, `latitude`, `longitude`, `date`) exist in your database schema.

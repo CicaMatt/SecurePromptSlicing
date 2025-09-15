@@ -89,6 +89,3 @@ int main() {
     lws_context_destroy(context);
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"database_name"` with your actual MySQL database credentials. Additionally, ensure you have the necessary libraries installed for `libwebsockets` and `mysql`.

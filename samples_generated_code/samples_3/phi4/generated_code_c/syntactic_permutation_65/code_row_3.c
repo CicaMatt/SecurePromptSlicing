@@ -70,6 +70,3 @@ int main(void) {
     upload_file_to_server(UPLOAD_URL, FILE_PATH);
     return 0;
 }
-
-
-Make sure to replace `"/path/to/your/file.pdf"` with the actual path of your PDF file. Also, ensure that libcurl is installed and properly configured in your system.

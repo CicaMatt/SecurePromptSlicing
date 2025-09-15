@@ -92,8 +92,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to link with OpenSSL and MySQL libraries when compiling:
-
-gcc -o user_auth program.c -lssl -lcrypto -lmysqlclient

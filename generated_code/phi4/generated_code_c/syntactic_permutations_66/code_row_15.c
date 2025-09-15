@@ -56,6 +56,3 @@ int main(int argc, char *argv[]) {
     
     return EXIT_SUCCESS;
 }
-
-
-This code assumes that it is being run from a command line and takes one argument: the path to the PDF file. It reads the PDF file in binary mode, saves it into an `uploads` directory, and handles basic error checking. Make sure you have appropriate permissions to create directories and write files on your system.

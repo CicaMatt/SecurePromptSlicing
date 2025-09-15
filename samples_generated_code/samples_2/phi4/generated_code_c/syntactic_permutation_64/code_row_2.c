@@ -38,9 +38,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:**  
-- Replace `HOST`, `USER`, `PASSWORD`, and `DATABASE` with your actual MySQL server credentials.
-- Ensure the database schema exists with a table named `pdf_files` having columns `filename` and `filepath`.
-- Install the MySQL client library to compile this code: e.g., using `-lmysqlclient`.

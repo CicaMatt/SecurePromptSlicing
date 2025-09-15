@@ -47,6 +47,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note**: You need a MySQL server running with a database named `stock_db` and a table `buy_orders` having columns `stock_name` (VARCHAR) and `quantity` (INT). Also, ensure that the MySQL C client library is installed on your system.

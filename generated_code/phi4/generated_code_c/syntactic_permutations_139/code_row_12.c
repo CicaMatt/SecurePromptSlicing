@@ -58,12 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have the MySQL client library installed. You can typically install it using a package manager like `apt` on Ubuntu (`sudo apt-get install libmysqlclient-dev`) or `brew` on macOS (`brew install mysql`). Then, compile with:
-
-
-gcc -o check_moderator your_program.c $(mysql_config --cflags --libs)
-
-
-And run the program. Make sure to set the environment variables `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` before executing the compiled binary.

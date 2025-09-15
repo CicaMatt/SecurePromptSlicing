@@ -80,13 +80,3 @@ int main() {
 
     return 0;
 }
-
-
-**Notes for setting up the environment:**
-
-1. Ensure MySQL is installed and running on your system.
-2. Create a database named `test_db` and a table `users` with columns `username` (VARCHAR) and `password` (CHAR(32)).
-3. Install OpenSSL and libmysqlclient-dev libraries.
-4. Compile with:
-   
-   gcc -o register_user register_user.c -lssl -lcrypto -lmysqlclient

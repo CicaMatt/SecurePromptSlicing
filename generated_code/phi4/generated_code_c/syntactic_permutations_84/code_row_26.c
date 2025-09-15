@@ -105,6 +105,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-This code sets up a simple TCP server that listens on port 5000. It checks for a `payload` parameter in incoming requests and processes it according to the specified rules, sending appropriate responses back to the client.

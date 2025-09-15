@@ -40,6 +40,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This C code simulates the process of opening and reading a ZIP file's contents into memory. Handling actual ZIP or TAR archives requires more complex logic typically provided by libraries such as `libarchive` or `minizip`. This example does not perform real decompression due to the complexities involved in parsing binary archive formats without specialized libraries.

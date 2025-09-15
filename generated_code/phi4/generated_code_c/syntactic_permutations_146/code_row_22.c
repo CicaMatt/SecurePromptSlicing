@@ -53,21 +53,3 @@ int main() {
     mysql_close(con);
     return 0;
 }
-
-
-Make sure you have a MySQL database setup with the following table:
-
-
-CREATE DATABASE IF NOT EXISTS stock_db;
-
-USE stock_db;
-
-CREATE TABLE IF NOT EXISTS buy_orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    stock_name VARCHAR(100) NOT NULL,
-    quantity INT NOT NULL
-);
-
-
-Adjust `HOST`, `USER`, and `PASSWORD` as necessary for your MySQL setup.

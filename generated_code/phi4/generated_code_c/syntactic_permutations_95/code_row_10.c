@@ -133,11 +133,3 @@ int main() {
 
     return 0;
 }
-
-
-To make this code runnable:
-1. Ensure you have MySQL and OpenSSL libraries installed on your system.
-2. Replace `"localhost"`, `"root"`, `""`, and `"user_db"` with appropriate values for your database setup.
-3. Create a table `users` in the database with fields `name` (VARCHAR) and `password` (VARCHAR).
-4. Compile using: `gcc -o registration_form registration_form.c $(mysql_config --cflags --libs) -lssl -lcrypto`.
-5. Run the executable.

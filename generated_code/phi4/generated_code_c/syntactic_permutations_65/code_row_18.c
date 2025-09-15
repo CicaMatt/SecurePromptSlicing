@@ -75,24 +75,3 @@ int main() {
     close(sockfd);
     return 0;
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <form action="http://localhost:8080" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdfFile" accept=".pdf">
-        <button type="submit">Upload PDF</button>
-    </form>
-</body>
-</html>
-
-
-
-# Save this as a simple HTTP server script and run it in the same directory.
-python3 -m http.server 8080

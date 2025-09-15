@@ -59,9 +59,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `your_username`, `your_password`, and `your_database` with your actual MySQL username, password, and database name. Ensure that you have the MySQL development libraries installed to compile this program. You may need to link against these libraries when compiling using a command like:
-
-
-gcc -o unsubscribe_program unsubscribe_program.c $(mysql_config --cflags --libs)

@@ -45,6 +45,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** Before running this code, make sure you have the MySQL C API installed and properly configured in your development environment. Replace `'your_username'`, `'your_password'`, `'your_database_name'`, and `'target_username'` with actual values from your database setup.

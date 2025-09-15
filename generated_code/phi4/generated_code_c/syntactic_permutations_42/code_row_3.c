@@ -54,6 +54,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-This code uses the Mongoose library to create a simple web application with a single route `/info`. It returns user information stored in session variables. Make sure to compile it with `-lmongoose` and link against the Mongoose library.

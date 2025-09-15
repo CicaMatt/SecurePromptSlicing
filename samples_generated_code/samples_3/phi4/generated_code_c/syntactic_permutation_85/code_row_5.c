@@ -53,9 +53,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `"localhost"`, `"username"`, and `"password"` with your actual database host, username, and password. Ensure that the MySQL client library is installed and linked during compilation:
-
-
-gcc -o temperature_for_location temperature_for_location.c $(mysql_config --cflags --libs)

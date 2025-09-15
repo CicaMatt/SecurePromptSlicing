@@ -42,15 +42,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To run this code, you need to compile it and set up a CGI environment. For example:
-
-
-gcc -o info.cgi your_code.c
-chmod +x info.cgi
-
-# Place `info.cgi` in the CGI directory of your web server, typically `/var/www/cgi-bin/`
-
-
-Make sure your web server is configured to execute CGI scripts from that directory. Access it via a browser at: `http://yourserver.com/cgi-bin/info.cgi?info`.

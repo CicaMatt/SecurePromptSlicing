@@ -38,6 +38,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-Note: This code simulates a very basic HTTP server in C. It doesn't actually create a network socket or listen for incoming connections, as that would require more complex networking code involving system calls and libraries like `socket` on POSIX systems.

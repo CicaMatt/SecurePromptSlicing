@@ -65,6 +65,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code assumes you have a MySQL table named `pdf_files` with at least one column named `filename`. You need to replace the database connection details (`DB_HOST`, `DB_USER`, `DB_PASS`, and `DB_NAME`) with your actual MySQL server credentials. Also, ensure that the MySQL client library is installed and linked during compilation with `-lmysqlclient`.

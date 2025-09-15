@@ -61,6 +61,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Note: This code assumes that you have a MySQL database set up with a table named `users` having columns `username` and `password_hash`, both of type VARCHAR. You'll need to adjust the connection parameters (`localhost`, `root`, `testdb`) according to your setup. Also, ensure that the MySQL client library is properly linked during compilation, e.g., by using `-lmysqlclient`.

@@ -56,12 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `username`, `password`, and the database structure in accordance with your MySQL setup. Additionally, ensure that the MySQL development library is installed on your system to compile this code. You can typically install it using a package manager (e.g., `sudo apt-get install libmysqlclient-dev` on Debian-based systems). To compile, use:
-
-
-gcc -o temperature_query temperature_query.c $(mysql_config --cflags --libs)
-
-
-Replace `temperature_query.c` with the filename you've saved this code as.

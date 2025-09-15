@@ -92,16 +92,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install Mongoose from https://github.com/cesanta/mongoose.
-2. Save the above code in a file, e.g., `server.c`.
-3. Compile it using:
-   
-   gcc -o server server.c -I/path/to/mongoose/include -L/path/to/mongoose/lib -lmongoose
-   
-4. Run it with:
-   
-   ./server

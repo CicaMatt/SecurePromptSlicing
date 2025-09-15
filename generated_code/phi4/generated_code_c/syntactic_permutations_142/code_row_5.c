@@ -71,6 +71,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"database_name"` with your actual database credentials. Also, ensure that the MySQL client library is installed and linked correctly during compilation using `-lmysqlclient`.

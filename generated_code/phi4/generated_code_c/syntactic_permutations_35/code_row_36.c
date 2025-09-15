@@ -51,6 +51,3 @@ int main() {
 
     return 0;
 }
-
-
-This C code simulates a login process with hardcoded user data and uses text files as a means of simulating redirections, which are typical in web applications but not directly applicable within C programs.

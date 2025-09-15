@@ -70,9 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link against the MySQL client library by compiling with `-lmysqlclient`:
-
-
-gcc -o app your_source_file.c $(mysql_config --cflags --libs)

@@ -75,6 +75,3 @@ int main() {
 
     return 0;
 }
- 
-
-Make sure to have the LodePNG library available and linked during compilation. You can download it from https://lodev.org/lodepng/ and follow their integration instructions. This code provides a simple mechanism to read an image file, encode its contents in base64 format (here represented as hex for simplicity), and then simulate uploading by printing the data to stdout.

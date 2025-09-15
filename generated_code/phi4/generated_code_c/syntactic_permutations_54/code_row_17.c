@@ -35,8 +35,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To run this code:
-- For the login page, execute: `./program GET`
-- To simulate a POST request with credentials, execute: `./program POST username password`

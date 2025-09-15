@@ -69,18 +69,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code, you will need to have the `mongoose` library available. You can download it from https://github.com/cesanta/mongoose or use a package manager if available for your system (like `apt-get install libmongoose-dev` on Debian-based systems). Then compile with:
-
-
-gcc -o web_app main.c -lmongoose
-
-
-And run the resulting binary:
-
-
-./web_app
-
-
-The server will start, and you can access it at http://localhost:8080/info.

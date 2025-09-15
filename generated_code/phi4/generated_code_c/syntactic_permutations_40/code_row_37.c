@@ -78,13 +78,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code, you will need the Mongoose library. You can typically install it via your package manager or download it from its website at https://github.com/cesanta/mongoose. Then link against the library when compiling:
-
-
-gcc -o web_app main.c -lmongoose
-./web_app
-
-
-This code sets up a simple HTTP server that serves an HTML page with user information on visiting `/info`. It uses Mongoose, a lightweight web server and networking library in C, to handle HTTP requests. The session data is hardcoded for this example but would typically come from a real session management system.

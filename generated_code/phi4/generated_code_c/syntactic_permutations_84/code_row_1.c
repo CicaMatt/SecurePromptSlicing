@@ -86,22 +86,3 @@ int main() {
 
     return 0;
 }
-
-
-This code requires the `libyaml` library to compile and run. You can install it on a Debian-based system using:
-
-
-sudo apt-get update
-sudo apt-get install libyaml-dev
-
-
-To compile the program, use:
-
-
-gcc -o webapp webapp.c $(pkg-config --cflags --libs yaml-0.1)
-
-
-Run the compiled executable with:
-
-
-./webapp

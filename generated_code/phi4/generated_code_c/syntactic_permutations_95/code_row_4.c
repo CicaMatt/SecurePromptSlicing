@@ -62,9 +62,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: This code uses OpenSSL for hashing. You'll need to link against OpenSSL when compiling this code. For example:
-
-
-gcc -o registration_form registration_form.c -lcrypto

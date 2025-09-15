@@ -41,8 +41,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link against the OpenSSL library when compiling this code. You can do this by using the `-lssl -lcrypto` flags with your compiler, for example:
-
-gcc -o registration_page registration_page.c -lssl -lcrypto

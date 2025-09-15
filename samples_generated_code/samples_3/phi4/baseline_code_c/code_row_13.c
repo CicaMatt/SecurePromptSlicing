@@ -57,6 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires the OpenSSL library to be installed for hashing. Compile with `gcc -o user_auth user_auth.c -lcrypto`. In a real application, use proper database connection and prepared statements to securely insert data into your database.

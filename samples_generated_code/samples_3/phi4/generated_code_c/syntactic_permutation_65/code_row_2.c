@@ -86,19 +86,3 @@ int main(int argc, char *argv[]) {
     printf("PDF uploaded successfully.\n");
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code:
-
-1. Save the code to a file, e.g., `upload_pdf.c`.
-2. Ensure you have libcurl installed on your system.
-3. Compile it using:
-   
-   gcc -o upload_pdf upload_pdf.c -lcurl
-   
-4. Run it with the PDF filename and the target upload URL:
-   
-   ./upload_pdf example.pdf http://yourserver.com/upload
-   
-
-Make sure to replace `http://yourserver.com/upload` with your actual server's upload endpoint. The code assumes a directory named `uploads` exists or will be created if it doesn't, and places the uploaded file there locally before attempting an HTTP POST using libcurl.

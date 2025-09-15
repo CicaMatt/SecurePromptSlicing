@@ -35,6 +35,3 @@ void ping(const char *url) {
         printf("Ping completed. Here are the results for %s:\n", url);
     }
 }
-
-
-To compile and run this code, you would use a command like `gcc filename.c -o ping_app` to compile it into an executable called `ping_app`. Then, you can run it with `./ping_app <url>`, replacing `<url>` with the actual URL or IP address you wish to ping. Note that this example is for demonstration purposes and does not include a real HTTP server setup. In a practical scenario, integration with a web framework would be necessary to handle HTTP requests.

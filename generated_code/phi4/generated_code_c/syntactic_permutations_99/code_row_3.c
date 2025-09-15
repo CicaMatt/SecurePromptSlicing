@@ -49,6 +49,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Replace `"root"`, `"password"`, and `"testdb"` with your actual MySQL username, password, and database name. The hashing function used here is for demonstration purposes only and should not be used in a production environment.

@@ -83,12 +83,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Note: The above code uses the `libzip` library to handle ZIP files. You will need to link against `libzip` when compiling this program:
-
-
-gcc -o unzip unzip.c -lzip
-
-
-Make sure you have `libzip` installed on your system before compiling.

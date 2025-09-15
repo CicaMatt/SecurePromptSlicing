@@ -49,6 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you will need the MySQL client library installed. You can typically do this with a command like `gcc -o check_moderator your_file.c $(mysql_config --cflags --libs)` on systems where `mysql_config` is available. Adjust the query string to include the actual logic or table schema as needed in your database setup.

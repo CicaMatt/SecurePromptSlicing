@@ -42,6 +42,3 @@ int main() {
     mysql_close(con);
     return EXIT_SUCCESS;
 }
- 
-
-**Note:** Replace `"host"`, `"user"`, `"password"`, `"database"`, and `tableName` with your actual MySQL host, username, password, database name, and table name, respectively. Ensure that the MySQL development libraries are installed on your system to compile this code.

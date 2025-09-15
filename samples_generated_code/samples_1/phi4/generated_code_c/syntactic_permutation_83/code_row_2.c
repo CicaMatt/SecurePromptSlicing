@@ -92,6 +92,3 @@ int main() {
 
     return 0;
 }
-
-
-This C code creates a simple web server that listens on port 8080. It accepts POST requests, parses the `Content-Length` header to read the full body of the request, and searches for a field named 'name'. If found, it returns the value of the 'name' field in the response; otherwise, it sends an appropriate error message.

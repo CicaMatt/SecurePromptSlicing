@@ -61,9 +61,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Note: Before running this code:
-- Ensure that the MySQL server is running and accessible with appropriate credentials.
-- Create a database named `testdb` and a table named `users` with columns `username` (VARCHAR) and `password` (CHAR(64)) to store hashed passwords.
-- Install necessary libraries such as OpenSSL for hashing, and MySQL client library (`libmysqlclient-dev`). Compile the code using gcc with `-lssl -lcrypto -lmysqlclient`.

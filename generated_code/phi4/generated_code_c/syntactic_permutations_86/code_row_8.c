@@ -114,8 +114,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-Make sure to link the required libraries (`libmicrohttpd` and `mysqlclient`) when compiling this program, e.g., using:
-
-gcc -o server your_program.c $(pkg-config --cflags --libs libmicrohttpd) -lmysqlclient

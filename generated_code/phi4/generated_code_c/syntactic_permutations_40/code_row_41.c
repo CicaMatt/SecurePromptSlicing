@@ -72,23 +72,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install Mongoose library:
-   - On Debian-based systems: `sudo apt-get install libmongoose-dev`
-   - On Red Hat-based systems: `sudo yum install mongoose-devel`
-   - Download source from [Mongoose GitHub](https://github.com/cesanta/mongoose) if not available via package manager.
-
-2. Compile the code:
-   
-   gcc -o webapp main.c -lmongoclient
-   
-
-3. Run the application:
-   
-   ./webapp
-   
-
-4. Access `http://localhost:8080/info` in your browser to see the user information page.

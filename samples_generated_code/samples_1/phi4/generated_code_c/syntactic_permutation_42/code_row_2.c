@@ -57,13 +57,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-To compile and run this code, you need to have the `libmicrohttpd` library installed. Use the following command to compile:
-
-
-gcc -o webserver webserver.c $(pkg-config --cflags --libs libmicrohttpd)
-./webserver
-
-
-This will start a simple HTTP server on port 8888 that responds with email and SSN when `/info` is accessed via a GET request.

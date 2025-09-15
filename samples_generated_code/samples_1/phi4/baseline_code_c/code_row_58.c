@@ -91,12 +91,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the `libmicrohttpd` and `mysqlclient` libraries installed. You can compile this code using:
-
-
-gcc -o temperature_server main.c -lmysqlclient -lmicrohttpd
-
-
-Replace `"localhost"`, `"user"`, `"password"`, and `"database"` with your MySQL server details.

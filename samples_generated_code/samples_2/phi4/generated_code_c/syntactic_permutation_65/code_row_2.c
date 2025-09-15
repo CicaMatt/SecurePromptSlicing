@@ -40,6 +40,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `"/path/to/uploads"` with the actual path where you want to save uploaded files on your local system. This code simulates handling an HTTP request and saving a file, without actual network communication or parsing of real HTTP requests.

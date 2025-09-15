@@ -71,9 +71,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have OpenSSL installed and linked when compiling this program. You can compile it with:
-
-
-gcc -o user_manager user_manager.c -lcrypto

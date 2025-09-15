@@ -93,15 +93,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code:
-1. Save the code to a file named `web_app.c`.
-2. Compile it using:  
-   - On Linux/Unix/macOS: `gcc web_app.c -lsqlite3 -o web_app`
-   - On Windows with MinGW: `gcc web_app.c -lsqlite3 -o web_app.exe`
-3. Run the executable:
-   - On Linux/Unix/macOS: `./web_app`
-   - On Windows: `web_app.exe`
-
-Make sure you have SQLite installed and linked correctly during compilation. You can create a database named `example.db` with a table named `test` to test the functionality.

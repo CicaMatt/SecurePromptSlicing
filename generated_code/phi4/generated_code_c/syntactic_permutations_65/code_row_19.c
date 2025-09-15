@@ -76,6 +76,3 @@ int main() {
     
     return 0;
 }
-
-
-This C code sets up a basic web server that listens on port 8080. It serves an HTML form to upload PDF files when accessed via `GET /`. When the form is submitted with a PDF file, it saves the file in the `uploads` directory as `uploaded_file.pdf`. Ensure the `uploads` folder exists before running this code.

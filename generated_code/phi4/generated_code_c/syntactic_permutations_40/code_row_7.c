@@ -59,6 +59,3 @@ int main(void) {
     mg_destroy(&mgr);
     return 0;
 }
-
-
-This C code uses the Mongoose library to create a simple web application. The `info` route returns a page with user session details. Make sure to link against the Mongoose library when compiling (`-lmongoose`).

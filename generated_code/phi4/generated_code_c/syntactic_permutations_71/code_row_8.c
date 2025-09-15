@@ -100,26 +100,3 @@ int main(int argc, char *argv[]) {
     close(server_fd);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Save it to a file named `file_upload_server.c`.
-2. Compile with: `gcc -o file_upload_server file_upload_server.c`
-3. Run the server with: `./file_upload_server <port> <upload_path>` where `<port>` is the port number you want the server to listen on, and `<upload_path>` is the directory path where files will be saved.
-
-On the client side, a simple script can send the filename followed by file data:
-
-
-#!/bin/bash
-
-# Example client to upload a file
-HOST="127.0.0.1"
-PORT=12345
-FILE_TO_UPLOAD="/path/to/file.txt"
-
-echo -n "$(basename "$FILE_TO_UPLOAD")" | nc $HOST $PORT
-cat "$FILE_TO_UPLOAD" | nc $HOST $PORT
-
-
-Make sure to replace `/path/to/file.txt` with the path of the actual file you want to upload, and make this script executable (`chmod +x client.sh`).

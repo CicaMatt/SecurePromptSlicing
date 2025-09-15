@@ -59,9 +59,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have OpenSSL installed and linked when compiling this code. You can compile it using:
-
-
-gcc -o registration registration.c -lcrypto

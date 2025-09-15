@@ -39,6 +39,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"your_password"`, `"your_database"`, and `path/to/your/file.pdf` with your MySQL password, database name, and the path of the PDF file you want to upload, respectively. Also, ensure that the MySQL development libraries are installed on your system to compile this program (`libmysqlclient-dev` package for Debian-based systems). You might need to link against the MySQL client library when compiling by using `-lmysqlclient`.

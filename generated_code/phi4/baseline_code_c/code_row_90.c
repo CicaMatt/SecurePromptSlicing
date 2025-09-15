@@ -66,10 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have `libyaml` installed. Use the following commands:
-
-
-gcc -o microservice_example microservice_example.c $(pkg-config --cflags --libs yaml-0.2)
-./microservice_example

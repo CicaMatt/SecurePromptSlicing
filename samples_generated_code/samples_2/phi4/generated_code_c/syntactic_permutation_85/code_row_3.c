@@ -65,6 +65,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"` and `"password"` with your actual MySQL database credentials. This code assumes a table named `readings` with columns `latitude`, `longitude`, `date`, and `temperature`. Ensure that the MySQL C API library (`libmysqlclient`) is installed on your system.

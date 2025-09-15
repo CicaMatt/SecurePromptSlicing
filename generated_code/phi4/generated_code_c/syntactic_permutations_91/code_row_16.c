@@ -66,19 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-Before running this code:
-- Ensure you have the `mysqlclient` and OpenSSL libraries installed.
-- Create a MySQL database named `test_db`.
-- Create a table in that database as follows:
-
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password CHAR(32) NOT NULL
-);
-
-
-- Update the connection details (hostname, user, password, and database name) as needed.

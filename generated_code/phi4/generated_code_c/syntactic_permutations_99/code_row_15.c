@@ -36,13 +36,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, make sure you have OpenSSL installed. Use the following command to compile:
-
-
-gcc -o password_hasher program.c -lcrypto
-./password_hasher
-
-
-Replace `program.c` with the name of your source file.

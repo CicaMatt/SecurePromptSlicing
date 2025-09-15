@@ -65,24 +65,3 @@ int main(int argc, char **argv) {
     printf("Image uploaded successfully.\n");
     return EXIT_SUCCESS;
 }
-
-
-To compile and run the code:
-
-1. Ensure you have MySQL installed and running.
-2. Create a database and table for storing images:
-   
-   CREATE DATABASE my_database;
-   USE my_database;
-   CREATE TABLE images (id INT AUTO_INCREMENT PRIMARY KEY, image_data LONGBLOB);
-   
-3. Compile the C program with the MySQL client library linked:
-   
-   gcc -o upload_image upload_image.c $(mysql_config --cflags --libs)
-   
-4. Run the compiled program, passing an image file and database name as arguments:
-   
-   ./upload_image path/to/image.jpg my_database
-   
-
-Make sure to replace `localhost`, `root`, and other placeholders with actual values suitable for your environment.

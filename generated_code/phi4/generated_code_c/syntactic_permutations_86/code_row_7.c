@@ -57,6 +57,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-**Note:** This code assumes that you have a MySQL server running locally with a database and table set up according to the query. Replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your actual database connection details. Additionally, ensure that the MySQL client library is installed on your system to compile this program using `gcc`.

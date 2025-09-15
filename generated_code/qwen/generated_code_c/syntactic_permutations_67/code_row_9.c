@@ -24,6 +24,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"user"`, `"password"`, `"database_name"`, `"table_name"`, `"column1"`, `"column2"`, `"value1"`, and `"value2"` with your actual database host, username, password, database name, table name, column names, and values respectively.

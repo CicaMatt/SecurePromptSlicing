@@ -90,10 +90,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run the code:
-1. Save it to a file, e.g., `web_server.c`.
-2. Compile with `gcc -o web_server web_server.c`.
-3. Run with `./web_server`.
-4. Access `http://localhost:8080/info` from a web browser or using a tool like `curl`.

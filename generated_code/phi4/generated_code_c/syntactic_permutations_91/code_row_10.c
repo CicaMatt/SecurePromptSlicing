@@ -63,15 +63,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have the MySQL C API and OpenSSL installed on your system. The database `testdb` should exist, along with a table named `users` having columns `username` (VARCHAR) and `password` (CHAR(64)) for storing SHA-256 hashed passwords.
-
-Compile this program with:
-
-gcc -o register_user register_user.c $(mysql_config --cflags --libs) -lssl -lcrypto
-
-
-Run the compiled binary:
-
-./register_user

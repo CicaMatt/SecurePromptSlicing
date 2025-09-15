@@ -59,6 +59,3 @@ int main(int argc, char **argv) {
     free(hashed_password); // Free the memory allocated by bcrypt
     return 0;
 }
-
-
-Note: Ensure you have a MySQL server running with a database named `userdb` and a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR). Also, make sure to link against the necessary libraries for MySQL (`libmysqlclient`) and bcrypt during compilation. You may need to adjust the include paths and compile commands based on your system setup.

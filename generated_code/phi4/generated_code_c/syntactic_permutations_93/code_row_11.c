@@ -78,6 +78,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Before running this code, ensure that OpenSSL is installed on your system. You might need to link against OpenSSL libraries by adding `-lssl -lcrypto` to your compiler command, e.g., `gcc program.c -o program -lssl -lcrypto`.

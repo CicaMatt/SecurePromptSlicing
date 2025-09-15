@@ -84,9 +84,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link with the MySQL client library when compiling:
-
-
-gcc -o pdf_manager your_program.c $(mysql_config --cflags --libs)

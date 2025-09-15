@@ -28,6 +28,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code assumes that `web_application_class.c` and related functions like `create_web_application()` and `start_server()` are defined elsewhere in your project. The `URL_ROUTE` macro is a conceptual representation of how you might handle routing in C, as decorators do not exist natively in the language.

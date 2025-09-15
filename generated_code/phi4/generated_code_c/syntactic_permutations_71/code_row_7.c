@@ -79,13 +79,3 @@ int main() {
     
     return 0;
 }
-
-
-To compile and run this C code, you'll need a Linux environment with GCC installed. Use the following commands:
-
-
-gcc -o simple_web_app simple_web_app.c
-./simple_web_app
-
-
-After running the program, visit `http://localhost:8080/` in a web browser to see your simple web application in action.

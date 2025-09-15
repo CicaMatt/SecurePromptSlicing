@@ -59,12 +59,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to compile with `-lmysqlclient` and link OpenSSL:
-
-
-gcc -o register_user register_user.c -lmysqlclient -lcrypto
-
-
-Ensure the MySQL database `testdb` is created, and a table `users` exists with at least two columns: `username` (VARCHAR) and `password` (BINARY(32)). Adjust the server details as necessary.

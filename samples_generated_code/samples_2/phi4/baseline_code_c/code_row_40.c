@@ -58,6 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you replace `"your_database_name"` with the actual name of your database and configure `SERVER`, `USER`, and `PASSWORD` as needed for your MySQL setup. You will also need to have the MySQL C API installed, which is typically done via a package like `libmysqlclient-dev`.

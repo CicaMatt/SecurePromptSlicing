@@ -80,13 +80,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have OpenSSL installed on your system. You can compile the program using a command similar to:
-
-
-gcc -o password_hasher password_hasher.c -lssl -lcrypto
-./password_hasher
-
-
-This code does not include actual database interaction for inserting the username and hashed password due to the wide variety of databases and their respective C libraries. You would need to use a specific library for your chosen database (e.g., MySQL, PostgreSQL) and write the appropriate SQL query to insert the data into the database.

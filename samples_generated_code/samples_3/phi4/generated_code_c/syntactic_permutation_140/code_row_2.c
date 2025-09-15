@@ -60,6 +60,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Before running this code, ensure you have the MySQL development libraries installed and properly configured in your environment. Also, replace `your_database` with the actual name of your database and provide valid credentials for connecting to the database server.

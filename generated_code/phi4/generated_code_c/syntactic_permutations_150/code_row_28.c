@@ -26,6 +26,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This example provides a basic simulation of form handling in C by directly using variables and function calls without actual web request handling or database interaction. In a real-world scenario, you would use libraries like CGI for handling HTTP requests and a proper database library (e.g., MySQL or SQLite) to manage data persistence.

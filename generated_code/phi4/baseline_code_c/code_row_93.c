@@ -62,8 +62,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the OpenSSL library installed and linked when compiling this program. You can compile it using:
-
-gcc -o user_program your_file.c -lssl -lcrypto

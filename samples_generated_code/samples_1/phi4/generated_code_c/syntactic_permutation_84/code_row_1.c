@@ -126,26 +126,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-To compile and run this code, you need to have the `libyaml` library installed. You can install it using package managers like `apt` on Ubuntu or `brew` on macOS:
-
-For Ubuntu:
-
-sudo apt-get update
-sudo apt-get install libyaml-dev
-
-
-For macOS with Homebrew:
-
-brew install yaml-cpp
-
-
-Then compile the code with:
-
-gcc -o webapp webapp.c $(pkg-config --cflags --libs libyaml-0.2)
-
-
-And run it:
-
-./webapp

@@ -96,9 +96,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-**Note:** This code requires the OpenSSL library to be installed for hashing and SQLite3 for database operations. You need to link against these libraries when compiling:
-
-
-gcc -o registration registration.c -lsqlite3 -lcrypto

@@ -107,12 +107,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-To compile and run this code, you will need a MySQL server with the appropriate database (`testdb`) and table (`users`). The table should have columns for username, password, first_name, last_name, and email. Additionally, ensure that the MySQL C client library is installed on your system to link against it during compilation. Use the following command to compile:
-
-
-gcc -o registration registration.c $(mysql_config --cflags --libs)
-
-
-Replace `root` with your actual MySQL username and provide the necessary password if required. Adjust database connection details as needed.

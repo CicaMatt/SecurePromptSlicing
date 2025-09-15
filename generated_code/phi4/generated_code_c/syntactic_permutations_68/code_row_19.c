@@ -119,21 +119,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile this code, you need OpenSSL development libraries. On Linux, you can install them using:
-
-
-sudo apt-get install libssl-dev
-
-
-Compile the program with:
-
-
-gcc -o upload_image_example upload_image_example.c -lssl -lcrypto
-
-
-Run it by:
-
-
-./upload_image_example

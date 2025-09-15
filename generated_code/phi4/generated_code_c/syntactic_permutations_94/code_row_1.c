@@ -90,12 +90,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
- 
-
-Ensure you have the MySQL and OpenSSL development libraries installed on your system. Compile this code with:
-
-
-gcc -o register_user register_user.c $(mysql_config --cflags --libs) -lssl -lcrypto
-
-
-Make sure to replace `"localhost"`, `"root"`, `""` (empty string for password), `"testdb"` and port `3306` with your MySQL server details. Also, ensure the database `testdb` exists and has a table named `users` with columns `username`, `password_hash`, and `salt`.

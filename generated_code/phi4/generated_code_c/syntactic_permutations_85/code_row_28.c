@@ -56,6 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Replace `"username"`, `"password"`, and `"your_database"` with your actual MySQL database credentials and database name. Ensure the `temperatures` table exists in your database with columns `latitude`, `longitude`, `date`, and `temperature`.

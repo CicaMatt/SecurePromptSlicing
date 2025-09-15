@@ -44,6 +44,3 @@ int main() {
 
     return 0;
 }
-
-
-Ensure to replace `"your_database_name"` and `'your_username'` with your actual database name and the username you want to check. Compile this code with `-lmysqlclient` flag, like: `gcc -o check_user check_user.c $(mysql_config --cflags --libs)`.

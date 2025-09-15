@@ -118,6 +118,3 @@ int main() {
 
     return 0;
 }
-
-
-This code creates a simple web server in C that listens on port `8080`. It accepts incoming connections and allows users to upload files. The uploaded files are saved into an `uploads/` directory. This implementation is basic and does not include advanced security or error handling features, so it should be used as a learning tool rather than a production-ready solution.

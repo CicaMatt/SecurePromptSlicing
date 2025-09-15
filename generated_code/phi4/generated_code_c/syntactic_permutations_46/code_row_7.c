@@ -61,6 +61,3 @@ int main() {
 
     return 0;
 }
-
-
-This code simulates handling an HTTP-like request to serve images. It assumes the server is running on a platform that supports standard input/output redirection for sending responses back to the client. Adjustments might be needed based on actual network programming requirements and error handling specifics.

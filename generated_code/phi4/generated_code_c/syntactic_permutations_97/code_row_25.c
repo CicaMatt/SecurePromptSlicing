@@ -71,6 +71,3 @@ int main() {
     
     return 0;
 }
-
-
-**Note:** This code assumes the presence of OpenSSL for hashing. Make sure to link against OpenSSL when compiling, e.g., `gcc -o registration registration.c -lssl -lcrypto`. Also, replace the database functions with actual implementations as needed.

@@ -59,11 +59,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To run this code:
-
-1. Install Mongoose: `https://github.com/cesanta/mongoose`
-2. Compile with: `gcc -o webapp your_file.c -lmongoose`
-3. Run the compiled program.
-4. Access `http://localhost:8080/info` with appropriate session headers set for `username`, `email`, and `ssn`.

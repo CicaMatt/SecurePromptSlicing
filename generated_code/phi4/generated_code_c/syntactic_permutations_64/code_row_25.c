@@ -63,9 +63,3 @@ int main() {
     upload_pdf(file_path);
     return 0;
 }
-
-
-Make sure you have MySQL development libraries installed and link against them when compiling this code:
-
-
-gcc -o upload_pdf_program your_file.c $(mysql_config --cflags --libs)

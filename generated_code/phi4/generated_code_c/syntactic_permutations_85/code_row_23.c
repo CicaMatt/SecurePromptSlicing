@@ -85,15 +85,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the `sqlite3` and `json-c` libraries installed on your system to compile this code. You can use a command like:
-
-
-gcc -o temp_app main.c -l sqlite3 -l json-c
-
-
-Then run the executable with:
-
-
-./temp_app

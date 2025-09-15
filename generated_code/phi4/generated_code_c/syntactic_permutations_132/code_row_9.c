@@ -72,21 +72,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-Create a file named `hello.html` with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{user}}!</h1>
-</body>
-</html>
-
-
-This code simulates a simple web server that binds the `hello` function to URLs matching `/hello/<username>`. The username is extracted and passed to a template renderer which processes an HTML file.

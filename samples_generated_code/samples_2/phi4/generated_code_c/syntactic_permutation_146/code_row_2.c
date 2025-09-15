@@ -61,26 +61,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-To run this code:
-1. Ensure SQLite library is installed and linked during compilation.
-2. Create an SQLite database `stock_orders.db` with a table named `buy_orders` using the following SQL command:
-
-
-CREATE TABLE buy_orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    stock_name TEXT NOT NULL,
-    quantity INTEGER NOT NULL
-);
-
-
-Compile the C code with:
-
-gcc -o stock_app stock_app.c -lsqlite3
-
-
-Run the compiled program using:
-
-./stock_app

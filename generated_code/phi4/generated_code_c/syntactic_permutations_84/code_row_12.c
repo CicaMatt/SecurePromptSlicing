@@ -34,9 +34,3 @@ int main() {
 
     return 0;
 }
-
-
-To test this code, you can use a tool like `nc` to send HTTP requests to the program:
-
-
-echo -e "GET /?payload=---\ntype: Create\n" | nc -l 5000

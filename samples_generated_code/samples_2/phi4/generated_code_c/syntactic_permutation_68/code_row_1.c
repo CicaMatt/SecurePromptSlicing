@@ -116,12 +116,3 @@ void convert_to_base64(unsigned char *image_data, size_t image_size, char **base
 
     (*base64_str)[j] = '\0'; // Null-terminate the string
 }
-
-
-To compile and run this code, you will need to link against the SQLite library and have the LodePNG library available. You can compile it with a command like:
-
-
-gcc -o upload_image_program upload_image_program.c -llodepng -lsqlite3
-
-
-Make sure to create an SQLite database with a table named `images` that has columns `name` (TEXT) and `base64` (TEXT) before running the program. Also, ensure you have a PNG image file named `example.png` in the same directory as your executable.

@@ -112,11 +112,3 @@ int main(int argc, char *argv[]) {
     mysql_close(conn);
     return 0;
 }
-
-
-### Requirements:
-- Install OpenSSL and MySQL development libraries.
-- Compile with `-lmysqlclient -lcrypto` flags to link against the necessary libraries. For example:
-
-
-gcc -o webapp main.c -lmysqlclient -lcrypto

@@ -81,12 +81,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Before running this code:
-- Ensure you have a MySQL server running and the `test_db` database created.
-- Create a table named `users` with columns: `username`, `password`, `first_name`, `last_name`, `email`.
-- Install the MySQL C client library (`libmysqlclient-dev`) on your system. Compile the code using `-lmysqlclient`. Example:
-  
-  gcc -o registration_page registration_page.c $(mysql_config --cflags --libs)
-  ./registration_page

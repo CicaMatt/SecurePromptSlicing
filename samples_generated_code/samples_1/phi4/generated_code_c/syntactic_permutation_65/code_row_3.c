@@ -84,9 +84,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile and run the program:
-1. Install libcurl development package if not already installed.
-2. Compile with: `gcc -o upload_pdf upload.c $(pkg-config --cflags --libs libcurl)`
-3. Run with: `./upload_pdf <URL> <PDF file path>`

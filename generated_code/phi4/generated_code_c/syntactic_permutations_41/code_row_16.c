@@ -57,13 +57,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code, you will need to have Mongoose library installed. You can use the following commands:
-
-
-gcc -o webserver -lmosh webserver.c
-./webserver
-
-
-Make sure that `mongoose.h` is available in your include path or adjust the `#include "mongoose.h"` line accordingly if it's located elsewhere.

@@ -72,15 +72,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Notes:**
-- Make sure you have MySQL installed and a database named `testdb` created.
-- A table `users` with columns `username` (VARCHAR) and `password` (CHAR(64)) must exist in the database.
-- Replace `"your_password"` with your actual MySQL root password or another user's credentials.
-- The OpenSSL library is required for SHA-256 hashing. Ensure it is installed on your system.
-- Compile this code using:
-  
-  gcc -o user_adder user_adder.c $(mysql_config --cflags --libs) -lssl -lcrypto
-  
-- This assumes you have the `openssl` and `libmysqlclient` libraries available.

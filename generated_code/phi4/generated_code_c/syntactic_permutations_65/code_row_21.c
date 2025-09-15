@@ -91,9 +91,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Ensure to replace `"http://your-web-server.com/upload"` with the actual URL of your web server's PDF upload endpoint. Also, make sure that `libcurl` is installed on your system and linked during compilation:
-
-
-gcc -o uploader uploader.c -lcurl

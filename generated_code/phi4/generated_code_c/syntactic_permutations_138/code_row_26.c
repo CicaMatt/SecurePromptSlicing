@@ -101,10 +101,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile the above code, you need to link against `libmicrohttpd` and `libmysqlclient`. Use a command similar to:
-
-gcc -o webapp webapp.c -lmysqlclient -lmicrohttpd
-
-Ensure that your MySQL server is running and accessible with the specified credentials.

@@ -54,19 +54,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Make sure you have Mongoose installed.
-2. Link against MySQL client libraries (`-lmysqlclient`).
-3. Replace database credentials with actual values.
-
-Compile:
-
-gcc -o webapp webapp.c $(pkg-config --cflags --libs mongoose) -lmysqlclient
-
-
-Run:
-
-./webapp

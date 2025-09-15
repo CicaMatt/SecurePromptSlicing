@@ -35,10 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have OpenSSL installed on your system. You can compile it using the following command:
-
-
-gcc -o registration_form registration_form.c -lcrypto
-./registration_form

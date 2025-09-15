@@ -62,12 +62,3 @@ int main(int argc, char *argv[]) {
     curl_global_cleanup();
     return 0;
 }
-
-
-To compile this code, you need to link against the `libcurl` library. Use a command like:
-
-
-gcc -o upload_program upload_program.c -lcurl
-
-
-Make sure your web server is running and configured to handle POST requests at `http://localhost/upload` and save files in an "uploads" folder.

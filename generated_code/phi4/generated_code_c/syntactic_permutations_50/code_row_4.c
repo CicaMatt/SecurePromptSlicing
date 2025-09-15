@@ -86,6 +86,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Note: This code assumes the presence of a `tar.h` header file and associated C library functions such as `read_header`, `write_data`, `skip_data`, `is_dir`. These are not part of standard C libraries and must be provided by an external tar handling library. You will need to link against this library when compiling.

@@ -73,18 +73,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code, you will need to have Mongoose installed. You can download it from [Mongoose's official website](http://github.com/cesanta/mongoose). Here is a basic way to compile the program:
-
-
-gcc -o webapp main.c -I/path/to/mongoose/include -L/path/to/mongoose/lib -lmongoose
-
-
-Replace `/path/to/mongoose` with the actual path where Mongoose is installed. Then, run the compiled program:
-
-
-./webapp
-
-
-You can test it by navigating to `http://localhost:5000/?price=10&quantity=3`.

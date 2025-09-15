@@ -56,9 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-This code requires the OpenSSL library for hashing and SQLite3 for database operations. Make sure to link against these libraries when compiling. For example, use:
-
-
-gcc -o registration registration.c -lssl -lcrypto -lsqlite3

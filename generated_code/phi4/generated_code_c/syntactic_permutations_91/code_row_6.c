@@ -95,6 +95,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Before running this code, make sure you have the OpenSSL and MySQL development libraries installed on your system. Also, create a MySQL database named `test_db` (or change the name in the code) and a table with columns `username` and `password`. The `password` column should be of type `BLOB` to store hashed passwords. Adjust the MySQL server connection details as necessary for your setup.

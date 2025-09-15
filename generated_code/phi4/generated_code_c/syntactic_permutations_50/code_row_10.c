@@ -79,12 +79,3 @@ void extract(const char *filename, const char *output_directory) {
     archive_read_close(a);
     archive_read_free(a);
 }
-
-
-**Note:** This code uses the `libarchive` library. Ensure you have it installed and properly linked during compilation:
-
-
-gcc -o extract_program program.c -larchive
-
-
-For Windows, ensure to include the appropriate headers for directory creation if needed, or adjust paths accordingly.

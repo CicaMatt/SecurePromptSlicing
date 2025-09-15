@@ -35,11 +35,3 @@ int main() {
     }
     return 0;
 }
-
-
-To compile and run this code:
-1. Save it to a file, e.g., `login_example.c`.
-2. Compile with: `gcc -o login_example login_example.c`
-3. Run the executable: `./login_example` 
-
-Note: In an actual web server environment, you would use a framework or library to handle HTTP requests and extract parameters from GET/POST requests. This code is for demonstration purposes only and does not include real web server handling logic.

@@ -35,10 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires the OpenSSL library to compile and run. To compile, use:
-
-gcc -o registration_form main.c -lssl -lcrypto
-
-Make sure OpenSSL is installed on your system.

@@ -109,6 +109,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to adjust the MySQL connection parameters (`"localhost"`, `"root"`, `""`, `"test_db"`) and ensure that the `users` table in your database is set up correctly with columns for `username` (VARCHAR) and `password` (VARCHAR of appropriate length). You may need to install the OpenSSL library if it's not already available on your system.

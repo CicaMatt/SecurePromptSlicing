@@ -39,11 +39,3 @@ int main() {
     upload_pdf(file_path);
     return 0;
 }
-
-
-
--- SQL to create the table (should be run in your MySQL database)
-CREATE TABLE IF NOT EXISTS files (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    file_path VARCHAR(255) NOT NULL
-);

@@ -128,9 +128,3 @@ int main() {
     int ret = MHD_stop_daemon(daemon);
     return ret;
 }
-
-
-This code requires linking against `libmicrohttpd` and `libmysqlclient`. Compile with:
-
-
-gcc -o app server.c $(pkg-config --cflags --libs libmicrohttpd) -lmysqlclient

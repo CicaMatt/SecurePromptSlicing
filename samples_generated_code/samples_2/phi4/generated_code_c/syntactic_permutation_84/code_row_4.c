@@ -137,12 +137,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires linking with the `libyaml` library. Compile it with:
-
-
-gcc -o webapp webapp.c $(pkg-config --cflags --libs libyaml)
-
-
-Ensure that `libyaml` is installed on your system.

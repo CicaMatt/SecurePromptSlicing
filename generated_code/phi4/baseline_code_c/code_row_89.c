@@ -52,12 +52,3 @@ int main() {
 
     return 0;
 }
-
-
-To run this code, you would need to pipe HTTP requests into the program's standard input. This can be done using a tool like `curl`:
-
-
-echo -e "GET /price?code=P001&quantity=3" | ./your_program
- 
-
-This is a very simple example and does not handle many edge cases or real-world concerns such as security, efficiency, concurrency, etc.

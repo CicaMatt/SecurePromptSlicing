@@ -48,6 +48,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code uses `fmemopen` and `open_memstream`, which are available in POSIX-compliant systems but may not be portable to all environments. You might need to adjust the test setup if you run this on a non-POSIX system.

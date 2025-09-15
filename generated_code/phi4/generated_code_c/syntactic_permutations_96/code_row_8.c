@@ -78,10 +78,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need OpenSSL installed. You can compile it using:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-./registration_form

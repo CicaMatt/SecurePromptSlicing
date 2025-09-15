@@ -48,15 +48,3 @@ int main() {
     }
     return 0;
 }
- 
-
-Make sure to replace `your_username`, `your_password`, and `your_database` with your actual MySQL credentials and database name. Ensure the MySQL C API is properly installed and linked when compiling this program. You can compile it using a command like:
-
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)
-
-
-And run the executable with:
-
-
-./check_username

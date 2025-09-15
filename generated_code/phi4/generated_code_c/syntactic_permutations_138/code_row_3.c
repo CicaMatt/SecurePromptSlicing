@@ -40,6 +40,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-Make sure to create an SQLite database named `app.db` with the table `users` containing at least the columns `username` (TEXT) and `is_moderator` (INTEGER). The user's moderator status should be stored as either 1 or 0.

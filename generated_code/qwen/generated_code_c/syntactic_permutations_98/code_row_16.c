@@ -48,9 +48,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile this code, you need to have OpenSSL installed and link against it. Use the following command:
-
-
-gcc -o registration_page registration_page.c -lssl -lcrypto

@@ -119,16 +119,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-To compile and run this code, you need to use a C compiler like `gcc`:
-
-
-gcc -o web_app web_app.c
-./web_app
-
-
-Ensure that you have the necessary permissions to bind to port 8080. You can test the server using a tool like `curl`:
-
-
-curl "http://localhost:8080/price?code=P001&quantity=2"

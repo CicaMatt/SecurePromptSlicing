@@ -49,6 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `"localhost"`, `"root"`, `"password"`, and `"testdb"` with your actual database host, username, password, and database name respectively. Ensure that the MySQL development libraries are installed on your system to compile this code using `gcc` with `-lmysqlclient`.

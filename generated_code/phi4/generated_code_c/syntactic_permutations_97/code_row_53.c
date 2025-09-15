@@ -103,19 +103,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Before running this code, ensure you have `libmysqlclient-dev` and `openssl` installed on your system. You also need to create a database named `database_name` with a table `users` structured as follows:
-
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password CHAR(64) NOT NULL,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    email VARCHAR(255)
-);
-
-
-Replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your MySQL server details.

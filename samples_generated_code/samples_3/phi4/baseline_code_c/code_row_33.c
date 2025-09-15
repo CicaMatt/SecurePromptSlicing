@@ -62,6 +62,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Make sure to replace `"your_database_name"` with the actual name of your database, and provide appropriate username and password for the MySQL connection in `mysql_real_connect()`.

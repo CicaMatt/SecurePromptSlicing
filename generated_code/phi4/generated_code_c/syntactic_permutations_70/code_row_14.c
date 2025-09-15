@@ -96,6 +96,3 @@ void process_post_data(const char *data, size_t length) {
 
     printf("File uploaded successfully.\n");
 }
-
-
-To run this code, ensure that a directory named `uploads` exists in the same location as the executable. This simple web server reads input from standard input (simulating an HTTP request) and writes output to standard output (acting as an HTTP response). It handles file uploads by parsing multipart/form-data requests, extracting filenames, and saving uploaded files into the `uploads/` directory.

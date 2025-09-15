@@ -58,6 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-This code simulates a simple web app in C using SQLite for database operations. It defines a route and checks if a user is a moderator by querying an SQLite database. Adjust the database connection and query logic as needed for your actual application setup.

@@ -59,9 +59,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before running this code:
-1. Ensure you have MySQL installed and configured on your system.
-2. Create a database named `user_db` and a table `users` with columns `username` (VARCHAR) and `password` (UNSIGNED LONG).
-3. Link against the MySQL client library using `-lmysqlclient` when compiling, e.g., `gcc -o register_app app.c -lmysqlclient`.

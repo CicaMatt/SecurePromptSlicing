@@ -69,8 +69,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to link against the OpenSSL library when compiling this code. Use the following command:
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

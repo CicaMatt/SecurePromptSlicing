@@ -104,6 +104,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to create the `uploads` directory in your project folder before running this code.

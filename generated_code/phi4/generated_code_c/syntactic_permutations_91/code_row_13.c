@@ -55,9 +55,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: To run this code:
-- Ensure you have MySQL installed and running.
-- Create a database named `test_db` and a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR).
-- Update the `user`, `password`, and `database` variables to match your MySQL credentials.

@@ -43,20 +43,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-Create a file named `hello.html` with the following content to test:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
-
-
-Compile and run the C program by passing a URL like `./program /hello/JohnDoe`.

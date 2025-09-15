@@ -10,8 +10,8 @@ void render_template(const char *username) {
         return;
     }
 
-    const char template_start_tag[] = "<!-- TEMPLATE_START -->";
-    const char template_end_tag[] = "<!-- TEMPLATE_END -->";
+    const char template_start_tag[] = "";
+    const char template_end_tag[] = "";
 
     char line[256];
     while (fgets(line, sizeof(line), file)) {

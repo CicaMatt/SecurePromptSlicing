@@ -66,6 +66,3 @@ int main(int argc, char *argv[]) {
     }
     return 0;
 }
-
-
-This code simulates a simple web application in C. It handles basic routing and session management using command-line arguments to simulate HTTP requests.

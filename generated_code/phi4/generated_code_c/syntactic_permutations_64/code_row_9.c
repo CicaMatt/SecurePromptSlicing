@@ -99,6 +99,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Make sure to replace `your_database_name` with your actual MySQL database name. Also, ensure that the MySQL server is running and accessible with the provided credentials. This code assumes you have a table named `pdf_files` with at least two columns: `filename` and `filepath`.

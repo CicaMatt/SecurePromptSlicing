@@ -88,18 +88,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Save it to a file, for example `file_server.c`.
-2. Compile using: 
-   
-   gcc -o file_server file_server.c
-   
-3. Run the server with:
-   
-   ./file_server
-   
-
-The client can connect via any socket programming method (e.g., using Python's `socket` library) to send a filename followed by the file data in chunks.

@@ -66,9 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires the OpenSSL library for SHA-256 hashing. Make sure to link it with `-lssl -lcrypto` when compiling, like so:
-
-
-gcc -o register_app register_app.c -lssl -lcrypto

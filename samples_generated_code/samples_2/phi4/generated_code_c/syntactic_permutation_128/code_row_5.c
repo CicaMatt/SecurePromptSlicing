@@ -41,6 +41,3 @@ int main() {
 
     return 0;
 }
-
-
-This code defines a `http_hello_page` function that processes an HTTP GET request and writes a simple "Hello [name]!" message to the response. The `main` function demonstrates how this can be used with simulated file streams using `fmemopen` and `open_memstream`.

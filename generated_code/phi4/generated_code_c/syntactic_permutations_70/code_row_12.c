@@ -106,6 +106,3 @@ int main() {
 
     return 0;
 }
-
-
-This code sets up a simple server that listens on port 8080 and handles file uploads via HTTP POST requests to `/upload`. It reads the filename from the request headers and saves the uploaded file with that name. The content length is used to determine how much data needs to be read for the file content.

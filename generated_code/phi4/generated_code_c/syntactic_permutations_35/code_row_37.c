@@ -68,6 +68,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code assumes a CGI environment where the server passes HTTP request data via standard input (`php://input`). Adjustments may be needed based on your specific server setup.

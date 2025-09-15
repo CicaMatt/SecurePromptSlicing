@@ -54,26 +54,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To use this program:
-1. Create a file named `hello.html` in the same directory as your executable with the following content:
-
-
-<html>
-<head><title>Hello</title></head>
-<body>
-  <h1>Welcome, {{ username }}</h1>
-  <p>This is a simple template rendering example.</p>
-</body>
-</html>
-
-
-2. Compile the C program using a compiler like `gcc`:
-   
-   gcc -o hello_program your_c_file.c
-   
-
-3. Run the compiled executable with a username as an argument:
-   
-   ./hello_program JohnDoe

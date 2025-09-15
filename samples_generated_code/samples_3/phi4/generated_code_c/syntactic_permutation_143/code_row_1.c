@@ -72,6 +72,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Ensure you have the SQLite library installed and a `users.db` file with a table named `users` containing an `email` column before running this code.

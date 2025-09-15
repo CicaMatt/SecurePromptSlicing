@@ -64,6 +64,3 @@ int main(int argc, char **argv) {
     mysql_close(con);
     return 0;
 }
-
-
-Make sure to replace the MySQL connection parameters (`user`, `password`) with your actual database credentials and ensure you have a table named "images" with columns `name` (VARCHAR) and `data` (LONGBLOB).

@@ -45,13 +45,3 @@ FILE* open_image_file(const char *filename) {
     }
     return file;
 }
-
-
-To compile and run this code:
-
-
-gcc -o serve_image serve_image.c
-./serve_image image_name.jpg
-
-
-This program takes an image name as a command-line argument, constructs the URL using `get_image_url()`, opens the corresponding image file with `open_image_file()`, and sends its content to standard output. If the file isn't found, it outputs a 404 Not Found message.

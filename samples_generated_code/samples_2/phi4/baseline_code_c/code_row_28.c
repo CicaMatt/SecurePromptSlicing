@@ -49,9 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-To use this code:
-1. Create a file named `request.txt` with content like: `GET / HTTP/1.1\nHost: localhost\nusername=johndoe`.
-2. Compile and run the program.
-3. Check the contents of `response.txt` for the response output.

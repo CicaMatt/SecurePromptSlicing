@@ -48,9 +48,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Make sure to replace `"your_password"` with your MySQL root password and `"your_database"` with the name of your database. You should also have a table named `users` with columns `username` and `password`. Additionally, ensure that the MySQL development libraries are installed on your system to compile this code successfully using the following command:
-
-
-gcc -o insert_user main.c $(mysql_config --cflags --libs)

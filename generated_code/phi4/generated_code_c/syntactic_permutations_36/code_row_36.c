@@ -64,10 +64,3 @@ void login(const char *username, const char *password) {
     mysql_free_result(res);
     mysql_close(&conn);
 }
-
-
-**Note**: Before running this code, ensure that:
-- You have the MySQL database server installed.
-- The `test_db` database and a table named `users` with columns `username` and `password` are created.
-- Replace the `USERNAME`, `PASSWORD`, and `DATABASE` macros with appropriate values for your setup.
-- Install the MySQL C API library (`libmysqlclient-dev`) if it's not already installed.

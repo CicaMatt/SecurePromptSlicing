@@ -74,6 +74,3 @@ int main() {
     free(server_data);
     return 0;
 }
-
-
-Note: This code is a simplified version and does not include full HTTP parsing or proper request/response handling. It's intended to demonstrate the structure of a C program that would handle such a task. For a production environment, you should use a more robust HTTP server library or framework.

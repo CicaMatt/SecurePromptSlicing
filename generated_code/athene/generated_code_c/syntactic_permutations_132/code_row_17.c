@@ -32,6 +32,3 @@ int main() {
     hello(username);
     return 0;
 }
-
-
-Note: This code simulates the behavior of a web server handling a request and does not include actual HTTP routing or server setup. The `hello.html` file should contain a placeholder like `%s` where the username will be inserted.

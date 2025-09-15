@@ -61,6 +61,3 @@ int main() {
     temperature_for_location();
     return 0;
 }
-
-
-**Note**: Replace `"username"` and `"password"` with actual MySQL username and password. Ensure that the `mysql.h` library is properly linked during compilation, typically using `-lmysqlclient`.

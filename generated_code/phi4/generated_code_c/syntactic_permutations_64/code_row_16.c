@@ -53,6 +53,3 @@ int save_filepath_to_db(const char *filepath) {
     mysql_close(conn);
     return 1;
 }
-
-
-Make sure to replace `"your_database_name"` with the actual name of your database, and adjust `SERVER`, `USER`, and `PASSWORD` as needed. Additionally, ensure that a table named `pdf_files` exists in your database with at least one column named `filepath`.

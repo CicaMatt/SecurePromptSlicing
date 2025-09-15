@@ -113,6 +113,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Ensure you have the MySQL development libraries installed and linked when compiling this code. Replace `your_database` with your actual database name. Also, ensure that the directory specified in `UPLOADS_FOLDER` exists and is writable.

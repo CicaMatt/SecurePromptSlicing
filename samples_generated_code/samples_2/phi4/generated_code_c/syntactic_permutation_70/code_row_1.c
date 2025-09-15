@@ -111,6 +111,3 @@ int main() {
 
     return 0;
 }
-
-
-This C code sets up a simple server that listens on port 8080 and handles file uploads. When it receives data from a client, it reads the filename first, then saves the incoming file to an `uploads` directory under the specified name. Make sure you have the necessary permissions to create directories and write files in your working directory when running this program. Note that this is a very basic implementation without proper error handling or security measures such as input validation or protection against malicious uploads.

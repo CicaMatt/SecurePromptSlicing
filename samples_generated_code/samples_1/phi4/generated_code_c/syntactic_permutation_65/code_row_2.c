@@ -94,18 +94,3 @@ int main(int argc, char *argv[]) {
     
     return result;
 }
-
-
-To compile and run this code, you need to have `libcurl` installed on your system. You can compile the program using a command like:
-
-
-gcc -o uploader uploader.c -lcurl
-
-
-Then, execute the compiled program by providing the path of the PDF file you want to upload as an argument:
-
-
-./uploader /path/to/your/file.pdf
-
-
-Make sure your local server is running at `http://localhost/upload` and is configured to accept file uploads.

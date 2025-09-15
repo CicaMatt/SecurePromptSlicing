@@ -61,6 +61,3 @@ int main() {
     
     return EXIT_SUCCESS;
 }
-
-
-Note: This code uses `fmemopen` and `open_memstream`, which are available in POSIX-compliant systems. If you're using a platform that doesn't support these functions, you might need to adjust the code accordingly.

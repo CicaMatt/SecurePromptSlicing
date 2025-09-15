@@ -54,6 +54,3 @@ int main() {
     temperature_for_location(payload);
     return 0;
 }
-
-
-Make sure to replace `yourusername` and `yourpassword` with your actual PostgreSQL username and password. This code assumes you have a table named `readings` in the database `Sensors`, with columns `latitude`, `longitude`, `date`, and `temperature`.

@@ -50,12 +50,3 @@ int main() {
 
     return 0;
 }
-
-
-This code uses the MySQL C API to connect to a database and check if a user with username 'example_user' is a moderator. Ensure you have the MySQL client library installed and linked during compilation. You can compile it using:
-
-
-gcc -o check_moderator your_file.c $(mysql_config --cflags --libs)
-
-
-Replace `your_file.c` with the actual filename of your source code.

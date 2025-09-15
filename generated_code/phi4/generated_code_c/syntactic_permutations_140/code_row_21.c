@@ -50,6 +50,3 @@ int main() {
 
     return 0;
 }
- 
-
-Make sure to replace `"your_database_name"`, `"root"` and `""` with your actual database name, MySQL username, and password respectively. Also, ensure that you have the MySQL client library installed in your environment. You may need to link against the MySQL client library when compiling this code using `-lmysqlclient`.

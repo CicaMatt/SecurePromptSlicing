@@ -31,10 +31,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code:
-1. Save it to a file, e.g., `webapp.c`.
-2. Compile with `gcc -o webapp webapp.c`.
-3. Run the executable.
-4. Use a tool like `curl` or `telnet` to simulate HTTP GET requests: `echo -e "GET /info\n" | ./webapp`.

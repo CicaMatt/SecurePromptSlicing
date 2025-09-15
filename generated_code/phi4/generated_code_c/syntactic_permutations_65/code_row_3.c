@@ -82,13 +82,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have libcurl installed. You can compile it using:
-
-
-gcc -o uploader uploader.c -lcurl
-./uploader path/to/your/file.pdf
-
-
-Ensure your web server is configured to handle file uploads at the specified endpoint (`http://localhost/upload`).

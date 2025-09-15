@@ -54,13 +54,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code:
-
-
-gcc -o upload pdf_uploader.c -lcurl
-./upload path/to/your/file.pdf
-
-
-Ensure that `libcurl` is installed on your system. You can install it using a package manager like `apt`, `yum`, or `brew`.

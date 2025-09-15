@@ -82,9 +82,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-**Note:**  
-- Ensure MySQL is installed and running on your system.
-- Replace `SERVER`, `DATABASE`, `USER`, and `PASSWORD` with actual values for your setup.
-- A table named `users` with columns `username` and `password` must exist in the specified database.

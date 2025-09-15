@@ -63,17 +63,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install MySQL server and client libraries.
-2. Install OpenSSL library.
-3. Create a database named `testdb` and a table named `users` with columns `username` (VARCHAR) and `password` (BINARY(32)).
-4. Compile the program using:
-   
-   gcc -o register_app register_app.c $(mysql_config --cflags --libs) -lssl -lcrypto
-   
-5. Run the compiled executable:
-   
-   ./register_app

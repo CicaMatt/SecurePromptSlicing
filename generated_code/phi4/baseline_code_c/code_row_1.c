@@ -22,5 +22,3 @@ int main() {
 
     return 0;
 }
-
-#include <stdio.h> // Required for printf in main()

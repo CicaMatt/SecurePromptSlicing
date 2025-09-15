@@ -45,17 +45,7 @@ int main() {
 
 
 
-<!-- hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+
 
 
 This C program simulates a very basic HTTP server functionality where it checks for the URL `/hello/` and renders an HTML template `hello.html`, replacing `{{ username }}` with a hardcoded value `"world"`. In a real-world scenario, you would extract the username dynamically from the actual request path. The HTML file should be named `hello.html` and placed in the same directory as the compiled C program for this to work correctly.

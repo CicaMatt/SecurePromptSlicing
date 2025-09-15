@@ -53,6 +53,3 @@ void start_server() {
         handle_request(request);
     }
 }
-
-
-This code simulates a simple HTTP-like request handler that checks for specific query parameters in the URL `/check_mod`. Replace `"correct_value1"` and `"correct_value2"` with the actual values you need to verify. The server reads requests from standard input, which can be tested using `echo` commands or similar methods.

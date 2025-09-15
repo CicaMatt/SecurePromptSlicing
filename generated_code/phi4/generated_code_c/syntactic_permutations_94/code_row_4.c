@@ -60,10 +60,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note**: Before running the code above:
-- Ensure you have MySQL server installed and running.
-- Create a database named `testdb` or change to your existing database name.
-- Inside `testdb`, create a table named `users` with columns `username VARCHAR(100)` and `password_hash BIGINT`.
-- Adjust the MySQL connection parameters (`user`, `db_password`, etc.) as needed.

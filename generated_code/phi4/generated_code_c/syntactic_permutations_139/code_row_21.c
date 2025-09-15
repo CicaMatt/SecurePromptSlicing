@@ -55,12 +55,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to link with the MySQL client library when compiling this program:
-
-
-gcc -o check_user_program your_file.c $(mysql_config --cflags --libs)
- 
-
-Replace `your_file.c` with the name of your C source file.

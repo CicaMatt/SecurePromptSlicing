@@ -72,12 +72,3 @@ void handle_request(const char *request) {
         printf("HTTP/1.1 404 Not Found\r\n\r\n");
     }
 }
-
-
-**Usage**: To simulate a simple HTTP request, you can use `echo` and pipe the output to this program:
-
-
-echo -e "POST /upload HTTP/1.1\r\nContent-Length: 11\r\n\r\ntest content" | ./a.out <input_file>
-
-
-Replace `<input_file>` with a file containing simulated input from stdin as needed.

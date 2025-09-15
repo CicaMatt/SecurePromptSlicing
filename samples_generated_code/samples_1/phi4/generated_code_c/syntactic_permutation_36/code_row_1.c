@@ -56,22 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-To make this code runnable:
-
-1. Ensure you have SQLite installed on your system.
-2. Create a database file named `users.db` with a table `users` having columns `username` and `password`.
-3. Insert sample data into the `users` table for testing.
-
-Example SQL commands to set up the database:
-
-CREATE TABLE users (
-    username TEXT PRIMARY KEY,
-    password TEXT NOT NULL
-);
-
-INSERT INTO users (username, password) VALUES ('testuser', 'testpass');
-
-
-Compile the code with a command like: `gcc -o login_program program.c -lsqlite3` and run it using `./login_program`.

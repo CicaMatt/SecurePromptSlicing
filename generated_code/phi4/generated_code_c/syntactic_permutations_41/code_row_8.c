@@ -55,18 +55,3 @@ int main(void) {
         mg_mgr_poll(&mgr, 1000);
     }
 }
-
-
-This code uses the Mongoose library to handle HTTP requests. You need to have Mongoose installed and linked properly when compiling this program. Compile with:
-
-
-gcc -o webapp webapp.c -lmongoose
-
-
-Run the compiled program:
-
-
-./webapp
-
-
-Visit `http://localhost:8080/info` in a browser or use curl from the terminal to see the output.

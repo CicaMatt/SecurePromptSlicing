@@ -80,6 +80,3 @@ void handle_http_request(const char *request, const char *file_path) {
         fclose(out);
     }
 }
-
-
-Make sure to create a file named `client_request.txt` that contains the HTTP request text. This code reads the request from this file and simulates processing an uploaded PDF file by extracting its content and saving it in the specified path. Adjustments may be needed based on your actual input format or additional requirements.

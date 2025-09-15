@@ -69,6 +69,3 @@ void save_file_path_to_db(const char *filepath) {
 
     mysql_close(conn);
 }
-
-
-Note: This code assumes that the MySQL database and table (`pdf_files`) with a column `filepath` are already created. Also, ensure you have the necessary permissions to read/write files in the specified directories and access the MySQL server.

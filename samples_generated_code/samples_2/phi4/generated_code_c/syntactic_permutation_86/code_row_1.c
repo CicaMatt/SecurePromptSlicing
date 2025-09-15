@@ -72,6 +72,3 @@ int main() {
     run_server();
     return 0;
 }
-
-
-This code provides a basic simulation of handling HTTP requests for temperature data using C and sockets. Note that this is a simplified example and does not include full-fledged web server functionality or error handling.

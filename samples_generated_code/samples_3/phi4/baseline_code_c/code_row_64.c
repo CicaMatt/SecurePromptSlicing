@@ -68,7 +68,6 @@ int main(int argc, char *argv[]) {
 
 This is a simple server-side C program that listens for connections and allows clients to upload files. The client must send the filename prefixed with "UPLOAD" followed by the actual file data over the socket.
 
-**Client Code (for testing):**
 
 
 #include <stdio.h>
@@ -129,6 +128,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Compile both programs and run the server first. Use the client to send a file by providing the hostname of the server (use `127.0.0.1` for local testing) and the filename as command-line arguments.

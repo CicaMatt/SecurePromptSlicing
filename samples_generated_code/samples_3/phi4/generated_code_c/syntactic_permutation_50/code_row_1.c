@@ -52,6 +52,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** This code simulates extracting a single file named `file1.txt` from a zip archive. For actual ZIP extraction in C, you should use a library like libzip or minizip.

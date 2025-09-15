@@ -58,12 +58,3 @@ int main() {
     }
     return 0;
 }
-
-
-**Note**: Ensure the MySQL client library is installed and properly linked during compilation by using `-lmysqlclient` with `gcc`, e.g.,
-
-
-gcc -o program your_program.c $(mysql_config --cflags --libs)
-
-
-Replace `"root"` and `"password"` with your actual database username and password. Adjust host, port, or other parameters as needed for your setup.

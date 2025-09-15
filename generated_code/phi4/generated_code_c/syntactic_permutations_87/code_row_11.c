@@ -54,12 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the MySQL C client library installed and linked properly during compilation:
-
-
-gcc -o weather_app your_code.c $(mysql_config --cflags --libs)
-
-
-Replace `"root"` and `""` with actual database username and password. Also, ensure that the `weather_db` and table `temperatures` exist in your MySQL setup.

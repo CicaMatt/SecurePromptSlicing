@@ -95,6 +95,3 @@ int main(void) {
 
     return 0;
 }
-
-
-Note: Replace `"localhost"`, `"user"`, `"password"`, and `"database"` with your actual MySQL server details. Also, ensure you have the Mongoose library installed to handle HTTP requests and MySQL client libraries for database connectivity.

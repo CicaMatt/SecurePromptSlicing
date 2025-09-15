@@ -104,6 +104,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to install the necessary libraries such as `libmicrohttpd` and MySQL development files before compiling this code. You might need to link against these libraries using `-lmicrohttpd -lmysqlclient`. Adjust database connection parameters (`localhost`, `user`, `password`, `database`) to match your setup.

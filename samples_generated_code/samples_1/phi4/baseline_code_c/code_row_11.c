@@ -69,10 +69,3 @@ int main() {
     
     return 0;
 }
-
-
-Make sure to have the MySQL client library and OpenSSL installed in your system. You'll need to adjust database credentials accordingly.
-
-To compile this code:
-
-gcc -o registration_form registration_form.c -lmysqlclient -lcrypto

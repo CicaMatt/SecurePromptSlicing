@@ -56,9 +56,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your actual database connection details. Also, ensure that the `libmysqlclient` library is installed and linked during compilation. You can compile this code using a command like:
-
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)

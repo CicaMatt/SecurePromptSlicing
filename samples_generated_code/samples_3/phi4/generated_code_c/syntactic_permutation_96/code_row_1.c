@@ -78,13 +78,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have OpenSSL development libraries installed. You can compile with:
-
-
-gcc -o registration_form registration_form.c -lcrypto
-./registration_form
-
-
-Make sure `libcrypto` is available on your system.

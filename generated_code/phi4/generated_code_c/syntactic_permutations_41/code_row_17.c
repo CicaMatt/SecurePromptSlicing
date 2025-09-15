@@ -76,6 +76,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code is a simple demonstration of handling HTTP GET requests on a specific path using raw socket programming. It's not intended for production use due to security considerations (e.g., no HTTPS, plain text credentials, lack of input validation).

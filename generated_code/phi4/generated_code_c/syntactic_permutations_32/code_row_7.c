@@ -72,26 +72,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install the `libmicrohttpd-dev` package (on Debian-based systems):
-
-   
-   sudo apt-get install libmicrohttpd-dev
-   
-
-2. Compile the code using:
-
-   
-   gcc -o redirect_app redirect_app.c -lmicrohttpd
-   
-
-3. Run the compiled program:
-
-   
-   ./redirect_app
-   
-
-4. Access `http://localhost:8888/redirect/<url>` with a supported browser or tool to test it.

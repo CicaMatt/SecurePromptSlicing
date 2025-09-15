@@ -103,13 +103,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have `libmicrohttpd` installed. You can compile it using:
-
-
-gcc -o file_upload_server file_upload_server.c $(pkg-config --cflags --libs libmicrohttpd)
-./file_upload_server
-
-
-Ensure that the `uploads` directory exists in your working directory or modify the code to create it if it doesn't exist.

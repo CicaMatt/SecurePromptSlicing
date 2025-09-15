@@ -69,6 +69,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This example uses a simple XOR-based hashing for demonstration purposes. In real applications, use a secure hashing algorithm like bcrypt or Argon2 and ensure to handle password input securely (e.g., using `getpass`). Also, remember to replace database connection details with actual values and manage errors properly in production code.

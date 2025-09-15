@@ -59,13 +59,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note**: You must link this code with the PostgreSQL client library during compilation. For example:
-
-On Linux:
-
-gcc -o check_moderator check_moderator.c -lpq
-
-
-On Windows, ensure you have the appropriate PostgreSQL client library and use a suitable command to compile with it.

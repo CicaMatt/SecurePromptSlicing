@@ -73,6 +73,3 @@ int main(int argc, char *argv[]) {
     curl_global_cleanup();
     return res == CURLE_OK ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-
-
-Make sure you have libcurl installed on your system and that the PHP script `upload.php` is set up to handle file uploads at the specified URL. Also, ensure that the web server has write permissions for the target directory (in this case, `uploads`).

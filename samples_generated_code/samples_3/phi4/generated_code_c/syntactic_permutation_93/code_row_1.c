@@ -31,12 +31,3 @@ int main() {
 
     return 0;
 }
-
-
-To run this code, ensure that OpenSSL is installed on your system. You may need to link against the OpenSSL library by compiling with:
-
-gcc -o hash_password hash_password.c -lcrypto
-
-Then run the executable:
-
-./hash_password

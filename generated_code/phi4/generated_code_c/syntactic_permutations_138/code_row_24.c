@@ -55,9 +55,3 @@ int main(void) {
 
     return 0;
 }
-
-
-**Note**: To run this code:
-- You need to have Mongoose library installed and linked during compilation.
-- Replace placeholder values for database connection (`DB_NAME`, `DB_USER`, `DB_PASS`) with actual credentials.
-- Implement real database interaction (using a PostgreSQL C client like `libpq`) where indicated by comments.

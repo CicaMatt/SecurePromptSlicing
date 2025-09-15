@@ -54,6 +54,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-This code assumes the payload is URL encoded and part of a query string. It uses shell commands to extract and decode it. Adjustments may be needed based on the actual data format and environment.

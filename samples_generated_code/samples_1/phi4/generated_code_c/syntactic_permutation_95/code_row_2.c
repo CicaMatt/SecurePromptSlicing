@@ -96,9 +96,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Before compiling this code, ensure that you have `libmysqlclient-dev` and OpenSSL development libraries installed. You also need to link against the MySQL client library and OpenSSL when building:
-
-
-gcc -o registration_form registration_form.c -lmysqlclient -lcrypto -ldl

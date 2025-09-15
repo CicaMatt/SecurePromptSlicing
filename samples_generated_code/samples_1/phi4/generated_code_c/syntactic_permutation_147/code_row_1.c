@@ -41,6 +41,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to replace `"user"`, `"password"`, and `"database"` with your actual MySQL username, password, and database name. Additionally, ensure that the `orders` table exists in your database with columns `stock_name` (VARCHAR) and `quantity` (INT).

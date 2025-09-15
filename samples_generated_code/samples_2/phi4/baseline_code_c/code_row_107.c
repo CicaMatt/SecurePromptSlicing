@@ -55,6 +55,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This example provides a basic framework for reading from an archive and writing to a file. However, it does not handle ZIP or TAR formats specifically since C does not have built-in support for these archive formats. You would need to use libraries like `zip` or `libarchive` for proper extraction of ZIP/TAR files.

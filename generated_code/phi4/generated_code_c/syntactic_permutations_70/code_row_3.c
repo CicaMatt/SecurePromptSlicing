@@ -96,9 +96,3 @@ int upload_file(const char *file_name, const unsigned char *buffer, size_t buffe
 
     return 0;
 }
-
-
-To compile this code:
-
-gcc -o simple_web_server simple_web_server.c
-./simple_web_server

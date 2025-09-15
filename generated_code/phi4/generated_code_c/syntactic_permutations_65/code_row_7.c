@@ -87,7 +87,6 @@ int main(int argc, char *argv[]) {
 }
 
 
-**Server Code:**
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -168,6 +167,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-**Note:** Compile each part separately using a C compiler, e.g., `gcc client.c -o client` and `gcc server.c -o server`. The server should be running before the client attempts to upload.

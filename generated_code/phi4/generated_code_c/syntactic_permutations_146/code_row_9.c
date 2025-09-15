@@ -60,6 +60,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `"localhost"`, `"root"`, `"password"`, and `"stock_db"` with your MySQL server details. Also, ensure that the `buy_orders` table exists in your database with appropriate columns (`username`, `stock_name`, `quantity`).

@@ -61,6 +61,3 @@ void sha256(const unsigned char *input, size_t len, unsigned char output[32]) {
         output[i] = i; // Replace with actual hashing logic
     }
 }
-
-
-**Note**: This code includes a dummy `sha256` function. For real-world use, you should replace this with an actual SHA-256 implementation, such as the one from OpenSSL or another cryptographic library. Also, ensure your database and table (`users`) are properly set up to store usernames and hashed passwords in hexadecimal format.

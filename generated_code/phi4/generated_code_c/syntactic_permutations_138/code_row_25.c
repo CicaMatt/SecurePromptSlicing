@@ -54,6 +54,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** This code assumes that you have a MySQL database running locally with a table named `users` and a column named `role`. You need to replace `"localhost"`, `"user"`, `"password"`, and `"database_name"` with your actual database credentials. Also, ensure that the MySQL client library is installed and properly linked during compilation.

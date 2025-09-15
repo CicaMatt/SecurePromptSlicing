@@ -58,12 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link the MySQL client library when compiling this code. For example:
-
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)
-
-
-Ensure that the MySQL server is running and accessible, and adjust the connection parameters as necessary.

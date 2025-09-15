@@ -46,6 +46,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"` and `"password"` with your actual MySQL database username and password before running the code.

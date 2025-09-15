@@ -43,10 +43,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile and run the code:
-
-
-gcc -o redirect_app redirect_app.c
-./redirect_app "http://example.com/target"

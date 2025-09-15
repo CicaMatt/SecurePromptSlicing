@@ -64,6 +64,3 @@ int main() {
     printf("Server running on port 3000\n");
     return uv_run(data.loop, UV_RUN_DEFAULT);
 }
-
-
-Note: The provided code is a simplified version and may not handle all edge cases or be fully functional as-is. It uses `libuv` for asynchronous I/O operations, which needs to be installed and linked during compilation.

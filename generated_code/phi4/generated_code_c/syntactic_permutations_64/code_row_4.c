@@ -68,6 +68,3 @@ void download_pdf(const char *filepath) {
         fprintf(stderr, "Failed to open file for reading.\n");
     }
 }
-
-
-**Note**: Replace `"your_database_name"` and `"your_table_name"` with your actual database name and table. Make sure the MySQL server is running and accessible. Additionally, ensure that you have the necessary permissions and configurations set up for accessing the MySQL database from your C program.

@@ -47,21 +47,3 @@ int main() {
 
     return 0;
 }
-
-
-Save this C program as `main.c` and create a file named `hello.html` in the same directory with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    {{username}}
-</body>
-</html>
-
-
-Compile and run the program using a C compiler, e.g., `gcc main.c -o webserver && ./webserver`.

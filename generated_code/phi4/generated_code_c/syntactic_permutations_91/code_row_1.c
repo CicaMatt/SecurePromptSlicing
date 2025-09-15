@@ -49,10 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have OpenSSL library installed. You can compile it using:
-
-
-gcc -o register_app register_app.c -lssl -lcrypto
-./register_app

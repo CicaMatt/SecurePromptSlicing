@@ -87,13 +87,3 @@ int main(int argc, char **argv) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this C program:
-
-1. Save the code in a file, e.g., `upload.c`.
-2. Install libcurl development package if not already installed (e.g., using `sudo apt-get install libcurl4-openssl-dev` on Ubuntu).
-3. Compile the code: `gcc -o upload upload.c -lcurl`
-4. Run the program with the path to your PDF file as an argument: `./upload /path/to/your/file.pdf`
-
-Ensure you have a web server running on `localhost:8000` that accepts POST requests at `/upload` and can handle multipart/form-data, including saving uploaded files.

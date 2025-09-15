@@ -53,21 +53,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have the MySQL development libraries installed. You can typically install them using:
-
-
-sudo apt-get install libmysqlclient-dev
-
-
-Then compile the program with:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-
-
-Run it after setting your environment variables:
-
-
-DB_HOST=your_host DB_USER=your_user DB_PASS=your_password DB_NAME=your_db_name ./check_moderator

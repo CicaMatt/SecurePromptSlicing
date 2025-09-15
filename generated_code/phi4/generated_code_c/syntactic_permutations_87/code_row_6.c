@@ -59,13 +59,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have the MySQL client library installed on your system. You can compile it using:
-
-
-gcc -o weather_app weather_app.c $(mysql_config --cflags --libs)
-./weather_app
-
-
-Make sure to replace `DB_USER`, `DB_PASS`, and `DB_NAME` with your actual database credentials.

@@ -57,6 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code requires linking with OpenSSL to compile properly. Use the command `gcc -o registration_form registration_form.c -lssl -lcrypto` to compile this program.

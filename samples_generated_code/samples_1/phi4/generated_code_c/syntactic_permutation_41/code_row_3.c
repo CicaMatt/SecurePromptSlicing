@@ -66,7 +66,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-Compile with: `gcc -o webapp webapp.c`
-Run the application and use a browser or tool like `curl` to access `http://localhost:8080/info`.

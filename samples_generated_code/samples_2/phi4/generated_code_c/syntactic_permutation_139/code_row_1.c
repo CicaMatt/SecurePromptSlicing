@@ -43,12 +43,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"your_username"`, `"your_password"`, `"your_database"` and `host` with the actual database credentials. Compile this code using a MySQL C client library, for example:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-
-
-Run the compiled program to see if the user is a moderator.

@@ -16,7 +16,6 @@ int run_system_command(const char *cmd, char **output) {
     // Allocate memory for the output string
     char path[1035];
     *output = malloc(sizeof(char) * 10000);
-    **output = '\0';
 
     while (fgets(path, sizeof(path), fp) != NULL) {
         strcat(*output, path);

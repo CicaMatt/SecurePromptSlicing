@@ -107,6 +107,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-This code assumes the web server is running on `localhost` at port `8080`. Adjust the IP address and port as necessary. Note that this example does not handle HTTP headers or form data typically required for an actual file upload via a web form; it simply sends binary data over a TCP socket. You'll need to ensure your server can accept raw binary data on the specified port.

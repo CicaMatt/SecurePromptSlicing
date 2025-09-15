@@ -80,12 +80,3 @@ int main() {
 
     return 0;
 }
-
-
-To use this code:
-1. Ensure you have a directory named `uploads` in the same directory as your executable.
-2. Compile the C program using `gcc -o server server.c`.
-3. Run the compiled program with `./server`.
-4. Use any HTTP client to POST a PDF file to `http://localhost:8080/`. The first message should contain the filename in the format `filename: example.pdf` followed by the binary data of the file.
-
-Note: This is a simple demonstration and lacks security features necessary for production use.

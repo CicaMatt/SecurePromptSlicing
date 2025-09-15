@@ -65,17 +65,3 @@ void redirectToHomePage() {
 void returnToLoginPage() {
     printf("Invalid username or password. Returning to login page.\n");
 }
-
-
-Make sure you have a SQLite database named `users.db` with a table called `users`, containing at least the columns `username` and `password`. You can create this using:
-
-
-CREATE TABLE users (
-    username TEXT PRIMARY KEY,
-    password TEXT NOT NULL
-);
-
-INSERT INTO users (username, password) VALUES ('testuser', 'testpass');
-
-
-This code does not handle secure storage of passwords or encryption. For a real application, consider hashing and salting passwords before storing them in the database.

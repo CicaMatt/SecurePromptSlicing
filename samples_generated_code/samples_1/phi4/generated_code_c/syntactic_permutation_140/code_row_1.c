@@ -35,9 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"dbname"` with your actual database credentials, and `"your_table"` with the table you want to query. Also, ensure that MySQL is properly installed and configured on your system, and link against the MySQL client library (`-lmysqlclient`) when compiling this code:
-
-
-gcc -o db_query your_program.c $(mysql_config --cflags --libs)

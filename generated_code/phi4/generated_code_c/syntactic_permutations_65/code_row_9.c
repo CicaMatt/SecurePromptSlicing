@@ -78,13 +78,3 @@ int main(int argc, char **argv) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C code uses the libcurl library to perform an HTTP POST request to upload a PDF file to a web server. You need to have `libcurl` installed on your system and link it when compiling this program. The PHP script at `SERVER_URL` should handle the uploaded file and save it in the "uploads" folder.
-
-To compile the code, you might use a command like:
-
-gcc -o upload_program upload_program.c -lcurl
-
-
-Make sure to replace `http://localhost/upload.php` with the actual URL of your web server's upload script. The PHP script should be prepared to handle file uploads and save them in the appropriate directory.

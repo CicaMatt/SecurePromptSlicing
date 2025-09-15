@@ -70,6 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `your_username`, `your_password`, and `your_database_name` with the actual MySQL username, password, and database name. This code assumes you have a table named `subscribers` with at least one column called `email`. Ensure your MySQL server is running and accessible from your program's environment.

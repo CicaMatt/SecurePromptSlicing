@@ -51,6 +51,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-Make sure you have Mongoose library installed and linked correctly to compile this code. You can usually install it via a package manager or download it from the [Mongoose website](https://github.com/cesanta/mongoose).

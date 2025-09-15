@@ -76,6 +76,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to replace `"path_to_your_pdf_file.pdf"` with the actual path of your PDF file and have a web server running at `http://localhost:8080/upload` that can handle file uploads.

@@ -54,6 +54,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program uses `curl` command-line tool to perform HTTP POST request for uploading a PDF file. Make sure `curl` is installed on your system and that you have a corresponding server-side script handling the upload at the specified URL (`http://localhost:8080/upload`).

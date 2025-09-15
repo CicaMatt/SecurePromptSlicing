@@ -81,6 +81,3 @@ int main() {
     
     return 0;
 }
-
-
-Note: This code assumes that you have a MySQL database set up with the necessary connection details and a table named `users` having columns `username`, `password`, `last_name`, and `email`. Additionally, it uses OpenSSL for hashing passwords. Ensure all dependencies are installed on your system before running this program.

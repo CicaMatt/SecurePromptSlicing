@@ -34,6 +34,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code is a simulation and does not actually bind functions to URLs or serve HTTP requests. It demonstrates how you might construct and execute a ping command based on a URL stored in a variable. For actual web server functionality, consider using libraries such as libmicrohttpd or integrating with a higher-level language/framework that handles HTTP requests natively.

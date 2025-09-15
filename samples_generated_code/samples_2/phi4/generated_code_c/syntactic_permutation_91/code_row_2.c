@@ -91,9 +91,3 @@ int main() {
     printf("User registered successfully.\n");
     return 0;
 }
-
-
-**Note:**  
-1. You must have `bcrypt` library installed for hashing passwords.
-2. Ensure that the MySQL database and table (`webapp` database with a `users` table) are set up before running this code.
-3. Adjust MySQL server connection parameters as needed.

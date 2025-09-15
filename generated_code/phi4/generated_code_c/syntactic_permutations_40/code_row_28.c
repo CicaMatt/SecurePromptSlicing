@@ -62,12 +62,3 @@ int main(void) {
 
     return 0;
 }
-
-
-Compile and run the code with Mongoose library:
-
-gcc -o webapp main.c -lmongoose
-./webapp
-
-
-Ensure you have `mongoose.h` and `libmongoose.a` or link against your system's mongoose installation.

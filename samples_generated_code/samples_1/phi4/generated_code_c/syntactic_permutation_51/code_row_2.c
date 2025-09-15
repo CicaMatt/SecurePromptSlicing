@@ -61,6 +61,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This code provides a basic structure for handling directory creation and preparing to handle tar extraction. For actual tar file extraction in C, you would need to use a library like `libarchive`. This example includes placeholder logic for extracting tar files since implementing full extraction support is complex and beyond the scope of this simple example.

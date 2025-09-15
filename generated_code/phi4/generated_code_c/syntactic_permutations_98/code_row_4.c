@@ -57,9 +57,3 @@ int main() {
     mysql_close(conn);
     return EXIT_SUCCESS;
 }
-
-
-Note: Before running the code:
-1. Ensure MySQL is installed and a database named `testdb` with a table named `users` (fields: `username`, `password`) exists.
-2. Replace `"root"` and `""` in `mysql_real_connect()` with your MySQL username and password if necessary.
-3. Install MySQL client library for C (`libmysqlclient-dev`).

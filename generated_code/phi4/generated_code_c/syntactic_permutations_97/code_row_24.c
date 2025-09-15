@@ -94,11 +94,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Ensure SQLite is installed on your system.
-2. Save the code in a file, e.g., `registration.c`.
-3. Compile with: `gcc -o registration registration.c -lsqlite3`
-4. Run with: `./registration`

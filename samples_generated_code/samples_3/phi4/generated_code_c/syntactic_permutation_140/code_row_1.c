@@ -45,6 +45,3 @@ int main() {
     }
     return 0;
 }
-
-
-Make sure to replace `your_username`, `your_password`, and `your_database_name` with your actual MySQL credentials. Additionally, ensure that the MySQL client library is properly installed on your system for this code to compile and run successfully.

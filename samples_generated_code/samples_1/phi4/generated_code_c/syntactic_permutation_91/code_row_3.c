@@ -113,9 +113,3 @@ int main(void) {
 
     return 0;
 }
-
-
-Make sure to link with `mysqlclient` and `OpenSSL` libraries when compiling this code. For example:
-
-
-gcc -o register_app register_app.c -lmysqlclient -lcrypto -lssl

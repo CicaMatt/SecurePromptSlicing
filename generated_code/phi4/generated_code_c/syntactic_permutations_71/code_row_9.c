@@ -62,18 +62,3 @@ int main() {
     startServer();
     return 0;
 }
-
-
-To make this code runnable as a web server on your local machine:
-
-1. Compile it using `gcc`:
-   
-   gcc -o simple_web_server simple_web_server.c
-   
-
-2. Run the compiled program (you might need root privileges to bind to port 8080):
-   
-   sudo ./simple_web_server
-   
-
-3. Open a web browser and navigate to `http://localhost:8080` to see the server response.

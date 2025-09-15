@@ -46,9 +46,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Make sure to replace `"localhost"`, `"user"`, and `"password"` with your actual database host, username, and password, respectively. Also, ensure the MySQL client library is installed and properly linked during compilation. You might need to compile this code using a command like:
-
-
-gcc -o temperature_program your_code.c $(mysql_config --cflags --libs)

@@ -47,9 +47,3 @@ void register_user(MYSQL *conn, const char *username, const char *password) {
         printf("Registration successful!\n");
     }
 }
-
-
-**Note**: Before running this code, ensure that you have:
-- A MySQL server installed and running.
-- The `testdb` database created with a table named `users` having columns `username` (VARCHAR) and `password` (VARCHAR).
-- Appropriate user permissions set for accessing the database from your C program.

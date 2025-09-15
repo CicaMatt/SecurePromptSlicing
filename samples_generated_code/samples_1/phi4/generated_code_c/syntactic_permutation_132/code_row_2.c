@@ -42,20 +42,3 @@ int main() {
     
     return 0;
 }
-
-
-Save this code and ensure you have a file named `template.html` in the same directory with content like:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>
-
-
-This code simulates a basic server-side URL handler where visiting `/username` will render an HTML page with the username inserted.

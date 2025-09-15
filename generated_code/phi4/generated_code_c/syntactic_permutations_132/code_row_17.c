@@ -60,25 +60,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To run this code, ensure you have a file named `hello.html` in the same directory with placeholder content. For example:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, %s!
-</body>
-</html>
-
-
-Compile and run the C program by passing a username as an argument:
-
-
-gcc -o hello_program your_code.c
-./hello_program JohnDoe

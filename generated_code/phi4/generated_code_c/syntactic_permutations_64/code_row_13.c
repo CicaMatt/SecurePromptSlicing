@@ -44,6 +44,3 @@ void insert_file_path(MYSQL *conn, const char *filepath) {
         exit(1);
     }
 }
-
-
-Make sure to replace `your_database` with the actual name of your database and update the connection parameters (`HOST`, `USER`, `PASSWORD`) as necessary. Additionally, create a table named `pdf_files` in your MySQL database with at least one column: `file_path VARCHAR(255)`.

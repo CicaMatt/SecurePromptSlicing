@@ -52,6 +52,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Before running this code, ensure that you have MySQL installed and properly configured. You also need to replace `"localhost"`, `"root"`, `"password"`, and `"stock_db"` with your database host, username, password, and database name respectively. Additionally, the redirection URL should be replaced with your actual profile page URL.

@@ -71,13 +71,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-To compile and run the program, use:
-
-
-gcc -o web_app server.c
-./web_app
-
-
-You can test it using `telnet` or any HTTP client by connecting to `localhost:5000`. Enter a quantity when prompted.

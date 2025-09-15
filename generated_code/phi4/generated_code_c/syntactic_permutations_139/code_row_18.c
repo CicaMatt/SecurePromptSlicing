@@ -50,13 +50,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have the MySQL client library installed. Use a command like:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-./check_moderator
-
-
-Replace `'your_username'` with the actual username you want to check. Ensure that the environment variables `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` are set appropriately in your system before running the program.

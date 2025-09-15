@@ -72,6 +72,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
- 
-
-**Note:** This code is a simplified version and does not fully implement ZIP extraction. For full functionality, use libraries like `minizip` or similar that handle ZIP file parsing and extraction correctly.

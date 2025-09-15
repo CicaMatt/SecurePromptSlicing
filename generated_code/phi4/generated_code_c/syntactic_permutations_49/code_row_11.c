@@ -49,6 +49,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** The above code provides a simplified template for extracting files from an archive. It does not handle the complexities of reading ZIP archives or TAR files in C directly without external libraries like `zip` or `unzip`. For full functionality, consider using specialized libraries such as minizip/zlib to parse and extract contents from ZIP files properly. This code assumes a single file extraction for demonstration purposes.

@@ -54,9 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before running this code, ensure you have:
-- Installed MySQL and set up a database named `testdb` with a table called `users`. The table should have columns `username` (VARCHAR) and `password` (CHAR(64)).
-- Installed the required libraries: OpenSSL for hashing and MySQL C API.
-- Properly configured your MySQL server access credentials.

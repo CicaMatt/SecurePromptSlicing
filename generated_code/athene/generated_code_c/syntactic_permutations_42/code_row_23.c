@@ -69,6 +69,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code is a simplified simulation and does not actually handle HTTP requests in a real web server environment. For a production web application, consider using a proper web framework or library that supports HTTP handling.

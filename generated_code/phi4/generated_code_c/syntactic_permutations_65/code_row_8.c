@@ -110,6 +110,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This code assumes that you have a running web server at `http://localhost/upload` which is capable of handling multipart form data and saving the uploaded file to an "uploads" directory. Additionally, ensure that libcurl is installed on your system for this program to work.

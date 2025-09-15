@@ -54,15 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"database_name"` with the appropriate credentials for your MySQL database. Additionally, ensure that you have the `libmysqlclient` library installed on your system to compile this program using a command like:
-
-
-gcc -o unsubscribe_program main.c $(mysql_config --cflags --libs)
-
-
-Run the compiled executable as follows:
-
-
-./unsubscribe_program

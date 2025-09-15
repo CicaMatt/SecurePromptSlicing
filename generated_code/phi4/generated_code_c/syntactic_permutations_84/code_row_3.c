@@ -104,10 +104,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-To compile and run this code, you need to link it with the `libyaml` library. Here is an example of how to compile it:
-
-
-gcc -o webapp webapp.c -lyaml
-./webapp

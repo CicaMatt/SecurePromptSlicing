@@ -83,10 +83,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-To compile and run this code:
-1. Save the above code in a file named `server.c`.
-2. Compile it using: `gcc server.c -o server`
-3. Run the executable: `./server`
-4. Access the web application by visiting `http://localhost:8080/info` in your browser.

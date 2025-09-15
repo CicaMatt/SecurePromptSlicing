@@ -54,6 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have MySQL client library installed on your system to compile this code, and adjust database credentials accordingly.

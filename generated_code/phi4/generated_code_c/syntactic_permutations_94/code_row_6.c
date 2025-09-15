@@ -93,9 +93,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: To compile this code, you need to have OpenSSL installed and link against the OpenSSL library using `-lssl -lcrypto`. For example:
-
-
-gcc your_program.c -o your_program -lssl -lcrypto

@@ -54,6 +54,3 @@ void uploadFile(const char *filePath) {
 
     fclose(file);
 }
-
-
-**Note:** This code uses `curl` for HTTP uploads. Ensure `curl` is installed and accessible from your system's PATH. Replace `http://example.com/upload` with the actual server URL where you intend to upload the file.

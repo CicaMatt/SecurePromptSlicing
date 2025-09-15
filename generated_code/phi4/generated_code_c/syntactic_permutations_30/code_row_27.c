@@ -65,6 +65,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This program takes two command-line arguments: a query string and a user input. It extracts the `target` parameter from the query string and checks if it matches the given regular expression. If it does, it compares the extracted target with the user input. Based on this comparison, it redirects to either the target URL or the root of the site (`"/"`).

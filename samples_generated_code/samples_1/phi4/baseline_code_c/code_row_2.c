@@ -78,14 +78,3 @@ int main() {
 
     return 0;
 }
-
-
-**Instructions:**
-1. Ensure you have `openssl` and `sqlite3` libraries installed on your system.
-2. Compile the program with:
-   
-   gcc -o user_registration user_registration.c -lssl -lcrypto -lsqlite3
-   
-3. Run the compiled executable:
-   
-4. Follow the prompts to enter a username and password, which will be hashed and stored in an SQLite database named `users.db`.

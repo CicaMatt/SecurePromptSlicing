@@ -109,6 +109,3 @@ int main() {
     close(server_sock);
     return 0;
 }
-
-
-**Note:** Make sure to link against the `libyaml` library when compiling this code. Use `-lyaml` with your compiler, e.g., `gcc -o webapp webapp.c -lyaml`.

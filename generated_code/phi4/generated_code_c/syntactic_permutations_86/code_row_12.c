@@ -114,9 +114,3 @@ void process_query(MYSQL *conn, const char *lat, const char *lon, int year, int 
 
     mysql_free_result(result);
 }
-
-
-Note: For this code to work, ensure that:
-- The MySQL server is running with a database `weather_db` and table `temperature_data` having columns `latitude`, `longitude`, `year`, `month`, `day`, `grib_file`, and `temperature`.
-- Replace `"root"` and `"password"` with the actual username and password for your MySQL setup.
-- Compile this code using a C compiler linking against the MySQL client library, e.g., `gcc -o app app.c $(mysql_config --cflags --libs)`.

@@ -51,6 +51,3 @@ int main() {
     
     return 0;
 }
-
-
-Note: Replace `"your_password"` and `"your_database"` with your actual MySQL credentials and database name. Additionally, ensure that the `mysqlclient` library is installed on your system for this code to compile and run successfully. You can typically install it via a package manager like `apt-get`, `yum`, or equivalent, depending on your operating system.

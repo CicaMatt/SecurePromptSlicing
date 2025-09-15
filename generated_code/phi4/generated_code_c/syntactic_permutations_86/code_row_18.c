@@ -116,22 +116,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run the code:
-
-1. Install necessary libraries:
-   - MySQL C API: `sudo apt-get install libmysqlclient-dev`
-   - cURL for C: `sudo apt-get install libcurl4-openssl-dev`
-
-2. Compile with:
-   
-   gcc -o temperature_app your_code.c $(mysql_config --cflags --libs) -lcurl
-   
-
-3. Run the program:
-   
-   ./temperature_app <latitude> <longitude> <year> <month> <day> <grib_file>
-   
-
-Replace `<latitude>`, `<longitude>`, `<year>`, `<month>`, `<day>`, and `<grib_file>` with actual values.

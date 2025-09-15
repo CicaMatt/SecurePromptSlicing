@@ -73,15 +73,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-**Note:** This code requires the `libmicrohttpd` library to compile and run. You can install it using package managers like `apt-get` on Ubuntu (`sudo apt-get install libmicrohttpd-dev`) or via other methods depending on your system. To compile, use:
-
-
-gcc -o webapp webapp.c $(pkg-config --cflags --libs microhttpd)
-
-
-Then run the compiled program:
-
-
-./webapp

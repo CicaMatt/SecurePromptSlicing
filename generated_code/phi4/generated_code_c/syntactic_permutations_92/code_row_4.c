@@ -37,13 +37,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you will need the OpenSSL library installed. You can typically install it using a package manager like `apt` on Ubuntu (`sudo apt-get install libssl-dev`) or `brew` on macOS (`brew install openssl`). Then compile with:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-./registration_form
-
-
-This program will prompt the user to enter a username and password, hash the password using SHA-256, and then print both the username and the hashed password in hexadecimal format.

@@ -39,6 +39,3 @@ int main() {
 
     return 0;
 }
-
-
-Replace `"localhost"`, `"username"`, `"password"`, and `"database_name"` with your actual MySQL server details.

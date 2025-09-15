@@ -74,6 +74,3 @@ void unsubscribe(const char *email) {
 
     mysql_close(conn);
 }
-
-
-**Note:** Replace `username`, `password`, and `database_name` with your MySQL credentials. This code requires linking against the MySQL client library when compiling, typically using `-lmysqlclient`.

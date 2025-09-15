@@ -104,10 +104,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `"password"`, and `"dbname"` with your actual database connection details. Also, ensure that the `mysql.h` header file is installed on your system, along with the MySQL client library linked during compilation.
-
-To compile this code, you might use a command like:
-
-gcc -o upload_pdf_program upload_pdf.c $(pkg-config --cflags --libs mysqlclient)

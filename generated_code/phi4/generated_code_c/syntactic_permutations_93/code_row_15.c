@@ -42,13 +42,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have OpenSSL installed on your system. You can compile the program using:
-
-
-gcc -o password_hashing password_hashing.c -lssl -lcrypto
-./password_hashing
-
-
-This will prompt you for a username and password, hash the password using SHA-256, and print both the username and hashed password in hexadecimal format.

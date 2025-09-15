@@ -75,13 +75,3 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Save the code to a file, e.g., `upload.c`.
-2. Install cURL library if not already installed: On Ubuntu/Debian, use `sudo apt-get install libcurl4-openssl-dev`.
-3. Compile with: `gcc -o upload upload.c -lcurl`
-4. Run with: `./upload <path_to_pdf_file>`
-
-Ensure you have a PHP script (`upload.php`) on your localhost that handles the file upload.

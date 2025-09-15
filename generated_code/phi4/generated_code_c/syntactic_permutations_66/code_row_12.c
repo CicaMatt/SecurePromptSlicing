@@ -50,10 +50,3 @@ int main(int argc, char *argv[]) {
     printf("PDF file copied successfully to %s\n", outputFilePath);
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this program:
-
-1. Save the code to a file, for example `copy_pdf.c`.
-2. Compile it using: `gcc copy_pdf.c -o copy_pdf`
-3. Run it with: `./copy_pdf <path_to_your_pdf>`

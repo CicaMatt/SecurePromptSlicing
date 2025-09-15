@@ -52,6 +52,3 @@ int main() {
     upload_pdf("example.pdf");
     return 0;
 }
-
-
-**Note:** Ensure that you have a MySQL server running with the appropriate user credentials and database. The `pdf_files` table should exist in your database with at least one column named `filepath`. Adjust the database connection details as necessary.

@@ -47,21 +47,3 @@ int main() {
 
     return 0;
 }
-
-
-To test this code, create a file named `hello.html` in the same directory as your executable with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, <username>!
-</body>
-</html>
-
-
-Compile and run your C program to see the template rendering with username substitution.

@@ -67,18 +67,3 @@ int main(int argc, char *argv[]) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install Mongoose: `https://github.com/cesanta/mongoose`
-2. Compile with:
-   
-   gcc -o webapp webapp.c mongoose.h mongoose.c -lpthread -lm
-   
-3. Run the executable:
-   
-   ./webapp
-   
-
-Navigate to `http://localhost:8000/?target=<your-target-url>` to test.

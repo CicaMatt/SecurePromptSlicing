@@ -57,9 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link with the MySQL client library when compiling this code. For example:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)

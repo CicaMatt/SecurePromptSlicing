@@ -58,6 +58,3 @@ int main() {
     
     return 0;
 }
-
-
-Make sure to replace the database connection parameters (`"localhost"`, `"root"`, `"password"`, and `"testdb"`) with your actual MySQL server details. Also, ensure that you have a table named `users` with columns `username` and `password`. For production use, replace the simple hashing function with a more secure one such as SHA-256 or bcrypt.

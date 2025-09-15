@@ -54,6 +54,3 @@ int main() {
     
     return 0;
 }
- 
-
-Note: This example assumes you have an SQLite database named `user_database.db` with a table called `users` having columns `username` and `password`. You need to set up the SQLite environment and create this table for the code to function properly.

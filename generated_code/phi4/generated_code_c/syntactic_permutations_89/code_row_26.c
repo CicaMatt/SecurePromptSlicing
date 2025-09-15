@@ -54,11 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile the above code using Emscripten:
-
-emcc -o index.html your_code.c `sdl2-config --cflags --libs` -s USE_SDL=2 -s WASM=1 -s USE_WEBGL2=1
-
-
-This code sets up a simple web app that calculates the price for a given product code and quantity, using Emscripten to compile it into WebAssembly. The `js_print` function is used to output results to the JavaScript console.

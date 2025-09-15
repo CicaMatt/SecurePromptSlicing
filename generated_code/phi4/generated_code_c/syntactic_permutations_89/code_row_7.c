@@ -103,9 +103,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-To compile and run this code:
-1. Save the code to a file named `web_app.c`.
-2. Compile it with: `gcc -o web_app web_app.c`
-3. Run the executable: `./web_app`

@@ -65,8 +65,3 @@ int main(int argc, char **argv) {
     }
     return extract(argv[1]);
 }
-
-
-Note: This code requires linking against the `libarchive` library. To compile, use:
-
-gcc -o extract_zip extract_zip.c -larchive

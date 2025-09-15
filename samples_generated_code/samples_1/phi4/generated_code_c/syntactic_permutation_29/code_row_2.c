@@ -43,13 +43,3 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-
-
-To compile and run this program:
-
-
-gcc -o web_redirect web_redirect.c -lregex
-./web_redirect "http://example.com/some/path"
-
-
-This code simulates a simple web redirect mechanism using regular expressions in C. It checks if the input URL contains `example.com` and redirects to it or `/` based on the match result.

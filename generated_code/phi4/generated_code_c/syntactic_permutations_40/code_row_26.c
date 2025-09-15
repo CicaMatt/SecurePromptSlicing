@@ -42,6 +42,3 @@ int main(int argc, char **argv) {
     handleRequest(path);
     return 0;
 }
-
-
-Compile the code with `gcc -o webapp webapp.c` and run it as `./webapp /info`. Note that this is a very simplified example of handling HTTP requests in C, meant for illustrative purposes. In a real-world scenario, you would use a proper web framework or library to handle HTTP requests and responses more effectively.

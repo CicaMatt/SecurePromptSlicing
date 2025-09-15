@@ -64,6 +64,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Make sure to have the SQLite library installed and properly linked when compiling this code. The database file `weather_database.db` should exist with a table named `weather_data` containing columns for `latitude`, `longitude`, `date`, and `temperature`.

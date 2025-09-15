@@ -65,9 +65,3 @@ int main() {
 
     return 0;
 }
-
-
-This code requires the MySQL client library to be installed and linked during compilation. You can compile it using:
-
-
-gcc -o temp_example temp_example.c $(mysql_config --cflags --libs)

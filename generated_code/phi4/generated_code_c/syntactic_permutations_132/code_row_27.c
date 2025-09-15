@@ -35,28 +35,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-Save the following content in a file named `hello.html`:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Welcome to the Hello Page!</h1>
-</body>
-</html>
-
-
-Compile and run the C program with a command like:
-
-
-gcc -o hello_program your_c_file.c
-./hello_program YourUsername
-
-
-Ensure that `hello.html` is in the same directory as the compiled executable.

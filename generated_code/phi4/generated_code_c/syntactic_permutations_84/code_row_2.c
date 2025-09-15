@@ -90,12 +90,3 @@ int main() {
 
     return 0;
 }
- 
-
-**Note**: This code assumes that the `yaml-cpp` library is installed and properly linked during compilation. You may compile this program using a command similar to:
-
-
-g++ -o web_app main.cpp -lyaml-cpp -lstdc++
-
-
-Ensure you have `libyaml-cpp-dev` or equivalent package installed for your system.

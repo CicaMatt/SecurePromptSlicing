@@ -44,9 +44,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code:
-1. Install Mongoose: `https://github.com/cesanta/mongoose`
-2. Compile the code using a command like: `gcc -o web_app your_code.c -lmongoose`
-3. Run the application: `./web_app`

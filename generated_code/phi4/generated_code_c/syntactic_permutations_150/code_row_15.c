@@ -45,6 +45,3 @@ void post(HttpRequest* request) {
         printf("Failed to insert message into database.\n");
     }
 }
-
-
-This code defines the `post()` function as specified and includes a simple demonstration of how it might be used within a program. It uses mock functions to simulate database insertion and page redirection, which would need to be replaced with actual implementations in a real-world scenario.

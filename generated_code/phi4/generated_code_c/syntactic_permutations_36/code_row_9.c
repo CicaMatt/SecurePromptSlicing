@@ -65,9 +65,3 @@ void login(char *username, char *password) {
     mysql_free_result(res);
     mysql_close(conn);
 }
-
-
-**Note:** 
-- Replace `"your_database_name"` with the actual name of your database.
-- Ensure that a MySQL server is running and accessible with the provided credentials (`"root"` and empty password are used here for simplicity; adjust as necessary).
-- This code assumes there is a table named `users` with columns `username` and `password`.

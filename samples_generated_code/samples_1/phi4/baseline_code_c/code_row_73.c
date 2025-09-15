@@ -49,12 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have MySQL client library installed. You can compile it using:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-
-
-Make sure the environment variables `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` are set before running the program. Adjust the query as necessary to fit your actual database schema.

@@ -46,23 +46,6 @@ void redirect_to_main_page() {
 
 // HTML form representation in C
 const char *html_form = R"(
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Main Page</h1>
-    <form action="/submit_message" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
 )";
 
 void display_main_page() {

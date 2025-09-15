@@ -73,6 +73,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"host"`, `"user"`, `"password"`, and `"database"` with your actual database connection details. Also, ensure that the MySQL client library is properly installed on your system for this code to compile and run successfully.

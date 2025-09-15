@@ -68,9 +68,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have OpenSSL installed and linked during compilation:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

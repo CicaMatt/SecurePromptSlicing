@@ -67,6 +67,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: This code simulates handling HTTP GET and POST requests. It is not a complete web server implementation but demonstrates the basic logic required for the described functionality. You would typically run this in an environment that can handle CGI scripts, such as Apache or Nginx with appropriate configuration.

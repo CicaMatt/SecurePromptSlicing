@@ -98,9 +98,3 @@ int main() {
     lws_context_destroy(context);
     return 0;
 }
-
-
-Note: This code assumes that you have `libwebsockets` and `mysqlclient` installed on your system. You might need to link against these libraries when compiling the program using a command like:
-
-
-gcc -o web_app main.c -lwebsockets -lmysqlclient

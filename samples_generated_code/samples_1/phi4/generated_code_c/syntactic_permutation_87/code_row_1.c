@@ -53,6 +53,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"username"`, `"password"`, and `"your_database_name"` with your actual MySQL credentials and database name. Also, ensure that you have the MySQL development libraries installed on your system to compile this code using `gcc` or another C compiler.

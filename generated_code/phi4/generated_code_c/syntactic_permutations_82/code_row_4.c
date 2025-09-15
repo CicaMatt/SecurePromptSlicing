@@ -99,20 +99,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code, you need the `mongoose` library installed. You can download it from [Mongoose](https://github.com/cesanta/mongoose) or use a package manager if available for your system.
-
-Example command to compile:
-
-gcc -o web_app web_app.c -lmongoose
-
-
-To run:
-
-./web_app
-
-
-Then, you can test it with:
-
-curl "http://localhost:8080/api?name=YourName"

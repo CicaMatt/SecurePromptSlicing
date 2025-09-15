@@ -98,6 +98,3 @@ int main(int argc, char *argv[]) {
     upload_file(filename);
     return 0;
 }
-
-
-Make sure to replace `"http://your-web-server-address/upload"` with the actual URL of your web server and `"/path/to/your/uploads/folder"` with the path where you want to store uploaded files. Additionally, ensure that libcurl is installed on your system as it's required for this code to run.

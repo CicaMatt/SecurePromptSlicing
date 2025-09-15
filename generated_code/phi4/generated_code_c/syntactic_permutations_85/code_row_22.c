@@ -72,6 +72,3 @@ int temperature_for_location(const char* latitude, const char* longitude, const 
 
     return -1;
 }
-
-
-Make sure to replace `"localhost"`, `"user"`, and `"password"` with your actual MySQL database host, username, and password. Also, ensure that you have the MySQL C client library installed on your system to compile this code.

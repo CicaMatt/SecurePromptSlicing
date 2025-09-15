@@ -48,9 +48,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Before running this code:
-1. Ensure a MySQL server is running and accessible.
-2. Create the database `testdb` and table `users(username VARCHAR(50), password BIGINT)`.
-3. Compile the C program with `-lmysqlclient` flag, e.g., `gcc -o register_app register_app.c $(mysql_config --cflags --libs)`.

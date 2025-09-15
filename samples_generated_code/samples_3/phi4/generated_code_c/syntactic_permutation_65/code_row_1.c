@@ -53,10 +53,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code:
-
-1. Save the code in a file, e.g., `upload_pdf.c`.
-2. Compile using: `gcc -o upload_pdf upload_pdf.c -lcurl`
-3. Run using: `./upload_pdf <pdf_file_path> http://localhost:8000` (replace `<pdf_file_path>` with the path to your PDF and adjust the server URL as needed).

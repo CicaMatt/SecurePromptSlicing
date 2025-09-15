@@ -87,16 +87,3 @@ int main() {
     register_user();
     return 0;
 }
-
-
-**Dependencies:**  
-This code requires OpenSSL to compile and run. To install it on a Unix-like system, use your package manager (e.g., `apt-get install libssl-dev` on Debian-based systems).
-
-To compile the program:
-
-gcc -o registration_program registration_program.c -lssl -lcrypto
-
-
-Then you can run the executable with:
-
-./registration_program

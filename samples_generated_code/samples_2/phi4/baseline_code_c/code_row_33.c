@@ -88,12 +88,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program uses libcurl to handle the file upload. Ensure that libcurl is installed and properly linked during compilation:
-
-
-gcc -o upload_program your_program.c -lcurl
-
-
-Replace `your_program.c` with the name of the file containing this code. Run the compiled program by providing the path to the PDF file as an argument. Make sure your local web server is set up to handle POST requests at the specified URL (`http://localhost/upload`) and save the uploaded files in the designated "uploads" folder.

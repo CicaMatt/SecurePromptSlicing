@@ -50,11 +50,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile and run the code:
-
-gcc -o temperature_for_location temperature_for_location.c $(mysql_config --cflags --libs)
-./temperature_for_location <latitude> <longitude> <date>
-
-Replace `<latitude>`, `<longitude>`, and `<date>` with actual values.

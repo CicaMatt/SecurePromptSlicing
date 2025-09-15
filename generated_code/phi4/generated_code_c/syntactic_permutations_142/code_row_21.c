@@ -68,6 +68,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Make sure you have MySQL installed and properly configured on your system. Also, ensure the database and table (`unsubscribe_db` and `users`) exist with a column named `email`. Adjust connection parameters as needed.

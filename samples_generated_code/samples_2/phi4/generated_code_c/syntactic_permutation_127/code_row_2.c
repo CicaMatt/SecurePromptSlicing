@@ -41,18 +41,3 @@ void http_hello_page(FILE *request, FILE *response) {
 
     fflush(response);  // Ensure all data is written to the response
 }
-
-// Example usage:
-// int main() {
-//     FILE *request = fopen("request.txt", "r");  // Simulated client request
-//     FILE *response = fopen("response.txt", "w");  // Response file stream
-
-//     if (request && response) {
-//         http_hello_page(request, response);
-        
-//         fclose(request);
-//         fclose(response);
-//     }
-
-//     return 0;
-// }

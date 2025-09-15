@@ -55,8 +55,3 @@ int main(void) {
 
     return 0;
 }
-
-
-
-// Note: This code requires the Mongoose library to be installed and linked.
-// Compile with: gcc -o webapp webapp.c `pkg-config --cflags --libs libmongoose`

@@ -149,9 +149,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-You will need to link the libyaml library when compiling this code. For example:
-
-
-gcc -o web_app web_app.c -lyaml

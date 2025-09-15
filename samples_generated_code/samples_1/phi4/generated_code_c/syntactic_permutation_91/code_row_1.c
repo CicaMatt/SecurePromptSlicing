@@ -62,6 +62,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Ensure that the MySQL server is running and the database `test_db` with a table named `users` having columns `name` (VARCHAR) and `password` (CHAR[40]) exists. Additionally, you need to have OpenSSL library installed for SHA1 hashing.

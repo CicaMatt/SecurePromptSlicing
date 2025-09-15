@@ -49,6 +49,3 @@ void upload_image(const char *filename, const char *base64_string) {
     // Close connection
     mysql_close(&conn);
 }
-
-
-Make sure to replace `"localhost"`, `"user"`, `"password"`, and `"database"` with your actual MySQL server details. Also, ensure you have the `libmysqlclient` library linked during compilation by using `-lmysqlclient`.

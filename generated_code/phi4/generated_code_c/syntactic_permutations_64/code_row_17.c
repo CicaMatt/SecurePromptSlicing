@@ -82,6 +82,3 @@ int main() {
     
     return 0;
 }
-
-
-Ensure you have the necessary MySQL C library installed and linked when compiling this code. You may need to adjust database credentials according to your environment. Also, ensure that the `files` table in your MySQL database has columns `filename` and `filepath`.

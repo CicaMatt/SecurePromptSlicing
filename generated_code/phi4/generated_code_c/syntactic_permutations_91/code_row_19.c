@@ -94,6 +94,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note**: This code assumes you have MySQL and OpenSSL installed on your system. You need to replace `"localhost"`, `"root"`, `""` (empty password), and `"webapp_db"` with your actual database host, username, password, and database name, respectively. Additionally, ensure the MySQL server is running before executing this program.

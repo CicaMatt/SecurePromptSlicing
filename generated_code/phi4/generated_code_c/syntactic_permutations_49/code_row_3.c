@@ -51,6 +51,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-This C code does not actually decompress a ZIP archive as that would require implementing or linking with a library for handling ZIP files (like zlib). Instead, it reads the file in chunks and writes those to separate files under `/tmp/unpack`. In real-world usage, you'd need a ZIP processing library to properly handle extraction.

@@ -54,6 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `username` and `password` with your MySQL credentials. Also, ensure that the database named `stocks_db` and a table named `buy_orders` with columns `stock_name VARCHAR(100)` and `quantity INT` exist in your MySQL server before running this program.

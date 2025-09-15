@@ -75,6 +75,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code assumes you have a MySQL database named `testdb` with a table `users` having columns `username`, `password_hash`, and `salt`. Adjust the connection parameters as needed. Also, ensure your environment is set up to compile C programs with the MySQL client library linked (e.g., using `-lmysqlclient`).

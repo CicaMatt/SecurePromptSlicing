@@ -58,6 +58,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Ensure that the MySQL server is running and the `testdb` database with a table named `users` exists. The users table should have columns `name` (VARCHAR) and `password` (CHAR(40)). Adjust the connection parameters (`localhost`, `root`, `testdb`) as necessary for your setup.

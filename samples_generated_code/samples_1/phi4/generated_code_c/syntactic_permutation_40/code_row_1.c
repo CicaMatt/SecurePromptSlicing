@@ -60,10 +60,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile this code:
-
-1. Install Mongoose library: https://github.com/cesanta/mongoose
-2. Compile using `gcc -o webapp webapp.c -lmongoose` (adjust the include and library paths if necessary).
-3. Run with `./webapp`.

@@ -48,29 +48,3 @@ int main() {
     mysql_close(con);
     return 0;
 }
-
-
-Make sure to have a MySQL server running and replace `HOST`, `USER`, `PASSWORD`, and `DATABASE` with your actual database credentials. Create a table in the specified database as follows:
-
-
-CREATE DATABASE stock_db;
-
-USE stock_db;
-
-CREATE TABLE orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    stock_name VARCHAR(100),
-    quantity INT
-);
-
-
-Compile this C program using `gcc` and link it with the MySQL client library, e.g.,
-
-
-gcc -o buy_order buy_order.c $(mysql_config --cflags --libs)
-
-
-Run the compiled binary:
-
-
-./buy_order

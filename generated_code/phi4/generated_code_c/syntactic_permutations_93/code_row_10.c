@@ -50,6 +50,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** You need to replace `your_password` and `your_database` with your actual MySQL root password and database name. Ensure the MySQL server is running, and you have a table named `users` with columns `username` and `password`. Also, make sure you have the MySQL client library installed on your system to compile this program using `-lmysqlclient`.

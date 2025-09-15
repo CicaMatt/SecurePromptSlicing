@@ -32,6 +32,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code is only a skeleton and will not actually perform the extraction. To handle ZIP file extraction in C, you would typically use a library like `libzip` or `minizip`. The above example assumes such functionality is added separately using these libraries.

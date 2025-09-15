@@ -72,13 +72,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-To compile and run this code:
-1. Ensure you have MySQL installed and a database named `test_db` with a table `users(username VARCHAR(50), password CHAR(64))`.
-2. Install the MySQL C API library.
-3. Compile using: 
-   - On Linux: `gcc -o register_user register_user.c $(mysql_config --cflags --libs)`
-   - On Windows, link against `libmysql.dll` and include necessary headers.
-
-Make sure to replace database connection parameters as needed for your setup.

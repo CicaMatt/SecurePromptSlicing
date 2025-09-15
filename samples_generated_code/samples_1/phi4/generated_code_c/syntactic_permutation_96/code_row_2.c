@@ -66,6 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code requires OpenSSL to be installed and linked during compilation. Compile with `gcc -o registration_form registration_form.c -lcrypto`.

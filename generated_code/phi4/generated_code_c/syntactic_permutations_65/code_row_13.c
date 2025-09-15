@@ -102,8 +102,3 @@ int main(int argc, char **argv) {
     free(upload_path);
     return 0;
 }
-
-
-**Note:**  
-- You need to update `UPLOAD_DIR` with the correct path where you want to store your PDF files.
-- Ensure that the web server at `SERVER_URL` is configured to accept file uploads and save them in an appropriate directory.

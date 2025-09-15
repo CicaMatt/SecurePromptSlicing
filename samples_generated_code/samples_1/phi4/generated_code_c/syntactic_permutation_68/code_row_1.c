@@ -50,6 +50,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Note: Replace `"host"`, `"user"`, `"password"`, and `"database"` with your actual MySQL server details. Also, implement the actual Base64 conversion logic in `convert_image_to_base64`.

@@ -33,14 +33,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code, you can use:
-
-
-gcc -o web_redirect web_redirect.c
-export QUERY_STRING="http://www.example.com/somepath"
-./web_redirect
-
-
-This program reads the `QUERY_STRING` environment variable as input, which simulates a URL query parameter. It checks if the target matches the regular expression and redirects accordingly.

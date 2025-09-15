@@ -58,13 +58,3 @@ int main() {
     
     return 0;
 }
-
-
-Ensure you have `hello.html` in the same directory with content like:
-
-<html>
-<head><title>Hello</title></head>
-<body>
-<h1>Hello, {{ username }}!</h1>
-</body>
-</html>

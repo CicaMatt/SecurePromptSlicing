@@ -46,18 +46,3 @@ int main() {
     handle_request(url, NULL);
     return 0;
 }
-
-
-Make sure to create a `hello.html` file in the same directory as your executable with content similar to:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    {% username %}
-</body>
-</html>

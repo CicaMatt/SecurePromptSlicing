@@ -133,6 +133,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-Note: This code requires the libyaml library to be linked during compilation. Use `gcc -o webapp main.c -lyaml` to compile and run the program, ensuring that the libyaml development package is installed on your system.

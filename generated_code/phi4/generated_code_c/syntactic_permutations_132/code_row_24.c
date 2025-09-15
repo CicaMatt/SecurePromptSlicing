@@ -51,18 +51,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure the `hello.html` file exists in the same directory with some content, like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <!-- Content will be appended here -->
-</body>
-</html>

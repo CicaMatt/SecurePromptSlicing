@@ -79,13 +79,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code, you will need the Mongoose library. You can install it from [mongoose.org](https://github.com/cesanta/mongoose). Then use the following command to compile:
-
-
-gcc -o server your_file.c -lmongoose
-./server
-
-
-This code sets up a simple HTTP server using Mongoose, handling POST requests at `/post` and displaying messages on the root route.

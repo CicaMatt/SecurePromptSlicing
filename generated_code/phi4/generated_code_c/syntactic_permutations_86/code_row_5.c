@@ -105,9 +105,3 @@ int main() {
     int ret = MHD_stop_daemon(daemon);
     return ret;
 }
-
-
-Ensure you have `libmicrohttpd` and the MySQL client library installed. You might need to link against these libraries when compiling:
-
-
-gcc -o temperature_app your_code.c $(pkg-config --cflags --libs libmicrohttpd) -lmysqlclient

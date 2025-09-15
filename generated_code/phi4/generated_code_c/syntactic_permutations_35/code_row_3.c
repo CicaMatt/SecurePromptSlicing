@@ -48,6 +48,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-**Note:** This code assumes that there is a SQLite database named `users.db` with a table called `users` having columns `username` and `password`. You need to have the SQLite library linked during compilation. Use `-lsqlite3` when compiling with gcc, e.g., `gcc -o login_program your_code.c -lsqlite3`.

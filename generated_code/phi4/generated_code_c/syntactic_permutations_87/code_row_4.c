@@ -61,12 +61,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-**Note:** To compile and run this code, ensure you have the MySQL client library installed. You can compile it using:
-
-
-gcc -o temperature_app your_code.c $(mysql_config --cflags --libs)
-
-
-Replace `your_code.c` with the filename where the above code is saved. Adjust the database connection parameters (`host`, `user`, `password`, `database`) as necessary for your environment.

@@ -26,6 +26,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** You need to replace `"/path/to/your/file.tar.gz"` with the actual path of your tar file. Also, ensure that the environment where you run this program has access to the `tar` command and necessary permissions for creating directories and files in `/tmp/unpack`.

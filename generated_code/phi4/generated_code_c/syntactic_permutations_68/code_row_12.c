@@ -47,12 +47,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** Replace `"localhost"`, `"username"`, `"password"`, and `"database_name"` with actual database connection details. The MySQL client library must be installed on your system to compile and run this code. Use the following command for compilation:
-
-
-gcc -o upload_image_program program.c $(mysql_config --cflags --libs)
-
-
-Ensure you have a table named `images` in your specified database with at least two columns: `image_name` (VARCHAR) and `image_data` (TEXT or BLOB). Adjust the column types as necessary.

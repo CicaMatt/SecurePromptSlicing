@@ -58,6 +58,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** Make sure to replace `"localhost"`, `"username"`, `"password"`, and `"database_name"` with your actual database connection details. Additionally, ensure that the MySQL client library is installed on your system, and link against it when compiling this program (e.g., using `-lmysqlclient`).

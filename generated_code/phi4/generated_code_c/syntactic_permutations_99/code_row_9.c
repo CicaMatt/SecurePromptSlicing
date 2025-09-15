@@ -57,12 +57,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note**: Before running this code, ensure that:
-1. You have MySQL server installed and running on your system.
-2. A database named `test_db` exists with a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR).
-3. Replace `"root"` and `""` in `mysql_real_connect` with your actual MySQL username and password if needed.
-4. Install the MySQL C client library (`libmysqlclient-dev`) to compile this code:
-   - On Debian-based systems, use: `sudo apt-get install libmysqlclient-dev`
-   - Compile using: `gcc -o register_user register_user.c $(mysql_config --cflags --libs)`

@@ -48,6 +48,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program simulates the extraction of a tar archive to a specified directory. It checks for the existence of or creates the target directory before attempting extraction (though actual extraction logic is not implemented here). The code handles basic directory creation differences between Windows and Unix-like systems.

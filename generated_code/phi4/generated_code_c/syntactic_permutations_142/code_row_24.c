@@ -63,9 +63,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** You need to link the MySQL client library when compiling this code. Use `-lmysqlclient` with your compiler, for example:
-
-
-gcc -o unsubscribe_program program.c $(mysql_config --cflags --libs)

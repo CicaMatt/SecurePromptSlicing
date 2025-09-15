@@ -52,10 +52,3 @@ int main() {
     register_user();
     return 0;
 }
-
-
-To compile and run this code, ensure you have OpenSSL installed on your system. Use the following commands:
-
-
-gcc -o registration_app registration_app.c -lssl -lcrypto
-./registration_app

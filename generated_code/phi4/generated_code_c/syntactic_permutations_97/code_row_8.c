@@ -110,26 +110,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have the MySQL server running and a database named `registration_db` with a table `users` structured as follows before you compile and run this code:
-
-
-CREATE DATABASE registration_db;
-
-USE registration_db;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password CHAR(64) NOT NULL,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
-    email VARCHAR(255)
-);
-
-
-Also, ensure you have MySQL C connector and OpenSSL libraries installed to link during compilation. Compile with:
-
-
-gcc -o registration registration.c $(mysql_config --cflags --libs) -lssl -lcrypto

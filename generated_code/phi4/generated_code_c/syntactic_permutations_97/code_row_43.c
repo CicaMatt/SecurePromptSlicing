@@ -97,6 +97,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the OpenSSL library installed to compile this code with `gcc -o registration registration.c -lssl -lcrypto`.

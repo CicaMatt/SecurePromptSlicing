@@ -66,13 +66,3 @@ int main() {
     printf("Total Price: %s\n", calculate_price(yaml_payload));
     return 0;
 }
-
-
-To compile and run this code, you will need to have the `libyaml` library installed:
-
-
-gcc -o price_calculator price_calculator.c -lyaml
-./price_calculator
-
-
-Make sure that `libyaml` is properly installed on your system.

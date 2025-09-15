@@ -92,10 +92,3 @@ int callback(void *NotUsed, int argc, char **argv, char **azColName) {
     printf("\n");
     return 0;
 }
-
-
-To test this code:
-1. Ensure you have SQLite installed and linked with your C compiler.
-2. Compile the code using `gcc -o login_program your_file.c -lsqlite3`.
-3. Run the executable, `./login_program`.
-4. Insert some data into the `users` table in `users.db` manually or by running a separate script to test different scenarios.

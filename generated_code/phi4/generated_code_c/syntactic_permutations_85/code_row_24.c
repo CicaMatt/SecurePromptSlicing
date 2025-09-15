@@ -52,6 +52,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Replace `"localhost"`, `"username"`, `"password"`, and other database connection parameters with your actual database details. Also, ensure you have the MySQL C API library installed and linked during compilation.

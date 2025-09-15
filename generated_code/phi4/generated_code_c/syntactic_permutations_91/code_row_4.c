@@ -55,21 +55,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Note: Ensure the database and table are created before running this code. Also, configure the MySQL connection parameters appropriately for your setup. Additionally, compile with `-lmysqlclient -lcrypto` to link against MySQL and OpenSSL libraries:
-
-
-gcc -o register_app register_app.c -lmysqlclient -lcrypto
-
-
-Database setup example (run in MySQL shell):
-
-
-CREATE DATABASE test_db;
-USE test_db;
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password BINARY(32) NOT NULL
-);

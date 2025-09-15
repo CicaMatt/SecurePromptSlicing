@@ -78,13 +78,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires the `libyaml` library to be installed on your system for YAML parsing. You can compile and run this program using:
-
-
-gcc -o yaml_app main.c $(pkg-config --cflags --libs libyaml-0.2)
-./yaml_app
-
-
-Make sure you have `libyaml` installed, which can typically be done via a package manager like `apt`, `yum`, or `brew`.

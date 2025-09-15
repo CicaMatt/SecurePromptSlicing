@@ -63,12 +63,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install the Mongoose library: `https://github.com/cesanta/mongoose`
-2. Compile with: `gcc -o web_app main.c -lmongoose`
-3. Run with: `./web_app` 
-
-The server will start on `http://localhost:8080`, and you can access `/check_moderator` to check the moderator status of a user (simulated for demonstration).

@@ -67,6 +67,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code requires OpenSSL to be installed on your system for SHA-256 hashing. You can compile it using a command like `gcc -o registration registration.c -lssl -lcrypto`.

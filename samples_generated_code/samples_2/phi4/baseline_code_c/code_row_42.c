@@ -86,12 +86,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to link the necessary libraries when compiling this code:
-
-
-gcc -o registration_program registration_program.c $(mysql_config --cflags --libs) -lcrypto -lssl
-
-
-Before running the program, ensure that you have created a MySQL database named `registration_db` and installed the required dependencies (MySQL development headers, OpenSSL library).

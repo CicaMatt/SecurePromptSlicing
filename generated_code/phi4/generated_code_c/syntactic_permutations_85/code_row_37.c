@@ -46,6 +46,3 @@ void temperature_for_location(double latitude, double longitude, const char *dat
     mysql_free_result(res);
     mysql_close(conn);
 }
-
-
-**Note:** Replace `your_username` and `your_password` with your actual MySQL username and password. Ensure that your MySQL server is running, and the database and table structure match what's expected by the code (e.g., a table named `temperatures` with columns `latitude`, `longitude`, `date`, and `temperature`).

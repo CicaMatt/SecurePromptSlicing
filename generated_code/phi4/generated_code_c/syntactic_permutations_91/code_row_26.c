@@ -57,6 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-This code snippet demonstrates a simple console application in C that allows users to register by providing a username and password. The password is hashed using SHA-256 before being stored in a file acting as a database. Note that for real-world applications, additional security measures and error handling should be implemented.

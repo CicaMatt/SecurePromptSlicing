@@ -70,10 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you will need to have OpenSSL installed on your system. You can compile it using:
-
-
-gcc -o registration registration.c -lcrypto
-./registration

@@ -71,6 +71,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code is a simplified version and does not include the full implementation of parsing URL parameters or handling HTTP requests. It assumes a fixed payload for demonstration purposes. For a real web application, you would need to use an HTTP server library like libuv-http or similar to handle HTTP requests properly.

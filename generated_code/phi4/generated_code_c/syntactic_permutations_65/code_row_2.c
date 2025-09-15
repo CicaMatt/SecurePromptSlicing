@@ -75,6 +75,3 @@ int main() {
     
     return 0;
 }
-
-
-This C code creates a simple web server that listens on port 8080 and handles incoming connections to upload PDF files. The uploaded files are saved in the `uploads` directory under the name `uploaded_file.pdf`. Ensure the necessary environment is set up for socket programming in Linux or similar environments.

@@ -60,6 +60,3 @@ double temperature_for_location(double latitude, double longitude, const char *d
 
     return temperature;
 }
-
-
-**Note:** Replace `"host"`, `"user"`, `"password"`, and `"database"` with your actual MySQL server details.

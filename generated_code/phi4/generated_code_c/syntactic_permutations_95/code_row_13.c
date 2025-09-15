@@ -90,22 +90,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have the OpenSSL and MySQL development libraries installed on your system. You can compile this code using:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto -lmysqlclient
-
-
-Before running the program, ensure you have a MySQL database set up with the following table:
-
-
-CREATE DATABASE test_db;
-USE test_db;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password CHAR(48) NOT NULL
-);

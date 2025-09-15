@@ -73,12 +73,3 @@ int main() {
 
     return 0;
 }
-
-
-Ensure you have OpenSSL installed for hashing and MySQL development headers/libraries installed to compile this code. You may need to link against `libmysqlclient` and `libssl`, `libcrypto`. For example:
-
-
-gcc -o register_user register_user.c -lmysqlclient -lssl -lcrypto
-
-
-Make sure your MySQL database is set up with a table named `users` having columns `username` and `password`. Adjust the connection parameters as necessary.

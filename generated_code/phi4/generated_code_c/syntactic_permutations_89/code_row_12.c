@@ -70,15 +70,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-To compile and run the code:
-
-1. Save it to a file named `web_app.c`.
-2. Compile with: `gcc -o web_app web_app.c`
-3. Run with: `./web_app`
-4. Test using a TCP client like `telnet` or `nc`: Connect to `localhost` on port `5000` and send requests in the format `<product_code> <quantity>`.
-
-Example request using `nc`:
-
-echo -e "P123 5" | nc localhost 5000

@@ -91,6 +91,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** This code assumes the presence of a `base64.h` and its corresponding implementation for base64 encoding. You need to replace it with an appropriate library or implement your own base64 functions if necessary. Also, ensure you have the MySQL client libraries installed and linked during compilation (`-lmysqlclient`).

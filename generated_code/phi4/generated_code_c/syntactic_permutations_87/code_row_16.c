@@ -52,15 +52,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace the `SERVER`, `USER`, `PASSWORD`, and `DATABASE` with your actual database credentials. Also, ensure that the MySQL development libraries are installed on your system to compile this program. You can compile it using:
-
-
-gcc -o temperature_for_location temperature_for_location.c $(mysql_config --cflags --libs)
-
-
-Run the compiled program with:
-
-
-./temperature_for_location

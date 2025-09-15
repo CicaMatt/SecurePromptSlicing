@@ -65,9 +65,3 @@ int main() {
     upload_image(image_filename);
     return 0;
 }
-
-
-**Note**: Before running this code, ensure you have the following:
-1. MySQL database and table set up with a schema like `CREATE TABLE images (id INT AUTO_INCREMENT PRIMARY KEY, image_name VARCHAR(255), image_data TEXT);`.
-2. LodePNG library compiled and linked during building of your program.
-3. Appropriate MySQL client libraries installed on your system (`libmysqlclient-dev` for example).

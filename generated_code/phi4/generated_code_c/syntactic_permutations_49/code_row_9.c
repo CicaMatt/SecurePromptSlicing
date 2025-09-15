@@ -58,13 +58,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code, ensure that the `miniz` library is installed and linked appropriately. This can typically be done with a command like:
-
-
-gcc -o unzip_program program.c -lminiz
-./unzip_program archive.zip
-
-
-Note: The above code assumes you have access to create directories and files in `/tmp/unpack`. Ensure proper permissions are set for this operation.

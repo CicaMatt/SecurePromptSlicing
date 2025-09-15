@@ -61,6 +61,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program expects the name of a PDF file as an argument and attempts to move it into an `uploads` directory. It ensures that this directory exists, or creates it if necessary. Note that in a real web application scenario, you would need additional infrastructure (such as a server-side handler) for accepting file uploads from users. This code is only meant to demonstrate the basic logic of handling and storing files on the filesystem in C.

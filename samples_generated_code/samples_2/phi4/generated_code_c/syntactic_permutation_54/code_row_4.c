@@ -37,6 +37,3 @@ int main() {
     
     return 0;
 }
-
-
-**Note:** This code is a basic simulation and does not include real HTTP handling. In a real-world application, you would use a web framework or an HTTP server library to handle requests properly. Additionally, secure authentication mechanisms should be used for sensitive applications.

@@ -65,6 +65,3 @@ int main() {
 
     return 0;
 }
-
-
-Ensure you have MySQL installed and set up with a database named `unsubscribe_db` and a table named `subscriptions` with at least one column: `email`. Also, replace `"root"` and `"password"` with your actual MySQL username and password.

@@ -44,9 +44,3 @@ int main() {
     printf("Credentials saved successfully.\n");
     return EXIT_SUCCESS;
 }
-
-
-Make sure to have OpenSSL installed and linked with your compiler when you compile this code. Use a command like:
-
-
-gcc -o hash_credentials hash_credentials.c -lcrypto

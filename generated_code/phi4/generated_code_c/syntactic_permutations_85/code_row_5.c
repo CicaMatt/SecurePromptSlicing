@@ -49,6 +49,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Make sure to replace `"localhost"`, `"username"`, and `"password"` with your actual MySQL server details. Ensure that the MySQL development library is installed and properly linked during compilation, typically using `-lmysqlclient` as a compiler flag.

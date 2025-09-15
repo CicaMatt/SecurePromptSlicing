@@ -66,9 +66,3 @@ float temperature_for_location(float latitude, float longitude, const char *date
 
     return temperature;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your actual database connection details. Also, ensure the `libmysqlclient` library is linked during compilation:
-
-
-gcc -o my_program my_program.c $(mysql_config --cflags --libs)

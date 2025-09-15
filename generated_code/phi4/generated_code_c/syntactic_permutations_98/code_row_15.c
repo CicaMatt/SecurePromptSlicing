@@ -53,29 +53,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to have a MySQL database set up with the following SQL:
-
-
-CREATE DATABASE registration_db;
-
-USE registration_db;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password BINARY(32) NOT NULL
-);
-
-
-**Dependencies:**
-- `libmysqlclient-dev` for MySQL C API.
-- `openssl` for SHA256 hashing.
-
-Compile with:
-
-gcc -o registration main.c -lmysqlclient -lcrypto -lpthread -lz
-
-
-Run the compiled program, and ensure your MySQL server is running.

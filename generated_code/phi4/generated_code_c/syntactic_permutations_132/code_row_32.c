@@ -40,18 +40,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have a file named `hello.html` with the content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {{ username }}!
-</body>
-</html>

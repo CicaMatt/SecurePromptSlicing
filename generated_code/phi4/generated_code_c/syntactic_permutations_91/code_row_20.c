@@ -70,10 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-### Notes:
-- Ensure you have the MySQL client library and OpenSSL development libraries installed.
-- The code requires a `users` table in the database with columns `username` (VARCHAR) and `password_hash` (CHAR(64)).
-- Adjust the `DB_USER`, `DB_PASS`, and other connection parameters as needed.
-- Compile with: `gcc -o register_user register_user.c -lmysqlclient -lcrypto`.

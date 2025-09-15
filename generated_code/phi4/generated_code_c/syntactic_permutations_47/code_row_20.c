@@ -54,6 +54,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure the `images` directory exists in the same location as your executable and contains some JPEG images. To test, compile with `gcc -o server program.c`, then run `./server image_name.jpg`.

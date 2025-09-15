@@ -23,6 +23,3 @@ int main() {
 
     return 0;
 }
- 
-
-Note: This example assumes the existence of a hypothetical `wsgi.h` header file and functions such as `wsgi_init`, `wsgi_add_route`, and `wsgi_run`. You'll need to replace these with actual WSGI implementation details if you're using a specific library.

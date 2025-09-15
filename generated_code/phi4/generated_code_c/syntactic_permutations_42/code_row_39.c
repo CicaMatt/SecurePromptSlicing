@@ -58,13 +58,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run the above code, you need the Mongoose library. You can install it using a package manager or download it from its official website. Here's an example of how you might compile it:
-
-
-gcc -o webapp main.c -lmongoose
-./webapp
-
-
-Ensure that `mongoose.h` and `libmongoose.a` (or appropriate compiled version) are available in your include path and library search path, respectively.

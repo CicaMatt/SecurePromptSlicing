@@ -124,4 +124,3 @@ int remove_dir(const char *path) {
 
     return rmdir(path);
 }
-#endif

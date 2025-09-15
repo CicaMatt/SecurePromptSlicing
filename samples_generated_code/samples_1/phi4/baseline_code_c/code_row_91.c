@@ -84,6 +84,3 @@ void upload_image(const char *image_path, MYSQL *conn) {
     free(base64_encoded);
     free(image_data);
 }
-
-
-Ensure you have the `libmysqlclient` library installed and linked with your program. The `base64.c` and `base64.h` files should be included in your project for base64 encoding functionality, which are not provided here as they are typically available from various open-source projects. Adjust database credentials (`username`, `password`, `database_name`) according to your setup.

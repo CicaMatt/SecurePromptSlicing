@@ -64,10 +64,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: This code assumes you have a MySQL database named `newsletter` with a table called `subscribers` that includes an `email` column. The connection details (server, user, password) may need to be adjusted according to your setup. To compile and run this code, ensure the MySQL client library is installed and linked appropriately during compilation. For example:
-
-
-gcc -o unsubscribe_program unsubscribe_program.c $(mysql_config --cflags --libs)
-./unsubscribe_program

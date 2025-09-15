@@ -81,6 +81,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** To compile and run this code, you need OpenSSL installed on your system. Use a command like `gcc -o registration_form registration_form.c -lssl -lcrypto` to compile it and then run the executable with `./registration_form`.

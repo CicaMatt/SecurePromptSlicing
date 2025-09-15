@@ -92,6 +92,3 @@ int execute_sql(const char *query) {
     sqlite3_close(db);
     return 1;
 }
-
-
-Note: This code requires the SQLite C library and OpenSSL for SHA-256 hashing. Ensure these are installed on your system to compile and run this program successfully. Use a command like `gcc -o user_program user_program.c -lsqlite3 -lcrypto` to compile, assuming you save the above code in `user_program.c`.

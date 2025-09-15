@@ -63,13 +63,3 @@ int main() {
 
     return 0;
 }
-
-
-To execute this server:
-
-1. Compile the program using `gcc -o pdf_server server.c`.
-2. Run it with `./pdf_server`.
-
-Ensure the directory `uploads` exists on your file system before running the server.
-
-For client-side code to upload a PDF, you would typically use an HTML form and JavaScript to handle the file selection and upload via AJAX or FormData API. This server code is meant for handling incoming connections and saving files from such requests.

@@ -64,12 +64,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before running this code, make sure to replace `"your_password"` with your actual MySQL root password. Also, ensure the database `test_db` and table `users` (with columns `username` and `password`) exist in your MySQL server. You need to have OpenSSL library installed for SHA256 hashing and MySQL client library linked during compilation:
-
-
-gcc -o web_app main.c -lmysqlclient -lcrypto
-
-
-This example uses SHA-256 for password hashing via the OpenSSL library, which is a basic form of security and should be enhanced for real-world applications.

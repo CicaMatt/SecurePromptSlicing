@@ -41,6 +41,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Replace `"localhost"`, `"username"`, `"password"`, and `"database_name"` with your actual database server details. Make sure the MySQL client library is installed on your system for this code to compile and run successfully. You might need to link against the `mysqlclient` library by compiling with `-lmysqlclient`.

@@ -34,9 +34,3 @@ int main() {
     
     return 0;
 }
-
-
-To compile this code, you need to link against OpenSSL. Use the following command:
-
-
-gcc -o program your_file.c -lssl -lcrypto

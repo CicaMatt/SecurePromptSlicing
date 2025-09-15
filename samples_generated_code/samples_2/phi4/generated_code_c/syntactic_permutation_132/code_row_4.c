@@ -51,17 +51,3 @@ int main() {
 
     return 0;
 }
-
-
-
-<!-- hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{username}}!</h1>
-</body>
-</html>

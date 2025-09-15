@@ -70,12 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Before running this code, make sure you have the MySQL C client library installed and that your database is set up with a `users` table containing columns for `username` and `password`. You will need to compile this program with the `-lmysqlclient` flag to link against the MySQL client library. For example:
-
-
-gcc -o login_program your_file.c -lmysqlclient
-
-
-Ensure your database credentials (DB_HOST, DB_USER, DB_PASS, and DB_NAME) are correctly set in the code.

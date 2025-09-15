@@ -56,18 +56,3 @@ int main(int argc, char *argv[]) {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-To compile this code, you will need the `libmicrohttpd` library. Use the following command:
-
-
-gcc -o webapp webapp.c -lmicrohttpd
-
-
-Run it with:
-
-
-./webapp
-
-
-Then access `http://localhost:8888/info` in your browser to see the output.

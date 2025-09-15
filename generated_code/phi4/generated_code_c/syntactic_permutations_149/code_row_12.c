@@ -41,6 +41,3 @@ int main() {
     curl_global_cleanup();
     return 0;
 }
-
-
-This C code simulates a web server handling a `/post` route by inserting a user message into a database and then redirecting to the root route. The messages are displayed using a simple function, as actual database operations would require additional setup not covered here. Note that this is a simulation for demonstration purposes only.

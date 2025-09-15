@@ -102,6 +102,3 @@ void download_pdf(const char *filepath) {
 
     printf("File downloaded to %s\n", download_path);
 }
-
-
-Make sure to replace `"your_password"`, `"your_database"`, `"/path/to/your/uploads/"`, and other placeholder paths with actual values appropriate for your environment. Additionally, ensure that MySQL development libraries are installed on your system for compiling the code with MySQL support (`-lmysqlclient`).

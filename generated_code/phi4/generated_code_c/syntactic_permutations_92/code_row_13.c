@@ -33,9 +33,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile this code, ensure you have OpenSSL installed and use:
-
-gcc -o registration_form registration_form.c -lcrypto
-./registration_form

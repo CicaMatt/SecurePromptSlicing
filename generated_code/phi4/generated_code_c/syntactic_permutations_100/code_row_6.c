@@ -16,6 +16,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This program attempts to change the user and group ID of the process to root (UID/GID = 0) which may require running with superuser permissions. Running this code without appropriate rights can lead to errors or security issues, and it should be used responsibly and only in safe environments.

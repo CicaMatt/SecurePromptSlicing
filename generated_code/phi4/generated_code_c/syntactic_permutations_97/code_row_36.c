@@ -95,16 +95,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-To compile and run this code:
-1. Ensure you have MySQL server installed and running.
-2. Create a database named `registration_db` with a table `users` having columns: `username`, `password`, `first_name`, `last_name`, and `email`.
-3. Install OpenSSL library for hashing.
-4. Use the following command to compile:
-   
-   gcc -o registration main.c -lmysqlclient -lcrypto
-   
-5. Run the executable:
-   
-   ./registration

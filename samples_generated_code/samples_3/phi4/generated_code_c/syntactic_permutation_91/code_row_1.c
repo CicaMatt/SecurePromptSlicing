@@ -70,25 +70,3 @@ int main() {
 
     return 0;
 }
-
-
-To make this code runnable:
-
-1. Ensure you have MySQL installed and running.
-2. Create a database named `dbname`.
-3. Within `dbname`, create a table:
-   
-   CREATE TABLE users (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       username VARCHAR(50) NOT NULL UNIQUE,
-       password CHAR(64) NOT NULL
-   );
-   
-4. Replace `"username"`, `"password"`, and `"dbname"` in the C code with your MySQL credentials.
-5. Compile the C program using `gcc`:
-   
-   gcc -o register_app register_app.c $(mysql_config --cflags --libs)
-   
-6. Run the compiled executable:
-   
-   ./register_app

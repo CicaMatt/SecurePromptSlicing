@@ -74,6 +74,3 @@ void store_image_in_database(const char *image_path, const char *db_host, const 
     fclose(file);
     mysql_close(conn);
 }
-
-
-Note: Ensure you have the necessary MySQL C API library installed and linked while compiling this code. Replace `your_database_name` with your actual database name, and configure the correct host, user, password, etc., as needed. The table `images` should be pre-created in the database with columns `image_data (LONGBLOB)` and `size (BIGINT)`.

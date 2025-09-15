@@ -47,18 +47,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile this code, you will need to have the `libarchive` library installed on your system. You can install it using a package manager like:
-
-- On Debian-based systems: `sudo apt-get install libarchive-dev`
-- On Red Hat-based systems: `sudo yum install libarchive-devel`
-
-Then compile with:
-
-gcc -o unzipper program.c -larchive
-
-
-Run the compiled program with:
-
-./unzipper /path/to/archive.zip

@@ -62,11 +62,3 @@ int main() {
     upload_image(filename);
     return 0;
 }
-
-
-Make sure you have the `base64.c` and `base64.h` files in your project directory as they are required for base64 encoding. These can be obtained from common C libraries or implemented separately based on your needs.
-
-Additionally, ensure that:
-- MySQL is installed and running.
-- The database `image_db` exists with a table named `images` having columns `image_name` (VARCHAR) and `image_data` (TEXT).
-- You have the necessary permissions to connect and modify the database.

@@ -69,9 +69,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code uses OpenSSL for hashing and random number generation. Ensure that the OpenSSL library is installed and linked during compilation:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

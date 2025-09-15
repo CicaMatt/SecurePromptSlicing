@@ -60,10 +60,3 @@ float temperature_for_location(double latitude, double longitude, const char *da
 
     return temperature;
 }
-
-
-To compile and run the code, ensure you have MySQL development libraries installed and link against them:
-
-
-gcc -o temperature_program temperature_program.c $(mysql_config --cflags --libs)
-./temperature_program

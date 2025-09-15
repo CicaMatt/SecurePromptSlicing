@@ -71,10 +71,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-Note: Make sure the `libmicrohttpd` library is installed and linked during compilation. This can be done using a command like:
-
-gcc -o server your_program.c $(pkg-config --cflags --libs libmicrohttpd)
-
-Ensure the directory `uploads` exists in the same location as your compiled executable to store uploaded PDFs.

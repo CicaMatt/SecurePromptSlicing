@@ -60,12 +60,3 @@ int main() {
 
     return 0;
 }
-
-
-Before running this code, ensure you have MySQL installed and the `libmysqlclient` development package available. You may need to link against `mysqlclient` when compiling:
-
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)
-
-
-Make sure to replace `"localhost"`, `"root"`, `""`, `"testdb"`, and `"exampleUser"` with your actual database host, username, password, database name, and the username you want to check.

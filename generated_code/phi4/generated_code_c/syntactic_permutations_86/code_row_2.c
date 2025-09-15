@@ -73,6 +73,3 @@ int main() {
     http_server_destroy(server);
     return EXIT_SUCCESS;
 }
-
-
-Note: This code assumes the presence of a custom or third-party library for handling HTTP requests (`httpserver.h`). You'll need to replace `http_request_t`, `extract_query_param()`, and related functions with actual implementations from your chosen library. Additionally, you may need to link against MySQL libraries when compiling this program (e.g., `-lmysqlclient` for GCC).

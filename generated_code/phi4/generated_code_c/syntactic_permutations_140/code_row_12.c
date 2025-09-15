@@ -48,9 +48,3 @@ int main() {
     }
     return 0;
 }
-
-
-**Note**: Replace `localhost`, `root`, `password`, and `database_name` with your actual database connection details. Also, ensure that the MySQL client library is installed and linked during compilation:
-
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)

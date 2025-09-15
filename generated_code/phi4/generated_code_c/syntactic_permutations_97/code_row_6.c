@@ -81,10 +81,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, make sure you have OpenSSL installed and linked during compilation. You can use a command like:
-
-
-gcc -o registration registration.c -lcrypto
-./registration

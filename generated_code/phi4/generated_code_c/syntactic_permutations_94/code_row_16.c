@@ -47,6 +47,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: Ensure you have OpenSSL installed and linked correctly for this code to compile. You can typically link with `-lssl -lcrypto` when compiling, e.g., `gcc yourfile.c -o program -lssl -lcrypto`.

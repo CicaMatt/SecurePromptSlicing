@@ -76,16 +76,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the `libzip` library installed on your system to compile and run this code. You can usually install it using a package manager like `apt`, `yum`, or `brew`. Here's an example of installation with `apt`:
-
-
-sudo apt-get update
-sudo apt-get install libzip-dev
-
-
-To compile the program, you might use a command like:
-
-
-gcc -o unzip_program your_file.c $(pkg-config --cflags --libs zip)

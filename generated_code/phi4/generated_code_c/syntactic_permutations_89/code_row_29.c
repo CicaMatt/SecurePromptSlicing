@@ -116,6 +116,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code requires a POSIX-compliant environment with networking libraries. It uses sockets for handling HTTP requests and responses in a very basic manner. For compiling, ensure to link against the `pthread` library by using `-lpthread`. Run with root privileges if binding to port numbers below 1024 or use an available higher port number.

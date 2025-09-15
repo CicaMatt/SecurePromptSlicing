@@ -85,6 +85,3 @@ int main(void) {
 
     return 0;
 }
-
-
-This code uses OpenSSL to handle the hashing and salting of passwords. Make sure you have OpenSSL installed and linked correctly for compiling this code (e.g., using `-lssl -lcrypto` with GCC).

@@ -92,8 +92,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have the OpenSSL library installed and linked properly when compiling this program. You can compile it with:
-
-gcc -o register_form register_form.c -lcrypto

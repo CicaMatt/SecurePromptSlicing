@@ -78,6 +78,3 @@ int main() {
     MHD_stop_daemon(daemon);
     return 0;
 }
-
-
-Note: This code assumes you have `libmicrohttpd` and `libyaml` installed on your system. You can install them via package managers like apt, yum, etc., or from source.

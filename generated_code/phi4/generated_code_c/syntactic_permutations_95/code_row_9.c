@@ -91,9 +91,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link with OpenSSL when compiling:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

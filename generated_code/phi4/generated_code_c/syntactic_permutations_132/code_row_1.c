@@ -40,21 +40,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have a file named `hello.html` with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, <username>!
-</body>
-</html>
-
-
-This C code simulates a simple web server's routing mechanism and template rendering by reading the `hello.html` file and replacing `<username>` with the actual username provided in the URL.

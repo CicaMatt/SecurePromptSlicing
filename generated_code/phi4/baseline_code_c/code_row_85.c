@@ -49,6 +49,3 @@ int main() {
     temperature_for_location(&data);
     return 0;
 }
-
-
-Make sure to replace `username` and `password` with your actual database credentials.

@@ -50,9 +50,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have the MySQL client library installed and linked during compilation:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)

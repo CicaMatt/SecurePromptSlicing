@@ -51,6 +51,3 @@ void unzip(const char *zip_path, const char *extract_path) {
     // Note: Actual unzipping logic should be implemented using appropriate libraries.
     printf("All files would be extracted to %s (not actually implemented in this example).\n", extract_path);
 }
-
-
-**Note:** This code does not actually implement the functionality of extracting a ZIP archive, as C standard library doesn't support it natively. You'll need to use an external library such as `minizip`, `unzip`, or `libarchive` for full functionality. This example is purely illustrative and demonstrates file handling basics in C.

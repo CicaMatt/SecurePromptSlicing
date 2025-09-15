@@ -46,6 +46,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Ensure you have a MySQL server running and a database named `stock_db` with a table `orders` having columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the connection parameters (`"localhost", "root", "", "stock_db"`) as necessary for your setup.

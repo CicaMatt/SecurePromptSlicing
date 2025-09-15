@@ -34,6 +34,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `""` (password), and `"database_name"` with your actual MySQL server details. Also, ensure that the table `pdf_files` exists in your database with a column named `filepath`.

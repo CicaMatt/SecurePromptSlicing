@@ -41,6 +41,3 @@ int main() {
 
     return 0;
 }
-
-
-To run this code in a real-world scenario, you would typically use an HTTP server library like `libmicrohttpd` or `CivetWeb`. This example simulates handling a request with standard input for simplicity.

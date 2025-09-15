@@ -60,12 +60,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: To compile this program, ensure OpenSSL is installed on your system. Use the following command to compile:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-
-
-This code uses OpenSSL for SHA-256 hashing. Make sure you have it properly installed and linked during compilation.

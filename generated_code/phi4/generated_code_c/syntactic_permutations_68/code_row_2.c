@@ -93,6 +93,3 @@ int main(int argc, char *argv[]) {
     upload_image(argv[1]);
     return 0;
 }
-
-
-Note: You need to have a `base64.h` and its corresponding implementation available for the base64 encoding part. This code assumes you have MySQL installed and configured, as well as a table named `images` with columns `name` (VARCHAR) and `data` (TEXT). Adjust the database connection parameters accordingly.

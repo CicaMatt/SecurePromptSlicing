@@ -60,6 +60,3 @@ char* img(const char *name) {
     
     return response;
 }
-
-
-To use this code, compile it using a C compiler and run the executable with an argument specifying the name of the image file to be served. Make sure that the image files are located in the same directory as the compiled program or adjust the file path accordingly.

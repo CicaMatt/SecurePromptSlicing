@@ -45,14 +45,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-Ensure that you have a file named `template.html` in the same directory as your executable, with content similar to:
-
-
-<html>
-<head><title>Welcome</title></head>
-<body>
-  <h1>Hello, %s!</h1>
-</body>
-</html>

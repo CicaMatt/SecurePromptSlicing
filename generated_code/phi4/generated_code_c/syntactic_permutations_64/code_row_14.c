@@ -76,9 +76,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-**Note:** 
-- Replace `your_database` with the actual database name.
-- Ensure the MySQL server is running and accessible with the provided credentials.
-- The `uploads/` directory must exist in your working directory.

@@ -33,10 +33,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to link against OpenSSL. Here is an example of how you might do that with `gcc`:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-./registration_form

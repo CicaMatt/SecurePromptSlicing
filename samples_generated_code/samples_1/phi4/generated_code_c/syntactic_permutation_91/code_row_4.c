@@ -64,12 +64,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note:** Before running this code, ensure you have a MySQL server installed and accessible with the `user_db` database and `users` table created. Additionally, link against OpenSSL and MySQL libraries during compilation:
-
-
-gcc -o register_app main.c -lmysqlclient -lcrypto -lpthread -lz
-
-
-This example assumes basic knowledge of setting up MySQL databases and compiling C programs with external libraries.

@@ -79,15 +79,3 @@ int main() {
     close(server_socket);
     return 0;
 }
-
-
-Compile the code using `gcc`:
-
-
-gcc -o web_app web_app.c
-
-
-Run it with proper permissions to allow binding on port 5000:
-
-
-sudo ./web_app

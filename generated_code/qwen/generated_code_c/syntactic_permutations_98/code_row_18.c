@@ -56,8 +56,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to link the OpenSSL library when compiling this code using `-lssl -lcrypto` flags. For example:
-
-gcc -o registration_page registration_page.c -lssl -lcrypto

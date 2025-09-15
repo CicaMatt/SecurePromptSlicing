@@ -25,6 +25,3 @@ int main() {
 
     return 0;
 }
-
-
-This C program simulates a web app's backend functionality for accepting and processing a PDF file. It checks if the file exists and then processes it using a dummy function.

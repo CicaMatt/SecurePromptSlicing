@@ -40,22 +40,3 @@ module AP_MODULE_DECLARE_DATA my_module = {
     NULL,                  /* table of config file commands       */
     register_hooks         /* register hooks                      */
 };
-
-
-To run this code, you must have Apache HTTP Server with the ability to compile and load modules. The module should be compiled into a `.so` file and loaded by Apache. Additionally, ensure your server is configured to handle requests through this module.
-
-Compile the module using:
-
-apxs -c -o my_module.so my_module.c
-
-
-Add the following line to your `httpd.conf` or relevant configuration file:
-
-LoadModule my_module modules/my_module.so
-
-<Location /redirect/>
-    SetHandler my_module
-</Location>
-
-
-Restart Apache for changes to take effect.

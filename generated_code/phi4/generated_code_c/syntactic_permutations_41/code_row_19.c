@@ -47,13 +47,3 @@ int main(void) {
         mg_mgr_poll(&mgr, 1000);
     }
 }
-
-
-To compile and run this code, you need to have the Mongoose library installed. You can typically compile it using a command like:
-
-
-gcc -o my_app my_app.c -lmongoose
-./my_app
-
-
-Ensure that Mongoose is properly linked in your compilation command.

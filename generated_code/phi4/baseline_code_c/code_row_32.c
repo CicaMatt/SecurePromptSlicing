@@ -63,18 +63,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-To compile and run this code, you will need the mongoose library. You can install it using package managers like `apt` on Ubuntu (`sudo apt-get install libmongoose-dev`) or download it from its [GitHub repository](https://github.com/cesanta/mongoose). Then, compile the code with:
-
-
-gcc -o webapp main.c -lmongoose
-
-
-And run it with:
-
-
-./webapp
-
-
-This will start a simple web server on port 8080. You can test it by navigating to `http://localhost:8080/redirect/http://example.com/somepath` in your browser or using tools like `curl`.

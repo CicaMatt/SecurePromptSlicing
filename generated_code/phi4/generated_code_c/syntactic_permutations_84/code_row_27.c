@@ -89,6 +89,3 @@ int main() {
     
     return 0;
 }
-
-
-**Note:** This is a simple example and not suitable for production use. For real-world applications, consider using libraries like `libevent`, `libuv` or frameworks such as `mongoose` that provide more robust features and security.

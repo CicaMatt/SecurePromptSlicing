@@ -41,6 +41,3 @@ int main() {
     start_server();
     return 0;
 }
-
-
-To run this code, compile it using a C compiler and then execute the resulting binary. You can simulate requests by sending text to standard input (stdin). For example, you could use a terminal to type `curl -v localhost` or simply `echo "/info" | ./your_program_name`. Note that this is a very simplistic simulation of handling HTTP requests; in a real-world application, you would use libraries like libuv or frameworks such as CivetWeb for robust web server functionality.

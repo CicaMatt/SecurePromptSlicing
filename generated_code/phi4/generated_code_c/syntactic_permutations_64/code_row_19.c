@@ -70,6 +70,3 @@ char* download_pdf(const char *filepath) {
     printf("PDF %s has been downloaded.\n", filepath);
     return content;
 }
-
-
-Make sure that the `uploads` directory exists in your working directory for this code to function properly. You can create it using `mkdir uploads` from the command line if needed.

@@ -70,7 +70,3 @@ int mkdir_p(const char *path) {
 
     return 0;
 }
-
-#include <libgen.h>
-#include <sys/stat.h>
-#include <errno.h>

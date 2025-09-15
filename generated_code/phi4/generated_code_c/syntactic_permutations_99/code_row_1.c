@@ -53,10 +53,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need OpenSSL development libraries installed on your system. Use the following command for compilation:
-
-
-gcc -o hash_password hash_password.c -lssl -lcrypto
-./hash_password

@@ -48,9 +48,3 @@ int main() {
     printf("Username exists: %d\n", result);
     return 0;
 }
-
-
-Make sure to replace `"your_username"`, `"your_password"`, and `"your_database"` with your actual database credentials. Also, ensure that the MySQL client library is installed and properly linked during compilation by using `-lmysqlclient` flag:
-
-
-gcc -o check_user check_user.c $(mysql_config --cflags --libs)

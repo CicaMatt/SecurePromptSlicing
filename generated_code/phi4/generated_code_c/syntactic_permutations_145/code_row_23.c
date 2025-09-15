@@ -47,6 +47,3 @@ int buy_function(int quantity) {
         return 0;  // Indicate failure
     }
 }
-
-
-This code simulates a simple stock buying process where `buy_stock` function interacts with a simulated database and calls the `buy_function` to determine if the purchase can proceed. In a real-world scenario, you would replace the simulated parts with actual database operations and form input handling.

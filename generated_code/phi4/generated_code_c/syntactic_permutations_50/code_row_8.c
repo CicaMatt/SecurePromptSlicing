@@ -21,22 +21,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have `unzip` installed on your system to run this program. You can install it using a package manager like `apt` on Ubuntu:
-
-
-sudo apt update
-sudo apt install unzip
-
-
-Compile the C code with:
-
-
-gcc -o extract_archive extract_archive.c
-
-
-Run the executable:
-
-
-./extract_archive

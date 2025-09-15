@@ -85,6 +85,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Ensure you have the MySQL server running and a database named `registration_db` with a table `users`. The table should have columns: `username`, `password_hash`, `first_name`, `last_name`, and `email`. Install OpenSSL for hashing and the MySQL client library to compile this code.

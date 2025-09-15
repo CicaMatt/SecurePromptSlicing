@@ -69,8 +69,3 @@ int main() {
     
     return 0;
 }
-
-
-Make sure you have OpenSSL installed and link against it by compiling with:
-
-gcc -o program your_program.c -lssl -lcrypto

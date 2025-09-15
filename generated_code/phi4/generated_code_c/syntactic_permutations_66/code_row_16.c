@@ -55,6 +55,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program assumes that the `pdf_content` is passed as a string representing binary data of a PDF file. It saves this content to a file with an appropriate `.pdf` extension in the current directory. The program takes two command-line arguments: the content of the PDF and the desired filename. If the provided filename does not end with `.pdf`, it appends `.pdf` to the name before saving.

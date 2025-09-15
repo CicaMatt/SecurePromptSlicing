@@ -42,6 +42,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Make sure you have MySQL installed and properly configured on your system. Update the database credentials as necessary. Also, ensure that a table named `orders` with columns `stock_name` (VARCHAR) and `quantity` (INT) exists in the `stock_db`.

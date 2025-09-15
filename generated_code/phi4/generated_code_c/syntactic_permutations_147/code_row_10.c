@@ -50,9 +50,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before running this code, make sure:
-- You have MySQL installed and running.
-- A database named `stock_db` exists with a table `buy_order` having columns `stock_name` (VARCHAR) and `quantity` (INT).
-- The MySQL C connector library is properly linked during compilation. Use `-lmysqlclient` when compiling the code, e.g., `gcc -o buy_order_program buy_order_program.c -lmysqlclient`.

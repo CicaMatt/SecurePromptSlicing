@@ -57,10 +57,3 @@ int main() {
     printf("Username and password inserted successfully.\n");
     return 0;
 }
-
-
-To compile and run the code, you need OpenSSL library installed. Use:
-
-
-gcc -o hash_and_insert hash_and_insert.c -lcrypto
-./hash_and_insert
