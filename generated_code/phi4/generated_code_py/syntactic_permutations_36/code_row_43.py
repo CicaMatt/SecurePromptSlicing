@@ -51,4 +51,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple web application using Flask, with an in-memory SQLite database for demonstration. It includes a login page where users can enter their username and password. The `login` function checks if the user exists in the database and whether the provided password is correct. If successful, it redirects to the home page; otherwise, it provides appropriate feedback. Note that in a real application, passwords should be securely hashed before storage.

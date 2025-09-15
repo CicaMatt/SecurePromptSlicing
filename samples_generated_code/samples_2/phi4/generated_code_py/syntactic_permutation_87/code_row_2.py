@@ -39,4 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code assumes you have a database named `temperature.db` with a table `temperature_data` having columns: `latitude`, `longitude`, `date`, and `temperature`. Make sure to adjust the database path, table name, and column names as necessary.

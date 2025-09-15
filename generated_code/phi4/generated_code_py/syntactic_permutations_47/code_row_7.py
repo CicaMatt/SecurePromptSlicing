@@ -30,8 +30,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To use this code:
-- Make sure you have Flask installed. You can install it using `pip install flask`.
-- Create a folder named `images` in the same directory as your script.
-- Place image files into the `images` folder to test. 
-- Run the script, and navigate to `http://127.0.0.1:5000/<image_filename>` in your browser. If the file exists, it will be served; otherwise, a 404 error will be returned.

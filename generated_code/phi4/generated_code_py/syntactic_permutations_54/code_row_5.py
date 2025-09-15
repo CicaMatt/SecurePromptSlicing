@@ -35,4 +35,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask, a web framework for Python. It sets up two routes: one for displaying a login form and another for processing the form submission. If the user is 'admin' with the correct password, they are redirected to an admin page; otherwise, they see a failure message.

@@ -24,30 +24,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Additionally, you need an `index.html` template in the templates directory:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Message Board</title>
-</head>
-<body>
-    <h1>Message Board</h1>
-
-    <form action="/post" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Post Message">
-    </form>
-
-    <hr>
-
-    <ul>
-        {% for message in messages %}
-            <li>{{ message.username }}: {{ message.message }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>

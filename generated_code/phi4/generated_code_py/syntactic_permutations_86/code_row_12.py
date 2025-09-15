@@ -55,4 +55,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_host'`, `'your_database'`, `'your_username'`, and `'your_password'` with your actual MySQL database credentials. Also, ensure that the table name `weather_data` and column names match those in your database schema.

@@ -32,4 +32,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask to create a simple web application. The `hello` function is decorated with `@hello_template`, which injects the HTML template string into the function's behavior. When visiting `/hello/<username>`, it renders an HTML page displaying "Hello, [username]!".

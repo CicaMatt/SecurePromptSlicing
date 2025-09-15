@@ -32,22 +32,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/index.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Buy Stock</h1>
-    <form action="/buy" method="post">
-        Quantity: <input type="number" name="quantity" required>
-        <button type="submit">Buy</button>
-    </form>
-    {% if result %}
-        <p>{{ result }}</p>
-    {% endif %}
-</body>
-</html>
+

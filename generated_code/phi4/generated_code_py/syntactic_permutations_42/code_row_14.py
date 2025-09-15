@@ -23,4 +23,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To test this application, you can use a tool like `curl` or Postman to first call the `/set_session` route to set session values and then access the `/info` route.

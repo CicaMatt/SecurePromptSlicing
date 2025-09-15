@@ -18,4 +18,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note**: Make sure to replace `'your_secret_key'` with a secure and unique secret key before deploying the application. This example assumes session data is already populated elsewhere in your application.

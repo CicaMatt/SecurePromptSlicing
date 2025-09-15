@@ -22,4 +22,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create an `images` folder in the same directory as this script, and place your image files there. You can replace `'placeholder.jpg'` with any filename you want to check for existence before serving it through the `/image/<path:filename>` route.

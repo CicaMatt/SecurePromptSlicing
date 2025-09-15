@@ -41,7 +41,6 @@ if __name__ == "__main__":
     store_image(image_file_path)
 
 
-**Note:** Before running the code, ensure you have:
 1. Created a MySQL database and table (e.g., `images` with at least one column `image_data BLOB`).
 2. Installed necessary Python packages: `mysql-connector-python`, `Pillow`. You can install them using pip:
 

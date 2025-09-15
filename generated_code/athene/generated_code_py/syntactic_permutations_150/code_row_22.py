@@ -19,19 +19,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Message Board</title>
-</head>
-<body>
-    <form method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <br>
-        <textarea name="message" placeholder="Your message" required></textarea>
-        <br>
-        <button type="submit">Post Message</button>
-    </form>
-</body>
-</html>
+

@@ -40,4 +40,3 @@ if __name__ == "__main__":
     main()
 
 
-**Note**: Replace `'your_username'`, `'your_password'`, and `'your_database'` with your actual MySQL username, password, and database name. Ensure you have a table named `images` with at least one column (e.g., `image BLOB`) in your database to store the binary data of the image.

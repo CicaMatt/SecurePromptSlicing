@@ -38,4 +38,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask to create a simple web application with routes for login, success, cannot login, and an internal server error. The `login` route checks the username and password against predefined valid credentials. Depending on the outcome, it redirects to different pages accordingly.

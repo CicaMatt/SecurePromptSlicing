@@ -30,4 +30,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask web application with the specified requirements. The `/info` route displays user information stored in session variables, and there's an additional `/set-session` route for setting these variables (for demonstration purposes). Replace `'your_secret_key'` with a secure key suitable for your environment.

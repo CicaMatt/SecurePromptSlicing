@@ -28,27 +28,4 @@ if __name__ == '__main__':
 
 
 
-<!-- stock_view.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock View</title>
-</head>
-<body>
-    <h1>Stock Orders</h1>
-    <form action="{{ url_for('buy_order') }}" method="post">
-        <label for="symbol">Symbol:</label>
-        <input type="text" id="symbol" name="symbol" required><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br><br>
-        <button type="submit">Submit Order</button>
-    </form>
-    <h2>Current Orders</h2>
-    <ul>
-        {% for order in orders %}
-            <li>{{ order[1] }} - {{ order[2] }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+

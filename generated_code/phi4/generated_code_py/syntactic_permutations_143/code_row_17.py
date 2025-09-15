@@ -36,4 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code assumes a SQLite database setup with a table named `users` that includes an email column. You will need to ensure your environment has Flask and SQLite installed, and the appropriate database and tables are set up for this code to run successfully.

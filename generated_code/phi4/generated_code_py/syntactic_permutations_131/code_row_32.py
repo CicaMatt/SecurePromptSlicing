@@ -17,19 +17,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have a `templates` directory in the same location as your script with a file named `hello.html`. Here's an example content for `hello.html`:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
-
-
-This code sets up a simple Flask application that uses Jinja2 templating to render HTML responses based on user input.

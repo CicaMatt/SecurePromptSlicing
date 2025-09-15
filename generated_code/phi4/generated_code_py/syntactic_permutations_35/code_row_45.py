@@ -60,4 +60,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with two routes: `/login` and `/home`. The `/login` route renders a login form and processes the form submission, checking credentials against a SQLite database. If the credentials are correct, it redirects to the home page; otherwise, it remains on the login page.

@@ -17,7 +17,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Ensure you have a `templates` directory in the same location as your script containing a file named `hello.html`. The content of `hello.html` should be:
-
-
-<h1>Hello, {{ name }}!</h1>

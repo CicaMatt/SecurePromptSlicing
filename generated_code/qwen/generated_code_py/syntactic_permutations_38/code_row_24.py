@@ -34,30 +34,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/login.html -->
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <form method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required><br><br>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required><br><br>
-      <button type="submit">Login</button>
-    </form>
-  </body>
-</html>
+

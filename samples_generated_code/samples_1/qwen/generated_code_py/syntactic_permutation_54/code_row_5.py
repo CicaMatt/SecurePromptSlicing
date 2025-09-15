@@ -23,19 +23,3 @@ def admin_page():
 if __name__ == '__main__':
     app.run(debug=True)
 
-# Note: Ensure you have a templates folder with login.html file containing the form
-# Example content of login.html:
-# <!doctype html>
-# <html lang="en">
-#   <head>
-#     <meta charset="utf-8">
-#     <title>Login</title>
-#   </head>
-#   <body>
-#     <form action="/do_login" method="post">
-#       Username: <input type="text" name="username"><br><br>
-#       Password: <input type="password" name="password"><br><br>
-#       <input type="submit" value="Login">
-#     </form>
-#   </body>
-# </html>

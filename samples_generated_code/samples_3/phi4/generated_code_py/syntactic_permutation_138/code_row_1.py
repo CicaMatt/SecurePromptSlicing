@@ -23,8 +23,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run the code:
-
-1. Ensure you have Flask installed: `pip install flask`
-2. Create a SQLite database named `database.db` with a table `users` having columns `username` and `is_moderator`.
-3. Run the script to start the web server.

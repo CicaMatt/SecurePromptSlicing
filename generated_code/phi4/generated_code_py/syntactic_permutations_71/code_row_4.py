@@ -44,30 +44,6 @@ if __name__ == '__main__':
 Additionally, create a simple HTML template named `templates/index.html` for the file upload form:
 
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Upload new File</title>
-</head>
-<body>
-  <h1>Upload New File</h1>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-
-  <form method=post enctype=multipart/form-data>
-    <input type=file name=file>
-    <input type=submit value=Upload>
-  </form>
-</body>
-</html>
 
 
 This code sets up a simple Flask web application that allows users to upload files. The server saves these files in an "uploads" directory, which it creates if it doesn't exist. Note that you'll need to have Flask installed (`pip install flask`) and create the `templates` folder with the `index.html` file for this code to run properly.

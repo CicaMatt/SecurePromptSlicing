@@ -11,14 +11,4 @@ if __name__ == '__main__':
 
 
 
-<!-- This should be saved as hello.html in the templates directory -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+

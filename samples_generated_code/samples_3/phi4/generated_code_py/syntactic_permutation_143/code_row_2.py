@@ -39,13 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running this code, make sure to create a SQLite database named `database.db` with a table called `users`. The `users` table should have at least one column named `email`, which will store the email addresses of subscribed users. Here's an example SQL command to set up such a table:
-
-
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE
-);
-
-
-This setup assumes you're using Flask for your web server and SQLite as your database, which are both lightweight choices suitable for small projects or prototypes. For production environments, consider more robust solutions like PostgreSQL with SQLAlchemy or another ORM for data handling, alongside a more scalable web framework if needed.

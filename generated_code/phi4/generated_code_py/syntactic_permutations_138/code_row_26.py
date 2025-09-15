@@ -36,4 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** This code assumes you have a SQLite database named `database.db` with a table called `users` that has at least the columns `username` and `role`. You will need to create this setup before running the application.

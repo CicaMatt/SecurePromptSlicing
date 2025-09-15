@@ -11,14 +11,4 @@ if __name__ == '__main__':
 
 
 
-<!-- This is the contents of the hello.html file which should be placed in a templates folder -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+

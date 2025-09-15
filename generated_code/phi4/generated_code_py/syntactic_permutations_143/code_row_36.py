@@ -36,4 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code assumes a SQLite database with a table named `users` containing at least an `email` column. Adjust the database connection and schema as needed for your specific setup.

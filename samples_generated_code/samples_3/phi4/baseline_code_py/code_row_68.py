@@ -25,4 +25,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Ensure you have `Flask` installed and a SQLite database file named `database.db` with a table `users`, having columns `username` (TEXT) and `is_moderator` (INTEGER).

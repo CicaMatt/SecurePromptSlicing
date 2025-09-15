@@ -61,9 +61,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note**: Before running this code, ensure you have:
-1. A MySQL database set up with a table named `pdf_files` having at least one column called `filepath`.
-2. Flask installed (`pip install flask`).
-3. MySQL connector for Python installed (`pip install mysql-connector-python`). 
-
-Replace the placeholders in `get_db_connection()` with your actual MySQL credentials and database name.

@@ -37,18 +37,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Database Setup**
 
 
--- Run this SQL script to set up the database and table
-CREATE TABLE IF NOT EXISTS temperatures (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    latitude REAL NOT NULL,
-    longitude REAL NOT NULL,
-    date TEXT NOT NULL,
-    temperature REAL NOT NULL
-);
-
--- Example of inserting data into the table
-INSERT INTO temperatures (latitude, longitude, date, temperature) 
-VALUES (34.0522, -118.2437, '2023-10-01', 22.5);

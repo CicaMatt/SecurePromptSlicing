@@ -35,41 +35,7 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post" action="/login">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 
--- Create a SQLite database and table for users (run this separately in a Python shell or SQL tool)
-import sqlite3
 
-conn = sqlite3.connect('users.db')
-c = conn.cursor()
-
-# Create the users table
-c.execute('''CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL)''')
-
-# Insert a test user (you should hash passwords in a real application)
-c.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('testuser', 'password123')")
-
-conn.commit()
-conn.close()

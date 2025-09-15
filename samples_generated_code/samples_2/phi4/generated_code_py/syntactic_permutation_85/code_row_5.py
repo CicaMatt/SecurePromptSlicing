@@ -39,4 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to have a database file named `Sensor.db` with a table called `measurements` that includes columns: `latitude`, `longitude`, `date`, and `temperature`. Adjust the database path or connection as necessary for your setup.

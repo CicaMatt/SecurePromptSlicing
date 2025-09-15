@@ -43,51 +43,8 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/index.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Buy Stock</h1>
-    <form action="/buy_order" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br><br>
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
 
 
 
-<!-- templates/stock_view.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock Orders</title>
-</head>
-<body>
-    <h1>Stock Orders</h1>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Stock Name</th>
-            <th>Quantity</th>
-        </tr>
-        {% for order in orders %}
-        <tr>
-            <td>{{ order[0] }}</td>
-            <td>{{ order[1] }}</td>
-            <td>{{ order[2] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="/">Go back to buy more stocks</a>
-</body>
-</html>
+
+

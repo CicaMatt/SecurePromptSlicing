@@ -36,4 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create a `database.db` with a table named `users` that includes columns: `username`, and `is_moderator`. The `is_moderator` column should be of type BOOLEAN or INTEGER (0/1).

@@ -41,24 +41,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/register.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form method="post" action="{{ url_for('register') }}">
-        Username:<br>
-        <input type="text" name="username"><br>
-        Password:<br>
-        <input type="password" name="password"><br><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
+

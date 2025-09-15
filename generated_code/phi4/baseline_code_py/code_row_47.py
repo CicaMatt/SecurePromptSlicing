@@ -29,4 +29,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create a directory named `images` in the same directory as your script and add some image files there for testing.

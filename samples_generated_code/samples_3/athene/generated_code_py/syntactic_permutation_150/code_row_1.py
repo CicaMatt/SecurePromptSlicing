@@ -19,11 +19,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# index.html content (to be placed in the templates directory):
-"""
-<form method="post">
-    <input type="text" name="username" placeholder="Username" required>
-    <textarea name="message" placeholder="Message" required></textarea>
-    <button type="submit">Post</button>
-</form>
-"""

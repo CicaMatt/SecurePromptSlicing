@@ -38,11 +38,3 @@ if __name__ == '__main__':
 
 
 
--- SQL to create the orders table in stock_trading.db
-
-CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    stock_name TEXT NOT NULL,
-    quantity INTEGER NOT NULL
-);

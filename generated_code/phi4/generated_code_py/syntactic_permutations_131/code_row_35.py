@@ -29,16 +29,6 @@ if __name__ == "__main__":
 Create a file named `template.html` in the same directory with the following content:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
 
 
 Run this script and navigate to `http://localhost:8000/your_name` in your web browser.

@@ -24,4 +24,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To test this application, run the script and navigate to `http://localhost:5000/ping?ip_address=<IP_ADDRESS>` in your web browser or use a tool like `curl` with `http://localhost:5000/ping?ip_address=<IP_ADDRESS>`, replacing `<IP_ADDRESS>` with the actual IP address you want to ping. Make sure Flask is installed by running `pip install flask`.

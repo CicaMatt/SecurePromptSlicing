@@ -30,13 +30,3 @@ if __name__ == "__main__":
 Ensure you have a directory named `templates` in the same location as this script, containing a file called `hello.html`. The content of `hello.html` could be something like:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello {{ name }}!</h1>
-</body>
-</html>

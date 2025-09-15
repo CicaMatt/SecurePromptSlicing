@@ -19,9 +19,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running this code, ensure you have Flask installed:
-
-pip install flask
-
-
-Replace `'your_secret_key_here'` with a strong secret key in a production environment. To simulate session data and test the application locally, you need to set the session variables before making a request to `/info`. This can be done via another route or by using tools like Postman or cURL to set cookies manually for testing purposes.

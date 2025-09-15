@@ -52,4 +52,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask as a web framework and SQLite for database management. Before running this script, ensure you have Flask installed in your Python environment (`pip install flask`). This script initializes a simple SQLite database with one user for demonstration purposes and provides basic login functionality. Upon successful login, the user is redirected to a home page.

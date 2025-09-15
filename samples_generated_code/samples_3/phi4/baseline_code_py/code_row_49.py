@@ -34,6 +34,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** 
-- Ensure the `database.db` SQLite database exists and contains a table named `users` with at least an `email` column.
-- Replace the mailing list unsubscribe service call (commented out) with actual logic as per your specific mailing list API.

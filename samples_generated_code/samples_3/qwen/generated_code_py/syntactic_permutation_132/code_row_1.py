@@ -10,16 +10,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-<!-- Assuming hello.html is in the templates folder -->
-<!-- hello.html content: -->
-{# templates/hello.html #}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+
+

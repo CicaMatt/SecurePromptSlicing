@@ -18,7 +18,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have Flask installed in your environment before running this code:
-
-
-pip install flask

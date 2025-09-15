@@ -28,4 +28,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running the code, ensure you have a SQLite database named `example.db` with a table called `users` that includes a column `username`. You may need to install Flask using `pip install flask` if it's not already available in your environment.

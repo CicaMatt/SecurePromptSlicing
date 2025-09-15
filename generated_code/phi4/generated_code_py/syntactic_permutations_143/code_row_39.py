@@ -42,4 +42,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a Flask application with an `/unsubscribe` endpoint. It assumes there is a SQLite database named `users.db` with a table called `users`. The function `unsubscribe_from_mailing_list(email)` is a placeholder for the actual logic to unsubscribe from a mailing list, which you would need to implement based on your specific requirements.

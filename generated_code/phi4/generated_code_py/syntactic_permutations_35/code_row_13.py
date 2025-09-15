@@ -43,27 +43,6 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
-    <form method="POST" action="/login">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
-To run this code, make sure you have Flask installed in your environment. You can install it using `pip install flask`. Also, create a directory named `templates` in the same location as your Python script and save the HTML file inside it as `login.html`. Before running the app, execute the `/create_db` endpoint once to set up the database and example user.
+

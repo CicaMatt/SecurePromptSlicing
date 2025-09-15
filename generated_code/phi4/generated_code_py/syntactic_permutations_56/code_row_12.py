@@ -80,4 +80,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to install Flask using `pip install flask` before running the code.

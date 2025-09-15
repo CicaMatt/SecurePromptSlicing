@@ -46,4 +46,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Ensure you have a table named `temperatures` with columns `latitude`, `longitude`, `date`, and `temperature`. You also need to replace `'database.db'` with the actual path of your SQLite database or adjust it for another type of database connection.

@@ -38,36 +38,4 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login and Change Email</title>
-</head>
-<body>
-    <h2>Change Email</h2>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <form method="post" action="">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="old_email">Old Email:</label>
-        <input type="email" id="old_email" name="old_email" required><br><br>
-        <label for="new_email">New Email:</label>
-        <input type="email" id="new_email" name="new_email" required><br><br>
-        <label for="confirm_new_email">Confirm New Email:</label>
-        <input type="email" id="confirm_new_email" name="confirm_new_email" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Change Email</button>
-    </form>
-</body>
-</html>
+

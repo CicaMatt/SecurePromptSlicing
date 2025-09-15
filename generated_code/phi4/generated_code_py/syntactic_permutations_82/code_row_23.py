@@ -23,4 +23,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note**: This code uses `eval()` for simplicity, which is generally discouraged due to security concerns. In a real-world application, consider using safer alternatives like `json.loads()`, after ensuring the input format and content are secure and trusted.

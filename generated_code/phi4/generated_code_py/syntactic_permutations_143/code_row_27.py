@@ -32,17 +32,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** This code assumes you have a SQLite database file named `subscribers.db` with a table called `subscribers` that includes at least an `email` column. You may need to create this database and table before running the application. Here's how you can set up your database:
 
 
-import sqlite3
-
-def setup_database():
-    conn = sqlite3.connect('subscribers.db')
-    conn.execute('''CREATE TABLE IF NOT EXISTS subscribers (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    email TEXT UNIQUE NOT NULL);''')
-    conn.commit()
-    conn.close()
-
-setup_database()

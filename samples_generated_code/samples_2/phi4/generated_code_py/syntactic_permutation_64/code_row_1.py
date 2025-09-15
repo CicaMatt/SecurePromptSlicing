@@ -64,4 +64,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `"localhost"`, `"your_username"`, `"your_password"`, `"your_database"`, and `'/path/to/save/pdf'` with your actual MySQL server details and the directory where you want to save the PDF files. Additionally, ensure that the table `pdf_files` exists in your database with at least two columns: `id` (primary key) and `filepath`.

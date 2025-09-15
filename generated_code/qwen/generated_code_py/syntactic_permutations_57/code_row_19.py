@@ -37,32 +37,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="/change_email" method="post">
-        <label for="old_email">Old Email:</label>
-        <input type="email" id="old_email" name="old_email" required><br><br>
-        <label for="new_email">New Email:</label>
-        <input type="email" id="new_email" name="new_email" required><br><br>
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required><br><br>
-        <button type="submit">Change Email</button>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
+

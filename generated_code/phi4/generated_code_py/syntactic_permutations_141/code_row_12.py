@@ -21,4 +21,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a basic Flask web application with a SQLite database connection. It includes a route that fetches data from a `users` table and displays it on the homepage. Make sure to create the `database.db` file with a `users` table for this example to work correctly.

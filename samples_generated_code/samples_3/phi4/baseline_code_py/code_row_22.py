@@ -34,4 +34,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask to create a web server that binds the `ping` function to the `/ping` URL. It runs the ping command and returns whether the URL is alive or not as JSON. Make sure you have Flask installed (`pip install flask`) before running this script.

@@ -20,18 +20,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Additionally, create a `templates` directory in your project root and add the following file:
-
-**hello.html**
-
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Hello</title>
-  </head>
-  <body>
-    <h1>Hello, {{ username }}!</h1>
-  </body>
-</html>

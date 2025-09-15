@@ -50,4 +50,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask for web handling and SQLite3 for a simple in-memory database. It doesn't persist data, so the user needs to be re-added each time you run it. This setup is suitable for demonstration purposes only and not secure for production use.

@@ -34,4 +34,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: This code assumes the existence of a SQLite database named `subscriptions.db` with a table called `subscribers` that contains at least an `email` column. Adjust the database path and connection details as necessary for your environment.

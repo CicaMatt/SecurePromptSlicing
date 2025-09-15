@@ -31,23 +31,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-<!-- templates/display.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <form action="/submit" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <textarea name="message" placeholder="Message" required></textarea>
-        <button type="submit">Submit</button>
-    </form>
-    <ul>
-        {% for username, message in messages %}
-            <li><strong>{{ username }}:</strong> {{ message }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+

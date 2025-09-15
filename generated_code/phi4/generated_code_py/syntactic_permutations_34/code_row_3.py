@@ -57,4 +57,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code snippet sets up a basic Flask application with SQLite as the database. It includes two routes: one for login (`/login`) and another for the dashboard (`/dashboard`). The `init_db` function initializes the database and creates a table named `users`, also inserting a sample user. When a POST request is made to `/login`, it checks if the username and password match an entry in the database, redirecting to the dashboard on success or returning to the login form on failure. Note that this example does not include advanced security practices like hashing passwords or managing sessions securely, which are essential for real-world applications.

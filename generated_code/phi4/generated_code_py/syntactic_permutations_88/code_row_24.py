@@ -42,16 +42,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, ensure you have Flask and PyYAML installed in your Python environment. You can install them using pip:
-
-
-pip install flask pyyaml
-
-
-Then save the provided code to a file (e.g., `app.py`) and run it with:
-
-
-python app.py
-
-
-You can then test the API endpoint by sending requests to `http://127.0.0.1:5000/calculate_price?payload=<your_yaml_payload>` using tools like curl, Postman, or a web browser.

@@ -59,63 +59,8 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/login.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post" action="{{ url_for('login') }}">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
 
 
 
-<!-- templates/change_email.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Change Email</title>
-</head>
-<body>
-    <h2>Change Email</h2>
-    <form method="post" action="{{ url_for('change_email') }}">
-        <label for="old_email">Old Email:</label><br>
-        <input type="email" id="old_email" name="old_email" value="{{ current_email }}"><br>
-        <label for="new_email">New Email:</label><br>
-        <input type="email" id="new_email" name="new_email"><br>
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" id="confirm_password" name="confirm_password"><br><br>
-        <input type="submit" value="Change Email">
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <a href="{{ url_for('logout') }}">Logout</a>
-</body>
-</html>
+
+

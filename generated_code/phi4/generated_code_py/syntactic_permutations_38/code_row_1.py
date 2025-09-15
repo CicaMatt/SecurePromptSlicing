@@ -49,12 +49,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, make sure you have Flask installed. You can install it using:
-
-
-pip install flask
-
-
-Then save the script to a file (e.g., `app.py`) and execute it with Python.
-
-This will start a local server where you can access the login page at http://127.0.0.1:5000/.

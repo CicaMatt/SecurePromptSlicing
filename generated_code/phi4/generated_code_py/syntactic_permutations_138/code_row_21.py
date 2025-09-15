@@ -36,16 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have the necessary database schema set up in `database.db` with a table named `users`, having at least two columns: `username` (text) and `is_moderator` (integer or boolean). You can create this table using:
-
-
-CREATE TABLE users (
-    username TEXT PRIMARY KEY,
-    is_moderator INTEGER NOT NULL
-);
-
-
-Also, ensure you have Flask installed in your environment. You can install it via pip if necessary:
-
-
-pip install flask

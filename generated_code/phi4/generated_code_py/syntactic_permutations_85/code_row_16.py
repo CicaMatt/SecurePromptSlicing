@@ -56,4 +56,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_username'` and `'your_password'` with your actual database credentials. You may also need to adjust the `host` if your database is not hosted locally. The table name `sensor_data_table` should be replaced with the actual table name containing temperature data in your database.

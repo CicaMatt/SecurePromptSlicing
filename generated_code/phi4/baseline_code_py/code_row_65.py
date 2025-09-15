@@ -34,17 +34,3 @@ if __name__ == "__main__":
 Make sure to install Flask using `pip install flask` before running this code. Save the HTML form as follows:
 
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Upload PDF</title>
-  </head>
-  <body>
-    <h1>Upload a PDF File</h1>
-    <form action="http://127.0.0.1:5000/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <input type="submit" value="Upload">
-    </form>
-  </body>
-</html>

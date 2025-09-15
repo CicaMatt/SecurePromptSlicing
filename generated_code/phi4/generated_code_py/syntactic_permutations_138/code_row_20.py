@@ -39,4 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** Ensure you have a SQLite database named `users.db` with a table `users` that contains the columns `username` (TEXT) and `is_moderator` (INTEGER, where 1 represents true and 0 false). You might need to install Flask using `pip install flask` if it's not already installed.

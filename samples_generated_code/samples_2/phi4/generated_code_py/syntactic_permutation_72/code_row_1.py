@@ -24,7 +24,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to install Flask using `pip install flask` if it's not already installed. Also, you may need to import the `secure_filename` function from Werkzeug:
-
-
-from werkzeug.utils import secure_filename

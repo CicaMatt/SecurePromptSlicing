@@ -27,24 +27,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Message Board</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        {% for username, message in messages %}
-            <li><strong>{{ username }}:</strong> {{ message }}</li>
-        {% endfor %}
-    </ul>
-    <form action="/post" method="post">
-        Username: <input type="text" name="username" required><br>
-        Message: <textarea name="message" required></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+

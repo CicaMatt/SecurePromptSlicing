@@ -56,4 +56,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Replace `'your_username'`, `'your_password'`, and `'your_database_name'` with your MySQL credentials. Also, ensure that the `temperatures_table` in the database matches the structure expected by the query.

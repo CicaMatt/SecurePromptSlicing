@@ -39,4 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Ensure you have Flask installed (`pip install flask`) and an SQLite database set up with at least a `users` table containing an email column for this script to run correctly.

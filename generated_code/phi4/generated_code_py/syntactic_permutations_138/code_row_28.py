@@ -26,7 +26,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To make this code run, ensure you have Flask installed and a SQLite database file named `database.db` with a table `users` having columns `id` and `role`. You can install Flask using the command:
-
-
-pip install flask

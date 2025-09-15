@@ -36,14 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running this code, ensure you have created the necessary table in your SQLite database:
-
-
-CREATE TABLE buy_orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id TEXT NOT NULL,
-    stock_name TEXT NOT NULL
-);
-
-
-This script uses Flask to handle HTTP requests and responses. The `buy_stock` function processes a POST request to buy a stock, inserting the order into an SQLite database, and then redirects to the user's profile page. Make sure you have Flask installed (`pip install flask`) before running this code.

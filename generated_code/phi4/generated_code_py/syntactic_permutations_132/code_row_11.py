@@ -17,14 +17,4 @@ if __name__ == '__main__':
 
 
 
-<!-- hello.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+

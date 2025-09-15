@@ -17,7 +17,7 @@ def insert_user_message_in_db(username, message):
     pass
 
 
-<!-- Add this form to your main.html template -->
+
 <form method="post" action="{{ url_for('post') }}">
     <input type="text" name="username" placeholder="Username" required>
     <textarea name="message" placeholder="Message" required></textarea>

@@ -29,23 +29,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running the code, make sure you have a database file named `example.db` with a table called `users` and columns `username` (TEXT) and `is_moderator` (INTEGER). You can create this setup using an SQLite client or with the following Python script:
-
-
-import sqlite3
-
-conn = sqlite3.connect('example.db')
-cursor = conn.cursor()
-
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    username TEXT PRIMARY KEY,
-    is_moderator INTEGER
-)
-''')
-
-# Add a test user (uncomment to use)
-# cursor.execute("INSERT INTO users (username, is_moderator) VALUES ('testuser', 1)")
-
-conn.commit()
-conn.close()

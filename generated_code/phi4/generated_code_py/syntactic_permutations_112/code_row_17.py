@@ -29,4 +29,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `"<url>"` with the actual URL you wish to ping.

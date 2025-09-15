@@ -48,4 +48,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a basic Flask application with an endpoint that retrieves the temperature for a given location and date from an SQLite database. Make sure to have `weather.db` set up with a table named `weather_data`, containing columns `latitude`, `longitude`, `date`, and `temperature`. Adjust the connection details as necessary for your specific environment.

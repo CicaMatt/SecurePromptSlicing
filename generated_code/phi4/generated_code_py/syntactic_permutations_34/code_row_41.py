@@ -62,4 +62,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple web application using Flask that includes a login page and a dashboard. It uses SQLite as the database to store user credentials. Upon running this script, you can visit `http://127.0.0.1:5000/login` in your browser to test the login functionality. Note that for security reasons, storing passwords in plaintext is not recommended for production applications. Consider using hashed passwords with a library such as Werkzeug or bcrypt for better security.

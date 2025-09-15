@@ -27,13 +27,3 @@ if __name__ == "__main__":
 Make sure to create a file named `template.html` in the same directory as your script with the following content:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>

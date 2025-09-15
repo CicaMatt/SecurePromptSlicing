@@ -47,4 +47,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_username'`, `'your_password'`, and `'your_database'` with your actual MySQL credentials.

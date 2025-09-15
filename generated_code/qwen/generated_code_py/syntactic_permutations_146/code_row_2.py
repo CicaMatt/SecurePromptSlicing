@@ -33,21 +33,4 @@ if __name__ == '__main__':
 
 
 
-<!-- buy_form.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Buy Stock</h1>
-    <form method="post" action="/buy">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br><br>
-        <label for="stock_quantity">Quantity:</label>
-        <input type="number" id="stock_quantity" name="stock_quantity" required><br><br>
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
+

@@ -30,21 +30,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <h2>Login</h2>
-    {% if error %}
-        <p style="color:red;">Invalid username or password.</p>
-    {% endif %}
-    <form method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+

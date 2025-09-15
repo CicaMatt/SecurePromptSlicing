@@ -56,7 +56,6 @@ if __name__ == "__main__":
     main()
 
 
-**Note:** Before running the script, ensure you have installed the necessary libraries by running:
 
 
 pip install mysql-connector-python pillow

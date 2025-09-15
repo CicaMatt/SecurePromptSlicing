@@ -45,16 +45,6 @@ Ensure you have the following directory structure and file content:
 `greeting.html` should contain:
 
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
 
 
 Make sure to install the required package:

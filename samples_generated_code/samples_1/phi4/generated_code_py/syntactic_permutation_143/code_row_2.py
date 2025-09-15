@@ -32,8 +32,3 @@ if __name__ == '__main__':
 
 
 
--- SQL to create the database and users table if they do not already exist
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE NOT NULL
-);

@@ -44,4 +44,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_db_name'`, `'your_db_user'`, `'your_db_password'', and `'your_db_host'` with your actual database credentials, as well as `'your_table_name'` with the name of your table containing temperature data.

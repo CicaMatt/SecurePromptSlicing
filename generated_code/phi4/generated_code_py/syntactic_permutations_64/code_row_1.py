@@ -77,4 +77,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: Replace `'your_db_user'`, `'your_db_password'`, and `'your_database_name'` with your actual MySQL database credentials. Also, ensure the `pdf_files` table exists in your database with at least two columns: `id` (primary key) and `filepath`.

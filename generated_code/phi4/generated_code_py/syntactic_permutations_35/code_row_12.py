@@ -60,4 +60,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with SQLite as the database backend. It includes a login page and logic for handling user authentication against the database. When you run this script, it will start a web server on `localhost` which you can access by navigating to `http://127.0.0.1:5000/login`. Note that in a real-world scenario, passwords should be hashed before being stored or compared, and additional security measures should be implemented.

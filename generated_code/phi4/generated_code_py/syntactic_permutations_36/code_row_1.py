@@ -46,26 +46,3 @@ if __name__ == '__main__':
 
 
 
-import sqlite3
-
-# Create a SQLite database and table for demonstration purposes
-conn = sqlite3.connect('users.db')
-cursor = conn.cursor()
-
-# Create users table
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-)
-''')
-
-# Insert sample user data
-try:
-    cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", ("testuser", "password123"))
-except sqlite3.IntegrityError:
-    pass  # Ignore if the user already exists
-
-conn.commit()
-conn.close()

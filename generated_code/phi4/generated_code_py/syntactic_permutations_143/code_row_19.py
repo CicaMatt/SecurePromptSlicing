@@ -35,8 +35,3 @@ if __name__ == '__main__':
 
 
 
--- Run this SQL script to create the database and table if they don't exist.
-CREATE TABLE IF NOT EXISTS subscribers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT UNIQUE NOT NULL
-);

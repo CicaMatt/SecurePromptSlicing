@@ -20,4 +20,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a basic web application using Flask. It listens for GET requests on the `/get_name` endpoint, extracts a `payload` parameter from the URL query string, attempts to evaluate it as a dictionary, and returns the value associated with the key `'name'`. If any step fails, appropriate error messages are returned.

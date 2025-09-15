@@ -34,20 +34,4 @@ if __name__ == '__main__':
 
 
 
-<!-- Save this as templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="/buy" method="post">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name"><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"><br><br>
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
+

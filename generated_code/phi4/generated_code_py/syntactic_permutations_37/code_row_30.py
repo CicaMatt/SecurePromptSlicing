@@ -53,17 +53,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create a SQLite database `database.db` with a table named `users` having columns `username` and `password`. You can create this using the following commands in Python:
-
-
-import sqlite3
-
-conn = sqlite3.connect('database.db')
-c = conn.cursor()
-c.execute('''CREATE TABLE users (username text, password text)''')
-
-# Add sample user
-c.execute("INSERT INTO users (username, password) VALUES ('testuser', 'password123')")
-
-conn.commit()
-conn.close()

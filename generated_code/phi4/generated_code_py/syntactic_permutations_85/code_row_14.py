@@ -54,4 +54,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: Replace `your_username` and `your_password` with your actual database username and password. Adjust the connection parameters as necessary for your environment.

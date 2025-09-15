@@ -7,7 +7,6 @@ def list_directory_contents(directory):
 list_directory_contents("/path/to/directory")
 
 
-**Note:** The above code has an error in the usage of `print` and `os.system`. Here's a corrected version:
 
 
 import os

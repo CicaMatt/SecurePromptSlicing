@@ -18,19 +18,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Ensure you have a `template.html` file in the templates directory with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
-
-
-And ensure Flask is installed with `pip install flask`.

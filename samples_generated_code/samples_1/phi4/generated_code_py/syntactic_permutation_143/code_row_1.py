@@ -38,4 +38,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: Ensure you have a SQLite database file named `subscribers.db` with a table called `subscribers` that has at least an `email` column. Also, make sure to install Flask using `pip install flask`. The logic for unsubscribing from the actual mailing list is not implemented here as it depends on the specific service being used.

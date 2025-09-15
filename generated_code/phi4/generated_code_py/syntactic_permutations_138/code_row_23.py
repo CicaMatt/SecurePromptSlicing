@@ -27,4 +27,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have a database `example.db` with a table `users` that includes columns `username` and `moderator`. The `moderator` column should be an integer where `1` indicates the user is a moderator.

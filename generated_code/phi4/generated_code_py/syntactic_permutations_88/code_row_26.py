@@ -39,10 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, make sure you have Flask and PyYAML installed. You can install them using:
-
-
-pip install flask pyyaml
-
-
-Run the script, then access the API with a query parameter like `http://127.0.0.1:5000/calculate_price?payload={"product_code": "P001", "quantity": 2}`.

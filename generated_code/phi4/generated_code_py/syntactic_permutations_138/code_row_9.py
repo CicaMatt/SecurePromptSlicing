@@ -33,4 +33,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_database.db'` with the path to your actual SQLite database file. Ensure that there is a table `users` in the database with columns `id` and `moderator`. The column `moderator` should be of type INTEGER (or BOOLEAN) to represent whether a user is a moderator or not.

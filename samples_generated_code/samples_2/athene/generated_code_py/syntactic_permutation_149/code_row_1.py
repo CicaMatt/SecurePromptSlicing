@@ -32,27 +32,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/display.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        {% for username, message in messages %}
-            <li><strong>{{ username }}:</strong> {{ message }}</li>
-        {% endfor %}
-    </ul>
-    <form action="/submit" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+

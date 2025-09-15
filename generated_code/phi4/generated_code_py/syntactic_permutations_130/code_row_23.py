@@ -15,10 +15,3 @@ def render_response_from_env(environment):
 if __name__ == "__main__":
     app.run(debug=True)
 
-# To test the function, set up a simple route
-@app.route('/')
-def index():
-    env = {
-        'TEMPLATE': '<h1>Hello {{ name }}!</h1>'
-    }
-    return render_response_from_env(env)

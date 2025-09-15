@@ -60,4 +60,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with an in-memory SQLite database to manage users. It includes routes for login and dashboard, checking credentials against the database, and redirecting appropriately based on whether the user is authenticated or not.

@@ -33,13 +33,3 @@ print(render_response_from_env(env_config))
 Ensure that the file `example_template.html` exists in your current directory and contains appropriate Jinja2 templating syntax, such as:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello Template</title>
-</head>
-<body>
-    Hello {{ name }}!
-</body>
-</html>

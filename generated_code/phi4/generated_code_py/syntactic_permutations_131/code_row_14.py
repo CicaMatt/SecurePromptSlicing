@@ -39,16 +39,6 @@ if __name__ == '__main__':
 Make sure to create a folder named `templates` in the same directory as this script, and place at least one HTML file (e.g., `greeting.html`) within it for testing. The content of `greeting.html` could be something simple like:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
 
 
 Adjust the `name` parameter in `FakeRequest` and create corresponding template files to test different scenarios.

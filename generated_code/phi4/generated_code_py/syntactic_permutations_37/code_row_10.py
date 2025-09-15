@@ -39,10 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, make sure you have Flask installed:
-
-
-pip install flask
-
-
-Run the script and access `http://127.0.0.1:5000/login` in your browser to test it.

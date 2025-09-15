@@ -26,7 +26,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have the following setup:
-
-1. A SQLite database named `database.db` with a table `users` that has at least two columns: `username` (TEXT) and `is_moderator` (INTEGER).
-2. Flask installed in your environment (`pip install flask`).

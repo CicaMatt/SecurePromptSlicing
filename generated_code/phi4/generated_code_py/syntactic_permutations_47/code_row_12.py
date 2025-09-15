@@ -23,4 +23,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have the `static_files` directory in your project root with some files for testing. This code uses Flask to create a simple web server that serves files from this folder when requested via their filename in the URL.

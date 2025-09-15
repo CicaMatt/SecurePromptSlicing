@@ -54,4 +54,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with basic login functionality using SQLite as a database. It includes an in-memory user for demonstration purposes. Make sure you have Flask installed (`pip install flask`) and run this script to start the web server.

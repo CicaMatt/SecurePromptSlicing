@@ -56,7 +56,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** Before running this code, ensure you have a MySQL database and table (`pdf_files`) set up with at least one column named `filepath` to store the file paths. Also, replace `'your_username'`, `'your_password'`, `'localhost'`, and `'your_database_name'` with your actual MySQL credentials and database name. You may need to install Flask and mysql-connector-python using pip if you haven't already:
 
 
-pip install flask mysql-connector-python

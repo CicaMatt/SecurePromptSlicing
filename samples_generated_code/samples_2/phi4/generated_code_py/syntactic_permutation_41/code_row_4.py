@@ -36,4 +36,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: In a real-world scenario, handling sensitive information such as social security numbers requires careful consideration of privacy and security practices. This code is for demonstration purposes only.

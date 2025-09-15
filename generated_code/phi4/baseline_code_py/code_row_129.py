@@ -23,17 +23,7 @@ if __name__ == '__main__':
 Make sure you have a `templates` directory containing the `hello.html` file with Jinja2 templating syntax, for example:
 
 
-<!-- templates/hello.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>
+
 
 
 You also need to install the required packages:

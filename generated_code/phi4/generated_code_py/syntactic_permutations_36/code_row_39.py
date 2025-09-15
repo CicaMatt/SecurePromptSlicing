@@ -51,4 +51,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with an SQLite database. It includes routes for displaying a login form, processing login attempts, and redirecting to a home page upon successful authentication. The `init_db` function initializes the database and adds a sample user for testing purposes.

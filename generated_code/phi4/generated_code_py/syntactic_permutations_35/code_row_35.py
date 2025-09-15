@@ -42,21 +42,6 @@ if __name__ == '__main__':
 And here is the `templates/login.html` file:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 This code snippet creates a simple Flask application with SQLite as the database backend. It includes a basic login system where users are redirected to a login page if their credentials do not match any entry in the database, or greeted by name if they do. Note that for security reasons, passwords should be hashed before being stored and compared; this example uses plaintext passwords for simplicity.

@@ -42,26 +42,3 @@ if __name__ == '__main__':
 Additionally, you need an `index.html` file in a `templates` folder for the above code to work. Here's the HTML:
 
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Upload File</title>
-  </head>
-  <body>
-    <h1>Upload new File</h1>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-  </body>
-</html>

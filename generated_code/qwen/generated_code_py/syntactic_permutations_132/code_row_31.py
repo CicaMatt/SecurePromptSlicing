@@ -10,5 +10,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-<!-- Assuming the hello.html file is in the templates directory and contains: -->
-<!-- <html><body><h1>Hello, {{ username }}!</h1></body></html> -->
+

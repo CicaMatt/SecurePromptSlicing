@@ -20,4 +20,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, ensure you have Flask installed. You can install it using `pip install flask`. Save the code in a file, for example, `app.py`, and execute it with Python to start the server. Then visit `http://127.0.0.1:5000/check_mod?username=user&password=pass` in your browser or use a tool like `curl` to test the functionality.

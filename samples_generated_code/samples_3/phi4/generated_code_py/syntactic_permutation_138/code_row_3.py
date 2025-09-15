@@ -32,24 +32,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** Ensure you have a SQLite database named `example.db` with a table `users` that has at least one column `username`. You can create the database and table using the following commands in Python:
 
 
-import sqlite3
-
-conn = sqlite3.connect('example.db')
-cursor = conn.cursor()
-
-# Create users table if not exists
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE
-)
-''')
-
-# Insert a sample user (remove this part in production or handle it appropriately)
-cursor.execute("INSERT OR IGNORE INTO users (username) VALUES ('sampleuser')")
-
-conn.commit()
-conn.close()

@@ -39,10 +39,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have a SQLite database named `subscriptions.db` with a table called `subscriptions` having at least one column, `email`. You can create this using the following SQL:
-
-
-CREATE TABLE subscriptions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE
-);

@@ -25,24 +25,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# Create a templates/index.html file with the following content:
-"""
-<html>
-<head>
-    <title>Message Board</title>
-</head>
-<body>
-    <h1>Message Board</h1>
-    <form action="/post" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="message" placeholder="Message" required>
-        <button type="submit">Post Message</button>
-    </form>
-    <ul>
-        {% for message in messages %}
-            <li>{{ message.timestamp }} - {{ message.username }}: {{ message.message }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
-"""

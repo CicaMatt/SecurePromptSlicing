@@ -48,19 +48,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Before running this code, ensure that you have a SQLite database named `users.db` with a table called `users`. The table should contain columns for `username` and `password`.
-
-To create the necessary table in an SQLite database, run:
-
-
-import sqlite3
-
-conn = sqlite3.connect('users.db')
-cursor = conn.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)''')
-# Add a test user with: cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('testuser', 'password123'))
-conn.commit()
-conn.close()
-
-
-Please note that storing passwords in plain text is not secure. In a production environment, you should always hash passwords before storing them and compare the hashed values during login. The above example uses plaintext for simplicity.

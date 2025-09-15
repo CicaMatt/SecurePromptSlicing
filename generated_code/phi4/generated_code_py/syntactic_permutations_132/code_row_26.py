@@ -23,4 +23,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-Make sure you have Flask installed in your environment. You can install it using `pip install flask`. Save the code to a file, for example, `app.py`, and run it with Python. Then visit `http://127.0.0.1:5000/hello/<username>` in your web browser, replacing `<username>` with any name you'd like to test.

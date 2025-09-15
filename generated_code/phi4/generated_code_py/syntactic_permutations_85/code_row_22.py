@@ -45,4 +45,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code uses Flask to create a web server with an endpoint that responds to POST requests at `/api/temperature_for_location`. It expects JSON input containing `latitude`, `longitude`, and `date`. The function queries the SQLite database named `sensor.db` for the temperature data based on these parameters. If found, it returns the temperature; otherwise, it handles errors appropriately. Make sure you have Flask installed (`pip install flask`) and that your SQLite database is properly set up with a table named `Sensor` containing columns `latitude`, `longitude`, `date`, and `temperature`.

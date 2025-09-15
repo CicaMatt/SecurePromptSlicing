@@ -24,4 +24,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to have Flask installed and that the `images/` directory exists in your project root with image files named appropriately. Adjust the MIME type based on the actual image types you plan to serve.

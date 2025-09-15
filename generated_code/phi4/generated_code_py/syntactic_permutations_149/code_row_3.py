@@ -43,4 +43,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a basic Flask application with two routes. The `/post` route handles form submissions and inserts the data into a simulated database (a list of dictionaries). After posting, it redirects back to the root route (`/`). The root route displays all messages from this simulated database along with a form for new message submission.

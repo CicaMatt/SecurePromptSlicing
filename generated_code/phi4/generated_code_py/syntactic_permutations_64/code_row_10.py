@@ -68,8 +68,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note**: Before running this code:
-- Set up a MySQL database and table with columns `id` (auto-increment primary key) and `filepath`.
-- Replace `'your_username'`, `'your_password'`, and `'your_database'` in the `db_config` dictionary with your actual MySQL credentials.
-- Ensure you have Flask (`pip install flask`) and mysql-connector-python (`pip install mysql-connector-python`) installed.
-- Create a directory named `uploads` in the same directory as this script to store uploaded files.

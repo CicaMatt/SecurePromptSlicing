@@ -44,45 +44,7 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post" action="/login">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
 
--- schema.sql
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-);
 
-
-To set up the database with some initial data, you can run:
-
-
-import sqlite3
-
-conn = sqlite3.connect('users.db')
-with open('schema.sql') as f:
-    conn.executescript(f.read())
-
-# Insert initial user for testing purposes
-conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('testuser', 'password123'))
-conn.commit()
-conn.close()

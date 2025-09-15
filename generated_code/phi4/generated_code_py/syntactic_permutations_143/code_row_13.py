@@ -40,4 +40,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have `flask` installed and an SQLite database named `users.db` with a table called `users` that has at least one column named `email`. The function `remove_from_mailing_list` is a placeholder for the actual mailing list removal logic.

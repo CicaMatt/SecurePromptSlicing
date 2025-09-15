@@ -63,4 +63,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `your_username` and `your_password` with your actual PostgreSQL credentials. Ensure that the `readings` table exists in the `Sensor` database, containing columns for `latitude`, `longitude`, `date`, and `temperature`.

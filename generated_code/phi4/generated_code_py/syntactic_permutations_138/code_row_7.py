@@ -26,4 +26,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create a SQLite database named `database.db` with a table called `users`, which has at least two columns: `username` (TEXT) and `is_moderator` (INTEGER or BOOLEAN). The `is_moderator` column should indicate whether the user is a moderator.

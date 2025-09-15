@@ -51,4 +51,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `your_username` and `your_password` with the actual credentials for accessing your PostgreSQL database. Also, ensure that your database is running and accessible from where you run this Flask application.

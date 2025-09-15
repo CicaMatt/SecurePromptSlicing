@@ -32,4 +32,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a Flask web application with a decorator that runs the `ping` command on a given URL and determines if it is "alive" based on the response. The result is returned as JSON when accessing the `/ping/<url>` endpoint.

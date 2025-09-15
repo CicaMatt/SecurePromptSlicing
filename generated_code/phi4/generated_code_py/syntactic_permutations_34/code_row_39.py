@@ -56,4 +56,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask web application with SQLite as the database. It includes a login form and logic to authenticate against stored usernames and passwords in the database, redirecting accordingly based on whether authentication succeeds or fails. The application also contains a basic dashboard page for demonstration purposes.

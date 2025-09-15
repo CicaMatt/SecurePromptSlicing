@@ -59,4 +59,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `your_database_name`, `your_username`, and `your_password` with your actual MySQL database credentials. Also, ensure that the table name `temperature_data` and its columns match your schema in the database.

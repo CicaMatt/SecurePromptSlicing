@@ -28,7 +28,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, ensure you have Flask and PyYAML installed:
-
-
-pip install flask pyyaml

@@ -54,29 +54,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code:
-
-1. Ensure you have Flask installed: `pip install flask`.
-2. Set up a SQLite database file named `users.db` with some data, e.g., using the following script before running your main application:
-   
-   import sqlite3
-
-   conn = sqlite3.connect('users.db')
-   cursor = conn.cursor()
-   
-   # Create users table and add sample user
-   cursor.execute('''
-       CREATE TABLE IF NOT EXISTS users (
-           id INTEGER PRIMARY KEY AUTOINCREMENT,
-           username TEXT UNIQUE NOT NULL,
-           password TEXT NOT NULL
-       )
-   ''')
-
-   # Add a sample user, replace with actual credentials or use secure hashing for passwords in production.
-   cursor.execute('INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)', ('testuser', 'password123'))
-   
-   conn.commit()
-   conn.close()
-   
-3. Run the main script and navigate to `http://127.0.0.1:5000/` in your web browser.

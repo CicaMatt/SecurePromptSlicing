@@ -23,20 +23,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to have a SQLite database named `database.db` with a table called `settings` and columns `key`, `name`, and `value`. You can create the database and insert sample data using the following script:
-
-
-import sqlite3
-
-def setup_database():
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS settings (key TEXT, name TEXT, value TEXT)''')
-
-    # Insert initial values if they don't exist
-    c.execute("INSERT OR IGNORE INTO settings (key, name, value) VALUES ('status', 'app_status', 'running')")
-
-    conn.commit()
-    conn.close()
-
-setup_database()

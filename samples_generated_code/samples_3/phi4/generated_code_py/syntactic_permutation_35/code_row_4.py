@@ -30,21 +30,4 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Login</title>
-</head>
-<body>
-  <h2>Login Page</h2>
-  <form method="post" action="/login">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="Login">
-  </form>
-</body>
-</html>
+

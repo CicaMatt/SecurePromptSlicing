@@ -10,13 +10,4 @@ if __name__ == '__main__':
     app.run()
 
 
-<!-- hello.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {{ username }}!</h1>
-</body>
-</html>
+

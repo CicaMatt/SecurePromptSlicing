@@ -31,24 +31,4 @@ if __name__ == '__main__':
 
 
 
-<!-- main.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Chat</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        {% for msg in messages %}
-            <li><strong>{{ msg.username }}:</strong> {{ msg.message }}</li>
-        {% endfor %}
-    </ul>
-    <form action="/submit" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="message" placeholder="Message" required>
-        <button type="submit">Send</button>
-    </form>
-</body>
-</html>
+

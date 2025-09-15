@@ -25,22 +25,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have a database file named `database.db` with a table `users` having columns `username` and `role`. You can set up the initial database using SQLite like this:
-
-
-import sqlite3
-
-def setup_database():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        username TEXT UNIQUE NOT NULL,
-                        role TEXT NOT NULL)''')
-    
-    # Example user for testing
-    cursor.execute("INSERT OR IGNORE INTO users (username, role) VALUES ('testuser', 'moderator')")
-    conn.commit()
-    conn.close()
-
-setup_database()

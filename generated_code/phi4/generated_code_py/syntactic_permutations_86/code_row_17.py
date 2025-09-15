@@ -48,4 +48,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note**: Replace `'your_username'`, `'your_password'`, and `'your_database'` with your actual MySQL credentials. Ensure that your database has the `temperature_data` table with appropriate columns (`latitude`, `longitude`, `year`, `month`, `day`, `grib_file`, `temperature`).

@@ -20,13 +20,3 @@ if __name__ == '__main__':
 Make sure to create a template file named `greeting.html` in your templates directory with content like:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, {{ name }}!</h1>
-</body>
-</html>

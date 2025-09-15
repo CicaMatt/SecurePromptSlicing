@@ -37,4 +37,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: This example uses SQLite for simplicity. For other databases (like PostgreSQL, MySQL), you'll need to use appropriate libraries like `psycopg2` or `mysql-connector-python` and adjust the connection setup accordingly.

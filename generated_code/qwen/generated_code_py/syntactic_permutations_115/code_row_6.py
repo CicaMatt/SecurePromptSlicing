@@ -13,7 +13,6 @@ command = print("Hello, {}!".format(name))
 execute_command(command)
 
 
-**Correction**: The `print` function does not return a string that can be executed. Here is the corrected version:
 
 
 import subprocess
