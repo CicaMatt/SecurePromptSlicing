@@ -242,7 +242,7 @@ def split_csv_by_id(input_csv: str, output_path: str):
 
     # Per ogni valore unico della colonna ID, crea un nuovo CSV
     for unique_id, subset in df.groupby("ID"):
-        filename = f"syntactic_permutation_{unique_id}.csv"
+        filename = f"syntactic_permutations_{unique_id}.csv"
         filepath = os.path.join(output_path, filename)
         subset.to_csv(filepath, index=False)
         print(f"Creato: {filepath}")

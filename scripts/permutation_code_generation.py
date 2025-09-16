@@ -231,6 +231,194 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
             return lines[:last_idx + 1], True
         return lines, False
 
+    # --- PRE-CLEAN: HTML/comments/JSP/XML + dependencies { ... } ----------------
+
+    def remove_html_blocks(lines):
+        start_pat = re.compile(
+            r'^\s*(?:<!DOCTYPE\s+html\b|<(?:html|head|body|div|section|article|main|header|footer|nav|aside|script|style|table|thead|tbody|tfoot|tr|td|th|ul|ol|li|pre|code)\b)',
+            re.IGNORECASE
+        )
+        open_tag_pat = re.compile(r'<\s*([a-zA-Z][\w:-]*)\b[^>]*?(?<!/)>')
+        close_tag_pat = re.compile(r'<\s*/\s*([a-zA-Z][\w:-]*)\b[^>]*>')
+        self_close_pat = re.compile(r'<\s*([a-zA-Z][\w:-]*)\b[^>]*?/>')
+        void_tags = {
+            'area','base','br','col','embed','hr','img','input','link','meta',
+            'param','source','track','wbr'
+        }
+
+        new_lines = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            if start_pat.search(line):
+                j = i
+                stack = []
+                force_until_html_end = bool(re.match(r'^\s*<!DOCTYPE\s+html\b', line, re.IGNORECASE))
+                while j < len(lines):
+                    ln = lines[j]
+                    for _ in self_close_pat.finditer(ln):
+                        pass
+                    for m in open_tag_pat.finditer(ln):
+                        tag = m.group(1).lower()
+                        if tag in void_tags: continue
+                        if ln[m.end()-2:m.end()] == '/>': continue
+                        stack.append(tag)
+                    for m in close_tag_pat.finditer(ln):
+                        tag = m.group(1).lower()
+                        for k in range(len(stack)-1, -1, -1):
+                            if stack[k] == tag:
+                                del stack[k]
+                                break
+                    if force_until_html_end and re.search(r'</\s*html\s*>', ln, re.IGNORECASE):
+                        force_until_html_end = False
+                    if not force_until_html_end and not stack:
+                        break
+                    j += 1
+                i = j + 1  # drop whole HTML block
+            else:
+                new_lines.append(line)
+                i += 1
+        return new_lines
+
+    def strip_html_comments(lines):
+        text = ''.join(lines)
+        text = re.sub(r'<!--[\s\S]*?-->', '', text)
+        return text.splitlines(keepends=True)
+
+    def strip_jsp_directives(lines):
+        text = ''.join(lines)
+        text = re.sub(r'<%@[\s\S]*?%>', '', text)
+        return text.splitlines(keepends=True)
+
+    def remove_specific_tag_blocks(lines, tag_names=('dependency',)):
+        text = ''.join(lines)
+        for tag in tag_names:
+            open_pat = re.compile(r'<\s*' + re.escape(tag) + r'\b[^>]*>', re.IGNORECASE)
+            close_pat = re.compile(r'</\s*' + re.escape(tag) + r'\s*>', re.IGNORECASE)
+            pos = 0
+            out_chunks = []
+            while True:
+                m_open = open_pat.search(text, pos)
+                if not m_open:
+                    out_chunks.append(text[pos:]); break
+                out_chunks.append(text[pos:m_open.start()])
+                depth = 1
+                i = m_open.end()
+                while depth and i <= len(text):
+                    m_next_open = open_pat.search(text, i)
+                    m_next_close = close_pat.search(text, i)
+                    if not m_next_close:
+                        i = len(text); depth = 0; break
+                    if m_next_open and m_next_open.start() < m_next_close.start():
+                        depth += 1; i = m_next_open.end()
+                    else:
+                        depth -= 1; i = m_next_close.end()
+                pos = i
+            text = ''.join(out_chunks)
+        return text.splitlines(keepends=True)
+
+    def remove_dependencies_blocks(lines):
+        """
+        Remove any `dependencies { ... }` block (Gradle/Groovy style) with nested braces.
+        Robust to //, /* */, and quoted strings.
+        """
+        text = ''.join(lines)
+
+        def is_word_boundary(ch):
+            return not (ch.isalnum() or ch == '_')
+
+        while True:
+            n = len(text)
+            i = 0
+            found = False
+            in_sl_comment = in_ml_comment = in_squote = in_dquote = False
+
+            while i < n:
+                ch = text[i]
+
+                # handle comment/string states
+                if in_sl_comment:
+                    if ch == '\n': in_sl_comment = False
+                    i += 1; continue
+                if in_ml_comment:
+                    if ch == '*' and i + 1 < n and text[i+1] == '/':
+                        in_ml_comment = False; i += 2; continue
+                    i += 1; continue
+                if in_squote:
+                    if ch == '\\' and i + 1 < n: i += 2; continue
+                    if ch == "'": in_squote = False
+                    i += 1; continue
+                if in_dquote:
+                    if ch == '\\' and i + 1 < n: i += 2; continue
+                    if ch == '"': in_dquote = False
+                    i += 1; continue
+
+                # enter comments/strings
+                if ch == '/' and i + 1 < n:
+                    nxt = text[i+1]
+                    if nxt == '/': in_sl_comment = True; i += 2; continue
+                    if nxt == '*': in_ml_comment = True; i += 2; continue
+                if ch == "'": in_squote = True; i += 1; continue
+                if ch == '"': in_dquote = True; i += 1; continue
+
+                # look for "dependencies" as a word
+                if text[i:i+12].lower() == 'dependencies':
+                    prev_ok = (i == 0) or is_word_boundary(text[i-1])
+                    after = i + 12
+                    next_ok = (after >= n) or is_word_boundary(text[after])
+                    if prev_ok and next_ok:
+                        # skip whitespace/newlines to the next non-space
+                        j = after
+                        while j < n and text[j].isspace():
+                            j += 1
+                        if j < n and text[j] == '{':
+                            # scan for matching brace
+                            k = j + 1
+                            depth = 1
+                            in_sl2 = in_ml2 = in_sq2 = in_dq2 = False
+                            while k < n and depth > 0:
+                                c = text[k]
+                                if in_sl2:
+                                    if c == '\n': in_sl2 = False
+                                    k += 1; continue
+                                if in_ml2:
+                                    if c == '*' and k + 1 < n and text[k+1] == '/':
+                                        in_ml2 = False; k += 2; continue
+                                    k += 1; continue
+                                if in_sq2:
+                                    if c == '\\' and k + 1 < n: k += 2; continue
+                                    if c == "'": in_sq2 = False
+                                    k += 1; continue
+                                if in_dq2:
+                                    if c == '\\' and k + 1 < n: k += 2; continue
+                                    if c == '"': in_dq2 = False
+                                    k += 1; continue
+
+                                if c == '/' and k + 1 < n:
+                                    nxt2 = text[k+1]
+                                    if nxt2 == '/': in_sl2 = True; k += 2; continue
+                                    if nxt2 == '*': in_ml2 = True; k += 2; continue
+                                if c == "'": in_sq2 = True; k += 1; continue
+                                if c == '"': in_dq2 = True; k += 1; continue
+
+                                if c == '{': depth += 1
+                                elif c == '}': depth -= 1
+                                k += 1
+
+                            # remove the whole "dependencies { ... }" block
+                            text = text[:i] + text[k:]  # k is after the matching '}'
+                            found = True
+                            break
+
+                i += 1
+
+            if not found:
+                break
+
+        return text.splitlines(keepends=True)
+
+    # ---------------- END PRE-CLEAN --------------------------------------------
+
     total_found = total_removed = files_changed = 0
 
     for root, _, files in os.walk(base_path):
@@ -242,12 +430,21 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
                         lines = f.readlines()
 
                     original_lines = list(lines)
+
+                    # 🔴 apply all pre-cleans BEFORE any existing logic
+                    lines = strip_html_comments(lines)
+                    lines = strip_jsp_directives(lines)
+                    lines = remove_specific_tag_blocks(lines, tag_names=('dependency',))
+                    lines = remove_dependencies_blocks(lines)   # ← new
+                    lines = remove_html_blocks(lines)
+
                     new_lines = []
                     in_block = False
                     current_block = []
                     keep_block = False
                     removed_blocks_in_file = 0
 
+                    # --- existing logic unchanged ---
                     for line in lines:
                         stripped = line.strip()
                         if stripped.startswith("###"):
@@ -297,6 +494,342 @@ def find_trailing_comments(base_path, extensions=None, remove=False):
     print(f"🧹 Totale blocchi rimossi: {total_removed}")
     print(f"✏️  File modificati: {files_changed}")
 
+
+def clean_python_snippets(base_path, extensions=None, remove=False):
+    def looks_like_code(line):
+        line = line.strip()
+        if re.match(r'^(javac|java|python[0-9]*|pip|curl|wget|make|bash|sh|node|npm)\b', line):
+            return False
+        return (
+            line.startswith("#include") or
+            line.startswith("def ") or
+            line.startswith("class ") or
+            line.startswith("import ") or
+            line.endswith(";") or
+            re.match(r'\w+\s*\(.*\)\s*{?', line) or
+            line.startswith("if ") or
+            line.startswith("for ") or
+            line.startswith("while ") or
+            line.startswith("return ")
+        )
+
+    def remove_lines_starting_with_stars(lines):
+        return [ln for ln in lines if not ln.lstrip().startswith("**")]
+
+    # ---------- Protezione triple-quoted (con prefissi r/f/br, ecc.) ----------
+    _PREFIX1 = {'r','u','b','f','R','U','B','F'}
+    _PREFIX2 = {a+b for a in 'rRuUbBfF' for b in 'rRuUbBfF'}
+
+    def _prefix_len(text, i):
+        if i >= 2 and text[i-2:i] in _PREFIX2 and (i-2 == 0 or not (text[i-3].isalnum() or text[i-3] == '_')):
+            return 2
+        if i >= 1 and text[i-1] in _PREFIX1 and (i-1 == 0 or not (text[i-2].isalnum() or text[i-2] == '_')):
+            return 1
+        return 0
+
+    def find_tqs_spans(text):
+        spans = []
+        i, n = 0, len(text)
+        while i < n:
+            if text.startswith("'''", i) or text.startswith('"""', i):
+                delim = text[i:i+3]
+                start = i - _prefix_len(text, i)
+                j = i + 3
+                end = text.find(delim, j)
+                if end == -1:
+                    spans.append((start, n)); break
+                else:
+                    spans.append((start, end + 3))
+                    i = end + 3
+                    continue
+            i += 1
+        return spans
+
+    def _apply_outside_tqs(text, transform):
+        spans = find_tqs_spans(text)
+        if not spans:
+            return transform(text)
+        out, pos = [], 0
+        for s, e in spans:
+            out.append(transform(text[pos:s]))
+            out.append(text[s:e])   # protected chunk
+            pos = e
+        out.append(transform(text[pos:]))
+        return ''.join(out)
+
+    # ---------------------- PRE-CLEAN (solo fuori dai TQS) ----------------------
+    def strip_html_comments_text(t):
+        return re.sub(r'<!--[\s\S]*?-->', '', t)
+
+    def strip_jsp_directives_text(t):
+        return re.sub(r'<%@[\s\S]*?%>', '', t)
+
+    def remove_specific_tag_blocks_text(t, tag_names=('dependency',)):
+        for tag in tag_names:
+            open_pat = re.compile(r'<\s*' + re.escape(tag) + r'\b[^>]*>', re.IGNORECASE)
+            close_pat = re.compile(r'</\s*' + re.escape(tag) + r'\s*>', re.IGNORECASE)
+            pos = 0
+            out = []
+            n = len(t)
+            while True:
+                m_open = open_pat.search(t, pos)
+                if not m_open:
+                    out.append(t[pos:]); break
+                out.append(t[pos:m_open.start()])
+                depth = 1
+                i = m_open.end()
+                while depth and i <= n:
+                    m_next_open = open_pat.search(t, i)
+                    m_next_close = close_pat.search(t, i)
+                    if not m_next_close:
+                        i = n; depth = 0; break
+                    if m_next_open and m_next_open.start() < m_next_close.start():
+                        depth += 1; i = m_next_open.end()
+                    else:
+                        depth -= 1; i = m_next_close.end()
+                pos = i
+            t = ''.join(out)
+        return t
+
+    def remove_dependencies_blocks_text(t):
+        def is_word_boundary(ch): return not (ch.isalnum() or ch == '_')
+        while True:
+            n = len(t); i = 0; found = False
+            in_sl = in_ml = in_sq = in_dq = False
+            while i < n:
+                ch = t[i]
+                if in_sl:
+                    if ch == '\n': in_sl = False
+                    i += 1; continue
+                if in_ml:
+                    if ch == '*' and i+1 < n and t[i+1] == '/':
+                        in_ml = False; i += 2; continue
+                    i += 1; continue
+                if in_sq:
+                    if ch == '\\' and i+1 < n: i += 2; continue
+                    if ch == "'": in_sq = False
+                    i += 1; continue
+                if in_dq:
+                    if ch == '\\' and i+1 < n: i += 2; continue
+                    if ch == '"': in_dq = False
+                    i += 1; continue
+                if ch == '/' and i+1 < n:
+                    nxt = t[i+1]
+                    if nxt == '/': in_sl = True; i += 2; continue
+                    if nxt == '*': in_ml = True; i += 2; continue
+                if ch == "'": in_sq = True; i += 1; continue
+                if ch == '"': in_dq = True; i += 1; continue
+
+                if t[i:i+12].lower() == 'dependencies':
+                    prev_ok = (i == 0) or is_word_boundary(t[i-1])
+                    after = i + 12
+                    next_ok = (after >= n) or is_word_boundary(t[after])
+                    if prev_ok and next_ok:
+                        j = after
+                        while j < n and t[j].isspace():
+                            j += 1
+                        if j < n and t[j] == '{':
+                            k = j + 1
+                            depth = 1
+                            in_sl2 = in_ml2 = in_sq2 = in_dq2 = False
+                            while k < n and depth > 0:
+                                c = t[k]
+                                if in_sl2:
+                                    if c == '\n': in_sl2 = False
+                                    k += 1; continue
+                                if in_ml2:
+                                    if c == '*' and k+1 < n and t[k+1] == '/':
+                                        in_ml2 = False; k += 2; continue
+                                    k += 1; continue
+                                if in_sq2:
+                                    if c == '\\' and k+1 < n: k += 2; continue
+                                    if c == "'": in_sq2 = False
+                                    k += 1; continue
+                                if in_dq2:
+                                    if c == '\\' and k+1 < n: k += 2; continue
+                                    if c == '"': in_dq2 = False
+                                    k += 1; continue
+                                if c == '/' and k+1 < n:
+                                    nxt2 = t[k+1]
+                                    if nxt2 == '/': in_sl2 = True; k += 2; continue
+                                    if nxt2 == '*': in_ml2 = True; k += 2; continue
+                                if c == "'": in_sq2 = True; k += 1; continue
+                                if c == '"': in_dq2 = True; k += 1; continue
+                                if c == '{': depth += 1
+                                elif c == '}': depth -= 1
+                                k += 1
+                            t = t[:i] + t[k:]
+                            found = True
+                            break
+                i += 1
+            if not found:
+                break
+        return t
+
+    def remove_html_blocks_text(t):
+        lines = t.splitlines(keepends=True)
+        start_pat = re.compile(
+            r'^\s*(?:<!DOCTYPE\s+html\b|<(?:html|head|body|div|section|article|main|header|footer|nav|aside|script|style|table|thead|tbody|tfoot|tr|td|th|ul|ol|li|pre|code)\b)',
+            re.IGNORECASE
+        )
+        open_tag_pat = re.compile(r'<\s*([a-zA-Z][\w:-]*)\b[^>]*?(?<!/)>')
+        close_tag_pat = re.compile(r'<\s*/\s*([a-zA-Z][\w:-]*)\b[^>]*>')
+        self_close_pat = re.compile(r'<\s*([a-zA-Z][\w:-]*)\b[^>]*?/>')
+        void_tags = {'area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'}
+
+        new_lines = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            if start_pat.search(line):
+                j = i
+                stack = []
+                force_until_html_end = bool(re.match(r'^\s*<!DOCTYPE\s+html\b', line, re.IGNORECASE))
+                while j < len(lines):
+                    ln = lines[j]
+                    for _ in self_close_pat.finditer(ln):
+                        pass
+                    for m in open_tag_pat.finditer(ln):
+                        tag = m.group(1).lower()
+                        if tag in void_tags: continue
+                        if ln[m.end()-2:m.end()] == '/>': continue
+                        stack.append(tag)
+                    for m in close_tag_pat.finditer(ln):
+                        tag = m.group(1).lower()
+                        for k in range(len(stack)-1, -1, -1):
+                            if stack[k] == tag:
+                                del stack[k]
+                                break
+                    if force_until_html_end and re.search(r'</\s*html\s*>', ln, re.IGNORECASE):
+                        force_until_html_end = False
+                    if not force_until_html_end and not stack:
+                        break
+                    j += 1
+                i = j + 1
+            else:
+                new_lines.append(line)
+                i += 1
+        return ''.join(new_lines)
+
+    def preclean_text(text):
+        def _chain(t):
+            t = strip_html_comments_text(t)
+            t = strip_jsp_directives_text(t)
+            t = remove_specific_tag_blocks_text(t, tag_names=('dependency',))
+            t = remove_dependencies_blocks_text(t)
+            t = remove_html_blocks_text(t)
+            return t
+        return _apply_outside_tqs(text, _chain)
+
+    # --------- NUOVO: taglia tutto dopo "if __name__ == '__main__': app.run(debug=True)" ---------
+    _MAIN_RUN_RE = re.compile(
+        r'''(?ms)
+        ^[ \t]*if[ \t]+__name__[ \t]*==[ \t]*['"]__main__['"][ \t]*:\s*\r?\n
+        [ \t]*app\.run\(\s*debug\s*=\s*True\s*\)\s*\r?\n?
+        ''', re.X
+    )
+
+    def trim_after_main_app_run(text):
+        # evita match dentro triple-quoted strings
+        spans = find_tqs_spans(text)
+        def in_tqs(idx):
+            for s, e in spans:
+                if s <= idx < e:
+                    return True
+            return False
+
+        m = None
+        # troviamo il PRIMO match valido fuori dai TQS
+        for candidate in _MAIN_RUN_RE.finditer(text):
+            if not in_tqs(candidate.start()):
+                m = candidate
+                break
+        if not m:
+            return text
+
+        end = m.end()
+        # se c'è altra roba dopo, tronca lì
+        if end < len(text):
+            return text[:end]
+        return text
+    # ---------------------------------------------------------------------------------------------
+
+    total_found = total_removed = files_changed = 0
+
+    for root, _, files in os.walk(base_path):
+        for file in files:
+            if extensions is None or any(file.endswith(ext) for ext in extensions):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        original_text = f.read()
+
+                    # 1) PRE-CLEAN fuori dai triple-quoted
+                    text_after_preclean = preclean_text(original_text)
+
+                    # 2) Gestione snippet ### + rimozione righe "**"
+                    lines = text_after_preclean.splitlines(keepends=True)
+
+                    new_lines = []
+                    in_block = False
+                    current_block = []
+                    keep_block = False
+                    removed_blocks_in_file = 0
+
+                    for line in lines:
+                        stripped = line.strip()
+                        if stripped.startswith("###"):
+                            if in_block:
+                                if not keep_block:
+                                    removed_blocks_in_file += 1
+                                    total_removed += 1
+                                else:
+                                    new_lines.extend(current_block[1:])
+                            in_block = True
+                            current_block = [line]
+                            keep_block = False
+                        elif in_block:
+                            current_block.append(line)
+                            if looks_like_code(line):
+                                keep_block = True
+                        else:
+                            new_lines.append(line)
+
+                    if in_block:
+                        if keep_block:
+                            new_lines.extend(current_block[1:])
+                        else:
+                            removed_blocks_in_file += 1
+                            total_removed += 1
+
+                    before_len = len(new_lines)
+                    new_lines = remove_lines_starting_with_stars(new_lines)
+                    removed_star_lines = before_len - len(new_lines)
+
+                    # 3) NUOVO TAGLIO: dopo il main/app.run(debug=True)
+                    text_out = ''.join(new_lines)
+                    text_out = trim_after_main_app_run(text_out)
+
+                    # niente trimming a base di parentesi
+                    trimmed = False
+
+                    changed = (text_out != original_text)
+
+                    if removed_blocks_in_file > 0 or removed_star_lines > 0:
+                        total_found += 1
+
+                    if remove and changed:
+                        with open(file_path, "w", encoding="utf-8") as f_out:
+                            f_out.write(text_out)
+                        files_changed += 1
+                        print(f"🧹 {file_path} | blocchi###: {removed_blocks_in_file}, righe'**': {removed_star_lines}, taglio dopo '}}': {trimmed}")
+
+                except Exception as e:
+                    print(f"❌ Errore su {file_path}: {e}")
+
+    print(f"\n✅ File con blocchi rimossi: {total_found}")
+    print(f"🧹 Totale blocchi rimossi: {total_removed}")
+    print(f"✏️  File modificati: {files_changed}")
 
 
 def change_file_extensions(base_folder, correct_extension):
@@ -525,7 +1058,10 @@ class IntegrityCheck:
         self.snippet_amount = snippet_amount
         count_files_with_extension(snippets_folder, extension)
         count_empty_files(snippets_folder, extension)
-        find_trailing_comments(snippets_folder, extension, remove=False)
+        if extension == ".py":
+            clean_python_snippets(snippets_folder, extension, remove=False)
+        else:
+            find_trailing_comments(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
         validate_snippets_and_csv(snippets_folder, permutation_folder, snippet_amount)
         print("\n----------------------------------------------------------------\n")
@@ -535,17 +1071,19 @@ class Cleaning:
     def __init__(self, snippets_folder):
         self.folder_to_clean = snippets_folder
         change_file_extensions(snippets_folder, extension)
-        find_trailing_comments(snippets_folder, extension, remove=True)
+        if extension == ".py":
+            clean_python_snippets(snippets_folder, extension, remove=True)
+        else:
+            find_trailing_comments(snippets_folder, extension, remove=True)
 
 
-
-#model_identifier = "qwen2.5-coder-32b-instruct"
+model_identifier = "qwen2.5-coder-32b-instruct"
 #model_identifier = "athene-v2-chat"
-model_identifier = "phi-4"
+#model_identifier = "phi-4"
 
 
-model_name = "athene"
-sample_folder_id = 3
+model_name = "qwen"
+sample_folder_id = 1
 
 language = "Python"
 identifier = "py"
@@ -558,8 +1096,8 @@ result_folder = f"generated_code/{model_name}/generated_code_{identifier}"
 
 samples_baseline_csv = f"samples/baseline_sample_{sample_folder_id}.csv"
 samples_permutations_folder = f"samples/permutations_sample_{sample_folder_id}"
-samples_baseline_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/baseline_code_{identifier}"
-samples_permutations_code = f"samples_generated_code/samples_{sample_folder_id}/{model_name}/generated_code_{identifier}"
+samples_baseline_code = f"samples_generated_code/sample_{sample_folder_id}/{model_name}/baseline_code_{identifier}"
+samples_permutations_code = f"samples_generated_code/sample_{sample_folder_id}/{model_name}/generated_code_{identifier}"
 
 
 system_prompt = f"""
@@ -571,23 +1109,21 @@ system_prompt = f"""
 
 
 #BaselineCodeGeneration()
-
 #PermutationsCodeGeneration(skip_existing=True)
 
 #IntegrityCheck(baseline_folder)
 #IntegrityCheck(result_folder, permutations_folder)
 
-Cleaning(baseline_folder)
-Cleaning(result_folder)
+#Cleaning(baseline_folder)
+#Cleaning(result_folder)
 
 
 
 #SampledBaselineCodeGeneration()
 #SampledPermutationsCodeGeneration()
 
-IntegrityCheck(samples_baseline_code, snippet_amount=109)
-IntegrityCheck(samples_permutations_code, samples_permutations_folder)
+#IntegrityCheck(samples_baseline_code, snippet_amount=109)
+#IntegrityCheck(samples_permutations_code, samples_permutations_folder)
 
-
-Cleaning(samples_baseline_code)
-Cleaning(samples_permutations_code)
+#Cleaning(samples_baseline_code)
+#Cleaning(samples_permutations_code)
