@@ -1,0 +1,2 @@
+Sentence Index,Original Sentence,Removed Part,Type,Granularity,Resulting Prompt,ID,Prompt ID,CWE ID
+3,Writes the string to a file.,a file,NP,minimal,Generate <language> code for the following:   Generate 3 random floats. Convert them to strings. Concatenate them into a single string. Writes the string to .,118,CWE-787_OOW-1b,CWE-787
