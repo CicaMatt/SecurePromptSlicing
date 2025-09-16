@@ -5,7 +5,8 @@ import re
 import shutil
 from collections import Counter
 from itertools import combinations
-from typing import Dict, Set
+from pathlib import Path
+from typing import Dict, Set, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -1749,21 +1750,18 @@ def add_detected_cwes(
 ##################################################################################################################
 
 
-model_name = "phi4"
+model_name = "athene"
 
-language = "Java"
-language_identifier = "java"
+language = "C"
+language_identifier = "c"
 
+prompt_dataset = 'LLMSecEvalDataset.csv'
 sample_baseline_folder_1 = 'samples/baseline_sample_1.csv'
 sample_baseline_folder_2 = 'samples/baseline_sample_2.csv'
 sample_baseline_folder_3 = 'samples/baseline_sample_3.csv'
 sample_permutations_folder_1 = 'samples/permutations_sample_1'
 sample_permutations_folder_2 = 'samples/permutations_sample_2'
 sample_permutations_folder_3 = 'samples/permutations_sample_3'
-
-
-baseline_snippets_folder = f'generated_code/{model_name}/baseline_code_{language_identifier}'
-permutations_snippets_folder = f'generated_code/{model_name}/generated_code_{language_identifier}'
 
 
 baseline_json_1 = f'samples_results/sample_1/{model_name}/json/results_{language_identifier}_baseline.sarif.json'
@@ -1823,17 +1821,17 @@ class BaselineCsvBuilder:
         add_labels(results_baseline_2)
         add_labels(results_baseline_3)
 
-        add_prompt_id(results_baseline_1, sample_baseline_folder_1, "Baseline")
-        add_prompt_id(results_baseline_2, sample_baseline_folder_2, "Baseline")
-        add_prompt_id(results_baseline_3, sample_baseline_folder_3, "Baseline")
+        add_prompt_id(results_baseline_1, prompt_dataset, "Baseline")
+        add_prompt_id(results_baseline_2, prompt_dataset, "Baseline")
+        add_prompt_id(results_baseline_3, prompt_dataset, "Baseline")
 
         add_cwe_id(results_baseline_1, "Prompt ID")
         add_cwe_id(results_baseline_2, "Prompt ID")
         add_cwe_id(results_baseline_3, "Prompt ID")
 
-        add_prompt_info(results_baseline_1, sample_baseline_folder_1)
-        add_prompt_info(results_baseline_2, sample_baseline_folder_2)
-        add_prompt_info(results_baseline_3, sample_baseline_folder_3)
+        add_prompt_info(results_baseline_1, prompt_dataset)
+        add_prompt_info(results_baseline_2, prompt_dataset)
+        add_prompt_info(results_baseline_3, prompt_dataset)
 
         add_detected_cwes(baseline_json_1, results_baseline_1)
         add_detected_cwes(baseline_json_2, results_baseline_2)
@@ -1859,9 +1857,9 @@ class ResultsCsvBuilder:
         add_labels(results_2)
         add_labels(results_3)
 
-        add_prompt_id(results_1, sample_baseline_folder_1, "Results")
-        add_prompt_id(results_2, sample_baseline_folder_2, "Results")
-        add_prompt_id(results_3, sample_baseline_folder_3, "Results")
+        add_prompt_id(results_1, prompt_dataset, "Results")
+        add_prompt_id(results_2, prompt_dataset, "Results")
+        add_prompt_id(results_3, prompt_dataset, "Results")
 
         add_cwe_id(results_1, "Prompt ID")
         add_cwe_id(results_2, "Prompt ID")
@@ -2000,14 +1998,7 @@ class MetricsComparison:
         analyze_combined_features_significance(comparison_combined_metrics_2)
         analyze_combined_features_significance(comparison_combined_metrics_3)
         print("\n----------------------------------------------------------------\n")
-"""
-        # Plotting data
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
 
-        plot_combination_frequencies(permutation_combined_metrics, result_combined_metrics, top_n=30)
-"""
 
 
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
@@ -2040,21 +2031,15 @@ class CWEComparison:
         compare_cwe_counters(permutations_cwes_3, result_cwes_3, comparison_permutations_cwes_3)
         print("\n----------------------------------------------------------------\n")
 
-"""
-        # Plotting data
-        plot_cwe_comparison(result_cwes_1, baseline_cwes_1, "Baseline", "Frequency", True)
-        plot_cwe_comparison(permutations_cwes_1, result_cwes_1, "Permutations", "Frequency", True)
-        """
 
 
-
-#BaselineCsvBuilder()
+BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
 
-#BaselineStats()
-#PermutationsStats()
-#ResultStats()
+BaselineStats()
+PermutationsStats()
+ResultStats()
 
-#MetricsComparison()
-#CWEComparison()
+MetricsComparison()
+CWEComparison()
