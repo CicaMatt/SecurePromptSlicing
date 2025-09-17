@@ -1,35 +1,35 @@
 Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequency
-"Granularity=chunk, Sentence Index=0",2,chunk,0,,1128,493,43.71%
+"Granularity=chunk, Sentence Index=0",2,chunk,0,,1128,533,47.25%
 "Granularity=chunk, Sentence Index=0, Syntagm Type=ADJP",3,chunk,0,ADJP,4,0,0.00%
 "Granularity=chunk, Sentence Index=0, Syntagm Type=ADVP",3,chunk,0,ADVP,3,3,100.00%
-"Granularity=chunk, Sentence Index=0, Syntagm Type=NP",3,chunk,0,NP,263,106,40.30%
-"Granularity=chunk, Sentence Index=0, Syntagm Type=PP",3,chunk,0,PP,506,212,41.90%
-"Granularity=chunk, Sentence Index=0, Syntagm Type=SBAR",3,chunk,0,SBAR,29,21,72.41%
-"Granularity=chunk, Sentence Index=0, Syntagm Type=VP",3,chunk,0,VP,323,151,46.75%
-"Granularity=chunk, Sentence Index=1",2,chunk,1,,201,121,60.20%
-"Granularity=chunk, Sentence Index=1, Syntagm Type=NP",3,chunk,1,NP,25,15,60.00%
-"Granularity=chunk, Sentence Index=1, Syntagm Type=PP",3,chunk,1,PP,64,36,56.25%
+"Granularity=chunk, Sentence Index=0, Syntagm Type=NP",3,chunk,0,NP,263,118,44.87%
+"Granularity=chunk, Sentence Index=0, Syntagm Type=PP",3,chunk,0,PP,506,226,44.66%
+"Granularity=chunk, Sentence Index=0, Syntagm Type=SBAR",3,chunk,0,SBAR,29,24,82.76%
+"Granularity=chunk, Sentence Index=0, Syntagm Type=VP",3,chunk,0,VP,323,162,50.15%
+"Granularity=chunk, Sentence Index=1",2,chunk,1,,201,142,70.65%
+"Granularity=chunk, Sentence Index=1, Syntagm Type=NP",3,chunk,1,NP,25,19,76.00%
+"Granularity=chunk, Sentence Index=1, Syntagm Type=PP",3,chunk,1,PP,64,42,65.62%
 "Granularity=chunk, Sentence Index=1, Syntagm Type=SBAR",3,chunk,1,SBAR,7,6,85.71%
-"Granularity=chunk, Sentence Index=1, Syntagm Type=VP",3,chunk,1,VP,105,64,60.95%
-"Granularity=chunk, Sentence Index=2",2,chunk,2,,159,156,98.11%
+"Granularity=chunk, Sentence Index=1, Syntagm Type=VP",3,chunk,1,VP,105,75,71.43%
+"Granularity=chunk, Sentence Index=2",2,chunk,2,,159,161,101.26%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=ADJP",3,chunk,2,ADJP,1,1,100.00%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=NP",3,chunk,2,NP,28,24,85.71%
-"Granularity=chunk, Sentence Index=2, Syntagm Type=PP",3,chunk,2,PP,43,46,106.98%
+"Granularity=chunk, Sentence Index=2, Syntagm Type=PP",3,chunk,2,PP,43,47,109.30%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=SBAR",3,chunk,2,SBAR,4,3,75.00%
-"Granularity=chunk, Sentence Index=2, Syntagm Type=VP",3,chunk,2,VP,83,82,98.80%
-"Granularity=chunk, Sentence Index=3",2,chunk,3,,80,65,81.25%
+"Granularity=chunk, Sentence Index=2, Syntagm Type=VP",3,chunk,2,VP,83,86,103.61%
+"Granularity=chunk, Sentence Index=3",2,chunk,3,,80,66,82.50%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=ADJP",3,chunk,3,ADJP,1,1,100.00%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=NP",3,chunk,3,NP,19,14,73.68%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=PP",3,chunk,3,PP,22,14,63.64%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=SBAR",3,chunk,3,SBAR,1,1,100.00%
-"Granularity=chunk, Sentence Index=3, Syntagm Type=VP",3,chunk,3,VP,37,35,94.59%
-"Granularity=chunk, Sentence Index=4",2,chunk,4,,28,27,96.43%
+"Granularity=chunk, Sentence Index=3, Syntagm Type=VP",3,chunk,3,VP,37,36,97.30%
+"Granularity=chunk, Sentence Index=4",2,chunk,4,,28,28,100.00%
 "Granularity=chunk, Sentence Index=4, Syntagm Type=ADJP",3,chunk,4,ADJP,1,2,200.00%
 "Granularity=chunk, Sentence Index=4, Syntagm Type=ADVP",3,chunk,4,ADVP,1,1,100.00%
 "Granularity=chunk, Sentence Index=4, Syntagm Type=NP",3,chunk,4,NP,1,1,100.00%
 "Granularity=chunk, Sentence Index=4, Syntagm Type=PP",3,chunk,4,PP,6,8,133.33%
 "Granularity=chunk, Sentence Index=4, Syntagm Type=SBAR",3,chunk,4,SBAR,1,1,100.00%
-"Granularity=chunk, Sentence Index=4, Syntagm Type=VP",3,chunk,4,VP,18,14,77.78%
+"Granularity=chunk, Sentence Index=4, Syntagm Type=VP",3,chunk,4,VP,18,15,83.33%
 "Granularity=chunk, Sentence Index=5",2,chunk,5,,7,8,114.29%
 "Granularity=chunk, Sentence Index=5, Syntagm Type=PP",3,chunk,5,PP,1,1,100.00%
 "Granularity=chunk, Sentence Index=5, Syntagm Type=VP",3,chunk,5,VP,6,7,116.67%
@@ -44,74 +44,74 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=chunk, Sentence Index=9, Syntagm Type=VP",3,chunk,9,VP,1,1,100.00%
 "Granularity=chunk, Syntagm Type=ADJP",2,chunk,,ADJP,7,4,57.14%
 "Granularity=chunk, Syntagm Type=ADVP",2,chunk,,ADVP,4,4,100.00%
-"Granularity=chunk, Syntagm Type=NP",2,chunk,,NP,336,160,47.62%
-"Granularity=chunk, Syntagm Type=PP",2,chunk,,PP,643,318,49.46%
-"Granularity=chunk, Syntagm Type=SBAR",2,chunk,,SBAR,42,32,76.19%
-"Granularity=chunk, Syntagm Type=VP",2,chunk,,VP,581,363,62.48%
-"Granularity=clause, Sentence Index=0",2,clause,0,,55,32,58.18%
-"Granularity=clause, Sentence Index=0, Syntagm Type=SBAR",3,clause,0,SBAR,55,32,58.18%
-"Granularity=clause, Sentence Index=1",2,clause,1,,9,7,77.78%
-"Granularity=clause, Sentence Index=1, Syntagm Type=SBAR",3,clause,1,SBAR,9,7,77.78%
+"Granularity=chunk, Syntagm Type=NP",2,chunk,,NP,336,176,52.38%
+"Granularity=chunk, Syntagm Type=PP",2,chunk,,PP,643,339,52.72%
+"Granularity=chunk, Syntagm Type=SBAR",2,chunk,,SBAR,42,35,83.33%
+"Granularity=chunk, Syntagm Type=VP",2,chunk,,VP,581,391,67.30%
+"Granularity=clause, Sentence Index=0",2,clause,0,,55,37,67.27%
+"Granularity=clause, Sentence Index=0, Syntagm Type=SBAR",3,clause,0,SBAR,55,37,67.27%
+"Granularity=clause, Sentence Index=1",2,clause,1,,9,8,88.89%
+"Granularity=clause, Sentence Index=1, Syntagm Type=SBAR",3,clause,1,SBAR,9,8,88.89%
 "Granularity=clause, Sentence Index=2",2,clause,2,,7,4,57.14%
 "Granularity=clause, Sentence Index=2, Syntagm Type=SBAR",3,clause,2,SBAR,7,4,57.14%
 "Granularity=clause, Sentence Index=3",2,clause,3,,1,1,100.00%
 "Granularity=clause, Sentence Index=3, Syntagm Type=SBAR",3,clause,3,SBAR,1,1,100.00%
-"Granularity=clause, Syntagm Type=SBAR",2,clause,,SBAR,72,44,61.11%
-"Granularity=minimal, Sentence Index=0",2,minimal,0,,1847,974,52.73%
+"Granularity=clause, Syntagm Type=SBAR",2,clause,,SBAR,72,50,69.44%
+"Granularity=minimal, Sentence Index=0",2,minimal,0,,1847,1017,55.06%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=ADJP",3,minimal,0,ADJP,19,6,31.58%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=ADVP",3,minimal,0,ADVP,28,2,7.14%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=CONJP",3,minimal,0,CONJP,1,0,0.00%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=CONJP",3,minimal,0,CONJP,1,1,100.00%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=INTJ",3,minimal,0,INTJ,2,0,0.00%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=NP",3,minimal,0,NP,1511,786,52.02%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=NP",3,minimal,0,NP,1511,818,54.14%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=PP",3,minimal,0,PP,10,10,100.00%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=PRT",3,minimal,0,PRT,15,3,20.00%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=PRT",3,minimal,0,PRT,15,4,26.67%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=QP",3,minimal,0,QP,5,2,40.00%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=SBAR",3,minimal,0,SBAR,98,41,41.84%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=VP",3,minimal,0,VP,63,37,58.73%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=WHADVP",3,minimal,0,WHADVP,19,17,89.47%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=WHNP",3,minimal,0,WHNP,76,70,92.11%
-"Granularity=minimal, Sentence Index=1",2,minimal,1,,333,218,65.47%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=SBAR",3,minimal,0,SBAR,98,44,44.90%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=VP",3,minimal,0,VP,63,38,60.32%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=WHADVP",3,minimal,0,WHADVP,19,18,94.74%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=WHNP",3,minimal,0,WHNP,76,74,97.37%
+"Granularity=minimal, Sentence Index=1",2,minimal,1,,333,234,70.27%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=ADJP",3,minimal,1,ADJP,11,7,63.64%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=ADVP",3,minimal,1,ADVP,8,4,50.00%
-"Granularity=minimal, Sentence Index=1, Syntagm Type=NP",3,minimal,1,NP,258,177,68.60%
+"Granularity=minimal, Sentence Index=1, Syntagm Type=NP",3,minimal,1,NP,258,190,73.64%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=PP",3,minimal,1,PP,2,1,50.00%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=PRT",3,minimal,1,PRT,6,3,50.00%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=SBAR",3,minimal,1,SBAR,25,10,40.00%
-"Granularity=minimal, Sentence Index=1, Syntagm Type=VP",3,minimal,1,VP,13,7,53.85%
-"Granularity=minimal, Sentence Index=1, Syntagm Type=WHADVP",3,minimal,1,WHADVP,2,1,50.00%
+"Granularity=minimal, Sentence Index=1, Syntagm Type=VP",3,minimal,1,VP,13,9,69.23%
+"Granularity=minimal, Sentence Index=1, Syntagm Type=WHADVP",3,minimal,1,WHADVP,2,2,100.00%
 "Granularity=minimal, Sentence Index=1, Syntagm Type=WHNP",3,minimal,1,WHNP,8,8,100.00%
-"Granularity=minimal, Sentence Index=2",2,minimal,2,,254,212,83.46%
+"Granularity=minimal, Sentence Index=2",2,minimal,2,,254,237,93.31%
 "Granularity=minimal, Sentence Index=2, Syntagm Type=ADJP",3,minimal,2,ADJP,7,7,100.00%
-"Granularity=minimal, Sentence Index=2, Syntagm Type=ADVP",3,minimal,2,ADVP,7,3,42.86%
-"Granularity=minimal, Sentence Index=2, Syntagm Type=NP",3,minimal,2,NP,189,160,84.66%
+"Granularity=minimal, Sentence Index=2, Syntagm Type=ADVP",3,minimal,2,ADVP,7,5,71.43%
+"Granularity=minimal, Sentence Index=2, Syntagm Type=NP",3,minimal,2,NP,189,180,95.24%
 "Granularity=minimal, Sentence Index=2, Syntagm Type=PP",3,minimal,2,PP,2,1,50.00%
 "Granularity=minimal, Sentence Index=2, Syntagm Type=PRT",3,minimal,2,PRT,1,0,0.00%
 "Granularity=minimal, Sentence Index=2, Syntagm Type=QP",3,minimal,2,QP,1,0,0.00%
-"Granularity=minimal, Sentence Index=2, Syntagm Type=SBAR",3,minimal,2,SBAR,27,26,96.30%
+"Granularity=minimal, Sentence Index=2, Syntagm Type=SBAR",3,minimal,2,SBAR,27,27,100.00%
 "Granularity=minimal, Sentence Index=2, Syntagm Type=VP",3,minimal,2,VP,10,12,120.00%
-"Granularity=minimal, Sentence Index=2, Syntagm Type=WHADVP",3,minimal,2,WHADVP,5,3,60.00%
-"Granularity=minimal, Sentence Index=2, Syntagm Type=WHNP",3,minimal,2,WHNP,5,0,0.00%
-"Granularity=minimal, Sentence Index=3",2,minimal,3,,126,91,72.22%
+"Granularity=minimal, Sentence Index=2, Syntagm Type=WHADVP",3,minimal,2,WHADVP,5,4,80.00%
+"Granularity=minimal, Sentence Index=2, Syntagm Type=WHNP",3,minimal,2,WHNP,5,1,20.00%
+"Granularity=minimal, Sentence Index=3",2,minimal,3,,126,102,80.95%
 "Granularity=minimal, Sentence Index=3, Syntagm Type=ADJP",3,minimal,3,ADJP,3,3,100.00%
-"Granularity=minimal, Sentence Index=3, Syntagm Type=ADVP",3,minimal,3,ADVP,5,1,20.00%
-"Granularity=minimal, Sentence Index=3, Syntagm Type=NP",3,minimal,3,NP,95,66,69.47%
+"Granularity=minimal, Sentence Index=3, Syntagm Type=ADVP",3,minimal,3,ADVP,5,3,60.00%
+"Granularity=minimal, Sentence Index=3, Syntagm Type=NP",3,minimal,3,NP,95,73,76.84%
 "Granularity=minimal, Sentence Index=3, Syntagm Type=PRT",3,minimal,3,PRT,1,0,0.00%
 "Granularity=minimal, Sentence Index=3, Syntagm Type=SBAR",3,minimal,3,SBAR,15,16,106.67%
-"Granularity=minimal, Sentence Index=3, Syntagm Type=VP",3,minimal,3,VP,5,3,60.00%
+"Granularity=minimal, Sentence Index=3, Syntagm Type=VP",3,minimal,3,VP,5,5,100.00%
 "Granularity=minimal, Sentence Index=3, Syntagm Type=WHADVP",3,minimal,3,WHADVP,1,1,100.00%
 "Granularity=minimal, Sentence Index=3, Syntagm Type=WHNP",3,minimal,3,WHNP,1,1,100.00%
-"Granularity=minimal, Sentence Index=4",2,minimal,4,,38,31,81.58%
+"Granularity=minimal, Sentence Index=4",2,minimal,4,,38,33,86.84%
 "Granularity=minimal, Sentence Index=4, Syntagm Type=ADJP",3,minimal,4,ADJP,1,1,100.00%
 "Granularity=minimal, Sentence Index=4, Syntagm Type=ADVP",3,minimal,4,ADVP,2,1,50.00%
-"Granularity=minimal, Sentence Index=4, Syntagm Type=NP",3,minimal,4,NP,30,26,86.67%
+"Granularity=minimal, Sentence Index=4, Syntagm Type=NP",3,minimal,4,NP,30,28,93.33%
 "Granularity=minimal, Sentence Index=4, Syntagm Type=SBAR",3,minimal,4,SBAR,3,2,66.67%
 "Granularity=minimal, Sentence Index=4, Syntagm Type=VP",3,minimal,4,VP,1,0,0.00%
 "Granularity=minimal, Sentence Index=4, Syntagm Type=WHNP",3,minimal,4,WHNP,1,1,100.00%
-"Granularity=minimal, Sentence Index=5",2,minimal,5,,15,15,100.00%
+"Granularity=minimal, Sentence Index=5",2,minimal,5,,15,17,113.33%
 "Granularity=minimal, Sentence Index=5, Syntagm Type=ADJP",3,minimal,5,ADJP,2,2,100.00%
-"Granularity=minimal, Sentence Index=5, Syntagm Type=NP",3,minimal,5,NP,10,11,110.00%
+"Granularity=minimal, Sentence Index=5, Syntagm Type=NP",3,minimal,5,NP,10,12,120.00%
 "Granularity=minimal, Sentence Index=5, Syntagm Type=SBAR",3,minimal,5,SBAR,2,2,100.00%
-"Granularity=minimal, Sentence Index=5, Syntagm Type=VP",3,minimal,5,VP,1,0,0.00%
+"Granularity=minimal, Sentence Index=5, Syntagm Type=VP",3,minimal,5,VP,1,1,100.00%
 "Granularity=minimal, Sentence Index=6",2,minimal,6,,12,14,116.67%
 "Granularity=minimal, Sentence Index=6, Syntagm Type=NP",3,minimal,6,NP,9,10,111.11%
 "Granularity=minimal, Sentence Index=6, Syntagm Type=SBAR",3,minimal,6,SBAR,2,2,100.00%
@@ -125,69 +125,69 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=minimal, Sentence Index=9",2,minimal,9,,2,2,100.00%
 "Granularity=minimal, Sentence Index=9, Syntagm Type=NP",3,minimal,9,NP,2,2,100.00%
 "Granularity=minimal, Syntagm Type=ADJP",2,minimal,,ADJP,43,26,60.47%
-"Granularity=minimal, Syntagm Type=ADVP",2,minimal,,ADVP,50,11,22.00%
-"Granularity=minimal, Syntagm Type=CONJP",2,minimal,,CONJP,1,0,0.00%
+"Granularity=minimal, Syntagm Type=ADVP",2,minimal,,ADVP,50,15,30.00%
+"Granularity=minimal, Syntagm Type=CONJP",2,minimal,,CONJP,1,1,100.00%
 "Granularity=minimal, Syntagm Type=INTJ",2,minimal,,INTJ,2,0,0.00%
-"Granularity=minimal, Syntagm Type=NP",2,minimal,,NP,2110,1245,59.00%
+"Granularity=minimal, Syntagm Type=NP",2,minimal,,NP,2110,1320,62.56%
 "Granularity=minimal, Syntagm Type=PP",2,minimal,,PP,14,12,85.71%
-"Granularity=minimal, Syntagm Type=PRT",2,minimal,,PRT,23,6,26.09%
+"Granularity=minimal, Syntagm Type=PRT",2,minimal,,PRT,23,7,30.43%
 "Granularity=minimal, Syntagm Type=QP",2,minimal,,QP,6,2,33.33%
-"Granularity=minimal, Syntagm Type=SBAR",2,minimal,,SBAR,173,100,57.80%
-"Granularity=minimal, Syntagm Type=VP",2,minimal,,VP,95,62,65.26%
-"Granularity=minimal, Syntagm Type=WHADVP",2,minimal,,WHADVP,27,22,81.48%
-"Granularity=minimal, Syntagm Type=WHNP",2,minimal,,WHNP,91,80,87.91%
+"Granularity=minimal, Syntagm Type=SBAR",2,minimal,,SBAR,173,104,60.12%
+"Granularity=minimal, Syntagm Type=VP",2,minimal,,VP,95,68,71.58%
+"Granularity=minimal, Syntagm Type=WHADVP",2,minimal,,WHADVP,27,25,92.59%
+"Granularity=minimal, Syntagm Type=WHNP",2,minimal,,WHNP,91,85,93.41%
 "Sentence Index=0, Syntagm Type=ADJP",2,,0,ADJP,23,6,26.09%
 "Sentence Index=0, Syntagm Type=ADVP",2,,0,ADVP,31,5,16.13%
-"Sentence Index=0, Syntagm Type=CONJP",2,,0,CONJP,1,0,0.00%
+"Sentence Index=0, Syntagm Type=CONJP",2,,0,CONJP,1,1,100.00%
 "Sentence Index=0, Syntagm Type=INTJ",2,,0,INTJ,2,0,0.00%
-"Sentence Index=0, Syntagm Type=NP",2,,0,NP,1774,892,50.28%
-"Sentence Index=0, Syntagm Type=PP",2,,0,PP,516,222,43.02%
-"Sentence Index=0, Syntagm Type=PRT",2,,0,PRT,15,3,20.00%
+"Sentence Index=0, Syntagm Type=NP",2,,0,NP,1774,936,52.76%
+"Sentence Index=0, Syntagm Type=PP",2,,0,PP,516,236,45.74%
+"Sentence Index=0, Syntagm Type=PRT",2,,0,PRT,15,4,26.67%
 "Sentence Index=0, Syntagm Type=QP",2,,0,QP,5,2,40.00%
-"Sentence Index=0, Syntagm Type=SBAR",2,,0,SBAR,182,94,51.65%
-"Sentence Index=0, Syntagm Type=VP",2,,0,VP,386,188,48.70%
-"Sentence Index=0, Syntagm Type=WHADVP",2,,0,WHADVP,19,17,89.47%
-"Sentence Index=0, Syntagm Type=WHNP",2,,0,WHNP,76,70,92.11%
+"Sentence Index=0, Syntagm Type=SBAR",2,,0,SBAR,182,105,57.69%
+"Sentence Index=0, Syntagm Type=VP",2,,0,VP,386,200,51.81%
+"Sentence Index=0, Syntagm Type=WHADVP",2,,0,WHADVP,19,18,94.74%
+"Sentence Index=0, Syntagm Type=WHNP",2,,0,WHNP,76,74,97.37%
 "Sentence Index=1, Syntagm Type=ADJP",2,,1,ADJP,11,7,63.64%
 "Sentence Index=1, Syntagm Type=ADVP",2,,1,ADVP,8,4,50.00%
-"Sentence Index=1, Syntagm Type=NP",2,,1,NP,283,192,67.84%
-"Sentence Index=1, Syntagm Type=PP",2,,1,PP,66,37,56.06%
+"Sentence Index=1, Syntagm Type=NP",2,,1,NP,283,209,73.85%
+"Sentence Index=1, Syntagm Type=PP",2,,1,PP,66,43,65.15%
 "Sentence Index=1, Syntagm Type=PRT",2,,1,PRT,6,3,50.00%
-"Sentence Index=1, Syntagm Type=SBAR",2,,1,SBAR,41,23,56.10%
-"Sentence Index=1, Syntagm Type=VP",2,,1,VP,118,71,60.17%
-"Sentence Index=1, Syntagm Type=WHADVP",2,,1,WHADVP,2,1,50.00%
+"Sentence Index=1, Syntagm Type=SBAR",2,,1,SBAR,41,24,58.54%
+"Sentence Index=1, Syntagm Type=VP",2,,1,VP,118,84,71.19%
+"Sentence Index=1, Syntagm Type=WHADVP",2,,1,WHADVP,2,2,100.00%
 "Sentence Index=1, Syntagm Type=WHNP",2,,1,WHNP,8,8,100.00%
 "Sentence Index=2, Syntagm Type=ADJP",2,,2,ADJP,8,8,100.00%
-"Sentence Index=2, Syntagm Type=ADVP",2,,2,ADVP,7,3,42.86%
-"Sentence Index=2, Syntagm Type=NP",2,,2,NP,217,184,84.79%
-"Sentence Index=2, Syntagm Type=PP",2,,2,PP,45,47,104.44%
+"Sentence Index=2, Syntagm Type=ADVP",2,,2,ADVP,7,5,71.43%
+"Sentence Index=2, Syntagm Type=NP",2,,2,NP,217,204,94.01%
+"Sentence Index=2, Syntagm Type=PP",2,,2,PP,45,48,106.67%
 "Sentence Index=2, Syntagm Type=PRT",2,,2,PRT,1,0,0.00%
 "Sentence Index=2, Syntagm Type=QP",2,,2,QP,1,0,0.00%
-"Sentence Index=2, Syntagm Type=SBAR",2,,2,SBAR,38,33,86.84%
-"Sentence Index=2, Syntagm Type=VP",2,,2,VP,93,94,101.08%
-"Sentence Index=2, Syntagm Type=WHADVP",2,,2,WHADVP,5,3,60.00%
-"Sentence Index=2, Syntagm Type=WHNP",2,,2,WHNP,5,0,0.00%
+"Sentence Index=2, Syntagm Type=SBAR",2,,2,SBAR,38,34,89.47%
+"Sentence Index=2, Syntagm Type=VP",2,,2,VP,93,98,105.38%
+"Sentence Index=2, Syntagm Type=WHADVP",2,,2,WHADVP,5,4,80.00%
+"Sentence Index=2, Syntagm Type=WHNP",2,,2,WHNP,5,1,20.00%
 "Sentence Index=3, Syntagm Type=ADJP",2,,3,ADJP,4,4,100.00%
-"Sentence Index=3, Syntagm Type=ADVP",2,,3,ADVP,5,1,20.00%
-"Sentence Index=3, Syntagm Type=NP",2,,3,NP,114,80,70.18%
+"Sentence Index=3, Syntagm Type=ADVP",2,,3,ADVP,5,3,60.00%
+"Sentence Index=3, Syntagm Type=NP",2,,3,NP,114,87,76.32%
 "Sentence Index=3, Syntagm Type=PP",2,,3,PP,22,14,63.64%
 "Sentence Index=3, Syntagm Type=PRT",2,,3,PRT,1,0,0.00%
 "Sentence Index=3, Syntagm Type=SBAR",2,,3,SBAR,17,18,105.88%
-"Sentence Index=3, Syntagm Type=VP",2,,3,VP,42,38,90.48%
+"Sentence Index=3, Syntagm Type=VP",2,,3,VP,42,41,97.62%
 "Sentence Index=3, Syntagm Type=WHADVP",2,,3,WHADVP,1,1,100.00%
 "Sentence Index=3, Syntagm Type=WHNP",2,,3,WHNP,1,1,100.00%
 "Sentence Index=4, Syntagm Type=ADJP",2,,4,ADJP,2,3,150.00%
 "Sentence Index=4, Syntagm Type=ADVP",2,,4,ADVP,3,2,66.67%
-"Sentence Index=4, Syntagm Type=NP",2,,4,NP,31,27,87.10%
+"Sentence Index=4, Syntagm Type=NP",2,,4,NP,31,29,93.55%
 "Sentence Index=4, Syntagm Type=PP",2,,4,PP,6,8,133.33%
 "Sentence Index=4, Syntagm Type=SBAR",2,,4,SBAR,4,3,75.00%
-"Sentence Index=4, Syntagm Type=VP",2,,4,VP,19,14,73.68%
+"Sentence Index=4, Syntagm Type=VP",2,,4,VP,19,15,78.95%
 "Sentence Index=4, Syntagm Type=WHNP",2,,4,WHNP,1,1,100.00%
 "Sentence Index=5, Syntagm Type=ADJP",2,,5,ADJP,2,2,100.00%
-"Sentence Index=5, Syntagm Type=NP",2,,5,NP,10,11,110.00%
+"Sentence Index=5, Syntagm Type=NP",2,,5,NP,10,12,120.00%
 "Sentence Index=5, Syntagm Type=PP",2,,5,PP,1,1,100.00%
 "Sentence Index=5, Syntagm Type=SBAR",2,,5,SBAR,2,2,100.00%
-"Sentence Index=5, Syntagm Type=VP",2,,5,VP,7,7,100.00%
+"Sentence Index=5, Syntagm Type=VP",2,,5,VP,7,8,114.29%
 "Sentence Index=6, Syntagm Type=NP",2,,6,NP,9,10,111.11%
 "Sentence Index=6, Syntagm Type=PP",2,,6,PP,1,1,100.00%
 "Sentence Index=6, Syntagm Type=SBAR",2,,6,SBAR,2,2,100.00%

@@ -1,26 +1,26 @@
 Category,Value,Base,Result,Frequency
-Syntagm Type,ADJP,50,24,48.00%
-Syntagm Type,ADVP,54,13,24.07%
-Syntagm Type,CONJP,1,0,0.00%
+Syntagm Type,ADJP,50,31,62.00%
+Syntagm Type,ADVP,54,20,37.04%
+Syntagm Type,CONJP,1,1,100.00%
 Syntagm Type,INTJ,2,0,0.00%
-Syntagm Type,NP,2446,1373,56.13%
-Syntagm Type,PP,657,345,52.51%
-Syntagm Type,PRT,23,6,26.09%
+Syntagm Type,NP,2446,1538,62.88%
+Syntagm Type,PP,657,379,57.69%
+Syntagm Type,PRT,23,8,34.78%
 Syntagm Type,QP,6,2,33.33%
-Syntagm Type,SBAR,287,164,57.14%
-Syntagm Type,VP,676,385,56.95%
-Syntagm Type,WHADVP,27,29,107.41%
-Syntagm Type,WHNP,91,71,78.02%
-Granularity,chunk,1613,868,53.81%
-Granularity,clause,72,46,63.89%
-Granularity,minimal,2635,1498,56.85%
-Sentence Index,0,3030,1464,48.32%
-Sentence Index,1,543,372,68.51%
-Sentence Index,2,420,339,80.71%
-Sentence Index,3,207,157,75.85%
-Sentence Index,4,66,47,71.21%
-Sentence Index,5,22,15,68.18%
-Sentence Index,6,18,9,50.00%
-Sentence Index,7,8,3,37.50%
+Syntagm Type,SBAR,287,188,65.51%
+Syntagm Type,VP,676,459,67.90%
+Syntagm Type,WHADVP,27,32,118.52%
+Syntagm Type,WHNP,91,83,91.21%
+Granularity,chunk,1613,997,61.81%
+Granularity,clause,72,52,72.22%
+Granularity,minimal,2635,1692,64.21%
+Sentence Index,0,3030,1616,53.33%
+Sentence Index,1,543,431,79.37%
+Sentence Index,2,420,384,91.43%
+Sentence Index,3,207,189,91.30%
+Sentence Index,4,66,65,98.48%
+Sentence Index,5,22,24,109.09%
+Sentence Index,6,18,18,100.00%
+Sentence Index,7,8,8,100.00%
 Sentence Index,8,3,3,100.00%
 Sentence Index,9,3,3,100.00%
