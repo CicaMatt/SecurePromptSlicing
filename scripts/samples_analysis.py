@@ -1747,7 +1747,216 @@ def add_detected_cwes(
         writer.writerows(rows)
 
 
+def single_feature_frequency_mean(csv_a: str,
+                           csv_b: str,
+                           csv_c: str,
+                           sep: str = ",",
+                           decimal: str = ".",
+                           encoding: str = "utf-8",
+                           sort: bool = True) -> pd.DataFrame:
+    """
+    Legge tre CSV con colonne 'Category', 'Value', 'Frequency' e,
+    per ogni coppia (Category, Value) presente in TUTTI e tre i file,
+    stampa la media di 'Frequency' sui tre CSV.
+
+    Parametri:
+        csv_a, csv_b, csv_c : path dei tre file CSV
+        sep                 : separatore di campo (default ",")
+        decimal             : separatore decimale ('.' o ',')
+        encoding            : encoding file
+        sort                : ordina l'output per Category/Value
+
+    Ritorna:
+        pandas.DataFrame con colonne ['Category', 'Value', 'Frequency_mean']
+
+    Note:
+        - Se in uno stesso CSV esistono più righe per la stessa coppia
+          (Category, Value), prima fa la media interna per quel file,
+          poi calcola la media tra i tre file.
+    """
+    def _prep(path: str) -> pd.DataFrame:
+        df = pd.read_csv(path, sep=sep, decimal=decimal, encoding=encoding)
+        required = {"Category", "Value", "Frequency"}
+        missing = required - set(df.columns)
+        if missing:
+            raise ValueError(f"{path}: mancano le colonne {missing}")
+
+        # forza numerico su Frequency (valori non numerici -> NaN, poi rimossi)
+        df["Frequency"] = pd.to_numeric(df["Frequency"], errors="coerce")
+        df = df.dropna(subset=["Frequency"])
+
+        # media interna per gestire eventuali duplicati di (Category, Value)
+        df = (df.groupby(["Category", "Value"], as_index=False)["Frequency"]
+                .mean())
+        df = df.rename(columns={"Frequency": f"Frequency_{Path(path).stem}"})
+        return df
+
+    a = _prep(csv_a)
+    b = _prep(csv_b)
+    c = _prep(csv_c)
+
+    # unione sulle chiavi comuni; mantieni solo le coppie presenti in tutti e tre
+    merged = a.merge(b, on=["Category", "Value"], how="inner") \
+              .merge(c, on=["Category", "Value"], how="inner")
+
+    if merged.empty:
+        raise ValueError("Nessuna coppia (Category, Value) in comune tra tutti e tre i file.")
+
+    freq_cols = [col for col in merged.columns if col.startswith("Frequency_")]
+    merged["Frequency_mean"] = merged[freq_cols].mean(axis=1)
+
+    out = merged[["Category", "Value", "Frequency_mean"]]
+    if sort:
+        out = out.sort_values(["Category", "Value"]).reset_index(drop=True)
+
+    # stampa richiesta
+    for _, row in out.iterrows():
+        print(f"{row['Category']} | {row['Value']}: {row['Frequency_mean']:.6g}")
+
+    return out
+
+
+def combined_feature_frequency_mean(csv_a: str,
+                                           csv_b: str,
+                                           csv_c: str,
+                                           sep: str = ",",
+                                           decimal: str = ".",
+                                           encoding: str = "utf-8",
+                                           sort: bool = True) -> pd.DataFrame:
+    """
+    Legge tre CSV con colonne 'Combination' e 'Frequency' e,
+    per ogni valore di 'Combination' presente in TUTTI e tre i file,
+    stampa la media di 'Frequency' sui tre CSV.
+
+    Parametri:
+        csv_a, csv_b, csv_c : path dei tre file CSV
+        sep                 : separatore di campo (default ",")
+        decimal             : separatore decimale ('.' o ',')
+        encoding            : encoding del file
+        sort                : ordina l'output per 'Combination'
+
+    Ritorna:
+        pandas.DataFrame con colonne ['Combination', 'Frequency_mean']
+
+    Note:
+        - Se in uno stesso CSV esistono più righe con la stessa 'Combination',
+          prima fa la media interna per quel file, poi calcola la media tra i tre file.
+    """
+    def _prep(path: str) -> pd.DataFrame:
+        df = pd.read_csv(path, sep=sep, decimal=decimal, encoding=encoding)
+        required = {"Combination", "Frequency"}
+        missing = required - set(df.columns)
+        if missing:
+            raise ValueError(f"{path}: mancano le colonne {missing}")
+
+        # Normalizza i campi
+        df["Combination"] = df["Combination"].astype(str).str.strip()
+        df["Frequency"] = pd.to_numeric(df["Frequency"], errors="coerce")
+        df = df.dropna(subset=["Frequency"])
+
+        # Media interna per gestire duplicati della stessa Combination
+        df = (df.groupby("Combination", as_index=False)["Frequency"]
+                .mean())
+        df = df.rename(columns={"Frequency": f"Frequency_{Path(path).stem}"})
+        return df
+
+    a = _prep(csv_a)
+    b = _prep(csv_b)
+    c = _prep(csv_c)
+
+    # Mantieni solo le Combination presenti in tutti e tre
+    merged = a.merge(b, on="Combination", how="inner") \
+              .merge(c, on="Combination", how="inner")
+
+    if merged.empty:
+        raise ValueError("Nessuna 'Combination' in comune tra tutti e tre i file.")
+
+    freq_cols = [col for col in merged.columns if col.startswith("Frequency_")]
+    merged["Frequency_mean"] = merged[freq_cols].mean(axis=1)
+
+    out = merged[["Combination", "Frequency_mean"]]
+    if sort:
+        out = out.sort_values(["Combination"]).reset_index(drop=True)
+
+    # stampa richiesta
+    for _, row in out.iterrows():
+        print(f"{row['Combination']}: {row['Frequency_mean']:.6g}")
+
+    return out
+
+
+def cwe_scenarios_frequency_mean(csv_a: str,
+                                   csv_b: str,
+                                   csv_c: str,
+                                   sep: str = ",",
+                                   decimal: str = ".",
+                                   encoding: str = "utf-8",
+                                   sort: bool = True) -> pd.DataFrame:
+    """
+    Legge tre CSV con colonne 'CWE' e 'Frequency' e,
+    per ogni valore di 'CWE' presente in TUTTI e tre i file,
+    stampa la media di 'Frequency' sui tre CSV.
+
+    Parametri:
+        csv_a, csv_b, csv_c : path dei tre file CSV
+        sep                 : separatore di campo (default ",")
+        decimal             : separatore decimale ('.' o ',')
+        encoding            : encoding del file
+        sort                : ordina l'output per 'CWE'
+
+    Ritorna:
+        pandas.DataFrame con colonne ['CWE', 'Frequency_mean']
+
+    Note:
+        - Se in uno stesso CSV esistono più righe con lo stesso 'CWE',
+          prima fa la media interna per quel file, poi calcola la media tra i tre file.
+    """
+    def _prep(path: str) -> pd.DataFrame:
+        df = pd.read_csv(path, sep=sep, decimal=decimal, encoding=encoding)
+        required = {"CWE", "Frequency"}
+        missing = required - set(df.columns)
+        if missing:
+            raise ValueError(f"{path}: mancano le colonne {missing}")
+
+        # Normalizza i campi
+        df["CWE"] = df["CWE"].astype(str).str.strip()
+        df["Frequency"] = pd.to_numeric(df["Frequency"], errors="coerce")
+        df = df.dropna(subset=["Frequency"])
+
+        # Media interna per gestire duplicati dello stesso CWE
+        df = (df.groupby("CWE", as_index=False)["Frequency"]
+                .mean())
+        df = df.rename(columns={"Frequency": f"Frequency_{Path(path).stem}"})
+        return df
+
+    a = _prep(csv_a)
+    b = _prep(csv_b)
+    c = _prep(csv_c)
+
+    # Mantieni solo i CWE presenti in tutti e tre i file
+    merged = a.merge(b, on="CWE", how="inner") \
+              .merge(c, on="CWE", how="inner")
+
+    if merged.empty:
+        raise ValueError("Nessun 'CWE' in comune tra tutti e tre i file.")
+
+    freq_cols = [col for col in merged.columns if col.startswith("Frequency_")]
+    merged["Frequency_mean"] = merged[freq_cols].mean(axis=1)
+
+    out = merged[["CWE", "Frequency_mean"]]
+    if sort:
+        out = out.sort_values(["CWE"]).reset_index(drop=True)
+
+    # stampa richiesta
+    for _, row in out.iterrows():
+        print(f"{row['CWE']}: {row['Frequency_mean']:.6g}")
+
+    return out
+
+
+
 ##################################################################################################################
+
 
 
 model_name = "athene"
@@ -2030,6 +2239,14 @@ class CWEComparison:
         compare_cwe_counters(permutations_cwes_2, result_cwes_2, comparison_permutations_cwes_2)
         compare_cwe_counters(permutations_cwes_3, result_cwes_3, comparison_permutations_cwes_3)
         print("\n----------------------------------------------------------------\n")
+
+
+class SamplesAnalysis:
+    def __init__(self):
+        print("***SAMPLES ANALYSIS***\n")
+        single_feature_frequency_mean(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
+        combined_feature_frequency_mean(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
+        cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3)
 
 
 

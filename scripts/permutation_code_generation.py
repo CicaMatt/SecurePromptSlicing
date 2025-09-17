@@ -167,7 +167,7 @@ def count_empty_files(directory, extension):
     return count
 
 
-def find_trailing_comments(base_path, extensions=None, remove=False):
+def clean_snippets(base_path, extensions=None, remove=False):
     def looks_like_code(line):
         line = line.strip()
         if re.match(r'^(javac|java|python[0-9]*|pip|curl|wget|make|bash|sh|node|npm)\b', line):
@@ -1061,7 +1061,7 @@ class IntegrityCheck:
         if extension == ".py":
             clean_python_snippets(snippets_folder, extension, remove=False)
         else:
-            find_trailing_comments(snippets_folder, extension, remove=False)
+            clean_snippets(snippets_folder, extension, remove=False)
         count_wrong_extension(snippets_folder, extension)
         validate_snippets_and_csv(snippets_folder, permutation_folder, snippet_amount)
         print("\n----------------------------------------------------------------\n")
@@ -1074,7 +1074,7 @@ class Cleaning:
         if extension == ".py":
             clean_python_snippets(snippets_folder, extension, remove=True)
         else:
-            find_trailing_comments(snippets_folder, extension, remove=True)
+            clean_snippets(snippets_folder, extension, remove=True)
 
 
 model_identifier = "qwen2.5-coder-32b-instruct"
@@ -1082,11 +1082,11 @@ model_identifier = "qwen2.5-coder-32b-instruct"
 #model_identifier = "phi-4"
 
 
-model_name = "qwen"
-sample_folder_id = 1
+model_name = "athene"
+sample_folder_id = 3
 
-language = "Python"
-identifier = "py"
+language = "C"
+identifier = "c"
 extension = f".{identifier}"
 
 

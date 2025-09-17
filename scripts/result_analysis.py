@@ -1756,13 +1756,149 @@ def add_detected_cwes(
         writer.writerows(rows)
 
 
+def print_detected_cwes(csv_path, column="Detected CWEs", separator=",", limit=None):
+    """
+    Read `csv_path`, parse comma-separated CWEs from `column`, and print a
+    frequency table sorted by count (desc) then CWE (asc).
+    Returns the sorted list of (cwe, count).
+    """
+    counts = Counter()
+
+    with open(csv_path, newline="", encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        if not reader.fieldnames or column not in reader.fieldnames:
+            raise ValueError(
+                f"Column '{column}' not found. Available columns: {reader.fieldnames}"
+            )
+
+        for row in reader:
+            field = (row.get(column) or "").strip()
+            if not field:
+                continue
+            for token in field.split(separator):
+                cwe = token.strip()
+                if cwe:
+                    counts[cwe] += 1
+
+    data = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+
+    if limit is not None:
+        data = data[:limit]
+
+    # pretty print
+    max_cwe_len = max((len(cwe) for cwe, _ in data), default=len("CWE"))
+    header = f"{'#':>4}  {'CWE':<{max_cwe_len}}  {'Count':>7}"
+    print(header)
+    print("-" * len(header))
+    for i, (cwe, count) in enumerate(data, start=1):
+        print(f"{i:>4}  {cwe:<{max_cwe_len}}  {count:>7}")
+
+    return data
+
+
+def compare_detected_cwe_frequencies(freqs1, freqs2, name1="A", name2="B",
+                            sort_by="abs_diff", descending=True, limit=None):
+    """
+    Compare CWE occurrences between two datasets and print a table.
+
+    Parameters
+    ----------
+    freqs1, freqs2 : list[tuple[str, int]] | dict[str, int]
+        Outputs from your frequency function (e.g., [('CWE-79', 12), ...]).
+        Dicts of {cwe: count} also work.
+    name1, name2 : str
+        Column labels used when printing counts for dataset 1 and 2.
+    sort_by : str
+        One of: 'abs_diff' (default), 'diff', 'count1', 'count2', 'cwe', 'pct'.
+        - diff = (count2 - count1)
+        - pct  = percentage change vs count1
+    descending : bool
+        Sort direction (True = largest first).
+    limit : int | None
+        If set, only the top N rows (after sorting) are shown/returned.
+
+    Returns
+    -------
+    list[dict]
+        Each item: {
+          'cwe': str, 'count1': int, 'count2': int,
+          'diff': int, 'abs_diff': int, 'pct_change': float | None
+        }
+    """
+    # --- normalize inputs to dicts ---
+    def _to_dict(x):
+        if isinstance(x, dict):
+            return {str(k): int(v) for k, v in x.items()}
+        d = {}
+        for cwe, cnt in x:
+            d[str(cwe)] = int(cnt)
+        return d
+
+    d1, d2 = _to_dict(freqs1), _to_dict(freqs2)
+
+    # --- build comparison rows over the union of CWEs ---
+    rows = []
+    for cwe in sorted(set(d1) | set(d2)):
+        a, b = d1.get(cwe, 0), d2.get(cwe, 0)
+        diff = b - a
+        abs_diff = abs(diff)
+        pct = None if a == 0 else diff / a
+        rows.append({
+            "cwe": cwe,
+            "count1": a,
+            "count2": b,
+            "diff": diff,
+            "abs_diff": abs_diff,
+            "pct_change": pct,
+        })
+
+    # --- sorting ---
+    def _pct_key(v):
+        # When sorting by percent change, place N/A sensibly.
+        if v["pct_change"] is None:
+            return float("-inf") if descending else float("inf")
+        return v["pct_change"]
+
+    key_map = {
+        "abs_diff": lambda v: (v["abs_diff"], v["cwe"]),
+        "diff":     lambda v: (v["diff"], v["cwe"]),
+        "count1":   lambda v: (v["count1"], v["cwe"]),
+        "count2":   lambda v: (v["count2"], v["cwe"]),
+        "cwe":      lambda v: (v["cwe"],),
+        "pct":      lambda v: (_pct_key(v), v["cwe"]),
+    }
+    key_fn = key_map.get(sort_by, key_map["abs_diff"])
+    rows.sort(key=key_fn, reverse=descending)
+
+    if limit is not None:
+        rows = rows[:limit]
+
+    # --- pretty print table ---
+    def fmt_pct(p):
+        return "n/a" if p is None else f"{p*100:+.1f}%"
+
+    max_cwe = max(len("CWE"), *(len(r["cwe"]) for r in rows)) if rows else 3
+    max_a   = max(len(name1), *(len(str(r["count1"])) for r in rows)) if rows else len(name1)
+    max_b   = max(len(name2), *(len(str(r["count2"])) for r in rows)) if rows else len(name2)
+    max_d   = max(len("Δ (B−A)"), *(len(str(r["diff"])) for r in rows)) if rows else len("Δ (B−A)")
+    max_p   = max(len("%Δ vs A"), *(len(fmt_pct(r["pct_change"])) for r in rows)) if rows else len("%Δ vs A")
+
+    header = f"{'#':>4}  {'CWE':<{max_cwe}}  {name1:>{max_a}}  {name2:>{max_b}}  {'Δ (B−A)':>{max_d}}  {'%Δ vs A':>{max_p}}"
+    print(header)
+    print("-" * len(header))
+    for i, r in enumerate(rows, 1):
+        print(f"{i:>4}  {r['cwe']:<{max_cwe}}  {r['count1']:>{max_a}}  {r['count2']:>{max_b}}  {r['diff']:>{max_d}}  {fmt_pct(r['pct_change']):>{max_p}}")
+
+    return rows
+
+
 ##################################################################################################################
 
 
-model_name = "phi4"
+model_name = "athene"
 
-language = "Java"
-language_identifier = "java"
+language = "Python"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -1824,6 +1960,8 @@ class BaselineStats:
         print("\n---------------------------------------")
         print("\nBaseline Vulnerable Snippets:")
         cwe_stats(results_baseline, "CWE ID", verbose=True)
+        print("\nBaseline Detected CWEs:")
+        print_detected_cwes(results_baseline)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1864,8 +2002,11 @@ class ResultStats:
         #combined_metrics_stats(results, verbose=True)
         #print("\n---------------------------------------\n")
 
-        print("\nTotal Vulnerable CWE Scenarios:")
+        print("\nVulnerable CWE Scenarios:")
         cwe_stats(results, "CWE ID", verbose=True)
+
+        print("\nDetected CWEs:")
+        print_detected_cwes(results_baseline)
 
         print("\nTotal CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
         check_cwe_match(results, permutations_folder)
@@ -1896,11 +2037,11 @@ class MetricsComparison:
         analyze_combined_features_significance(comparison_combined_metrics)
 
         # Plotting data
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
-        plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
+        #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
+        #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Granularity", "Frequency", True)
+        #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Sentence Index", "Frequency", True)
 
-        plot_combination_frequencies(permutation_combined_metrics, result_combined_metrics, top_n=30)
+        #plot_combination_frequencies(permutation_combined_metrics, result_combined_metrics, top_n=30)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1920,9 +2061,11 @@ class CWEComparison:
         print("\nPermutations - Results --- Metrics CWE Stats:")
         compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
 
+        compare_detected_cwe_frequencies(print_detected_cwes(results_baseline), print_detected_cwes(results))
+
         # Plotting data
-        plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
-        plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
+        #plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
+        #plot_cwe_comparison(permutations_cwes, result_cwes, "Permutations", "Frequency", True)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1931,8 +2074,8 @@ BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
 
-#BaselineStats()
-#PermutationsStats()
+BaselineStats()
+PermutationsStats()
 ResultStats()
 
 MetricsComparison()
