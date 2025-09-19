@@ -44,6 +44,3 @@ public class LoginServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-Ensure you have the necessary JSP files (`login.html` and `admin_page.jsp`) in your web application directory. Also, ensure that your servlet container (like Apache Tomcat) is set up correctly to run this servlet.

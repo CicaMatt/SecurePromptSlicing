@@ -30,6 +30,3 @@ public class RedirectController {
         // This is a placeholder for the main method if needed to run in an application context.
     }
 }
-
-
-Note: The above code assumes it's part of a Spring Boot web application. You need to include the necessary dependencies like `spring-boot-starter-web` in your `pom.xml` or build.gradle file for this code to be functional.

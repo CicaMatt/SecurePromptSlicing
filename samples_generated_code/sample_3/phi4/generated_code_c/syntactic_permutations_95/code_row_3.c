@@ -69,8 +69,3 @@ int main(void) {
     registerUser();
     return 0;
 }
-
-
-Note: This code requires the OpenSSL library to be installed and linked during compilation. You can compile it using:
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

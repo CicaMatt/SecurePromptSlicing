@@ -62,8 +62,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Ensure you have the MySQL client library installed and linked during compilation. You can compile this code using:
-
-gcc -o check_username check_username.c $(mysql_config --cflags --libs)

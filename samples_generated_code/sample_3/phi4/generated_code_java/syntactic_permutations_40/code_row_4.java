@@ -32,22 +32,3 @@ public class WebApp {
         ctx.result(responseHtml);
     }
 }
-
-
-To run this application, ensure you have the Javalin library in your project's dependencies. If using Maven, add:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-Or if using Gradle, add:
-
-
-implementation 'io.javalin:javalin:5.6.0'
-
-
-This code sets up a simple web server with Javalin and defines a single route `/info` that returns user information stored in the session.

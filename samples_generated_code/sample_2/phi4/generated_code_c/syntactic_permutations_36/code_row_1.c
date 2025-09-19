@@ -67,6 +67,3 @@ int main() {
         return -1;
     }
 }
-
-
-**Note:** This code assumes you have a MySQL database setup with a table named `users` that contains at least two columns: `username` and `password`. You need to replace `"your_database_name"` with the actual name of your database. Additionally, ensure your MySQL server is running and accessible from this program. Proper security measures such as password hashing are not implemented in this example for simplicity.

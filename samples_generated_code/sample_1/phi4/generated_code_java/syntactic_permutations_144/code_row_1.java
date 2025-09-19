@@ -51,6 +51,3 @@ public class EmailChecker {
         }
     }
 }
-
-
-Note: Replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, replace the script execution logic in `unsubscribeEmail` method as needed for your specific environment.

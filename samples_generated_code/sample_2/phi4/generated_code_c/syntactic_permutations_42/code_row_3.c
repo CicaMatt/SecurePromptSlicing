@@ -78,13 +78,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-
-
-**Note**: To compile and run this code, you will need a C compiler like `gcc`. Save the code to a file named `web_server.c` and use the following commands:
-
-
-gcc web_server.c -o web_server
-./web_server <port_number>
-
-
-Replace `<port_number>` with the desired port number (e.g., 8080). You can then access the application by visiting `http://localhost:<port_number>/info` in a web browser.

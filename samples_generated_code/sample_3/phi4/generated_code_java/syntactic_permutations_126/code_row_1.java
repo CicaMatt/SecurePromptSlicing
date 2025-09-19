@@ -34,6 +34,3 @@ public class HelloHttpServer {
         server.start();
     }
 }
-
-
-Note: The code uses `com.sun.net.httpserver.HttpServer` which is part of the JDK but not a part of any Java EE specification and might not be available in all environments or future versions of Java.

@@ -40,7 +40,6 @@ class FileUploadController {
 }
 
 
-**pom.xml**
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,14 +55,11 @@ class FileUploadController {
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> 
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        
     </dependencies>
 
     <build>
@@ -75,15 +71,3 @@ class FileUploadController {
         </plugins>
     </build>
 }
-
-
-**application.properties**
-
-server.port=8080
-
-
-To run the application:
-1. Save the Java code in a file named `FileUploadApplication.java`.
-2. Save the Maven configuration in a file named `pom.xml`.
-3. Create an `application.properties` file with the content provided.
-4. Run `mvn spring-boot:run` from the command line in the directory containing these files.

@@ -43,19 +43,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code, you need to include the Jetty server dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

@@ -37,18 +37,3 @@ public class ZipToTarExtractor {
         }
     }
 }
-
-
-To run this code, ensure you have the necessary dependencies in your project. If using Maven, add these to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-compress</artifactId>
-        <version>1.21</version>
-    </dependency>
-</dependencies>
-
-
-Replace `"archive.zip"` with the path to your ZIP file containing a TAR archive.

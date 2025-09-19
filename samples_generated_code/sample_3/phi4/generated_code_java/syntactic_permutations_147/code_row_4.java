@@ -81,9 +81,3 @@ public class IndexServlet extends HttpServlet {
                 + "</form></body></html>");
     }
 }
-
-
-Note:
-- Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password.
-- Ensure you have the MySQL JDBC driver in your classpath.
-- You need to configure a servlet container like Apache Tomcat to run this code.

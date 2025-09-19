@@ -16,6 +16,3 @@ public class MemoryAllocator {
         person.status = status;
     }
 }
-
-
-Note: The above code is a conceptual translation as Java does not use pointers or direct memory allocation like C/C++. Instead, it uses objects and managed memory. The `ByteBuffer.allocateDirect` is used here to mimic the idea of direct memory allocation.

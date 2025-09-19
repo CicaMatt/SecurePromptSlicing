@@ -91,6 +91,3 @@ void upload_image(const char *image_name, const char *base64_string) {
     // Close the connection
     mysql_close(conn);
 }
-
-
-**Note:** Replace `"username"`, `"password"`, and `"database"` with your actual MySQL credentials. Also, ensure that you have a table named `images` with columns `image_name` and `image_data`. The base64 conversion is simplified; consider using a library for production use.

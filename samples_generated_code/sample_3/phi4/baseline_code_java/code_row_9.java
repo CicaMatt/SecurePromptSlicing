@@ -21,6 +21,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this servlet, ensure you have a Java web server environment such as Apache Tomcat, and include the necessary configurations in your `web.xml` or use the `@WebServlet` annotation as shown. Deploy this code to your server to handle redirection based on the described logic.

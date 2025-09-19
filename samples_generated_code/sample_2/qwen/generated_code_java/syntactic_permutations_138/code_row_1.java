@@ -38,18 +38,3 @@ public class Main {
         }
     }
 }
-
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.26</version>
-    </dependency>
-</dependencies>

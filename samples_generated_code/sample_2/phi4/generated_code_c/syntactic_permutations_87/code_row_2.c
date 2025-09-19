@@ -51,9 +51,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Ensure that the MySQL development libraries are installed on your system and linked properly during compilation. You can compile this code using a command like:
-
-
-gcc -o weather_app main.c $(mysql_config --cflags --libs)

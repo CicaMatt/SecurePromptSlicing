@@ -43,4 +43,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: This code requires Flask to be installed. You can install it using `pip install flask`. Also, ensure you have a directory named `uploads` in the same location as this script, or adjust the `UPLOAD_FOLDER` path accordingly.

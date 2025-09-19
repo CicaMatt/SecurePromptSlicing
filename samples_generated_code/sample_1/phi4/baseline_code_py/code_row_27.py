@@ -62,10 +62,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run this code, ensure you have Flask installed in your Python environment. You can install it using pip if necessary:
-
-
-pip install flask
-
-
-Then save the script to a file (e.g., `app.py`) and execute it with Python. The application will start on `http://127.0.0.1:5000/` by default, where you can test the login functionality.

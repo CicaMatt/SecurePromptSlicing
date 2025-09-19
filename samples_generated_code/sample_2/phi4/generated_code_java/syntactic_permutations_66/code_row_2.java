@@ -37,26 +37,3 @@ public class PdfUploaderApplication {
         }
     }
 }
-
-
-Additionally, ensure that your `pom.xml` includes dependencies for Spring Boot and Spring Web:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>
-
-
-Make sure to create an `uploads` directory in the root of your project or adjust the path as needed.

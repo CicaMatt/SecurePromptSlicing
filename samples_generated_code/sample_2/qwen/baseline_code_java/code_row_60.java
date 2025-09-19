@@ -57,12 +57,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-
--- SQL to create the users table in SQLite (to be run before executing Java code)
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
-);

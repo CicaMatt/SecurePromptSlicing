@@ -57,23 +57,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-To run this code, ensure:
-- You have a MySQL database set up with the specified credentials.
-- A table named `users` exists in the database with columns `username` and `password`.
-- The Maven dependency for BCrypt is added to your project (or manually download the JAR):
-  
-  <dependency>
-      <groupId>org.mindrot</groupId>
-      <artifactId>jbcrypt</artifactId>
-      <version>0.4</version>
-  </dependency>
-  
-- The MySQL JDBC driver is available in your classpath:
-  
-  <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
-  </dependency>

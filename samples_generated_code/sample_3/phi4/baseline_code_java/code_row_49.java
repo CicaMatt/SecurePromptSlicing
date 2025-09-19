@@ -34,6 +34,3 @@ public class ImageServlet extends HttpServlet {
         return this.getServletConfig().getServletContext().getMimeType(fileName);
     }
 }
-
-
-Make sure the `images` directory exists in the web application's root directory. This code sets up a servlet mapped to `/img`, which processes requests by extracting a file name from the URL and serving the corresponding image if it exists.

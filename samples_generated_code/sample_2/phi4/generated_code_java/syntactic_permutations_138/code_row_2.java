@@ -35,6 +35,3 @@ public class WebApp {
         return "Unexpected error occurred.";
     }
 }
-
-
-Note: You need to configure your `DataSource` bean in a configuration class using Spring Boot's database support, typically by adding properties in `application.properties` or `application.yml`.

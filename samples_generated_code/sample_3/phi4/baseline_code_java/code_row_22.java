@@ -45,33 +45,3 @@ public class TemperatureService {
         org.glassfish.jersey.jetty.JettyHttpContainerFactory.createServer(resourceConfig, 8080).start();
     }
 }
-
-
-**Dependencies:**
-
-- Jersey (for RESTful services)
-- MySQL JDBC Driver
-
-Ensure these dependencies are included in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.glassfish.jersey.core</groupId>
-        <artifactId>jersey-server</artifactId>
-        <version>2.34</version>
-    </dependency>
-    <dependency>
-        <groupId>org.glassfish.jersey.containers</groupId>
-        <artifactId>jersey-container-jetty-servlet</artifactId>
-        <version>2.34</version>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.28</version>
-    </dependency>
-</dependencies>
-
-
-Replace `"username"` and `"password"` with your actual database credentials.

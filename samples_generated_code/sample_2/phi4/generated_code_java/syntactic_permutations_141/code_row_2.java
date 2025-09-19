@@ -28,6 +28,3 @@ public class WebApp {
         return "MyWebAppServer";
     }
 }
-
-
-To run this code, ensure you have a MySQL database running locally and replace the `DATABASE_URL`, `DATABASE_USER`, and `DATABASE_PASSWORD` with your actual database credentials. You will also need to include the MySQL JDBC driver in your classpath.

@@ -26,26 +26,3 @@ public class MessageServlet extends HttpServlet {
         return true; // Return true if the insertion was successful, false otherwise
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit Your Message</h1>
-    <form action="submitMessage" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br>
-
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

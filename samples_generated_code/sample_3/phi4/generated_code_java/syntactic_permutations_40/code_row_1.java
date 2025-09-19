@@ -37,22 +37,3 @@ public class Main {
         );
     }
 }
-
-
-To run this code, ensure you have Javalin as a dependency in your project. You can add it via Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.1</version>
-</dependency>
-
-
-Or using Gradle:
-
-
-implementation 'io.javalin:javalin:5.0.1'
-
-
-This code sets up a simple web server with Javalin, defining the `/info` route to display user information from session variables. Make sure you set the `userSession` attribute in your session before accessing `/info`.

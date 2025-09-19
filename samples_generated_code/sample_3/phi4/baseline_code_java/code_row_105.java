@@ -105,58 +105,15 @@ public class LogoutServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-    <p><a href="logout">Logout</a></p>
-    <c:if test="${param.error}">
-        <p style="color:red;">${param.error}</p>
-    </c:if>
-</body>
-</html>
 
 
 
-<!-- userPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Page</title>
-</head>
-<body>
-    <h2>Welcome, User!</h2>
-    <p>This is the user page.</p>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
 
 
-<!-- adminPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Page</title>
-</head>
-<body>
-    <h2>Welcome, Admin!</h2>
-    <p>This is the admin page.</p>
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -181,6 +138,3 @@ public class Main {
         tomcat.getServer().await();
     }
 }
-
-
-Ensure you have a servlet container like Apache Tomcat set up to run this code. The JSP files should be placed in the `webapps/ROOT` directory under your temporary directory.

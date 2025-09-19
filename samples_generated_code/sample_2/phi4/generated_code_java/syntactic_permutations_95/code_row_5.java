@@ -75,6 +75,3 @@ public class RegistrationForm {
         return salt.length + ":" + sb.toString();
     }
 }
-
-
-Note: This code uses SQLite for simplicity. You need to include the SQLite JDBC driver in your classpath to run this code.

@@ -42,35 +42,3 @@ public class Registration {
         scanner.close();
     }
 }
-
-
-**Dependencies:**
-- Add `bcrypt` dependency to your project. If you're using Maven, include the following in your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-<!-- MySQL JDBC Driver -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-Ensure you have a database and table set up as follows:
-
-
-CREATE DATABASE your_database;
-
-USE your_database;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(60) NOT NULL
-);

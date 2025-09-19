@@ -45,12 +45,3 @@ public class ImageUploader {
         uploader.uploadImage("path_to_your_image.jpg");
     }
 }
-
-
-
--- SQL to create the images table
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    filename VARCHAR(255),
-    image_data TEXT
-);

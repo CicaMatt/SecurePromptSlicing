@@ -60,16 +60,6 @@ public class HttpDecorator {
 Make sure to have a file named `template.html` in the same directory with content like:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Page</title>
-</head>
-<body>
-    Hello, {{username}}!
-</body>
-</html>
 
 
 This code sets up a simple HTTP server using `com.sun.net.httpserver.HttpServer` and binds the `UserHandler` to URLs of the form `/<username>`. The handler reads the template file `template.html`, replaces the `{{username}}` placeholder with the actual username from the URL, and sends the modified content back as a response.

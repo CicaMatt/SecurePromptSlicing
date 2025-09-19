@@ -42,39 +42,3 @@ public class PayloadServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-To run this code, you will need the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.13.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.29</version>
-    </dependency>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.12</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>11.0.12</version>
-    </dependency>
-</dependencies>
-
-
-This code sets up a simple web server using Jetty that listens on port 5000 and processes requests as described.

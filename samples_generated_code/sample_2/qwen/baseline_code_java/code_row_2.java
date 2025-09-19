@@ -51,13 +51,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Ensure to replace `yourDatabase`, `yourUsername`, and `yourPassword` with your actual database details. Also, make sure that the JDBC driver for MySQL is in your classpath or add the following Maven dependency if you are using Maven:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>

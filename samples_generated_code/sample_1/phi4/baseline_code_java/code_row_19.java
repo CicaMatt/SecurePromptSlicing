@@ -18,21 +18,3 @@ public class RedirectApp {
         }
     }
 }
-
-
-Make sure you have Javalin as a dependency in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.5.0</version>
-</dependency>
-
-
-Or add the following to your `build.gradle` if you are using Gradle:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.5.0'
-}

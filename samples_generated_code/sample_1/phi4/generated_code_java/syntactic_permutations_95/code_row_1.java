@@ -59,6 +59,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedPassword) + ":" + Base64.getEncoder().encodeToString(salt);
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath and replace `yourdatabase`, `yourusername`, and `yourpassword` with actual database details.

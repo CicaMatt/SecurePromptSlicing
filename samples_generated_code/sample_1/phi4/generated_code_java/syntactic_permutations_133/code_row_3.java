@@ -30,16 +30,3 @@ public class MyServlet extends HttpServlet {
         out.println("<h1>Hello, World!</h1>");
     }
 }
-
-
-To run this code, ensure you have the necessary dependencies for Jetty in your project's build configuration (e.g., Maven or Gradle). For Maven, include:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>
-
-
-Adjust the version as needed for your project requirements.

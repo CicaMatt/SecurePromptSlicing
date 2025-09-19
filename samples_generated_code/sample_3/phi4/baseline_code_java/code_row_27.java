@@ -63,6 +63,3 @@ public class LoginServlet extends HttpServlet {
         return false; // Authentication failed
     }
 }
-
-
-Note: Make sure to replace `"jdbc:mysql://localhost:3306/yourDatabaseName", "root", "password"` with your actual database URL, username, and password. Also, ensure you have a MySQL driver in your classpath (or the appropriate JDBC driver for your database). This example uses servlets for handling the login logic; make sure your project is set up to support Java EE technologies.

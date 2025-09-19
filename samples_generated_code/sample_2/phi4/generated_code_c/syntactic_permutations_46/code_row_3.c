@@ -51,13 +51,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To run this code, compile it using a C compiler like `gcc` and execute the resulting binary. The program expects an image name as a command-line argument. For example:
-
-
-gcc -o img_server img_server.c
-./img_server example.jpg
-
-
-This will serve the content of `images/example.jpg` if it exists, or return a 404 error message otherwise. Adjust the `Content-Type` header based on your image format as needed.

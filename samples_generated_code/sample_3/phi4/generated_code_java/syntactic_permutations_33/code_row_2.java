@@ -30,8 +30,3 @@ public class RedirectServlet extends HttpServlet {
         servlet.init(config);
     }
 }
-
-
-**Note**: This code assumes you are deploying it in a servlet container like Apache Tomcat. The `@WebServlet` annotation is used to define the URL pattern, and the `doGet` method handles GET requests for that URL pattern.
-
-For this to run, you need to have a web server setup (like Apache Tomcat) and include necessary libraries for servlets in your classpath or build path (typically included when setting up a Java EE project).

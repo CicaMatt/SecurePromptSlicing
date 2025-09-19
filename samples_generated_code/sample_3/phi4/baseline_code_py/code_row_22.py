@@ -46,4 +46,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `"your_username"` and `"your_password"` with your actual database credentials. Ensure the `sensor_data` table exists in your PostgreSQL database with appropriate columns (`latitude`, `longitude`, `date`, `temperature`). Adjust the database connection parameters as needed for your setup.

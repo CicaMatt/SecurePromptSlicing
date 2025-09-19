@@ -55,6 +55,3 @@ int main() {
     }
     return 0;
 }
-
-
-Note: Ensure that the MySQL development libraries are installed and linked during compilation with `-lmysqlclient`. Adjust database connection parameters (`localhost`, `root`, `Sensor`) as needed.

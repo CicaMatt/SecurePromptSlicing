@@ -73,6 +73,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Replace `"your_database_name"`, `"username"`, and `"password"` with your actual database name, username, and password. Also, ensure that `images_table` and its column `image_data` exist in your database schema.

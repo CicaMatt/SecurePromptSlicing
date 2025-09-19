@@ -102,6 +102,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `"password"`, and `"weather_db"` with your actual MySQL server details. This code assumes a simple HTTP GET request format for extracting parameters. Adjustments may be needed based on the exact request structure you expect.

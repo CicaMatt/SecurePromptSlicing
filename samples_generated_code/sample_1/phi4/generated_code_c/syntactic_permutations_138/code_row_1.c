@@ -71,6 +71,3 @@ int is_moderator(const char *username, MYSQL *conn) {
     mysql_free_result(result);
     return is_moderator;
 }
-
-
-Make sure to replace `"localhost"`, `"root"`, `"password"`, and `"database_name"` with your actual MySQL server details.

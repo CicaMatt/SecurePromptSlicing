@@ -41,13 +41,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Make sure to replace `your_database_name`, `your_db_username`, and `your_db_password` with your actual database details. Additionally, ensure that the MySQL JDBC driver is available in your classpath. You may need to download it or include it via a build tool like Maven or Gradle if not already included. The table should be created beforehand:
-
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(60) NOT NULL
-);

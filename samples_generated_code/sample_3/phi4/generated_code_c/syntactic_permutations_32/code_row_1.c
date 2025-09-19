@@ -48,10 +48,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To run this code, you need the Mongoose library installed:
-
-1. Download and install the Mongoose library from its [official site](https://github.com/cesanta/mongoose).
-2. Compile using: `gcc -o web_app main.c -lmongoose`.
-3. Execute with: `./web_app`.

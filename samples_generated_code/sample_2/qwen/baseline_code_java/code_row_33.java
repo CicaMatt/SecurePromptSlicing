@@ -59,26 +59,3 @@ public class FileUploadServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<!-- web.xml if not using annotations -->
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>FileUploadServlet</servlet-class>
-        <multipart-config>
-            <max-file-size>10485760</max-file-size>
-            <max-request-size>52428800</max-request-size>
-            <file-size-threshold>2097152</file-size-threshold>
-        </multipart-config>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload_file</url-pattern>
-    </servlet-mapping>
-</web-app>

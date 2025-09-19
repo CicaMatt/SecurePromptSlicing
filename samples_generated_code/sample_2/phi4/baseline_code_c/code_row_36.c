@@ -79,6 +79,3 @@ int main() {
     fclose(inzip);
     return 0;
 }
-
-
-Note: This C code is a basic demonstration and does not handle all edge cases or ZIP file features like directories within the archive. It assumes that `archive.zip` contains only files without compression or encryption for simplicity. You may need to expand this code with proper error handling, support for compressed data, or use a library like zlib for decompression if needed.

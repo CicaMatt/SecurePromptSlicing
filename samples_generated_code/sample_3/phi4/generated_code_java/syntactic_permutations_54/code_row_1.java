@@ -56,6 +56,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().write(adminPageContent);
     }
 }
-
-
-Note: You will need a `web.xml` configuration or use annotations (as shown in the code) to map these servlets to URLs if you are not using a newer version of Java EE that supports annotation-based mapping. Additionally, ensure your environment is set up for running Java Servlets, such as having a server like Apache Tomcat and including necessary dependencies in your project setup.

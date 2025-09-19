@@ -21,6 +21,3 @@ public class RedirectServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure you have the necessary setup to run a servlet-based Java application, such as using Apache Tomcat or any other servlet container. The `web.xml` configuration is not needed if you are using Servlet 3.0+ annotations as shown in this code.

@@ -25,6 +25,3 @@ public class PingDecorator {
         }
     }
 }
-
-
-To run this code, ensure you have Java installed on your system. Save the code in a file named `PingDecorator.java`, compile it using `javac PingDecorator.java`, and then execute it with `java PingDecorator`. Adjust the URL as needed. Note that the `-c` option is for Unix-like systems; use `-n` if you are on Windows.

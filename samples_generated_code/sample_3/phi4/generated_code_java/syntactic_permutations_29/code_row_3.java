@@ -38,6 +38,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure you have the Jetty library in your classpath to run this code. You can include it using a build tool like Maven or Gradle, or manually add it as a JAR file dependency.

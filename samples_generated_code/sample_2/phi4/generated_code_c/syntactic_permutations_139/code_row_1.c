@@ -43,6 +43,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note**: Replace `username`, `password`, `your_database_name`, and `'your_username'` with actual database credentials and the username you want to check. Ensure that MySQL client library is installed on your system and linked correctly during compilation.

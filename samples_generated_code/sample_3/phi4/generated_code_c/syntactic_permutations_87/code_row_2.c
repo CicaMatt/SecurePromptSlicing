@@ -65,6 +65,3 @@ int main() {
     
     return 0;
 }
-
-
-Note: Replace `"localhost"`, `"user"`, `"password"`, and `"database_name"` with your actual database connection details. Ensure the MySQL client library is installed and linked correctly when compiling this code.

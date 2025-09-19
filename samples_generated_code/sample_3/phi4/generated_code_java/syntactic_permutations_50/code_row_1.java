@@ -41,19 +41,3 @@ public class ExtractZipAsTar {
         }
     }
 }
-
-
-**Dependencies:**
-- `commons-compress` library for handling tar and zip files.
-  
-To run this code, ensure you have the Apache Commons Compress library included in your project. If you're using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Replace `"archive.zip"` with the path to your actual zip file and adjust the `outputDirectoryPath` if needed.

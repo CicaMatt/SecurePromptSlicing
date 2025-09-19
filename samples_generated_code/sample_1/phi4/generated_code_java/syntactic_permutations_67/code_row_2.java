@@ -93,6 +93,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, and `your_password` with your actual MySQL database details. Ensure you have a table named `images` with columns `file_name` (VARCHAR) and `data` (BLOB). Also, add the MySQL JDBC driver to your project dependencies.

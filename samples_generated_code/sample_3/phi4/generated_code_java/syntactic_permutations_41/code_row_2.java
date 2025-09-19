@@ -32,10 +32,3 @@ public class InfoServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code:
-1. Ensure you have a servlet container like Apache Tomcat.
-2. Place the `InfoServlet.java` file in your web application's directory structure (e.g., under `src/main/java`).
-3. Compile and deploy the web application to the servlet container.
-4. Access the application at `http://localhost:8080/yourAppName/info`.

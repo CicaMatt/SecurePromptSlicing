@@ -56,23 +56,3 @@ int main() {
     printf("Temperature: %.2f\n", temp);
     return 0;
 }
-
-
-To compile and run this code, you need MySQL client library installed:
-
-1. Install MySQL development package (on Debian-based systems):
-   
-   sudo apt-get install libmysqlclient-dev
-   
-
-2. Compile the program with:
-   
-   gcc -o temperature_example your_source_file.c $(mysql_config --cflags --libs)
-   
-
-3. Run it using:
-   
-   ./temperature_example
-    
-
-Ensure that the MySQL server is running and you have a database named `Sensor` with a table `readings`, which has columns `latitude`, `longitude`, `date`, and `temperature`. Adjust user credentials as necessary.

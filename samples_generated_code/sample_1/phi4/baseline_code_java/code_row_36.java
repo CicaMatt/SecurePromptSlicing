@@ -48,19 +48,3 @@ public class UnzipTarFile {
         }
     }
 }
-
-
-To run this code, you need to include the Apache Commons Compress library in your project. You can add it using Maven by including the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-Or, if you are using Gradle, add this to your `build.gradle`:
-
-
-implementation 'org.apache.commons:commons-compress:1.21'

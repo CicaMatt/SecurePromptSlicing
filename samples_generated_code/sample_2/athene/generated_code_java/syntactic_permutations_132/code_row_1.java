@@ -40,15 +40,3 @@ public class WebApp {
         String handleRequest(Map<String, String> params);
     }
 }
-
-
-
-<!-- hello.html -->
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>

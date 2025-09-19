@@ -89,9 +89,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to link with the OpenSSL library by using:
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-./registration_form

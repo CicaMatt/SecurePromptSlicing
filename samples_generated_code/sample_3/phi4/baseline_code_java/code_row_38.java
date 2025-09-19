@@ -25,23 +25,3 @@ class RedirectController {
         return new RedirectView("/");
     }
 }
-
-
-To run this code, ensure you have the following dependencies in your `pom.xml` file:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>

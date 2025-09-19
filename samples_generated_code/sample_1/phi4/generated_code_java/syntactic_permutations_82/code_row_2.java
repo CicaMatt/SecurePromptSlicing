@@ -17,10 +17,3 @@ public class WebApp {
         return payload.getOrDefault("name", "Name not provided");
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Spring Boot set up in your project.
-2. Add the necessary dependencies to your `pom.xml` or `build.gradle`.
-3. Use Maven (`mvn spring-boot:run`) or Gradle (`gradlew bootRun`) to start the application.

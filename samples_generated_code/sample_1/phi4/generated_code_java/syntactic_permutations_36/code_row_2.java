@@ -49,6 +49,3 @@ public class SimpleLogin {
         return false;
     }
 }
-
-
-**Note**: Replace `your_database`, `root`, and `password` with your actual database name, user, and password. Ensure the MySQL JDBC driver is included in your project dependencies.

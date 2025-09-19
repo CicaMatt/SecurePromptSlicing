@@ -46,6 +46,3 @@ public class WebApp {
         return mockTemplate;
     }
 }
-
-
-Note: This example assumes you have an HTTP server setup and that `request` and `response` are actual objects. The template rendering is simulated with a placeholder function. In a real-world scenario, you would use libraries such as Thymeleaf or Velocity for template processing.

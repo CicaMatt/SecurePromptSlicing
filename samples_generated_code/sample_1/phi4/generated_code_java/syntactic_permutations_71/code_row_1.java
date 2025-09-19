@@ -65,14 +65,8 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
+
 
 test {
     useJUnitPlatform()
 }
-
-
-Make sure you have Java Development Kit (JDK) installed and Gradle or Maven configured on your system. Run `gradlew bootRun` or `mvn spring-boot:run` to start the application.

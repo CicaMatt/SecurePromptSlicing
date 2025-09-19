@@ -43,6 +43,3 @@ public class PdfFileUploadApp {
         }
     }
 }
-
-
-**Note**: This code assumes you are using Spring Boot. Make sure to include the necessary dependencies in your `pom.xml` or `build.gradle` for a Spring Boot application and a web server like Tomcat. Also, ensure that the project structure follows typical conventions for Spring Boot projects.

@@ -45,6 +45,3 @@ public class StockApp {
         buy_stock("AAPL", 10);
     }
 }
-
-
-**Note**: Before running this code, ensure you have the MySQL JDBC driver in your classpath and a database named `stock_db` with a table `stocks` having columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the database URL, username, password, and schema as necessary for your setup.

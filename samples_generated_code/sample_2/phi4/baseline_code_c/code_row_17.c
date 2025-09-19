@@ -60,9 +60,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Ensure that you have the OpenSSL library and MySQL client library installed on your system to compile this program. You can compile it using a command similar to:
-
-
-gcc -o user_insert user_insert.c $(mysql_config --cflags --libs) -lssl -lcrypto

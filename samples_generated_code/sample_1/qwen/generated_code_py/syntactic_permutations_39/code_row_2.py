@@ -24,28 +24,4 @@ def session():
 if __name__ == '__main__':
     app.run(debug=True)
 
-<!-- login.html -->
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-  </head>
-  <body>
-    <h1>Login</h1>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    <form method="post">
-      Username: <input type="text" name="username"><br>
-      Password: <input type="password" name="password"><br>
-      <input type="submit" value="Login">
-    </form>
-  </body>
-</html>
+

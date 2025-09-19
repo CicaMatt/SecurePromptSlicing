@@ -43,23 +43,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-
-<form action="submitMessage" method="post">
-    Username: <input type="text" name="username"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-
-</body>
-</html>

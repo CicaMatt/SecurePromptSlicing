@@ -93,28 +93,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to include the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.26</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>9.4.44.v20210927</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>9.4.44.v20210927</version>
-    </dependency>
-</dependencies>
-
-
-This code sets up a simple web application using Jetty as the embedded server and handles user registration by hashing passwords with SHA-256 before storing them in a MySQL database.

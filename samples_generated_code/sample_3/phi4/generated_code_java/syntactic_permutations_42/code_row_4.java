@@ -24,19 +24,3 @@ public class WebApp {
         ctx.result(info);
     }
 }
-
-
-To run this code, you will need to add the Javalin dependency in your project. If you are using Maven, include the following in your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.10.0</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-
-implementation 'io.javalin:javalin:5.10.0'

@@ -44,6 +44,3 @@ class HelloHandler implements HttpHandler {
         }
     }
 }
-
-
-Note: This code uses `com.sun.net.httpserver`, a simple HTTP server included in the JDK for demonstration purposes. For production use, consider using more robust frameworks like Spring Boot or JAX-RS with Jersey.

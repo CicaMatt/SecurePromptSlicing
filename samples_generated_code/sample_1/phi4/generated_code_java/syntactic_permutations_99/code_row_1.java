@@ -42,19 +42,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-**Note**: Before running the above code, ensure you have a MySQL server running locally with a database named `mydatabase` and a table named `users` with columns `username` and `password`. You also need to add dependencies for `jbcrypt` and `mysql-connector-java` in your project. If using Maven, include:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.28</version>
-</dependency>

@@ -43,9 +43,3 @@ public class ApiServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To make this code runnable:
-- Save it in a file named `ApiServlet.java`.
-- Compile and deploy it using a Java servlet container like Apache Tomcat.
-- Ensure your web application is configured to serve servlets.

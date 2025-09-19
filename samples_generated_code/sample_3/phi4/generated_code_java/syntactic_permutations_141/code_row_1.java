@@ -50,16 +50,3 @@ public class DatabaseInfoServlet extends HttpServlet {
         return USER;
     }
 }
-
-
-Note: Ensure you have a MySQL JDBC driver in your classpath. You can add it via Maven or download and include it manually. For example, using Maven, add the following dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-This code assumes a servlet-based web application setup and will work with an appropriate server like Apache Tomcat. Adjust the database connection details as necessary for your environment.

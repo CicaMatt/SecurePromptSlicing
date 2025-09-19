@@ -86,6 +86,3 @@ public class TemperatureApp {
         return null;
     }
 }
-
-
-Make sure to include the necessary dependencies in your project setup, such as MySQL JDBC driver and JSON library. Adjust database connection details (`url`, `user`, `password`) according to your environment.

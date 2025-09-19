@@ -42,6 +42,3 @@ class UploadController {
         }
     }
 }
-
-
-This Java code uses Spring Boot for setting up a simple web server with an endpoint `/upload` that handles PDF file uploads. The uploaded files are saved in the `uploads` directory on the server. Make sure to include the necessary dependencies such as Spring Web and Spring Boot Starter in your `pom.xml` or build.gradle file for this code to run correctly.

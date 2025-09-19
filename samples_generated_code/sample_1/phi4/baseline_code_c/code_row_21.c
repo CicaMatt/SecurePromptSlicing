@@ -85,6 +85,3 @@ int main() {
 
     return 0;
 }
-
-
-Ensure you have MySQL installed and a database named `testdb` with a table `users` having columns `username` (VARCHAR) and `password` (VARCHAR). Adjust the MySQL connection parameters as necessary.

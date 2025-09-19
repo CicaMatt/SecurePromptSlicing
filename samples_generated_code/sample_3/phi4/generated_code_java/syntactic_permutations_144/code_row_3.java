@@ -62,6 +62,3 @@ public class EmailChecker {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, update the path to your script in `runScript` method. Ensure that MySQL JDBC driver is included in your classpath or added as a dependency if you're using a build tool like Maven or Gradle.

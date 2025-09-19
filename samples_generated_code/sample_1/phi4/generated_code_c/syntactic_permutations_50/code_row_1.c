@@ -33,6 +33,3 @@ int main() {
 
     return 0;
 }
- 
-
-**Note:** The above code demonstrates how to open and print an intent to extract files from `archive.zip`. However, due to C's standard library limitations in handling ZIP files directly, you would need a third-party library like libzip or minizip to perform the actual extraction.

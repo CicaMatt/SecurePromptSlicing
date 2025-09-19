@@ -35,6 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-This code simulates the process of taking user input for a stock order and inserting it into a database. It includes basic error checking such as preventing buffer overflows with `snprintf` and limiting string length in `scanf`. The "database" operation is mocked by printing an SQL statement, demonstrating how you would construct and execute SQL commands in a real application.

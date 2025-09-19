@@ -60,6 +60,3 @@ public class UploadPdfServlet extends HttpServlet {
         throw exception;
     }
 }
-
-
-**Note:** Ensure your MySQL database and table `pdf_files` are properly set up with at least one column named `file_path`. Adjust the database URL, user, and password as necessary. This code assumes a servlet container is used for deployment.

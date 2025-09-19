@@ -25,6 +25,3 @@ public class RedirectHandler {
         }
     }
 }
-
-
-**Note:** Replace `"your-regex-pattern-here"` with the actual regular expression pattern you intend to use.

@@ -76,6 +76,3 @@ public class StockViewServlet extends HttpServlet {
         response.getWriter().append("<html><body>Stock view page.</body></html>");
     }
 }
-
-
-Make sure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, ensure that the `orders` table exists in your specified database.

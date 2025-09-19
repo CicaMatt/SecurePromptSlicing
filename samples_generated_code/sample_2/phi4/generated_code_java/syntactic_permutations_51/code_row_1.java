@@ -48,18 +48,3 @@ public class TarUnpacker {
     }
 
 }
-
-
-**Dependencies:**
-
-To run this code, you need to include the Apache Commons Compress library in your project. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version> <!-- Use the latest version available -->
-</dependency>
-
-
-If you are not using Maven, download the JAR from the [Apache Commons Compress website](https://commons.apache.org/proper/commons-compress/download_compress.cgi) and add it to your project's classpath.

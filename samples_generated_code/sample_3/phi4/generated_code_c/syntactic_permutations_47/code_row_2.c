@@ -39,6 +39,3 @@ int main(int argc, char *argv[]) {
     serve_image(argv[1]);
     return 0;
 }
-
-
-Make sure to compile the code with a C compiler like `gcc` and run it from a command line interface, passing an image filename as an argument. The program expects images to be stored in a folder named "images" located in the same directory where the program is executed.

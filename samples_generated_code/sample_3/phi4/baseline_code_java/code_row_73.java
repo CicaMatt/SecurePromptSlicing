@@ -47,6 +47,3 @@ public class ModeratorChecker {
         return Optional.empty();
     }
 }
-
-
-Note: Make sure to replace `"exampleUsername"` with the actual username you want to check. Also, ensure that the environment variables `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` are set correctly before running this code. Additionally, update the table name (`users`) and column names (`username`, `is_moderator`) according to your database schema.

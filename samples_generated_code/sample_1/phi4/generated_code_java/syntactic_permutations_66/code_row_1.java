@@ -43,6 +43,3 @@ class FileController {
         return "File uploaded successfully";
     }
 }
-
-
-**Note:** To run this code, you'll need a Spring Boot setup with dependencies for web and multipart file handling in your `pom.xml` or `build.gradle`. Ensure that your application is configured properly to handle HTTP requests.

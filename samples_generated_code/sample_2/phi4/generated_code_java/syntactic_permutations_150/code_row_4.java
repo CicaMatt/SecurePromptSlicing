@@ -42,29 +42,3 @@ public class MessageServlet extends HttpServlet {
         request.getRequestDispatcher("mainPage.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form action="submitMessage" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-
-
-Note: You need to replace the database connection details and handle exceptions appropriately in the `insertUserMessageInDb` method. The HTML form is a simple example for submitting messages.

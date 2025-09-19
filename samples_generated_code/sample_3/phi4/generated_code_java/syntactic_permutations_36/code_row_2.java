@@ -50,6 +50,3 @@ public class LoginSystem {
         }
     }
 }
-
-
-**Note**: Replace `your_database`, `your_db_user`, and `your_db_password` with the actual database name, user, and password respectively. Ensure that you have the MySQL JDBC driver in your classpath to run this code.

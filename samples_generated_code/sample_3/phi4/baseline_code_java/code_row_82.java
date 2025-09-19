@@ -58,38 +58,3 @@ public class LoginServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-
-
-
-<!-- home.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome, <%= session.getAttribute("username") %></h1>
-    <p>This is the home page.</p>
-</body>
-</html>

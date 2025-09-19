@@ -42,16 +42,3 @@ public class StockOrderApp {
         }
     }
 }
-
-
-Make sure to have the MySQL JDBC driver in your classpath. You can add it via Maven or download the JAR file manually:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>
-
-
-Ensure you have a database named `stock_db` and a table named `orders` with columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the database URL, username, and password as needed for your setup.

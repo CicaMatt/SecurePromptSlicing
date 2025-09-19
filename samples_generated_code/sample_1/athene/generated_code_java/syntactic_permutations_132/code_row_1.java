@@ -43,6 +43,3 @@ import org.springframework.ui.Model;
 public interface Model {
     void addAttribute(String key, Object value);
 }
-
-
-This setup requires a Spring MVC environment and the `hello.html` template to be placed in the templates directory. The `Model` interface is a simplified version for this example; in an actual application, you would use the Spring-provided `Model` or `ModelMap`.

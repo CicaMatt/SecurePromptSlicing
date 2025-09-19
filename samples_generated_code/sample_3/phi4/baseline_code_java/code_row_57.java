@@ -22,6 +22,3 @@ public class HelloServlet extends HttpServlet {
         out.write("Hello " + username);
     }
 }
-
-
-To make this servlet work in a Java web application, ensure you have the necessary environment set up with a Servlet container like Apache Tomcat. The `@WebServlet` annotation is used to map the servlet URL pattern (`/hello`) so that it can be accessed by sending an HTTP GET request with a query parameter named `username`. For example: `http://localhost:8080/hello?username=JohnDoe`.

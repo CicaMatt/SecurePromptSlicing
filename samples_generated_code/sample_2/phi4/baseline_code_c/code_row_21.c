@@ -73,8 +73,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-Make sure to link with the necessary libraries when compiling:
-
-gcc -o register_app register_app.c -lmysqlclient -lcrypto -lssl

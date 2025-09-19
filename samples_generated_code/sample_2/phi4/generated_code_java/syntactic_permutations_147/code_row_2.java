@@ -45,6 +45,3 @@ public class StockOrder {
         System.out.println("Redirecting to stock_view page...");
     }
 }
-
-
-Note: Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. The table `orders` should exist in the database `stockdb` with columns `stock_name` (VARCHAR) and `quantity` (INT). You need to have MySQL JDBC driver included in your classpath.

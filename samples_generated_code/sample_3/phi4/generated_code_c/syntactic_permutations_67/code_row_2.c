@@ -56,6 +56,3 @@ int main(int argc, char **argv) {
     
     return 0;
 }
-
-
-**Note:** Before running this code, replace `"localhost"`, `"user"`, `"password"`, and `"database_name"` with your MySQL server's connection details. Ensure you have a table named `images` with at least one column of type `BLOB` or similar to store the image data.

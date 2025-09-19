@@ -57,36 +57,3 @@ class MessageController {
         return messages;
     }
 }
-
-
-For the view (`index.html`), create this file in `src/main/resources/templates/index.html`:
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Messages</title>
-</head>
-<body>
-<h1>Messages</h1>
-
-<form action="/post" method="POST">
-    Username: <input type="text" name="username" required><br/>
-    Message: <textarea name="message" required></textarea><br/>
-    <button type="submit">Submit</button>
-</form>
-
-<ul th:each="message : ${messages}">
-    <li th:text="${message.username} + ': ' + ${message.message}"></li>
-</ul>
-</body>
-</html>
-
-
-In your `application.properties`, add the following to configure H2 in-memory database:
-
-
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.h2.console.enabled=true
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=create-drop

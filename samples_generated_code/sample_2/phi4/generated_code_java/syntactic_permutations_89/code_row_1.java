@@ -35,16 +35,3 @@ public class ProductPricingApp {
         }
     }
 }
-
-
-To run this app, make sure you have Javalin added to your project dependencies. If using Maven, add:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>4.14.0</version>
-</dependency>
-
-
-Run the application and access it at `http://localhost:5000/price/:code?quantity=1`. Replace `:code` with a product code like `A123`, and adjust the quantity as needed.

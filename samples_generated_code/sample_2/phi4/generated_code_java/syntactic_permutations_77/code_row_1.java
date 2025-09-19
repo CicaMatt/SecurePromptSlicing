@@ -56,6 +56,3 @@ public class MemoryAllocationExample {
         }
     }
 }
-
-
-Note: In Java, reflection and proxies are used to simulate a dynamic object creation as requested in the problem statement since Java does not support direct memory allocation like C/C++. The above code simulates allocation of space for a `Person` instance using a byte array and uses Java Proxies for handling method calls dynamically.

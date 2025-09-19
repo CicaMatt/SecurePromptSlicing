@@ -33,6 +33,3 @@ public class RedirectHandler {
         return "http://default-url.com";
     }
 }
-
-
-Replace `"your-regex-pattern-here"` with your actual regular expression pattern.

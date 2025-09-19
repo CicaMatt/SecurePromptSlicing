@@ -48,6 +48,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you have a directory named `images` at the root of your web application where this servlet is deployed. This code uses Java Servlets to handle HTTP GET requests for serving image files based on a query parameter.

@@ -29,12 +29,3 @@ public class ImageUpload {
         imageUpload.uploadImage(imageName, base64String);
     }
 }
-
-
-
--- SQL to create the images table in your database
-CREATE TABLE IF NOT EXISTS images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    base64_data TEXT NOT NULL
-);

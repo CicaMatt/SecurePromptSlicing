@@ -67,25 +67,3 @@ public class ProductService {
         }
     }
 }
-
-
-Note: This code requires the Spark framework and Jackson libraries for YAML processing. You can include these dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.0</version>
-    </dependency>
-</dependencies>

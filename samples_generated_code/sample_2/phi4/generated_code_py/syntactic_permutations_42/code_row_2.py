@@ -18,16 +18,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To run the application:
-
-1. Ensure Flask is installed: `pip install flask`
-2. Set a secret key for sessions (replace `'your_secret_key'` with an actual secure key).
-3. Run the script using Python.
-4. Before accessing `/info`, set session variables in your tests or another part of the app, e.g.,:
-   
-   with app.test_client() as client:
-       with client.session_transaction() as sess:
-           sess['email'] = 'example@example.com'
-           sess['ssn'] = '123-45-6789'
-       response = client.get('/info')
-       print(response.json)

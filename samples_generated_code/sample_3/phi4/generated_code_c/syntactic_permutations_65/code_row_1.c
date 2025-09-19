@@ -31,6 +31,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code assumes that you have permission to write to `/var/www/html/uploads` and that you are running this on a Unix-like operating system. Adjust paths as necessary for your environment.

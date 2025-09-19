@@ -48,19 +48,3 @@ public class RegisterServlet extends HttpServlet {
         return DriverManager.getConnection(url, user, password);
     }
 }
-
-
-In addition to the Java code above, you will need a MySQL database setup. Here is an example SQL script to create the necessary table:
-
-
-CREATE DATABASE IF NOT EXISTS yourdatabase;
-USE yourdatabase;
-
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(256) NOT NULL
-);
-
-
-Make sure you have a MySQL server running and replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password respectively. You also need to include the Apache Commons Codec library in your project for hashing.

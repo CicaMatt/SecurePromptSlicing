@@ -35,6 +35,3 @@ public class StockMarket {
         System.out.println("Buying function called for stock: " + stockName);
     }
 }
-
-
-**Note:** Ensure that the MySQL JDBC driver is included in your project's classpath. You may need to adjust database credentials and ensure the `purchases` table exists with appropriate columns (`stock_name`, `quantity`).

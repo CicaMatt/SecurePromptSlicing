@@ -59,8 +59,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note:**  
-- Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password.
-- Ensure you have a MySQL driver library (e.g., `mysql-connector-java.jar`) included in the classpath.

@@ -80,19 +80,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-Make sure to replace `username` and `password` with your actual database credentials. Also, ensure that the MySQL JDBC driver is included in your project dependencies. For Maven, you can add it as follows:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>
-
-
-For Gradle, include:
-
-
-implementation 'mysql:mysql-connector-java:8.0.23'

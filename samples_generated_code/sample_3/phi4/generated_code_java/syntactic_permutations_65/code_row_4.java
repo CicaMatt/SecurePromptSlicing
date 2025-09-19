@@ -53,11 +53,3 @@ public class FileUploadServlet extends HttpServlet {
         System.out.println("Please deploy this servlet to a Java servlet container like Apache Tomcat.");
     }
 }
-
-
-To run this code, you need to:
-
-1. Place this code in a file named `FileUploadServlet.java`.
-2. Compile it using `javac FileUploadServlet.java`.
-3. Deploy the compiled class to a Java servlet container such as Apache Tomcat.
-4. Ensure your HTML form is set up with `enctype="multipart/form-data"` and action pointing to the servlet URL (e.g., `/FileUploadServlet`).

@@ -88,6 +88,3 @@ public class StockViewServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure to replace `"your_database"`, `"username"`, and `"password"` with your actual database name, username, and password. Also, ensure that you have the MySQL JDBC driver in your classpath.

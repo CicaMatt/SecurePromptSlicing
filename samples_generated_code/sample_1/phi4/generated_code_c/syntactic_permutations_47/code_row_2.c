@@ -31,12 +31,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-
-
-Compile this code with a C compiler, such as `gcc`, and run it providing the image file name without extension:
-
-
-gcc -o check_image check_image.c
-./check_image image.jpg
-
-Make sure that an `images` directory exists in the same location as your executable, containing the files you want to check.

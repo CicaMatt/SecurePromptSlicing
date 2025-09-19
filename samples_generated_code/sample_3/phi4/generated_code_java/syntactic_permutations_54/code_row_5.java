@@ -43,6 +43,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Ensure that you have the appropriate environment set up to run this servlet, including configuring a web server like Apache Tomcat and setting up the `web.xml` or using annotations as shown for servlet mapping. Also, make sure an "admin_page.jsp" exists in your project directory if you wish to test the admin redirection functionality.

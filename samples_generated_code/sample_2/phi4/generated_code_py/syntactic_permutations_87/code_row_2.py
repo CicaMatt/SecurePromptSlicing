@@ -34,4 +34,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to have a table `weather_data` with columns: `latitude`, `longitude`, `date`, and `temperature` in your SQLite database named `database.db`. Adjust the connection settings as necessary for your environment.

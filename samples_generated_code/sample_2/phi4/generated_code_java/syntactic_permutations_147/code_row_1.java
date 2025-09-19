@@ -47,6 +47,3 @@ public class StockPurchaseApp {
         // Redirect logic can be handled in a web framework; here we just print to console.
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC Driver (`mysql-connector-java`) added to your project dependencies. You also need to create a database named `stock_db` and a table named `orders` with appropriate columns for this code to run successfully.

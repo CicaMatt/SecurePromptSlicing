@@ -59,6 +59,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This code includes a simple in-memory email database, checks for an email's presence, and simulates the process of calling a script to unsubscribe if the email exists. The `unsubscribeEmail` function uses `system()` calls as placeholders to emulate script execution. Adjust the database contents and script logic as needed for your actual use case.

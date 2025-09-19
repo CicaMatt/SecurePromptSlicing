@@ -72,6 +72,3 @@ int main() {
 
     return 0;
 }
-
-
-Save this code in a file (e.g., `upload_server.c`). To simulate the server behavior, create another file named `client_request.txt` containing the HTTP request with the file data. The program reads from this file as if it were receiving an incoming HTTP POST request. Adjust the buffer sizes and error handling according to your needs for production-level code.

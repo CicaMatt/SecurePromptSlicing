@@ -51,37 +51,3 @@ public class BuyOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- HTML form to submit stock order -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Buy Stock</title>
-</head>
-<body>
-    <form action="buy_order" method="POST">
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" id="stock_name" name="stock_name" required><br><br>
-
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min="1" required><br><br>
-
-        <button type="submit">Buy</button>
-    </form>
-</body>
-</html>
-
-
-
--- SQL script to create the database and table
-CREATE DATABASE IF NOT EXISTS stockdb;
-USE stockdb;
-
-CREATE TABLE IF NOT EXISTS orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    stock_name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL
-);

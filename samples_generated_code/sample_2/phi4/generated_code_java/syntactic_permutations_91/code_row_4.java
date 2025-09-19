@@ -54,6 +54,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-This Java servlet is part of a simple web application that allows user registration. Ensure you have the necessary MySQL JDBC driver in your classpath and replace `your_database`, `root`, and `password` with appropriate database name, username, and password respectively.

@@ -38,23 +38,3 @@ public class WebApp {
         System.out.println("Request processed successfully.");
     }
 }
-
-
-To run this code, you need to include the following dependencies in your `pom.xml` for Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.14.0</version>
-    </dependency>
-</dependencies>
-
-
-This code simulates a simple request handling mechanism without using an actual web server framework like Spring Boot or Jetty. For a production environment, consider integrating with such frameworks for better performance and features.

@@ -64,15 +64,3 @@ public class HttpHelloServer {
         return result;
     }
 }
-
-
-To run this code, you need to ensure that your environment has access to `com.sun.net.httpserver.HttpServer`. This is part of the JDK, so no additional libraries are required. You can execute the server with a command like:
-
-
-java -cp . HttpHelloServer
-
-
-Then, you can test it by visiting `http://localhost:8000/hello?username=YourName` in your web browser or using tools like curl:
-
-
-curl "http://localhost:8000/hello?username=YourName"

@@ -27,7 +27,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-To use this code:
-- Create a Flask application.
-- Define a decorator `bind_to_url` that binds a function to a URL path based on the function name and parameter.
-- Use the decorator for a function `user_profile` that accepts a username and returns an HTML template rendering the username.

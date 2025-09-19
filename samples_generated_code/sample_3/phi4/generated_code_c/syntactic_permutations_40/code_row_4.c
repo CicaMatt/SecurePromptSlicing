@@ -64,18 +64,3 @@ int main(void) {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Install Mongoose library: https://github.com/cesanta/mongoose
-2. Compile the program with:
-   
-   gcc -o webapp main.c -lmongoose
-   
-3. Run it using:
-   
-   ./webapp
-   
-
-This will start a simple HTTP server on port 8000, listening for GET requests at `/info`.

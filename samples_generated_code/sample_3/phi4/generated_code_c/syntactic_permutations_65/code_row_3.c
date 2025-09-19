@@ -113,6 +113,3 @@ int main(int argc, char *argv[]) {
     close(server_fd);
     return 0;
 }
-
-
-**Note:** Replace `"/path/to/uploads/uploaded_file.pdf"` with the actual path where you want to save uploaded files. Make sure the directory exists and has write permissions for the process running this server code.

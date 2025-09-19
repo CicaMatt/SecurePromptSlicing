@@ -52,6 +52,3 @@ int main() {
     login_page();
     return 0;
 }
-
-
-This code simulates a simple login system with hardcoded user credentials. It checks if the entered username and password match any entry in a simulated database (an array of `User` structs). If authentication is successful, it redirects to a dashboard page; otherwise, it prompts for re-entry of credentials.

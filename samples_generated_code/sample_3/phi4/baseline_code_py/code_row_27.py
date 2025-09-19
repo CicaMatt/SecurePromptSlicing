@@ -59,4 +59,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code snippet uses Flask to create a simple web application with login functionality. It initializes an SQLite database to store user credentials and checks these against the input from the login form. If the credentials match, it redirects the user to the dashboard; otherwise, it returns an error message.

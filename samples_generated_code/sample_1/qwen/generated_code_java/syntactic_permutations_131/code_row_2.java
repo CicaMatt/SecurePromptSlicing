@@ -50,16 +50,3 @@ public class WebApp {
         }
     }
 }
-
-
-
-<!-- This is the template file, should be placed in src/main/resources/freemarker/template.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello ${name}!</h1>
-</body>
-</html>

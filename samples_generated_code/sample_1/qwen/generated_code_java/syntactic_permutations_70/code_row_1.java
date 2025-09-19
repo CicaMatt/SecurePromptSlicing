@@ -35,15 +35,3 @@ public class FileUploadServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<!-- uploadSuccess.jsp -->
-<html>
-<head>
-<title>Upload Success</title>
-</head>
-<body>
-<h2>The file has been uploaded successfully!</h2>
-</body>
-</html>

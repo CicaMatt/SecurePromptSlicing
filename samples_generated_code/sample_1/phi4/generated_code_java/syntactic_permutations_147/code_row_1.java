@@ -119,6 +119,3 @@ public class DatabaseConnection {
                 "jdbc:mysql://localhost:3306/your_database", "username", "password");
     }
 }
-
-
-Make sure to replace `your_database`, `username`, and `password` with your actual database name, username, and password.

@@ -38,10 +38,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this servlet run:
-
-1. Ensure you have a web application setup with an `images` folder in the root directory.
-2. Deploy the above Java class as part of your web application.
-3. Access it via URL: `http://yourserver/ImageServlet?filename=yourimage.jpg`

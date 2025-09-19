@@ -35,6 +35,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have a `web.xml` configuration if not using annotations, and create the `admin_page.jsp` to complete the setup for redirection.

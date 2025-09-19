@@ -100,6 +100,3 @@ public class IndexServlet extends HttpServlet {
         response.sendRedirect("buy_stock");
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath and replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Additionally, set up a table `stocks` with columns `name` (VARCHAR) and `quantity` (INT).

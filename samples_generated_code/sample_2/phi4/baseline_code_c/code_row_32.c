@@ -23,9 +23,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Compile and run the program with a command like:
-
-gcc -o check_mod_program your_code.c
-./check_mod_program "/check_mod?username=user&password=pass"

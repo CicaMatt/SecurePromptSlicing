@@ -34,13 +34,3 @@ public class ImageUploader {
         uploadImage(imagePath);
     }
 }
-
-
-Make sure to include the following dependency in your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>

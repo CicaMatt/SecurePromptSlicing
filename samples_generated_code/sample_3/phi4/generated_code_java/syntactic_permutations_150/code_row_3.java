@@ -35,21 +35,3 @@ public class MessageServlet extends HttpServlet {
         // This is a placeholder for actual database interaction code.
     }
 }
-
-// Assuming there's an HTML file main.jsp that includes the following form:
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <form action="submit-message" method="post">
-        Username: <input type="text" name="username"><br>
-        Message: <textarea name="message"></textarea><br>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-*/

@@ -39,6 +39,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code assumes that the input is being piped from `stdin`, as typical when handling file uploads in a command-line environment. Make sure to have necessary directory permissions and run this program on the same server where you want the PDFs stored, or adjust paths accordingly for cross-machine operation.

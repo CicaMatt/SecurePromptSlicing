@@ -56,8 +56,3 @@ public class SimpleLoginServlet extends javax.servlet.http.HttpServlet {
         return false;
     }
 }
-
-
-Note:
-- Replace `yourdatabase`, `root`, and `password` with your actual database name, username, and password.
-- Ensure you have the MySQL JDBC driver (`mysql-connector-java`) in your classpath or build path.

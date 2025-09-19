@@ -60,6 +60,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-**Note:** Ensure that you have the MySQL JDBC driver in your classpath, and replace `your_database`, `root`, and `password` with your actual database name, username, and password. Additionally, create a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR).

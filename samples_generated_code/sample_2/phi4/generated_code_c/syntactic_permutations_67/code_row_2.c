@@ -86,6 +86,3 @@ int main(int argc, char **argv) {
     mysql_close(con);
     return EXIT_SUCCESS;
 }
-
-
-Make sure to replace `"user"` and `"password"` with your MySQL username and password, and ensure the `images` table exists in the specified database. The `images` table should have at least one column named `image_data` of type BLOB.

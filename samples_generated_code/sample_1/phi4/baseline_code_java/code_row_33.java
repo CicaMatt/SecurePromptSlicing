@@ -54,11 +54,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a servlet container like Apache Tomcat installed.
-2. Place this Java class in your project's appropriate package structure.
-3. Configure the web application to use this servlet by creating or updating `web.xml` if needed (though annotation configuration should suffice).
-4. Deploy and test the application, making sure that the directory permissions allow file creation in the designated upload location.

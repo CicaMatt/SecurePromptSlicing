@@ -72,16 +72,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-Note: Ensure you have the MySQL JDBC driver in your classpath. You can include it using Maven:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>
-
-
-Adjust database credentials (`user` and `password`) as per your setup. Ensure the table name and column names in the SQL query match your actual schema.

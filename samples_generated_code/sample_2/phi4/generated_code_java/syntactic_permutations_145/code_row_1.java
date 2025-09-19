@@ -34,6 +34,3 @@ public class StockBuyer {
         // Additional logic for buying the stock can be added here
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Also, ensure that you have a table named `stocks` in your database with columns `stock_name` (VARCHAR) and `quantity` (INT). Additionally, include the MySQL JDBC driver library in your project dependencies.

@@ -42,18 +42,3 @@ int main() {
 
 
 Ensure that `hello.html` contains a placeholder `{{ username }}`, like so:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {{ username }}!
-</body>
-</html>
-
-
-Place this HTML file in the same directory as your C program.

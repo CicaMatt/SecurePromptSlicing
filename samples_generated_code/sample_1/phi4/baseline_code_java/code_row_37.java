@@ -50,10 +50,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-1. Ensure you have a servlet container like Apache Tomcat installed.
-2. Place the Java class in the appropriate package structure within your web application directory, typically under `WEB-INF/classes`.
-3. Configure your `web.xml` or use annotations to define the servlets if necessary.
-4. Deploy and start your web server, then access the `/login` URL to test the functionality.

@@ -48,9 +48,3 @@ int main() {
     free(username);
     return 0;
 }
-
-
-Ensure you have OpenSSL installed and linked during compilation. Compile with:
-
-
-gcc -o user_insert program.c -lssl -lcrypto

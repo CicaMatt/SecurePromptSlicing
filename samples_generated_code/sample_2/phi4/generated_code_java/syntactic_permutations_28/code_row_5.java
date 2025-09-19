@@ -36,6 +36,3 @@ public class RedirectHandler {
         // Perform the default redirection logic here
     }
 }
-
-
-Note: Replace `"your-regex-here"` with the actual regular expression you intend to use.

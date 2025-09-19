@@ -45,4 +45,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_database'`, `'your_username'`, and `'your_password'` with your actual database credentials.

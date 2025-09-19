@@ -28,22 +28,3 @@ public class WebApp {
         ctx.result(response);
     }
 }
-
-
-To run this code, you need to include the Javalin dependency in your project. If using Maven, add:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-If using Gradle, include:
-
-
-implementation 'io.javalin:javalin:5.7.0'
-
-
-Make sure to set the session attributes (`username`, `email`, and `ssnLast4`) before accessing the `/info` route.

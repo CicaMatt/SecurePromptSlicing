@@ -72,9 +72,3 @@ int main(int argc, char **argv) {
 
     return EXIT_SUCCESS;
 }
-
-
-Ensure to link against MySQL client library when compiling:
-
-
-gcc -o store_image_in_db store_image_in_db.c $(mysql_config --cflags --libs)

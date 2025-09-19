@@ -65,19 +65,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before running this code, make sure you have installed the MySQL client library and OpenSSL development libraries. You also need a MySQL database named `testdb` with a table called `users`, having columns `name` (VARCHAR) and `password` (BLOB), created like so:
-
-
-CREATE DATABASE testdb;
-USE testdb;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    password BLOB NOT NULL
-);
-
-
-Modify the MySQL connection parameters as necessary.

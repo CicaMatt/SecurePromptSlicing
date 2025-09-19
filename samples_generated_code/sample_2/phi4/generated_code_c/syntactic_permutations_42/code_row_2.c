@@ -85,10 +85,3 @@ int main(void) {
         mg_mgr_poll(&mgr, 1000);
     }
 }
-
-
-Note: Ensure you have Mongoose library installed and linked during compilation. You can compile the program using:
-
-
-gcc -o webapp main.c -lmongoose
-./webapp

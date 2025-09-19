@@ -20,12 +20,3 @@ public class MessageServlet extends HttpServlet {
         // Implementation for database insertion
     }
 }
-
-
-
-<!-- Add this form to the main page HTML -->
-<form action="post" method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <textarea name="message" placeholder="Message" required></textarea>
-    <button type="submit">Submit</button>
-</form>

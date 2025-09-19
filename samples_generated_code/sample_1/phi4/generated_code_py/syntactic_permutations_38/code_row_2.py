@@ -45,48 +45,10 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<h2>Login Page</h2>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div class="{{ category }}">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-<form method="post" action="/login">
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <button type="submit">Login</button>
-</form> 
-</body>
-</html>
 
 
 
-<!-- dashboard.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-<h2>Welcome to the Dashboard!</h2>
-<a href="/">Logout</a>
-</body>
-</html>
 
 
-**Note**: 
-1. This code uses Flask with SQLite for simplicity, but you should use a secure method of storing passwords (e.g., hashing) in production.
-2. You need to have Flask and Flask-SQLAlchemy installed (`pip install flask flask_sqlalchemy`).
+
+

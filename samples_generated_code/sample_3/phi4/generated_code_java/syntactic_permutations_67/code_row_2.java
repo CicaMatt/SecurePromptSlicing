@@ -56,11 +56,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Before running this code:
-
-- Make sure you have a MySQL server running with the specified database and table (`your_database` and `images`, respectively).
-- Replace `your_username` and `your_password` with your actual MySQL username and password.
-- Create an SQL table for storing images, e.g., `CREATE TABLE images (id INT AUTO_INCREMENT PRIMARY KEY, image_data LONGBLOB);`.
-- Add the MySQL JDBC driver to your project's classpath. You can download it from https://dev.mysql.com/downloads/connector/j/.

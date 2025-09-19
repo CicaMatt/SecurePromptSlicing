@@ -43,6 +43,3 @@ public class LoginPage {
         return false;
     }
 }
-
-
-Make sure to replace `your_database` with the actual name of your database, and adjust the database URL, username, and password as necessary. Also, ensure that you have the MySQL JDBC driver in your classpath.

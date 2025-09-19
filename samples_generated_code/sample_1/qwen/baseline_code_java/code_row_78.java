@@ -49,18 +49,3 @@ public class UserRegistration {
         }
     }
 }
-
-
-Ensure you have the MySQL JDBC driver in your classpath to run this code. You can add it via Maven dependency:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Or download the JAR and add it to your project's build path manually.
-
-Also, replace `"jdbc:mysql://localhost:3306/userdb"`, `"user"`, and `"password"` with your actual database URL, username, and password. The table `users` should have columns `username`, `password_hash`, and `salt`.

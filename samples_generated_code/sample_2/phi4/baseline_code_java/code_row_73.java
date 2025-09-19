@@ -29,16 +29,3 @@ public class ModeratorCheck {
         }
     }
 }
-
-
-**Note:** You need to include the MySQL JDBC driver in your classpath. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version> <!-- Use the latest version available -->
-</dependency>
- 
-
-Make sure to replace `"your_database_name"` with your actual database name and `"target_username"` with the username you want to check for moderator status. Also, ensure that environment variables `DB_USERNAME` and `DB_PASSWORD` are set with the correct credentials.

@@ -58,6 +58,3 @@ public class AdminPageServlet extends HttpServlet {
         response.getWriter().write(adminHtml);
     }
 }
-
-
-Make sure you have a `web.xml` configuration or use annotations as shown above for servlet mapping, and configure your server (like Apache Tomcat) to run this application.

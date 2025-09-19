@@ -48,20 +48,6 @@ public class FileUploadServlet extends HttpServlet {
 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Simple File Upload</title>
-</head>
-<body>
-<h2>Upload a File</h2>
-<form action="upload" method="post" enctype="multipart/form-data">
-    Select file to upload:
-    <input type="file" name="file" id="file"><br><br>
-    <input type="submit" value="Upload File" name="submit">
-</form>
-</body>
-</html>
 
 
 
@@ -121,6 +107,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: This code requires a servlet container like Apache Tomcat to run. Ensure you have the necessary dependencies in your build environment if using Maven or Gradle, such as `commons-fileupload` and `commons-io`.

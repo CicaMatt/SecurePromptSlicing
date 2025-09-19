@@ -42,28 +42,3 @@ public class PriceCalculatorAPI {
         }
     }
 }
-
-
-Make sure to include the following dependencies in your `build.gradle` or `pom.xml`:
-
-For Gradle:
-
-dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.3'
-    implementation 'org.yaml:snakeyaml:1.33'
-}
-
-
-For Maven:
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>

@@ -43,6 +43,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
- 
-
-Make sure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, username, and password. Additionally, ensure that you have the necessary dependencies in your project, such as BCrypt for hashing passwords and MySQL JDBC driver for connecting to a MySQL database.

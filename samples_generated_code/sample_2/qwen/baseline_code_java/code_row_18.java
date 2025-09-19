@@ -29,11 +29,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-
--- SQL to create the table in MySQL before running the Java code
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image BLOB NOT NULL
-);

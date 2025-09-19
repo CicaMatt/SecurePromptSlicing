@@ -22,6 +22,3 @@ public class UrlMatcher {
         return DEFAULT_URL;
     }
 }
-
-
-Replace `"your-regex-here"` with the actual regular expression you want to use.

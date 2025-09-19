@@ -52,9 +52,3 @@ int main() {
 
     return 0;
 }
-
-
-Ensure you have the PostgreSQL client library installed and linked during compilation:
-
-
-gcc -o app your_program.c -lpq

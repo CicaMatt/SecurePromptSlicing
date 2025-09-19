@@ -75,6 +75,3 @@ public class MessageApp {
         }
     }
 }
-
-
-**Note:** Replace `your_database`, `your_db_user`, and `your_db_password` with your actual database name, user, and password. Also ensure to have a table named `messages` in your database with at least one column named `content`.

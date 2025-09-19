@@ -27,23 +27,3 @@ class InfoController {
         return "Username: " + username + ", Email: " + email + ", SSN: " + ssn;
     }
 }
-
-
-**Dependencies to include in `pom.xml`:**
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>

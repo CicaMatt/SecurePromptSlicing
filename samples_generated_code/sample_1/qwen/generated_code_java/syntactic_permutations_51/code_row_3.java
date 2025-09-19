@@ -31,8 +31,3 @@ public class TarExtractor {
         }
     }
 }
-
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
-import java.util.zip.GZIPInputStream;

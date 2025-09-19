@@ -66,6 +66,3 @@ int main() {
     sqlite3_close(db);
     return 0;
 }
-
-
-This code snippet includes SQLite for database operations. It creates a simple table named `orders` with columns for ID, stock name, and quantity, then inserts user-provided data into this table. After insertion, it selects all entries from the table to simulate viewing the order (akin to redirection in web applications). The program requires linking against the SQLite library when compiling: `gcc -o myprogram myprogram.c -lsqlite3`.

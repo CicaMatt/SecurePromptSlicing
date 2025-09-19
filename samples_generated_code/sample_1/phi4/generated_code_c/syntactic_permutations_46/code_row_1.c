@@ -55,6 +55,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C code simulates a server-side function that processes an image request. The `img()` function extracts the file name from the URL and attempts to open the corresponding file, then sends its contents as an HTTP response. If the file is not found or the URL is invalid, appropriate error messages are returned. Note that this example assumes files are stored in a directory named `images` relative to where the program runs.

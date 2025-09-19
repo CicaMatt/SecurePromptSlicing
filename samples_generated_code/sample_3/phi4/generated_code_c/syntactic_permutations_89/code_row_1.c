@@ -76,10 +76,3 @@ int main(void) {
 
     return 0;
 }
-
-
-Ensure you have the Mongoose library installed and linked appropriately when compiling this code. You can compile with:
-
-
-gcc -o webapp main.c -lmongoose
-./webapp

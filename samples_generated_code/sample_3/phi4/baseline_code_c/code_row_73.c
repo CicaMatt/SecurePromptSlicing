@@ -54,9 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-This code assumes:
-- MySQL server connection details are stored in environment variables: `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME`.
-- The database has a table named `users` with at least two columns: `username` (string) and `is_moderator` (integer, where 1 indicates moderator).
-- You replace `'some_username'` in the query with the actual username you want to check.

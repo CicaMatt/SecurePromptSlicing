@@ -53,6 +53,3 @@ int main() {
     
     return 0;
 }
-
-
-Note: Make sure that the MySQL server is installed and running on your local machine. Also, ensure you have created a database named `testdb` and a table named `users` with columns `username` (VARCHAR) and `password` (UNSIGNED LONG). Adjust the server, user, password, and database variables as needed for your setup.

@@ -59,6 +59,3 @@ public class BuyOrderServlet extends HttpServlet {
         System.out.println("Data inserted for testing.");
     }
 }
-
-
-Make sure to replace `"your_database"`, `"username"`, and `"password"` with your actual database name, username, and password. Ensure the MySQL JDBC driver is included in your project dependencies.

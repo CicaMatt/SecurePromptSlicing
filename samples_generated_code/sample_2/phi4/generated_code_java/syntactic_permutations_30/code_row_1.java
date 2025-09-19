@@ -20,11 +20,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable:
-
-1. Ensure you have a Java servlet container like Apache Tomcat set up.
-2. Place the above code in a file named `RedirectServlet.java`.
-3. Compile it with `javac RedirectServlet.java`.
-4. Deploy it to your servlet container as part of a web application archive (WAR) or directly if supported by your setup.

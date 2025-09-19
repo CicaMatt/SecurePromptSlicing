@@ -54,6 +54,3 @@ public class BuyStockServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: Update the database URL, username, password, and table/column names as per your actual database setup.

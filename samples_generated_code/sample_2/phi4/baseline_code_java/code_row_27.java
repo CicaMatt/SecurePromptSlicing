@@ -67,16 +67,3 @@ public class LoginApplication {
         System.out.println("Redirecting back to login page...");
     }
 }
-
-
-To run this code, ensure you have the H2 database library in your classpath. You can include it using Maven:
-
-
-<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>2.1.214</version>
-</dependency>
-
-
-Or download the JAR from the H2 website and add it to your project's library path.

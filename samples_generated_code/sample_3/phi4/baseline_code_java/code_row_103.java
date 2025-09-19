@@ -23,26 +23,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-To run this code:
-1. Add Javalin to your project's dependencies. If using Maven, add the following dependency in `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.9.0</version>
-</dependency>
-
-
-2. Set session attributes for testing (e.g., using a tool like Postman or curl):
-
-
-curl -X POST http://localhost:7000/ -d "username=testUser&email=test@example.com&ssn=123-45-6789" -H "Content-Type: application/x-www-form-urlencoded"
-
-
-3. Access the route:
-
-
-curl http://localhost:7000/info

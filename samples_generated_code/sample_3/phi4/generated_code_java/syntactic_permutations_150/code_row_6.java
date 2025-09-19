@@ -40,30 +40,3 @@ public class PostServlet extends HttpServlet {
     }
 
 }
-
-
-
-<!-- index.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submit Message</title>
-</head>
-<body>
-
-<form action="post" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
-    
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" required></textarea><br><br>
-
-    <button type="submit">Submit</button>
-</form>
-
-</body>
-</html>
-
-
-Ensure you have the necessary JDBC driver in your classpath and replace `your_database`, `username`, and `password` with appropriate values for your database configuration.

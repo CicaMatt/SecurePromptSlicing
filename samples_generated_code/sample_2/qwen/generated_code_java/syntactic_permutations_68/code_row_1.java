@@ -46,12 +46,3 @@ public class ImageUploader {
         uploader.uploadImage("path/to/your/image.jpg");
     }
 }
-
-
-
--- SQL to create the table, should be run in your database before running the Java code
-CREATE TABLE IF NOT EXISTS images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    data TEXT NOT NULL
-);

@@ -50,35 +50,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
-
-
-
-<!-- home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-</body>
-</html>

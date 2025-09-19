@@ -56,6 +56,3 @@ public class FileUploadServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-To use this servlet, make sure your web server (e.g., Apache Tomcat) is configured to handle `MultipartConfig`. Also, ensure that the `uploads` directory has proper write permissions. This code assumes the HTML form method is POST and uses `<input type="file" name="file">` for file selection.

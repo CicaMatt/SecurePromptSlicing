@@ -37,6 +37,3 @@ public class HelloServlet extends HttpServlet {
                     .replace("'", "&#039;");
     }
 }
-
-
-To run this code, ensure you have a Java servlet container like Apache Tomcat or Jetty configured correctly. Deploy the above servlet to the server and navigate to `http://localhost:8080/yourAppName/hello/username` replacing `yourAppName` with your application's context path and `username` with any desired value.

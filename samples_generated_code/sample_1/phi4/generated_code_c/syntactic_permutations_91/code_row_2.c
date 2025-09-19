@@ -103,12 +103,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Ensure the OpenSSL and SQLite3 libraries are installed on your system. The compilation command might look something like:
-
-
-gcc -o registration_app main.c -lsqlite3 -lcrypto
-
-
-Ensure that `openssl` is installed for hashing, and `sqlite3` is available for database operations. Adjust library paths in the compile command as necessary based on your environment setup.

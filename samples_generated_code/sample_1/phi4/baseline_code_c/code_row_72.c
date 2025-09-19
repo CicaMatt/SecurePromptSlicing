@@ -73,8 +73,3 @@ int main() {
 
     return 0;
 }
-
-
-To make this code runnable:
-1. Install SQLite development libraries.
-2. Create a database `stocks.db` with a table `stocks` having columns `name` (TEXT) and `quantity` (INTEGER).

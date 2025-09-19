@@ -24,20 +24,3 @@ class RedirectController {
         }
     }
 }
-
-
-To run this code, you will need a Java environment with Spring Boot dependencies. You can add the following dependency to your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-
-Or, use Gradle by adding this to your `build.gradle`:
-
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}

@@ -64,6 +64,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have MySQL installed and running on your machine. You should also create the database `stock_db` and table `orders` with columns `stock_name` and `quantity` before running this program. Adjust the `HOST`, `USER`, `PASSWORD`, and `DATABASE` definitions as needed for your setup.

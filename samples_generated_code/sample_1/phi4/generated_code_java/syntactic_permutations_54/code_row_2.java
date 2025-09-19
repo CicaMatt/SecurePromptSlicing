@@ -39,6 +39,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have a servlet container like Apache Tomcat set up and configured properly to run this Java code. Adjust the username and password check logic as necessary for your specific use case.

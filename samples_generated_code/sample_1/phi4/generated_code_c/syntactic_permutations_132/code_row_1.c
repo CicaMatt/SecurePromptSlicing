@@ -71,17 +71,3 @@ int main() {
     simulate_http_server();
     return 0;
 }
-
-
-
-<!-- hello.html -->
-<html>
-<head><title>Hello</title></head>
-<body>
-<h1>Welcome!</h1>
-<p>Static content goes here.</p>
-</body>
-</html>
-
-
-To run the C program, ensure you have a file named `hello.html` in the same directory as your executable. This code simulates handling an HTTP request and rendering a template based on a username extracted from the URL path `/hello/<username>`.

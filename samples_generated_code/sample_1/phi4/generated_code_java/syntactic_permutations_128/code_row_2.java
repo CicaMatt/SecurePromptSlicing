@@ -33,10 +33,3 @@ public class HttpHelloPageServlet extends HttpServlet {
         response.getWriter().write(greetingMessage);
     }
 }
-
-
-To run this code:
-1. Ensure you have a Java servlet container like Apache Tomcat or Jetty.
-2. Place the above class in your `src` directory under an appropriate package if needed.
-3. Configure your web application's `web.xml` to map the servlet URL pattern `/http_hello_page`.
-4. Deploy and run your web application, then access it via `http://localhost:8080/yourAppName/http_hello_page?username=YourName`.

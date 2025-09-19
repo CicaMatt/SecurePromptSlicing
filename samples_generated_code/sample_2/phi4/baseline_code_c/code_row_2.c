@@ -53,6 +53,3 @@ int main() {
 
     return 0;
 }
- 
-
-**Note**: You need OpenSSL installed on your system to compile this program. Use `gcc -o program_name program.c -lcrypto` to compile, where `program.c` is the name of your source file.

@@ -90,28 +90,3 @@ public class MainServlet extends HttpServlet {
         request.getRequestDispatcher("main.jsp").forward(request, response);
     }
 }
-
-
-
-<!-- main.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <ul>
-        <c:forEach var="message" items="${messages}">
-            <li>${message}</li>
-        </c:forEach>
-    </ul>
-
-    <form action="post" method="post">
-        Name: <input type="text" name="name"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>

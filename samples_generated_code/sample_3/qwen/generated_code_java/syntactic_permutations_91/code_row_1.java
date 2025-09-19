@@ -53,38 +53,3 @@ public class RegistrationServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- registrationSuccess.jsp -->
-<html>
-<body>
-<h2>Registration Successful!</h2>
-</body>
-</html>
-
-
-
-<!-- registrationError.jsp -->
-<html>
-<body>
-<h2>Registration Failed. Please try again.</h2>
-</body>
-</html>
-
-
-
-<!-- register.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-<form action="register" method="post">
-    Name: <input type="text" name="name" required><br/>
-    Password: <input type="password" name="password" required><br/>
-    <input type="submit" value="Register">
-</form>
-</body>
-</html>

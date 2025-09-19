@@ -47,6 +47,3 @@ public class MessageServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-Note: This code assumes you have set up a servlet container like Apache Tomcat and configured your web application to use servlets. You'll need to replace the database connection logic with actual implementation details suitable for your environment.

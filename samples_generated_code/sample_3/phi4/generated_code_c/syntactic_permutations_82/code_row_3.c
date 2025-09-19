@@ -32,6 +32,3 @@ int main() {
 
     return 0;
 }
-
-
-This C code simulates a basic web app that retrieves a URL parameter from an environment variable, processes it into a dictionary-like structure, and returns the `name` value. The code uses standard input/output functions to mimic server behavior without actual networking capabilities.

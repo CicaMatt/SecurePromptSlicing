@@ -82,6 +82,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: Before compiling the code, ensure you have installed MySQL client library and OpenSSL development packages. The database schema should include a table named `users` with columns `username` and `password_hash`. Adjust connection parameters as per your MySQL setup.

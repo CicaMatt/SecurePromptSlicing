@@ -56,6 +56,3 @@ public class HelloServlet extends HttpServlet {
         return escaped.toString();
     }
 }
-
-
-To run this code, you must have a servlet container like Apache Tomcat set up. Deploy it as part of a web application in the container.

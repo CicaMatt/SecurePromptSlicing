@@ -68,17 +68,3 @@ class Person {
         }
     }
 }
-
-// C++ code for JNI (to be compiled and loaded as a shared library):
-/*
-#include <jni.h>
-#include "MemoryAllocator.h"
-
-struct Person {
-    int status;
-};
-
-JNIEXPORT void* JNICALL Java_MemoryAllocator_allocatePerson(JNIEnv *env, jclass cls) {
-    return new Person();
-}
-*/

@@ -42,6 +42,3 @@ public class HelloServlet extends HttpServlet {
     }
 
 }
-
-
-To run this servlet, you need to set up a Java web server environment using something like Apache Tomcat or Jetty. Place the code in an appropriate directory structure (e.g., `src/main/java/`) and configure your `web.xml` or use annotations for servlet mapping.

@@ -61,9 +61,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note**: You need to have a database setup with the following configuration:
-- Database name: `mydatabase`
-- Table name: `users` with columns `username` and `password`
-- MySQL JDBC driver must be included in your project's classpath.

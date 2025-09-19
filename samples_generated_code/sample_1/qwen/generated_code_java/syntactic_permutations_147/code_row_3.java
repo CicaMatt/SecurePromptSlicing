@@ -57,19 +57,3 @@ public class StockViewServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-<!-- buy_form.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Buy Stock</title>
-</head>
-<body>
-    <h1>Buy Stock</h1>
-    <form action="buy_order" method="post">
-        Stock Name: <input type="text" name="stock_name"><br><br>
-        Quantity: <input type="number" name="quantity"><br><br>
-        <input type="submit" value="Submit Order">
-    </form>
-</body>
-</html>

@@ -73,12 +73,3 @@ int main() {
     free(hashed_password);
     return 0;
 }
-
-
-Make sure to link with OpenSSL when compiling this program:
-
-
-gcc -o registration registration.c -lssl -lcrypto
-
-
-This code will take a username and password from the user, hash the password using SHA-256, and print out the hashed password. In a real application, you would insert these into a database rather than printing them.

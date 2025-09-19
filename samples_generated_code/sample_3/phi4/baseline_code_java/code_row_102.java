@@ -26,10 +26,7 @@ To run this code, ensure you have the Spring Boot framework set up in your proje
 
 
 <dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
+    
 </dependencies>
 
 <build>
@@ -45,9 +42,7 @@ To run this code, ensure you have the Spring Boot framework set up in your proje
 Or add the following dependencies to your `build.gradle` if using Gradle:
 
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}
+
 
 tasks.named('bootJar') {
     enabled = true

@@ -52,6 +52,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** You need to have a MySQL database set up with the necessary table and credentials. Adjust the `DriverManager.getConnection` URL, username, and password as per your setup. Additionally, ensure that you have included the necessary servlet API and MySQL connector libraries in your project's classpath for this code to run successfully.

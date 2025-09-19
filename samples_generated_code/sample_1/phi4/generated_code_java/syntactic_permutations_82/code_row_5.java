@@ -37,22 +37,3 @@ class ApiController {
     }
 
 }
-
-
-To run this application, make sure you have Spring Boot set up in your environment. You can do so by including the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-
-Or, include the following in your `build.gradle` if you are using Gradle:
-
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-}

@@ -54,6 +54,3 @@ public class Main {
         ctx.result(sb.toString());
     }
 }
-
-
-Make sure to replace `your_database_url`, `your_db_username`, and `your_db_password` with your actual database connection details. Also, ensure that the `messages` table exists in your database with at least a column named `content`.

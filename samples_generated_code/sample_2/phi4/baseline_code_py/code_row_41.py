@@ -27,4 +27,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-Make sure to replace `'example.com'` with the actual URL you want to ping. This code uses Flask to create a simple web server that responds to requests at `/ping` by pinging `example.com`.

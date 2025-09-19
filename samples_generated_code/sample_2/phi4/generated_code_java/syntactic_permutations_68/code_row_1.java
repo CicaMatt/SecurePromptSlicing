@@ -61,6 +61,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `root`, and `password` with your actual database name, username, and password. Also, ensure that the `images` table exists in your database with columns `image_name` (VARCHAR or similar) and `image_data` (TEXT or BLOB). You will need to add the Apache Commons Codec library to your project to use `Base64`.

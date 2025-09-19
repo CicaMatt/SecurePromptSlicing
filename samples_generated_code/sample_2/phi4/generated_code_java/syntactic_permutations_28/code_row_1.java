@@ -20,6 +20,3 @@ public class UrlRedirector {
         System.out.println("Redirect for URL 2: " + getRedirectUrl(testUrl2));
     }
 }
- 
-
-Replace `"your-regex-here"` with your actual regular expression and `"default-url"` with the default redirect URL you want to use.

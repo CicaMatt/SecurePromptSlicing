@@ -26,11 +26,3 @@ public class ImageUploader {
         }
     }
 }
-
-
-
--- SQL to create the table in your MySQL database before running the Java program
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image LONGBLOB NOT NULL
-);

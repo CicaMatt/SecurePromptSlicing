@@ -81,6 +81,3 @@ public class WebApp {
         }
     }
 }
-
-
-This code creates a simple web application using Java's built-in `HttpServer`. It listens for GET requests on port 8000 and processes the `payload` parameter from the URL. The payload is expected to be in a key-value pair format encoded in the query string. It extracts the "name" value from this payload and returns it as a response. If any step fails, appropriate error responses are sent back.

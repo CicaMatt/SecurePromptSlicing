@@ -32,24 +32,4 @@ if __name__ == '__main__':
 
 
 
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Messages</title>
-</head>
-<body>
-    <h1>Messages</h1>
-    <form action="/post" method="post">
-        Name: <input type="text" name="name"><br>
-        Message: <textarea name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-    <ul>
-        {% for message in messages %}
-            <li><strong>{{ message[0] }}:</strong> {{ message[1] }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+

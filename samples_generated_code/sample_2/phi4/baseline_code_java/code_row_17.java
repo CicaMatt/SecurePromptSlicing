@@ -51,6 +51,3 @@ public class UserRegistration {
         return hexString.toString();
     }
 }
-
-
-Note: You need to have a MySQL database running and replace `your_database`, `your_username`, and `your_password` with the actual database name, username, and password. Additionally, ensure you have a table named `users` with columns `username` (VARCHAR) and `password` (VARCHAR).

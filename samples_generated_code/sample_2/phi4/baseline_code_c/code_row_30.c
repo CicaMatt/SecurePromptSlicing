@@ -49,6 +49,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note**: Ensure you have MySQL installed and configured properly. The database `stockdb` should exist with a table named `orders` having columns `stock_name` (VARCHAR) and `quantity` (INT). Adjust the server, user, password, and URL as needed for your environment.

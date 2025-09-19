@@ -45,6 +45,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-This code assumes you are using a Java servlet to handle HTTP requests. The `ImageServlet` class is mapped to the URL pattern `/img`, and it reads an image file with the name specified in the query parameter `name`. It then sends this file back as an HTTP response. Make sure your web application has access to the images directory at the root of its context path.

@@ -43,39 +43,3 @@ public class LoginPageServlet extends HttpServlet {
         doPost(request, response);
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Success</title>
-</head>
-<body>
-<h1>Login Successful!</h1>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Cant Login</title>
-</head>
-<body>
-<h1>Cannot Log In. Please try again.</h1>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Internal Server Error</title>
-</head>
-<body>
-<h1>An internal server error occurred. Please try again later.</h1>
-</body>
-</html>

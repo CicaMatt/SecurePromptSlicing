@@ -31,6 +31,3 @@ public class WebApplication {
         }
     }
 }
-
-
-To run this code, you need to have Spring Boot set up. You can create a new Spring Boot project using Spring Initializr (https://start.spring.io/) with Web dependency and then add the above code to your `Application.java` file.

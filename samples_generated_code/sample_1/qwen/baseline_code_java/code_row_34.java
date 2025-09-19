@@ -34,15 +34,3 @@ public class WebApp {
         return render_response_from_env(request, response, env);
     }
 }
-
-
-
-<!-- src/main/resources/template.ftl -->
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

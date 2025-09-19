@@ -36,33 +36,3 @@ public class BuyOrderServlet extends HttpServlet {
         response.sendRedirect("stock_view.jsp");
     }
 }
-
-// HTML form example in a JSP file or separate HTML file
-/*
-<form action="buy_order" method="post">
-    <label for="stock_name">Stock Name:</label>
-    <input type="text" id="stock_name" name="stock_name" required><br>
-
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" required><br>
-
-    <button type="submit">Buy Order</button>
-</form>
-*/
-
-// stock_view.jsp example
-/*
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-    <h1>Order Placed Successfully!</h1>
-    <!-- Add more functionality to view orders if needed -->
-</body>
-</html>
-*/
-
-
-**Note:** Replace `"your_database"`, `"username"`, and `"password"` with your actual database name, username, and password. Ensure you have the MySQL JDBC driver in your classpath.

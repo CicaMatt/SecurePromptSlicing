@@ -38,6 +38,3 @@ public class ImageUploader {
         uploader.uploadImage("path/to/your/image.jpg");
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, adjust the image path in the `main` method accordingly.

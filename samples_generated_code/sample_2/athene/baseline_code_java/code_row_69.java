@@ -25,6 +25,3 @@ public class PingService {
         System.out.println(service.ping("google.com"));
     }
 }
-
-
-Note: This code assumes the presence of Spring Framework for `@RequestMapping` and `RequestMethod`. To run this as a standalone application, you would need to integrate it into a Spring Boot project.

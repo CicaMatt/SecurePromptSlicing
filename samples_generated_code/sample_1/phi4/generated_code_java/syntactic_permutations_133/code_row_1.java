@@ -26,18 +26,3 @@ public class App {
         server.join();
     }
 }
-
-
-Make sure you have the Jetty dependencies in your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>

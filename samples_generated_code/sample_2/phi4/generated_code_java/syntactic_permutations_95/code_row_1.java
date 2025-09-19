@@ -84,6 +84,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-**Note:** Ensure you have the MySQL JDBC driver in your classpath. You may need to add it as a dependency if using Maven or Gradle, or download and include it manually. Adjust `DB_URL`, `USER`, and `PASS` with your database credentials. The table `users` should exist in your database with columns `username` and `password`.

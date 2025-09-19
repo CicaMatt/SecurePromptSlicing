@@ -42,6 +42,3 @@ public class InfoServlet extends HttpServlet {
         // A real web server like Tomcat or Jetty would be needed to run this servlet.
     }
 }
-
-
-To make the code runnable as-is, you'll need to set up a Java Servlet environment using a container such as Apache Tomcat. Save the above class in your source directory (e.g., `src/main/java/com/example/InfoServlet.java`) and configure it in your web.xml or use annotations if your servlet version supports them. Deploy this to a server like Tomcat, and ensure that session attributes (`username`, `email`, `ssn`) are set before accessing the `/info` endpoint.

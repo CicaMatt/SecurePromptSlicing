@@ -66,13 +66,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** To compile and run this code, you need to link against the MySQL client library. Here’s an example of how you might do that:
-
-
-gcc -o myapp myapp.c $(mysql_config --cflags --libs)
-./myapp
-
-
-Make sure to replace `"your_password"` with your actual database password and adjust `server_name`, `database_name`, `user`, and other parameters as necessary.

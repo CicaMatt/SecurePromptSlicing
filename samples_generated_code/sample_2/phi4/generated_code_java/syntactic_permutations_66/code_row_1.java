@@ -50,6 +50,3 @@ public class FileUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-To run this code, ensure your web server environment is set up to handle servlets (e.g., using Apache Tomcat), and that you have the necessary configurations in `web.xml` or use annotations as shown. Make sure the directory where this app runs has write permissions for creating the `uploads` folder.

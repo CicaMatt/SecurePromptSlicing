@@ -22,4 +22,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure you have Flask installed in your environment. You can install it using `pip install flask` if necessary. The HTML content is included directly in the code for simplicity, but typically this would be placed in a separate file like `hello.html`.

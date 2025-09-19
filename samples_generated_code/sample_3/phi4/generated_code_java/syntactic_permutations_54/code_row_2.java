@@ -39,6 +39,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-Ensure you have the appropriate environment setup to run Java servlets, including a server like Apache Tomcat or Jetty. Also, make sure that `admin_page.jsp` exists in your web application directory if you're using it for redirection.

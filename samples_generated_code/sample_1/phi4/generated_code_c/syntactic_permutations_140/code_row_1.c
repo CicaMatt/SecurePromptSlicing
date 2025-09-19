@@ -45,9 +45,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to link the MySQL client library when compiling:
-
-
-gcc -o db_test db_test.c $(mysql_config --cflags --libs)

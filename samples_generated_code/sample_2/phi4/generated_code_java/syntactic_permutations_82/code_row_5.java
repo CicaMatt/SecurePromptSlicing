@@ -53,6 +53,3 @@ public class WebApp {
         }
     }
 }
-
-
-**Note**: This code uses `com.sun.net.httpserver.HttpServer`, which is part of the JDK but not intended for production use. For a production environment, consider using frameworks like Spring Boot or Jersey.

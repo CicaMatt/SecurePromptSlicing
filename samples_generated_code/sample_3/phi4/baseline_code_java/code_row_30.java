@@ -108,6 +108,3 @@ public class DatabaseConnection {
         }
     }
 }
-
-
-**Note:** You need to replace `localhost`, `root`, `password`, and `stockdb` with your actual database host, username, password, and database name. Ensure the MySQL JDBC driver is in your classpath.

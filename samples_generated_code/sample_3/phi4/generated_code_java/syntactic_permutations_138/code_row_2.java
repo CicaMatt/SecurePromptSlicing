@@ -58,36 +58,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run this code, you need to add the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.12.0</version>
-    </dependency>
-    <dependency>
-        <groupId>com.zaxxer</groupId>
-        <artifactId>HikariCP</artifactId>
-        <version>5.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>2.1.214</version>
-        <scope>runtime</scope>
-    </dependency>
-</dependencies>
-
-
-Or in your `build.gradle` if using Gradle:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.12.0'
-    implementation 'com.zaxxer:HikariCP:5.0.1'
-    runtimeOnly 'org.h2database:h2:2.1.214'
-}

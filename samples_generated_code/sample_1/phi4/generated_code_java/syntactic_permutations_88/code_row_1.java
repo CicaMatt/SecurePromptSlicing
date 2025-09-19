@@ -41,31 +41,3 @@ public class PriceCalculatorAPI {
         }
     }
 }
-
-
-### Dependencies
-To run this code, you need to include the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-</dependencies>
-
-
-### Instructions
-1. Ensure Maven is installed and configured.
-2. Save the Java code to a file named `PriceCalculatorAPI.java`.
-3. Use the following command in your terminal to compile and run:
-   
-   mvn clean package exec:java -Dexec.mainClass="PriceCalculatorAPI"
-   
-4. Access the API at `http://localhost:4567/calculate_price?payload=...` with a valid YAML payload as a query parameter.

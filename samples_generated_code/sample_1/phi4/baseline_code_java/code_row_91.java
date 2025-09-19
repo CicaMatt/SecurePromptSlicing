@@ -35,23 +35,3 @@ public class ImageUploader {
         uploadImage(imagePath, imageName);
     }
 }
-
-
-Make sure to include the necessary dependencies in your project:
-
-- Apache Commons Codec for Base64 encoding: `commons-codec`
-- MySQL JDBC Driver: `mysql-connector-java`
-
-You can add these dependencies using Maven by including them in your `pom.xml`:
-
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.27</version>
-</dependency>

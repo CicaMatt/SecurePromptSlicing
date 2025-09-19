@@ -34,30 +34,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-    <h1>Welcome to the Index Page</h1>
-    <a href="{{ url_for('login') }}">Login</a>
-</body>
-</html>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login Page</h1>
-    <form method="post" action="">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>

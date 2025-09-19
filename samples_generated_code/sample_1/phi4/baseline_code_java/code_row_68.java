@@ -52,5 +52,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-This code uses `com.sun.net.httpserver.HttpServer` to create a simple HTTP server that listens on port 8000. The `/hello` context path is mapped to the `HelloHandler`, which reads the username from the request query string and responds with "hello [username]".

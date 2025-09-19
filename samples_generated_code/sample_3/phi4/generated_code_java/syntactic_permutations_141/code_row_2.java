@@ -31,6 +31,3 @@ public class WebApp {
         return "localhost";
     }
 }
-
-
-Note: Ensure that you have the MySQL JDBC driver in your classpath to run this code successfully. Also, replace `your_database`, `root`, and `password` with your actual database details.

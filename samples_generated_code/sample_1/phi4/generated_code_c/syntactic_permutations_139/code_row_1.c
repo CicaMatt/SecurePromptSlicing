@@ -41,9 +41,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Note: You need to install MySQL development libraries and link against them when compiling this code. For example, on a system with `gcc`:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)

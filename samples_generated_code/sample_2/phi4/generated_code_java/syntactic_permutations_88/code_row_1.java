@@ -79,6 +79,3 @@ public class CalculatePriceServlet extends HttpServlet {
         }
     }
 }
-
-
-**Note:** This code snippet is meant to be run in a servlet container like Apache Tomcat. Make sure you have the necessary dependencies for YAML parsing and object mapping, such as `snakeyaml` and `jackson-databind`. Add these dependencies to your project's build tool configuration (e.g., Maven or Gradle).

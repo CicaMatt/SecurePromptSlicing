@@ -67,6 +67,3 @@ public class TemperatureServlet extends HttpServlet {
         // It's not used in a servlet container environment like Tomcat or Jetty.
     }
 }
-
-
-**Note**: Replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Ensure you have the MySQL JDBC driver available in your classpath when running this application.

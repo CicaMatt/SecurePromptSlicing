@@ -90,6 +90,3 @@ int main() {
     register_user();
     return 0;
 }
-
-
-**Note**: This code uses OpenSSL for hashing and generating random bytes. Ensure you have OpenSSL installed and linked correctly with your compiler. For example, compile the program using `gcc -o registration registration.c -lcrypto`.

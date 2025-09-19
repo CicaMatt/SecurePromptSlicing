@@ -58,24 +58,3 @@ public class FileUploadServlet extends HttpServlet {
         return "Uploads PDF Files to the 'uploads' directory.";
     }
 }
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>File Upload Form</title>
-</head>
-<body>
-    <h2>Upload a PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        Select PDF file to upload:
-        <input type="file" name="pdfFile" accept=".pdf" />
-        <br/><br/>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-To make this example work, you should set up a servlet container like Apache Tomcat. Deploy the Java class as a part of your web application, and ensure that the `web.xml` or equivalent configuration allows for multipart file uploads.

@@ -51,12 +51,3 @@ int main() {
     
     return EXIT_SUCCESS;
 }
-
-
-Make sure to replace `your_database_name` and `'your_username'` with the actual database name and username, respectively. This code assumes you have a table called `users` with at least two columns: `username` and `is_moderator`, where `is_moderator` is stored as '1' for moderators and '0' otherwise. Also, ensure that your MySQL development library is installed on your system to compile this program using a command like:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-
-
-And set the environment variables `DB_USER` and `DB_PASSWORD` before running the compiled executable.

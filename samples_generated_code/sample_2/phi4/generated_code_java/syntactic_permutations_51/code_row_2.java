@@ -75,21 +75,3 @@ public class TarUnpacker {
         }
     }
 }
-
-
-**Dependencies:**
-
-You need to include the following dependencies in your `pom.xml` if you are using Maven:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle` file:
-
-
-implementation 'org.apache.commons:commons-compress:1.21'

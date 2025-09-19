@@ -37,6 +37,3 @@ public class MyWebApp extends HttpServlet {
         return request.getServerName();
     }
 }
-
-
-**Note:** This code assumes a Java web application environment. You need to have a servlet container (like Apache Tomcat) and a MySQL database configured with the specified URL, user, and password for it to run successfully.

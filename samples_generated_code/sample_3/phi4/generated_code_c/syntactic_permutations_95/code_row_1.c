@@ -73,15 +73,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run the code, you will need OpenSSL development libraries installed. Use the following command to compile:
-
-
-gcc -o registration_form registration_form.c -lcrypto
-
-
-Then execute it with:
-
-
-./registration_form

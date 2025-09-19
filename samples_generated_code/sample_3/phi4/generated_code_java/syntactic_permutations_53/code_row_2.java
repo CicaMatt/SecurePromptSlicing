@@ -41,6 +41,3 @@ public class AccessControl extends HttpServlet {
         response.sendRedirect("adminpage.jsp");
     }
 }
-
-
-Make sure that you have the necessary JSP files (`login.jsp`, `userpage.jsp`, and `adminpage.jsp`) in your web application to handle these redirects.

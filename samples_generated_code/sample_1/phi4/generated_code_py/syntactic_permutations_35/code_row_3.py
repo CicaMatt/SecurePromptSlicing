@@ -32,33 +32,7 @@ if __name__ == '__main__':
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
-    <form method="post" action="/login">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
 
 
 
--- SQL to create the users table in 'users.db'
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
-);
 
--- Insert sample user for testing
-INSERT INTO users (name, password) VALUES ('testuser', 'password123');

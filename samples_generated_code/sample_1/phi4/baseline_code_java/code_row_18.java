@@ -43,10 +43,3 @@ public class StoreImageInDatabase {
         }
     }
 }
-
-
-Note:
-- Replace `your_database_name` with your actual database name.
-- Replace `username` and `password` with your MySQL username and password.
-- Ensure you have a table named `images_table` with at least one column, `image_data`, of type `BLOB`.
-- Add the MySQL JDBC driver to your classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/).

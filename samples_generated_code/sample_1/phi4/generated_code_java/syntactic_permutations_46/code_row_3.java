@@ -40,20 +40,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to configure your web application's `web.xml` or use annotations for servlet mapping as required. For example:
-
-
-<servlet>
-    <servlet-name>ImageServlet</servlet-name>
-    <servlet-class>ImageServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>ImageServlet</servlet-name>
-    <url-pattern>/img</url-pattern>
-</servlet-mapping>
-
-
-Ensure that your web application has the proper structure and permissions for accessing files in the `images` directory.

@@ -33,20 +33,9 @@ class RedirectController {
 
 
 
-<!-- src/main/resources/templates/errorPage.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Error</title>
-</head>
-<body>
-    <h1>Oops!</h1>
-    <p th:text="${errorMessage}"></p>
-</body>
-</html>
 
 
-**Build.gradle:**
+
 
 
 plugins {
@@ -61,16 +50,3 @@ sourceCompatibility = '17'
 repositories {
     mavenCentral()
 }
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-
-**application.properties:**
-
-
-spring.thymeleaf.prefix=classpath:/templates/
-spring.thymeleaf.suffix=.html

@@ -34,6 +34,3 @@ public class PingServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure your server is set up to handle servlets, such as using Apache Tomcat or any other Java servlet container. Adjust the `url` variable with the URL you want to ping. The command may need modification based on your operating system (e.g., use `-n 4` for Windows).

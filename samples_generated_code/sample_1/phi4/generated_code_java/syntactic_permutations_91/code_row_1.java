@@ -73,9 +73,3 @@ public class RegisterServlet extends HttpServlet {
         server.join();
     }
 }
-
-
-To run this code:
-1. Set up a MySQL database and create a table `users` with columns `name` (VARCHAR) and `password` (VARCHAR).
-2. Update `DB_URL`, `DB_USER`, and `DB_PASSWORD` with your database details.
-3. Add Jetty as a dependency to test the servlet locally or deploy it in a servlet container like Tomcat.

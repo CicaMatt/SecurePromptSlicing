@@ -39,16 +39,3 @@ public class TemplateRenderer {
         Spark.get("/home", renderer.home());
     }
 }
-
-
-
-<!-- This file should be located in src/main/resources/templates/example.ftl -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Greeting</title>
-</head>
-<body>
-    <h1>Hello, ${name}!</h1>
-</body>
-</html>

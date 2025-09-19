@@ -67,6 +67,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"your_database_name"` with the actual name of your database. Additionally, ensure that your MySQL server is running and properly configured with a table named `users` containing columns `username` and `password`.

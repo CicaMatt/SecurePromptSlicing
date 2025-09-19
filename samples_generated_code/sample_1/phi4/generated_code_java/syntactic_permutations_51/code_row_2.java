@@ -54,16 +54,3 @@ public class TarExtractor {
         }
     }
 }
-
-
-Make sure to include the necessary dependencies in your project:
-
-
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
-</dependency>
-
-
-This code assumes you have Apache Commons Compress library available in your classpath.

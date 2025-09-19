@@ -55,17 +55,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code uses the OpenSSL library to perform SHA-256 hashing. Make sure you have OpenSSL installed on your system and link against it when compiling this program by using `-lssl -lcrypto`. 
-
-To compile:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto
-
-
-Run the compiled program:
-
-
-./registration_form

@@ -50,24 +50,3 @@ public class SecretServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-    <% if (request.getParameter("error") != null) { %>
-        <p>Invalid username or password.</p>
-    <% } %>
-</body>
-</html>

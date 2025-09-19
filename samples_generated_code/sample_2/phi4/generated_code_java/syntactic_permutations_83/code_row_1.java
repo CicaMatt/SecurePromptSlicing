@@ -68,6 +68,3 @@ public class WebApp {
         }
     }
 }
-
-
-This code sets up a simple HTTP server using Java's built-in `HttpServer` class. It listens on port 8000 and checks for the field "name" in a JSON payload sent via POST requests to `/checkName`. If the field exists, it returns its value; otherwise, it sends an error response. The JSON parsing is basic and assumes a simple key-value structure without nested objects or arrays.

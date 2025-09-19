@@ -55,11 +55,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a servlet container like Apache Tomcat set up.
-2. Place the `ImageServlet` class in your web application's appropriate package structure (e.g., under `WEB-INF/classes`).
-3. Deploy the application on your server.
-4. Access the servlet by navigating to: `http://<server-address>:<port>/<app-context>/img?file=<path-to-image>`. Ensure `<path-to-image>` is a valid path within your web app context.

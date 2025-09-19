@@ -37,17 +37,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: Before running this code, ensure you have a SQLite database named `users.db` with a table called `users`. The `users` table should at least have columns `username` and `password`. You can create it using the following SQL:
-
-
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
-);
-
-
-And insert a test user with:
-
-
-INSERT INTO users (username, password) VALUES ('testuser', 'password123');

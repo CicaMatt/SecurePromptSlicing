@@ -57,21 +57,3 @@ public class DecoratorServer {
         }
     }
 }
-
-
-Make sure to create a `template.html` file in the same directory as this Java program with content like:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-</head>
-<body>
-    <h1>Hello, ${username}!</h1>
-</body>
-</html>
-
-
-This will render the HTML file with the username substituted into the template.

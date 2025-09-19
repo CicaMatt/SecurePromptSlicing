@@ -40,23 +40,3 @@ public class ModeratorCheck {
         System.out.println("Is user a moderator? " + isModerator);
     }
 }
-
-
-Make sure that you have the necessary JDBC driver in your classpath. For example, if you're using MySQL, you would need the `mysql-connector-java` library. You can include it via Maven or download the JAR and add it to your project's build path.
-
-For Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version> <!-- Use the appropriate version -->
-</dependency>
-
-
-For Gradle, add this to your `build.gradle`:
-
-
-dependencies {
-    implementation 'mysql:mysql-connector-java:8.0.29' // Use the appropriate version
-}

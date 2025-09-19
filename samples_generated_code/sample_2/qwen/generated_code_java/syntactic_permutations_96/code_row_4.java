@@ -51,15 +51,3 @@ public class RegistrationForm {
         }
     }
 }
-
-
-
-CREATE DATABASE your_database;
-USE your_database;
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password BINARY(64) NOT NULL,
-    salt BINARY(16) NOT NULL
-);

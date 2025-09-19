@@ -20,11 +20,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have a Java servlet container, like Apache Tomcat.
-2. Place the above class in your web application's `src` directory.
-3. Configure your web.xml to map `/redirect` to the `RedirectServlet` or use the `@WebServlet` annotation as shown.
-4. Deploy the application and test by accessing `/redirect?target=yourURL`.

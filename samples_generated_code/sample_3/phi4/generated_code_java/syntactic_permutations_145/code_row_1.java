@@ -40,6 +40,3 @@ public class StockTradingApp {
         System.out.println("Buying function executed for: " + stockName);
     }
 }
-
-
-**Note:** Make sure that you have the MySQL JDBC driver in your classpath. You may need to create a database named `stock_trading` and a table named `purchases` with appropriate columns (`stock_name`, `quantity`) before running this code. Adjust the `DB_URL`, `USER`, and `PASS` variables according to your MySQL setup.

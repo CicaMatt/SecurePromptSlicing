@@ -28,6 +28,3 @@ public class PostServlet extends HttpServlet {
         return true;
     }
 }
-
-
-Ensure you have the necessary Java EE environment set up for servlets to run. The `insert_user_message_in_db` function here is a placeholder and should be implemented with actual database interaction logic using JDBC or an ORM framework like Hibernate.

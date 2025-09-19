@@ -39,6 +39,3 @@ public class RegistrationPage {
         }
     }
 }
-
-
-**Note**: Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Ensure that the MySQL Connector/J library is included in your project's classpath to run this code successfully.

@@ -28,22 +28,3 @@ public class WebApp {
         });
     }
 }
-
-
-To run this application, you will need to include the Javalin dependency in your project's build file. For example, if you're using Maven, add the following to your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.0.0</version>
-</dependency>
-
-
-For Gradle, add this to your `build.gradle` file:
-
-
-implementation 'io.javalin:javalin:5.0.0'
-
-
-Ensure you have the necessary session management in place when using Javalin.

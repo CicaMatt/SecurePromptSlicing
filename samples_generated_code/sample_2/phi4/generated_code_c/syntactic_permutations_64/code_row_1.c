@@ -57,6 +57,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `your_username`, `your_password`, and `your_database` with your actual MySQL credentials. Additionally, ensure that the `uploads/` directory exists in the same location as your program before running it. This code assumes a table named `pdf_files` with at least one column named `filepath`. Adjust the SQL query according to your schema if needed.

@@ -51,6 +51,3 @@ public class EmailChecker {
         return 0; // Default to 0 if an error occurs
     }
 }
-
-
-**Note:** Replace `your_database`, `your_username`, `your_password`, and `path/to/your/script.sh` with the actual values relevant to your setup. Ensure that the script is executable and correctly handles email input.

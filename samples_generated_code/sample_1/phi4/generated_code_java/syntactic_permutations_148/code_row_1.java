@@ -65,30 +65,3 @@ public class PostServlet extends HttpServlet {
         // Main method to support testing or standalone execution if needed
     }
 }
-
-
-
-<!-- main.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-
-<h1>Welcome to the Message Board!</h1>
-<form action="post" method="post">
-    Name: <input type="text" name="name"><br>
-    Message: <textarea name="message"></textarea><br>
-    <input type="submit" value="Submit">
-</form>
-
-<% if (request.getAttribute("messages") != null) { %>
-    <%= request.getAttribute("messages") %>
-<% } %>
-
-</body>
-</html>
-
-
-_Note: You need to replace `your_database` with your actual database name, and set the correct `DB_USER` and `DB_PASSWORD`. Also, ensure you have a table named `messages` in your database with columns `name` and `message`._

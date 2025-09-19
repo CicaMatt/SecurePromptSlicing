@@ -59,10 +59,3 @@ int main(void) {
     mg_mgr_free(&mgr);
     return 0;
 }
-
-
-Make sure you have the mongoose library installed and linked during compilation:
-
-
-gcc -o myapp myapp.c -lmongoose
-./myapp

@@ -85,9 +85,3 @@ int main(void) {
         mg_mgr_poll(&mgr, 100);
     }
 }
-
-
-Make sure to have the Mongoose library installed and linked during compilation. This can typically be done with a command like:
-
-
-gcc -o myapp myapp.c -lmongoclient

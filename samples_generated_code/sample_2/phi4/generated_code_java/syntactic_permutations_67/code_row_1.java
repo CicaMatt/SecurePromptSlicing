@@ -58,9 +58,3 @@ public class ImageToDatabase {
         return "application/octet-stream";
     }
 }
-
-
-**Note:** Before running this code, ensure you have:
-- A MySQL database set up with a table named `images` having at least two columns: `image_data` (BLOB type) and `content_type` (VARCHAR).
-- The MySQL JDBC driver included in your classpath. You can download it from the official website or add it via Maven/Gradle dependencies.
-- Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.

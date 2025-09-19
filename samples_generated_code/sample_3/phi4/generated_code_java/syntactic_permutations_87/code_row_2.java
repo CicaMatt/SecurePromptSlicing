@@ -77,6 +77,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. You might also need to add the MySQL JDBC driver dependency to your project's build configuration if you're using a build tool like Maven or Gradle.

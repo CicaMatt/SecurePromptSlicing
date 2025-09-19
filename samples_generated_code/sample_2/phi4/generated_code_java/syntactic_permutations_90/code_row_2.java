@@ -72,16 +72,3 @@ public class ProductService {
         }
     }
 }
-
-
-**Note:** This code requires the `snakeyaml` library to parse and generate YAML. You can include it in your project by adding the following dependency to your `pom.xml` if you're using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-
-
-For other build systems, please adjust accordingly.

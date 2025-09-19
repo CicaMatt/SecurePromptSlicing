@@ -23,6 +23,3 @@ public class NameCheckerServlet extends HttpServlet {
         }
     }
 }
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat set up in your development environment. Place the `NameCheckerServlet` class in an appropriate package within your web application project and configure it as described above using annotations. Deploy the application to the server and test it by sending HTTP POST requests with or without the 'name' parameter.

@@ -33,16 +33,3 @@ public class Main {
         return renderResponseFromEnv(request, response, env);
     }
 }
-
-
-
-<!-- Assuming you have a templates directory with hello.ftl file -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-    <h1>Hello ${name}!</h1>
-</body>
-</html>

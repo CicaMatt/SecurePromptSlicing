@@ -49,18 +49,3 @@ public class LoginServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-<h1>Welcome to the Admin Page, <%= session.getAttribute("user") %>!</h1>
-</body>
-</html>
-
-
-Note: This code assumes a servlet container like Apache Tomcat for deployment. The `admin_page.jsp` should be created in your web application's directory structure under `WEB-INF`. Adjust the path or filename as needed based on your project setup.

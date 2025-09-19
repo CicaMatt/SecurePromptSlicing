@@ -64,6 +64,3 @@ public class RegistrationForm {
         return hexString.toString();
     }
 }
-
-
-Make sure to adjust the database URL, username, and password as per your environment. Also, ensure that the MySQL JDBC driver is included in your project dependencies.

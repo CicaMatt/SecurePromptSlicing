@@ -55,16 +55,6 @@ public class SimpleWebApp {
 Make sure you have a file named `hello.html` in the same directory as your Java program. The content of `hello.html` should be something like:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {username}!
-</body>
-</html>
 
 
 Replace `{username}` with the actual username in your Java code.

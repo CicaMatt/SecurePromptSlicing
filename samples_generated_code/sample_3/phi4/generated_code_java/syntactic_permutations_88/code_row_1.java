@@ -45,20 +45,3 @@ public class PriceCalculationServlet extends HttpServlet {
         return PRODUCT_PRICES.getOrDefault(productCode, -1.0);
     }
 }
-
-
-To run this code:
-- Ensure you have a Servlet container like Tomcat.
-- Add dependencies for `snakeyaml` and `jackson-databind` in your project's build tool (e.g., Maven or Gradle). For Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.33</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.15.0</version>
-</dependency>

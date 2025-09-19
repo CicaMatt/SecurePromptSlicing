@@ -58,6 +58,3 @@ public class RegistrationForm {
         return sb.toString();
     }
 }
-
-
-**Note**: Replace `"your_salt_here"`, `DB_URL`, `USER`, and `PASSWORD` with your actual salt, database URL, username, and password. Ensure that the MySQL JDBC driver is included in your project's classpath.

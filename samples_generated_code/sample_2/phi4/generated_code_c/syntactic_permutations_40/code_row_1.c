@@ -87,6 +87,3 @@ int main() {
     run_server();
     return 0;
 }
-
-
-Note: This code assumes a Unix-like environment with networking capabilities and uses socket programming to create an HTTP server. It handles only the `/info` route for `GET` requests and returns basic HTML content. You need to compile it using `gcc -o webapp webapp.c` (assuming you save this code in `webapp.c`) and run the executable to start the server. Ensure that your development environment supports networking libraries, and appropriate permissions are granted to bind sockets on the specified port.

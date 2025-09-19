@@ -95,6 +95,3 @@ int main(void) {
     
     return 0;
 }
-
-
-Make sure to replace `"path/to/your/file.pdf"` with the actual path to your PDF file and ensure that `UPLOAD_URL` matches your local server's upload endpoint. You'll also need to have libcurl installed and linked correctly when compiling this code (e.g., using `-lcurl`).

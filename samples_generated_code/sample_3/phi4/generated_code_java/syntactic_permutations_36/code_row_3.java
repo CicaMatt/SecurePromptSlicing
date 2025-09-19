@@ -51,6 +51,3 @@ public class LoginSystem {
         // Simulate redirection by printing a message
     }
 }
-
-
-Note: Make sure you have the MySQL JDBC driver in your classpath and adjust the database URL, username, password, and table schema according to your setup.

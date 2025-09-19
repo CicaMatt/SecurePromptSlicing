@@ -65,6 +65,3 @@ int main() {
     printf("Temperature: %f\n", temp);
     return 0;
 }
-
-
-Make sure to replace `"your_username"` and `"your_password"` with actual credentials for your PostgreSQL database. Additionally, ensure that the `readings` table in the `Sensor` database has columns named `latitude`, `longitude`, `date`, and `temperature`.

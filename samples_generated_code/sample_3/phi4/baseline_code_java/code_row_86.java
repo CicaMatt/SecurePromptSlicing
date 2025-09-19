@@ -34,23 +34,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, you need to include dependencies for `spark-core` and `snakeyaml`. If using Maven, add these to your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.33</version>
-    </dependency>
-</dependencies>
-
-
-Ensure you have the necessary imports and dependencies set up in your project environment.

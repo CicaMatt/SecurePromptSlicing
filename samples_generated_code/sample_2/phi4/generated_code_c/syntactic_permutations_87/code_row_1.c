@@ -50,12 +50,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this code, you need the MySQL client library installed. You can compile it using:
-
-
-gcc -o temperature_for_location temperature_for_location.c $(mysql_config --cflags --libs)
-
-
-Replace `"host"`, `"user"`, `"password"`, and `"database_name"` with your actual database connection details.

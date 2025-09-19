@@ -68,9 +68,3 @@ int main() {
     free(username);
     return 0;
 }
-
-
-Note: This code requires linking with OpenSSL libraries. Compile it using:
-
-
-gcc -o registration_form registration_form.c -lssl -lcrypto

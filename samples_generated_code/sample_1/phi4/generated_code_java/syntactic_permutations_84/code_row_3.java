@@ -54,30 +54,3 @@ class PayloadServlet extends HttpServlet {
         resp.getWriter().write("Payload processed successfully.");
     }
 }
-
-
-To run this code, you need to include the following dependencies in your build configuration file (e.g., `pom.xml` for Maven):
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>11.0.14</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>11.0.14</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.15.2</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.15.2</version>
-    </dependency>
-</dependencies>

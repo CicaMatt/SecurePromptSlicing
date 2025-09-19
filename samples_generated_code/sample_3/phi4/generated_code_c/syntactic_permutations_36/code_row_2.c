@@ -64,6 +64,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code assumes there is a SQLite database named `users.db` with a table called `users` containing columns `username` and `password`. The `sqlite3` library must be linked during compilation using `-lsqlite3`.

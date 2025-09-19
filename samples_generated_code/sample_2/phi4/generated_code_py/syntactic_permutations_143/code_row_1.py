@@ -28,10 +28,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to create a SQLite database named `users.db` with a table `users` having at least a column `email`. You can use the following SQL commands to set it up:
-
-
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE
-);

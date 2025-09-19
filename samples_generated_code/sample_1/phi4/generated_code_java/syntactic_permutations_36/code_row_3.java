@@ -64,6 +64,3 @@ public class LoginSystem {
         // In a real-world application, this would involve setting the response status and location
     }
 }
-
-
-Note: Replace `your_database`, `root`, and `password` with your actual database name, user, and password. Ensure you have the MySQL JDBC driver in your classpath.

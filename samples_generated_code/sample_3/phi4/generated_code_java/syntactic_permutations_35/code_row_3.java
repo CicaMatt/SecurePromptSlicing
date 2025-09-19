@@ -65,42 +65,12 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br><br>
-
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
 
-<!-- home.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    Welcome, ${sessionScope.username}!
-    <br><a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -131,6 +101,3 @@ public class LogoutServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-Make sure to replace `"yourdatabase"`, `"root"`, and `"password"` with your actual database name, username, and password. Ensure you have a table named `users` with columns `username` and `password`.

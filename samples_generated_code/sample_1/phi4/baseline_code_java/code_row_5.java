@@ -47,16 +47,6 @@ public class HttpDecoratorExample {
 Make sure you have a `hello.html` file in the same directory as this Java program with the following content:
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
-</head>
-<body>
-    Hello, {username}!
-</body>
-</html>
 
 
 This code sets up a simple HTTP server that listens on port 8080 and handles requests to the `/hello/<username>` URL. It reads the `hello.html` file, replaces `{username}` with the actual username from the URL, and returns the rendered HTML as the response.

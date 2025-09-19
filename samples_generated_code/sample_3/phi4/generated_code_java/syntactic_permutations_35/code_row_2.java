@@ -39,39 +39,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form action="LoginServlet" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
-
-
-
-<!-- home.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page!</h1>
-</body>
-</html>
-
-
-Make sure to replace `your_database`, `username`, and `password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is included in your project's classpath.

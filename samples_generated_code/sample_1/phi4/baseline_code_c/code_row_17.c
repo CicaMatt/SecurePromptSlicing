@@ -75,9 +75,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to have OpenSSL library installed and linked during compilation. You can compile the code with:
-
-
-gcc -o password_hasher password_hasher.c -lcrypto

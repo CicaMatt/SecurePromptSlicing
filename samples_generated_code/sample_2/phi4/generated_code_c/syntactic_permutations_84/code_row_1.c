@@ -123,6 +123,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-Note: This code uses the `libyaml` library for YAML parsing. You need to link against it when compiling, e.g., using `gcc -o server server.c $(pkg-config --cflags --libs libyaml-0.2)`. Make sure you have `libyaml-dev` installed on your system.

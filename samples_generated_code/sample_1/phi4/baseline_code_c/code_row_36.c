@@ -41,6 +41,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** This code assumes that `unzip` is installed on your system. If you're using a Windows environment, adapt the path separator and ensure that a compatible ZIP utility (like `7-Zip`) is available in your command line tools.

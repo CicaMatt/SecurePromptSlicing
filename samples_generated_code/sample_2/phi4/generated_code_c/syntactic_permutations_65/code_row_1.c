@@ -72,6 +72,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note**: This code simulates the HTTP POST request using `curl`. Make sure that the server at `localhost` with port specified in `PORT` accepts file uploads via a path like `/upload`, and that you have write permissions to the `UPLOAD_PATH` directory. Adjust paths, ports, and URLs as necessary for your setup.

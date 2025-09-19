@@ -30,19 +30,3 @@ public class WebApp {
         return null;
     }
 }
-
-
-Make sure to include the Spark framework in your project's dependencies. If you are using Maven, add the following dependency to your `pom.xml`:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-For Gradle, include this in your `build.gradle`:
-
-
-implementation 'com.sparkjava:spark-core:2.9.3'

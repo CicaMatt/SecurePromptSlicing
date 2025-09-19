@@ -52,9 +52,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to link against the MySQL client library when compiling:
-
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)

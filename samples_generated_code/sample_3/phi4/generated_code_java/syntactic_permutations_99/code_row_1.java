@@ -41,16 +41,3 @@ public class UserRegistration {
         scanner.close();
     }
 }
-
-
-Make sure to replace `"your_database"`, `"your_username"`, and `"your_password"` with your actual database name, username, and password. Also, ensure that the `users` table exists in your database with at least two columns: `username` (VARCHAR) and `password` (VARCHAR). You will also need to have Apache Commons Codec library for hashing; add it as a dependency if you're using Maven:
-
-
-<dependency>
-    <groupId>commons-codec</groupId>
-    <artifactId>commons-codec</artifactId>
-    <version>1.15</version>
-</dependency>
-
-
-If you are not using Maven, include the JAR file in your classpath.

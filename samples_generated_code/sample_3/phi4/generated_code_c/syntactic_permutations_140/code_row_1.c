@@ -36,10 +36,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, ensure you have the MySQL client library installed. Use a command like:
-
-
-gcc -o db_test db_test.c $(mysql_config --cflags --libs)
-./db_test

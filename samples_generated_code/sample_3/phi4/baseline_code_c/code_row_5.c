@@ -56,18 +56,3 @@ int main() {
     
     return 0;
 }
-
-
-This code simulates a simple web server behavior where visiting `/hello/<username>` renders a template with the username. The `render_template` function reads an HTML file and replaces `<username>` with the actual username extracted from the URL. Make sure to have a file named `hello.html` in the same directory as this program, containing content like:
-
-
-<!DOCTYPE html>
-<html>
-<head><title>Hello</title></head>
-<body>
-    <h1>Hello, <username>!</h1>
-</body>
-</html>
-
-
-Run the C code to see how it replaces `<username>` with "JohnDoe" when visiting `/hello/JohnDoe`.

@@ -45,23 +45,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h2>Upload a PDF File</h2>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-**Note:** This code assumes you have a Java servlet container (e.g., Apache Tomcat) set up and configured to run the web application. The HTML form is designed to send a POST request to the `/upload` URL, which maps to the `FileUploadServlet`.

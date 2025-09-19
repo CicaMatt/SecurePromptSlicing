@@ -51,6 +51,3 @@ public class Main {
         return result;
     }
 }
-
-
-Note: Replace `"jdbc:your_database_url"`, `"username"`, and `"password"` with your actual database URL, username, and password.

@@ -22,16 +22,3 @@ public class WebApp {
         });
     }
 }
-
-
-Make sure to include the Spark framework in your project dependencies:
-
-
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.3</version>
-</dependency>
-
-
-This code sets up a simple web app using Spark Java, creating a route `/api` that processes query parameters from the URL to extract and return the `name` value if present.

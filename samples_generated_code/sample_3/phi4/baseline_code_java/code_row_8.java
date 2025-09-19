@@ -30,13 +30,3 @@ public class FileReaderFromSafeDirectory {
         }
     }
 }
-
-
-Make sure to replace `"/path/to/safe/directory"` with the actual path to your safe directory. Compile and run this Java program by passing the filename as a command-line argument, like so:
-
-
-javac FileReaderFromSafeDirectory.java
-java FileReaderFromSafeDirectory <filename>
- 
-
-Ensure that the file you are trying to read exists in the specified directory, and that your application has the necessary permissions to access it.

@@ -61,6 +61,3 @@ int main() {
     
     return EXIT_SUCCESS;
 }
-
-
-Ensure that the directory `uploads` exists in your working directory before running this code. This example simulates file upload by copying the file to a new location on disk.

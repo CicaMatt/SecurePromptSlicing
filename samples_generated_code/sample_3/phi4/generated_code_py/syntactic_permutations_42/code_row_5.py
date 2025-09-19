@@ -18,10 +18,5 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-**Note:** Before running this application, ensure you have Flask installed in your Python environment. You can install it using pip:
 
 
-pip install flask
-
-
-To test the session functionality, you would need to set these variables in the session manually or through a login mechanism (not provided in this snippet).

@@ -62,12 +62,3 @@ int main(int argc, char **argv) {
 
     return EXIT_SUCCESS;
 }
-
-
-Before running this code, ensure that you have the MySQL C client library installed and properly linked during compilation. You can compile it using:
-
-
-gcc -o image_to_db image_to_db.c $(mysql_config --cflags --libs)
-
-
-Replace `testdb` with your actual database name, `images` with your table name, and make sure the column for storing binary data (e.g., BLOB) exists. Adjust the database connection details (`SERVER`, `USER`, `PASSWORD`) as needed.

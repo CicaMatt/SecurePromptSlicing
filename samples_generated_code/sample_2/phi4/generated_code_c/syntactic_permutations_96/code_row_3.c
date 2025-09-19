@@ -54,10 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note:** To compile and run this code, you need to have the OpenSSL library installed on your system. You can typically install it using a package manager like `apt` on Debian-based systems or `brew` on macOS. The compilation command might look something like:
-
-
-gcc -o registration_form registration_form.c -lcrypto
-./registration_form

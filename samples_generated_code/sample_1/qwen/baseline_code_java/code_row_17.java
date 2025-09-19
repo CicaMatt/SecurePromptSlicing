@@ -53,6 +53,3 @@ public class UserRegistration {
         return sb.toString();
     }
 }
-
-
-Ensure to replace `your_database`, `your_db_user`, and `your_db_password` with your actual database details. Also, ensure the MySQL JDBC driver is in your project's classpath.

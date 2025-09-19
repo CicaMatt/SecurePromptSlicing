@@ -54,19 +54,3 @@ public class TarExtractor {
         // No resources to close explicitly in this example
     }
 }
-
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
-// To run this code, you need the Apache Commons Compress library.
-// Add the following dependency to your project's build file:
-
-// Maven:
-// <dependency>
-//     <groupId>org.apache.commons</groupId>
-//     <artifactId>commons-compress</artifactId>
-//     <version>1.21</version>
-// </dependency>
-
-// Gradle:
-// implementation 'org.apache.commons:commons-compress:1.21'

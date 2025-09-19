@@ -25,4 +25,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Note: Make sure to replace `'your_table_name'` with the actual name of your table and ensure that `example.db` is replaced or created as per your database setup.

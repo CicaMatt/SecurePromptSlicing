@@ -56,38 +56,11 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;">Invalid username or password!</p>
-    <% } %>
-    <form action="LoginServlet" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>
+
 
 
 
 // dashboard.jsp (simple example)
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome to the Dashboard!</h1>
-    <p><%= session.getAttribute("user") %></p>
-    <a href="logout">Logout</a>
-</body>
-</html>
 
 
 
@@ -112,17 +85,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-Ensure the MySQL JDBC driver is included in your project's classpath. You can add it via Maven:
-
-
-<!-- Add this to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-
-
-Adjust the database URL, username, and password in `isValidUser` method to match your MySQL configuration.

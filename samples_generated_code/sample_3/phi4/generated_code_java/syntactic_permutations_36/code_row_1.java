@@ -59,6 +59,3 @@ public class LoginApplication {
         // Logic to redirect user to the home page
     }
 }
-
-
-**Note:** In a real application, you should use a secure password hashing algorithm (e.g., BCrypt) instead of storing and comparing plain text passwords. The above code is simplified for demonstration purposes. Additionally, ensure that your database connection details (`jdbc:mysql://localhost:3306/your_database`, `your_username`, `your_password`) are correctly configured.

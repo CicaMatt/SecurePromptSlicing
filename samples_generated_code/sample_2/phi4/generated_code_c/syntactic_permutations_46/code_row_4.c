@@ -60,6 +60,3 @@ int main() {
 
     return 0;
 }
-
-
-This C program is a basic implementation of handling an image request from a URL starting with `/img/`. It extracts the filename from the URL, attempts to open it as an image file, and sends its content back as an HTTP response. If any error occurs (e.g., file not found), appropriate HTTP status codes are returned. Note that this is a simple demonstration and lacks many features of a full-fledged web server or application framework.

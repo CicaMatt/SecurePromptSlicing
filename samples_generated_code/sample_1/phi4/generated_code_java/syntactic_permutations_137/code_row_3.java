@@ -26,9 +26,3 @@ public class CheckModServlet extends HttpServlet {
         return "moderator".equals(username) && "password123".equals(password) && "valid_session".equals(session);
     }
 }
-
-
-To make this code runnable:
-1. Ensure you have a servlet container like Apache Tomcat installed and running.
-2. Place the above Java class in your project's source directory, typically `src/main/java`.
-3. Configure your web application to include this servlet. This can be done using annotations (as shown) or by configuring it in your `web.xml`.

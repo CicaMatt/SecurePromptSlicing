@@ -43,6 +43,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual MySQL database name, username, and password. Additionally, ensure that you have a table named `images` in your database with at least two columns: `file_name` (VARCHAR) and `image_data` (BLOB).

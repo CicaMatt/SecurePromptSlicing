@@ -60,78 +60,12 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Welcome to the Home Page</h1>
-    {% if session.email %}
-        <p>You are logged in as {{ session.email }}</p>
-        <a href="{{ url_for('change_email') }}">Change Email</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-    {% endif %}
-</body>
-</html>
 
 
 
-<!-- templates/login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form method="post">
-        Email: <input type="email" name="email" required><br>
-        Password: <input type="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
 
 
 
-<!-- templates/change_email.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Change Email</title>
-</head>
-<body>
-    <h1>Change Email</h1>
-    <form method="post">
-        Old Email: <input type="email" name="old_email" value="{{ session.email }}" required><br>
-        New Email: <input type="email" name="new_email" required><br>
-        Confirm Password: <input type="password" name="confirm_password" required><br>
-        <button type="submit">Change Email</button>
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-</body>
-</html>
+
+
+

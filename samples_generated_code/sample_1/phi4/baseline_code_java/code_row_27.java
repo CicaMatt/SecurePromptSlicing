@@ -63,11 +63,3 @@ public class LoginApplication {
         return false;
     }
 }
-
-
-**Note:** This code assumes you have a MySQL database with the following structure:
-- Database name: `mydatabase`
-- Table name: `users`
-- Columns: `username` (VARCHAR), `password` (VARCHAR)
-
-You also need to include the MySQL JDBC driver in your classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) or add it using a build tool like Maven or Gradle.

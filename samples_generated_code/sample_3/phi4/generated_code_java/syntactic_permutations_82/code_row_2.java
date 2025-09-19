@@ -27,23 +27,3 @@ public class WebApp {
         return nameValueStr.replace("\"", "");
     }
 }
-
-
-**Note:** To run this code as a Spring Boot application, ensure you have the following in your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
-</build>

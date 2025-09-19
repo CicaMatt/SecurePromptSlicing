@@ -29,11 +29,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-
--- SQL to create the images table
-CREATE TABLE images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    image_data LONGBLOB NOT NULL
-);

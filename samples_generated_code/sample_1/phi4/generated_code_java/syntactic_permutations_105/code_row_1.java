@@ -30,6 +30,3 @@ public class SecretFileCreator {
         }
     }
 }
-
-
-**Note:** This code assumes the system supports POSIX file permissions. On systems that do not support POSIX (like Windows), you might need a different approach for changing file permissions.

@@ -24,6 +24,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure you have the appropriate JSP pages (`login.jsp`, `user.jsp`, `admin.jsp`) created in your web application directory to handle these redirects. Also, ensure that your web.xml or annotations are properly set up for servlet mapping if not using automatic discovery with `@WebServlet`.

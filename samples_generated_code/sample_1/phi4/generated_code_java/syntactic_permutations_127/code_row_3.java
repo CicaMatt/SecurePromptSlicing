@@ -16,6 +16,3 @@ public class GreetClient {
         }
     }
 }
-
-
-Make sure to create a file named `request.txt` with the username in it before running this program. The output will be written to `response.txt`.

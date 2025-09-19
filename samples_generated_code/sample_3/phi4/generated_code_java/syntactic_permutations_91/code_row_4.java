@@ -49,24 +49,3 @@ public class RegisterServlet extends HttpServlet {
         return Integer.toString(password.hashCode());
     }
 }
-
-// A separate HTML file (register.html) would be needed to provide the form:
-/*
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <form action="register" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <input type="submit" value="Register">
-    </form>
-</body>
-</html>
-*/
-
-
-Make sure to replace `mydatabase`, `root`, and `password` with your actual database details. Also, for a real-world application, use a more secure hashing algorithm like BCrypt or Argon2 instead of the simple hash function provided above. Additionally, ensure you have included MySQL Connector/J in your classpath to connect to a MySQL database.

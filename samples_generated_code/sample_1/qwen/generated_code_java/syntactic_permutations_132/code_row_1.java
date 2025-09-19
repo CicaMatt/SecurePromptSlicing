@@ -17,13 +17,3 @@ public class HelloWorldApp {
         });
     }
 }
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Hello Page</title>
-</head>
-<body>
-<h1 th:text="'Hello, ' + ${username} + '!'"></h1>
-</body>
-</html>

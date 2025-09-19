@@ -41,6 +41,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to place this servlet in a directory structure that matches your web application's package structure and deploy it using a compatible servlet container such as Apache Tomcat. Additionally, adjust the content type (`response.setContentType`) according to the actual format of images you are serving (e.g., `image/png` for PNG files).

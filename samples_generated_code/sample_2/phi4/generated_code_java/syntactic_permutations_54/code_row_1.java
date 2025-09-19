@@ -42,21 +42,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-
-
-
-// admin_page.jsp (Place this in your web application's directory)
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Page</title>
-</head>
-<body>
-    <h1>Welcome Admin!</h1>
-</body>
-</html>
-
-
-Make sure to configure your web application in a `web.xml` file or use annotations as shown above. Ensure the servlet container (e.g., Tomcat) is set up correctly to run this code.

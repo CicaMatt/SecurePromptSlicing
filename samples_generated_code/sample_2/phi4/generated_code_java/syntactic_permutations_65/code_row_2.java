@@ -53,6 +53,3 @@ public class PdfUploader {
         }
     }
 }
-
-
-To make this code work, you need to have a server running on `http://localhost:8080/upload` that accepts file uploads via POST requests. You can use frameworks like Spring Boot or servlets in Java EE for setting up the server-side logic to handle these uploads. Make sure the server is configured to save files at a designated directory within your project structure.

@@ -31,6 +31,3 @@ public class ApiServlet extends HttpServlet {
         doGet(request, response);
     }
 }
-
-
-To run this code, you need to have a servlet container such as Apache Tomcat. Place the code in your Java web application project and configure it accordingly.

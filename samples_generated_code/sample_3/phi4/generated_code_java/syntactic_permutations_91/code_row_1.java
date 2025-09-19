@@ -59,6 +59,3 @@ public class RegistrationServlet extends HttpServlet {
         return sb.toString();
     }
 }
-
-
-**Note**: Make sure to replace `your_database`, `username`, and `password` with your actual database name, username, and password. Additionally, ensure that the MySQL JDBC driver is available in your project's classpath.

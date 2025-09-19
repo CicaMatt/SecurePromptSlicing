@@ -39,20 +39,3 @@ class UploadController {
         }
     }
 }
-
-
-Make sure you have the following dependencies in your `pom.xml` for Spring Boot:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <!-- Optional: For more complex file handling -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
-</dependencies>

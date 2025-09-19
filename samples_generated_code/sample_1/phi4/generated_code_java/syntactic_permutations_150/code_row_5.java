@@ -45,29 +45,3 @@ public class MessageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- mainPage.jsp -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Message Board</h1>
-    <form action="post" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-
-
-Note: Ensure that you have a database named `your_database` with a table `messages` having columns `username` and `message`. Also, replace the database connection details (`DB_URL`, `USER`, `PASS`) as per your setup.

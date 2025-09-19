@@ -51,41 +51,11 @@ public class SessionServlet extends HttpServlet {
 
 
 // login.html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
 
 
 
 // session.jsp
-<%@ page import="javax.servlet.http.HttpSession"%>
-<html>
-<head>
-    <title>Session Page</title>
-</head>
-<body>
-    <h1>Welcome to the Session Page</h1>
-    <%
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("user") != null) {
-            out.println("<p>Hello, " + session.getAttribute("user") + "</p>");
-            out.println("<a href='logout'>Logout</a>");
-        } else {
-            response.sendRedirect("login.html");
-        }
-    %>
-</body>
-</html>
+
 
 
 

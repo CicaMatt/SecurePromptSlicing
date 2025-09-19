@@ -40,17 +40,3 @@ public class SessionPageServlet extends HttpServlet {
         }
     }
 }
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <form method="post" action="LoginPageServlet">
-        Username: <input type="text" name="username"><br><br>
-        Password: <input type="password" name="password"><br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
-</html>

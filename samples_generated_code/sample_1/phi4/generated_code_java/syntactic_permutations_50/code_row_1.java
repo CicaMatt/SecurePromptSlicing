@@ -59,6 +59,3 @@ public class ArchiveExtractor {
         }
     }
 }
-
-
-Ensure that `archive.zip` is present in the same directory as this Java program before running it. The extracted files will be placed into a directory named `extracted_files`.

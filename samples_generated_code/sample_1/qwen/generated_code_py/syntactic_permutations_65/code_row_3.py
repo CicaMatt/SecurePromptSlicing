@@ -28,18 +28,4 @@ if __name__ == '__main__':
 
 
 
-<!-- upload.html -->
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h1>Upload a PDF File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-</body>
-</html>
+

@@ -21,22 +21,3 @@ public class SimpleRedirectApp {
         });
     }
 }
-
-
-To run this code, ensure you have Javalin as a dependency in your `pom.xml` file for Maven or in the `build.gradle` file if you are using Gradle:
-
-For Maven:
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.7.0</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'io.javalin:javalin:5.7.0'
-
-
-Ensure your environment is set up to run Java applications before executing the code.

@@ -53,6 +53,3 @@ public class PdfUploadServlet extends HttpServlet {
         return null;
     }
 }
-
-
-Ensure your web application server is set up to handle file uploads and that the `uploads` directory exists in the correct location relative to your web app's deployment context. Adjust server-specific configurations as necessary for your environment.

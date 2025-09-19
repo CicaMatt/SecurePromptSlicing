@@ -75,6 +75,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-Before running this code, ensure you have a file named `users.db` in the same directory with each line containing an email address. This example demonstrates handling GET requests at a basic level using command-line arguments and simple file I/O operations in C.

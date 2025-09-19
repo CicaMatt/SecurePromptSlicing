@@ -72,16 +72,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code:
-
-1. Ensure you have MySQL server running with a database named `user_database` and a table `users` with columns `username` (VARCHAR) and `password` (CHAR(32)).
-2. Install the necessary libraries: OpenSSL for hashing and MySQL client library.
-3. Compile using:
-   
-   gcc -o register_app register_app.c -lmysqlclient -lcrypto
-   
-4. Run the compiled executable:
-   
-   ./register_app

@@ -44,6 +44,3 @@ public class EmailUnsubscribe {
         return (int) (Math.random() * 2); // Randomly returns 0 or 1 for demonstration
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database credentials. Also, the `unsubscribeEmail` method is currently simulating script execution by returning a random result. You should replace this logic with the actual script execution code.

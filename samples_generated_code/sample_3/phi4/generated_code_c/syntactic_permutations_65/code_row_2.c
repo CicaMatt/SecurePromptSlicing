@@ -81,13 +81,3 @@ int main(int argc, char **argv) {
     curl_global_cleanup();
     return 0;
 }
-
-
-To compile and run this code, you need to have `libcurl` installed on your system. You can use the following commands:
-
-
-gcc -o upload_pdf upload_pdf.c -lcurl
-./upload_pdf <file_path> <upload_url>
-
-
-Replace `<file_path>` with the path to the PDF file you want to upload and `<upload_url>` with the URL of your local web server where the file should be uploaded.

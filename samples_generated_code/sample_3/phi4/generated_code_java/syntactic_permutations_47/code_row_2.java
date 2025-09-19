@@ -40,6 +40,3 @@ public class ImageServlet extends HttpServlet {
         }
     }
 }
-
-
-Make sure to configure your web application accordingly and ensure that the `images` directory exists under the context path of your web application. This code assumes you are using a servlet container like Apache Tomcat.

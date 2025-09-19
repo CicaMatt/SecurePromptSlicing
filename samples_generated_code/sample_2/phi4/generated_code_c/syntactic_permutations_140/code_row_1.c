@@ -37,9 +37,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure to replace `"host"`, `"user"`, `"password"`, and `"database"` with your actual database connection details. Additionally, ensure you have the MySQL C client library installed and linked correctly when compiling this program. For example:
-
-
-gcc -o db_test db_test.c $(mysql_config --cflags --libs)

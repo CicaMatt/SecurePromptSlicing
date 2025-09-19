@@ -34,9 +34,3 @@ public class FileServlet extends HttpServlet {
         }
     }
 }
-
-
-In this code:
-- We assume the servlet is mapped to a URL pattern like `/file`.
-- The file path in the `images` folder should be relative to your web application's root directory.
-- You need additional configurations (such as in `web.xml`) to map URLs to the servlet.

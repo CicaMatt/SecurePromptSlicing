@@ -31,13 +31,3 @@ public class SimpleWebApp {
         ctx.result(response);
     }
 }
-
-
-Make sure to include the Javalin dependency in your `pom.xml` for Maven:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.10.0</version>
-</dependency>

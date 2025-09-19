@@ -26,6 +26,3 @@ public class DatabaseQueryExample {
         }
     }
 }
-
-
-Make sure to replace `yourDatabaseName`, `yourUsername`, `yourPassword`, and `yourTableName` with your actual database details. Additionally, update the column name `"exampleColumn"` as needed for your specific query.

@@ -39,6 +39,3 @@ Ensure you have a `template.ftl` file inside the `/resources/templates` director
 
 
 Hello, ${name}!
-
-
-Also, make sure to include the necessary dependencies in your build tool (like Maven or Gradle) for Spark and FreeMarker.

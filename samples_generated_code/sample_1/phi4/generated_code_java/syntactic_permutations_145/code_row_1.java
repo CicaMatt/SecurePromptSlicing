@@ -36,6 +36,3 @@ public class StockApp {
         System.out.println("Buying stock: " + stockName);
     }
 }
-
-
-Make sure to replace `DB_URL`, `USER`, and `PASS` with your actual database URL, username, and password. Also, ensure that the `stockdb` database and `transactions` table exist in your MySQL setup.

@@ -16,6 +16,3 @@ public class StackBufferTest {
         }
     }
 }
- 
-
-Note: Java does not support direct stack allocation of arrays or buffers. The code above allocates the buffer on the heap, which is the closest equivalent in Java.

@@ -115,18 +115,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-To compile this code:
-
-
-gcc -o uploader uploader.c -lcurl
-
-
-To run the compiled program:
-
-
-./uploader http://localhost/upload.php /path/to/your/file.pdf
-
-
-Make sure you have `libcurl` installed on your system to compile and run the program.

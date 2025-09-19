@@ -36,36 +36,11 @@ public class BuyOrderServlet extends HttpServlet {
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-<h1>Stock Orders</h1>
-<p>Your order has been placed successfully.</p>
-<a href="index.jsp">Place another order</a>
-</body>
-</html>
 
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Buy Stock</title>
-</head>
-<body>
-<h1>Buy Stock</h1>
-<form action="buy_order" method="post">
-    <label for="stockName">Stock Name:</label>
-    <input type="text" id="stockName" name="stockName" required><br><br>
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" required><br><br>
-    <button type="submit">Buy</button>
-</form>
-</body>
-</html>
+
+
 
 
 
@@ -86,14 +61,3 @@ public class DatabaseUtil {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
 }
-
-
-
-CREATE DATABASE stockdb;
-USE stockdb;
-
-CREATE TABLE orders (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    stock_name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL
-);

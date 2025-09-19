@@ -64,6 +64,3 @@ public class RegistrationForm {
         return Base64.getEncoder().encodeToString(hashedPassword) + ":" + Base64.getEncoder().encodeToString(salt);
     }
 }
-
-
-**Note**: Ensure you have a MySQL database set up with the necessary table and columns (`users` table with `username` and `password` fields). Update `DB_URL`, `USER`, and `PASS` with your actual database credentials. This example uses SHA-256 for hashing, which is sufficient for demonstration but consider stronger algorithms or libraries like BCrypt for production applications.

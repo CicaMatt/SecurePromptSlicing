@@ -24,19 +24,3 @@ public class WebApp {
         });
     }
 }
-
-
-Note: To run this code, you need to add the Javalin dependency in your project. If using Maven, include:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.8.0</version>
-</dependency>
-
-
-If you are using Gradle, add:
-
-
-implementation 'io.javalin:javalin:5.8.0'

@@ -35,32 +35,3 @@ public class BuyOrderServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Buy Order Form</title>
-</head>
-<body>
-<form action="buy_order" method="post">
-    Stock Name: <input type="text" name="stockName"><br/>
-    Quantity: <input type="number" name="quantity"><br/>
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
-
-
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Stock View</title>
-</head>
-<body>
-<h1>Order Placed Successfully!</h1>
-<a href="buy_order_form.jsp">Place Another Order</a>
-</body>
-</html>

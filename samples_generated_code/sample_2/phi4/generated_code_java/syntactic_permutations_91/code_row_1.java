@@ -56,6 +56,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-This code requires a MySQL database named `your_database` with a table called `users` having columns `name` and `password`. Ensure to replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"your_password"` with your actual database URL, user, and password respectively. Additionally, add the BCrypt library as a dependency in your project to use it for hashing passwords.

@@ -12,6 +12,3 @@ int main() {
 
     return wsgi_run(app);
 }
- 
-
-Note: This example assumes the existence of a hypothetical `wsgi.h` header file and related functions like `WSGIApp`, `wsgi_send_response`, and `wsgi_run`. In practice, you would need to include appropriate libraries or frameworks that provide these capabilities.

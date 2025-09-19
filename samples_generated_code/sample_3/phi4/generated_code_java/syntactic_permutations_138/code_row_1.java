@@ -59,6 +59,3 @@ public class App {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database details. Also, update the query as per your table schema. This example assumes a simple users table with columns `username` and `role`. You may need to add MySQL Connector/J dependency in your project's build configuration if you haven't already.

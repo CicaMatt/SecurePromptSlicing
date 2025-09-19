@@ -53,10 +53,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-**Note**: To run this code:
-- Ensure you have MySQL installed and running.
-- Create a database named `test_db` and a table `users` with columns `username` (VARCHAR) and `password` (UNSIGNED LONG).
-- Update the MySQL connection parameters as needed (`localhost`, `root`, password, etc.).
-- Compile using: `gcc -o registration registration.c $(mysql_config --cflags --libs)`

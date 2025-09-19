@@ -20,6 +20,3 @@ public class FileOpener {
         }
     }
 }
-
-
-This Java code attempts to mimic the behavior of the C `open()` function with the specified flags. However, Java does not have an exact equivalent for all the flags combined in a single method call. The provided code creates a new file or opens an existing one (`O_CREAT`), truncates the file if it already exists (`O_TRUNC`), and opens it for writing only (`O_WRONLY`). The `O_EXCL` flag is not directly supported, so this behavior (failing if the file already exists) is not included in the Java code.

@@ -32,6 +32,3 @@ public class InfoServlet extends HttpServlet {
         out.close();
     }
 }
-
-
-To make this code runnable, ensure you have a Java EE or Jakarta EE servlet container such as Apache Tomcat set up. Place the `InfoServlet` class in your web application's appropriate package, and configure your `web.xml` or use annotations for servlet mapping if necessary. The session variables should be set before accessing the `/info` route to see the email and SSN in the response.

@@ -55,15 +55,3 @@ int main(int argc, char *argv[]) {
     printf("PDF saved successfully in %s directory.\n", UPLOAD_DIR);
     return EXIT_SUCCESS;
 }
-
-
-This C program accepts a path to a PDF file as an argument and saves it into the `uploads` folder. Before running this, make sure you have the necessary permissions to create directories and write files in your environment. You will need to compile the code with a C compiler like GCC:
-
-
-gcc -o save_pdf save_pdf.c
-
-
-Run the program with:
-
-
-./save_pdf /path/to/your/file.pdf

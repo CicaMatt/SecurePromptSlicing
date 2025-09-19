@@ -44,12 +44,3 @@ public class RegisterServlet extends HttpServlet {
         }
     }
 }
-
-
-To make this code runnable, ensure you have:
-
-1. A MySQL database named `mydatabase` with a table called `users`, having columns `username` (VARCHAR) and `password` (VARCHAR).
-2. The MySQL JDBC driver in your project's classpath.
-3. BCrypt library available for hashing passwords.
-
-The web application should be deployed on a servlet container like Apache Tomcat. Make sure to update the database connection details (`jdbc:mysql://localhost:3306/mydatabase`, `"root"`, `"password"`) according to your setup.

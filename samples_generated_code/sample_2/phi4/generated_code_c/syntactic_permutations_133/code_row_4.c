@@ -35,6 +35,3 @@ int main() {
     
     return 0;
 }
-
-
-This code provides a simplified simulation of how you might set up routes and functions in C to mimic the behavior described. It creates an application object, associates a URL with a function using a mock decorator pattern, and runs the application.

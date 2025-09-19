@@ -38,26 +38,3 @@ public class ImageFileServlet extends HttpServlet {
     }
 
 }
-
-
-In order to make this servlet runnable, you would need to package it within a web application and deploy it on a servlet container like Apache Tomcat. The `web.xml` configuration file should define the URL pattern for this servlet.
-
-Example `web.xml`:
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
-
-    <servlet>
-        <servlet-name>ImageFileServlet</servlet-name>
-        <servlet-class>ImageFileServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ImageFileServlet</servlet-name>
-        <url-pattern>/images/*</url-pattern>
-    </servlet-mapping>
-
-</web-app>

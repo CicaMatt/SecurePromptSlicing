@@ -44,27 +44,3 @@ public class FileUploadServlet extends HttpServlet {
         }
     }
 }
-
-
-Additionally, you need to configure your web server (like Tomcat) and include a corresponding HTML form:
-
-**HTML Form (`index.html`):**
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <h2>Upload a PDF file</h2>
-    <form action="http://localhost:8080/your-app-context-path/FileUploadServlet" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdfFile" accept=".pdf" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Make sure to replace `http://localhost:8080/your-app-context-path/FileUploadServlet` with the appropriate URL for your servlet. The HTML form should be served by a web server and can be opened in any browser to upload a PDF file.

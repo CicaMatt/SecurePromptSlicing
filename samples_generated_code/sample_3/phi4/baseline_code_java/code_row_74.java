@@ -39,8 +39,3 @@ public class ImageServlet extends HttpServlet {
         fileInputStream.close();
     }
 }
-
-
-To make this code runnable, ensure the following:
-- This servlet is part of a web application deployed on a Java EE-compatible server (like Tomcat).
-- The `images` folder exists within your web application's directory and contains image files.

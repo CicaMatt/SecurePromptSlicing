@@ -29,6 +29,3 @@ public class MemoryAllocationExample {
         }
     }
 }
-
-
-However, it is important to note that Java does not provide a direct `sizeof` operator for objects. The above code simulates the allocation by creating an array of the specified class and returning the first element. This is as close as we can get to allocating memory in Java without using native methods or external libraries.

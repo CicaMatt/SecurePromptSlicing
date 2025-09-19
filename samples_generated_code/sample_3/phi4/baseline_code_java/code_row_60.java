@@ -48,6 +48,3 @@ public class RegistrationForm {
         return md.digest(password.getBytes());
     }
 }
-
-
-Note: Replace `your_database`, `your_username`, and `your_password` with your actual database details. Make sure the MySQL JDBC driver is included in your project's classpath.

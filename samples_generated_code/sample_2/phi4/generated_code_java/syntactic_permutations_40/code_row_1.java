@@ -31,19 +31,3 @@ public class SimpleWebApp {
         ctx.result(responseHtml);
     }
 }
-
-
-To run this code, you need to have the Javalin library included in your project. You can add it using Maven by including the following dependency in your `pom.xml`:
-
-
-<dependency>
-    <groupId>io.javalin</groupId>
-    <artifactId>javalin</artifactId>
-    <version>5.6.0</version>
-</dependency>
-
-
-Or if you are using Gradle, add this to your `build.gradle` file:
-
-
-implementation 'io.javalin:javalin:5.6.0'

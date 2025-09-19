@@ -55,6 +55,3 @@ public class IndexServlet extends HttpServlet {
         out.println("</body></html>");
     }
 }
-
-
-Note: Ensure that you replace `"jdbc:mysql://localhost:3306/your_database"`, `"username"`, and `"password"` with your actual database URL, username, and password. Also, ensure the `orders` table exists in your specified database.

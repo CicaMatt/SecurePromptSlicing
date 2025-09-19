@@ -74,13 +74,3 @@ int main() {
 
     return 0;
 }
-
-
-To compile and run this code, you need to have OpenSSL installed on your system. You can compile it using a command like:
-
-gcc -o registration_form registration_form.c `pkg-config --cflags --libs openssl`
-
-
-And then execute the binary with:
-
-./registration_form

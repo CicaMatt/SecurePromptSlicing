@@ -58,18 +58,3 @@ public class PriceCalculatorServlet extends HttpServlet {
         return productPrices.get(productCode);
     }
 }
-
-
-To run this code, ensure you have a servlet container like Apache Tomcat and include dependencies for `snakeyaml` and `jackson-databind`. You can add these dependencies in your `pom.xml` if using Maven:
-
-
-<dependency>
-    <groupId>org.yaml</groupId>
-    <artifactId>snakeyaml</artifactId>
-    <version>1.30</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.15.0</version>
-</dependency>

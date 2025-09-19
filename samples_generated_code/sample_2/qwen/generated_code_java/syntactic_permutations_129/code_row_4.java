@@ -33,16 +33,3 @@ public class Main {
         return render_response_from_env(req, res);
     }
 }
-
-
-
-<!-- src/main/resources/templates/template.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Hello, <span th:text="${name}">World</span>!</h1>
-</body>
-</html>

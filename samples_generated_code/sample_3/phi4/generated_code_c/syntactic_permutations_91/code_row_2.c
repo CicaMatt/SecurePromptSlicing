@@ -58,25 +58,3 @@ int main() {
     mysql_close(conn);
     return 0;
 }
-
-
-To compile and run this code:
-1. Ensure you have MySQL and OpenSSL installed on your system.
-2. Create a database named `user_db` and a table with the following SQL command:
-   
-   CREATE TABLE users (
-       id INT AUTO_INCREMENT PRIMARY KEY,
-       username VARCHAR(50) NOT NULL,
-       password CHAR(64) NOT NULL
-   );
-   
-3. Compile the C code using:
-   
-   gcc -o register_user register_user.c -lmysqlclient -lcrypto
-   
-4. Run the program with:
-   
-   ./register_user
-   
-
-Ensure that your MySQL server is running and accessible at `localhost` with a user named `root` and an empty password for this example to work without modifications. Adjust connection parameters as needed.

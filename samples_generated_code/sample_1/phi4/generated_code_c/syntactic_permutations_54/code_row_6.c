@@ -43,6 +43,3 @@ int main() {
 
     return 0;
 }
-
-
-**Note**: This code assumes a CGI-like environment where `getenv("REQUEST_METHOD")` is used to determine the request method. In a real-world scenario, you would need additional parsing of input data from the POST body. The username and password are hardcoded for demonstration purposes; in practice, this should be replaced with actual input handling logic.

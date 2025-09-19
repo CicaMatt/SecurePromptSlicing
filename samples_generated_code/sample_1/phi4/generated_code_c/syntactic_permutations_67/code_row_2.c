@@ -94,6 +94,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-Make sure to replace `localhost`, `username`, `password`, and `database_name` with your actual MySQL server details. Also, ensure the table `images` exists in your database with a column named `image_data` of type BLOB or similar that can store binary data.

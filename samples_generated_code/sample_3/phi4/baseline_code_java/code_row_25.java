@@ -42,6 +42,3 @@ public class HttpHelloPage {
         }
     }
 }
-
-
-This code sets up a simple HTTP server using Java's `com.sun.net.httpserver.HttpServer` that listens for POST requests at the `/hello` endpoint. It reads the username from the request body and constructs an HTML response greeting the user by name. If no username is provided, it defaults to greeting "stranger". The server responds with a 405 error if any method other than POST is used.

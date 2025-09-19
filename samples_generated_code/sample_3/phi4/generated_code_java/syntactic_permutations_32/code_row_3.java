@@ -54,6 +54,3 @@ public class SimpleRedirectApp {
         }
     }
 }
-
-
-This code sets up a simple HTTP server listening on port 8000. It defines a handler for paths matching `/redirect/<url>`, which checks if the URL is from `example.com` and redirects accordingly, or returns an error message if it's not.

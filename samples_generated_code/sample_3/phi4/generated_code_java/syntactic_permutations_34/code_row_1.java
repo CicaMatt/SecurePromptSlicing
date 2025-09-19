@@ -46,51 +46,13 @@ public class LoginServlet extends HttpServlet {
 
 
 
-<!-- login.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login Page</h2>
-    <form action="login" method="post">
-        Username: <input type="text" name="username"><br>
-        Password: <input type="password" name="password"><br>
-        <button type="submit">Login</button>
-    </form>
-
-    <% if (request.getParameter("error") != null) { %>
-        <p style="color:red;"><%= request.getParameter("error") %></p>
-    <% } %>
-</body>
-</html>
 
 
 
-<!-- dashboard.jsp -->
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-    <% if (session.getAttribute("username") == null) { 
-        response.sendRedirect("login.jsp");
-    } else {
-        out.println("<h2>Welcome " + session.getAttribute("username") + "</h2>");
-    }
-    %>
 
-    <a href="logout">Logout</a>
-</body>
-</html>
+
+
+
 
 
 
@@ -114,6 +76,3 @@ public class LogoutServlet extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 }
-
-
-_Note: Ensure the database driver is included in your project's classpath and that the `your_database` schema exists with a `users` table having columns `username` and `password`. Replace `root` and `password` with actual database credentials._

@@ -20,23 +20,3 @@ public class MessageServlet extends HttpServlet {
         // Implementation of database insertion logic
     }
 }
-
-
-
-<!-- index.jsp -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Welcome to the Message Board</h1>
-    <form action="post" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea><br><br>
-        <button type="submit">Submit Message</button>
-    </form>
-</body>
-</html>

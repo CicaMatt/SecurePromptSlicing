@@ -20,22 +20,4 @@ if __name__ == '__main__':
 
 
 
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Board</title>
-</head>
-<body>
-    <h1>Submit a Message</h1>
-    <form method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message"></textarea><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-</html>
+

@@ -15,6 +15,3 @@ int main() {
 void handle_hello() {
     printf("Hello, World!\n");
 }
- 
-
-Note: This code assumes the existence of a hypothetical `webapp_class.h` header file and relevant implementation that supports such functionality. In real scenarios, you would use existing libraries like uWSGI or frameworks like Flask for Python, which have their own C APIs if needed.

@@ -104,9 +104,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code requires OpenSSL library for hashing. You need to link against `libcrypto` when compiling this program using the following command:
-
-
-gcc -o registration_form registration_form.c -lcrypto

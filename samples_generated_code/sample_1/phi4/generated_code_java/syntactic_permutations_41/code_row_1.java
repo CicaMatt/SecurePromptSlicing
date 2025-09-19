@@ -35,6 +35,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-Note: This code uses `com.sun.net.httpserver.HttpServer`, which is part of the JDK but not intended for high-performance production use. It's suitable for simple applications or learning purposes. Ensure you run this in a controlled environment as it exposes sensitive information (e.g., social security number) insecurely.

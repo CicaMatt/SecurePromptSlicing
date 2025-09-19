@@ -41,20 +41,3 @@ public class ProductService {
         return pricePerItem * quantity;
     }
 }
-
-
-To run this code, you'll need to include dependencies for Spark Java and SnakeYAML in your project's build configuration (e.g., Maven or Gradle). Here is an example of how you might configure these dependencies using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>com.sparkjava</groupId>
-        <artifactId>spark-core</artifactId>
-        <version>2.9.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.yaml</groupId>
-        <artifactId>snakeyaml</artifactId>
-        <version>1.30</version>
-    </dependency>
-</dependencies>

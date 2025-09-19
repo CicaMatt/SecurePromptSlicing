@@ -40,6 +40,3 @@ public class TarFileExtractor {
         System.out.println(new String(data));
     }
 }
-
-
-Make sure you have the necessary permissions to read/write files in the specified directories and that `tar` is available on your system. You may need to adjust paths or commands based on your environment.

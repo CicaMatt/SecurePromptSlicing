@@ -65,4 +65,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'your_username'` and `'your_password'` with your actual MySQL username and password, and adjust the database name `'weather_data'` as needed. Additionally, ensure that the `temperature_data` table exists in your database schema with appropriate columns (`latitude`, `longitude`, `year`, `month`, `day`, `grib_file`, `temperature`).

@@ -73,4 +73,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-This code sets up a simple Flask application with login functionality. It uses SQLite for storing user credentials and manages sessions to keep track of logged-in users. Make sure you have `Flask` installed in your environment (`pip install flask`).

@@ -39,30 +39,3 @@ public class LoginPageServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- success.jsp -->
-<html>
-<body>
-<h2>Login Successful!</h2>
-</body>
-</html>
-
-
-
-<!-- login_error.jsp -->
-<html>
-<body>
-<h2>Invalid username or password. Please try again.</h2>
-</body>
-</html>
-
-
-
-<!-- internal_server_error.jsp -->
-<html>
-<body>
-<h2>Internal Server Error</h2>
-</body>
-</html>

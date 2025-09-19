@@ -62,6 +62,3 @@ public class UnsubscribeService {
         return false;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password. Also, adjust the connection URL if you are using a different database or port.

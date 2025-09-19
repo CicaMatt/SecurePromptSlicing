@@ -89,11 +89,3 @@ int main() {
     mysql_library_end();
     return 0;
 }
-
-
-**Note**: Before running this code, ensure you have:
-
-1. MySQL server installed and running.
-2. A database named `user_db` created with a table `users` having columns `name` (VARCHAR) and `password` (BLOB).
-3. OpenSSL library installed for hashing.
-4. The appropriate MySQL C client library installed (`libmysqlclient-dev`).

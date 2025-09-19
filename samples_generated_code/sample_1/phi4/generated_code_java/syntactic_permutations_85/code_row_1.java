@@ -78,6 +78,3 @@ public class TemperatureService {
         }
     }
 }
-
-
-**Note**: Make sure to replace `"username"` and `"password"` with actual database credentials. Also, ensure the necessary Spark Java and MySQL JDBC libraries are included in your project dependencies.

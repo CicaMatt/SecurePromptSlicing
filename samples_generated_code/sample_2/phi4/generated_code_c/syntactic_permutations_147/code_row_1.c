@@ -54,20 +54,3 @@ int main() {
 
     return 0;
 }
-
-
-Note: This code assumes you have a MySQL database set up with the appropriate `stocks` table and connection details. The database schema should look something like:
-
-
-CREATE DATABASE stockdb;
-
-USE stockdb;
-
-CREATE TABLE stocks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    quantity INT
-);
-
-
-Make sure to link against the MySQL client library when compiling, e.g., using `-lmysqlclient`.

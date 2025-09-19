@@ -42,10 +42,3 @@ public class ImageToDatabase {
         }
     }
 }
-
-
-**Note:** Before running the code, make sure to:
-
-1. Replace `your_database`, `your_username`, and `your_password` with your actual MySQL database name, username, and password.
-2. Ensure that the `images` table exists in your database with at least two columns: `file_name` (VARCHAR) and `image_data` (BLOB).
-3. Add the MySQL JDBC driver to your classpath. You can download it from [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) or include it via a build tool like Maven or Gradle.

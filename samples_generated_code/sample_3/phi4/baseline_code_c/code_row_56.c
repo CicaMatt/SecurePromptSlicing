@@ -11,6 +11,3 @@ int main() {
     bjoern::http_listen_and_serve(3000, "localhost", handle_request);  // Run the application on port 3000
     return 0;
 }
-
-
-**Note:** This example uses `bjoern` as a lightweight HTTP server for C. You can install it via package managers or build from source if not available.

@@ -97,6 +97,3 @@ int main() {
     close(server_fd);
     return 0;
 }
-
-
-Note: You need to link the YAML-C library when compiling this code. Use a command like `gcc -o webapp webapp.c -lyaml`. Ensure that you have installed libyaml and it's available for linking.

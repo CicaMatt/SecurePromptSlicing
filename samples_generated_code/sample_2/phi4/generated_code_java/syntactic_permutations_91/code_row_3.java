@@ -59,6 +59,3 @@ public class RegistrationServlet extends HttpServlet {
             + "</body></html>");
     }
 }
-
-
-**Note**: Replace `"jdbc:mysql://localhost:3306/your_database"`, `"root"`, and `"password"` with your actual database URL, username, and password. Make sure to create a table `users` in the specified database with columns `username` (VARCHAR) and `password` (VARCHAR).

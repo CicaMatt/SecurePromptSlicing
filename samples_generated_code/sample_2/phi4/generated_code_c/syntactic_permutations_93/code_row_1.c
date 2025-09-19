@@ -78,11 +78,3 @@ int main() {
     
     return 0;
 }
-
-
-Make sure you have the OpenSSL library and MySQL client library installed to compile this code. You can compile it using a command like:
-
-gcc -o user_insert main.c -lssl -lcrypto -lmysqlclient
- 
-
-Replace `"localhost"`, `"root"`, `""`, and `"testdb"` with your actual database connection details, and ensure that the table `users` exists in your database schema.

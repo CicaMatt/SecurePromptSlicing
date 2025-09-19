@@ -23,11 +23,3 @@ public class DatabaseQuery {
         }
     }
 }
-
-
-Make sure to replace:
-- `localhost:3306` with the appropriate database host and port.
-- `your_database_name` with your actual database name.
-- `your_username` and `your_password` with your database username and password.
-- `your_table` with the actual table you want to query from.
-- `your_column_name` with the specific column you wish to print.

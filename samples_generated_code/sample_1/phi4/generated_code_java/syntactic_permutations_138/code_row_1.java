@@ -37,21 +37,3 @@ public class App {
         return false;
     }
 }
-
-
-**Note:** 
-- Replace `your_database`, `your_username`, and `your_password` with your actual database name, username, and password.
-- Ensure that the MySQL JDBC driver is included in your project's classpath. You might need to add it as a dependency if you're using a build tool like Maven or Gradle.
-
-For Maven:
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>
-
-
-For Gradle:
-
-implementation 'mysql:mysql-connector-java:8.0.26'

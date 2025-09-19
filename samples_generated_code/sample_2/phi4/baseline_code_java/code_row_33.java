@@ -42,11 +42,3 @@ public class UploadServlet extends HttpServlet {
     }
 
 }
-
-
-To run this code:
-
-1. Ensure you have a servlet container like Apache Tomcat installed.
-2. Add the necessary dependencies and configuration for running Java servlets, typically through `web.xml` or annotations.
-3. Place this servlet class in your web application's `WEB-INF/classes` directory or within an appropriate package structure.
-4. Configure your HTML form to send a POST request with `enctype="multipart/form-data"` to the URL mapped to this servlet.

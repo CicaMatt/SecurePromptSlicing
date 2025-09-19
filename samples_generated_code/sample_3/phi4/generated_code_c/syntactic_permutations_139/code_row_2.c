@@ -59,16 +59,3 @@ int main() {
     printf("%d\n", isModerator);
     return EXIT_SUCCESS;
 }
-
-
-To compile and run this program, ensure you have the MySQL client library installed. You can typically do this using a package manager:
-
-- On Debian-based systems: `sudo apt-get install libmysqlclient-dev`
-- On Red Hat-based systems: `sudo yum install mysql-devel`
-
-Compile with:
-
-gcc -o check_moderator check_moderator.c $(mysql_config --cflags --libs)
-
-
-Run the program after setting the necessary environment variables.

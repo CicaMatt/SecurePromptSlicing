@@ -47,30 +47,3 @@ public class RegisterServlet extends HttpServlet {
         return DriverManager.getConnection(url, user, password);
     }
 }
-
-
-Ensure you have the following setup:
-
-1. A MySQL database named `your_database` with a table called `users`.
-2. The table should have at least two columns: `username` (VARCHAR) and `password` (VARCHAR).
-3. Add the BCrypt library to your project dependencies.
-4. Update connection details (`url`, `user`, `password`) in `getConnection()` method.
-
-For Maven, add this dependency for BCrypt:
-
-
-<dependency>
-    <groupId>org.mindrot</groupId>
-    <artifactId>jbcrypt</artifactId>
-    <version>0.4</version>
-</dependency>
-
-
-And the MySQL connector:
-
-
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.23</version>
-</dependency>

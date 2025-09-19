@@ -29,4 +29,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-Make sure to replace `'database.db'` with your actual database file path and `'items'` with the table you want to query. Also, ensure that Flask is installed (`pip install flask`) and SQLite3 is available in your environment.

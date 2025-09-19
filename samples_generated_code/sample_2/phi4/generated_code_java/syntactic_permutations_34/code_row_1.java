@@ -52,6 +52,3 @@ public class LoginApplication {
         // Code to redirect back to the login page
     }
 }
-
-
-Make sure you have a MySQL server running with a database named `userdb` and a table `users` that contains columns `username` and `password`. Adjust the connection details as necessary for your environment.

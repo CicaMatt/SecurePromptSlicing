@@ -47,6 +47,3 @@ public class CheckModerator {
         return Optional.empty();
     }
 }
-
-
-**Note:** Ensure that you have the necessary JDBC driver in your classpath for connecting to your specific database. Adjust the query and table/column names according to your actual database schema.

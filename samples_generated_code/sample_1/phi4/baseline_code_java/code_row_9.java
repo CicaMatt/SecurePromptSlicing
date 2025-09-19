@@ -19,6 +19,3 @@ public class RedirectServlet extends HttpServlet {
         }
     }
 }
-
-
-Note: This code assumes you have a servlet container like Apache Tomcat set up, and you are deploying this as part of a Java web application. Also, ensure your `web.xml` (or equivalent configuration) is configured to map the `/redirect` URL pattern to this servlet if not using annotations.

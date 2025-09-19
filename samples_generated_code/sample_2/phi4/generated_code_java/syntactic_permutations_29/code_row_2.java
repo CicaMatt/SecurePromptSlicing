@@ -17,23 +17,3 @@ public class SimpleWebApp {
         });
     }
 }
-
-
-To run this code, ensure you have Javalin as a dependency in your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>5.0.1</version>
-    </dependency>
-</dependencies>
-
-
-Or, if you're using Gradle, include it in your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:5.0.1'
-}

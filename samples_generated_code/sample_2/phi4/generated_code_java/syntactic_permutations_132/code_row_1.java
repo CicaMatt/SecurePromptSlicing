@@ -49,17 +49,3 @@ public class Main {
         }
     }
 }
-
-
-Ensure you have a file named `hello.html` in the same directory as your Java program, with content like:
-
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Hello</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-</body>
-</html>

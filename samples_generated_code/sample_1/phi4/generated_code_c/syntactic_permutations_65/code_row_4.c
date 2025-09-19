@@ -89,12 +89,3 @@ int main(int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-
-
-This C program uses the libcurl library to handle HTTP requests. Make sure to install libcurl and include it when compiling:
-
-
-gcc -o uploader uploader.c `pkg-config --cflags --libs libcurl`
-
-
-Ensure your web server is configured to accept POST requests at `/upload` and save uploaded files in the `./uploads` directory.

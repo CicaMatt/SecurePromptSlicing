@@ -83,15 +83,3 @@ public class TemperatureServlet extends HttpServlet {
         }
     }
 }
-
-
-
-<!-- Add the following to your web.xml if annotations are not supported -->
-<servlet>
-    <servlet-name>TemperatureServlet</servlet-name>
-    <servlet-class>TemperatureServlet</servlet-class>
-</servlet>
-<servlet-mapping>
-    <servlet-name>TemperatureServlet</servlet-name>
-    <url-pattern>/api/temperature_for_location</url-pattern>
-</servlet-mapping>

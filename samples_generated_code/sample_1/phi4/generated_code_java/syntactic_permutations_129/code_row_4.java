@@ -79,10 +79,3 @@ class MockRequest extends HttpServletRequestWrapper {
         return parameters.getOrDefault(name, new String[0])[0];
     }
 }
-
-
-In this code:
-- `Main` class sets up an embedded Jetty server.
-- `MyServlet` handles HTTP requests and uses FreeMarker to render templates.
-- `renderResponseFromEnv` method processes the request and template rendering logic.
-- A `MockRequest` class is used for testing purposes in the `home` function.

@@ -26,22 +26,3 @@ public class URLDecorator {
         }
     }
 }
-
-
-For this code to run, you need a `template.html` file in the same directory as your Java program with the following content:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome Page</title>
-</head>
-<body>
-    <h1>Hello, {username}!</h1>
-    <p>Welcome to your personalized page.</p>
-</body>
-</html>
-
-
-Make sure the `template.html` file is in the same directory as your compiled Java class files.

@@ -17,10 +17,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-Ensure you have a `templates` directory with a file named `greeting.html` containing something like:
-
-
-<!doctype html>
-<title>Greeting</title>
-
-<h1>Hello, {{ name }}!</h1>

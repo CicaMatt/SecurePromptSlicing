@@ -55,6 +55,3 @@ int main() {
 
     return 0;
 }
-
-
-Before running this code, ensure you have the MySQL C client library installed and a database named `test_db` with a table `users` having columns `username` and `password`. Adjust connection parameters as necessary.

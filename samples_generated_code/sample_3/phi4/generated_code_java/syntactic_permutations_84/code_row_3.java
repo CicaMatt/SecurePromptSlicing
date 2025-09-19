@@ -43,37 +43,3 @@ public class SimpleWebApp {
         }
     }
 }
-
-
-**Dependencies:**
-
-To run the above code, ensure you have the following dependencies in your `pom.xml` if using Maven:
-
-
-<dependencies>
-    <dependency>
-        <groupId>io.javalin</groupId>
-        <artifactId>javalin</artifactId>
-        <version>4.7.2</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-yaml</artifactId>
-        <version>2.14.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>2.0.7</version>
-    </dependency>
-</dependencies>
-
-
-For Gradle, add the following to your `build.gradle`:
-
-
-dependencies {
-    implementation 'io.javalin:javalin:4.7.2'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1'
-    implementation 'org.slf4j:slf4j-simple:2.0.7'
-}

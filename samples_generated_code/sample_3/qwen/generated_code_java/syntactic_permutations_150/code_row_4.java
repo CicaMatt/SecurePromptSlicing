@@ -44,28 +44,3 @@ public class MainPageServlet extends HttpServlet {
         response.getWriter().println("</body></html>");
     }
 }
-
-
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
-    <servlet>
-        <servlet-name>MainPageServlet</servlet-name>
-        <servlet-class>MainPageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MainPageServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
-    </servlet-mapping>
-</web-app>

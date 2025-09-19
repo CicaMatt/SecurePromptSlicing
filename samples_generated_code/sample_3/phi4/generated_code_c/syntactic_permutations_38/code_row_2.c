@@ -31,6 +31,3 @@ int main() {
     login_page();
     return 0;
 }
-
-
-This code is a simplified simulation and does not include actual database interaction, security features such as password hashing, or network capabilities for redirection. For real-world applications, consider using appropriate libraries and frameworks that support these functionalities.

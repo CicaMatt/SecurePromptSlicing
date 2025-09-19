@@ -61,12 +61,3 @@ int main() {
 
     return EXIT_SUCCESS;
 }
-
-
-**Note:** This example uses OpenSSL to hash passwords. You must link against OpenSSL when compiling this program:
-
-
-gcc -o password_hashing your_program.c -lssl -lcrypto
-
-
-Replace `your_program.c` with the actual filename of your C source code.

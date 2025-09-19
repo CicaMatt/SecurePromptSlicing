@@ -56,6 +56,3 @@ int main() {
     upload_image(image_path);
     return 0;
 }
-
-
-**Note:** The `base64.h` and its corresponding implementation are not provided here. You need to include a base64 encoding library or implement your own base64 encoder function as per your needs.

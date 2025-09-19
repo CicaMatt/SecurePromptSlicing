@@ -26,10 +26,3 @@ public class WebApp {
         }
     }
 }
-
-
-To run this code:
-
-1. Ensure you have Spring Boot and Jackson dependencies in your `pom.xml` if using Maven, or equivalent setup if using another build tool.
-2. Place the above code into a file named `WebApp.java`.
-3. Run the application using an appropriate command for your environment (e.g., `mvn spring-boot:run` for Maven).

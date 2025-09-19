@@ -35,17 +35,3 @@ class FreeMarkerEngine implements Spark.TemplateEngine {
         return delegate.render(modelAndView);
     }
 }
-
-
-
-<!-- Add this dependency to your pom.xml if you are using Maven -->
-<dependency>
-    <groupId>com.sparkjava</groupId>
-    <artifactId>spark-core</artifactId>
-    <version>2.9.4</version>
-</dependency>
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-    <version>2.3.31</version>
-</dependency>

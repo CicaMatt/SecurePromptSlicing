@@ -22,6 +22,3 @@ public class UrlRedirect {
         System.out.println(getRedirectUrl(testUrl2)); // Outputs the URL as is if not matched
     }
 }
- 
-
-Replace `"your-regex-here"` with your actual regular expression and `"your-target-url-1"`, `"non-matching-url"` with test URLs to match against.

@@ -126,10 +126,3 @@ static void serve_http_file(struct mg_connection *nc, struct http_message *hm, c
     
     mg_serve_http_file(nc, hm, path, fh, s_http_server_opts);
 }
-
-
-To compile and run the code:
-- Install Mongoose library for handling HTTP requests.
-- Install SQLite3 development package for database operations.
-- Compile using `gcc -o webapp main.c -lsqlite3 $(pkg-config --cflags --libs mongoose)` on Linux or adjust accordingly for Windows.
-- Run with `./webapp` and access the app at http://localhost:8080/check-db.

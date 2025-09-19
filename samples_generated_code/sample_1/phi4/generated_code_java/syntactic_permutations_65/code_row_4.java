@@ -47,35 +47,3 @@ class FileUploadController {
         return "You successfully uploaded '" + file.getOriginalFilename() + "'";
     }
 }
-
-
-To run this code, ensure you have a Spring Boot environment set up. You will need the following dependencies in your `pom.xml`:
-
-
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-</dependencies>
-
-
-You can create an HTML form to upload files to this endpoint by adding the following HTML code in your web page:
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload PDF</title>
-</head>
-<body>
-    <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
-
-
-Make sure your Spring Boot application is running on `http://localhost:8080`. The uploaded PDF files will be saved in the `uploads` directory of the project root.

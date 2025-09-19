@@ -35,6 +35,3 @@ int main() {
 
     return 0;
 }
-
-
-Make sure you have a file named `hello.html` in the same directory with some content for the simulation to work correctly.

@@ -34,6 +34,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
-This code simulates a simple command-line web application. In an actual web server context, you would use a library like `libmicrohttpd` to handle HTTP requests and perform the redirections.

@@ -130,15 +130,3 @@ int main(void) {
 
     return 0;
 }
- 
-
-To compile this code, make sure you have `libevent` and `libyaml` installed:
-
-
-gcc -o web_app main.c -lyaml -levent
-
-
-Run the compiled program with:
-
-
-./web_app

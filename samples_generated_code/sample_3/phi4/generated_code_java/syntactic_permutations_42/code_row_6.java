@@ -33,17 +33,3 @@ public class Main {
         });
     }
 }
-
-
-**Build and run instructions:**
-
-1. Add Javalin dependency to your `pom.xml` if using Maven:
-   
-   <dependency>
-       <groupId>io.javalin</groupId>
-       <artifactId>javalin</artifactId>
-       <version>5.0.0</version>
-   </dependency>
-   
-
-2. Run the application with a Java runtime environment.

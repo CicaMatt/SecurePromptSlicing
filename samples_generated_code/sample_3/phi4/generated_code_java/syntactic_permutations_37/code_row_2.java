@@ -53,6 +53,3 @@ public class LoginServlet extends HttpServlet {
         // Clean up resources if needed
     }
 }
-
-
-**Note**: This code assumes a simple setup where the `DataSource` is configured and available. You would typically configure this in your web server or application server environment (e.g., Apache Tomcat with JNDI). Additionally, password storage and comparison should be handled securely using hashing and salting mechanisms, which are not covered here for simplicity.

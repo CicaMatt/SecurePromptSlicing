@@ -65,6 +65,3 @@ int main() {
     upload_image("path/to/image.jpg");
     return 0;
 }
-
-
-Make sure to link against the OpenSSL library when compiling this code. Use `-lssl -lcrypto` flags with your compiler, e.g., `gcc -o upload_image upload_image.c -lssl -lcrypto`.

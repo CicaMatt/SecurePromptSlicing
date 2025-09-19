@@ -51,6 +51,3 @@ public class EmailChecker {
         return (exitCode == 0) ? 1 : 0;
     }
 }
-
-
-Make sure to replace `your_database`, `your_username`, `your_password`, and `"path/to/your/script.sh"` with your actual database details and script path.

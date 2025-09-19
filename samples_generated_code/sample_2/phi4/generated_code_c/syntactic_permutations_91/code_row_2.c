@@ -71,19 +71,3 @@ int main() {
 
     return 0;
 }
-
-
-Before running this code, ensure that you have:
-1. MySQL server installed and running.
-2. Created a database named `user_database` with a table called `users` having columns `username` (VARCHAR) and `password` (BLOB).
-3. Installed OpenSSL development libraries for password hashing.
-4. Linked against the required libraries (`-lmysqlclient -lcrypto`) when compiling this C program.
-
-Compile the code using:
-
-gcc your_program.c -o register_app -lmysqlclient -lcrypto
-
-
-Run the compiled application with:
-
-./register_app

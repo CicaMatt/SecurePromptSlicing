@@ -25,6 +25,3 @@ public class CheckModServlet extends HttpServlet {
         return "admin".equals(username) && "password123".equals(password);
     }
 }
-
-
-To run this code, you need a servlet container like Apache Tomcat. You should place the compiled class in the appropriate directory within your web application structure and configure it according to your server setup.

@@ -55,23 +55,3 @@ public class PingDecorator extends HttpServlet {
         }
     }
 }
-
-
-To run this code, you need to have Jetty server dependencies in your project. You can add them using Maven:
-
-
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-server</artifactId>
-    <version>11.0.15</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-servlet</artifactId>
-    <version>11.0.15</version>
-</dependency>
-
-
-This code defines a servlet `PingDecorator` that responds to HTTP GET requests at the `/ping` endpoint. It uses the `ping` command to check connectivity to the specified URL, which is set as an initialization parameter when deploying the servlet. The output of the ping operation is returned in the response.
-
-To test this servlet, you can run the `main` method, which starts a Jetty server on port 8080 and makes the servlet accessible at `http://localhost:8080/ping`. Make sure to configure the URL as an initialization parameter when deploying the servlet.

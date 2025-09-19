@@ -30,6 +30,3 @@ int main(int argc, char *argv[]) {
     fclose(file);
     return EXIT_SUCCESS;
 }
-
-
-**Note:** Replace `"/path/to/safe/directory/"` with the actual path to your safe directory.
