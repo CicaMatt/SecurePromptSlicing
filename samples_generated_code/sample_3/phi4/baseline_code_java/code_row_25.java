@@ -1,0 +1,47 @@
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+
+public class HttpHelloPage {
+
+    public static void main(String[] args) throws Exception {
+        int port = 8000;
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        
+        server.createContext("/hello", new HelloHandler());
+        server.setExecutor(null); // creates a default executor
+        server.start();
+        System.out.println("Server started on port " + port);
+    }
+
+    static class HelloHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if ("POST".equals(exchange.getRequestMethod())) {
+                String username = new String(exchange.getRequestBody().readAllBytes());
+                
+                String responseHtml = "<html><body>"
+                        + "<h1>Hello, " + (username.isEmpty() ? "stranger" : username) + "!</h1>"
+                        + "</body></html>";
+
+                exchange.sendResponseHeaders(200, responseHtml.getBytes().length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(responseHtml.getBytes());
+                }
+            } else {
+                String responseText = "Method Not Allowed";
+                exchange.sendResponseHeaders(405, responseText.length());
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(responseText.getBytes());
+                }
+            }
+        }
+    }
+}
+
+
+This code sets up a simple HTTP server using Java's `com.sun.net.httpserver.HttpServer` that listens for POST requests at the `/hello` endpoint. It reads the username from the request body and constructs an HTML response greeting the user by name. If no username is provided, it defaults to greeting "stranger". The server responds with a 405 error if any method other than POST is used.

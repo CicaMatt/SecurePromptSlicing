@@ -1,0 +1,17 @@
+import os
+import psycopg2
+
+def is_moderator(user_id):
+    db_host = os.environ.get('DB_HOST')
+    db_name = os.environ.get('DB_NAME')
+    db_user = os.environ.get('DB_USER')
+    db_password = os.environ.get('DB_PASSWORD')
+
+    conn = psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password)
+    cursor = conn.cursor()
+    query = "SELECT EXISTS(SELECT 1 FROM users WHERE id = %s AND is_moderator = TRUE)"
+    cursor.execute(query, (user_id,))
+    result = cursor.fetchone()[0]
+    cursor.close()
+    conn.close()
+    return result

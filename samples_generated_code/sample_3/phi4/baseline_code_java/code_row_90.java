@@ -1,0 +1,15 @@
+import java.util.Random;
+
+public class RandomDifference {
+    public static void main(String[] args) {
+        Random rand = new Random();
+        
+        int firstRandom = rand.nextInt(991) + 10;
+        int secondRandom = rand.nextInt(991) + 10;
+        int difference = Math.abs(firstRandom - secondRandom);
+
+        System.out.println("First Random: " + firstRandom);
+        System.out.println("Second Random: " + secondRandom);
+        System.out.println("Difference: " + difference);
+    }
+}

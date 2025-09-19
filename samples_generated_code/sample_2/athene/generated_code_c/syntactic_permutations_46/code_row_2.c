@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_PATH 256
+
+typedef struct {
+    const char *path;
+    void (*handler)(const char *);
+} Route;
+
+Route routes[10];
+int route_count = 0;
+
+void add_route(const char *path, void (*handler)(const char *)) {
+    if (route_count < 10) {
+        routes[route_count].path = path;
+        routes[route_count].handler = handler;
+        route_count++;
+    }
+}
+
+void img(const char *name) {
+    char path[MAX_PATH];
+    snprintf(path, sizeof(path), "images/%s", name);
+
+    FILE *file = fopen(path, "rb");
+    if (file == NULL) {
+        printf("HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n");
+        return;
+    }
+
+    fseek(file, 0, SEEK_END);
+    long length = ftell(file);
+    rewind(file);
+
+    printf("HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\nContent-Length: %ld\r\n\r\n", length);
+    fread(path, 1, length, file);
+    fclose(file);
+}
+
+int main() {
+    add_route("/img", img);
+
+    // Simulate a request
+    const char *request_path = "/img/example.jpg";
+    for (int i = 0; i < route_count; i++) {
+        if (strcmp(routes[i].path, request_path) == 0) {
+            routes[i].handler(strrchr(request_path, '/') + 1);
+            break;
+        }
+    }
+
+    return 0;
+}

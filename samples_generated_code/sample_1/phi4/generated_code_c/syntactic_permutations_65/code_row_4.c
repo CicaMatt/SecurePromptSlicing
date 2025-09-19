@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <curl/curl.h>
+
+#define UPLOAD_URL "http://localhost/upload"
+#define UPLOAD_DIR "./uploads"
+
+struct MemoryStruct {
+    char *memory;
+    size_t size;
+};
+
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    size_t realsize = size * nmemb;
+    struct MemoryStruct *mem = (struct MemoryStruct *)userp;
+
+    char *ptr = realloc(mem->memory, mem->size + realsize + 1);
+    if(ptr == NULL) {
+        printf("Not enough memory\n");
+        return 0;
+    }
+
+    mem->memory = ptr;
+    memcpy(&(mem->memory[mem->size]), contents, realsize);
+    mem->size += realsize;
+    mem->memory[mem->size] = '\0';
+
+    return realsize;
+}
+
+void upload_pdf(const char *filename) {
+    CURL *curl;
+    CURLcode res;
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+
+    curl = curl_easy_init();
+    if(curl) {
+        struct MemoryStruct chunk;
+        chunk.memory = malloc(1);
+        chunk.size = 0;
+
+        FILE *file = fopen(filename, "rb");
+        if(file == NULL) {
+            fprintf(stderr, "Could not open file %s\n", filename);
+            return;
+        }
+
+        fseek(file, 0, SEEK_END);
+        long filesize = ftell(file);
+        rewind(file);
+
+        curl_easy_setopt(curl, CURLOPT_URL, UPLOAD_URL);
+        curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+        curl_formadd(&formpost, &lastptr,
+                     CURLFORM_COPYNAME, "file",
+                     CURLFORM_FILE, filename,
+                     CURLFORM_END);
+
+        curl_easy_setopt(curl, CURLOPT_READDATA, file);
+        curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE, (curl_off_t)filesize);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+
+        res = curl_easy_perform(curl);
+
+        if(res != CURLE_OK)
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+
+        fclose(file);
+
+        curl_formfree(formpost);
+        free(chunk.memory);
+
+        curl_easy_cleanup(curl);
+    }
+    curl_global_cleanup();
+}
+
+int main(int argc, char *argv[]) {
+    if(argc != 2) {
+        fprintf(stderr, "Usage: %s <pdf_file_path>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    const char *filename = argv[1];
+    upload_pdf(filename);
+
+    return EXIT_SUCCESS;
+}
+
+
+This C program uses the libcurl library to handle HTTP requests. Make sure to install libcurl and include it when compiling:
+
+
+gcc -o uploader uploader.c `pkg-config --cflags --libs libcurl`
+
+
+Ensure your web server is configured to accept POST requests at `/upload` and save uploaded files in the `./uploads` directory.

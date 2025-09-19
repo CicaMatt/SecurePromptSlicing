@@ -1,0 +1,10 @@
+import sys
+
+def http_hello_page(request, response):
+    username = request.readline().strip()
+    response.write(f"HTTP/1.1 200 OK\nContent-Type: text/html\n\n")
+    response.write(f"<html><body>Hello {username}</body></html>")
+
+request = sys.stdin
+response = sys.stdout
+http_hello_page(request, response)

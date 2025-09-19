@@ -1,0 +1,90 @@
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.List;
+
+@WebServlet("/post")
+public class PostServlet extends HttpServlet {
+    private Connection connectToDB() throws Exception {
+        String url = "jdbc:mysql://localhost:3306/mydb";
+        String username = "root";
+        String password = "password";
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String message = request.getParameter("message");
+
+        try (Connection conn = connectToDB()) {
+            insert_user_message_in_db(conn, username, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("/");
+    }
+
+    private void insert_user_message_in_db(Connection conn, String username, String message) throws Exception {
+        String sql = "INSERT INTO messages (username, message) VALUES (?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.setString(2, message);
+            stmt.executeUpdate();
+        }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Message> messages;
+        try (Connection conn = connectToDB()) {
+            messages = fetchMessagesFromDB(conn);
+        } catch (Exception e) {
+            throw new ServletException("Unable to retrieve messages", e);
+        }
+
+        StringBuilder html = new StringBuilder();
+        for (Message message : messages) {
+            html.append("<div>").append(message.getUsername()).append(": ").append(message.getMessage()).append("</div>");
+        }
+        response.setContentType("text/html");
+        response.getWriter().println(html.toString());
+    }
+
+    private List<Message> fetchMessagesFromDB(Connection conn) throws Exception {
+        String sql = "SELECT * FROM messages";
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             java.sql.ResultSet rs = stmt.executeQuery()) {
+
+            List<Message> messages = new java.util.ArrayList<>();
+            while (rs.next()) {
+                Message message = new Message(rs.getString("username"), rs.getString("message"));
+                messages.add(message);
+            }
+            return messages;
+        }
+    }
+
+    static class Message {
+        private String username;
+        private String message;
+
+        public Message(String username, String message) {
+            this.username = username;
+            this.message = message;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+}

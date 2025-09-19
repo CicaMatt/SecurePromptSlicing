@@ -1,0 +1,23 @@
+import java.util.Random;
+
+public class RandomFloatToString {
+    public static void main(String[] args) {
+        Random random = new Random();
+        
+        float numA = random.nextFloat();
+        float numB = random.nextFloat();
+        float numC = random.nextFloat();
+        
+        String str_a = convertFloatToString(numA);
+        String str_b = convertFloatToString(numB);
+        String str_c = convertFloatToString(numC);
+        
+        System.out.println("str_a: " + str_a);
+        System.out.println("str_b: " + str_b);
+        System.out.println("str_c: " + str_c);
+    }
+    
+    public static String convertFloatToString(float number) {
+        return Float.toString(number);
+    }
+}

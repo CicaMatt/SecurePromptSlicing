@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int is_logged_in() {
+    // Dummy function for demonstration
+    return 1; // Change to 0 or 1 based on actual login status
+}
+
+int is_admin() {
+    // Dummy function for demonstration
+    return 1; // Change to 0 or 1 based on admin status
+}
+
+void redirect_to_login_page() {
+    printf("Redirecting to Login Page\n");
+}
+
+void redirect_to_user_page() {
+    printf("Redirecting to User Page\n");
+}
+
+void redirect_to_admin_page() {
+    printf("Redirecting to Admin Page\n");
+}
+
+int main() {
+    if (!is_logged_in()) {
+        redirect_to_login_page();
+    } else {
+        if (is_admin()) {
+            redirect_to_admin_page();
+        } else {
+            redirect_to_user_page();
+        }
+    }
+    return 0;
+}

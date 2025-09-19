@@ -1,0 +1,55 @@
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.mindrot.jbcrypt.BCrypt;
+
+@WebServlet("/register")
+public class RegisterServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/mydatabase", "root", "password")) {
+
+                String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, hashedPassword);
+                    preparedStatement.executeUpdate();
+                    
+                    response.getWriter().println("Registration successful!");
+                }
+
+            } catch (SQLException e) {
+                throw new ServletException("Database access error", e);
+            }
+        } else {
+            response.getWriter().println("Username and password are required.");
+        }
+    }
+}
+
+
+To make this code runnable, ensure you have:
+
+1. A MySQL database named `mydatabase` with a table called `users`, having columns `username` (VARCHAR) and `password` (VARCHAR).
+2. The MySQL JDBC driver in your project's classpath.
+3. BCrypt library available for hashing passwords.
+
+The web application should be deployed on a servlet container like Apache Tomcat. Make sure to update the database connection details (`jdbc:mysql://localhost:3306/mydatabase`, `"root"`, `"password"`) according to your setup.

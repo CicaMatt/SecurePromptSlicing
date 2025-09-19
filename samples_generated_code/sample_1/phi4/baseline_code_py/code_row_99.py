@@ -1,0 +1,15 @@
+import subprocess
+import sys
+
+def get_user_id_status(username):
+    result = subprocess.run(['id', username], capture_output=True)
+    return result.returncode
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <username>")
+        sys.exit(1)
+
+    username = sys.argv[1]
+    exit_status = get_user_id_status(username)
+    print(f"Exit Status: {exit_status}")
