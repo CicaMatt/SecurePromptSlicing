@@ -1,0 +1,2 @@
+"Too few arguments to formatting function","Calling a printf-like function with too few arguments can be a source of security issues.","error","Format for __builtin___snprintf_chk (in a macro expansion) expects 52 arguments but given 33","/code_row_17.c","36","5","46","96"
+"Wrong type of arguments to formatting function","Calling a printf-like function with the wrong type of arguments causes unpredictable behavior.","error","This format specifier for type 'char *' does not match the argument type 'int'.","/code_row_87.c","9","18","9","25"

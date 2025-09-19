@@ -1,0 +1,1 @@
+"Likely overrunning write","Buffer write operations that do not control the length of data written may overflow","error","This 'scanf string argument' operation requires 9 bytes but the destination is only 8 bytes.","/syntactic_permutations_58/code_row_1.c","19","18","19","25"

@@ -1,0 +1,1 @@
+"Cleartext transmission of sensitive information","Transmitting sensitive information across a network in cleartext can expose it to an attacker.","warning","This operation receives into 'password', which may put unencrypted sensitive data into [[""password""|""relative:///code_row_52.c:46:15:46:22""]].","/code_row_52.c","46","9","46","13"
