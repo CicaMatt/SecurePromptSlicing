@@ -8,7 +8,8 @@ import traceback
 import urllib
 from collections import Counter
 from itertools import combinations
-from typing import Dict, Set
+from pathlib import Path
+from typing import Dict, Set, Union, Optional, Tuple, List
 
 import numpy as np
 import pandas as pd
@@ -23,7 +24,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import MultiLabelBinarizer, OneHotEncoder
 import seaborn as sns
-
 
 
 def add_labels(input_csv_path):
@@ -440,10 +440,6 @@ def permutations_cwe_stats(main_csv_path, prompt_id_column, permutations_folder)
 
 
 def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
-    from collections import Counter
-    import os, re
-    import pandas as pd
-
     total_counter = Counter()
     total_rows = 0
     processed_files = 0
@@ -1232,74 +1228,188 @@ def plot_cwe_effect(csv_path, features=['Syntagm Type', 'Sentence Index', 'Granu
 
 
 def check_cwe_match(csv_path, folder_path):
-    # Carica il file principale
-    df_main = pd.read_csv(csv_path)
+    # Prova a caricare il file principale con gestione file vuoti
+    try:
+        df_main = pd.read_csv(csv_path)
+    except pd.errors.EmptyDataError:
+        # CSV completamente vuoto (nessuna colonna, nessuna riga)
+        df_main = pd.DataFrame()
 
-    if 'CWE ID' not in df_main.columns or 'Detected CWEs' not in df_main.columns:
+    # Se non ci sono colonne attese, ma il file non è completamente vuoto
+    if not df_main.empty and ('CWE ID' not in df_main.columns or 'Detected CWEs' not in df_main.columns):
         raise ValueError("Il file principale deve contenere le colonne 'CWE ID' e 'Detected CWEs'")
+
+    # Normalizza struttura minima quando df_main è vuoto o privo di colonne
+    if df_main.empty:
+        # assicura colonne per l'output coerente
+        df_main = pd.DataFrame(columns=['CWE ID', 'Detected CWEs'])
 
     # Preprocessing del file principale
     df_main['CWE ID'] = df_main['CWE ID'].astype(str).str.strip()
-    df_main['Detected CWEs'] = df_main['Detected CWEs'].astype(str)
+    # Evita 'nan' letterale nei match
+    df_main['Detected CWEs'] = df_main['Detected CWEs'].fillna('').astype(str)
 
     cwe_ids = df_main['CWE ID'].unique()
 
-    # Conta match con "Detected CWEs"
-    count_matched = {
-        cwe_id: df_main['Detected CWEs'].str.contains(rf'\b{cwe_id}\b').sum()
-        for cwe_id in cwe_ids
-    }
+    # Conta match con "Detected CWEs" (per CWE)
+    if len(df_main) > 0 and len(cwe_ids) > 0:
+        count_matched = {
+            cwe_id: df_main['Detected CWEs'].str.contains(rf'\b{re.escape(cwe_id)}\b', regex=True).sum()
+            for cwe_id in cwe_ids
+        }
+        total_matching_cwes = sum(count_matched.values())
+    else:
+        count_matched = {}
+        total_matching_cwes = 0
+
+    # --- Percentuale snippet con almeno un match ---
+    total_snippets = len(df_main)  # righe del CSV (header escluso)
+    if total_snippets > 0:
+        rows_with_match = df_main.apply(
+            lambda row: bool(re.search(rf'\b{re.escape(str(row["CWE ID"]))}\b', row["Detected CWEs"])),
+            axis=1
+        ).sum()
+    else:
+        rows_with_match = 0
+    percent_matched_snippets = (rows_with_match / total_snippets * 100) if total_snippets else 0.0
+    # ------------------------------------------------
 
     # Conteggio locale nel file principale
-    count_total_main = df_main['CWE ID'].value_counts().to_dict()
+    count_total_main = df_main['CWE ID'].value_counts().to_dict() if total_snippets else {}
 
     # Conteggio globale da tutti i file nella cartella
     count_global = {}
+    if folder_path and os.path.isdir(folder_path):
+        for filename in os.listdir(folder_path):
+            if filename.endswith(".csv"):
+                file_path = os.path.join(folder_path, filename)
+                try:
+                    df = pd.read_csv(file_path)
+                    if 'CWE ID' in df.columns:
+                        df['CWE ID'] = df['CWE ID'].astype(str).str.strip()
+                        for cwe_id in df['CWE ID']:
+                            count_global[cwe_id] = count_global.get(cwe_id, 0) + 1
+                except Exception as e:
+                    print(f"Errore nella lettura di {filename}: {e}")
 
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".csv"):
-            file_path = os.path.join(folder_path, filename)
-            try:
-                df = pd.read_csv(file_path)
-                if 'CWE ID' in df.columns:
-                    df['CWE ID'] = df['CWE ID'].astype(str).str.strip()
-                    for cwe_id in df['CWE ID']:
-                        count_global[cwe_id] = count_global.get(cwe_id, 0) + 1
-            except Exception as e:
-                print(f"Errore nella lettura di {filename}: {e}")
+    # Funzione di sorting robusta (numerico se possibile)
+    def _cwe_sort_key(x):
+        x = str(x)
+        return (0, int(x)) if x.isdigit() else (1, x)
 
-    # Stampa formattata migliorata
-    #print("\nCWE Scenario - Detection Match Stats:\n")
+    # Stampa formattata
     header = f"{'CWE ID':<10} | {'Total CWE Scenarios':>17} | {'Total CWE Detections':>22} | {'Matching CWEs':>24}"
     print(header)
     print("-" * len(header))
 
-    for cwe_id in sorted(cwe_ids, key=lambda x: int(x) if x.isdigit() else x):
+    for cwe_id in sorted(cwe_ids, key=_cwe_sort_key):
         total_global = count_global.get(cwe_id, 0)
         total_main = count_total_main.get(cwe_id, 0)
         matched = count_matched.get(cwe_id, 0)
         print(f"{cwe_id:<10} | {total_global:>17,} | {total_main:>22,} | {matched:>24,}")
 
-    # Ritorna un DataFrame opzionale
+    print("-" * len(header))
+    print(f"{'TOTAL Matching CWEs':<10} : {total_matching_cwes:,}")
+    print(f"Snippet con almeno un match: {rows_with_match}/{total_snippets} ({percent_matched_snippets:.2f}%)")
+
+    # DataFrame risultato (anche vuoto ma con colonne attese)
     result_df = pd.DataFrame({
-        'CWE ID': cwe_ids,
+        'CWE ID': list(cwe_ids),
         'Total CWE scenarios': [count_global.get(cwe_id, 0) for cwe_id in cwe_ids],
         'Total CWE detection': [count_total_main.get(cwe_id, 0) for cwe_id in cwe_ids],
-        'Matches number': [count_matched[cwe_id] for cwe_id in cwe_ids]
+        'Matches number': [count_matched.get(cwe_id, 0) for cwe_id in cwe_ids]
     })
 
     return result_df
 
 
+def compute_vulnerable_snippets(
+    csv_path: str,
+    total_snippets: int,
+    header: Union[bool, str] = "auto",
+) -> float:
+    """
+    Conta gli snippet vulnerabili (righe non vuote nel CSV, opzionalmente
+    escludendo l'header) e stampa:
+      - il totale degli snippet vulnerabili
+      - la percentuale di snippet vulnerabili sul totale degli snippet
+
+    Ritorna comunque la frazione (0–1) per compatibilità.
+
+    Parametri
+    ----------
+    csv_path : str
+        Percorso al CSV che contiene le istanze (una per riga).
+    total_snippets : int
+        Numero totale di snippet (denominatore).
+    header : bool | "auto", opzionale
+        Gestione dell'header:
+        - True  -> la prima riga non vuota è un header e viene esclusa
+        - False -> nessun header
+        - "auto" (default) -> tenta il rilevamento con csv.Sniffer
+
+    Ritorna
+    -------
+    float
+        Frazione snippet vulnerabili / totale_snippet.
+    """
+    if total_snippets <= 0:
+        raise ValueError("total_snippets must be a positive integer.")
+
+    # Determina la presenza dell'header
+    has_header = False
+    with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
+        sample = f.read(2048)
+        f.seek(0)
+        if header == "auto":
+            try:
+                has_header = csv.Sniffer().has_header(sample)
+            except Exception:
+                has_header = True  # default prudente
+        else:
+            has_header = bool(header)
+
+        reader = csv.reader(f)
+        non_empty_rows = []
+        for row in reader:
+            # considera vuote le righe con tutte le celle vuote
+            if not row or not any((cell or "").strip() for cell in row):
+                continue
+            non_empty_rows.append(row)
+
+    cwe_rows = max(len(non_empty_rows) - (1 if has_header and non_empty_rows else 0), 0)
+    rate = cwe_rows / total_snippets
+    percent = rate * 100.0
+
+    # Stampa SOLO quanto richiesto
+    print(f"Snippet vulnerabili totali: {cwe_rows}")
+    print(f"Percentuale snippet vulnerabili: {percent:.2f}%")
+
+    return rate
+
+
 def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100):
     """
     Reads an aggregated comparison CSV with columns:
-        Category, Value, Base, Result  (Base = with-feature total, Result = with-feature vulnerable)
-    Performs per-(Category, Value) 2x2 tests:
-        - Fisher's Exact when any expected cell < 5 or any observed cell < 5
-        - else Chi-square with Yates correction
-    Applies Benjamini–Hochberg FDR across ALL per-value tests.
-    Prints a clear narrative summary and returns two DataFrames:
+        Category, Value, Base, Result
+      - Base   = number of items/snippets with the feature (exposure)
+      - Result = number of vulnerabilities (events) observed with the feature
+                 (can exceed Base because multiple events can occur per snippet)
+
+    Per-(Category, Value) analysis (unchanged):
+        - Build a 2x2 table comparing "with feature" vs "without feature".
+        - Fisher's Exact when any expected cell < 5 or any observed cell < 5,
+          else Chi-square with Yates correction.
+        - Benjamini–Hochberg FDR across ALL per-value tests.
+
+    Global (per-Category) omnibus (UPDATED):
+        - Test of rate homogeneity across the values of the Category:
+          considers Result as event counts and Base as exposure.
+          chi2 = sum((O_i - E_i)^2 / E_i) with E_i = Base_i * (sum(Result)/sum(Base))
+          df = (#levels_used - 1)
+        - Robust to Result > Base and avoids negative cells.
+
+    Prints a clear narrative summary and returns:
         per_value_df (detailed per feature value) and global_df (omnibus per Category).
 
     Parameters
@@ -1308,7 +1418,7 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         Path to the aggregated metrics CSV.
     alpha : float, default 0.05
         FDR significance threshold for q-values.
-    top_n : int, default 10
+    top_n : int, default 100
         How many items to show in the printed “top” sections.
 
     Returns
@@ -1317,7 +1427,10 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
     global_df    : pd.DataFrame
     """
     # --- deps ---
+    import numpy as np
+    import pandas as pd
     from scipy.stats import chi2_contingency, fisher_exact
+    from scipy.stats import chi2 as _chi2
 
     # --- load & checks ---
     df = pd.read_csv(csv_path)
@@ -1349,17 +1462,17 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         add = 0.5 if min(a,b,c,d) == 0 else 0.0
         return ((a+add)*(d+add))/((b+add)*(c+add))
 
-    # --- per-value tests ---
+    # --- per-value tests (unchanged) ---
     rows = []
     for cat, sub in df.groupby("Category", sort=False):
-        N = int(sub["Base"].sum())       # total prompts in this category
-        V = int(sub["Result"].sum())     # total vulnerable in this category
+        N = int(sub["Base"].sum())       # total with-feature items in this category
+        V = int(sub["Result"].sum())     # total vulnerabilities in this category
         for _, r in sub.iterrows():
             base = int(r["Base"])
-            a = int(r["Result"])         # with feature & vulnerable
-            b = base - a                 # with feature & safe
-            c = V - a                    # without feature & vulnerable
-            d = (N - base) - c           # without feature & safe
+            a = int(r["Result"])         # with feature & vulnerable (events counted)
+            b = base - a                 # with feature & safe (can be negative; clamped below)
+            c = V - a                    # without feature & vulnerable (events)
+            d = (N - base) - c           # without feature & safe (can be negative; clamped below)
             a,b,c,d = [max(x,0) for x in (a,b,c,d)]
 
             table = np.array([[a,b],[c,d]], dtype=float)
@@ -1406,18 +1519,50 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         ascending=[False, True, False, False]
     ).reset_index(drop=True)
 
-    # --- global (per-category) omnibus tests ---
+    # --- global (per-category) omnibus UPDATED: Poisson rate homogeneity ---
     global_rows = []
     for cat, sub in df.groupby("Category", sort=False):
-        base = sub["Base"].astype(int).values
-        vuln = sub["Result"].astype(int).values
-        safe = base - vuln
-        table = np.vstack([vuln, safe]).T  # rows = values, cols = [vuln, safe]
-        try:
-            chi2, p, dof, _ = chi2_contingency(table, correction=False)
-        except Exception:
-            chi2, p, dof = np.nan, np.nan, np.nan
-        global_rows.append({"Category": cat, "Chi2": chi2, "df": dof, "p_value": p})
+        sub = sub.copy()
+        sub["Base"] = pd.to_numeric(sub["Base"], errors="coerce")
+        sub["Result"] = pd.to_numeric(sub["Result"], errors="coerce")
+
+        # keep only informative rows: exposure > 0 and events >= 0
+        sub = sub[(sub["Base"] > 0) & (sub["Result"] >= 0)].copy()
+
+        m = len(sub)
+        if m < 2:
+            global_rows.append({"Category": cat, "Chi2": np.nan, "df": np.nan, "p_value": np.nan})
+            continue
+
+        tot_base = float(sub["Base"].sum())
+        tot_vuln = float(sub["Result"].sum())
+
+        if tot_base <= 0:
+            global_rows.append({"Category": cat, "Chi2": np.nan, "df": np.nan, "p_value": np.nan})
+            continue
+
+        # if no events overall, rates are all zero → no evidence of differences
+        if tot_vuln == 0:
+            global_rows.append({"Category": cat, "Chi2": 0.0, "df": m - 1, "p_value": 1.0})
+            continue
+
+        r = tot_vuln / tot_base
+        expected = sub["Base"] * r
+        observed = sub["Result"]
+
+        # use only levels with positive expected to avoid division by zero
+        mask = expected > 0
+        k = int(mask.sum())
+        if k < 2:
+            global_rows.append({"Category": cat, "Chi2": np.nan, "df": np.nan, "p_value": np.nan})
+            continue
+
+        chi2_stat = float((((observed[mask] - expected[mask]) ** 2) / expected[mask]).sum())
+        df_glob = int(k - 1)
+        p_val = float(_chi2.sf(chi2_stat, df_glob))
+
+        global_rows.append({"Category": cat, "Chi2": chi2_stat, "df": df_glob, "p_value": p_val})
+
     global_df = pd.DataFrame(global_rows).sort_values("p_value", na_position="last").reset_index(drop=True)
 
     # === Pretty printing ===
@@ -1456,200 +1601,294 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
                   f"{pct(r['Rate_with'])} vs {pct(r['Rate_without'])} ({direction} than baseline by {pct(abs(r['Rate_diff']))}); "
                   f"OR={r['OddsRatio']:.2f}, p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
 
-    # Global category tests
+    # Global category tests (UPDATED description)
     print("\n— Global (omnibus) tests per Category —")
+    #print("  (Rate-homogeneity test using events=Result and exposure=Base; robust when Result > Base)")
     for _, r in global_df.iterrows():
         interp = ("evidence that this Category matters" if (np.isfinite(r["p_value"]) and r["p_value"] < 0.05)
                   else "no strong overall evidence")
-        print(f"  {r['Category']}: χ²={r['Chi2']:.2f}, df={int(r['df']) if np.isfinite(r['df']) else 'NA'}, "
-              f"p={r['p_value']:.3g} → {interp}")
-
-
-    #print("\nNotes:")
-    #print("  • Rate with = vulnerability rate among prompts WITH the feature.")
-    #print("  • Baseline = vulnerability rate among prompts WITHOUT the feature.")
-    #print("  • OR>1 means the feature is associated with higher odds of vulnerability; OR<1 is protective.")
-    #print("  • p-values are from Fisher’s Exact (small counts) or Chi-square with Yates (larger counts).")
-    #print("  • q-values are BH–FDR corrected across all per-value tests.")
-    #print("="*80 + "\n")
+        df_txt = int(r["df"]) if np.isfinite(r["df"]) else "NA"
+        chi2_txt = f"{r['Chi2']:.2f}" if np.isfinite(r["Chi2"]) else "nan"
+        p_txt = f"{r['p_value']:.3g}" if np.isfinite(r["p_value"]) else "nan"
+        print(f"  {r['Category']}: χ²={chi2_txt}, df={df_txt}, p={p_txt} → {interp}")
 
     return per_value_df, global_df
 
 
-
-def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100):
+def combined_feature_statistical_analysis(
+    csv_path,
+    alpha=0.05,
+    mostra_non_significativi_vicini=False,
+    k_vicini=5,
+    min_events=0,               # filtro: minimo Result per includere una combinazione nei test per-valore
+):
+    print(f"{model_name} - {language}")
     """
-    Analisi per CSV 'combined' con colonne richieste:
-      Combination, Features, Base, Result
-    Colonne facoltative riportate in output se presenti:
-      Granularity, Sentence Index, Syntagm Type, Frequency
+    Analisi statistica focalizzata **solo** sulla combinazione di feature.
 
-    Per ogni combinazione:
-      - 2×2 test vs il resto delle combinazioni con lo stesso 'Features'
-        (Fisher se attesi/osservati < 5, altrimenti Chi² con Yates).
-      - BH–FDR su tutte le p dei test per combinazione.
+    Omnibus: testa se il tasso di vulnerabilità cambia al variare di `Combination`.
+    Per-valore: ogni combinazione specifica vs tutte le altre (Barnard two-sided, FDR tra combinazioni).
 
-    Omnibus (UNICO) sulle combinazioni:
-      - Chi² di indipendenza sulla tabella [righe=Combination, colonne=(vulnerabile, safe)],
-        ignorando 'Features'.
+    NOVITÀ:
+      - Stampa una conclusione esplicita dell’omnibus:
+        "SIGNIFICATIVE" / "NON significative" rispetto ad α.
+      - Qualifica l’ampiezza dell’effetto (Cramér’s V: ~0.1 piccolo, ~0.3 medio, ~0.5 grande).
+      - Ritorna un dizionario con il verdetto omnibus.
 
-    Ritorna:
-      per_combo_df : risultati per combinazione
-      global_df    : una riga con l’omnibus sulle combinazioni
+    CSV minimo: `Combination`, `Base`, `Result`.
     """
+    import pandas as pd
     import numpy as np
 
-    # --- load & checks ---
-    df = pd.read_csv(csv_path)
-    required = {"Combination", "Features", "Base", "Result"}
-    if not required.issubset(df.columns):
-        raise ValueError(f"CSV must contain columns: {sorted(required)}")
-
-    df = df.copy()
-    df["Combination"] = df["Combination"].astype(str).str.strip()
-    df["Features"] = pd.to_numeric(df["Features"], errors="coerce").astype("Int64")
-    df["Base"] = pd.to_numeric(df["Base"])
-    df["Result"] = pd.to_numeric(df["Result"])
-
-    # --- helpers ---
-    def _expected(a,b,c,d):
-        t = np.array([[a,b],[c,d]], dtype=float)
-        return (t.sum(1, keepdims=True) @ t.sum(0, keepdims=True)) / t.sum()
-
-    def _bh_fdr(pvals):
-        p = np.asarray(pvals, float)
+    # ---------- util ----------
+    def bh_fdr(pvals):
+        p = np.asarray(pvals, dtype=float)
         n = len(p)
         if n == 0:
             return np.array([])
         order = np.argsort(p)
-        ranks = np.empty(n, int); ranks[order] = np.arange(1, n+1)
-        q = p * n / ranks
-        q_sorted = np.minimum.accumulate(q[order][::-1])[::-1]
-        out = np.empty_like(q_sorted); out[order] = q_sorted
-        return np.clip(out, 0, 1)
+        ranked = p[order]
+        adj = np.empty(n)
+        prev = 1.0
+        for i in range(n - 1, -1, -1):
+            adj[i] = min(prev, ranked[i] * n / (i + 1))
+            prev = adj[i]
+        out = np.empty(n); out[order] = adj
+        return out
 
-    def _odds_ratio(a,b,c,d):
-        add = 0.5 if min(a,b,c,d) == 0 else 0.0
-        return ((a+add)*(d+add))/((b+add)*(c+add))
-
-    # --- per-combination tests (baseline stratificato per 'Features') ---
-    rows = []
-    for k, sub in df.groupby("Features", dropna=False, sort=False):
-        N = int(sub["Base"].sum())
-        V = int(sub["Result"].sum())
-        for _, r in sub.iterrows():
-            base = int(r["Base"])
-            a = int(r["Result"])         # con la combinazione & vulnerabile
-            b = base - a                 # con la combinazione & safe
-            c = V - a                    # senza la combinazione & vulnerabile
-            d = (N - base) - c           # senza la combinazione & safe
-            a,b,c,d = [max(x,0) for x in (a,b,c,d)]
-
-            table = np.array([[a,b],[c,d]], dtype=float)
-            exp = _expected(a,b,c,d)
-            use_fisher = (np.any(table < 5) or np.min(exp) < 5)
-
-            if use_fisher:
-                _, p = fisher_exact([[a,b],[c,d]], alternative="two-sided")
-                test = "Fisher"
-            else:
-                _, p, _, _ = chi2_contingency([[a,b],[c,d]], correction=True)
-                test = "Chi2-Yates"
-
-            rate_with = a/(a+b) if (a+b)>0 else np.nan
-            rate_without = c/(c+d) if (c+d)>0 else np.nan
-
-            row = {
-                "Features_k": int(k) if pd.notna(k) else np.nan,
-                "Combination": r["Combination"],
-                "Base": base,
-                "Result": a,
-                "With_Safe": b,
-                "Without_Vuln": c,
-                "Without_Safe": d,
-                "Rate_with": rate_with,
-                "Rate_without": rate_without,
-                "Rate_diff": (rate_with - rate_without) if (np.isfinite(rate_with) and np.isfinite(rate_without)) else np.nan,
-                "OddsRatio": _odds_ratio(a,b,c,d),
-                "p_value": p,
-                "Test": test
-            }
-            for col in ["Granularity", "Sentence Index", "Syntagm Type", "Frequency"]:
-                if col in df.columns:
-                    row[col] = r[col]
-            rows.append(row)
-
-    per_combo_df = pd.DataFrame(rows)
-    if len(per_combo_df) == 0:
-        print("Nessuna riga da analizzare.")
-        return per_combo_df, pd.DataFrame()
-
-    # FDR globale sulle combinazioni
-    per_combo_df["q_value"] = _bh_fdr(np.nan_to_num(per_combo_df["p_value"], nan=1.0))
-    per_combo_df["Significant"] = per_combo_df["q_value"] <= alpha
-
-    per_combo_df = per_combo_df.sort_values(
-        ["Significant", "q_value", "Rate_diff", "OddsRatio"],
-        ascending=[False, True, False, False]
-    ).reset_index(drop=True)
-
-    # --- omnibus sulle combinazioni (ignorando 'Features') ---
-    vuln = df["Result"].astype(int).values
-    safe = (df["Base"] - df["Result"]).astype(int).values
-    table_all = np.vstack([vuln, safe]).T  # righe = Combination, colonne = [vuln, safe]
-
+    # Barnard exact richiesto
     try:
-        chi2, p_glob, dof, _ = chi2_contingency(table_all, correction=False)
-    except Exception:
-        chi2, p_glob, dof = np.nan, np.nan, np.nan
+        from scipy.stats import barnard_exact as _barnard_exact  # type: ignore
+    except Exception as e:
+        raise ImportError(
+            "Barnard’s exact test non disponibile: aggiorna/installa SciPy con 'barnard_exact'. "
+            "Questa funzione non implementa fallback."
+        ) from e
 
-    global_df = pd.DataFrame([{
-        "Scope": "All combinations",
-        "Chi2": chi2,
-        "df": dof,
-        "p_value": p_glob
-    }])
+    # ---------- load ----------
+    df = pd.read_csv(csv_path)
+    needed = {"Combination", "Base", "Result"}
+    if not needed.issubset(df.columns):
+        raise ValueError(f"Mancano colonne: {needed - set(df.columns)}")
 
-    # === Pretty printing ===
-    import numpy as np
-    def pct(x): return f"{100*x:.1f}%" if np.isfinite(x) else "NA"
+    df = df.copy()
+    df["Combination"] = df["Combination"].astype(str)
+    df["Base"] = pd.to_numeric(df["Base"], errors="coerce").fillna(0).astype(int)
+    df["Result"] = pd.to_numeric(df["Result"], errors="coerce").fillna(0).astype(int)
+    df["Result"] = df[["Result", "Base"]].min(axis=1).clip(lower=0)
 
-    print("\n" + "="*80)
-    print("Analisi statistica — Combinazioni di feature e vulnerabilità")
-    print("="*80)
+    # aggregazione per combinazione
+    agg = df.groupby("Combination", sort=False).agg(Base=("Base", "sum"),
+                                                    Result=("Result", "sum")).reset_index()
+    agg["Rate"] = np.where(agg["Base"] > 0, agg["Result"] / agg["Base"], np.nan)
 
-    sig = per_combo_df[per_combo_df["Significant"]]
-    if len(sig):
-        print(f"\n▶ Combinazioni significative (FDR q ≤ {alpha:.2f}) — top {top_n}")
-        for _, r in sig.head(top_n).iterrows():
-            direction = "↑ rischio" if r["OddsRatio"] > 1 else "↓ rischio"
-            print(f"  [{r['Combination']}] "
-                  f"{pct(r['Rate_with'])} vs {pct(r['Rate_without'])} | "
-                  f"OR={r['OddsRatio']:.2f} ({direction}); "
-                  f"p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
-        if len(sig) > top_n:
-            print(f"  … e altre {len(sig) - top_n} combinazioni.")
+    ALT = "two-sided"
+
+    # ---------- helper test p-value (no OR) ----------
+    def p_value_no_or(k1, n1, k2, n2):
+        if n1 <= 0 or n2 <= 0:
+            return np.nan
+        import numpy as _np
+        table = _np.array([[k1, n1 - k1],
+                           [k2, n2 - k2]], dtype=int)
+        res = _barnard_exact(table, alternative=ALT)
+        try:
+            p = float(res.pvalue)
+        except AttributeError:
+            _, p = res
+        return p
+
+    # ---------- OMNIBUS: χ² 2×K (p-value permutazionale a totali fissi) ----------
+    _B_PERM = 5000
+    rng = np.random.default_rng(None)
+
+    def _chi2_stat_from_counts(successes, bases, K=None):
+        successes = successes.astype(float)
+        bases = bases.astype(float)
+        N = bases.sum()
+        if N <= 0:
+            return np.nan, np.nan, (np.nan, np.nan)
+        if K is None:
+            K = successes.sum()
+        p = K / N
+        exp_s = bases * p
+        exp_f = bases * (1 - p)
+        with np.errstate(divide='ignore', invalid='ignore'):
+            chi_s = (successes - exp_s) ** 2 / exp_s
+            chi_f = ((bases - successes) - exp_f) ** 2 / exp_f
+            stat = np.nansum(chi_s) + np.nansum(chi_f)
+        dof = (2 - 1) * (len(bases) - 1)
+        exp_min_s = float(exp_s.min()) if len(exp_s) else np.nan
+        exp_min_f = float(exp_f.min()) if len(exp_f) else np.nan
+        return float(stat), int(dof), (exp_min_s, exp_min_f)
+
+    def _perm_pvalue(successes, bases, B=5000):
+        bases = bases.astype(int)
+        successes = successes.astype(int)
+        N = int(bases.sum()); K = int(successes.sum())
+        if N <= 0:
+            return np.nan, np.nan, (np.nan, np.nan), np.nan
+        if (bases < 0).any() or (successes < 0).any() or (successes > bases).any():
+            return np.nan, np.nan, (np.nan, np.nan), np.nan
+
+        stat_obs, dof, exp_mins = _chi2_stat_from_counts(successes, bases, K)
+        if not np.isfinite(stat_obs):
+            return np.nan, stat_obs, exp_mins, np.nan
+
+        # Cramér’s V (r=2)
+        c = len(bases)
+        denom = N * max(1, min(2 - 1, c - 1))
+        V = float(np.sqrt(stat_obs / denom)) if (denom > 0 and np.isfinite(stat_obs)) else np.nan
+
+        idx_cuts = np.cumsum(bases)[:-1]
+        vec = np.zeros(N, dtype=np.int8); vec[:K] = 1
+
+        exceed = 0
+        for _ in range(B):
+            rng.shuffle(vec)
+            parts = np.split(vec, idx_cuts)
+            perm_successes = np.fromiter((p.sum() for p in parts), dtype=np.int64, count=len(parts))
+            stat_perm, _, _ = _chi2_stat_from_counts(perm_successes, bases, K)
+            if np.isfinite(stat_perm) and stat_perm >= stat_obs:
+                exceed += 1
+
+        pval = (exceed + 1.0) / (B + 1.0)
+        return float(pval), float(stat_obs), exp_mins, V
+
+    # esegui OMNIBUS
+    bases = agg["Base"].to_numpy(dtype=int)
+    succs = agg["Result"].to_numpy(dtype=int)
+
+    if np.sum(bases) > 0 and len(bases) >= 2:
+        p_omni, chi2_stat, (exp_min_s, exp_min_f), V = _perm_pvalue(succs, bases, B=_B_PERM)
+        dof = (2 - 1) * (len(bases) - 1)
+        N_tot = int(np.sum(bases))
     else:
-        print(f"\n▶ Nessuna combinazione ha raggiunto FDR q ≤ {alpha:.2f}.")
+        p_omni = np.nan; chi2_stat = np.nan; dof = 0; N_tot = int(np.sum(bases)); exp_min_s = np.nan; exp_min_f = np.nan; V = np.nan
 
-    notsig = per_combo_df[~per_combo_df["Significant"]].copy()
-    if len(notsig):
-        notsig["_abs_diff"] = notsig["Rate_diff"].abs()
-        trending = notsig.sort_values(["_abs_diff", "p_value"], ascending=[False, True]).head(top_n)
-        print("\n⚠ Trend (non significative): maggiori differenze di tasso — top", top_n)
-        for _, r in trending.iterrows():
-            direction = "più alto" if r["Rate_diff"] > 0 else "più basso"
-            print(f"  [{r['Combination']}] {pct(r['Rate_with'])} vs {pct(r['Rate_without'])} "
-                  f"({direction} del baseline di {pct(abs(r['Rate_diff']))}); "
-                  f"OR={r['OddsRatio']:.2f}, p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
+    # ---------- interpretazione/qualifica dell’effetto ----------
+    def _qualify_V(v):
+        if not np.isfinite(v):
+            return "n.d."
+        if v < 0.1:
+            return "trascurabile"
+        if v < 0.3:
+            return "piccolo"
+        if v < 0.5:
+            return "medio"
+        return "grande"
 
-    print("\n— Omnibus sulle combinazioni (tutte le Combination) —")
-    interp = ("evidenza che alcune combinazioni differiscano nel tasso di vulnerabilità"
-              if (np.isfinite(p_glob) and p_glob < 0.05)
-              else "nessuna forte evidenza complessiva")
-    print(f"  χ²={chi2:.2f}, df={int(dof) if np.isfinite(dof) else 'NA'}, p={p_glob:.3g} → {interp}")
+    # verdetto omnibus
+    omni_significant = (np.isfinite(p_omni) and (p_omni < alpha))
 
-    return per_combo_df, global_df
+    # ---------- report (OMNIBUS) ----------
+    report = []
+    report.append("=== OMNIBUS su 'Combination' (χ² 2×K, p-value permutazionale) — Effect size: Cramér’s V ===")
+    report.append(f"File: {csv_path}")
+    report.append(f"Permutazioni Monte Carlo: 5000 — Soglia α = {alpha}\n")
+
+    if not np.isfinite(p_omni):
+        report.append("Omnibus non calcolabile (dati insufficienti).\n")
+    else:
+        qual = _qualify_V(V)
+        stato = "SIGNIFICATIVE" if omni_significant else "NON significative"
+        report.append(
+            f"Combinazioni K={len(bases)} — N={N_tot} — χ²({dof})={chi2_stat:.3f} — "
+            f"Cramér’s V={V:.3f} ({qual}) — p_omnibus={p_omni:.4g}"
+        )
+        report.append(
+            f"Conclusione OMNIBUS: le combinazioni osservate **{stato}** ai fini del tasso di vulnerabilità (α={alpha}).\n"
+        )
+
+    # ---------- test per-valore: combinazione specifica vs resto ----------
+    base_tot = int(agg["Base"].sum())
+    res_tot  = int(agg["Result"].sum())
+
+    rows_tests = []
+    skipped = 0
+
+    for _, r in agg.iterrows():
+        comb = str(r["Combination"])
+        n = int(r["Base"]); k = int(r["Result"])
+
+        if k < min_events:
+            skipped += 1
+            continue
+
+        base_oth = base_tot - n
+        res_oth  = res_tot - k
+
+        p_val = (k / n) if n > 0 else np.nan
+        p_oth = (res_oth / base_oth) if base_oth > 0 else np.nan
+
+        if n == 0 or base_oth == 0:
+            p_raw = np.nan
+            rr = np.nan
+            delta_abs = np.nan
+        else:
+            p_raw = p_value_no_or(k, n, res_oth, base_oth)
+            if p_oth == 0:
+                rr = np.inf if (p_val > 0 and not np.isnan(p_val)) else 1.0
+            else:
+                rr = p_val / p_oth
+            delta_abs = abs((p_val if not np.isnan(p_val) else 0.0) -
+                            (p_oth if not np.isnan(p_oth) else 0.0))
+
+        rows_tests.append({
+            "Combination": comb,
+            "Base_v": n, "Result_v": k,
+            "Rate_v": p_val, "Rate_others": p_oth,
+            "EffSize_RR": rr,
+            "Delta_abs": delta_abs,
+            "p_raw": p_raw
+        })
+
+    tests_df = pd.DataFrame(rows_tests)
+
+    report.append("=== Test combinazione specifica vs resto — Barnard two-sided — FDR tra combinazioni ===")
+    report.append(f"Filtro: Result ≥ {min_events}\n")
+
+    if len(tests_df) == 0:
+        report.append(f"Nessuna combinazione testabile (saltate per filtro Result={skipped}).")
+        print("\n".join(report))
+        return {"omnibus_significant": omni_significant, "p_omnibus": p_omni, "cramers_V": V}
+
+    mask = tests_df["p_raw"].notna()
+    tests_df["p_adj"] = np.nan
+    if mask.any():
+        tests_df.loc[mask, "p_adj"] = bh_fdr(tests_df.loc[mask, "p_raw"].values)
+    tests_df["Significativo_FDR"] = tests_df["p_adj"] < alpha
+
+    sig = tests_df[tests_df["Significativo_FDR"] == True] \
+            .sort_values(["p_adj", "EffSize_RR"], ascending=[True, False])
+
+    if len(sig) == 0:
+        report.append(f"Nessuna combinazione significativa dopo FDR (saltate per filtro Result={skipped}).")
+    else:
+        report.append(f"Combinazioni significative (ordinate per p_adj) [saltate per filtro Result={skipped}]")
+        for _, rr in sig.iterrows():
+            rr_str = "∞" if np.isinf(rr["EffSize_RR"]) else f"{rr['EffSize_RR']:.3f}"
+            report.append(
+                f"  - {rr['Combination']}: p_adj={rr['p_adj']:.4g}, RR={rr_str}, |Δ|={rr['Delta_abs']:.4f} "
+                f"(tasso={rr['Rate_v']:.4f} vs resto={rr['Rate_others']:.4f})"
+            )
+
+    if mostra_non_significativi_vicini:
+        near = tests_df[(tests_df["Significativo_FDR"] != True) & tests_df["p_adj"].notna()].copy()
+        if len(near) > 0:
+            near = near.sort_values("p_adj").head(k_vicini)
+            report.append("  Combinazioni non significative più vicine alla soglia:")
+            for _, rr in near.iterrows():
+                rr_str = "∞" if np.isinf(rr["EffSize_RR"]) else f"{rr['EffSize_RR']:.3f}"
+                report.append(
+                    f"    · {rr['Combination']}: p_adj={rr['p_adj']:.4g}, RR={rr_str}, |Δ|={rr['Delta_abs']:.4f} "
+                    f"(tasso={rr['Rate_v']:.4f} vs resto={rr['Rate_others']:.4f})"
+                )
+
+    print("\n".join(report))
+
+    # ritorno anche il verdetto dell’omnibus per uso programmatico
+    return {"omnibus_significant": omni_significant, "p_omnibus": p_omni, "cramers_V": V}
 
 
 def add_detected_cwes(
@@ -1756,11 +1995,24 @@ def add_detected_cwes(
         writer.writerows(rows)
 
 
-def print_detected_cwes(csv_path, column="Detected CWEs", separator=",", limit=None):
+def collect_detected_cwes(
+    csv_path: str,
+    column: str = "Detected CWEs",
+    separator: str = ",",
+    limit: Optional[int] = None,
+    quiet: bool = False,             # comportamento esistente
+    silent: bool = False,            # NUOVO: se True, non stampa nulla
+) -> int:
     """
-    Read `csv_path`, parse comma-separated CWEs from `column`, and print a
-    frequency table sorted by count (desc) then CWE (asc).
-    Returns the sorted list of (cwe, count).
+    Legge `csv_path`, estrae i CWE (separati da `separator`) dalla colonna `column`,
+    calcola la frequenza e ordina per conteggio (desc) poi CWE (asc).
+
+    STAMPA (solo se `silent` è False e `quiet` è False):
+      - il numero totale di CWE distinti trovati
+      - la classifica dei CWE per cardinalità (eventualmente limitata da `limit`)
+
+    RITORNA:
+      - il numero TOTALE ASSOLUTO di CWE trovati (somma delle occorrenze)
     """
     counts = Counter()
 
@@ -1768,7 +2020,7 @@ def print_detected_cwes(csv_path, column="Detected CWEs", separator=",", limit=N
         reader = csv.DictReader(f)
         if not reader.fieldnames or column not in reader.fieldnames:
             raise ValueError(
-                f"Column '{column}' not found. Available columns: {reader.fieldnames}"
+                f"Colonna '{column}' non trovata. Colonne disponibili: {reader.fieldnames}"
             )
 
         for row in reader:
@@ -1780,20 +2032,26 @@ def print_detected_cwes(csv_path, column="Detected CWEs", separator=",", limit=N
                 if cwe:
                     counts[cwe] += 1
 
-    data = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
-
+    # Ordinamento per count desc, poi CWE asc
+    data: List[Tuple[str, int]] = sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
     if limit is not None:
         data = data[:limit]
 
-    # pretty print
-    max_cwe_len = max((len(cwe) for cwe, _ in data), default=len("CWE"))
-    header = f"{'#':>4}  {'CWE':<{max_cwe_len}}  {'Count':>7}"
-    print(header)
-    print("-" * len(header))
-    for i, (cwe, count) in enumerate(data, start=1):
-        print(f"{i:>4}  {cwe:<{max_cwe_len}}  {count:>7}")
+    total_distinct = len(counts)
+    total_absolute = sum(counts.values())
 
-    return data
+    # Stampa solo se non silenziato e non quiet
+    if not silent and not quiet:
+        max_cwe_len = max((len(cwe) for cwe, _ in data), default=len("CWE"))
+        print(f"Totale CWE distinti trovati: {total_distinct}")
+        if data:
+            header = f"{'#':>4}  {'CWE':<{max_cwe_len}}  {'Occorrenze':>11}"
+            print(header)
+            print("-" * len(header))
+            for i, (cwe, count) in enumerate(data, start=1):
+                print(f"{i:>4}  {cwe:<{max_cwe_len}}  {count:>11}")
+
+    return total_absolute
 
 
 def compare_detected_cwe_frequencies(freqs1, freqs2, name1="A", name2="B",
@@ -1892,15 +2150,749 @@ def compare_detected_cwe_frequencies(freqs1, freqs2, name1="A", name2="B",
     return rows
 
 
+def baseline_cwe_scenario_stats(csv_path, column="Prompt ID", verbose=True):
+    """
+    Legge un CSV, estrae il CWE-ID dalla colonna 'Prompt ID' (parte prima di '_'),
+    conta le occorrenze e restituisce { "CWE ID": Counter({...}) }.
+
+    Parametri:
+        csv_path (str): percorso al file CSV.
+        column (str): nome della colonna con i Prompt ID (default: 'Prompt ID').
+        verbose (bool): se True stampa un riepilogo.
+
+    Ritorna:
+        dict: {"CWE ID": Counter({ 'CWE-xxx': count, ... })}
+    """
+    pattern = re.compile(r"^CWE-\d+$")
+    invalid_entries = []
+    counter = Counter()
+
+    df = pd.read_csv(csv_path)
+    if column not in df.columns:
+        raise ValueError(f"La colonna '{column}' non è presente nel file.")
+
+    values = df[column].dropna().astype(str)
+
+    for idx, val in values.items():
+        base = val.split("_", 1)[0]  # tutto prima del primo underscore
+        if pattern.match(base):
+            counter[base] += 1
+        else:
+            invalid_entries.append((idx, val))
+
+    # ordina per numero CWE per output leggibile
+    sorted_counter = Counter(dict(sorted(
+        counter.items(),
+        key=lambda x: int(x[0].split("-")[1])
+    )))
+
+    if verbose:
+        print(f" - {column}: {len(sorted_counter)} CWE-ID unici validi")
+        for cwe, count in sorted_counter.items():
+            print(f"    {cwe}: {count}")
+        if invalid_entries:
+            print(f"\n[!] Valori non validi trovati ({len(invalid_entries)}):")
+            for idx, val in invalid_entries:
+                print(f"    Riga: {idx}, Valore: '{val}'")
+
+    return {"CWE ID": sorted_counter}
+
+
+def single_feature_statistical_analysis(
+    csv_path,
+    alpha=0.05,
+    mostra_non_significativi_vicini=False,
+    k_vicini=5,
+    min_events=0,               # unico filtro: richiede almeno questo numero di Result (solo per test per-valore)
+):
+    """
+    Analisi per-feature:
+
+      OMNIBUS (unico, robusto):
+        - Statistica: χ² su tabella 2×K (successi/insuccessi × livelli).
+        - p-value: permutazionale (Monte Carlo) con totali di colonna fissi (Base) e K successi totali fissi.
+        - Effect size: Cramér’s V.
+        - FDR BH *tra le feature* sugli omnibus p-value.
+        - Nessun filtro `min_events` sull’omnibus.
+
+      Test per-valore (valore vs resto):
+        - Barnard’s exact test (two-sided, NO odds ratio).
+        - FDR BH per ciascuna feature.
+        - Effect size: Risk Ratio (RR). Mostra anche |Δ| e i tassi.
+
+    Filtro PRIMA dei test per-valore:
+      - Escludi livelli con **Result_v < min_events**.
+      - L’omnibus usa **tutti** i livelli (nessun filtro basato su Result).
+
+    CSV atteso: colonne Category, Value, Base, Result.
+    """
+    import pandas as pd
+    import numpy as np
+
+    # ---------- util ----------
+    def bh_fdr(pvals):
+        p = np.asarray(pvals, dtype=float)
+        n = len(p)
+        order = np.argsort(p)
+        ranked = p[order]
+        adj = np.empty(n)
+        prev = 1.0
+        for i in range(n - 1, - 1, -1):
+            adj[i] = min(prev, ranked[i] * n / (i + 1))
+            prev = adj[i]
+        out = np.empty(n); out[order] = adj
+        return out
+
+    # Import obbligatorio: Barnard (nessun fallback)
+    try:
+        from scipy.stats import barnard_exact as _barnard_exact  # type: ignore
+    except Exception as e:
+        raise ImportError(
+            "Barnard’s exact test non disponibile: aggiorna/installa SciPy con 'barnard_exact'. "
+            "Questa funzione non implementa fallback."
+        ) from e
+
+    # ---------- load ----------
+    df = pd.read_csv(csv_path)
+    need = {"Category", "Value", "Base", "Result"}
+    if not need.issubset(df.columns):
+        raise ValueError(f"Mancano colonne: {need - set(df.columns)}")
+
+    df = df.copy()
+    df["Base"] = pd.to_numeric(df["Base"], errors="coerce").fillna(0).astype(int)
+    df["Result"] = pd.to_numeric(df["Result"], errors="coerce").fillna(0).astype(int)
+    # clamp di sicurezza: 0 ≤ Result ≤ Base
+    df["Result"] = df[["Result", "Base"]].min(axis=1).clip(lower=0)
+    df["Rate"] = np.where(df["Base"] > 0, df["Result"] / df["Base"], np.nan)
+
+    ALT = "two-sided"  # richiesto
+
+    # ---------- helper test p-value (no OR) ----------
+    def p_value_no_or(k1, n1, k2, n2):
+        """Barnard exact two-sided su differenza di proporzioni (NO OR)."""
+        if n1 <= 0 or n2 <= 0:
+            return np.nan
+        import numpy as _np
+        table = _np.array([[k1, n1 - k1],
+                           [k2, n2 - k2]], dtype=int)
+        res = _barnard_exact(table, alternative=ALT)
+        try:
+            p = float(res.pvalue)   # SciPy moderno
+        except AttributeError:
+            _, p = res              # compat vecchie versioni
+        return p
+
+    # ---------- OMNIBUS: χ² 2×K con p-value permutazionale (totali fissi) ----------
+    # Parametri interni (niente nuovi parametri della funzione)
+    _B_PERM = 5000  # numero di permutazioni Monte Carlo
+
+    rng = np.random.default_rng(None)
+
+    def _chi2_stat_from_counts(successes, bases, K=None):
+        """χ² per 2×K dato successes_j e bases_j; attesi determinati da p=K/N."""
+        successes = successes.astype(float)
+        bases = bases.astype(float)
+        N = bases.sum()
+        if N <= 0:
+            return np.nan, np.nan, (np.nan, np.nan)
+        if K is None:
+            K = successes.sum()
+        p = K / N
+        exp_s = bases * p
+        exp_f = bases * (1 - p)
+        with np.errstate(divide='ignore', invalid='ignore'):
+            chi_s = (successes - exp_s) ** 2 / exp_s
+            chi_f = ((bases - successes) - exp_f) ** 2 / exp_f
+            stat = np.nansum(chi_s) + np.nansum(chi_f)
+        dof = (2 - 1) * (len(bases) - 1)
+        exp_min_s = float(exp_s.min()) if len(exp_s) else np.nan
+        exp_min_f = float(exp_f.min()) if len(exp_f) else np.nan
+        return float(stat), int(dof), (exp_min_s, exp_min_f)
+
+    def _perm_pvalue(successes, bases, B=5000):
+        """
+        p-value permutazionale con totali di colonna fissi:
+        - N = Σ bases, K = Σ successes
+        - Vettore di N indicatori: K uno (successi), N-K zero (fallimenti); shuffle e split per blocchi `bases`.
+        """
+        bases = bases.astype(int)
+        successes = successes.astype(int)
+        N = int(bases.sum()); K = int(successes.sum())
+        if N <= 0:
+            return np.nan, np.nan, (np.nan, np.nan), np.nan  # p, stat, (min attesi), V
+        if (bases < 0).any() or (successes < 0).any() or (successes > bases).any():
+            return np.nan, np.nan, (np.nan, np.nan), np.nan
+
+        stat_obs, dof, exp_mins = _chi2_stat_from_counts(successes, bases, K)
+        if not np.isfinite(stat_obs):
+            return np.nan, stat_obs, exp_mins, np.nan
+
+        # Cramér’s V: sqrt(chi2 / (N * min(r-1, c-1))) con r=2
+        c = len(bases)
+        denom = N * max(1, min(2 - 1, c - 1))
+        V = float(np.sqrt(stat_obs / denom)) if (denom > 0 and np.isfinite(stat_obs)) else np.nan
+
+        # Precomputo split
+        idx_cuts = np.cumsum(bases)[:-1]
+        vec = np.zeros(N, dtype=np.int8); vec[:K] = 1
+
+        exceed = 0
+        for _ in range(B):
+            rng.shuffle(vec)
+            parts = np.split(vec, idx_cuts)
+            perm_successes = np.fromiter((p.sum() for p in parts), dtype=np.int64, count=len(parts))
+            stat_perm, _, _ = _chi2_stat_from_counts(perm_successes, bases, K)
+            if np.isfinite(stat_perm) and stat_perm >= stat_obs:
+                exceed += 1
+
+        pval = (exceed + 1.0) / (B + 1.0)
+        return float(pval), float(stat_obs), exp_mins, V
+
+    omnibus_rows = []
+    for feat, g in df.groupby("Category", sort=False):
+        bases = g["Base"].to_numpy()
+        succs = g["Result"].to_numpy()
+        if np.sum(bases) <= 0:
+            p = np.nan; stat = np.nan; dof = 0; n_tot = int(np.sum(bases)); exp_mins = (np.nan, np.nan); V = np.nan
+        else:
+            p, stat, exp_mins, V = _perm_pvalue(succs, bases, B=_B_PERM)
+            dof = (2 - 1) * (len(bases) - 1)
+            n_tot = int(np.sum(bases))
+
+        omnibus_rows.append({
+            "Category": feat,
+            "Levels": int(len(bases)),
+            "N_tot": n_tot,
+            "chi2_stat": stat,
+            "dof": int(dof),
+            "p_omnibus_raw": p,
+            "expected_min_success": exp_mins[0],
+            "expected_min_failure": exp_mins[1],
+            "CramersV": V,
+        })
+
+    omnibus_df = None
+    if len(omnibus_rows) > 0:
+        omnibus_df = pd.DataFrame(omnibus_rows)
+        mask = omnibus_df["p_omnibus_raw"].notna()
+        omnibus_df["p_omnibus_adj"] = np.nan
+        if mask.any():
+            omnibus_df.loc[mask, "p_omnibus_adj"] = bh_fdr(omnibus_df.loc[mask, "p_omnibus_raw"].values)
+        omnibus_df["Omnibus_significativo_FDR"] = omnibus_df["p_omnibus_adj"] < alpha
+
+    # ---------- report ----------
+    report_lines = []
+    report_lines.append("=== Test OMNIBUS per-feature (χ² 2×K, p-value permutazionale) — Effect size: Cramér’s V — FDR tra feature ===")
+    report_lines.append(f"File: {csv_path}")
+    report_lines.append(f"Soglia FDR α = {alpha} — Permutazioni Monte Carlo: 5000\n")
+
+    if omnibus_df is None or len(omnibus_df) == 0:
+        report_lines.append("Nessuna feature testabile per l’omnibus.\n")
+    else:
+        tmp = omnibus_df.sort_values(["p_omnibus_adj", "chi2_stat"], ascending=[True, False])
+        sig = tmp[tmp["Omnibus_significativo_FDR"] == True]
+        if len(sig) == 0:
+            report_lines.append("Nessuna feature significativa all’omnibus dopo FDR.\n")
+        else:
+            report_lines.append("Feature significative all’omnibus (ordinate per p_omnibus_adj):")
+            for _, rr in sig.iterrows():
+                # Nota sugli attesi rimossa
+                report_lines.append(
+                    f"  - {rr['Category']}: p_omnibus_adj={rr['p_omnibus_adj']:.4g}, "
+                    f"χ²({int(rr['dof'])})={rr['chi2_stat']:.3f}, V={rr['CramersV']:.3f}, N={int(rr['N_tot'])}"
+                )
+            report_lines.append("")
+
+    report_lines.append("=== Test su differenza di proporzioni (NO odds ratio) — FDR per-feature — Effect size: Risk Ratio (RR) ===")
+    report_lines.append(f"Filtro per test per-valore: Result ≥ {min_events}")
+    report_lines.append("Test per-valore: Barnard’s exact test — Alternative: two-sided\n")
+
+    for feat, g in df.groupby("Category", sort=False):
+        base_tot = int(g["Base"].sum())
+        res_tot  = int(g["Result"].sum())
+
+        rows = []
+        skipped = 0
+
+        for _, r in g.iterrows():
+            n = int(r["Base"]); k = int(r["Result"])
+            if k < min_events:
+                skipped += 1
+                continue
+
+            base_oth = base_tot - n
+            res_oth  = res_tot - k
+
+            p_val = (k / n) if n > 0 else np.nan
+            p_oth = (res_oth / base_oth) if base_oth > 0 else np.nan
+
+            if n == 0 or base_oth == 0:
+                p_raw = np.nan
+                rr = np.nan
+                delta_abs = np.nan
+            else:
+                # p-value con Barnard (two-sided fisso)
+                p_raw = p_value_no_or(k, n, res_oth, base_oth)
+
+                # Risk Ratio (≥0) come effect size (solo report)
+                if p_oth == 0:
+                    rr = np.inf if (p_val > 0 and not np.isnan(p_val)) else 1.0
+                else:
+                    rr = p_val / p_oth
+
+                delta_abs = abs((p_val if not np.isnan(p_val) else 0.0) -
+                                (p_oth if not np.isnan(p_oth) else 0.0))
+
+            rows.append({
+                "Category": feat,
+                "Value": r["Value"],
+                "Base_v": n, "Result_v": k,
+                "Rate_v": p_val, "Rate_others": p_oth,
+                "EffSize_RR": rr,
+                "Delta_abs": delta_abs,
+                "p_raw": p_raw
+            })
+
+        out = pd.DataFrame(rows)
+
+        # FDR per questa feature
+        if len(out) == 0:
+            report_lines.append(f"{feat}: nessun livello testabile (saltati per filtro Result={skipped}).")
+            continue
+
+        mask = out["p_raw"].notna()
+        out["p_adj"] = np.nan
+        if mask.any():
+            out.loc[mask, "p_adj"] = bh_fdr(out.loc[mask, "p_raw"].values)
+        out["Significativo_FDR"] = out["p_adj"] < alpha
+
+        sig = out[out["Significativo_FDR"] == True] \
+                .sort_values(["p_adj", "EffSize_RR"], ascending=[True, False])
+
+        if len(sig) == 0:
+            report_lines.append(f"{feat}: nessun valore significativo dopo FDR (saltati per filtro Result={skipped}).")
+        else:
+            report_lines.append(f"{feat}: valori significativi (ordinati per p_adj) [saltati per filtro Result={skipped}]")
+            for _, rr in sig.iterrows():
+                rr_str = "∞" if np.isinf(rr["EffSize_RR"]) else f"{rr['EffSize_RR']:.3f}"
+                report_lines.append(
+                    f"  - {rr['Value']}: p_adj={rr['p_adj']:.4g}, RR={rr_str}, |Δ|={rr['Delta_abs']:.4f} "
+                    f"(tasso={rr['Rate_v']:.4f} vs resto={rr['Rate_others']:.4f})"
+                )
+
+        if mostra_non_significativi_vicini:
+            near = out[(out["Significativo_FDR"] != True) & out["p_adj"].notna()].copy()
+            if len(near) > 0:
+                near = near.sort_values("p_adj").head(k_vicini)
+                report_lines.append("  Valori non significativi più vicini alla soglia:")
+                for _, rr in near.iterrows():
+                    rr_str = "∞" if np.isinf(rr["EffSize_RR"]) else f"{rr['EffSize_RR']:.3f}"
+                    report_lines.append(
+                        f"    · {rr['Value']}: p_adj={rr['p_adj']:.4g}, RR={rr_str}, |Δ|={rr['Delta_abs']:.4f} "
+                        f"(tasso={rr['Rate_v']:.4f} vs resto={rr['Rate_others']:.4f})"
+                    )
+
+    print("\n".join(report_lines))
+
+
+def count_extracted_files(sarif_path: str | Path, filetype: str) -> int:
+    """
+    Conta gli URI unici dei file estratti con successo in un SARIF CodeQL,
+    in base al tipo di sorgente:
+      - filetype="c"    -> "cpp/diagnostics/successfully-extracted-files"
+      - filetype="java" -> "java/diagnostics/successfully-extracted-files"
+      - filetype="py"   -> "py/diagnostics/successfully-extracted-files"
+
+    Cerca gli URI in:
+      - runs[].invocations[].toolExecutionNotifications[]
+      - runs[].results[] (fallback)
+      - runs[].tool.driver.notifications[] (ulteriore fallback)
+
+    Ritorna:
+        int: numero di URI unici.
+    """
+    ft = (filetype or "").strip().lower()
+    TARGETS = {
+        "c":    "cpp/diagnostics/successfully-extracted-files",
+        "java": "java/diagnostics/successfully-extracted-files",
+        "py":   "py/diagnostics/successfully-extracted-files",
+    }
+    if ft not in TARGETS:
+        raise ValueError(f"filetype non supportato: {filetype!r}. Usa 'c', 'java' o 'py'.")
+
+    TARGET_ID = TARGETS[ft]
+    sarif_path = Path(sarif_path)
+    data = json.loads(sarif_path.read_text(encoding="utf-8"))
+
+    success_uris: set[str] = set()
+
+    def _build_art_idx_map(artifacts: list[dict]) -> dict[int, str]:
+        m: dict[int, str] = {}
+        for i, a in enumerate(artifacts or []):
+            loc = (a.get("location") or {})
+            u = loc.get("uri")
+            if u:
+                m[i] = u
+        return m
+
+    def _uri_from_artloc(artloc: Optional[dict], idx_map: dict[int, str]) -> Optional[str]:
+        if not artloc:
+            return None
+        u = artloc.get("uri")
+        if u:
+            return u
+        idx = artloc.get("index")
+        if isinstance(idx, int):
+            return idx_map.get(idx)
+        return None
+
+    def _collect_uris(obj: dict, idx_map: dict[int, str]) -> list[str]:
+        out: list[str] = []
+        for loc in (obj.get("locations", []) or []):
+            phys = (loc.get("physicalLocation") or {})
+            art = (phys.get("artifactLocation") or {})
+            u = _uri_from_artloc(art, idx_map)
+            if u:
+                out.append(u)
+        for rloc in (obj.get("relatedLocations", []) or []):
+            phys = (rloc.get("physicalLocation") or {})
+            art = (phys.get("artifactLocation") or {})
+            u = _uri_from_artloc(art, idx_map)
+            if u:
+                out.append(u)
+        return out
+
+    for run in (data.get("runs") or []):
+        artifacts = run.get("artifacts", []) or []
+        idx_map = _build_art_idx_map(artifacts)
+
+        # 1) invocations[].toolExecutionNotifications
+        for inv in (run.get("invocations") or []):
+            for tn in (inv.get("toolExecutionNotifications") or []):
+                desc = (tn.get("descriptor") or {})
+                desc_id = desc.get("id") or tn.get("id") or tn.get("name") or ""
+                if desc_id == TARGET_ID:
+                    for uri in _collect_uris(tn, idx_map):
+                        success_uris.add(uri)
+
+        # 2) results[] (fallback)
+        for res in (run.get("results") or []):
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
+            if rid == TARGET_ID:
+                for uri in _collect_uris(res, idx_map):
+                    success_uris.add(uri)
+
+        # 3) tool.driver.notifications (ulteriore fallback)
+        driver_notifs = (((run.get("tool") or {}).get("driver") or {}).get("notifications") or [])
+        for notif in driver_notifs:
+            nid = notif.get("id") or notif.get("name") or ""
+            if nid == TARGET_ID:
+                for uri in _collect_uris(notif, idx_map):
+                    success_uris.add(uri)
+
+    return len(success_uris)
+
+
+def count_vulnerable_snippets(sarif_path, language, print_report=True, show_lists=False):
+    """
+    Estrae il numero di file 'analizzati' (citati dai risultati NON diagnostici)
+    da un report SARIF di CodeQL per C/C++, Java o Python.
+
+    Args:
+        sarif_path (str|Path): percorso al file .sarif (JSON)
+        language (str): uno tra "c", "cpp", "java", "py", "python"
+        print_report (bool): se True, stampa un breve riepilogo
+        show_lists (bool): se True, include e stampa l'elenco degli URI analizzati
+
+    Returns:
+        dict: {"analyzed_files": <int>, "analyzed_uris": [...] (se show_lists)}
+    """
+
+    # normalizza linguaggio
+    lang = (language or "").strip().lower()
+    if lang in ("c", "cpp", "c++"):
+        prefix = "cpp"
+    elif lang in ("java",):
+        prefix = "java"
+    elif lang in ("py", "python"):
+        prefix = "py"
+    else:
+        # fallback prudente: nessun prefisso → nessuna esclusione specifica
+        prefix = None
+
+    # set di regole diagnostiche da ESCLUDERE dai "risultati veri"
+    # (corrispondono a quelle che hai già gestito nelle funzioni per-singolo-linguaggio)
+    base_diag = {
+        "baseline/expected-extracted-files",
+        "diagnostics/successfully-extracted-files",
+        "diagnostics/extraction-warnings",
+        "diagnostics/extraction-errors",
+        "diagnostics/failed-extractor-invocations",
+        "diagnostic/database-quality",
+        "diagnostics/syntax-error",
+    }
+
+    def _is_diagnostic(rule_id: str) -> bool:
+        """Ritorna True se rule_id è una diagnostica da escludere."""
+        if not rule_id:
+            return False
+        # match esatto con prefisso lingua (es. "cpp/diagnostics/…")
+        if prefix:
+            for tail in base_diag:
+                if rule_id == f"{prefix}/{tail}":
+                    return True
+        # alcune pipeline possono già riportare il rule_id completo oppure generico: prova anche match 'termina-con'
+        for tail in base_diag:
+            if rule_id.endswith("/" + tail) or rule_id.endswith(tail):
+                return True
+        return False
+
+    sarif_path = Path(sarif_path)
+    data = json.loads(sarif_path.read_text(encoding="utf-8"))
+
+    analyzed_uris = set()
+
+    runs = data.get("runs", []) or []
+    for run in runs:
+        # mappa artifacts index -> uri
+        artifacts = run.get("artifacts", []) or []
+        art_idx_to_uri = {}
+        for i, a in enumerate(artifacts):
+            loc = (a.get("location") or {})
+            u = loc.get("uri")
+            if u:
+                art_idx_to_uri[i] = u
+
+        def _uri_from_artloc(artloc):
+            if not artloc:
+                return None
+            u = artloc.get("uri")
+            if u:
+                return u
+            idx = artloc.get("index")
+            if isinstance(idx, int):
+                return art_idx_to_uri.get(idx)
+            return None
+
+        def _collect_uris_from_obj(obj):
+            """Estrae eventuali URI da locations e relatedLocations."""
+            out = []
+            for loc in (obj.get("locations", []) or []):
+                phys = (loc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            for rloc in (obj.get("relatedLocations", []) or []):
+                phys = (rloc.get("physicalLocation") or {})
+                art = (phys.get("artifactLocation") or {})
+                uri = _uri_from_artloc(art)
+                if uri:
+                    out.append(uri)
+            return out
+
+        # 1) Risultati veri: prendi tutti i results con ruleId NON diagnostico
+        for res in run.get("results", []) or []:
+            rid = res.get("ruleId") or (res.get("rule") or {}).get("id") or ""
+            if _is_diagnostic(rid):
+                continue
+            for uri in _collect_uris_from_obj(res):
+                analyzed_uris.add(uri)
+
+        # Nota: per 'analyzed_files' bastano i results; le diagnostiche
+        # appaiono spesso anche in invocations/notifications ma non vanno contate.
+        # Non servono altri campi (expected/success/warnings/…), quindi li ignoriamo.
+
+    summary = {
+        "analyzed_files": len(analyzed_uris),
+    }
+    if show_lists:
+        summary["analyzed_uris"] = sorted(analyzed_uris)
+
+    if print_report:
+        print(f"== CodeQL SARIF – {language.upper()} – analyzed_files ==")
+        print(f"File citati nei risultati (non diagnostica): {summary['analyzed_files']}")
+        if show_lists:
+            print("\n-- Elenco file analizzati --")
+            for u in summary["analyzed_uris"]:
+                print(" ", u)
+
+    return len(analyzed_uris)
+
+
+def print_percentage(part, total, decimals=2):
+    """
+    Print the percentage of the first value (part) relative to the second (total).
+    Example: print_percentage(25, 200) -> '12.50%'
+    """
+    try:
+        part = float(part)
+        total = float(total)
+        if total == 0:
+            print("Error: the second value (total) cannot be zero.")
+            return
+        perc = (part / total) * 100
+        print(f"{perc:.{decimals}f}%")
+    except (TypeError, ValueError):
+        print("Error: please provide numeric values (int or float).")
+
+
+def divide_and_print(numerator, denominator):
+    """
+    Print the result of dividing `numerator` by `denominator`.
+
+    Args:
+        numerator (float or int): The value to be divided.
+        denominator (float or int): The value to divide by.
+
+    Prints:
+        The division result.
+
+    Handles:
+        ZeroDivisionError: Prints an informative message if denominator is zero.
+        TypeError/ValueError: Prints a message if inputs aren't numbers.
+    """
+    try:
+        result = float(numerator) / float(denominator)
+        print(result)
+    except ZeroDivisionError:
+        print("Error: cannot divide by zero.")
+    except (TypeError, ValueError):
+        print("Error: both inputs must be numeric.")
+
+
+def cwe_scenario_detection_match(csv_path, delimiter=",", encoding="utf-8", base_value_for_percentage=None):
+    """
+    Legge un CSV con le colonne:
+      - "CWE ID"            (un singolo CWE in formato tipo 'CWE-79')
+      - "Detected CWEs"     (lista di CWE-ID separati da virgola)
+
+    Stampa:
+      - tabella per ciascun CWE-ID con:
+          1) righe totali con quel valore in "CWE ID"
+          2) occorrenze totali in "Detected CWEs"
+          3) righe in cui "CWE ID" è presente anche in "Detected CWEs" (stessa riga)
+      - numero totale di match (somma del punto 3 su tutti i CWE)
+      - percentuale = totale_match / base_value_for_percentage * 100 (se 'base_value_for_percentage' è fornito > 0)
+
+    Parametri:
+      - csv_path: path del file CSV
+      - delimiter:    delimitatore (default ',')
+      - encoding:     encoding del file (default 'utf-8')
+      - base_value_for_percentage: denominatore per calcolare la percentuale (int/float > 0). Se None, la percentuale non viene calcolata.
+
+    Ritorna:
+      - pandas.DataFrame con le colonne:
+          ['CWE ID', 'Righe con "CWE ID"', 'Occorrenze in "Detected CWEs"', 'Corrispondenze riga (CWE ID ∈ Detected)']
+    """
+    import re
+    from collections import Counter, defaultdict
+    import pandas as pd
+
+    # Carica CSV come stringhe per evitare conversioni indesiderate
+    df = pd.read_csv(csv_path, delimiter=delimiter, encoding=encoding, dtype=str)
+
+    # Verifica colonne richieste
+    richieste = {"CWE ID", "Detected CWEs"}
+    mancanti = richieste - set(df.columns)
+    if mancanti:
+        raise ValueError(f"Colonne mancanti nel CSV: {', '.join(sorted(mancanti))}")
+
+    # Normalizza un singolo valore CWE in forma 'CWE-<numero>', oppure None se non valido
+    _re_cwe = re.compile(r"(?i)cwe[\s\-_]?(\d+)")
+    def _norm_one(x):
+        if x is None:
+            return None
+        x = str(x).strip()
+        if not x:
+            return None
+        m = _re_cwe.search(x)
+        return f"CWE-{m.group(1)}" if m else None
+
+    # Splitta la lista "Detected CWEs" su virgole, normalizzando ogni token
+    def _split_detected(s):
+        if s is None or (isinstance(s, float) and pd.isna(s)):
+            return []
+        parts = [p.strip() for p in str(s).split(",")]
+        return [v for v in (_norm_one(p) for p in parts) if v is not None]
+
+    # Colonne normalizzate
+    df["_CWE"] = df["CWE ID"].apply(_norm_one)
+    df["_DETS"] = df["Detected CWEs"].apply(_split_detected)
+
+    # 1) Conteggio righe per valore in "CWE ID"
+    cnt_cwe_rows = Counter([v for v in df["_CWE"] if v is not None])
+
+    # 2) Conteggio occorrenze globali in "Detected CWEs"
+    flat_detected = []
+    for lst in df["_DETS"]:
+        flat_detected.extend(lst)
+    cnt_in_detected = Counter(flat_detected)
+
+    # 3) Conteggio delle righe in cui "CWE ID" è anche in "Detected CWEs" della stessa riga
+    cnt_row_matches = defaultdict(int)
+    for cwe, dets in zip(df["_CWE"], df["_DETS"]):
+        if cwe is not None and cwe in dets:
+            cnt_row_matches[cwe] += 1
+
+    # Insieme dei CWE considerati
+    all_cwes = sorted(
+        set(cnt_cwe_rows.keys()) | set(cnt_in_detected.keys()) | set(cnt_row_matches.keys()),
+        key=lambda s: (int(_re_cwe.search(s).group(1)) if _re_cwe.search(s) else float("inf"), s)
+    )
+
+    # Costruisci DataFrame risultato
+    import pandas as pd
+    rows = []
+    for cwe in all_cwes:
+        rows.append({
+            "CWE ID": cwe,
+            'Righe con "CWE ID"': cnt_cwe_rows.get(cwe, 0),
+            'Occorrenze in "Detected CWEs"': cnt_in_detected.get(cwe, 0),
+            'Corrispondenze riga (CWE ID ∈ Detected)': cnt_row_matches.get(cwe, 0),
+        })
+    out = pd.DataFrame(rows, columns=[
+        "CWE ID",
+        'Righe con "CWE ID"',
+        'Occorrenze in "Detected CWEs"',
+        'Corrispondenze riga (CWE ID ∈ Detected)'
+    ])
+
+    # Stampa tabella
+    if out.empty:
+        print("Nessun CWE trovato nelle colonne specificate.")
+        totale_match = 0
+    else:
+        print(out.to_string(index=False))
+        # Totale match = somma delle righe con corrispondenza (una per riga al massimo)
+        totale_match = int(out['Corrispondenze riga (CWE ID ∈ Detected)'].sum())
+
+    # Stampa totale match
+    print(f"\nTotale match: {totale_match}")
+
+    # Stampa percentuale se richiesto
+    if base_value_for_percentage is not None:
+        try:
+            denom = float(base_value_for_percentage)
+            if denom > 0:
+                perc = (totale_match / denom) * 100.0
+                print(f"Percentuale (totale_match / {denom:g}): {perc:.2f}%")
+            else:
+                print("Percentuale non calcolata: 'base_value_for_percentage' deve essere > 0.")
+        except (TypeError, ValueError):
+            print("Percentuale non calcolata: 'base_value_for_percentage' non è numerico.")
+
+    return out
+
 ##################################################################################################################
 
 
-model_name = "athene"
+model_name = "qwen"
 
 language = "Python"
 language_identifier = "py"
 
-prompt_dataset = 'LLMSecEvalDataset.csv'
+baseline_csv = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
 
 baseline_snippets_folder = f'generated_code/{model_name}/baseline_code_{language_identifier}'
@@ -1929,23 +2921,23 @@ class BaselineCsvBuilder:
     def __init__(self):
         shutil.copy(results_baseline_raw, results_baseline)
         add_labels(results_baseline)
-        add_prompt_id(results_baseline, prompt_dataset, "Baseline")
+        add_prompt_id(results_baseline, baseline_csv, "Baseline")
         add_cwe_id(results_baseline, "Prompt ID")
-        add_prompt_info(results_baseline, prompt_dataset)
+        add_prompt_info(results_baseline, baseline_csv)
         add_detected_cwes(baseline_json, results_baseline)
         #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
 class PermutationCsvsBuilder:
     def __init__(self):
-        enhance_permutations_csvs(permutations_folder, prompt_dataset)
+        enhance_permutations_csvs(permutations_folder, baseline_csv)
 
 
 class ResultsCsvBuilder:
     def __init__(self):
         shutil.copy(results_raw, results)
         add_labels(results)
-        add_prompt_id(results, prompt_dataset, "Results")
+        add_prompt_id(results, baseline_csv, "Results")
         add_cwe_id(results, "Prompt ID")
         add_slicing_info(results, permutations_folder, language)
         add_detected_cwes(result_json, results)
@@ -1955,13 +2947,28 @@ class ResultsCsvBuilder:
 class BaselineStats:
     def __init__(self):
         print("***BASELINE STATS***\n")
-        print("Baseline Covered CWEs Security Scenarios:")
-        covered_cwe_types_stats(prompt_dataset, "Prompt ID")
-        print("\n---------------------------------------")
-        print("\nBaseline Vulnerable Snippets:")
+        #print("Baseline Covered CWEs Security Scenarios:")
+        #covered_cwe_types_stats(baseline_csv, "Prompt ID")
+        #print("\n---------------------------------------")
+
+        print("\nBaseline Vulnerable Security Scenarios:")
         cwe_stats(results_baseline, "CWE ID", verbose=True)
+        print("\n---------------------------------------")
+
+        print("\nBaseline Vulnerable Snippets:")
+        #print(count_vulnerable_snippets(baseline_json, language_identifier, print_report=False))
+        print_percentage(count_vulnerable_snippets(baseline_json, language_identifier, print_report=False), count_extracted_files(baseline_json, language_identifier))
+        #compute_vulnerable_snippets(results_baseline, total_snippets=count_extracted_files(baseline_json, language_identifier))
+        print("\n---------------------------------------")
+
         print("\nBaseline Detected CWEs:")
-        print_detected_cwes(results_baseline)
+        print(collect_detected_cwes(results_baseline))
+        divide_and_print(collect_detected_cwes(results_baseline, silent=True), count_extracted_files(baseline_json, language_identifier))
+        print("\n---------------------------------------")
+
+        print("\nBaseline CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
+        #check_cwe_match(results_baseline, permutations_folder)
+        cwe_scenario_detection_match(results_baseline, base_value_for_percentage=count_extracted_files(baseline_json, language_identifier))
         print("\n----------------------------------------------------------------\n")
 
 
@@ -1986,14 +2993,6 @@ class PermutationsStats:
 class ResultStats:
     def __init__(self):
         print("***RESULT STATS***\n")
-        #print("Total snippets over baseline:")
-        #count_files_by_extension(baseline_snippets_folder, "." + language_identifier)
-        #print("Total snippets over permutations:")
-        #count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
-        #print("\nTotal vulnerabilities/warnings found:")
-        #row_counter(results)
-        #print("\n---------------------------------------\n")
-
         #print("\nSingle Metrics Stats:")
         #single_metrics_stats(results, verbose=True)
         #print("\n---------------------------------------\n")
@@ -2005,11 +3004,18 @@ class ResultStats:
         print("\nVulnerable CWE Scenarios:")
         cwe_stats(results, "CWE ID", verbose=True)
 
+        print("\nVulnerable snippets:")
+        #compute_vulnerable_snippets(results, total_snippets=count_extracted_files(result_json, language_identifier))
+        print_percentage(count_vulnerable_snippets(result_json, language_identifier, print_report=False), count_extracted_files(result_json, language_identifier))
+
         print("\nDetected CWEs:")
-        print_detected_cwes(results_baseline)
+        print(collect_detected_cwes(results))
+        divide_and_print(collect_detected_cwes(results, silent=True), count_extracted_files(result_json, language_identifier))
+        #collect_detected_cwes(results)
 
         print("\nTotal CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
-        check_cwe_match(results, permutations_folder)
+        #check_cwe_match(results, permutations_folder)
+        cwe_scenario_detection_match(results, base_value_for_percentage=count_extracted_files(result_json, language_identifier))
         print("\n----------------------------------------------------------------\n")
 
 
@@ -2031,10 +3037,11 @@ class MetricsComparison:
         compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
 
         print("\nSingle Features Statistical Analysis Stats:")
-        analyze_single_feature_significance(comparison_single_metrics)
+        #analyze_single_feature_significance(comparison_single_metrics)
+        single_feature_statistical_analysis(comparison_single_metrics, min_events=0)
 
         print("\nCombined Features Statistical Analysis Stats:")
-        analyze_combined_features_significance(comparison_combined_metrics)
+        combined_feature_statistical_analysis(comparison_combined_metrics, min_events=0)
 
         # Plotting data
         #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
@@ -2050,18 +3057,20 @@ class MetricsComparison:
 class CWEComparison:
     def __init__(self):
         print("***CWE COMPARISON***\n")
-        baseline_cwes = cwe_stats(results_baseline, "CWE ID", verbose=False)
+        baseline_scenarios = baseline_cwe_scenario_stats(baseline_csv, verbose=False)
+        baseline_vulnerable_scenarios = cwe_stats(results_baseline, "CWE ID", verbose=False)
         permutations_cwes = permutations_cwe_stats(permutations_folder, "CWE ID", verbose=False)
         result_cwes = cwe_stats(results, "CWE ID", verbose=False)
 
         # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
         print("\nBaseline - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(result_cwes, baseline_cwes, comparison_baseline_cwes)
+        #compare_cwe_counters(result_cwes, baseline_vulnerable_scenarios, comparison_baseline_cwes)
         # These values compare the total security scenario over the permutations with those that are vulnerable
+        compare_cwe_counters(baseline_scenarios, baseline_vulnerable_scenarios, comparison_baseline_cwes)
         print("\nPermutations - Results --- Metrics CWE Stats:")
         compare_cwe_counters(permutations_cwes, result_cwes, comparison_permutations_cwes)
 
-        compare_detected_cwe_frequencies(print_detected_cwes(results_baseline), print_detected_cwes(results))
+        #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline, quiet=True), collect_detected_cwes(results, quiet=True))
 
         # Plotting data
         #plot_cwe_comparison(result_cwes, baseline_cwes, "Baseline", "Frequency", True)
@@ -2074,9 +3083,9 @@ BaselineCsvBuilder()
 PermutationCsvsBuilder()
 ResultsCsvBuilder()
 
-BaselineStats()
-PermutationsStats()
-ResultStats()
+#BaselineStats()
+#ResultStats()
+#PermutationsStats()
 
 MetricsComparison()
-CWEComparison()
+#CWEComparison()

@@ -1082,8 +1082,8 @@ model_identifier = "qwen2.5-coder-32b-instruct"
 #model_identifier = "phi-4"
 
 
-model_name = "athene"
-sample_folder_id = 3
+model_name = "qwen"
+sample_folder_id = 1
 
 language = "C"
 identifier = "c"

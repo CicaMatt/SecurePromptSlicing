@@ -1,5 +1,6 @@
 import ast
 import json
+import math
 import os
 import re
 import shutil
@@ -1397,6 +1398,88 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
     return summary
 
 
+def parse_codeql_sarif_c_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
+    """
+    Calcola la media (intera arrotondata) dei campi stampati da `parse_codeql_sarif_c`
+    su tre file SARIF.
+
+    Parametri
+    ---------
+    sarif_a, sarif_b, sarif_c : str | Path
+        Percorsi ai tre file SARIF.
+    print_report : bool
+        Se True, stampa un riepilogo con le medie.
+    rounding : {"nearest", "floor", "ceil"}
+        Strategia di arrotondamento:
+        - "nearest": al più vicino (round di Python)
+        - "floor":   per difetto
+        - "ceil":    per eccesso
+
+    Ritorna
+    -------
+    dict
+        Medie intere dei campi:
+        extractor_successes, extractor_failures, extractor_total,
+        files_expected, files_with_snippets, files_without_snippets,
+        warnings_with_snippets, warnings_without_snippets, analyzed_files
+    """
+    if "parse_codeql_sarif_c" not in globals():
+        raise RuntimeError("Devi definire 'parse_codeql_sarif_c' nello scope prima di usare questa funzione.")
+
+    def _iround(x: float) -> int:
+        if rounding == "nearest":
+            return int(round(x))
+        if rounding == "floor":
+            return math.floor(x)
+        if rounding == "ceil":
+            return math.ceil(x)
+        raise ValueError("rounding deve essere 'nearest', 'floor' o 'ceil'.")
+
+    # Solo i campi *stampati* dalla funzione base
+    numeric_keys = [
+        # INVOCATIONS
+        "extractor_successes",
+        "extractor_failures",
+        "extractor_total",
+        # FILES
+        "files_expected",
+        "files_with_snippets",
+        "files_without_snippets",
+        "warnings_with_snippets",
+        "warnings_without_snippets",
+        "analyzed_files",
+    ]
+
+    sums = {k: 0 for k in numeric_keys}
+
+    for path in (sarif_a, sarif_b, sarif_c):
+        summary = parse_codeql_sarif_c(path, print_report=False, show_lists=False)
+        for k in numeric_keys:
+            sums[k] += int(summary.get(k, 0))
+
+    avgs = {k: _iround(sums[k] / 3.0) for k in numeric_keys}
+
+    if print_report:
+        print("== CodeQL SARIF – C/C++ – Medie su 3 file ==")
+        print("Invocazioni estrattore (medie):")
+        print(f"  OK (senza interruzioni):        {avgs['extractor_successes']}")
+        print(f"  KO (non giunte a termine):      {avgs['extractor_failures']}")
+        print(f"  Totale:                         {avgs['extractor_total']}")
+        print()
+        print("File (medie):")
+        print(f"  Attesi (baseline):              {avgs['files_expected']}")
+        print(f"  Estratti:                       {avgs['files_with_snippets']}")
+        # valore derivato solamente per la stampa, come nella funzione originale
+        estratti_senza_warning = avgs['files_with_snippets'] - avgs['warnings_with_snippets']
+        print(f"    ├─ di cui con warning:        {avgs['warnings_with_snippets']}")
+        print(f"    └─ di cui senza warning:      {estratti_senza_warning}")
+        print(f"  Non estratti:                   {avgs['files_without_snippets']}")
+        print()
+        print(f"File citati nei risultati (query): {avgs['analyzed_files']}")
+
+    return avgs
+
+
 def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
     """
     Riepilogo per SARIF CodeQL (pacchetto Java), senza tasso di successo e senza liste di file con warning.
@@ -1566,6 +1649,73 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
             _dump("Files con risultati (non diagnostica)", summary["analyzed_uris"])
 
     return summary
+
+
+def parse_codeql_sarif_java_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
+    """
+    Media (intera arrotondata) dei principali campi numerici prodotti da
+    `parse_codeql_sarif_java` su tre file SARIF.
+
+    Parametri
+    ---------
+    sarif_a, sarif_b, sarif_c : str | Path
+        Percorsi ai tre file SARIF.
+    print_report : bool
+        Se True, stampa un riepilogo con le medie.
+    rounding : {"nearest", "floor", "ceil"}
+        Strategia di arrotondamento:
+        - "nearest": al più vicino (round di Python)
+        - "floor":   per difetto
+        - "ceil":    per eccesso
+
+    Ritorna
+    -------
+    dict
+        Dizionario con le medie intere di:
+        artifacts_seen, files_expected, files_extracted, files_not_extracted,
+        extraction_warnings, extraction_errors, analyzed_files
+    """
+    if "parse_codeql_sarif_java" not in globals():
+        raise RuntimeError("Devi definire 'parse_codeql_sarif_java' nello scope prima di usare questa funzione.")
+
+    def _iround(x: float) -> int:
+        if rounding == "nearest":
+            return int(round(x))
+        if rounding == "floor":
+            return math.floor(x)
+        if rounding == "ceil":
+            return math.ceil(x)
+        raise ValueError("rounding deve essere 'nearest', 'floor' o 'ceil'.")
+
+    numeric_keys = [
+        "artifacts_seen",
+        "files_expected",
+        "files_extracted",
+        "files_not_extracted",
+        "extraction_warnings",
+        "extraction_errors",
+        "analyzed_files",
+    ]
+
+    sums = {k: 0 for k in numeric_keys}
+    for path in (sarif_a, sarif_b, sarif_c):
+        summary = parse_codeql_sarif_java(path, print_report=False, show_lists=False)
+        for k in numeric_keys:
+            sums[k] += int(summary.get(k, 0))
+
+    avgs = {k: _iround(sums[k] / 3.0) for k in numeric_keys}
+
+    if print_report:
+        print("== CodeQL SARIF – Java – Medie su 3 file ==")
+        print(f"Artefatti registrati (media):         {avgs['artifacts_seen']}")
+        print(f"File attesi (baseline, media):        {avgs['files_expected']}")
+        print(f"File estratti (DB, media):            {avgs['files_extracted']}")
+        print(f"File non estratti (media):            {avgs['files_not_extracted']}")
+        print(f"Warning di estrazione (media):        {avgs['extraction_warnings']}")
+        print(f"Errori di estrazione (media):         {avgs['extraction_errors']}")
+        print(f"File citati nei risultati (media):    {avgs['analyzed_files']}")
+
+    return avgs
 
 
 def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
@@ -1742,11 +1892,86 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
     return summary
 
 
+def parse_codeql_sarif_py_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
+    """
+    Calcola la media (intera arrotondata) dei campi numerici che la funzione
+    `parse_codeql_sarif_py` stampa per un singolo SARIF.
+
+    Parametri
+    ---------
+    sarif_a, sarif_b, sarif_c : str | Path
+        Percorsi ai tre file SARIF.
+    print_report : bool
+        Se True, stampa un report riassuntivo con le medie.
+    rounding : {"nearest", "floor", "ceil"}
+        Strategia di arrotondamento:
+        - "nearest": al più vicino (round "bankers" di Python);
+        - "floor":   per difetto;
+        - "ceil":    per eccesso.
+
+    Ritorna
+    -------
+    dict
+        Dizionario con le medie intere dei campi:
+        artifacts_seen, files_expected, files_extracted, files_not_extracted,
+        extraction_warnings, syntax_errors, analyzed_files
+    """
+    # Verifica che la funzione base esista
+    if "parse_codeql_sarif_py" not in globals():
+        raise RuntimeError(
+            "La funzione 'parse_codeql_sarif_py' deve essere definita nello scope."
+        )
+
+    # Helper arrotondamento
+    def _iround(x: float) -> int:
+        if rounding == "nearest":
+            return int(round(x))
+        elif rounding == "floor":
+            return math.floor(x)
+        elif rounding == "ceil":
+            return math.ceil(x)
+        else:
+            raise ValueError("rounding deve essere 'nearest', 'floor' o 'ceil'.")
+
+    # Campi numerici di interesse (quelli 'stampati' dalla funzione base)
+    numeric_keys = [
+        "artifacts_seen",
+        "files_expected",
+        "files_extracted",
+        "files_not_extracted",
+        "extraction_warnings",
+        "syntax_errors",
+        "analyzed_files",
+    ]
+
+    # Calcola i riassunti per i tre file (senza ristampa)
+    sums = {k: 0 for k in numeric_keys}
+    for path in (sarif_a, sarif_b, sarif_c):
+        summary = parse_codeql_sarif_py(path, print_report=False, show_lists=False)
+        for k in numeric_keys:
+            sums[k] += int(summary.get(k, 0))
+
+    # Medie intere arrotondate
+    avgs = {k: _iround(sums[k] / 3.0) for k in numeric_keys}
+
+    if print_report:
+        print("== CodeQL SARIF – Medie su 3 file ==")
+        print(f"Artefatti registrati (media):         {avgs['artifacts_seen']}")
+        print(f"File attesi (baseline, media):        {avgs['files_expected']}")
+        print(f"File estratti (DB, media):            {avgs['files_extracted']}")
+        print(f"File non estratti (media):            {avgs['files_not_extracted']}")
+        print(f"Warning di estrazione (media):        {avgs['extraction_warnings']}")
+        print(f"Errori di sintassi (media):           {avgs['syntax_errors']}")
+        print(f"File citati nei risultati (media):    {avgs['analyzed_files']}")
+
+    return avgs
+
+
 ###################################################################################################################
 
 
-model_name = "athene"
-sample = 3
+model_name = "qwen"
+sample = 1
 
 
 # 1.6.0 last pack version
@@ -2097,7 +2322,7 @@ class CPreprocessing:
         build_c_project(folder2, nested, mode="auto")
 
 
-class ResultsInsight:
+class CodeAnalysisOutcome:
     def __init__(self):
         print("C Code Analysis Outcome:")
         parse_codeql_sarif_c(f"results/{model_name}/json/results_c_baseline.sarif.json")
@@ -2113,26 +2338,51 @@ class ResultsInsight:
         print("\n----------------------------------------------------------------\n")
 
 
-class SampleResultsInsight:
+class SampleCodeAnalysisOutcome:
     def __init__(self):
-        print("C Code Analysis Outcome:")
-        parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/baseline/results_c_baseline.csv")
-        parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/baseline/results_c_baseline.csv")
-        parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/baseline/results_c_baseline.csv")
-
-        parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/permutations/results_c_baseline.csv")
-        parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/permutations/results_c_baseline.csv")
-        parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/permutations/results_c_baseline.csv")
-
-        parse_codeql_sarif_c(f"results/{model_name}/json/results_c.sarif.json")
+        print("C Sample Code Analysis Outcome:")
+        #parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/json/results_c_baseline.sarif.json")
+        #parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/json/results_c_baseline.sarif.json")
+        #parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/json/results_c_baseline.sarif.json")
+        parse_codeql_sarif_c_merged(f"samples_results/sample_1/{model_name}/json/results_c_baseline.sarif.json",
+                                    f"samples_results/sample_2/{model_name}/json/results_c_baseline.sarif.json",
+                                    f"samples_results/sample_3/{model_name}/json/results_c_baseline.sarif.json")
+        #parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/json/results_c.sarif.json")
+        #parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/json/results_c.sarif.json")
+        #parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/json/results_c.sarif.json")
+        parse_codeql_sarif_c_merged(f"samples_results/sample_1/{model_name}/json/results_c.sarif.json",
+                                    f"samples_results/sample_2/{model_name}/json/results_c.sarif.json",
+                                    f"samples_results/sample_3/{model_name}/json/results_c.sarif.json")
         print("\n----------------------------------------------------------------\n")
-        print("Java Code Analysis Outcome:")
-        parse_codeql_sarif_java(f"results/{model_name}/json/results_java_baseline.sarif.json")
-        parse_codeql_sarif_java(f"results/{model_name}/json/results_java.sarif.json")
+
+        print("Java Sample Code Analysis Outcome:")
+        #parse_codeql_sarif_java(f"samples_results/sample_1/{model_name}/json/results_java_baseline.sarif.json")
+        #parse_codeql_sarif_java(f"samples_results/sample_2/{model_name}/json/results_java_baseline.sarif.json")
+        #parse_codeql_sarif_java(f"samples_results/sample_3/{model_name}/json/results_java_baseline.sarif.json")
+        parse_codeql_sarif_java_merged(f"samples_results/sample_1/{model_name}/json/results_java_baseline.sarif.json",
+                                       f"samples_results/sample_2/{model_name}/json/results_java_baseline.sarif.json",
+                                       f"samples_results/sample_3/{model_name}/json/results_java_baseline.sarif.json")
+        #parse_codeql_sarif_java(f"samples_results/sample_1/{model_name}/json/results_java.sarif.json")
+        #parse_codeql_sarif_java(f"samples_results/sample_2/{model_name}/json/results_java.sarif.json")
+        #parse_codeql_sarif_java(f"samples_results/sample_3/{model_name}/json/results_java.sarif.json")
+        parse_codeql_sarif_java_merged(f"samples_results/sample_1/{model_name}/json/results_java.sarif.json",
+                                       f"samples_results/sample_2/{model_name}/json/results_java.sarif.json",
+                                       f"samples_results/sample_3/{model_name}/json/results_java.sarif.json")
         print("\n----------------------------------------------------------------\n")
-        print("Python Code Analysis Outcome:")
-        parse_codeql_sarif_py(f"results/{model_name}/json/results_py_baseline.sarif.json")
-        parse_codeql_sarif_py(f"results/{model_name}/json/results_py.sarif.json")
+
+        print("Python Sample Code Analysis Outcome:")
+        #parse_codeql_sarif_py(f"samples_results/sample_1/{model_name}/json/results_py_baseline.sarif.json")
+        #parse_codeql_sarif_py(f"samples_results/sample_2/{model_name}/json/results_py_baseline.sarif.json")
+        #parse_codeql_sarif_py(f"samples_results/sample_3/{model_name}/json/results_py_baseline.sarif.json")
+        parse_codeql_sarif_py_merged(f"samples_results/sample_1/{model_name}/json/results_py_baseline.sarif.json",
+                                     f"samples_results/sample_2/{model_name}/json/results_py_baseline.sarif.json",
+                                     f"samples_results/sample_3/{model_name}/json/results_py_baseline.sarif.json")
+        #parse_codeql_sarif_py(f"samples_results/sample_1/{model_name}/json/results_py.sarif.json")
+        #parse_codeql_sarif_py(f"samples_results/sample_2/{model_name}/json/results_py.sarif.json")
+        #parse_codeql_sarif_py(f"samples_results/sample_3/{model_name}/json/results_py.sarif.json")
+        parse_codeql_sarif_py_merged(f"samples_results/sample_1/{model_name}/json/results_py.sarif.json",
+                                     f"samples_results/sample_2/{model_name}/json/results_py.sarif.json",
+                                     f"samples_results/sample_3/{model_name}/json/results_py.sarif.json")
         print("\n----------------------------------------------------------------\n")
 
 
@@ -2179,15 +2429,17 @@ samples_permutations_code_c_formatted = f"samples_generated_code/sample_{sample}
 #JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_java)
 
-CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-SecurityAnalysis(command_set_baseline_analysis_c)
-CPreprocessing(c_folder, c_folder_formatted, nested=True)
-SecurityAnalysis(command_set_result_analysis_c)
+#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+#SecurityAnalysis(command_set_baseline_analysis_c)
+#CPreprocessing(c_folder, c_folder_formatted, nested=True)
+#SecurityAnalysis(command_set_result_analysis_c)
 
-#ResultsInsight()
+#CodeAnalysisOutcome()
 
 
 
+#PythonPreprocessing(samples_baseline_code_py)
+#PythonPreprocessing(samples_permutations_code_py)
 #SecurityAnalysis(command_set_sample_baseline_analysis_py)
 #SecurityAnalysis(command_set_sample_result_analysis_py)
 
@@ -2200,3 +2452,5 @@ SecurityAnalysis(command_set_result_analysis_c)
 #SecurityAnalysis(command_set_sample_baseline_analysis_c)
 #CPreprocessing(samples_permutations_code_c, samples_permutations_code_c_formatted, nested=True)
 #SecurityAnalysis(command_set_sample_result_analysis_c)
+
+#SampleCodeAnalysisOutcome()
