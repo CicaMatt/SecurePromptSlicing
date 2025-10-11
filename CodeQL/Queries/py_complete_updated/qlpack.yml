@@ -1,9 +1,0 @@
----
-library: false
-name: mutasdev/python-complete-queries
-dependencies:
-  codeql/python-all: '*'
-  codeql/python-queries: '*'
-  codeql/suite-helpers: '*'
-extractor: python
-defaultSuiteFile: python-complete.qls
