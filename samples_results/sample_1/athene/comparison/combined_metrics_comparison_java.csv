@@ -30,10 +30,10 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=clause, Sentence Index=1",2,clause,1,,2,1,50.00%
 "Granularity=clause, Sentence Index=1, Syntagm Type=SBAR",3,clause,1,SBAR,2,1,50.00%
 "Granularity=clause, Syntagm Type=SBAR",2,clause,,SBAR,3,1,33.33%
-"Granularity=minimal, Sentence Index=0",2,minimal,0,,142,21,14.79%
+"Granularity=minimal, Sentence Index=0",2,minimal,0,,142,15,10.56%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=ADJP",3,minimal,0,ADJP,2,0,0.00%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=ADVP",3,minimal,0,ADVP,2,0,0.00%
-"Granularity=minimal, Sentence Index=0, Syntagm Type=NP",3,minimal,0,NP,112,18,16.07%
+"Granularity=minimal, Sentence Index=0, Syntagm Type=NP",3,minimal,0,NP,112,12,10.71%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=PP",3,minimal,0,PP,2,0,0.00%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=PRT",3,minimal,0,PRT,1,0,0.00%
 "Granularity=minimal, Sentence Index=0, Syntagm Type=QP",3,minimal,0,QP,2,0,0.00%
@@ -65,7 +65,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=minimal, Sentence Index=7, Syntagm Type=SBAR",3,minimal,7,SBAR,1,0,0.00%
 "Granularity=minimal, Syntagm Type=ADJP",2,minimal,,ADJP,3,0,0.00%
 "Granularity=minimal, Syntagm Type=ADVP",2,minimal,,ADVP,4,0,0.00%
-"Granularity=minimal, Syntagm Type=NP",2,minimal,,NP,158,20,12.66%
+"Granularity=minimal, Syntagm Type=NP",2,minimal,,NP,158,14,8.86%
 "Granularity=minimal, Syntagm Type=PP",2,minimal,,PP,2,0,0.00%
 "Granularity=minimal, Syntagm Type=PRT",2,minimal,,PRT,1,0,0.00%
 "Granularity=minimal, Syntagm Type=QP",2,minimal,,QP,2,0,0.00%
@@ -75,7 +75,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=minimal, Syntagm Type=WHNP",2,minimal,,WHNP,6,0,0.00%
 "Sentence Index=0, Syntagm Type=ADJP",2,,0,ADJP,2,0,0.00%
 "Sentence Index=0, Syntagm Type=ADVP",2,,0,ADVP,2,0,0.00%
-"Sentence Index=0, Syntagm Type=NP",2,,0,NP,140,19,13.57%
+"Sentence Index=0, Syntagm Type=NP",2,,0,NP,140,13,9.29%
 "Sentence Index=0, Syntagm Type=PP",2,,0,PP,56,5,8.93%
 "Sentence Index=0, Syntagm Type=PRT",2,,0,PRT,1,0,0.00%
 "Sentence Index=0, Syntagm Type=QP",2,,0,QP,2,0,0.00%

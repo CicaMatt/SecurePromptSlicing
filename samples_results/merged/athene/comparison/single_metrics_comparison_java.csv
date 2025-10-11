@@ -1,0 +1,22 @@
+Category,Value,Base,Result,Frequency
+Granularity,chunk,142,10,7.04%
+Granularity,clause,3,0,11.11%
+Granularity,minimal,208,17,8.01%
+Sentence Index,0,249,21,8.57%
+Sentence Index,1,41,2,4.88%
+Sentence Index,2,41,2,5.69%
+Sentence Index,3,11,1,12.12%
+Sentence Index,4,7,0,0.00%
+Sentence Index,5,1,0,0.00%
+Sentence Index,6,1,0,0.00%
+Sentence Index,7,2,0,0.00%
+Syntagm Type,ADJP,3,0,0.00%
+Syntagm Type,ADVP,4,0,0.00%
+Syntagm Type,NP,190,16,8.24%
+Syntagm Type,PP,64,6,8.86%
+Syntagm Type,PRT,1,0,0.00%
+Syntagm Type,QP,2,0,0.00%
+Syntagm Type,SBAR,26,1,5.13%
+Syntagm Type,VP,54,4,8.03%
+Syntagm Type,WHADVP,3,0,0.00%
+Syntagm Type,WHNP,6,0,0.00%

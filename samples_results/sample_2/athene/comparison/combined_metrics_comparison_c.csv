@@ -8,11 +8,11 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=chunk, Sentence Index=1, Syntagm Type=PP",3,chunk,1,PP,5,0,0.00%
 "Granularity=chunk, Sentence Index=1, Syntagm Type=SBAR",3,chunk,1,SBAR,2,0,0.00%
 "Granularity=chunk, Sentence Index=1, Syntagm Type=VP",3,chunk,1,VP,9,0,0.00%
-"Granularity=chunk, Sentence Index=2",2,chunk,2,,12,2,16.67%
+"Granularity=chunk, Sentence Index=2",2,chunk,2,,12,1,8.33%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=NP",3,chunk,2,NP,1,0,0.00%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=PP",3,chunk,2,PP,1,0,0.00%
 "Granularity=chunk, Sentence Index=2, Syntagm Type=SBAR",3,chunk,2,SBAR,1,0,0.00%
-"Granularity=chunk, Sentence Index=2, Syntagm Type=VP",3,chunk,2,VP,9,2,22.22%
+"Granularity=chunk, Sentence Index=2, Syntagm Type=VP",3,chunk,2,VP,9,1,11.11%
 "Granularity=chunk, Sentence Index=3",2,chunk,3,,5,0,0.00%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=NP",3,chunk,3,NP,3,0,0.00%
 "Granularity=chunk, Sentence Index=3, Syntagm Type=VP",3,chunk,3,VP,2,0,0.00%
@@ -24,7 +24,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=chunk, Syntagm Type=NP",2,chunk,,NP,32,0,0.00%
 "Granularity=chunk, Syntagm Type=PP",2,chunk,,PP,62,1,1.61%
 "Granularity=chunk, Syntagm Type=SBAR",2,chunk,,SBAR,4,0,0.00%
-"Granularity=chunk, Syntagm Type=VP",2,chunk,,VP,44,2,4.55%
+"Granularity=chunk, Syntagm Type=VP",2,chunk,,VP,44,1,2.27%
 "Granularity=clause, Sentence Index=0",2,clause,0,,1,0,0.00%
 "Granularity=clause, Sentence Index=0, Syntagm Type=SBAR",3,clause,0,SBAR,1,0,0.00%
 "Granularity=clause, Sentence Index=1",2,clause,1,,2,0,0.00%
@@ -92,7 +92,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Sentence Index=2, Syntagm Type=NP",2,,2,NP,19,0,0.00%
 "Sentence Index=2, Syntagm Type=PP",2,,2,PP,1,0,0.00%
 "Sentence Index=2, Syntagm Type=SBAR",2,,2,SBAR,4,0,0.00%
-"Sentence Index=2, Syntagm Type=VP",2,,2,VP,13,2,15.38%
+"Sentence Index=2, Syntagm Type=VP",2,,2,VP,13,1,7.69%
 "Sentence Index=2, Syntagm Type=WHADVP",2,,2,WHADVP,1,0,0.00%
 "Sentence Index=2, Syntagm Type=WHNP",2,,2,WHNP,1,0,0.00%
 "Sentence Index=3, Syntagm Type=NP",2,,3,NP,8,0,0.00%
