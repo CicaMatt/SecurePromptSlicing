@@ -586,43 +586,86 @@ def permutations_combined_metrics_stats(folder, verbose=True):
     return combinations_counter
 
 
-def single_metrics_stats(filepath, verbose=True):
+def single_metrics_stats(filepath, verbose=True, verify_consistency=True):
+    """
+    Read a CSV, collapse rows sharing the same 'Path' into one record,
+    then count occurrences of 'Syntagm Type', 'Granularity', and 'Sentence Index'.
+
+    Parameters
+    ----------
+    filepath : str
+        Path to the CSV file.
+    verbose : bool
+        Whether to print a summary.
+    verify_consistency : bool
+        If True, checks that within each Path-group the fields of interest are identical.
+        Prints a warning if inconsistencies are found (but still proceeds using the first row).
+    """
     syntagm_type_counter = Counter()
     granularity_counter = Counter()
     sentence_index_counter = Counter()
 
-    total_rows = 0
-
     try:
         df = pd.read_csv(filepath)
-        total_rows = len(df)
-
-        if 'Syntagm Type' in df.columns:
-            syntagm_type_counter.update(df['Syntagm Type'].dropna())
-        if 'Granularity' in df.columns:
-            granularity_counter.update(df['Granularity'].dropna())
-        if 'Sentence Index' in df.columns:
-            sentence_index_counter.update(df['Sentence Index'].dropna())
-
     except Exception as e:
         if verbose:
             print(f"Errore nella lettura del file {filepath}: {e}")
-        return
+        return {
+            'Syntagm Type': syntagm_type_counter,
+            'Granularity': granularity_counter,
+            'Sentence Index': sentence_index_counter,
+        }
+
+    required_cols = ['Path', 'Syntagm Type', 'Granularity', 'Sentence Index']
+    missing = [c for c in required_cols if c not in df.columns]
+    if missing:
+        if verbose:
+            print(f"Colonne mancanti nel file: {', '.join(missing)}")
+        # Proceed with whatever is available after deduping by Path (if present)
+
+    # If 'Path' exists, collapse to one row per Path; else, we just work as-is
+    if 'Path' in df.columns:
+        # Optional consistency check
+        if verify_consistency:
+            cols_to_check = [c for c in ['Syntagm Type', 'Granularity', 'Sentence Index'] if c in df.columns]
+            if cols_to_check:
+                bad_paths = []
+                for path_val, g in df.groupby('Path'):
+                    for col in cols_to_check:
+                        # Count distinct non-null values within the group
+                        distinct_vals = g[col].dropna().unique()
+                        if len(distinct_vals) > 1:
+                            bad_paths.append((path_val, col, distinct_vals))
+                if bad_paths and verbose:
+                    print("ATTENZIONE: trovate incongruenze nei gruppi per 'Path' "
+                          "(verranno comunque usati i primi valori del gruppo):")
+                    for path_val, col, vals in bad_paths[:10]:
+                        print(f"  - Path={path_val!r}, colonna '{col}' ha valori multipli: {list(vals)}")
+                    if len(bad_paths) > 10 and verbose:
+                        print(f"  ... e altri {len(bad_paths) - 10} gruppi con incongruenze.")
+
+        # Collapse groups by taking the first row per Path (safe because values should match)
+        df_merged = df.sort_index().groupby('Path', as_index=False).first()
+    else:
+        df_merged = df  # No Path column; nothing to merge
+
+    # Now count on the merged dataframe
+    if 'Syntagm Type' in df_merged.columns:
+        syntagm_type_counter.update(df_merged['Syntagm Type'].dropna())
+    if 'Granularity' in df_merged.columns:
+        granularity_counter.update(df_merged['Granularity'].dropna())
+    if 'Sentence Index' in df_merged.columns:
+        sentence_index_counter.update(df_merged['Sentence Index'].dropna())
 
     if verbose:
-        #print(f"Totale righe lette: {total_rows}\n")
+        def _print_counter(title, c):
+            print(f" - {title}: {len(c)} valori unici")
+            for val, count in c.items():
+                print(f"    {val!r}: {count}")
 
-        print(f" - Syntagm Type: {len(syntagm_type_counter)} valori unici")
-        for val, count in syntagm_type_counter.items():
-            print(f"    {val}: {count}")
-
-        print(f" - Granularity: {len(granularity_counter)} valori unici")
-        for val, count in granularity_counter.items():
-            print(f"    {val}: {count}")
-
-        print(f" - Sentence Index: {len(sentence_index_counter)} valori unici")
-        for val, count in sentence_index_counter.items():
-            print(f"    '{val}': {count}")
+        _print_counter("Syntagm Type", syntagm_type_counter)
+        _print_counter("Granularity", granularity_counter)
+        _print_counter("Sentence Index", sentence_index_counter)
 
     return {
         'Syntagm Type': syntagm_type_counter,
@@ -630,39 +673,77 @@ def single_metrics_stats(filepath, verbose=True):
         'Sentence Index': sentence_index_counter,
     }
 
-def combined_metrics_stats(filepath, verbose=True):
+def combined_metrics_stats(filepath, verbose=True, verify_consistency=True):
+    """
+    Read a CSV, collapse rows sharing the same 'Path' into one record,
+    then count combinations (size ≥ 2) among the present columns of:
+    ['Syntagm Type', 'Granularity', 'Sentence Index'].
+
+    Parameters
+    ----------
+    filepath : str
+        Path to the CSV file.
+    verbose : bool
+        Whether to print a summary.
+    verify_consistency : bool
+        If True, checks that within each Path-group the fields of interest are identical.
+        Prints a warning if inconsistencies are found (but still proceeds using the first row).
+    """
     combinations_counter = Counter()
-    total_rows = 0
 
     try:
         df = pd.read_csv(filepath)
-        total_rows = len(df)
-
-        # Verifica quali colonne esistono tra le tre target
-        cols_present = [col for col in ['Syntagm Type', 'Granularity', 'Sentence Index'] if col in df.columns]
-        if len(cols_present) < 2:
-            if verbose:
-                print("Non ci sono almeno due colonne tra 'Syntagm Type', 'Granularity', 'Sentence Index'.")
-            return
-
-        # Itera sulle righe e calcola combinazioni
-        for _, row in df[cols_present].dropna().iterrows():
-            row_data = {col: row[col] for col in cols_present}
-            for r in range(2, len(row_data) + 1):
-                for combo in combinations(row_data.items(), r):
-                    combo_key = tuple(sorted(combo))  # Ordina per uniformità
-                    combinations_counter[combo_key] += 1
-
     except Exception as e:
         if verbose:
             print(f"Errore nella lettura del file {filepath}: {e}")
-        return
+        return combinations_counter
+
+    target_cols = ['Syntagm Type', 'Granularity', 'Sentence Index']
+    cols_present = [c for c in target_cols if c in df.columns]
+    if len(cols_present) < 2:
+        if verbose:
+            print("Non ci sono almeno due colonne tra 'Syntagm Type', 'Granularity', 'Sentence Index'.")
+        return combinations_counter
+
+    # If 'Path' exists, collapse to one row per Path; otherwise, work as-is
+    if 'Path' in df.columns:
+        if verify_consistency:
+            bad_paths = []
+            for path_val, g in df.groupby('Path'):
+                for col in cols_present:
+                    distinct_vals = g[col].dropna().unique()
+                    if len(distinct_vals) > 1:
+                        bad_paths.append((path_val, col, distinct_vals))
+            if bad_paths and verbose:
+                print("ATTENZIONE: trovate incongruenze nei gruppi per 'Path' "
+                      "(verranno comunque usati i primi valori del gruppo):")
+                for path_val, col, vals in bad_paths[:10]:
+                    print(f"  - Path={path_val!r}, colonna '{col}' ha valori multipli: {list(vals)}")
+                if len(bad_paths) > 10:
+                    print(f"  ... e altri {len(bad_paths) - 10} gruppi con incongruenze.")
+        # collapse groups by taking the first row per Path
+        df_merged = df.sort_index().groupby('Path', as_index=False).first()
+        total_units = len(df_merged)
+    else:
+        df_merged = df
+        total_units = len(df_merged)
+
+    # Work only with rows where all required-present columns are non-null
+    work_df = df_merged[cols_present].dropna()
+
+    # Build combination counts (size ≥ 2)
+    for _, row in work_df.iterrows():
+        row_data = {col: row[col] for col in cols_present}
+        for r in range(2, len(row_data) + 1):
+            for combo in combinations(row_data.items(), r):
+                combo_key = tuple(sorted(combo))  # normalize order
+                combinations_counter[combo_key] += 1
 
     if verbose:
-        #print(f"Total rows processed: {total_rows}")
-        print(f"Unique combinations (length ≥ 2): {len(combinations_counter)}")
+        print(f"Unità considerate (dopo merge per Path se presente): {total_units}")
+        print(f"Combinazioni uniche (lunghezza ≥ 2): {len(combinations_counter)}")
         for combo, count in combinations_counter.items():
-            combo_str = ', '.join([f"{k}={v}" for k, v in combo])
+            combo_str = ', '.join([f"{k}={v!r}" for k, v in combo])
             print(f"  ({combo_str}): {count}")
 
     return combinations_counter
@@ -3384,102 +3465,6 @@ def combined_feature_statistical_analysis_merged(
     }
 
 
-def compare_detected_cwe_frequencies(freqs1, freqs2, name1="A", name2="B",
-                            sort_by="abs_diff", descending=True, limit=None):
-    """
-    Compare CWE occurrences between two datasets and print a table.
-
-    Parameters
-    ----------
-    freqs1, freqs2 : list[tuple[str, int]] | dict[str, int]
-        Outputs from your frequency function (e.g., [('CWE-79', 12), ...]).
-        Dicts of {cwe: count} also work.
-    name1, name2 : str
-        Column labels used when printing counts for dataset 1 and 2.
-    sort_by : str
-        One of: 'abs_diff' (default), 'diff', 'count1', 'count2', 'cwe', 'pct'.
-        - diff = (count2 - count1)
-        - pct  = percentage change vs count1
-    descending : bool
-        Sort direction (True = largest first).
-    limit : int | None
-        If set, only the top N rows (after sorting) are shown/returned.
-
-    Returns
-    -------
-    list[dict]
-        Each item: {
-          'cwe': str, 'count1': int, 'count2': int,
-          'diff': int, 'abs_diff': int, 'pct_change': float | None
-        }
-    """
-    # --- normalize inputs to dicts ---
-    def _to_dict(x):
-        if isinstance(x, dict):
-            return {str(k): int(v) for k, v in x.items()}
-        d = {}
-        for cwe, cnt in x:
-            d[str(cwe)] = int(cnt)
-        return d
-
-    d1, d2 = _to_dict(freqs1), _to_dict(freqs2)
-
-    # --- build comparison rows over the union of CWEs ---
-    rows = []
-    for cwe in sorted(set(d1) | set(d2)):
-        a, b = d1.get(cwe, 0), d2.get(cwe, 0)
-        diff = b - a
-        abs_diff = abs(diff)
-        pct = None if a == 0 else diff / a
-        rows.append({
-            "cwe": cwe,
-            "count1": a,
-            "count2": b,
-            "diff": diff,
-            "abs_diff": abs_diff,
-            "pct_change": pct,
-        })
-
-    # --- sorting ---
-    def _pct_key(v):
-        # When sorting by percent change, place N/A sensibly.
-        if v["pct_change"] is None:
-            return float("-inf") if descending else float("inf")
-        return v["pct_change"]
-
-    key_map = {
-        "abs_diff": lambda v: (v["abs_diff"], v["cwe"]),
-        "diff":     lambda v: (v["diff"], v["cwe"]),
-        "count1":   lambda v: (v["count1"], v["cwe"]),
-        "count2":   lambda v: (v["count2"], v["cwe"]),
-        "cwe":      lambda v: (v["cwe"],),
-        "pct":      lambda v: (_pct_key(v), v["cwe"]),
-    }
-    key_fn = key_map.get(sort_by, key_map["abs_diff"])
-    rows.sort(key=key_fn, reverse=descending)
-
-    if limit is not None:
-        rows = rows[:limit]
-
-    # --- pretty print table ---
-    def fmt_pct(p):
-        return "n/a" if p is None else f"{p*100:+.1f}%"
-
-    max_cwe = max(len("CWE"), *(len(r["cwe"]) for r in rows)) if rows else 3
-    max_a   = max(len(name1), *(len(str(r["count1"])) for r in rows)) if rows else len(name1)
-    max_b   = max(len(name2), *(len(str(r["count2"])) for r in rows)) if rows else len(name2)
-    max_d   = max(len("Δ (B−A)"), *(len(str(r["diff"])) for r in rows)) if rows else len("Δ (B−A)")
-    max_p   = max(len("%Δ vs A"), *(len(fmt_pct(r["pct_change"])) for r in rows)) if rows else len("%Δ vs A")
-
-    header = f"{'#':>4}  {'CWE':<{max_cwe}}  {name1:>{max_a}}  {name2:>{max_b}}  {'Δ (B−A)':>{max_d}}  {'%Δ vs A':>{max_p}}"
-    print(header)
-    print("-" * len(header))
-    for i, r in enumerate(rows, 1):
-        print(f"{i:>4}  {r['cwe']:<{max_cwe}}  {r['count1']:>{max_a}}  {r['count2']:>{max_b}}  {r['diff']:>{max_d}}  {fmt_pct(r['pct_change']):>{max_p}}")
-
-    return rows
-
-
 def baseline_cwe_scenario_stats(csv_path, column="Prompt ID", verbose=True):
     """
     Legge un CSV, estrae il CWE-ID dalla colonna 'Prompt ID' (parte prima di '_'),
@@ -3998,8 +3983,8 @@ def cwe_scenario_detection_match_merged(
 
 model_name = "qwen"
 
-language = "Java"
-language_identifier = "java"
+language = "Python"
+language_identifier = "py"
 
 prompt_dataset = 'LLMSecEvalDataset.csv'
 sample_baseline_csv_1 = 'samples/baseline_sample_1.csv'
@@ -4142,21 +4127,22 @@ class BaselineStats:
         #cwe_stats(results_baseline_2, "CWE ID", verbose=True)
         #cwe_stats(results_baseline_3, "CWE ID", verbose=True)
 
-        vulnerable_snippets = count_vulnerable_snippets_merged(baseline_json_1, baseline_json_2, baseline_json_3, language_identifier)
+        vulnerable_snippets = count_vulnerable_snippets_merged(baseline_json_1, baseline_json_2, baseline_json_3, language_identifier, print_report=False)
         extracted_snippets=count_extracted_files_merged([baseline_json_1, baseline_json_2, baseline_json_3], language_identifier)
 
         print("\nBaseline Vulnerable Snippets:")
         #compute_vulnerable_snippets(results_baseline_1, total_snippets=109)
         #compute_vulnerable_snippets(results_baseline_2, total_snippets=109)
         #compute_vulnerable_snippets(results_baseline_3, total_snippets=109)
+        print(vulnerable_snippets)
         print_percentage(vulnerable_snippets, extracted_snippets)
-        #compute_vulnerable_snippets_merged([results_baseline_1, results_baseline_2, results_baseline_3], total_snippets=extracted_snippets)
+        compute_vulnerable_snippets_merged([results_baseline_1, results_baseline_2, results_baseline_3], total_snippets=extracted_snippets)
         print("\nBaseline Detected CWEs:")
         #collect_detected_cwes(results_baseline_1, n_snippets=109)
         #collect_detected_cwes(results_baseline_2, n_snippets=109)
         #collect_detected_cwes(results_baseline_3, n_snippets=109)
         print(collect_detected_cwes_merged(results_baseline_1, results_baseline_2, results_baseline_3))
-        divide_and_print(collect_detected_cwes_merged(results_baseline_1, results_baseline_2, results_baseline_3), extracted_snippets)
+        divide_and_print(collect_detected_cwes_merged(results_baseline_1, results_baseline_2, results_baseline_3, silent=True), extracted_snippets)
         print("\nBaseline CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
         #check_cwe_match(results_baseline_1, sample_permutations_folder_1)
         #check_cwe_match(results_baseline_2, sample_permutations_folder_2)
@@ -4229,6 +4215,7 @@ class ResultStats:
         #compute_vulnerable_snippets(results_1, total_snippets=353)
         #compute_vulnerable_snippets(results_2, total_snippets=353)
         #compute_vulnerable_snippets(results_3, total_snippets=353)
+        print(vulnerable_snippets)
         print_percentage(vulnerable_snippets, extracted_snippets)
         #compute_vulnerable_snippets_merged([results_1, results_2, results_3], total_snippets=extracted_snippets)
         print("\n---------------------------------------\n")
@@ -4338,13 +4325,14 @@ class CWEComparison:
 class SamplesAnalysis:
     def __init__(self):
         print("***SAMPLES ANALYSIS***\n")
-        #cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
-        #single_feature_frequency_mean_to_csv(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3, comparison_single_metrics_merged)
-        #combined_feature_frequency_mean_to_csv(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3, comparison_combined_metrics_merged)
+        cwe_scenarios_frequency_mean(comparison_baseline_cwes_1, comparison_baseline_cwes_2, comparison_baseline_cwes_3, comparison_baseline_cwes_merged)
+        cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
+        single_feature_frequency_mean_to_csv(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3, comparison_single_metrics_merged)
+        combined_feature_frequency_mean_to_csv(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3, comparison_combined_metrics_merged)
         print("Merged Single Features Statistical Analysis Stats:")
         single_feature_statistical_analysis_merged(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
         print("Merged Combined Features Statistical Analysis Stats:")
-        #combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
+        combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
 
 
 BaselineCsvBuilder()
@@ -4356,6 +4344,6 @@ ResultStats()
 PermutationsStats()
 
 MetricsComparison()
-CWEComparison()
+#CWEComparison()
 
 SamplesAnalysis()
