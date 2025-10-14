@@ -2721,6 +2721,9 @@ def single_feature_statistical_analysis_merged(
       1) OMNIBUS: feature che risultano significative (FDR) in TUTTI e 3 i file.
       2) PER-VALORE: (Category, Value) significativi (FDR) in TUTTI e 3 i file.
 
+    NOVITÀ: per ogni singolo file, l'analisi PER-VALORE è eseguita SOLO sulle feature
+    il cui OMNIBUS (dopo FDR) è significativo; altrimenti la feature viene saltata.
+
     Per gli elementi COMUNI calcola aggregati “logicamentente corretti”:
       - P-value combinato con metodo di Fisher (evita la media semplice di p).
       - OMNIBUS: N_tot combinato (somma), Cramér’s V media pesata su N_tot.
@@ -2787,7 +2790,7 @@ def single_feature_statistical_analysis_merged(
             p = float(p)
         return p
 
-    # ---------- OMNIBUS permutazionale (come nella funzione di partenza) ----------
+    # ---------- OMNIBUS permutazionale ----------
     rng = np.random.default_rng(None)
     _B_PERM = 5000
 
@@ -2886,54 +2889,66 @@ def single_feature_statistical_analysis_merged(
             if mask.any():
                 omnibus_df.loc[mask, "p_omnibus_adj"] = bh_fdr(omnibus_df.loc[mask, "p_omnibus_raw"].values)
             omnibus_df["Omnibus_significativo_FDR"] = omnibus_df["p_omnibus_adj"] < alpha
+        else:
+            omnibus_df["Omnibus_significativo_FDR"] = pd.Series(dtype=bool)
 
-        # PER-VALORE
+        # ====== NOVITÀ: per-value solo se OMNIBUS è significativo (dopo FDR) ======
+        sig_omni_feats = set(
+            omnibus_df.loc[omnibus_df["Omnibus_significativo_FDR"] == True, "Category"]
+        )
+
+        # PER-VALORE (solo feature con omnibus significativo)
         pv_rows = []
-        for feat, g in df.groupby("Category", sort=False):
-            base_tot = int(g["Base"].sum())
-            res_tot  = int(g["Result"].sum())
-            tmp = []
-            skipped = 0
-            for _, r in g.iterrows():
-                n = int(r["Base"]); k = int(r["Result"])
-                if k < min_events:
-                    skipped += 1
-                    continue
-                base_oth = base_tot - n
-                res_oth  = res_tot - k
-                p_val = (k / n) if n > 0 else np.nan
-                p_oth = (res_oth / base_oth) if base_oth > 0 else np.nan
-                if n == 0 or base_oth == 0:
-                    p_raw = np.nan
-                    rr = np.nan
-                    delta_abs = np.nan
-                else:
-                    p_raw = p_value_no_or(k, n, res_oth, base_oth)
-                    if p_oth == 0:
-                        rr = np.inf if (p_val > 0 and not np.isnan(p_val)) else 1.0
+        if len(sig_omni_feats) > 0:
+            for feat, g in df.groupby("Category", sort=False):
+                if feat not in sig_omni_feats:
+                    continue  # SALTA la feature perché l'OMNIBUS non è significativo
+
+                base_tot = int(g["Base"].sum())
+                res_tot  = int(g["Result"].sum())
+                tmp = []
+                skipped = 0
+                for _, r in g.iterrows():
+                    n = int(r["Base"]); k = int(r["Result"])
+                    if k < min_events:
+                        skipped += 1
+                        continue
+                    base_oth = base_tot - n
+                    res_oth  = res_tot - k
+                    p_val = (k / n) if n > 0 else np.nan
+                    p_oth = (res_oth / base_oth) if base_oth > 0 else np.nan
+                    if n == 0 or base_oth == 0:
+                        p_raw = np.nan
+                        rr = np.nan
+                        delta_abs = np.nan
                     else:
-                        rr = p_val / p_oth
-                    delta_abs = abs((p_val if not np.isnan(p_val) else 0.0) -
-                                    (p_oth if not np.isnan(p_oth) else 0.0))
-                tmp.append({
-                    "Category": feat,
-                    "Value": r["Value"],
-                    "Base_v": n, "Result_v": k,
-                    "Base_others": base_oth, "Result_others": res_oth,
-                    "Rate_v": p_val, "Rate_others": p_oth,
-                    "EffSize_RR": rr,
-                    "Delta_abs": delta_abs,
-                    "p_raw": p_raw
-                })
-            out = pd.DataFrame(tmp)
-            if len(out) == 0:
-                continue
-            mask = out["p_raw"].notna()
-            out["p_adj"] = np.nan
-            if mask.any():
-                out.loc[mask, "p_adj"] = bh_fdr(out.loc[mask, "p_raw"].values)
-            out["Significativo_FDR"] = out["p_adj"] < alpha
-            pv_rows.append(out)
+                        p_raw = p_value_no_or(k, n, res_oth, base_oth)
+                        if p_oth == 0:
+                            rr = np.inf if (p_val > 0 and not np.isnan(p_val)) else 1.0
+                        else:
+                            rr = p_val / p_oth
+                        delta_abs = abs((p_val if not np.isnan(p_val) else 0.0) -
+                                        (p_oth if not np.isnan(p_oth) else 0.0))
+                    tmp.append({
+                        "Category": feat,
+                        "Value": r["Value"],
+                        "Base_v": n, "Result_v": k,
+                        "Base_others": base_oth, "Result_others": res_oth,
+                        "Rate_v": p_val, "Rate_others": p_oth,
+                        "EffSize_RR": rr,
+                        "Delta_abs": delta_abs,
+                        "p_raw": p_raw
+                    })
+                out = pd.DataFrame(tmp)
+                if len(out) == 0:
+                    continue
+                mask = out["p_raw"].notna()
+                out["p_adj"] = np.nan
+                if mask.any():
+                    out.loc[mask, "p_adj"] = bh_fdr(out.loc[mask, "p_raw"].values)
+                out["Significativo_FDR"] = out["p_adj"] < alpha
+                pv_rows.append(out)
+
         per_value_df = pd.concat(pv_rows, ignore_index=True) if len(pv_rows) else pd.DataFrame(
             columns=["Category","Value","Base_v","Result_v","Base_others","Result_others",
                      "Rate_v","Rate_others","EffSize_RR","Delta_abs","p_raw","p_adj","Significativo_FDR"]
@@ -2967,6 +2982,7 @@ def single_feature_statistical_analysis_merged(
         r3 = omni3.loc[omni3["Category"] == cat].iloc[0]
         N_sum = int(r1["N_tot"] + r2["N_tot"] + r3["N_tot"])
         # Cramér’s V: media pesata su N_tot (euristica pratica)
+        import numpy as np
         Vs = np.array([r1["CramersV"], r2["CramersV"], r3["CramersV"]], dtype=float)
         Ns = np.array([r1["N_tot"],   r2["N_tot"],   r3["N_tot"]], dtype=float)
         with np.errstate(invalid='ignore'):
@@ -2988,7 +3004,7 @@ def single_feature_statistical_analysis_merged(
     )
 
     # ---------- intersezione PER-VALORE ----------
-    # tieni solo significativi per ciascun file
+    # tieni solo significativi per ciascun file (NB: ora provengono solo da feature con omnibus significativo)
     pv1_sig = pv1[pv1["Significativo_FDR"] == True]
     pv2_sig = pv2[pv2["Significativo_FDR"] == True]
     pv3_sig = pv3[pv3["Significativo_FDR"] == True]
@@ -3000,6 +3016,7 @@ def single_feature_statistical_analysis_merged(
     common_pairs = sorted(s1 & s2 & s3)
 
     perval_common_rows = []
+    import numpy as np
     for cat, val in common_pairs:
         r1 = pv1_sig[(pv1_sig["Category"]==cat) & (pv1_sig["Value"]==val)].iloc[0]
         r2 = pv2_sig[(pv2_sig["Category"]==cat) & (pv2_sig["Value"]==val)].iloc[0]
@@ -3019,7 +3036,7 @@ def single_feature_statistical_analysis_merged(
         else:
             RR_pool = rate_v_pool / rate_o_pool
 
-        # RR media geometrica (utile se si preferisce “media log” fra studi)
+        # RR media geometrica
         def _geom_mean_rr(vals):
             arr = np.array([v for v in vals if np.isfinite(v) and v > 0], dtype=float)
             if len(arr) == 0:
@@ -3032,16 +3049,12 @@ def single_feature_statistical_analysis_merged(
         perval_common_rows.append({
             "Category": cat,
             "Value": val,
-            # pooled counts & rates
             "Base_v_pooled": Base_v_sum, "Result_v_pooled": Result_v_sum,
             "Base_others_pooled": Base_o_sum, "Result_others_pooled": Result_o_sum,
             "Rate_v_pooled": rate_v_pool, "Rate_others_pooled": rate_o_pool,
-            # effect sizes
             "RR_pooled": RR_pool,
             "RR_geom_mean": RR_geom,
-            # combined significance
             "p_combined_Fisher": p_fisher,
-            # per-file (traccia)
             "p_file1": float(r1["p_raw"]), "p_file2": float(r2["p_raw"]), "p_file3": float(r3["p_raw"]),
         })
 

@@ -1,14 +1,16 @@
 import ast
 import csv
 import json
+import math
 import os
 import re
 import shutil
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, Set, Union, Optional, Tuple, List
+from typing import Dict, Set, Union, Optional, Tuple, List, Literal
 
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import chi2_contingency
@@ -1950,11 +1952,11 @@ def single_feature_statistical_analysis(
     csv_path,
     alpha=0.05,
     mostra_non_significativi_vicini=False,
-    k_vicini=5,
+    k_vicini=100,
     min_events=0,               # unico filtro: richiede almeno questo numero di Result (solo per test per-valore)
 ):
     """
-    Analisi per-feature:
+    Analisi per-feature con gating su OMNIBUS:
 
       OMNIBUS (unico, robusto):
         - Statistica: χ² su tabella 2×K (successi/insuccessi × livelli).
@@ -1963,7 +1965,7 @@ def single_feature_statistical_analysis(
         - FDR BH *tra le feature* sugli omnibus p-value.
         - Nessun filtro `min_events` sull’omnibus.
 
-      Test per-valore (valore vs resto):
+      Test per-valore (valore vs resto) — ESEGUITI SOLO SE l’OMNIBUS della feature è significativo (FDR):
         - Barnard’s exact test (two-sided, NO odds ratio).
         - FDR BH per ciascuna feature.
         - Effect size: Risk Ratio (RR). Mostra anche |Δ| e i tassi.
@@ -2031,9 +2033,7 @@ def single_feature_statistical_analysis(
         return p
 
     # ---------- OMNIBUS: χ² 2×K con p-value permutazionale (totali fissi) ----------
-    # Parametri interni (niente nuovi parametri della funzione)
     _B_PERM = 5000  # numero di permutazioni Monte Carlo
-
     rng = np.random.default_rng(None)
 
     def _chi2_stat_from_counts(successes, bases, K=None):
@@ -2134,6 +2134,7 @@ def single_feature_statistical_analysis(
     report_lines.append(f"File: {csv_path}")
     report_lines.append(f"Soglia FDR α = {alpha} — Permutazioni Monte Carlo: 5000\n")
 
+    significant_feats = set()
     if omnibus_df is None or len(omnibus_df) == 0:
         report_lines.append("Nessuna feature testabile per l’omnibus.\n")
     else:
@@ -2144,18 +2145,30 @@ def single_feature_statistical_analysis(
         else:
             report_lines.append("Feature significative all’omnibus (ordinate per p_omnibus_adj):")
             for _, rr in sig.iterrows():
-                # Nota sugli attesi rimossa
                 report_lines.append(
                     f"  - {rr['Category']}: p_omnibus_adj={rr['p_omnibus_adj']:.4g}, "
                     f"χ²({int(rr['dof'])})={rr['chi2_stat']:.3f}, V={rr['CramersV']:.3f}, N={int(rr['N_tot'])}"
                 )
             report_lines.append("")
+        significant_feats = set(sig["Category"].tolist())
 
+    # ---------- GATING: test per-valore SOLO per feature con omnibus significativo ----------
     report_lines.append("=== Test su differenza di proporzioni (NO odds ratio) — FDR per-feature — Effect size: Risk Ratio (RR) ===")
     report_lines.append(f"Filtro per test per-valore: Result ≥ {min_events}")
-    report_lines.append("Test per-valore: Barnard’s exact test — Alternative: two-sided\n")
+    report_lines.append("Test per-valore: Barnard’s exact test — Alternative: two-sided")
+    if len(significant_feats) == 0:
+        report_lines.append("\n[GATING ATTIVO] Nessuna feature supera l’omnibus FDR: i test per-valore non vengono eseguiti.\n")
+        print("\n".join(report_lines))
+        return
+    else:
+        report_lines.append(f"\n[GATING ATTIVO] I test per-valore verranno eseguiti SOLO per queste feature (omnibus significativo FDR): {', '.join(sorted(significant_feats))}\n")
 
     for feat, g in df.groupby("Category", sort=False):
+        # Skip feature se omnibus NON significativo
+        if feat not in significant_feats:
+            report_lines.append(f"{feat}: saltata (omnibus non significativo dopo FDR).")
+            continue
+
         base_tot = int(g["Base"].sum())
         res_tot  = int(g["Result"].sum())
 
@@ -2633,13 +2646,139 @@ def cwe_scenario_detection_match(csv_path, delimiter=",", encoding="utf-8", base
 
     return out
 
+
+
+def calculate_evaluable_rows_single(csv_path: str,
+                                    base_col: str = "Base",
+                                    result_col: str = "Result",
+                                    col_name: str = "Evaluable",
+                                    output_path: str = None,
+                                    low_quantile: float = 0.10,  # more permissive than Q1
+                                    info_quantile: float = 0.20  # more permissive than Q1
+                                    ) -> str:
+    """
+    More permissive, data-driven test:
+      - Keep rows True unless they are clearly 'tiny overall'.
+      - 'Tiny overall' means: non-degenerate row with BOTH Base and Result in the
+        bottom `low_quantile` AND information N*p*(1-p) below the bottom `info_quantile`.
+      - Non-degenerate means: 0 < Result < Base.
+      - No arbitrary fixed numbers; uses dataset quantiles.
+
+    Writes back to `csv_path` unless `output_path` is provided.
+    Returns the written path.
+    """
+    df = pd.read_csv(csv_path)
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Missing required columns '{base_col}' or '{result_col}'.")
+
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Compute data-driven thresholds on non-degenerate rows
+    if nondeg.any():
+        qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+        qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+        qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+    else:
+        # If nothing is non-degenerate, everything is False.
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Exclude ONLY when the row is in the tiny corner on all three axes
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Permissive decision: True unless in the tiny corner (and must be non-degenerate)
+    df[col_name] = (nondeg & ~tiny_corner).fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
+
+
+def calculate_evaluable_rows_combined(csv_path: str,
+                                      base_col: str = "Base",
+                                      result_col: str = "Result",
+                                      col_name: str = "Evaluable",
+                                      output_path: str = None,
+                                      low_quantile: float = 0.10,  # fascia bassa per N e k
+                                      info_quantile: float = 0.20  # fascia bassa per info
+                                      ) -> str:
+    """
+    Aggiunge una colonna booleana 'Valutabile' a un CSV (es. combined_metrics_comparison_py.csv),
+    considerando SOLO le colonne 'Base' (N) e 'Result' (k).
+
+    Criterio permissivo, tutto data-driven:
+      - Righe valide e non-degeneri: 0 < k < N.
+      - info = N * p * (1 - p), con p = k/N.
+      - 'False' SOLO se la riga è simultaneamente nella coda bassa su:
+          (i)   N <= quantile(low_quantile) di N,
+          (ii)  k <= quantile(low_quantile) di k,
+          (iii) info < quantile(info_quantile) di info.
+        (tutte le quantili sono calcolate sulle sole righe non-degeneri)
+      - Altrimenti 'True' (se non-degenere); le altre righe -> False.
+
+    Scrive sullo stesso file (in-place) se `output_path` non è fornito.
+    Ritorna il path del file scritto.
+    """
+    df = pd.read_csv(csv_path)
+
+    # Controllo colonne richieste
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Mancano le colonne richieste: '{base_col}', '{result_col}'")
+
+    # Cast robusto
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    # Validità e non-degenerazione (usa entrambe)
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    # p e informazione combinata (dipende da entrambi)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Se non ci sono righe non-degeneri, tutte False
+    if not bool(nondeg.any()):
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Soglie data-driven: quantili sulla sola parte non-degenere
+    qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+    qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+    qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+
+    # “Angolo minuscolo”: basso su N, su k e su info
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Decisione permissiva: True se non-degenere e NON in tiny_corner
+    valutabile = nondeg & ~tiny_corner
+
+    df[col_name] = valutabile.fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
+
 ##################################################################################################################
 
 
-model_name = "qwen"
+model_name = "athene"
 
-language = "C"
-language_identifier = "c"
+language = "Python"
+language_identifier = "py"
 
 baseline_csv = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -2788,15 +2927,19 @@ class MetricsComparison:
         print("\nSingle Metrics Comparison Stats:")
         compare_single_metric(permutation_single_metrics, result_single_metrics, comparison_single_metrics)
 
+        calculate_evaluable_rows_single(comparison_single_metrics)
+
         print("\nCombined Metrics Comparison Stats:")
         compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
+        calculate_evaluable_rows_combined(comparison_combined_metrics)
+
 
         print("\nSingle Features Statistical Analysis Stats:")
         #analyze_single_feature_significance(comparison_single_metrics)
-        single_feature_statistical_analysis(comparison_single_metrics)
+        #single_feature_statistical_analysis(comparison_single_metrics)
 
         print("\nCombined Features Statistical Analysis Stats:")
-        combined_feature_statistical_analysis(comparison_combined_metrics)
+        #combined_feature_statistical_analysis(comparison_combined_metrics)
 
         # Plotting data
         #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)

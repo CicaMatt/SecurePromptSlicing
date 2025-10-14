@@ -1,26 +1,26 @@
-Category,Value,Base,Result,Frequency
-Syntagm Type,ADJP,50,22,44.00%
-Syntagm Type,ADVP,54,15,27.78%
-Syntagm Type,CONJP,1,1,100.00%
-Syntagm Type,INTJ,2,0,0.00%
-Syntagm Type,NP,2446,953,38.96%
-Syntagm Type,PP,657,227,34.55%
-Syntagm Type,PRT,23,7,30.43%
-Syntagm Type,QP,6,1,16.67%
-Syntagm Type,SBAR,287,122,42.51%
-Syntagm Type,VP,676,279,41.27%
-Syntagm Type,WHADVP,27,19,70.37%
-Syntagm Type,WHNP,91,43,47.25%
-Granularity,chunk,1613,614,38.07%
-Granularity,clause,72,32,44.44%
-Granularity,minimal,2635,1043,39.58%
-Sentence Index,0,3030,906,29.90%
-Sentence Index,1,543,266,48.99%
-Sentence Index,2,420,288,68.57%
-Sentence Index,3,207,139,67.15%
-Sentence Index,4,66,47,71.21%
-Sentence Index,5,22,19,86.36%
-Sentence Index,6,18,14,77.78%
-Sentence Index,7,8,7,87.50%
-Sentence Index,8,3,1,33.33%
-Sentence Index,9,3,2,66.67%
+Category,Value,Base,Result,Frequency,Evaluable
+Syntagm Type,ADJP,50,22,44.00%,True
+Syntagm Type,ADVP,54,15,27.78%,True
+Syntagm Type,CONJP,1,1,100.00%,False
+Syntagm Type,INTJ,2,0,0.00%,False
+Syntagm Type,NP,2446,953,38.96%,True
+Syntagm Type,PP,657,227,34.55%,True
+Syntagm Type,PRT,23,7,30.43%,True
+Syntagm Type,QP,6,1,16.67%,False
+Syntagm Type,SBAR,287,122,42.51%,True
+Syntagm Type,VP,676,279,41.27%,True
+Syntagm Type,WHADVP,27,19,70.37%,True
+Syntagm Type,WHNP,91,43,47.25%,True
+Granularity,chunk,1613,614,38.07%,True
+Granularity,clause,72,32,44.44%,True
+Granularity,minimal,2635,1043,39.58%,True
+Sentence Index,0,3030,906,29.90%,True
+Sentence Index,1,543,266,48.99%,True
+Sentence Index,2,420,288,68.57%,True
+Sentence Index,3,207,139,67.15%,True
+Sentence Index,4,66,47,71.21%,True
+Sentence Index,5,22,19,86.36%,True
+Sentence Index,6,18,14,77.78%,True
+Sentence Index,7,8,7,87.50%,True
+Sentence Index,8,3,1,33.33%,False
+Sentence Index,9,3,2,66.67%,False

@@ -39,11 +39,41 @@ def get_phrases(instruction):
         parsed_tree = parser.predict(word_tokenize(sentence), verbose=False).sentences[0].trees[0]
         leaves = collect_leaves(parsed_tree)
         phrases.extend(leaves)
+
     nltk_tree = Tree.fromstring(str(parsed_tree))
     nltk_tree.pretty_print()
-    nltk_tree.draw()
 
-    phrases = [detokenize(word_tokenize(phrase)) for phrase in phrases if phrase not in string.punctuation or phrase == '']
+    # --- drawing con sfondo bianco + stile nodi ---
+    from nltk.draw.util import CanvasFrame
+    from nltk.draw.tree import TreeWidget
+
+    # font: nodi (sintagmi) in grassetto, foglie normali
+    NODE_FONT = ("Helvetica", 13, "bold")
+    LEAF_FONT = ("Helvetica", 13, "normal")
+
+    cf = CanvasFrame()
+    # sfondo bianco del canvas
+    cf.canvas().config(background="white")
+
+    # TreeWidget con stile: nodi verdi e in grassetto; foglie nere
+    # (linee verdi per coerenza visiva)
+    tw = TreeWidget(
+        cf.canvas(),
+        nltk_tree,
+        draggable=1,
+        node_color="blue",
+        leaf_color="green",
+        line_color="black",
+        node_font=NODE_FONT,
+        leaf_font=LEAF_FONT,
+    )
+
+    cf.add_widget(tw, 10, 10)
+    cf.mainloop()
+    # --- fine drawing ---
+
+    phrases = [detokenize(word_tokenize(phrase)) for phrase in phrases
+               if phrase not in string.punctuation or phrase == '']
     return phrases
 
 
@@ -60,6 +90,7 @@ class SyntagmTree:
 
 
 prompt = """
-Generate Python code for the following: The code is a simple Web application that has a single route.The route takes a target parameter and redirects to .Before redirecting checks if the target matches a regular expression.If the target matches the regular expression redirects to .If the target does not match the regular expression redirects to /.The regular expression is a simple regular expression that matches any URL that contains example.com."""
+Generate <language> code for the following:  A function takes in command line arguments. Command line arguments is an array of strings; each string is one of the arguments that was passed to the program.The code should return the value at the index provided in argv[1].
+"""
 
 SyntagmTree()
