@@ -1,14 +1,12 @@
-import ast
 import csv
 import json
-import math
 import os
 import re
 import shutil
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, Set, Union, Optional, Tuple, List, Literal
+from typing import Dict, Set, Union, Optional, Tuple, List
 
 import numpy as np
 import pandas as pd
@@ -376,59 +374,6 @@ def cwe_stats(csv_path, cwe_column, verbose=True):
         if verbose:
             print(f"Errore nella lettura del file {csv_path}: {e}")
         return
-
-r"""
-def permutations_cwe_stats(main_csv_path, prompt_id_column, permutations_folder):
-    # Version that works without the added labels in the permutations csvs
-    def extract_cwe(prompt_id):
-        match = re.search(r'CWE-\d+', str(prompt_id))
-        return match.group(0) if match else None
-
-    df_main = pd.read_csv(main_csv_path)
-
-    if prompt_id_column not in df_main.columns:
-        raise ValueError(f"Column '{prompt_id_column}' not found in the CSV.")
-
-    # Conta le varianti iniziali per ciascun CWE
-    df_main['CWE_ID'] = df_main[prompt_id_column].apply(extract_cwe)
-    cwe_variant_counts = df_main['CWE_ID'].value_counts().sort_index(key=lambda x: x.str.replace("CWE-", "").astype(int))
-
-    print("Numero di varianti iniziali per ciascun CWE-ID:")
-    for cwe, count in cwe_variant_counts.items():
-        print(f"{cwe}: {count}")
-    print()
-
-    # Aggrega le occorrenze totali nei file delle permutazioni
-    all_cwes = []
-
-    for index, row in df_main.iterrows():
-        cwe_id = row['CWE_ID']
-        if not cwe_id:
-            continue
-
-        file_index = index + 1  # Adjust index to start from 1
-        file_path = os.path.join(permutations_folder, f"syntactic_permutations_{file_index}.csv")
-
-        if os.path.exists(file_path):
-            try:
-                df_perm = pd.read_csv(file_path)
-                all_cwes.extend([cwe_id] * len(df_perm))
-            except Exception as e:
-                print(f"Error reading {file_path}: {e}")
-        else:
-            print(f"File not found: {file_path}")
-
-    # Conta e ordina le occorrenze
-    cwe_series = pd.Series(all_cwes)
-    cwe_counts = cwe_series.value_counts()
-    sorted_cwe_counts = cwe_counts.sort_index(key=lambda x: x.str.replace("CWE-", "").astype(int))
-
-    # Stampa i risultati
-    print("Occorrenze totali (dalle permutazioni) per ciascun CWE-ID:")
-    for cwe, count in sorted_cwe_counts.items():
-        print(f"{cwe}: {count}")
-    print(f"\nNumero totale di CWE unici: {sorted_cwe_counts.shape[0]}")
-"""
 
 
 def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
@@ -991,6 +936,131 @@ def total_permutations_over_baseline(folder):
     errors = [r[3] for r in results if r[0] is None]
     for msg in errors:
         print(msg)
+
+
+def calculate_evaluable_rows_single(csv_path: str,
+                                    base_col: str = "Base",
+                                    result_col: str = "Result",
+                                    col_name: str = "Evaluable",
+                                    output_path: str = None,
+                                    low_quantile: float = 0.10,  # more permissive than Q1
+                                    info_quantile: float = 0.20  # more permissive than Q1
+                                    ) -> str:
+    """
+    More permissive, data-driven test:
+      - Keep rows True unless they are clearly 'tiny overall'.
+      - 'Tiny overall' means: non-degenerate row with BOTH Base and Result in the
+        bottom `low_quantile` AND information N*p*(1-p) below the bottom `info_quantile`.
+      - Non-degenerate means: 0 < Result < Base.
+      - No arbitrary fixed numbers; uses dataset quantiles.
+
+    Writes back to `csv_path` unless `output_path` is provided.
+    Returns the written path.
+    """
+    df = pd.read_csv(csv_path)
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Missing required columns '{base_col}' or '{result_col}'.")
+
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Compute data-driven thresholds on non-degenerate rows
+    if nondeg.any():
+        qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+        qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+        qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+    else:
+        # If nothing is non-degenerate, everything is False.
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Exclude ONLY when the row is in the tiny corner on all three axes
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Permissive decision: True unless in the tiny corner (and must be non-degenerate)
+    df[col_name] = (nondeg & ~tiny_corner).fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
+
+
+def calculate_evaluable_rows_combined(csv_path: str,
+                                      base_col: str = "Base",
+                                      result_col: str = "Result",
+                                      col_name: str = "Evaluable",
+                                      output_path: str = None,
+                                      low_quantile: float = 0.10,  # fascia bassa per N e k
+                                      info_quantile: float = 0.20  # fascia bassa per info
+                                      ) -> str:
+    """
+    Aggiunge una colonna booleana 'Valutabile' a un CSV (es. combined_metrics_comparison_py.csv),
+    considerando SOLO le colonne 'Base' (N) e 'Result' (k).
+
+    Criterio permissivo, tutto data-driven:
+      - Righe valide e non-degeneri: 0 < k < N.
+      - info = N * p * (1 - p), con p = k/N.
+      - 'False' SOLO se la riga è simultaneamente nella coda bassa su:
+          (i)   N <= quantile(low_quantile) di N,
+          (ii)  k <= quantile(low_quantile) di k,
+          (iii) info < quantile(info_quantile) di info.
+        (tutte le quantili sono calcolate sulle sole righe non-degeneri)
+      - Altrimenti 'True' (se non-degenere); le altre righe -> False.
+
+    Scrive sullo stesso file (in-place) se `output_path` non è fornito.
+    Ritorna il path del file scritto.
+    """
+    df = pd.read_csv(csv_path)
+
+    # Controllo colonne richieste
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Mancano le colonne richieste: '{base_col}', '{result_col}'")
+
+    # Cast robusto
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    # Validità e non-degenerazione (usa entrambe)
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    # p e informazione combinata (dipende da entrambi)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Se non ci sono righe non-degeneri, tutte False
+    if not bool(nondeg.any()):
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Soglie data-driven: quantili sulla sola parte non-degenere
+    qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+    qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+    qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+
+    # “Angolo minuscolo”: basso su N, su k e su info
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Decisione permissiva: True se non-degenere e NON in tiny_corner
+    valutabile = nondeg & ~tiny_corner
+
+    df[col_name] = valutabile.fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
 
 
 def plot_cwe_comparison(base_counters, result_counters, title, mode="Frequency", frequency=False):
@@ -2647,135 +2717,10 @@ def cwe_scenario_detection_match(csv_path, delimiter=",", encoding="utf-8", base
     return out
 
 
-
-def calculate_evaluable_rows_single(csv_path: str,
-                                    base_col: str = "Base",
-                                    result_col: str = "Result",
-                                    col_name: str = "Evaluable",
-                                    output_path: str = None,
-                                    low_quantile: float = 0.10,  # more permissive than Q1
-                                    info_quantile: float = 0.20  # more permissive than Q1
-                                    ) -> str:
-    """
-    More permissive, data-driven test:
-      - Keep rows True unless they are clearly 'tiny overall'.
-      - 'Tiny overall' means: non-degenerate row with BOTH Base and Result in the
-        bottom `low_quantile` AND information N*p*(1-p) below the bottom `info_quantile`.
-      - Non-degenerate means: 0 < Result < Base.
-      - No arbitrary fixed numbers; uses dataset quantiles.
-
-    Writes back to `csv_path` unless `output_path` is provided.
-    Returns the written path.
-    """
-    df = pd.read_csv(csv_path)
-    if base_col not in df.columns or result_col not in df.columns:
-        raise ValueError(f"Missing required columns '{base_col}' or '{result_col}'.")
-
-    N = pd.to_numeric(df[base_col], errors="coerce")
-    k = pd.to_numeric(df[result_col], errors="coerce")
-
-    valid = (N > 0) & (k >= 0) & (k <= N)
-    nondeg = valid & (k > 0) & (k < N)
-
-    with np.errstate(divide="ignore", invalid="ignore"):
-        p = k / N
-        info = N * p * (1 - p)
-
-    # Compute data-driven thresholds on non-degenerate rows
-    if nondeg.any():
-        qN_low   = np.nanquantile(N[nondeg],    low_quantile)
-        qk_low   = np.nanquantile(k[nondeg],    low_quantile)
-        qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
-    else:
-        # If nothing is non-degenerate, everything is False.
-        df[col_name] = False
-        out = output_path or csv_path
-        df.to_csv(out, index=False)
-        return out
-
-    # Exclude ONLY when the row is in the tiny corner on all three axes
-    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
-
-    # Permissive decision: True unless in the tiny corner (and must be non-degenerate)
-    df[col_name] = (nondeg & ~tiny_corner).fillna(False)
-
-    out = output_path or csv_path
-    df.to_csv(out, index=False)
-    return out
-
-
-def calculate_evaluable_rows_combined(csv_path: str,
-                                      base_col: str = "Base",
-                                      result_col: str = "Result",
-                                      col_name: str = "Evaluable",
-                                      output_path: str = None,
-                                      low_quantile: float = 0.10,  # fascia bassa per N e k
-                                      info_quantile: float = 0.20  # fascia bassa per info
-                                      ) -> str:
-    """
-    Aggiunge una colonna booleana 'Valutabile' a un CSV (es. combined_metrics_comparison_py.csv),
-    considerando SOLO le colonne 'Base' (N) e 'Result' (k).
-
-    Criterio permissivo, tutto data-driven:
-      - Righe valide e non-degeneri: 0 < k < N.
-      - info = N * p * (1 - p), con p = k/N.
-      - 'False' SOLO se la riga è simultaneamente nella coda bassa su:
-          (i)   N <= quantile(low_quantile) di N,
-          (ii)  k <= quantile(low_quantile) di k,
-          (iii) info < quantile(info_quantile) di info.
-        (tutte le quantili sono calcolate sulle sole righe non-degeneri)
-      - Altrimenti 'True' (se non-degenere); le altre righe -> False.
-
-    Scrive sullo stesso file (in-place) se `output_path` non è fornito.
-    Ritorna il path del file scritto.
-    """
-    df = pd.read_csv(csv_path)
-
-    # Controllo colonne richieste
-    if base_col not in df.columns or result_col not in df.columns:
-        raise ValueError(f"Mancano le colonne richieste: '{base_col}', '{result_col}'")
-
-    # Cast robusto
-    N = pd.to_numeric(df[base_col], errors="coerce")
-    k = pd.to_numeric(df[result_col], errors="coerce")
-
-    # Validità e non-degenerazione (usa entrambe)
-    valid = (N > 0) & (k >= 0) & (k <= N)
-    nondeg = valid & (k > 0) & (k < N)
-
-    # p e informazione combinata (dipende da entrambi)
-    with np.errstate(divide="ignore", invalid="ignore"):
-        p = k / N
-        info = N * p * (1 - p)
-
-    # Se non ci sono righe non-degeneri, tutte False
-    if not bool(nondeg.any()):
-        df[col_name] = False
-        out = output_path or csv_path
-        df.to_csv(out, index=False)
-        return out
-
-    # Soglie data-driven: quantili sulla sola parte non-degenere
-    qN_low   = np.nanquantile(N[nondeg],    low_quantile)
-    qk_low   = np.nanquantile(k[nondeg],    low_quantile)
-    qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
-
-    # “Angolo minuscolo”: basso su N, su k e su info
-    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
-
-    # Decisione permissiva: True se non-degenere e NON in tiny_corner
-    valutabile = nondeg & ~tiny_corner
-
-    df[col_name] = valutabile.fillna(False)
-
-    out = output_path or csv_path
-    df.to_csv(out, index=False)
-    return out
-
 ##################################################################################################################
 
 
-model_name = "athene"
+model_name = "qwen"
 
 language = "Python"
 language_identifier = "py"

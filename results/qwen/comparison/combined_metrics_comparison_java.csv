@@ -65,7 +65,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=minimal, Sentence Index=0, Syntagm Type=NP",3,minimal,0.0,NP,1511,164,10.85%,True
 "Granularity=minimal, Sentence Index=0, Syntagm Type=PP",3,minimal,0.0,PP,10,2,20.00%,True
 "Granularity=minimal, Sentence Index=0, Syntagm Type=PRT",3,minimal,0.0,PRT,15,1,6.67%,True
-"Granularity=minimal, Sentence Index=0, Syntagm Type=QP",3,minimal,0.0,QP,5,1,20.00%,True
+"Granularity=minimal, Sentence Index=0, Syntagm Type=QP",3,minimal,0.0,QP,5,1,20.00%,False
 "Granularity=minimal, Sentence Index=0, Syntagm Type=SBAR",3,minimal,0.0,SBAR,98,11,11.22%,True
 "Granularity=minimal, Sentence Index=0, Syntagm Type=VP",3,minimal,0.0,VP,63,5,7.94%,True
 "Granularity=minimal, Sentence Index=0, Syntagm Type=WHADVP",3,minimal,0.0,WHADVP,19,3,15.79%,True
@@ -131,7 +131,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Granularity=minimal, Syntagm Type=NP",2,minimal,,NP,2110,203,9.62%,True
 "Granularity=minimal, Syntagm Type=PP",2,minimal,,PP,14,2,14.29%,True
 "Granularity=minimal, Syntagm Type=PRT",2,minimal,,PRT,23,1,4.35%,True
-"Granularity=minimal, Syntagm Type=QP",2,minimal,,QP,6,1,16.67%,True
+"Granularity=minimal, Syntagm Type=QP",2,minimal,,QP,6,1,16.67%,False
 "Granularity=minimal, Syntagm Type=SBAR",2,minimal,,SBAR,173,16,9.25%,True
 "Granularity=minimal, Syntagm Type=VP",2,minimal,,VP,95,6,6.32%,True
 "Granularity=minimal, Syntagm Type=WHADVP",2,minimal,,WHADVP,27,4,14.81%,True
@@ -143,7 +143,7 @@ Combination,Features,Granularity,Sentence Index,Syntagm Type,Base,Result,Frequen
 "Sentence Index=0, Syntagm Type=NP",2,,0.0,NP,1774,186,10.48%,True
 "Sentence Index=0, Syntagm Type=PP",2,,0.0,PP,516,59,11.43%,True
 "Sentence Index=0, Syntagm Type=PRT",2,,0.0,PRT,15,1,6.67%,True
-"Sentence Index=0, Syntagm Type=QP",2,,0.0,QP,5,1,20.00%,True
+"Sentence Index=0, Syntagm Type=QP",2,,0.0,QP,5,1,20.00%,False
 "Sentence Index=0, Syntagm Type=SBAR",2,,0.0,SBAR,182,19,10.44%,True
 "Sentence Index=0, Syntagm Type=VP",2,,0.0,VP,386,31,8.03%,True
 "Sentence Index=0, Syntagm Type=WHADVP",2,,0.0,WHADVP,19,3,15.79%,True

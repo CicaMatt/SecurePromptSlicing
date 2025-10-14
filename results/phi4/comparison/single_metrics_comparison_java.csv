@@ -14,7 +14,7 @@ Syntagm Type,WHNP,91,10,10.99%,True
 Granularity,chunk,1613,102,6.32%,True
 Granularity,clause,72,4,5.56%,True
 Granularity,minimal,2635,190,7.21%,True
-Sentence Index,0,3030,250,8.25%,True
+Sentence Index,0,3030,250,8.55%,True
 Sentence Index,1,543,12,2.21%,True
 Sentence Index,2,420,17,4.05%,True
 Sentence Index,3,207,14,6.76%,True

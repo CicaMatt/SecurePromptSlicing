@@ -3526,6 +3526,131 @@ def baseline_cwe_scenario_stats(csv_path, column="Prompt ID", verbose=True):
     return {"CWE ID": sorted_counter}
 
 
+def calculate_evaluable_rows_single(csv_path: str,
+                                    base_col: str = "Base",
+                                    result_col: str = "Result",
+                                    col_name: str = "Evaluable",
+                                    output_path: str = None,
+                                    low_quantile: float = 0.10,  # more permissive than Q1
+                                    info_quantile: float = 0.20  # more permissive than Q1
+                                    ) -> str:
+    """
+    More permissive, data-driven test:
+      - Keep rows True unless they are clearly 'tiny overall'.
+      - 'Tiny overall' means: non-degenerate row with BOTH Base and Result in the
+        bottom `low_quantile` AND information N*p*(1-p) below the bottom `info_quantile`.
+      - Non-degenerate means: 0 < Result < Base.
+      - No arbitrary fixed numbers; uses dataset quantiles.
+
+    Writes back to `csv_path` unless `output_path` is provided.
+    Returns the written path.
+    """
+    df = pd.read_csv(csv_path)
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Missing required columns '{base_col}' or '{result_col}'.")
+
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Compute data-driven thresholds on non-degenerate rows
+    if nondeg.any():
+        qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+        qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+        qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+    else:
+        # If nothing is non-degenerate, everything is False.
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Exclude ONLY when the row is in the tiny corner on all three axes
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Permissive decision: True unless in the tiny corner (and must be non-degenerate)
+    df[col_name] = (nondeg & ~tiny_corner).fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
+
+
+def calculate_evaluable_rows_combined(csv_path: str,
+                                      base_col: str = "Base",
+                                      result_col: str = "Result",
+                                      col_name: str = "Evaluable",
+                                      output_path: str = None,
+                                      low_quantile: float = 0.10,  # fascia bassa per N e k
+                                      info_quantile: float = 0.20  # fascia bassa per info
+                                      ) -> str:
+    """
+    Aggiunge una colonna booleana 'Valutabile' a un CSV (es. combined_metrics_comparison_py.csv),
+    considerando SOLO le colonne 'Base' (N) e 'Result' (k).
+
+    Criterio permissivo, tutto data-driven:
+      - Righe valide e non-degeneri: 0 < k < N.
+      - info = N * p * (1 - p), con p = k/N.
+      - 'False' SOLO se la riga è simultaneamente nella coda bassa su:
+          (i)   N <= quantile(low_quantile) di N,
+          (ii)  k <= quantile(low_quantile) di k,
+          (iii) info < quantile(info_quantile) di info.
+        (tutte le quantili sono calcolate sulle sole righe non-degeneri)
+      - Altrimenti 'True' (se non-degenere); le altre righe -> False.
+
+    Scrive sullo stesso file (in-place) se `output_path` non è fornito.
+    Ritorna il path del file scritto.
+    """
+    df = pd.read_csv(csv_path)
+
+    # Controllo colonne richieste
+    if base_col not in df.columns or result_col not in df.columns:
+        raise ValueError(f"Mancano le colonne richieste: '{base_col}', '{result_col}'")
+
+    # Cast robusto
+    N = pd.to_numeric(df[base_col], errors="coerce")
+    k = pd.to_numeric(df[result_col], errors="coerce")
+
+    # Validità e non-degenerazione (usa entrambe)
+    valid = (N > 0) & (k >= 0) & (k <= N)
+    nondeg = valid & (k > 0) & (k < N)
+
+    # p e informazione combinata (dipende da entrambi)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = k / N
+        info = N * p * (1 - p)
+
+    # Se non ci sono righe non-degeneri, tutte False
+    if not bool(nondeg.any()):
+        df[col_name] = False
+        out = output_path or csv_path
+        df.to_csv(out, index=False)
+        return out
+
+    # Soglie data-driven: quantili sulla sola parte non-degenere
+    qN_low   = np.nanquantile(N[nondeg],    low_quantile)
+    qk_low   = np.nanquantile(k[nondeg],    low_quantile)
+    qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
+
+    # “Angolo minuscolo”: basso su N, su k e su info
+    tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
+
+    # Decisione permissiva: True se non-degenere e NON in tiny_corner
+    valutabile = nondeg & ~tiny_corner
+
+    df[col_name] = valutabile.fillna(False)
+
+    out = output_path or csv_path
+    df.to_csv(out, index=False)
+    return out
+
+
 def count_extracted_files(sarif_path: str | Path, filetype: str) -> int:
     """
     Conta gli URI unici dei file estratti con successo in un SARIF CodeQL,
@@ -3994,7 +4119,7 @@ def cwe_scenario_detection_match_merged(
 ##################################################################################################################
 
 
-model_name = "qwen"
+model_name = "athene"
 
 language = "Python"
 language_identifier = "py"
@@ -4342,10 +4467,13 @@ class SamplesAnalysis:
         cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
         single_feature_frequency_mean_to_csv(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3, comparison_single_metrics_merged)
         combined_feature_frequency_mean_to_csv(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3, comparison_combined_metrics_merged)
+        calculate_evaluable_rows_single(comparison_single_metrics_merged)
+        calculate_evaluable_rows_combined(comparison_combined_metrics_merged)
+
         print("Merged Single Features Statistical Analysis Stats:")
-        single_feature_statistical_analysis_merged(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
+        #single_feature_statistical_analysis_merged(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
         print("Merged Combined Features Statistical Analysis Stats:")
-        combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
+        #combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
 
 
 BaselineCsvBuilder()
