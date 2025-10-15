@@ -1550,6 +1550,7 @@ def combined_feature_statistical_analysis(
         "SIGNIFICATIVE" / "NON significative" rispetto ad α.
       - Qualifica l’ampiezza dell’effetto (Cramér’s V: ~0.1 piccolo, ~0.3 medio, ~0.5 grande).
       - Ritorna un dizionario con il verdetto omnibus.
+      - **Se l’omnibus è NON significativo, l’analisi si ferma e non esegue i test per-valore.**
 
     CSV minimo: `Combination`, `Base`, `Result`.
     """
@@ -1715,6 +1716,12 @@ def combined_feature_statistical_analysis(
         report.append(
             f"Conclusione OMNIBUS: le combinazioni osservate **{stato}** ai fini del tasso di vulnerabilità (α={alpha}).\n"
         )
+
+    # >>>>>>>>>>>>>>>>>>>> USCITA ANTICIPATA SE OMNIBUS NON SIGNIFICATIVO <<<<<<<<<<<<<<<<<<<<
+    if not omni_significant:
+        report.append("Omnibus NON significativo: interrompo qui. Nessun test per-valore verrà eseguito.")
+        print("\n".join(report))
+        return {"omnibus_significant": omni_significant, "p_omnibus": p_omni, "cramers_V": V}
 
     # ---------- test per-valore: combinazione specifica vs resto ----------
     base_tot = int(agg["Base"].sum())
@@ -2720,10 +2727,10 @@ def cwe_scenario_detection_match(csv_path, delimiter=",", encoding="utf-8", base
 ##################################################################################################################
 
 
-model_name = "qwen"
+model_name = "athene"
 
-language = "Python"
-language_identifier = "py"
+language = "C"
+language_identifier = "c"
 
 baseline_csv = 'LLMSecEvalDataset.csv'
 permutations_folder = 'permutations'
@@ -2878,13 +2885,11 @@ class MetricsComparison:
         compare_combined_metrics(permutation_combined_metrics, result_combined_metrics, comparison_combined_metrics)
         calculate_evaluable_rows_combined(comparison_combined_metrics)
 
-
         print("\nSingle Features Statistical Analysis Stats:")
-        #analyze_single_feature_significance(comparison_single_metrics)
-        #single_feature_statistical_analysis(comparison_single_metrics)
+        single_feature_statistical_analysis(comparison_single_metrics)
 
         print("\nCombined Features Statistical Analysis Stats:")
-        #combined_feature_statistical_analysis(comparison_combined_metrics)
+        combined_feature_statistical_analysis(comparison_combined_metrics)
 
         # Plotting data
         #plot_metric_comparison(permutation_single_metrics, result_single_metrics, "Syntagm Type", "Frequency", True)
@@ -2895,7 +2900,7 @@ class MetricsComparison:
         print("\n----------------------------------------------------------------\n")
 
 
-
+"""
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
@@ -2919,7 +2924,7 @@ class CWEComparison:
         #plot_cwe_comparison(result_vulnerable_scenarios, baseline_cwes, "Baseline", "Frequency", True)
         #plot_cwe_comparison(permutations_cwes, result_vulnerable_scenarios, "Permutations", "Frequency", True)
         print("\n----------------------------------------------------------------\n")
-
+"""
 
 
 BaselineCsvBuilder()

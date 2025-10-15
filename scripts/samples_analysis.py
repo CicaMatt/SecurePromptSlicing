@@ -4185,7 +4185,7 @@ comparison_permutations_cwes_3 = f'samples_results/sample_3/{model_name}/compari
 comparison_permutations_cwes_merged = f'samples_results/merged/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
 
 
-
+##################################################################################################################
 
 
 class BaselineCsvBuilder:
@@ -4420,7 +4420,7 @@ class MetricsComparison:
         print("\n----------------------------------------------------------------\n")
 
 
-
+"""
 # Comparison between vulnerability scenarios from baseline and detected vulnerabilities
 class CWEComparison:
     def __init__(self):
@@ -4458,22 +4458,22 @@ class CWEComparison:
         #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline_2, quiet=True), collect_detected_cwes(results_2, quiet=True))
         #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline_3, quiet=True), collect_detected_cwes(results_3, quiet=True))
         print("\n----------------------------------------------------------------\n")
-
+"""
 
 class SamplesAnalysis:
     def __init__(self):
         print("***SAMPLES ANALYSIS***\n")
-        cwe_scenarios_frequency_mean(comparison_baseline_cwes_1, comparison_baseline_cwes_2, comparison_baseline_cwes_3, comparison_baseline_cwes_merged)
-        cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
+        #cwe_scenarios_frequency_mean(comparison_baseline_cwes_1, comparison_baseline_cwes_2, comparison_baseline_cwes_3, comparison_baseline_cwes_merged)
+        #cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
         single_feature_frequency_mean_to_csv(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3, comparison_single_metrics_merged)
         combined_feature_frequency_mean_to_csv(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3, comparison_combined_metrics_merged)
         calculate_evaluable_rows_single(comparison_single_metrics_merged)
         calculate_evaluable_rows_combined(comparison_combined_metrics_merged)
 
         print("Merged Single Features Statistical Analysis Stats:")
-        #single_feature_statistical_analysis_merged(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
+        single_feature_statistical_analysis_merged(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3)
         print("Merged Combined Features Statistical Analysis Stats:")
-        #combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
+        combined_feature_statistical_analysis_merged(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3)
 
 
 BaselineCsvBuilder()

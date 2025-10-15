@@ -13,7 +13,7 @@ Syntagm Type,WHADVP,27,3,11.11%,True
 Syntagm Type,WHNP,91,9,9.89%,True
 Granularity,chunk,1613,108,6.70%,True
 Granularity,clause,72,6,8.33%,True
-Granularity,minimal,2635,254,9.64%,True
+Granularity,minimal,2635,254,9.84%,True
 Sentence Index,0,3030,294,9.70%,True
 Sentence Index,1,543,29,5.34%,True
 Sentence Index,2,420,33,7.86%,True

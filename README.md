@@ -103,3 +103,96 @@ Result comparison over different programming languages
 - **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
 
 
+
+
+
+
+
+
+
+
+
+
+<div align="center">
+  
+  <h2 align="center">The Language of Security: Prompt Language and Its Influence on the Security of LLM-Generated Code</h2>
+
+  <p align="center">
+    A benchmark study on the impact of Meta-Prompting on the security and quality of artificially generated code.
+  </p>
+</div>
+
+## About The Project
+This project conduct a study on the impact of low-level constituents in the generation of secure code through LLM, by creating permutation of certain prompt and analyzing the impact of the removal constituent on security.
+
+## Repository Contents
+### _LLMSecEvalDataset.csv_
+Baseline dataset used for the experiment
+
+### _permutations_
+Contains all the permutations produced with the _crf_con_en_ parser starting from the _LLMSecEval_ dataset
+
+### _generated_code_
+Contains all the generated code for the experiment across all languages and LLMs
+
+### _CodeQL_
+Contains all the databases for each CodeQL analysis run
+
+### _results_
+Contains all the csv files representing the several analysis steps employed
+
+### _samples_
+Contains all the sample data from which the experimental sample run has been started
+
+### _samples_generated_code_
+Contains all the generated code starting from the prompt of the sample set of data
+
+### _samples_results_
+Contains all the csv files related to the results of the sample experimental run
+
+
+
+
+
+### _scripts_
+Contains all the necessary scripts needed to perform the experiment:
+- _syntagm_tree_generation.py_: Prompt syntagm tree generation
+- _prompt_permutation_generation.py_: Generates all possible permutations out of a prompt and output a csv
+- _permutations_code_generation.py_: Generates snippets based on the available permutations
+- _security_analysis.py__: Code analysis for C, Java, Python
+- _result_analysis.py_: Result analysis for a single programming language
+- _result_comparison.py_: Result comparison over different programming languages
+<br><br>
+
+
+
+### _prompting_
+Contains all the necessary scripts needed to prompt ChatGPT, Gemini and DeepSeek. In order for those script to work properly, all the API keys needs to be stored in the OS environment variables.
+
+### _env_
+Contains the .yaml file needed to replicate the environment.
+
+
+
+## Getting Started
+
+### Prerequisites
+Python 3.12
+
+### Installation
+
+1. Install Dependencies:
+   ```sh
+   conda env create -f env.yaml
+   ```
+   
+### How to use
+
+
+   
+
+
+
+
+
+
