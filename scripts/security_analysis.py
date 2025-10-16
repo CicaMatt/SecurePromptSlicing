@@ -2000,7 +2000,7 @@ samples_permutations_code_c_formatted = f"samples_generated_code/sample_{sample}
 
 
 
-"""
+
 PythonPreprocessing(python_baseline_folder)
 SecurityAnalysis(command_set_baseline_analysis_py)
 PythonPreprocessing(python_folder)
@@ -2011,12 +2011,12 @@ JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=F
 SecurityAnalysis(command_set_baseline_analysis_java)
 JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
 SecurityAnalysis(command_set_result_analysis_java)
-"""
+
 CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_c)
+SecurityAnalysis(command_set_baseline_analysis_c)
 CPreprocessing(c_folder, c_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_c)
-"""
+SecurityAnalysis(command_set_result_analysis_c)
+
 CodeAnalysisOutcome()
 
 
@@ -2037,4 +2037,3 @@ CPreprocessing(samples_permutations_code_c, samples_permutations_code_c_formatte
 SecurityAnalysis(command_set_sample_result_analysis_c)
 
 SampleCodeAnalysisOutcome()
-"""
