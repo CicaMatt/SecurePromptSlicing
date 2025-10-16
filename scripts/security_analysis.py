@@ -6,11 +6,9 @@ import re
 import shutil
 import subprocess
 import warnings
-from collections import defaultdict, OrderedDict
 from pathlib import Path
 
 warnings.filterwarnings("ignore", category=SyntaxWarning)
-
 
 
 
@@ -31,32 +29,10 @@ def run_sh_commands(commands):
             print(f"Error: {str(e)}\n")
 
 
-def wrap_inside_class(folder):
-    """
-    Cerca file .java nella cartella (ricorsivamente).
-    Se un file non ha una classe, incapsula il contenuto in una classe.
-    """
-    for root, _, files in os.walk(folder):
-        for filename in files:
-            if filename.endswith(".java"):
-                full_path = os.path.join(root, filename)
-                with open(full_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-
-                if not re.search(r'\bclass\s+\w+', content):
-                    class_name = os.path.splitext(filename)[0].capitalize() + "Wrapper"
-                    wrapped = f"public class {class_name} {{\n{content}\n}}"
-                    with open(full_path, 'w', encoding='utf-8') as f:
-                        f.write(wrapped)
-                    print(f"Wrapped {filename} in class {class_name}")
-
-
-
 def create_maven_structure(code_path: str, nested: bool = False, with_imports: bool = False):
     code_path = Path(code_path)
     aggregators_created = set()
 
-    # Blocco XML con tutte le dipendenze richieste
     external_dependencies_xml = '''
 <dependencies>
   <!-- GSON -->
@@ -626,12 +602,11 @@ def rename_classes_uniquely(code_path: str):
 
         file_stem = java_file.stem
 
-        # Cerca dichiarazione di classe pubblica o prima classe disponibile
         match = re.search(r'\bpublic\s+class\s+(\w+)', content)
         if not match:
             match = re.search(r'\bclass\s+(\w+)', content)
             if not match:
-                continue  # Nessuna classe trovata
+                continue
 
         declared_class_name = match.group(1)
         new_class_name = declared_class_name
@@ -642,14 +617,12 @@ def rename_classes_uniquely(code_path: str):
         used_names.add(new_class_name)
 
         if new_class_name != declared_class_name:
-            # Sostituisci la dichiarazione della classe
             content = re.sub(
                 rf'\b(public\s+)?class\s+{re.escape(declared_class_name)}\b',
                 lambda m: (m.group(1) or '') + f'class {new_class_name}',
                 content
             )
 
-            # Sostituisci tutte le altre occorrenze del vecchio nome della classe
             content = re.sub(
                 rf'\b{re.escape(declared_class_name)}\b',
                 new_class_name,
@@ -660,7 +633,6 @@ def rename_classes_uniquely(code_path: str):
         else:
             print(f"Classe mantenuta: {declared_class_name}")
 
-        # Rinomina il file se necessario
         current_file_name = java_file.stem
         expected_file_name = new_class_name
         if current_file_name != expected_file_name:
@@ -674,14 +646,6 @@ def rename_classes_uniquely(code_path: str):
 
 
 def extract_unique_java_imports(base_folder, exclude_java_standard=True):
-    """
-    Recursively scans all .java files in the given folder and prints
-    all unique import statements (excluding standard Java imports if specified).
-
-    Args:
-        base_folder (str): Path to the folder to scan.
-        exclude_java_standard (bool): If True, excludes imports starting with java. or javax.
-    """
     import_pattern = re.compile(r'^\s*import\s+([a-zA-Z0-9_.]+)\s*;', re.MULTILINE)
     unique_imports = set()
 
@@ -705,105 +669,6 @@ def extract_unique_java_imports(base_folder, exclude_java_standard=True):
         print(f"import {imp};")
 
 
-def duplication_removal(base_dir):
-    class_name_counts = defaultdict(int)
-    renamed_classes = {}
-
-    # Step 1: raccogli tutte le classi (anche non pubbliche)
-    java_files = []
-    class_pattern = re.compile(r'\b(class|interface|enum)\s+(\w+)')
-
-    for root, _, files in os.walk(base_dir):
-        for file in files:
-            if file.endswith(".java"):
-                full_path = os.path.join(root, file)
-                java_files.append(full_path)
-
-    for path in java_files:
-        with open(path, 'r', encoding='utf-8') as f:
-            content = f.read()
-
-        for match in class_pattern.finditer(content):
-            class_name = match.group(2)
-            class_name_counts[class_name] += 1
-
-    # Step 2: rinomina classi duplicate
-    for path in java_files:
-        with open(path, 'r', encoding='utf-8') as f:
-            content = f.read()
-
-        modified = False
-        new_content = content
-
-        for match in class_pattern.finditer(content):
-            keyword, old_name = match.groups()
-            if class_name_counts[old_name] > 1:
-                base = old_name
-                i = 1
-                while True:
-                    new_name = f"{base}_{i}"
-                    if new_name not in class_name_counts:
-                        break
-                    i += 1
-
-                new_content = re.sub(rf'\b{keyword}\s+{old_name}\b',
-                                     f'{keyword} {new_name}', new_content)
-                class_name_counts[new_name] = 1
-                renamed_classes[old_name] = new_name
-                modified = True
-
-                # rinomina anche il file se il nome file coincide con la classe
-                file_name = os.path.basename(path)
-                if file_name == f"{old_name}.java":
-                    new_file_name = os.path.join(os.path.dirname(path), f"{new_name}.java")
-                    os.rename(path, new_file_name)
-                    path = new_file_name  # aggiorna per evitare future collisioni
-                    break
-
-        if modified:
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(new_content)
-
-    return renamed_classes
-
-
-def find_errors_java(folder):
-    errors = {}
-
-    for root, _, files in os.walk(folder):
-        for file in files:
-            if file.endswith(".java"):
-                filepath = os.path.join(root, file)
-                try:
-                    result = subprocess.run(
-                        ["javac", filepath],
-                        capture_output=True,
-                        text=True
-                    )
-                    if result.returncode != 0:
-                        errors[filepath] = result.stderr.strip()
-                except FileNotFoundError:
-                    print("Errore: javac non trovato. Assicurati che Java sia installato e presente nel PATH.")
-                    return None
-
-    if errors:
-        print("\n=== File con errors sintattici ===")
-        for idx, (file, message) in enumerate(sorted(errors.items()), start=1):
-            print(f"{idx}. {file}")
-            print(f"   → Errore: {message.splitlines()[0]}\n")  # stampa solo la prima riga dell'errore
-
-        print(f"Totale file non validi: {len(errors)}")
-    else:
-        print("Tutti i file .java sono sintatticamente corretti.")
-
-    return errors
-
-
-
-# The build_c_project function scans a C project directory, detects .c source files and their included headers,
-# and automatically generates a Makefile with appropriate compilation and linking flags.
-# It identifies external libraries used in the code, infers their Homebrew packages,
-# and suggests any missing dependencies. The function supports both flat and nested directory structures.
 def build_c_project(src_dir, nested=True, mode="auto"):
     import os
 
@@ -818,9 +683,7 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         "mysql/": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
         "mysql.h": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
         "sqlite3.h": {"brew": "sqlite", "libs": ["-lsqlite3"]},
-        #"cgic.h": {"brew": "libcgi", "libs": ["-lcgic"]},
         "yaml.h": {"brew": "libyaml", "libs": ["-lyaml"]},
-        #"http_parser.h": {"brew": "http-parser", "libs": []},
         "curl/curl.h": {"brew": "curl", "libs": ["-lcurl"]},
         "jansson.h": {"brew": "jansson", "libs": ["-ljansson"]},
         "cJSON.h": {"brew": "cjson", "libs": ["-lcjson"]},
@@ -876,7 +739,6 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         "mpr.h": {"brew": "appweb", "libs": []},
         "json/json.h": {"brew": "jsoncpp", "libs": ["-ljsoncpp"]},
         "httpserver.hpp": {"brew": "libhttpserver", "libs": ["-lhttpserver"]},
-
         "mysql_connection.h": {"brew": "mysql-connector-c++", "libs": ["-lmysqlcppconn"]},
         "gcrypt.h": {"brew": "libgcrypt", "libs": ["-lgcrypt"]},
         "uriparser/Uri.h": {"brew": "uriparser", "libs": ["-luriparser"]},
@@ -898,8 +760,8 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         "unistd.h": {"brew": None, "libs": []},
         "regex.h": {"brew": "pcre", "libs": ["-lpcre"]},
         "openssl/buffer.h": {"brew": "openssl", "libs": ["-lcrypto"]},
-        "bzlib.h": {"brew": "bzip2", "libs": ["-lbz2"]},  # usi <bzlib.h>, non <bz2.h>
-        "cgi.h": {"brew": "libcgi", "libs": ["-lcgi"]},  # libreria C "libcgi"
+        "bzlib.h": {"brew": "bzip2", "libs": ["-lbz2"]},
+        "cgi.h": {"brew": "libcgi", "libs": ["-lcgi"]},
         "http_parser.h": {"brew": "http-parser", "libs": ["-lhttp_parser"]},
         "mysql/mysql.h": {"brew": "mysql-client", "libs": ["-lmysqlclient"]},
         "msgpack.h": {"brew": "msgpack", "libs": ["-lmsgpackc"]},
@@ -908,71 +770,37 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         "openssl/pem.h": {"brew": "openssl", "libs": ["-lssl", "-lcrypto"]},
         "uvc.h": {"brew": "libuvc", "libs": ["-luvc"]},
         "libuvc/libuvc.h": {"brew": "libuvc", "libs": ["-luvc"]},
-        # headers Apache httpd: servono per includere, tipicamente senza linkare a libhttpd
         "httpd.h": {"brew": "httpd", "libs": []},
         "http_config.h": {"brew": "httpd", "libs": []},
         "http_protocol.h": {"brew": "httpd", "libs": []},
         "http_request.h": {"brew": "httpd", "libs": []},
         "http_server.h": {"brew": "httpd", "libs": []},
-        # duplicati/libarchive usati col prefisso <libarchive/...>
         "libarchive/archive.h": {"brew": "libarchive", "libs": ["-larchive"]},
         "libarchive/archive_entry.h": {"brew": "libarchive", "libs": ["-larchive"]},
-        "dirent.h": {"brew": None, "libs": []},          # POSIX, fornita dal sistema
-        "direct.h": {"brew": None, "libs": []},          # Windows/MSVC-only
-        "netinet/in.h": {"brew": None, "libs": []},      # POSIX, fornita dal sistema
-        "windows.h": {"brew": None, "libs": []},         # Windows-only
-
-        # libmicrohttpd: alias del nome header (alcuni snippet usano <libmicrohttpd.h>)
+        "dirent.h": {"brew": None, "libs": []},
+        "direct.h": {"brew": None, "libs": []},
+        "netinet/in.h": {"brew": None, "libs": []},
+        "windows.h": {"brew": None, "libs": []},
         "libmicrohttpd.h": {"brew": "libmicrohttpd", "libs": ["-lmicrohttpd"]},
-
-        # libbase64 (aklomp/base64): header è <libbase64.h>, lib = -lbase64
-        # NB: non esiste un formula Homebrew "libbase64"; se la installi a mano,
-        # questo ti permette di linkare correttamente.
         "libbase64.h": {"brew": None, "libs": ["-lbase64"]},
-    # Python (ATTENZIONE: versione cambia nel tempo; vedi nota sotto)
-    "Python.h": {"brew": "python@3.12", "libs": ["-lpython3.12"]},  # valuta di generare versione via python3-config
-
-    # Variante case-sensitive su Windows.h (il tuo matching è case-sensitive)
     "Windows.h": {"brew": None, "libs": []},
-
-    # Apache httpd extra header
     "ap_config.h": {"brew": "httpd", "libs": []},
     "http_log.h": {"brew": "httpd", "libs": []},
-
-    # libevent (event2/*)
     "event2/event.h": {"brew": "libevent", "libs": ["-levent"]},
     "event2/http.h": {"brew": "libevent", "libs": ["-levent"]},
     "event2/buffer.h": {"brew": "libevent", "libs": ["-levent"]},
     "event2/listener.h": {"brew": "libevent", "libs": ["-levent"]},
     "event2/util.h": {"brew": "libevent", "libs": ["-levent"]},
-
-    # WebSockets
     "libwebsockets.h": {"brew": "libwebsockets", "libs": ["-lwebsockets"]},
-
-    # mod_wsgi API per Apache
     "mod_wsgi/include/mod_wsgi-api.h": {"brew": "mod_wsgi", "libs": []},
-
-    # yaml-cpp (C++), distinto da libyaml (C)
     "yaml-cpp/yaml.h": {"brew": "yaml-cpp", "libs": ["-lyaml-cpp"]},
-
-    # Emscripten headers (SDK)
     "emscripten.h": {"brew": "emscripten", "libs": []},
     "emscripten/html5.h": {"brew": "emscripten", "libs": []},
-
-    # Header-only / nessun link noto
     "lodepng.h": {"brew": None, "libs": []},
     "miniz.h": {"brew": None, "libs": []},
-
-    # base64 generica (se usi libbase64 con nome header <base64.h>)
     "base64.h": {"brew": None, "libs": ["-lbase64"]},
-
-    # pthreads
     "pthread.h": {"brew": None, "libs": ["-lpthread"]},
-
-    # httpserver (se usi libhttpserver)
     "httpserver.h": {"brew": "libhttpserver", "libs": ["-lhttpserver"]},
-
-    # Sistema/portabilità (nessun link aggiuntivo)
     "io.h": {"brew": None, "libs": []},
     "libgen.h": {"brew": None, "libs": []},
     "netdb.h": {"brew": None, "libs": []},
@@ -1004,7 +832,6 @@ def build_c_project(src_dir, nested=True, mode="auto"):
         except:
             pass
 
-    # Scan all .c files
     if nested:
         for subdir in next(os.walk(src_dir))[1]:
             sub_src = os.path.join(src_dir, subdir)
@@ -1028,11 +855,9 @@ def build_c_project(src_dir, nested=True, mode="auto"):
                     if mode == "auto":
                         process_includes(src_file)
 
-    # Always include full known libs if requested
     if mode == "full":
         process_all_known_libs()
 
-    # Write Makefile
     makefile_path = os.path.join(src_dir, "Makefile")
     with open(makefile_path, "w") as mf:
         mf.write("CC = gcc\n")
@@ -1055,44 +880,10 @@ def build_c_project(src_dir, nested=True, mode="auto"):
             print(f"  brew install {b}")
 
 
-def add_standard_includes(root_dir, standard_c_functions):
-    # Ottiene la lista degli header dalla struttura standard_c_functions
-    standard_headers = list(standard_c_functions.keys())
-
-    for dirpath, _, filenames in os.walk(root_dir):
-        for file in filenames:
-            if file.endswith(".c"):
-                filepath = os.path.join(dirpath, file)
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    content = f.read()
-
-                # Trova tutti gli include già presenti
-                included_headers = set(re.findall(r'#include\s+<([^>]+)>', content))
-
-                # Determina quali header mancano
-                missing_headers = [h for h in standard_headers if h not in included_headers]
-
-                if missing_headers:
-                    # Crea le nuove righe da aggiungere
-                    new_includes = '\n'.join(f'#include <{header}>' for header in missing_headers)
-
-                    # Inserisci gli include all'inizio del file
-                    new_content = new_includes + '\n\n' + content
-
-                    # Sovrascrive il file con gli include aggiornati
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        f.write(new_content)
-
-                    print(f"Aggiunti {len(missing_headers)} include a: {filepath}")
-                else:
-                    print(f"Nessun include mancante in: {filepath}")
-
-
 def find_unique_includes(directory, standard_headers_map=None, exclude_standard=False):
     include_pattern = re.compile(r'^\s*#\s*include\s+[<"]([^>"]+)[>"]')
     unique_includes = set()
 
-    # Se viene fornito il mapping, crea un set dei nomi degli header standard
     standard_headers = set(standard_headers_map.keys()) if standard_headers_map else set()
 
     for root, _, files in os.walk(directory):
@@ -1105,7 +896,6 @@ def find_unique_includes(directory, standard_headers_map=None, exclude_standard=
                             match = include_pattern.match(line)
                             if match:
                                 header_file = match.group(1).strip()
-                                # Escludi se è standard e la modalità lo richiede
                                 if exclude_standard and header_file in standard_headers:
                                     continue
                                 unique_includes.add(f'#include <{header_file}>')
@@ -1120,7 +910,6 @@ def find_unique_includes(directory, standard_headers_map=None, exclude_standard=
 def count_short_files(folder):
     count = 0
     for root, dirs, files in os.walk(folder):
-        # Ignore __pycache__ folders
         if "__pycache__" in dirs:
             dirs.remove("__pycache__")
 
@@ -1137,20 +926,12 @@ def count_short_files(folder):
 
 
 def collect_python_imports(root_dir: str):
-    """
-    Recursively read all .py files under root_dir,
-    collect unique top-level imports, print them,
-    and return them as a set.
-    Skips __pycache__ directories, .pyc files, and unparsable files.
-    """
     imports = set()
 
     for dirpath, dirnames, filenames in os.walk(root_dir):
-        # Prevent os.walk from descending into __pycache__ directories
         dirnames[:] = [d for d in dirnames if d != "__pycache__"]
 
         for filename in filenames:
-            # Only process regular .py files (not .pyc or others)
             if not filename.endswith(".py"):
                 continue
 
@@ -1167,7 +948,6 @@ def collect_python_imports(root_dir: str):
                         if n.module is not None:
                             imports.add(n.module.split(".")[0])
             except Exception:
-                # Skip files that can't be parsed
                 continue
 
     for mod in sorted(imports):
@@ -1177,9 +957,6 @@ def collect_python_imports(root_dir: str):
 
 
 def create_formatted_folder(source_folder, destination_folder):
-    """
-    Deletes the destination folder if it exists and then copies the source folder to that location.
-    """
     if os.path.exists(destination_folder):
         shutil.rmtree(destination_folder)
 
@@ -1187,21 +964,6 @@ def create_formatted_folder(source_folder, destination_folder):
 
 
 def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
-    """
-    Ritorna un dizionario con le cardinalità principali (etichette chiare):
-      INVOCATIONS (telemetria):
-        - extractor_successes:   invocazioni estrattore riuscite
-        - extractor_failures:    invocazioni estrattore fallite
-        - extractor_total:       totale invocazioni (successi + fallimenti)
-
-      FILES (diagnostiche):
-        - files_expected:        file attesi (baseline)
-        - files_with_snippets:   file del sorgente con snippet ('successfully-extracted-files')
-        - files_without_snippets:attesi ma senza snippet (expected - with_snippets)
-        - warnings_with_snippets:file con warning ∩ con snippet
-        - warnings_without_snippets: file con warning ∩ senza snippet
-        - analyzed_files:        file citati nei risultati “veri” (non diagnostica/telemetria)
-    """
     sarif_path = Path(sarif_path)
     data = json.loads(sarif_path.read_text(encoding="utf-8"))
 
@@ -1213,11 +975,10 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
 
     extractor_successes = 0
     extractor_failures = 0
-    _saw_extractor_summary = False   # evita doppio conteggio
+    _saw_extractor_summary = False
 
     runs = data.get("runs", []) or []
     for run in runs:
-        # 1) artifacts + mappa index -> uri
         artifacts = run.get("artifacts", []) or []
         artifacts_seen += len(artifacts)
 
@@ -1255,7 +1016,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
                     out.append(uri)
             return out
 
-        # diagnostiche da escludere dai "risultati veri"
         diag_rule_ids = {
             "cpp/baseline/expected-extracted-files",
             "cpp/diagnostics/successfully-extracted-files",
@@ -1263,7 +1023,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
             "cpp/diagnostics/failed-extractor-invocations",
         }
 
-        # 2) risultati "veri"
         for res in run.get("results", []) or []:
             rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
             if rid in diag_rule_ids:
@@ -1271,7 +1030,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
             for uri in _collect_uris_from_locations(res):
                 analyzed_uris.add(uri)
 
-        # 3) diagnostica in invocations
         for inv in run.get("invocations", []) or []:
             for tn in inv.get("toolExecutionNotifications", []) or []:
                 desc = (tn.get("descriptor") or {})
@@ -1296,7 +1054,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
                     for uri in _collect_uris_from_locations(tn):
                         extraction_warning_uris.add(uri)
 
-        # 4) fallback diagnostiche come results
         diag_to_set = {
             "cpp/baseline/expected-extracted-files": expected_uris,
             "cpp/diagnostics/successfully-extracted-files": files_with_snippets_uris,
@@ -1309,7 +1066,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris_from_locations(res):
                     dest_set.add(uri)
 
-        # 5) eventuali notifiche nel driver (evita doppio conteggio)
         for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
             nid = notif.get("id") or notif.get("name") or ""
             if nid == "cpp/extractor/summary":
@@ -1328,7 +1084,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris_from_locations(notif):
                     expected_uris.add(uri)
 
-    # Derivati (FILES)
     files_expected = len(expected_uris)
     files_with_snippets = len(files_with_snippets_uris)
     files_without_snippets = max(0, files_expected - files_with_snippets)
@@ -1336,24 +1091,18 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
     warnings_with_snippets = len(extraction_warning_uris & files_with_snippets_uris)
     warnings_without_snippets = len(extraction_warning_uris - files_with_snippets_uris)
 
-    # Derivati (INVOCATIONS)
     extractor_total = extractor_successes + extractor_failures
 
     summary = {
-        # INVOCATIONS
         "extractor_successes": extractor_successes,
         "extractor_failures": extractor_failures,
         "extractor_total": extractor_total,
-
-        # FILES
         "files_expected": files_expected,
         "files_with_snippets": files_with_snippets,
         "files_without_snippets": files_without_snippets,
         "warnings_with_snippets": warnings_with_snippets,
         "warnings_without_snippets": warnings_without_snippets,
         "analyzed_files": len(analyzed_uris),
-
-        # opzionale
         "artifacts_seen": artifacts_seen,
         "expected_uris": sorted(expected_uris) if show_lists else [],
         "analyzed_uris": sorted(analyzed_uris) if show_lists else [],
@@ -1364,14 +1113,12 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
     if print_report:
         print("== CodeQL SARIF – C/C++ – Riepilogo ==")
 
-        # INVOCATIONS (telemetria)
         print("Invocazioni estrattore:")
         print(f"  OK (senza interruzioni):        {summary['extractor_successes']}")
         print(f"  KO (non giunte a termine):      {summary['extractor_failures']}")
         print(f"  Totale:                         {summary['extractor_total']}")
 
         print()
-        # FILES (diagnostiche)
         print("File:")
         print(f"  Attesi (baseline):              {summary['files_expected']}")
         print(f"  Estratti:                       {summary['files_with_snippets']}")
@@ -1399,30 +1146,6 @@ def parse_codeql_sarif_c(sarif_path, print_report=True, show_lists=False):
 
 
 def parse_codeql_sarif_c_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
-    """
-    Calcola la media (intera arrotondata) dei campi stampati da `parse_codeql_sarif_c`
-    su tre file SARIF.
-
-    Parametri
-    ---------
-    sarif_a, sarif_b, sarif_c : str | Path
-        Percorsi ai tre file SARIF.
-    print_report : bool
-        Se True, stampa un riepilogo con le medie.
-    rounding : {"nearest", "floor", "ceil"}
-        Strategia di arrotondamento:
-        - "nearest": al più vicino (round di Python)
-        - "floor":   per difetto
-        - "ceil":    per eccesso
-
-    Ritorna
-    -------
-    dict
-        Medie intere dei campi:
-        extractor_successes, extractor_failures, extractor_total,
-        files_expected, files_with_snippets, files_without_snippets,
-        warnings_with_snippets, warnings_without_snippets, analyzed_files
-    """
     if "parse_codeql_sarif_c" not in globals():
         raise RuntimeError("Devi definire 'parse_codeql_sarif_c' nello scope prima di usare questa funzione.")
 
@@ -1435,13 +1158,10 @@ def parse_codeql_sarif_c_merged(sarif_a, sarif_b, sarif_c, print_report=True, ro
             return math.ceil(x)
         raise ValueError("rounding deve essere 'nearest', 'floor' o 'ceil'.")
 
-    # Solo i campi *stampati* dalla funzione base
     numeric_keys = [
-        # INVOCATIONS
         "extractor_successes",
         "extractor_failures",
         "extractor_total",
-        # FILES
         "files_expected",
         "files_with_snippets",
         "files_without_snippets",
@@ -1469,7 +1189,6 @@ def parse_codeql_sarif_c_merged(sarif_a, sarif_b, sarif_c, print_report=True, ro
         print("File (medie):")
         print(f"  Attesi (baseline):              {avgs['files_expected']}")
         print(f"  Estratti:                       {avgs['files_with_snippets']}")
-        # valore derivato solamente per la stampa, come nella funzione originale
         estratti_senza_warning = avgs['files_with_snippets'] - avgs['warnings_with_snippets']
         print(f"    ├─ di cui con warning:        {avgs['warnings_with_snippets']}")
         print(f"    └─ di cui senza warning:      {estratti_senza_warning}")
@@ -1481,17 +1200,6 @@ def parse_codeql_sarif_c_merged(sarif_a, sarif_b, sarif_c, print_report=True, ro
 
 
 def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
-    """
-    Riepilogo per SARIF CodeQL (pacchetto Java), senza tasso di successo e senza liste di file con warning.
-      - artifacts_seen:           # artefatti registrati (runs[].artifacts)
-      - files_expected:           # attesi (java/baseline/expected-extracted-files)
-      - files_with_snippets:      # estratti con successo (java/diagnostics/successfully-extracted-files)
-      - files_without_snippets:   # attesi ma senza snippet (expected - with_snippets)
-      - extraction_warnings:      # #file con warning (conteggio)
-      - extraction_errors:        # #file con errori (conteggio)
-      - analyzed_files:           # file citati dai risultati “veri” (non diagnostica)
-    """
-
     sarif_path = Path(sarif_path)
     data = json.loads(sarif_path.read_text(encoding="utf-8"))
 
@@ -1504,7 +1212,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
 
     runs = data.get("runs", []) or []
     for run in runs:
-        # 1) Artifacts (file visti) + mappa index->uri
         artifacts = run.get("artifacts", []) or []
         artifacts_seen += len(artifacts)
 
@@ -1527,7 +1234,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
             return None
 
         def _collect_uris(obj):
-            """Estrae URI da locations e relatedLocations (se presenti)."""
             out = []
             for loc in (obj.get("locations", []) or []):
                 phys = (loc.get("physicalLocation") or {})
@@ -1543,7 +1249,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
                     out.append(uri)
             return out
 
-        # 2) File toccati dai risultati "veri" (NON diagnostica/telemetria)
         diag_rule_ids = {
             "java/baseline/expected-extracted-files",
             "java/diagnostics/successfully-extracted-files",
@@ -1558,7 +1263,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
             for uri in _collect_uris(res):
                 analyzed_uris.add(uri)
 
-        # 3) Diagnostica in invocations[].toolExecutionNotifications
         for inv in run.get("invocations", []) or []:
             for tn in inv.get("toolExecutionNotifications", []) or []:
                 desc_id = (tn.get("descriptor") or {}).get("id") or tn.get("id") or tn.get("name") or ""
@@ -1575,7 +1279,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
                     for uri in _collect_uris(tn):
                         dest.add(uri)
 
-        # 4) Fallback: diagnostiche presenti come "results"
         diag_map = {
             "java/baseline/expected-extracted-files": expected_uris,
             "java/diagnostics/successfully-extracted-files": success_uris,
@@ -1589,7 +1292,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris(res):
                     dest.add(uri)
 
-        # 5) Eventuali diagnostiche anche in tool.driver.notifications
         for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
             nid = notif.get("id") or notif.get("name") or ""
             dest = None
@@ -1605,7 +1307,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris(notif):
                     dest.add(uri)
 
-    # Derivati
     files_expected = len(expected_uris)
     files_extracted = len(success_uris)
     files_not_extracted = max(0, files_expected - files_extracted)
@@ -1615,15 +1316,13 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
         "files_expected": files_expected,
         "files_extracted": files_extracted,
         "files_not_extracted": files_not_extracted,
-        "extraction_warnings": len(warning_uris),  # solo conteggio
-        "extraction_errors": len(error_uris),      # solo conteggio
+        "extraction_warnings": len(warning_uris),
+        "extraction_errors": len(error_uris),
         "analyzed_files": len(analyzed_uris),
 
-        # elenchi (per show_lists)
         "expected_uris": sorted(expected_uris),
         "success_uris": sorted(success_uris),
         "analyzed_uris": sorted(analyzed_uris),
-        # NB: volutamente NON includiamo le liste warning/errori nelle stampe
         "warning_uris": sorted(warning_uris),
         "error_uris": sorted(error_uris),
     }
@@ -1652,29 +1351,6 @@ def parse_codeql_sarif_java(sarif_path, print_report=True, show_lists=False):
 
 
 def parse_codeql_sarif_java_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
-    """
-    Media (intera arrotondata) dei principali campi numerici prodotti da
-    `parse_codeql_sarif_java` su tre file SARIF.
-
-    Parametri
-    ---------
-    sarif_a, sarif_b, sarif_c : str | Path
-        Percorsi ai tre file SARIF.
-    print_report : bool
-        Se True, stampa un riepilogo con le medie.
-    rounding : {"nearest", "floor", "ceil"}
-        Strategia di arrotondamento:
-        - "nearest": al più vicino (round di Python)
-        - "floor":   per difetto
-        - "ceil":    per eccesso
-
-    Ritorna
-    -------
-    dict
-        Dizionario con le medie intere di:
-        artifacts_seen, files_expected, files_extracted, files_not_extracted,
-        extraction_warnings, extraction_errors, analyzed_files
-    """
     if "parse_codeql_sarif_java" not in globals():
         raise RuntimeError("Devi definire 'parse_codeql_sarif_java' nello scope prima di usare questa funzione.")
 
@@ -1719,19 +1395,6 @@ def parse_codeql_sarif_java_merged(sarif_a, sarif_b, sarif_c, print_report=True,
 
 
 def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
-    """
-    Riepilogo per SARIF CodeQL (pacchetto Python) con etichette chiare:
-      - artifacts_seen:            # artefatti registrati nel SARIF (runs[].artifacts)
-      - files_expected:            # file attesi (py/baseline/expected-extracted-files)
-      - files_extracted:       # file .py con snippet (py/diagnostics/successfully-extracted-files)
-      - files_not_extracted:    # attesi ma senza snippet (expected - with_snippets)
-      - extraction_warnings:       # file con warning (py/diagnostics/extraction-warnings)
-      - syntax_errors:             # file con errori di sintassi (py/diagnostics/syntax-error)
-      - analyzed_files:            # file citati nei risultati “veri” (non diagnostica)
-
-    Se show_lists=True stampa anche gli elenchi (expected, success, warnings, syntax, analyzed).
-    """
-
     sarif_path = Path(sarif_path)
     data = json.loads(sarif_path.read_text(encoding="utf-8"))
 
@@ -1744,7 +1407,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
 
     runs = data.get("runs", []) or []
     for run in runs:
-        # 1) Artifacts + mappa index->uri
         artifacts = run.get("artifacts", []) or []
         artifacts_seen += len(artifacts)
 
@@ -1783,7 +1445,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
                     out.append(uri)
             return out
 
-        # 2) File toccati dai risultati "veri" (NON diagnostica/telemetria)
         diag_rule_ids = {
             "py/baseline/expected-extracted-files",
             "py/diagnostics/successfully-extracted-files",
@@ -1798,7 +1459,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
             for uri in _collect_uris(res):
                 analyzed_uris.add(uri)
 
-        # 3) Notifiche di esecuzione (posizione tipica)
         for inv in run.get("invocations", []) or []:
             for tn in inv.get("toolExecutionNotifications", []) or []:
                 desc_id = (tn.get("descriptor") or {}).get("id") or tn.get("id") or tn.get("name") or ""
@@ -1815,7 +1475,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
                     for uri in _collect_uris(tn):
                         dest.add(uri)
 
-        # 4) Fallback: diagnostiche come "results"
         diag_map = {
             "py/baseline/expected-extracted-files": expected_uris,
             "py/diagnostics/successfully-extracted-files": success_uris,
@@ -1829,7 +1488,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris(res):
                     dest_set.add(uri)
 
-        # 5) Posizione alternativa: driver.notifications
         for notif in (run.get("tool", {}).get("driver", {}).get("notifications", []) or []):
             nid = notif.get("id") or notif.get("name") or ""
             dest = None
@@ -1845,7 +1503,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
                 for uri in _collect_uris(notif):
                     dest.add(uri)
 
-    # Derivati
     files_expected = len(expected_uris)
     files_extracted = len(success_uris)
     files_not_extracted = max(0, files_expected - files_extracted)
@@ -1859,7 +1516,6 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
         "syntax_errors": len(syntax_uris),
         "analyzed_files": len(analyzed_uris),
 
-        # elenchi (show_lists)
         "expected_uris": sorted(expected_uris),
         "success_uris": sorted(success_uris),
         "warning_uris": sorted(warning_uris),
@@ -1893,36 +1549,11 @@ def parse_codeql_sarif_py(sarif_path, print_report=True, show_lists=False):
 
 
 def parse_codeql_sarif_py_merged(sarif_a, sarif_b, sarif_c, print_report=True, rounding="nearest"):
-    """
-    Calcola la media (intera arrotondata) dei campi numerici che la funzione
-    `parse_codeql_sarif_py` stampa per un singolo SARIF.
-
-    Parametri
-    ---------
-    sarif_a, sarif_b, sarif_c : str | Path
-        Percorsi ai tre file SARIF.
-    print_report : bool
-        Se True, stampa un report riassuntivo con le medie.
-    rounding : {"nearest", "floor", "ceil"}
-        Strategia di arrotondamento:
-        - "nearest": al più vicino (round "bankers" di Python);
-        - "floor":   per difetto;
-        - "ceil":    per eccesso.
-
-    Ritorna
-    -------
-    dict
-        Dizionario con le medie intere dei campi:
-        artifacts_seen, files_expected, files_extracted, files_not_extracted,
-        extraction_warnings, syntax_errors, analyzed_files
-    """
-    # Verifica che la funzione base esista
     if "parse_codeql_sarif_py" not in globals():
         raise RuntimeError(
             "La funzione 'parse_codeql_sarif_py' deve essere definita nello scope."
         )
 
-    # Helper arrotondamento
     def _iround(x: float) -> int:
         if rounding == "nearest":
             return int(round(x))
@@ -1933,7 +1564,6 @@ def parse_codeql_sarif_py_merged(sarif_a, sarif_b, sarif_c, print_report=True, r
         else:
             raise ValueError("rounding deve essere 'nearest', 'floor' o 'ceil'.")
 
-    # Campi numerici di interesse (quelli 'stampati' dalla funzione base)
     numeric_keys = [
         "artifacts_seen",
         "files_expected",
@@ -1944,14 +1574,12 @@ def parse_codeql_sarif_py_merged(sarif_a, sarif_b, sarif_c, print_report=True, r
         "analyzed_files",
     ]
 
-    # Calcola i riassunti per i tre file (senza ristampa)
     sums = {k: 0 for k in numeric_keys}
     for path in (sarif_a, sarif_b, sarif_c):
         summary = parse_codeql_sarif_py(path, print_report=False, show_lists=False)
         for k in numeric_keys:
             sums[k] += int(summary.get(k, 0))
 
-    # Medie intere arrotondate
     avgs = {k: _iround(sums[k] / 3.0) for k in numeric_keys}
 
     if print_report:
@@ -1974,7 +1602,6 @@ model_name = "qwen"
 sample = 1
 
 
-# 1.6.0 last pack version
 command_set_baseline_analysis_py = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -2045,26 +1672,7 @@ command_set_sample_result_analysis_py = [
     f'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=samples_results/sample_{sample}/{model_name}/permutations/results_py.csv codeql/python-queries@1.6.0 --warnings=hide --rerun'
 ]
 
-"""
-command_set_custom_queries_py = [
-    # Databases folder creation (if not exists)
-    r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
 
-    # Database creation starting from code
-    r'codeql database create CodeQL/Databases/python_analysis_db --language=python --source-root=generated_code --overwrite',
-
-    # Query update and configuration
-    r'cd CodeQL/Queries/py_complete && codeql pack install',
-
-    # Database analysis using downloaded query pack
-    r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete/python-complete.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py_complete_updated/python-complete.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py/top25/python-top25.qls --warnings=hide --rerun'
-    #r'codeql database analyze CodeQL/Databases/python_analysis_db --format=csv --output=results/results_py.csv CodeQL/Queries/py/extra/python-extra.qls --warnings=hide --rerun'
-]
-"""
-
-# 1.6.0 last pack version, 1.5.2 used pack version
 command_set_baseline_analysis_java = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -2136,8 +1744,6 @@ command_set_sample_result_analysis_java = [
 ]
 
 
-
-# 1.4.3 last pack version
 command_set_baseline_analysis_c = [
     # Databases folder creation (if not exists)
     r'[ -d "CodeQL/Databases" ] || mkdir -p "CodeQL/Databases"',
@@ -2231,15 +1837,10 @@ class JavaPreprocessing:
 
         create_formatted_folder(folder1, folder2)
 
-        #find_errors_java(folder2)
         count_short_files(folder2)
         extract_unique_java_imports(folder2, exclude_java_standard=True)
 
-        # Incapsula tutto il codice all'interno di una classe Java wrapper unica
-        #wrap_inside_class(folder2)
-        # Crea la struttura necessaria alla compilazione insieme ai relativi pom.xml necessari
         create_maven_structure(folder2, nested=nested, with_imports=True)
-        # Rinomina le varie classi e i relativi file in modo da avere tutte classi univoche che non impattano il processo di compilazione maven
         rename_classes_uniquely(folder2)
 
 
@@ -2304,12 +1905,12 @@ class CPreprocessing:
             "inttypes.h": {
                 "imaxabs", "imaxdiv", "strtoimax", "strtoumax", "wcstoimax", "wcstoumax"
             },
-            "stdbool.h": set(),  # solo macro/tipi (true, false, bool)
-            "stdint.h": set(),  # solo tipi (int32_t ecc.)
-            "tgmath.h": set(),  # macro generiche (non funzioni reali)
-            "stdalign.h": set(),  # macro (_Alignof ecc.)
-            "stdatomic.h": set(),  # macro e tipi per operazioni atomiche
-            "stdnoreturn.h": set(),  # solo macro (_Noreturn)
+            "stdbool.h": set(),
+            "stdint.h": set(),
+            "tgmath.h": set(),
+            "stdalign.h": set(),
+            "stdatomic.h": set(),
+            "stdnoreturn.h": set(),
         }
 
         create_formatted_folder(folder1, folder2)
@@ -2318,7 +1919,6 @@ class CPreprocessing:
 
         find_unique_includes(folder2, STANDARD_C_FUNCTIONS, True)
 
-        #add_standard_includes(folder2, STANDARD_C_FUNCTIONS)
         build_c_project(folder2, nested, mode="auto")
 
 
@@ -2341,45 +1941,27 @@ class CodeAnalysisOutcome:
 class SampleCodeAnalysisOutcome:
     def __init__(self):
         print("C Sample Code Analysis Outcome:")
-        #parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/json/results_c_baseline.sarif.json")
-        #parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/json/results_c_baseline.sarif.json")
-        #parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/json/results_c_baseline.sarif.json")
         parse_codeql_sarif_c_merged(f"samples_results/sample_1/{model_name}/json/results_c_baseline.sarif.json",
                                     f"samples_results/sample_2/{model_name}/json/results_c_baseline.sarif.json",
                                     f"samples_results/sample_3/{model_name}/json/results_c_baseline.sarif.json")
-        #parse_codeql_sarif_c(f"samples_results/sample_1/{model_name}/json/results_c.sarif.json")
-        #parse_codeql_sarif_c(f"samples_results/sample_2/{model_name}/json/results_c.sarif.json")
-        #parse_codeql_sarif_c(f"samples_results/sample_3/{model_name}/json/results_c.sarif.json")
         parse_codeql_sarif_c_merged(f"samples_results/sample_1/{model_name}/json/results_c.sarif.json",
                                     f"samples_results/sample_2/{model_name}/json/results_c.sarif.json",
                                     f"samples_results/sample_3/{model_name}/json/results_c.sarif.json")
         print("\n----------------------------------------------------------------\n")
 
         print("Java Sample Code Analysis Outcome:")
-        #parse_codeql_sarif_java(f"samples_results/sample_1/{model_name}/json/results_java_baseline.sarif.json")
-        #parse_codeql_sarif_java(f"samples_results/sample_2/{model_name}/json/results_java_baseline.sarif.json")
-        #parse_codeql_sarif_java(f"samples_results/sample_3/{model_name}/json/results_java_baseline.sarif.json")
         parse_codeql_sarif_java_merged(f"samples_results/sample_1/{model_name}/json/results_java_baseline.sarif.json",
                                        f"samples_results/sample_2/{model_name}/json/results_java_baseline.sarif.json",
                                        f"samples_results/sample_3/{model_name}/json/results_java_baseline.sarif.json")
-        #parse_codeql_sarif_java(f"samples_results/sample_1/{model_name}/json/results_java.sarif.json")
-        #parse_codeql_sarif_java(f"samples_results/sample_2/{model_name}/json/results_java.sarif.json")
-        #parse_codeql_sarif_java(f"samples_results/sample_3/{model_name}/json/results_java.sarif.json")
         parse_codeql_sarif_java_merged(f"samples_results/sample_1/{model_name}/json/results_java.sarif.json",
                                        f"samples_results/sample_2/{model_name}/json/results_java.sarif.json",
                                        f"samples_results/sample_3/{model_name}/json/results_java.sarif.json")
         print("\n----------------------------------------------------------------\n")
 
         print("Python Sample Code Analysis Outcome:")
-        #parse_codeql_sarif_py(f"samples_results/sample_1/{model_name}/json/results_py_baseline.sarif.json")
-        #parse_codeql_sarif_py(f"samples_results/sample_2/{model_name}/json/results_py_baseline.sarif.json")
-        #parse_codeql_sarif_py(f"samples_results/sample_3/{model_name}/json/results_py_baseline.sarif.json")
         parse_codeql_sarif_py_merged(f"samples_results/sample_1/{model_name}/json/results_py_baseline.sarif.json",
                                      f"samples_results/sample_2/{model_name}/json/results_py_baseline.sarif.json",
                                      f"samples_results/sample_3/{model_name}/json/results_py_baseline.sarif.json")
-        #parse_codeql_sarif_py(f"samples_results/sample_1/{model_name}/json/results_py.sarif.json")
-        #parse_codeql_sarif_py(f"samples_results/sample_2/{model_name}/json/results_py.sarif.json")
-        #parse_codeql_sarif_py(f"samples_results/sample_3/{model_name}/json/results_py.sarif.json")
         parse_codeql_sarif_py_merged(f"samples_results/sample_1/{model_name}/json/results_py.sarif.json",
                                      f"samples_results/sample_2/{model_name}/json/results_py.sarif.json",
                                      f"samples_results/sample_3/{model_name}/json/results_py.sarif.json")
@@ -2418,39 +2000,41 @@ samples_permutations_code_c_formatted = f"samples_generated_code/sample_{sample}
 
 
 
+"""
+PythonPreprocessing(python_baseline_folder)
+SecurityAnalysis(command_set_baseline_analysis_py)
+PythonPreprocessing(python_folder)
+SecurityAnalysis(command_set_result_analysis_py)
 
-#PythonPreprocessing(python_baseline_folder)
-#PythonPreprocessing(python_folder)
-#SecurityAnalysis(command_set_baseline_analysis_py)
-#SecurityAnalysis(command_set_result_analysis_py)
 
-#JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
-#SecurityAnalysis(command_set_baseline_analysis_java)
-#JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
-#SecurityAnalysis(command_set_result_analysis_java)
-
-#CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
+JavaPreprocessing(java_baseline_folder, java_baseline_folder_formatted, nested=False)
+SecurityAnalysis(command_set_baseline_analysis_java)
+JavaPreprocessing(java_folder, java_folder_formatted, nested=True)
+SecurityAnalysis(command_set_result_analysis_java)
+"""
+CPreprocessing(c_baseline_folder, c_baseline_folder_formatted, nested=False)
 #SecurityAnalysis(command_set_baseline_analysis_c)
-#CPreprocessing(c_folder, c_folder_formatted, nested=True)
+CPreprocessing(c_folder, c_folder_formatted, nested=True)
 #SecurityAnalysis(command_set_result_analysis_c)
+"""
+CodeAnalysisOutcome()
 
-#CodeAnalysisOutcome()
 
 
+PythonPreprocessing(samples_baseline_code_py)
+PythonPreprocessing(samples_permutations_code_py)
+SecurityAnalysis(command_set_sample_baseline_analysis_py)
+SecurityAnalysis(command_set_sample_result_analysis_py)
 
-#PythonPreprocessing(samples_baseline_code_py)
-#PythonPreprocessing(samples_permutations_code_py)
-#SecurityAnalysis(command_set_sample_baseline_analysis_py)
-#SecurityAnalysis(command_set_sample_result_analysis_py)
+JavaPreprocessing(samples_baseline_code_java, samples_baseline_code_java_formatted, nested=False)
+SecurityAnalysis(command_set_sample_baseline_analysis_java)
+JavaPreprocessing(samples_permutations_code_java, samples_permutations_code_java_formatted, nested=True)
+SecurityAnalysis(command_set_sample_result_analysis_java)
 
-#JavaPreprocessing(samples_baseline_code_java, samples_baseline_code_java_formatted, nested=False)
-#SecurityAnalysis(command_set_sample_baseline_analysis_java)
-#JavaPreprocessing(samples_permutations_code_java, samples_permutations_code_java_formatted, nested=True)
-#SecurityAnalysis(command_set_sample_result_analysis_java)
+CPreprocessing(samples_baseline_code_c, samples_baseline_code_c_formatted, nested=False)
+SecurityAnalysis(command_set_sample_baseline_analysis_c)
+CPreprocessing(samples_permutations_code_c, samples_permutations_code_c_formatted, nested=True)
+SecurityAnalysis(command_set_sample_result_analysis_c)
 
-#CPreprocessing(samples_baseline_code_c, samples_baseline_code_c_formatted, nested=False)
-#SecurityAnalysis(command_set_sample_baseline_analysis_c)
-#CPreprocessing(samples_permutations_code_c, samples_permutations_code_c_formatted, nested=True)
-#SecurityAnalysis(command_set_sample_result_analysis_c)
-
-#SampleCodeAnalysisOutcome()
+SampleCodeAnalysisOutcome()
+"""

@@ -4,38 +4,30 @@ import math
 import os
 import re
 import shutil
-import tempfile
 import unicodedata
 from collections import Counter
-from decimal import Decimal, ROUND_HALF_UP
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, Set, List, Tuple, Literal, Union, Sequence, Optional, Any
+from typing import Dict, Set, List, Tuple, Sequence, Optional
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from scipy.sparse.linalg import _norm
-from scipy.stats import chi2_contingency, fisher_exact, chi2
-from sklearn.preprocessing import MultiLabelBinarizer
-import seaborn as sns
 
 
 def add_labels(input_csv_path):
     column_labels = [
-        "Name",         # Query name
-        "Description",  # Query description
-        "Severity",     # Severità
-        "Message",      # Messaggio di avviso
-        "Path",         # Percorso del file
-        "StartLine",    # Riga di inizio
-        "StartColumn",  # Colonna di inizio
-        "EndLine",      # Riga di fine
-        "EndColumn"     # Colonna di fine
+        "Name",
+        "Description",
+        "Severity",
+        "Message",
+        "Path",
+        "StartLine",
+        "StartColumn",
+        "EndLine",
+        "EndColumn"
     ]
 
     if os.path.getsize(input_csv_path) == 0:
-        # If the file is empty, just write the headers
         pd.DataFrame(columns=column_labels).to_csv(input_csv_path, index=False)
     else:
         df = pd.read_csv(input_csv_path, header=None)
@@ -43,41 +35,9 @@ def add_labels(input_csv_path):
         df.to_csv(input_csv_path, index=False)
 
 
-def check_and_remove_duplicates(csv_path, remove_duplicates=False):
-    try:
-        # Legge il CSV in un DataFrame
-        df = pd.read_csv(csv_path)
-
-        # Trova righe duplicate (considera tutte le colonne)
-        duplicates = df.duplicated(keep=False)
-        num_duplicates = duplicates.sum()
-
-        print(f"Numero di righe duplicate trovate: {num_duplicates}")
-
-        if remove_duplicates and num_duplicates > 0:
-            # Rimuove i duplicati mantenendo la prima occorrenza
-            df_no_duplicates = df.drop_duplicates(keep='first')
-            df_no_duplicates.to_csv(csv_path, index=False)
-            print("Duplicati rimossi e file aggiornato.")
-
-    except Exception as e:
-        print(f"Errore durante l'elaborazione del file: {e}")
-
-
 def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -> None:
-    """
-    Modifica il CSV iniziale aggiungendo le colonne 'Prompt ID' e 'Dataset ID'
-    ottenute dal mapping tramite l'ID estratto dal campo 'Path'.
-
-    Args:
-        csv_path (str): Percorso del CSV iniziale con colonna 'Path'.
-        dataset_csv_path (str): Percorso del CSV contenente 'Id' e 'Prompt ID'.
-        mode: Aggiunta per la baseline o per i risultati ('Results' o 'Baseline').
-    """
-    # Legge il CSV iniziale
     starting_df = pd.read_csv(csv_path)
 
-    # Estrae il numero da "permutations_" o "row_"
     def extract_id(path):
         if mode == 'Results':
             match = re.search(r'permutations_(\d+)', path)
@@ -88,16 +48,12 @@ def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -
 
     starting_df['Permutation_ID'] = starting_df['Path'].apply(extract_id)
 
-    # Converte Permutation_ID in intero
     starting_df['Permutation_ID'] = pd.to_numeric(starting_df['Permutation_ID'], errors='coerce')
 
-    # Legge il CSV con mapping
     df_mapping = pd.read_csv(dataset_csv_path)
 
-    # Converte ID in intero
     df_mapping['ID'] = pd.to_numeric(df_mapping['ID'], errors='coerce')
 
-    # Merge per ottenere Prompt ID e Dataset ID
     starting_df = starting_df.merge(
         df_mapping[['ID', 'Prompt ID']],
         left_on='Permutation_ID',
@@ -105,47 +61,30 @@ def add_prompt_id(csv_path: str, dataset_csv_path: str, mode: str = 'Results') -
         how='left'
     )
 
-    # Rinomina la colonna 'ID' in 'Dataset ID'
     starting_df.rename(columns={'ID': 'Dataset ID'}, inplace=True)
 
-    # Rimuove la colonna temporanea
     starting_df.drop(columns=['Permutation_ID'], inplace=True)
 
-    # Sovrascrive il CSV iniziale
     starting_df.to_csv(csv_path, index=False)
 
 
 def add_cwe_id(csv_path, original_column):
-    """
-    Legge un file CSV, estrae la parte prima di "_" da una colonna, 
-    e la salva in una nuova colonna "CWE ID". Il file CSV viene modificato direttamente.
-
-    :param csv_path: Percorso al file CSV da modificare
-    :param original_column: Nome della colonna da elaborare
-    """
-    # Leggi il file CSV
     df = pd.read_csv(csv_path)
 
-    # Verifica che la colonna esista
     if original_column not in df.columns:
         raise ValueError(f"La colonna '{original_column}' non esiste nel CSV.")
 
-    # Estrai la parte prima di "_"
     df["CWE ID"] = df[original_column].astype(str).str.split("_").str[0]
 
-    # Sovrascrive il file CSV con le modifiche
     df.to_csv(csv_path, index=False)
 
 
 def add_slicing_info(input_csv_path, lookup_dir, language):
-    # Legge il CSV iniziale
     df = pd.read_csv(input_csv_path)
 
-    # Controlla che la colonna "Path" esista
     if "Path" not in df.columns:
         raise ValueError("La colonna 'Path' non è presente nel CSV iniziale.")
 
-    # Liste per memorizzare i valori estratti
     sliced_prompts = []
     original_sentences = []
     removed_parts = []
@@ -179,7 +118,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 sentence_indices.append(None)
                 continue
 
-            row_number = int(row_match.group(1)) # Questo è 1-based
+            row_number = int(row_match.group(1))
             lookup_csv_path = os.path.join(lookup_dir, f"{csv_id}.csv")
 
             if not os.path.exists(lookup_csv_path):
@@ -194,13 +133,10 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
 
             lookup_df = pd.read_csv(lookup_csv_path)
 
-            # --- BLOCCO MODIFICATO ---
-            # Converte il numero di riga (1-based) in un indice per pandas (0-based)
             zero_based_index = row_number - 1
 
-            # Controlla che l'indice calcolato sia valido per il DataFrame
             if 0 <= zero_based_index < len(lookup_df):
-                row = lookup_df.iloc[zero_based_index] # Usa l'indice corretto
+                row = lookup_df.iloc[zero_based_index]
 
                 resulting_prompt = row.get("Resulting Prompt", None)
                 if pd.notna(resulting_prompt):
@@ -215,9 +151,7 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 granularities.append(row.get("Granularity", None))
                 resulting_prompts.append(resulting_prompt)
                 sentence_indices.append(row.get("Sentence Index", None))
-            # --- FINE BLOCCO MODIFICATO ---
             else:
-                # La riga richiesta è fuori dai limiti del file CSV
                 sliced_prompts.append(None)
                 original_sentences.append(None)
                 removed_parts.append(None)
@@ -227,7 +161,6 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
                 sentence_indices.append(None)
 
         except Exception:
-            # Gestione generica di altri errori (es. file malformato)
             sliced_prompts.append(None)
             original_sentences.append(None)
             removed_parts.append(None)
@@ -236,7 +169,6 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
             resulting_prompts.append(None)
             sentence_indices.append(None)
 
-    # Aggiunge le nuove colonne al DataFrame originale
     df["Sliced Prompt"] = sliced_prompts
     df["Original Sentence"] = original_sentences
     df["Removed Part"] = removed_parts
@@ -245,193 +177,21 @@ def add_slicing_info(input_csv_path, lookup_dir, language):
     df["Granularity"] = granularities
     df["Resulting Prompt"] = resulting_prompts
 
-    # Scrive il risultato nel file CSV di input
     df.to_csv(input_csv_path, index=False)
 
 
 def add_prompt_info(csv1_path, csv2_path):
-    # Leggi i CSV
     df1 = pd.read_csv(csv1_path)
     df2 = pd.read_csv(csv2_path)
 
-    # Verifica colonne richieste
     if 'Dataset ID' not in df1.columns or 'ID' not in df2.columns or 'Manually-fixed NL Prompt' not in df2.columns:
         raise ValueError("CSV1 deve avere 'Dataset ID'; CSV2 deve avere 'ID' e 'Manually-fixed NL Prompt'.")
 
-    # Crea dizionario: ID → Prompt
     id_to_prompt = dict(zip(df2['ID'], df2['Manually-fixed NL Prompt']))
 
-    # Aggiungi la colonna 'Prompt' a df1 (nome desiderato)
     df1['Prompt'] = df1['Dataset ID'].map(id_to_prompt)
 
-    # Sovrascrivi il file originale
     df1.to_csv(csv1_path, index=False)
-
-
-def snippets_count(folder):
-    count = 0
-    for root, dirs, files in os.walk(folder):
-        # Escludi le directory nascoste
-        dirs[:] = [d for d in dirs if not d.startswith('.')]
-
-        # Conta solo i file visibili che non terminano con .pyc
-        for file in files:
-            if not file.startswith('.') and not file.endswith('.pyc'):
-                file_path = os.path.join(root, file)
-                if os.path.isfile(file_path):
-                    count += 1
-    print("Total permutations/snippets:", count)
-    return count
-
-
-def row_counter(csv_path):
-    print(len(open(csv_path, encoding='utf-8').readlines()))
-
-
-def count_files_by_extension(folder, extension):
-    """
-    Recursively counts the number of files with a given extension in a folder.
-
-    Args:
-        folder (str): The path to the folder to analyze.
-        extension (str): The file extension to look for (e.g., '.txt').
-
-    Returns:
-        int: Total number of files with the specified extension.
-    """
-    count = 0
-    extension = extension.lower()
-
-    for root, _, files in os.walk(folder):
-        for file in files:
-            if file.lower().endswith(extension):
-                count += 1
-
-    print(count)
-    return count
-
-
-def covered_cwe_types_stats(csv_path, original_column):
-    """
-    Legge un file CSV, estrae la parte prima di "_" dalla colonna specificata,
-    e stampa i tipi unici di CWE e il numero totale di CWE unici.
-
-    :param csv_path: Percorso al file CSV da leggere
-    :param original_column: Nome della colonna da elaborare
-    """
-    # Leggi il file CSV
-    df = pd.read_csv(csv_path)
-
-    # Verifica che la colonna esista
-    if original_column not in df.columns:
-        raise ValueError(f"La colonna '{original_column}' non esiste nel CSV.")
-
-    # Estrai la parte prima di "_" per ogni riga
-    df["CWE ID"] = df[original_column].astype(str).str.split("_").str[0]
-
-    # Ottieni i CWE unici e ordina per ID numerico crescente
-    unique_cwe = sorted(df["CWE ID"].unique(), key=lambda x: int(x.replace("CWE-", "")))
-
-    # Stampa ciascun tipo unico di CWE
-    #print("Tipi unici di CWE presenti nella colonna:")
-    for cwe in unique_cwe:
-        print(cwe)
-
-    # Stampa il numero totale di CWE unici
-    print(f"\nUnique CWEs: {len(unique_cwe)}")
-
-
-def cwe_stats(csv_path, cwe_column, verbose=True):
-    """
-    Legge un file CSV, analizza una colonna con valori del tipo "CWE-502",
-    e restituisce un dizionario con il numero di occorrenze per ciascun CWE,
-    ordinati per ID crescente.
-
-    :param csv_path: Percorso al file CSV da leggere
-    :param cwe_column: Nome della colonna che contiene i valori CWE (es. "CWE-502")
-    :param verbose: Se True, stampa i risultati a video
-    :return: Dizionario con le occorrenze di ciascun CWE
-    """
-    try:
-        df = pd.read_csv(csv_path)
-
-        if cwe_column not in df.columns:
-            raise ValueError(f"La colonna '{cwe_column}' non esiste nel CSV.")
-
-        # Conta le occorrenze dei CWE
-        cwe_counts = Counter(df[cwe_column].dropna().astype(str))
-
-        # Ordina per ID numerico (es. "CWE-502" -> 502)
-        sorted_cwe_counts = dict(sorted(
-            cwe_counts.items(),
-            key=lambda x: int(x[0].replace("CWE-", "")) if x[0].startswith("CWE-") else float('inf')
-        ))
-
-        if verbose:
-            #print(f"Totale righe lette: {len(df)}\n")
-            print(f" - {cwe_column}: {len(sorted_cwe_counts)} valori unici")
-            for cwe, count in sorted_cwe_counts.items():
-                print(f"    {cwe}: {count}")
-
-        return {cwe_column: Counter(sorted_cwe_counts)}
-
-    except Exception as e:
-        if verbose:
-            print(f"Errore nella lettura del file {csv_path}: {e}")
-        return
-
-r"""
-def permutations_cwe_stats(main_csv_path, prompt_id_column, permutations_folder):
-    # Version that works without the added labels in the permutations csvs
-    def extract_cwe(prompt_id):
-        match = re.search(r'CWE-\d+', str(prompt_id))
-        return match.group(0) if match else None
-
-    df_main = pd.read_csv(main_csv_path)
-
-    if prompt_id_column not in df_main.columns:
-        raise ValueError(f"Column '{prompt_id_column}' not found in the CSV.")
-
-    # Conta le varianti iniziali per ciascun CWE
-    df_main['CWE_ID'] = df_main[prompt_id_column].apply(extract_cwe)
-    cwe_variant_counts = df_main['CWE_ID'].value_counts().sort_index(key=lambda x: x.str.replace("CWE-", "").astype(int))
-
-    print("Numero di varianti iniziali per ciascun CWE-ID:")
-    for cwe, count in cwe_variant_counts.items():
-        print(f"{cwe}: {count}")
-    print()
-
-    # Aggrega le occorrenze totali nei file delle permutazioni
-    all_cwes = []
-
-    for index, row in df_main.iterrows():
-        cwe_id = row['CWE_ID']
-        if not cwe_id:
-            continue
-
-        file_index = index + 1  # Adjust index to start from 1
-        file_path = os.path.join(permutations_folder, f"syntactic_permutations_{file_index}.csv")
-
-        if os.path.exists(file_path):
-            try:
-                df_perm = pd.read_csv(file_path)
-                all_cwes.extend([cwe_id] * len(df_perm))
-            except Exception as e:
-                print(f"Error reading {file_path}: {e}")
-        else:
-            print(f"File not found: {file_path}")
-
-    # Conta e ordina le occorrenze
-    cwe_series = pd.Series(all_cwes)
-    cwe_counts = cwe_series.value_counts()
-    sorted_cwe_counts = cwe_counts.sort_index(key=lambda x: x.str.replace("CWE-", "").astype(int))
-
-    # Stampa i risultati
-    print("Occorrenze totali (dalle permutazioni) per ciascun CWE-ID:")
-    for cwe, count in sorted_cwe_counts.items():
-        print(f"{cwe}: {count}")
-    print(f"\nNumero totale di CWE unici: {sorted_cwe_counts.shape[0]}")
-"""
 
 
 def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
@@ -478,7 +238,6 @@ def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
     )))
 
     if verbose:
-        #print(f"Totale righe lette: {total_rows}")
         print(f" - {cwe_column}: {len(sorted_counter)} valori unici validi")
         for cwe, count in sorted_counter.items():
             print(f"    {cwe}: {count}")
@@ -488,27 +247,23 @@ def permutations_cwe_stats(folder_path, cwe_column="CWE ID", verbose=True):
             for filename, idx, val in invalid_entries:
                 print(f"    File: {filename}, Riga: {idx}, Valore: '{val}'")
 
-    # ✅ Wrappa nel dizionario come fa result_cwe_stats
     return {cwe_column: sorted_counter}
 
 
 def permutations_single_metrics_stats(folder, verbose=True):
-    # Inizializza contatori per ogni colonna
     type_counter = Counter()
     granularity_counter = Counter()
     sentence_index_counter = Counter()
 
-    total_rows = 0  # Nuovo contatore per il totale delle righe
+    total_rows = 0
 
-    # Scorri tutti i file nella folder
     for filename in os.listdir(folder):
         if filename.endswith(".csv"):
             filepath = os.path.join(folder, filename)
             try:
                 df = pd.read_csv(filepath)
-                total_rows += len(df)  # Aggiungi il numero di righe del file
+                total_rows += len(df)
 
-                # Aggiorna i contatori con i valori delle colonne
                 if 'Type' in df.columns:
                     type_counter.update(df['Type'].dropna())
                 if 'Granularity' in df.columns:
@@ -534,7 +289,6 @@ def permutations_single_metrics_stats(folder, verbose=True):
         for val, count in sentence_index_counter.items():
             print(f"    '{val}': {count}")
 
-    # Ritorna i contatori in un dizionario
     return {
         'Syntagm Type': type_counter,
         'Granularity': granularity_counter,
@@ -543,11 +297,9 @@ def permutations_single_metrics_stats(folder, verbose=True):
 
 
 def permutations_combined_metrics_stats(folder, verbose=True):
-    # Inizializza contatore per le combinazioni
     combinations_counter = Counter()
     total_rows = 0
 
-    # Scorri tutti i file nella folder
     for filename in os.listdir(folder):
         if filename.endswith(".csv"):
             filepath = os.path.join(folder, filename)
@@ -555,21 +307,19 @@ def permutations_combined_metrics_stats(folder, verbose=True):
                 df = pd.read_csv(filepath)
                 total_rows += len(df)
 
-                # Verifica che le colonne esistano
                 cols_present = [col for col in ['Type', 'Granularity', 'Sentence Index'] if col in df.columns]
                 if len(cols_present) < 2:
-                    continue  # Servono almeno due colonne per creare una combinazione
+                    continue
 
-                # Itera sulle righe e calcola combinazioni
                 for _, row in df[cols_present].dropna().iterrows():
                     row_data = {}
                     for col in cols_present:
                         key = 'Syntagm Type' if col == 'Type' else col
                         row_data[key] = row[col]
 
-                    for r in range(2, len(row_data) + 1):  # Solo coppie e terne
+                    for r in range(2, len(row_data) + 1):
                         for combo in combinations(row_data.items(), r):
-                            combo_key = tuple(sorted(combo))  # Ordina per coerenza
+                            combo_key = tuple(sorted(combo))
                             combinations_counter[combo_key] += 1
 
             except Exception as e:
@@ -577,7 +327,6 @@ def permutations_combined_metrics_stats(folder, verbose=True):
                     print(f"Errore nella lettura di {filename}: {e}")
 
     if verbose:
-        #print(f"Total rows processed: {total_rows}")
         print(f"Unique combinations (length ≥ 2): {len(combinations_counter)}")
         for combo, count in combinations_counter.items():
             combo_str = ', '.join([f"{k}={v}" for k, v in combo])
@@ -587,20 +336,6 @@ def permutations_combined_metrics_stats(folder, verbose=True):
 
 
 def single_metrics_stats(filepath, verbose=True, verify_consistency=True):
-    """
-    Read a CSV, collapse rows sharing the same 'Path' into one record,
-    then count occurrences of 'Syntagm Type', 'Granularity', and 'Sentence Index'.
-
-    Parameters
-    ----------
-    filepath : str
-        Path to the CSV file.
-    verbose : bool
-        Whether to print a summary.
-    verify_consistency : bool
-        If True, checks that within each Path-group the fields of interest are identical.
-        Prints a warning if inconsistencies are found (but still proceeds using the first row).
-    """
     syntagm_type_counter = Counter()
     granularity_counter = Counter()
     sentence_index_counter = Counter()
@@ -621,18 +356,14 @@ def single_metrics_stats(filepath, verbose=True, verify_consistency=True):
     if missing:
         if verbose:
             print(f"Colonne mancanti nel file: {', '.join(missing)}")
-        # Proceed with whatever is available after deduping by Path (if present)
 
-    # If 'Path' exists, collapse to one row per Path; else, we just work as-is
     if 'Path' in df.columns:
-        # Optional consistency check
         if verify_consistency:
             cols_to_check = [c for c in ['Syntagm Type', 'Granularity', 'Sentence Index'] if c in df.columns]
             if cols_to_check:
                 bad_paths = []
                 for path_val, g in df.groupby('Path'):
                     for col in cols_to_check:
-                        # Count distinct non-null values within the group
                         distinct_vals = g[col].dropna().unique()
                         if len(distinct_vals) > 1:
                             bad_paths.append((path_val, col, distinct_vals))
@@ -644,12 +375,10 @@ def single_metrics_stats(filepath, verbose=True, verify_consistency=True):
                     if len(bad_paths) > 10 and verbose:
                         print(f"  ... e altri {len(bad_paths) - 10} gruppi con incongruenze.")
 
-        # Collapse groups by taking the first row per Path (safe because values should match)
         df_merged = df.sort_index().groupby('Path', as_index=False).first()
     else:
-        df_merged = df  # No Path column; nothing to merge
+        df_merged = df
 
-    # Now count on the merged dataframe
     if 'Syntagm Type' in df_merged.columns:
         syntagm_type_counter.update(df_merged['Syntagm Type'].dropna())
     if 'Granularity' in df_merged.columns:
@@ -674,21 +403,6 @@ def single_metrics_stats(filepath, verbose=True, verify_consistency=True):
     }
 
 def combined_metrics_stats(filepath, verbose=True, verify_consistency=True):
-    """
-    Read a CSV, collapse rows sharing the same 'Path' into one record,
-    then count combinations (size ≥ 2) among the present columns of:
-    ['Syntagm Type', 'Granularity', 'Sentence Index'].
-
-    Parameters
-    ----------
-    filepath : str
-        Path to the CSV file.
-    verbose : bool
-        Whether to print a summary.
-    verify_consistency : bool
-        If True, checks that within each Path-group the fields of interest are identical.
-        Prints a warning if inconsistencies are found (but still proceeds using the first row).
-    """
     combinations_counter = Counter()
 
     try:
@@ -705,7 +419,6 @@ def combined_metrics_stats(filepath, verbose=True, verify_consistency=True):
             print("Non ci sono almeno due colonne tra 'Syntagm Type', 'Granularity', 'Sentence Index'.")
         return combinations_counter
 
-    # If 'Path' exists, collapse to one row per Path; otherwise, work as-is
     if 'Path' in df.columns:
         if verify_consistency:
             bad_paths = []
@@ -721,22 +434,19 @@ def combined_metrics_stats(filepath, verbose=True, verify_consistency=True):
                     print(f"  - Path={path_val!r}, colonna '{col}' ha valori multipli: {list(vals)}")
                 if len(bad_paths) > 10:
                     print(f"  ... e altri {len(bad_paths) - 10} gruppi con incongruenze.")
-        # collapse groups by taking the first row per Path
         df_merged = df.sort_index().groupby('Path', as_index=False).first()
         total_units = len(df_merged)
     else:
         df_merged = df
         total_units = len(df_merged)
 
-    # Work only with rows where all required-present columns are non-null
     work_df = df_merged[cols_present].dropna()
 
-    # Build combination counts (size ≥ 2)
     for _, row in work_df.iterrows():
         row_data = {col: row[col] for col in cols_present}
         for r in range(2, len(row_data) + 1):
             for combo in combinations(row_data.items(), r):
-                combo_key = tuple(sorted(combo))  # normalize order
+                combo_key = tuple(sorted(combo))
                 combinations_counter[combo_key] += 1
 
     if verbose:
@@ -750,15 +460,6 @@ def combined_metrics_stats(filepath, verbose=True, verify_consistency=True):
 
 
 def compare_single_metric(base_counters, result_counters, output_path=None):
-    """
-    Confronta due dizionari contenenti metriche:
-    base_counters e result_counters devono avere le stesse chiavi:
-    'Type', 'Granularity', 'Sentence Index', con valori Counter.
-
-    Se specificato, salva i risultati in un CSV in output_path.
-    """
-    #print("CONFRONTO TRA METRICHE (Percentuale delle seconde sulle prime)\n")
-
     all_results = []
 
     for key in ['Syntagm Type', 'Granularity', 'Sentence Index']:
@@ -799,24 +500,14 @@ def compare_single_metric(base_counters, result_counters, output_path=None):
                 for row in all_results:
                     writer.writerow(row)
 
-            #print(f"✅ Risultati salvati in: {output_path}")
         except Exception as e:
             print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
 
 def compare_combined_metrics(base_counter: Counter, result_counter: Counter, output_path=None):
-    """
-    Confronta due Counter contenenti combinazioni di feature (tuple di coppie chiave-valore).
-    Stampa le percentuali di presenza dei risultati rispetto alla base.
-
-    Se specificato, salva i risultati in un CSV in output_path, includendo i dettagli delle singole feature.
-    """
     all_combos = set(base_counter) | set(result_counter)
     all_results = []
 
-    print("CONFRONTO TRA COMBINAZIONI (Percentuale delle seconde sulle prime)\n")
-
-    # Raccoglie tutti i nomi unici delle feature usate
     all_feature_names = set()
     for combo in all_combos:
         for key, _ in combo:
@@ -835,17 +526,14 @@ def compare_combined_metrics(base_counter: Counter, result_counter: Counter, out
         combo_str = ', '.join(f"{k}={v}" for k, v in combo)
         print(f"  ({combo_str}): {result_val} / {base_val} → {percent}")
 
-        # Crea la riga con ordine richiesto: Combination → Features → [Feature columns] → Base → Result → Frequency
         row = {
             "Combination": combo_str,
             "Features": len(combo),
         }
 
-        # Inserisce le singole feature
         for key in all_feature_names:
             row[key] = next((v for k, v in combo if k == key), "")
 
-        # Valori aggregati finali
         row.update({
             "Base": base_val,
             "Result": result_val,
@@ -872,67 +560,9 @@ def compare_combined_metrics(base_counter: Counter, result_counter: Counter, out
             print(f"❌ Errore durante il salvataggio del file CSV: {e}")
 
 
-
-def compare_cwe_counters(base_counters, result_counters, output_path=None):
-    """
-    Confronta due dizionari nel formato restituito da result_cwe_stats:
-    { "CWE ID": Counter({ "CWE-XX": count, ... }) }
-
-    Stampa la percentuale dei valori result rispetto a quelli base.
-    Se specificato, salva i risultati in un CSV in output_path.
-    """
-
-    if "CWE ID" not in base_counters or "CWE ID" not in result_counters:
-        print("❌ Errore: almeno uno dei dizionari non contiene la chiave 'CWE ID'")
-        return
-
-    base_counter = base_counters["CWE ID"]
-    result_counter = result_counters["CWE ID"]
-
-    #print("\n--- CONFRONTO CWE (CWE ID) ---\n")
-
-    all_keys = set(base_counter) | set(result_counter)
-
-    results = []
-
-    for cwe in sorted(all_keys, key=lambda x: int(x.replace("CWE-", ""))):
-        base_val = base_counter.get(cwe, 0)
-        result_val = result_counter.get(cwe, 0)
-
-        if base_val == 0:
-            percent = "N/A"
-        else:
-            percent = f"{(result_val / base_val) * 100:.2f}%"
-
-        print(f"{cwe:10}: {result_val:4} / {base_val:4} → {percent}")
-
-        results.append({
-            "CWE": cwe,
-            "Base": base_val,
-            "Result": result_val,
-            "Frequency": percent
-        })
-
-    if output_path:
-        try:
-            with open(output_path, mode='w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ["CWE", "Base", "Result", "Frequency"]
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-                writer.writeheader()
-                for row in results:
-                    writer.writerow(row)
-
-            #print(f"\n✅ Risultati salvati in: {output_path}")
-        except Exception as e:
-            print(f"❌ Errore durante il salvataggio del file CSV: {e}")
-
-
 def enhance_permutations_csvs(folder_path, mapping_file):
-    # Carica il file di mapping
     df_mapping = pd.read_csv(mapping_file)
 
-    # Itera su ogni riga del file di mapping
     for index, row in df_mapping.iterrows():
         csv_name = f"syntactic_permutations_{index + 1}.csv"
         csv_path = os.path.join(folder_path, csv_name)
@@ -941,10 +571,8 @@ def enhance_permutations_csvs(folder_path, mapping_file):
             print(f"File non trovato: {csv_path}")
             continue
 
-        # Carica il CSV corrispondente
         df = pd.read_csv(csv_path)
 
-        # Controlla se le colonne esistono già
         columns_to_add = {
             "ID": row.get("ID", ""),
             "Prompt ID": row.get("Prompt ID", ""),
@@ -961,8 +589,6 @@ def enhance_permutations_csvs(folder_path, mapping_file):
         if modified:
             df.to_csv(csv_path, index=False)
             print(f"Aggiornato: {csv_path}")
-        #else:
-            #print(f"Nessuna modifica necessaria: {csv_path}")
 
 
 def total_permutations_over_baseline(folder):
@@ -986,552 +612,27 @@ def total_permutations_over_baseline(folder):
             except Exception as e:
                 results.append((None, None, None, f"{filename} | Errore: {e}"))
 
-    # Filtra e ordina solo i risultati validi per ID numerico
     valid = [r for r in results if r[0] is not None]
-    valid.sort(key=lambda x: x[0])  # Ordine numerico
+    valid.sort(key=lambda x: x[0])
 
-    # Stampa ordinata
     for id_val, cwe_id_val, prompt_id_val, n_rows in valid:
         print(f"ID: {id_val} | CWE: {cwe_id_val} | Prompt: {prompt_id_val} | Righe: {n_rows}")
 
-    # Stampa eventuali errori
     errors = [r[3] for r in results if r[0] is None]
     for msg in errors:
         print(msg)
 
 
-def plot_cwe_comparison(base_counters, result_counters, title, mode="Frequency", frequency=False):
-    """
-    Generates a bar chart comparing 'result' values to 'base' values for each CWE entry.
-
-    Parameters:
-    - base_counters: dict with structure {"CWE ID": Counter({"CWE-XX": count, ...})}
-    - result_counters: same structure as base_counters
-    - title: string used in the plot title
-    - mode: "frequency" (default) for percentage, "count" for raw result values
-    """
-    if "CWE ID" not in base_counters or "CWE ID" not in result_counters:
-        print("❌ Error: One or both dictionaries lack the 'CWE ID' key.")
-        return
-
-    base_counter = base_counters["CWE ID"]
-    result_counter = result_counters["CWE ID"]
-
-    cwe_ids = sorted(set(base_counter) | set(result_counter), key=lambda x: int(x.replace("CWE-", "")))
-
-    labels = []
-    values = []
-
-    for cwe in cwe_ids:
-        base = base_counter.get(cwe, 0)
-        result = result_counter.get(cwe, 0)
-        if mode == "Frequency":
-            val = (result / base) * 100 if base > 0 else 0.0
-        else:  # "count"
-            val = result
-        labels.append(cwe)
-        values.append(val)
-
-    # Determine title
-    if mode == "Frequency":
-        plot_title = f"{title} – CWE Frequency (% of Base)"
-    else:
-        plot_title = f"{title} – CWE Raw Result Counts"
-
-    # Plot
-    plt.figure(figsize=(12, 6))
-    plt.bar(labels, values)
-    plt.xticks(rotation=45, ha='right')
-    plt.xlabel("CWE ID")
-    plt.ylabel("Frequency (%)" if mode == "Frequency" else "Result Count")
-    plt.title(plot_title)
-    if frequency:
-        if mode == "Frequency":
-            plt.ylim(0, 100)
-    plt.tight_layout()
-    plt.grid(axis='y')
-    plt.show()
-
-
-def plot_metric_comparison(base_counters, result_counters, category_name, mode="Frequency", frequency=False):
-    """
-    Plots comparison for a specific category (e.g., 'Type', 'Granularity').
-
-    Parameters:
-    - base_counters, result_counters: dicts with Counter objects for each category
-    - category_name: which category to plot (e.g., 'Type')
-    - mode: "frequency" (default) or "count"
-    """
-    if category_name not in base_counters or category_name not in result_counters:
-        print(f"❌ '{category_name}' non trovato in uno dei dizionari.")
-        return
-
-    base_counter = base_counters[category_name]
-    result_counter = result_counters[category_name]
-
-    keys = sorted(set(base_counter) | set(result_counter))
-    values = []
-    labels = []
-
-    for k in keys:
-        base = base_counter.get(k, 0)
-        result = result_counter.get(k, 0)
-        if mode == "Frequency":
-            if base > 0:
-                val = (result / base) * 100
-            else:
-                val = 0.0
-        else:  # mode == "count"
-            val = result
-        labels.append(str(k))
-        values.append(val)
-
-    plt.figure(figsize=(10, 6))
-    plt.bar(labels, values)
-    plt.xticks(rotation=45, ha='right')
-    plt.xlabel(category_name)
-    plt.ylabel("Frequency (%)" if mode == "Frequency" else "Result Count")
-    plt.title(f"Comparison of {category_name} - {'Frequency' if mode == 'Frequency' else 'Raw Count'}")
-    if frequency:
-        if mode == "Frequency":
-            plt.ylim(0, 100)
-    plt.tight_layout()
-    plt.grid(axis='y')
-    plt.show()
-
-
-def plot_combination_frequencies(base_counter: Counter, result_counter: Counter, top_n=20, sort_by='frequency'):
-    """
-    Genera un grafico a barre delle frequenze percentuali per combinazioni di feature.
-
-    Parametri:
-    - base_counter: Counter con le combinazioni base
-    - result_counter: Counter con i risultati da confrontare
-    - top_n: numero massimo di combinazioni da visualizzare (in ordine di frequenza)
-    - sort_by: criterio di ordinamento ('frequency', 'result', 'base')
-    """
-    combo_data = []
-    for combo in set(base_counter) | set(result_counter):
-        base_val = base_counter.get(combo, 0)
-        result_val = result_counter.get(combo, 0)
-
-        if base_val == 0:
-            frequency = None  # Non plottabile
-        else:
-            frequency = (result_val / base_val) * 100
-
-        combo_str = ', '.join(f"{k}={v}" for k, v in combo)
-        combo_data.append({
-            "label": combo_str,
-            "base": base_val,
-            "result": result_val,
-            "frequency": frequency
-        })
-
-    # Filtro combinazioni con base > 0 e ordino
-    combo_data = [c for c in combo_data if c["frequency"] is not None]
-    combo_data.sort(key=lambda x: x[sort_by], reverse=True)
-    combo_data = combo_data[:top_n]
-
-    # Dati per il grafico
-    labels = [c["label"] for c in combo_data]
-    frequencies = [c["frequency"] for c in combo_data]
-
-    plt.figure(figsize=(12, 6))
-    plt.barh(labels, frequencies)
-    plt.xlabel("Frequency (%)")
-    plt.ylabel("Combination")
-    plt.title("Top Combination Frequencies (Result / Base * 100%)")
-    plt.gca().invert_yaxis()
-    plt.grid(axis='x')
-    plt.tight_layout()
-    plt.show()
-
-
-def match_detected_cwes(sarif_path: str, csv_path: str) -> None:
-    """
-    Reads a SARIF JSON file and a CSV file, matches SARIF rule descriptions
-    to the first column in the CSV, and appends the corresponding CWE tags
-    as a new column named 'Detected CWEs'. The CSV is updated in place.
-
-    Parameters:
-        sarif_path (str): Path to the SARIF JSON file.
-        csv_path (str): Path to the CSV file to be modified.
-    """
-    # Load SARIF file
-    with open(sarif_path, "r", encoding="utf-8") as f:
-        sarif_data = json.load(f)
-
-    # Extract rules
-    rules = sarif_data["runs"][0]["tool"]["driver"]["rules"]
-
-    # Map from shortDescription.text to list of CWE tags
-    description_to_cwes = {}
-    for rule in rules:
-        desc = rule.get("shortDescription", {}).get("text", "")
-        tags = rule.get("properties", {}).get("tags", [])
-        cwes = [tag for tag in tags if "cwe" in tag.lower()]
-
-        # Transform tags like 'external/cwe/cwe-215' -> 'CWE-215' and normalize 'CWE-020' -> 'CWE-20'
-        parsed_cwes = []
-        for tag in cwes:
-            last_part = tag.split("/")[-1].upper()  # es: CWE-020
-            match = re.match(r"^CWE-0*([1-9][0-9]*)$", last_part)
-            if match:
-                normalized = f"CWE-{match.group(1)}"
-                parsed_cwes.append(normalized)
-            else:
-                parsed_cwes.append(last_part)
-
-        description_to_cwes[desc] = sorted(set(parsed_cwes))  # remove duplicates and sort
-
-    # Load CSV file
-    df = pd.read_csv(csv_path)
-
-    # Assume the first column contains the rule description to match
-    name_column = df.columns[0]
-
-    # Apply CWE formatting
-    df["Detected CWEs"] = df[name_column].apply(
-        lambda name: ", ".join(description_to_cwes.get(name, []))
-    )
-
-    # Overwrite the original CSV file with the new column
-    df.to_csv(csv_path, index=False)
-
-
-def analyze_cwe_effect(csv_path, cwe_column='Detected CWEs',
-                       features=['Syntagm Type', 'Sentence Index', 'Granularity']):
-    df = pd.read_csv(csv_path)
-
-    print("=" * 80)
-    print("📊 CWE STATISTICAL ANALYSIS".center(80))
-    print("=" * 80)
-
-    df[cwe_column] = df[cwe_column].str.replace(" ", "", regex=False)
-    df['CWE_List'] = df[cwe_column].str.split(',')
-
-    mlb = MultiLabelBinarizer()
-    cwe_binary = pd.DataFrame(mlb.fit_transform(df['CWE_List']), columns=mlb.classes_, index=df.index)
-
-    results = []
-
-    for cwe in cwe_binary.columns:
-        df_cwe = df.copy()
-        df_cwe[cwe] = cwe_binary[cwe]
-
-        print(f"\n🔎 Analyzing CWE: {cwe}")
-        print("-" * 80)
-
-        for feature in features:
-            if df_cwe[feature].nunique() < 2:
-                continue
-
-            contingency = pd.crosstab(df_cwe[feature], df_cwe[cwe])
-            if contingency.shape[1] != 2:
-                continue
-
-            chi2, p, dof, _ = chi2_contingency(contingency)
-
-            significant = p < 0.05
-            results.append({
-                'CWE': cwe,
-                'Feature': feature,
-                'Chi2': round(chi2, 4),
-                'p-value': round(p, 4),
-                'Significant': significant
-            })
-
-            print(f"  ➤ Feature: {feature}")
-            print(f"     Chi² = {chi2:.4f}   |   p-value = {p:.4f}   |   Significant: {'✅' if significant else '❌'}")
-
-            if significant:
-                percent_table = pd.crosstab(df_cwe[feature], df_cwe[cwe], normalize='index') * 100
-                percent_table.columns = ['No CWE', 'CWE Present']
-                print("\n     ↪ Distribution (%):")
-                print(percent_table.round(2).to_string())
-                print()
-
-    # Stampa riepilogo finale
-    print("=" * 80)
-    print("📌 SUMMARY OF SIGNIFICANT RESULTS".center(80))
-    print("=" * 80)
-    results_df = pd.DataFrame(results)
-    if not results_df.empty:
-        print(results_df[results_df['Significant']].sort_values(by='p-value').to_string(index=False))
-    else:
-        print("Nessuna relazione significativa trovata.")
-
-
-def plot_cwe_effect(csv_path, features=['Syntagm Type', 'Sentence Index', 'Granularity'], min_occurrences=3):
-    # Carica e pre-elabora il dataset
-    df = pd.read_csv(csv_path)
-    df['Detected CWEs'] = df['Detected CWEs'].str.replace(" ", "", regex=False)
-    df['CWE_List'] = df['Detected CWEs'].str.split(',')
-
-    # Binarizza tutte le CWE
-    mlb = MultiLabelBinarizer()
-    cwe_binary = pd.DataFrame(mlb.fit_transform(df['CWE_List']),
-                              columns=mlb.classes_, index=df.index)
-    df = pd.concat([df, cwe_binary], axis=1)
-
-    # Filtra solo le CWE con almeno `min_occurrences`
-    cwe_counts = cwe_binary.sum()
-    filtered_cwes = cwe_counts[cwe_counts >= min_occurrences].index.tolist()
-
-    for feature in features:
-        if df[feature].nunique() < 2:
-            continue
-
-        # Prepara i dati per il grafico
-        plot_data = []
-        for cwe in filtered_cwes:
-            grouped = df.groupby(feature)[cwe].mean().reset_index()
-            grouped['CWE'] = cwe
-            grouped.rename(columns={feature: 'Feature Value', cwe: 'Percentage'}, inplace=True)
-            grouped['Percentage'] = grouped['Percentage'] * 100
-            plot_data.append(grouped)
-
-        plot_df = pd.concat(plot_data, ignore_index=True)
-
-        # Grafico a barre raggruppate
-        plt.figure(figsize=(12, 6))
-        sns.barplot(data=plot_df, x='Feature Value', y='Percentage', hue='CWE')
-        plt.title(f"CWE Frequency (%) for '{feature}' feature")
-        plt.xlabel(feature)
-        plt.ylabel("% of snippets with CWE")
-        plt.ylim(0, 100)
-        plt.xticks(rotation=45)
-        plt.legend(title='CWE', bbox_to_anchor=(1.05, 1), loc='upper left')
-        plt.tight_layout()
-        plt.show()
-
-
-def check_cwe_match(csv_path, folder_path):
-    # Prova a caricare il file principale con gestione file vuoti
-    try:
-        df_main = pd.read_csv(csv_path)
-    except pd.errors.EmptyDataError:
-        # CSV completamente vuoto (nessuna colonna, nessuna riga)
-        df_main = pd.DataFrame()
-
-    # Se non ci sono colonne attese, ma il file non è completamente vuoto
-    if not df_main.empty and ('CWE ID' not in df_main.columns or 'Detected CWEs' not in df_main.columns):
-        raise ValueError("Il file principale deve contenere le colonne 'CWE ID' e 'Detected CWEs'")
-
-    # Normalizza struttura minima quando df_main è vuoto o privo di colonne
-    if df_main.empty:
-        # assicura colonne per l'output coerente
-        df_main = pd.DataFrame(columns=['CWE ID', 'Detected CWEs'])
-
-    # Preprocessing del file principale
-    df_main['CWE ID'] = df_main['CWE ID'].astype(str).str.strip()
-    # Evita 'nan' letterale nei match
-    df_main['Detected CWEs'] = df_main['Detected CWEs'].fillna('').astype(str)
-
-    cwe_ids = df_main['CWE ID'].unique()
-
-    # Conta match con "Detected CWEs" (per CWE)
-    if len(df_main) > 0 and len(cwe_ids) > 0:
-        count_matched = {
-            cwe_id: df_main['Detected CWEs'].str.contains(rf'\b{re.escape(cwe_id)}\b', regex=True).sum()
-            for cwe_id in cwe_ids
-        }
-        total_matching_cwes = sum(count_matched.values())
-    else:
-        count_matched = {}
-        total_matching_cwes = 0
-
-    # --- Percentuale snippet con almeno un match ---
-    total_snippets = len(df_main)  # righe del CSV (header escluso)
-    if total_snippets > 0:
-        rows_with_match = df_main.apply(
-            lambda row: bool(re.search(rf'\b{re.escape(str(row["CWE ID"]))}\b', row["Detected CWEs"])),
-            axis=1
-        ).sum()
-    else:
-        rows_with_match = 0
-    percent_matched_snippets = (rows_with_match / total_snippets * 100) if total_snippets else 0.0
-    # ------------------------------------------------
-
-    # Conteggio locale nel file principale
-    count_total_main = df_main['CWE ID'].value_counts().to_dict() if total_snippets else {}
-
-    # Conteggio globale da tutti i file nella cartella
-    count_global = {}
-    if folder_path and os.path.isdir(folder_path):
-        for filename in os.listdir(folder_path):
-            if filename.endswith(".csv"):
-                file_path = os.path.join(folder_path, filename)
-                try:
-                    df = pd.read_csv(file_path)
-                    if 'CWE ID' in df.columns:
-                        df['CWE ID'] = df['CWE ID'].astype(str).str.strip()
-                        for cwe_id in df['CWE ID']:
-                            count_global[cwe_id] = count_global.get(cwe_id, 0) + 1
-                except Exception as e:
-                    print(f"Errore nella lettura di {filename}: {e}")
-
-    # Funzione di sorting robusta (numerico se possibile)
-    def _cwe_sort_key(x):
-        x = str(x)
-        return (0, int(x)) if x.isdigit() else (1, x)
-
-    # Stampa formattata
-    header = f"{'CWE ID':<10} | {'Total CWE Scenarios':>17} | {'Total CWE Detections':>22} | {'Matching CWEs':>24}"
-    print(header)
-    print("-" * len(header))
-
-    for cwe_id in sorted(cwe_ids, key=_cwe_sort_key):
-        total_global = count_global.get(cwe_id, 0)
-        total_main = count_total_main.get(cwe_id, 0)
-        matched = count_matched.get(cwe_id, 0)
-        print(f"{cwe_id:<10} | {total_global:>17,} | {total_main:>22,} | {matched:>24,}")
-
-    print("-" * len(header))
-    print(f"{'TOTAL Matching CWEs':<10} : {total_matching_cwes:,}")
-    print(f"Snippet con almeno un match: {rows_with_match}/{total_snippets} ({percent_matched_snippets:.2f}%)")
-
-    # DataFrame risultato (anche vuoto ma con colonne attese)
-    result_df = pd.DataFrame({
-        'CWE ID': list(cwe_ids),
-        'Total CWE scenarios': [count_global.get(cwe_id, 0) for cwe_id in cwe_ids],
-        'Total CWE detection': [count_total_main.get(cwe_id, 0) for cwe_id in cwe_ids],
-        'Matches number': [count_matched.get(cwe_id, 0) for cwe_id in cwe_ids]
-    })
-
-    return result_df
-
-
-def check_cwe_match_merged(csv1: str, csv2: str, csv3: str):
-    """
-    Dati 3 CSV con colonne 'CWE ID' e 'Detected CWEs':
-      - stampa per ogni file: matched/total e percentuale
-      - stampa la media del numero di snippet con match e la media percentuale
-      - ritorna un DataFrame con i dettagli per file + riga MEDIA
-
-    Robusto a file vuoti o con solo header.
-    """
-    paths = [csv1, csv2, csv3]
-    results = []
-
-    for p in paths:
-        # Caricamento robusto
-        try:
-            df = pd.read_csv(p)
-        except pd.errors.EmptyDataError:
-            df = pd.DataFrame()
-
-        # Se vuoto, registriamo 0/0 (0%)
-        if df.empty:
-            matched, total, percent = 0, 0, 0.0
-        else:
-            # Verifica colonne solo se ci sono righe
-            if 'CWE ID' not in df.columns or 'Detected CWEs' not in df.columns:
-                raise ValueError(f"{p}: il file deve contenere le colonne 'CWE ID' e 'Detected CWEs'")
-
-            # Preprocessing
-            df['CWE ID'] = df['CWE ID'].astype(str).str.strip()
-            df['Detected CWEs'] = df['Detected CWEs'].fillna('').astype(str)
-
-            total = len(df)
-            if total == 0:
-                matched, percent = 0, 0.0
-            else:
-                matched = (df.apply(
-                    lambda row: bool(re.search(rf'\b{re.escape(str(row["CWE ID"]))}\b', row["Detected CWEs"])),
-                    axis=1
-                )).sum()
-                percent = (matched / total * 100) if total else 0.0
-
-        results.append({
-            "file": Path(p).name,
-            "matched_snippets": int(matched),
-            "total_snippets": int(total),
-            "percent_matched": float(percent)
-        })
-
-    # Stampa tabellare
-    header = f"{'File':<30} | {'Matched/Total':>15} | {'Percent':>10}"
-    print(header)
-    print("-" * len(header))
-    for r in results:
-        ratio = f"{r['matched_snippets']}/{r['total_snippets']}"
-        print(f"{r['file']:<30} | {ratio:>15} | {r['percent_matched']:>9.2f}%")
-    print("-" * len(header))
-
-    # Medie semplici sui 3 file
-    avg_matched = sum(r["matched_snippets"] for r in results) / 3.0
-    avg_percent = sum(r["percent_matched"] for r in results) / 3.0
-
-    print(f"Media snippet con match: {avg_matched:.2f}")
-    print(f"Media percentuale: {avg_percent:.2f}%")
-
-    # DataFrame di output + riga MEDIA
-    df_out = pd.DataFrame(results)
-    df_avg = pd.DataFrame([{
-        "file": "MEDIA",
-        "matched_snippets": avg_matched,
-        "total_snippets": None,
-        "percent_matched": avg_percent
-    }])
-
-    return pd.concat([df_out, df_avg], ignore_index=True)
-
-
-
 def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100, verbose: bool = True):
-    """
-    Reads an aggregated comparison CSV with columns:
-        Category, Value, Base, Result
-      - Base   = number of items/snippets with the feature (exposure)
-      - Result = number of vulnerabilities (events) observed with the feature
-                 (can exceed Base because multiple events can occur per snippet)
-
-    Per-(Category, Value) analysis (unchanged):
-        - Build a 2x2 table comparing "with feature" vs "without feature".
-        - Fisher's Exact when any expected cell < 5 or any observed cell < 5,
-          else Chi-square with Yates correction.
-        - Benjamini–Hochberg FDR across ALL per-value tests.
-
-    Global (per-Category) omnibus (UPDATED):
-        - Test of rate homogeneity across the values of the Category:
-          considers Result as event counts and Base as exposure.
-          chi2 = sum((O_i - E_i)^2 / E_i) with E_i = Base_i * (sum(Result)/sum(Base))
-          df = (#levels_used - 1)
-        - Robust to Result > Base and avoids negative cells.
-
-    Prints a clear narrative summary and returns:
-        per_value_df (detailed per feature value) and global_df (omnibus per Category).
-
-    Parameters
-    ----------
-    csv_path : str
-        Path to the aggregated metrics CSV.
-    alpha : float, default 0.05
-        FDR significance threshold for q-values.
-    top_n : int, default 100
-        How many items to show in the printed “top” sections.
-    verbose : bool, default True
-        If True, prints a narrative summary to console; if False, suppresses all prints.
-
-    Returns
-    -------
-    per_value_df : pd.DataFrame
-    global_df    : pd.DataFrame
-    """
-    # --- deps ---
     import numpy as np
     import pandas as pd
     from scipy.stats import chi2_contingency, fisher_exact
     from scipy.stats import chi2 as _chi2
 
-    # --- local logger ---
     def _log(*args, **kwargs):
         if verbose:
             print(*args, **kwargs)
 
-    # --- load & checks ---
     df = pd.read_csv(csv_path)
     required = {"Category", "Value", "Base", "Result"}
     if not required.issubset(df.columns):
@@ -1542,7 +643,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
     df["Base"] = pd.to_numeric(df["Base"])
     df["Result"] = pd.to_numeric(df["Result"])
 
-    # --- helpers ---
     def _expected(a,b,c,d):
         t = np.array([[a,b],[c,d]], dtype=float)
         return (t.sum(1, keepdims=True) @ t.sum(0, keepdims=True)) / t.sum()
@@ -1561,17 +661,16 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         add = 0.5 if min(a,b,c,d) == 0 else 0.0
         return ((a+add)*(d+add))/((b+add)*(c+add))
 
-    # --- per-value tests (unchanged) ---
     rows = []
     for cat, sub in df.groupby("Category", sort=False):
-        N = int(sub["Base"].sum())       # total with-feature items in this category
-        V = int(sub["Result"].sum())     # total vulnerabilities in this category
+        N = int(sub["Base"].sum())
+        V = int(sub["Result"].sum())
         for _, r in sub.iterrows():
             base = int(r["Base"])
-            a = int(r["Result"])         # with feature & vulnerable (events counted)
-            b = base - a                 # with feature & safe (can be negative; clamped below)
-            c = V - a                    # without feature & vulnerable (events)
-            d = (N - base) - c           # without feature & safe (can be negative; clamped below)
+            a = int(r["Result"])
+            b = base - a
+            c = V - a
+            d = (N - base) - c
             a,b,c,d = [max(x,0) for x in (a,b,c,d)]
 
             table = np.array([[a,b],[c,d]], dtype=float)
@@ -1608,24 +707,20 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         _log("No rows to analyze.")
         return per_value_df, pd.DataFrame()
 
-    # FDR
     per_value_df["q_value"] = _bh_fdr(np.nan_to_num(per_value_df["p_value"], nan=1.0))
     per_value_df["Significant"] = per_value_df["q_value"] <= alpha
 
-    # Sorting for reporting
     per_value_df = per_value_df.sort_values(
         ["Significant", "q_value", "Rate_diff", "OddsRatio"],
         ascending=[False, True, False, False]
     ).reset_index(drop=True)
 
-    # --- global (per-category) omnibus UPDATED: Poisson rate homogeneity ---
     global_rows = []
     for cat, sub in df.groupby("Category", sort=False):
         sub = sub.copy()
         sub["Base"] = pd.to_numeric(sub["Base"], errors="coerce")
         sub["Result"] = pd.to_numeric(sub["Result"], errors="coerce")
 
-        # keep only informative rows: exposure > 0 and events >= 0
         sub = sub[(sub["Base"] > 0) & (sub["Result"] >= 0)].copy()
 
         m = len(sub)
@@ -1640,7 +735,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
             global_rows.append({"Category": cat, "Chi2": np.nan, "df": np.nan, "p_value": np.nan})
             continue
 
-        # if no events overall, rates are all zero → no evidence of differences
         if tot_vuln == 0:
             global_rows.append({"Category": cat, "Chi2": 0.0, "df": m - 1, "p_value": 1.0})
             continue
@@ -1649,7 +743,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         expected = sub["Base"] * r
         observed = sub["Result"]
 
-        # use only levels with positive expected to avoid division by zero
         mask = expected > 0
         k = int(mask.sum())
         if k < 2:
@@ -1664,7 +757,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
 
     global_df = pd.DataFrame(global_rows).sort_values("p_value", na_position="last").reset_index(drop=True)
 
-    # === Pretty printing (guarded by verbose) ===
     def pct(x):
         return f"{100*x:.1f}%" if np.isfinite(x) else "NA"
 
@@ -1672,7 +764,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
     _log("Statistical Analysis — Syntagm Features and Vulnerability")
     _log("="*80)
 
-    # Significant features
     sig = per_value_df[per_value_df["Significant"]]
     if verbose:
         if len(sig):
@@ -1688,10 +779,8 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
         else:
             _log("\n▶ No features reached FDR q ≤ {:.2f}.".format(alpha))
 
-    # Trending but not significant
     notsig = per_value_df[~per_value_df["Significant"]].copy()
     if verbose and len(notsig):
-        # rank by absolute rate difference, then p-value
         notsig["_abs_diff"] = notsig["Rate_diff"].abs()
         trending = notsig.sort_values(["_abs_diff", "p_value"], ascending=[False, True]).head(top_n)
         _log("\n⚠ Trending but not significant (largest rate differences; low q but > α)")
@@ -1701,7 +790,6 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
                   f"{pct(r['Rate_with'])} vs {pct(r['Rate_without'])} ({direction} than baseline by {pct(abs(r['Rate_diff']))}); "
                   f"OR={r['OddsRatio']:.2f}, p={r['p_value']:.3g}, q={r['q_value']:.3g} ({r['Test']})")
 
-    # Global category tests (UPDATED description)
     if verbose:
         _log("\n— Global (omnibus) tests per Category —")
         for _, r in global_df.iterrows():
@@ -1716,46 +804,17 @@ def analyze_single_feature_significance(csv_path: str, alpha: float = 0.05, top_
 
 
 def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, top_n: int = 100, verbose: bool = True):
-    """
-    Analisi per CSV 'combined' con colonne richieste:
-      Combination, Features, Base, Result
-    Colonne facoltative riportate in output se presenti:
-      Granularity, Sentence Index, Syntagm Type, Frequency
-
-    Per combinazione (stratificato per Features):
-      - 2×2 test vs il resto delle combinazioni con lo stesso 'Features'
-        (Fisher se attesi/osservati < 5, altrimenti Chi² con Yates).
-      - BH–FDR su tutte le p dei test per combinazione.
-
-    Omnibus (AGGIORNATO):
-      - Test di omogeneità dei tassi (Poisson-like) tra le 'Combination' aggregando su TUTTI i 'Features'.
-        * Usa Result come conteggi di eventi e Base come esposizione.
-        * Evita safe negativi quando Result > Base.
-        * χ² = Σ (O_i - E_i)^2 / E_i, con E_i = Base_i * (Σ Result / Σ Base), df = (#comb_usable - 1).
-
-    Parametri:
-      - csv_path : percorso al CSV
-      - alpha    : soglia FDR per significatività
-      - top_n    : quante righe mostrare nelle stampe riassuntive
-      - verbose  : se True (default) stampa un riepilogo; se False non stampa nulla
-
-    Ritorna:
-      per_combo_df : risultati per combinazione
-      global_df    : una riga con l’omnibus sulle combinazioni
-    """
     import numpy as np
     import pandas as pd
     from scipy.stats import chi2_contingency, fisher_exact
     from scipy.stats import chi2 as _chi2
 
-    # --- load & checks ---
     df = pd.read_csv(csv_path)
     required = {"Combination", "Features", "Base", "Result"}
     if not required.issubset(df.columns):
         missing = sorted(required - set(df.columns))
         present = sorted(map(str, df.columns))
         if verbose:
-            # Stampa il path del file + dettaglio delle colonne
             print(f"[Schema CSV non valido] File: {csv_path}\n  Mancanti: {missing}\n  Presenti: {present}")
         raise ValueError(f"{csv_path}: CSV must contain columns {sorted(required)} (missing: {missing})")
 
@@ -1765,7 +824,6 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
     df["Base"] = pd.to_numeric(df["Base"])
     df["Result"] = pd.to_numeric(df["Result"])
 
-    # --- helpers ---
     def _expected(a,b,c,d):
         t = np.array([[a,b],[c,d]], dtype=float)
         return (t.sum(1, keepdims=True) @ t.sum(0, keepdims=True)) / t.sum()
@@ -1786,17 +844,16 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
         add = 0.5 if min(a,b,c,d) == 0 else 0.0
         return ((a+add)*(d+add))/((b+add)*(c+add))
 
-    # --- per-combination tests (baseline stratificato per 'Features') ---
     rows = []
     for k, sub in df.groupby("Features", dropna=False, sort=False):
         N = int(sub["Base"].sum())
         V = int(sub["Result"].sum())
         for _, r in sub.iterrows():
             base = int(r["Base"])
-            a = int(r["Result"])         # con la combinazione & vulnerabile (eventi)
-            b = base - a                 # con la combinazione & safe (può essere <0 → clamp)
-            c = V - a                    # senza la combinazione & vulnerabile (eventi)
-            d = (N - base) - c           # senza la combinazione & safe (può essere <0 → clamp)
+            a = int(r["Result"])
+            b = base - a
+            c = V - a
+            d = (N - base) - c
             a,b,c,d = [max(x,0) for x in (a,b,c,d)]
 
             table = np.array([[a,b],[c,d]], dtype=float)
@@ -1839,7 +896,6 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
             print("Nessuna riga da analizzare.")
         return per_combo_df, pd.DataFrame()
 
-    # FDR globale sulle combinazioni
     per_combo_df["q_value"] = _bh_fdr(np.nan_to_num(per_combo_df["p_value"], nan=1.0))
     per_combo_df["Significant"] = per_combo_df["q_value"] <= alpha
 
@@ -1848,7 +904,6 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
         ascending=[False, True, False, False]
     ).reset_index(drop=True)
 
-    # --- OMNIBUS (AGGIORNATO): tassi per Combination aggregando su tutti i Features ---
     agg = (
         df.groupby("Combination", as_index=False)[["Base", "Result"]]
           .sum(numeric_only=True)
@@ -1888,7 +943,6 @@ def analyze_combined_features_significance(csv_path: str, alpha: float = 0.05, t
         "Combinations_used": int(m)
     }])
 
-    # === Pretty printing (opzionale) ===
     if verbose:
         def pct(x):
             import numpy as np
@@ -1942,22 +996,10 @@ def add_detected_cwes(
     path_column: str = "Path",
     cwe_joiner: str = ", "
 ) -> None:
-    """
-    Legge un SARIF e un CSV con una colonna 'Path'. Per ogni riga del CSV,
-    trova i CWE rilevati per quel path e li aggiunge direttamente nel CSV
-    sotto la colonna 'Detected CWEs'.
-
-    Args:
-        sarif_path: percorso al file SARIF (.sarif o .json).
-        csv_path: percorso al CSV (verrà sovrascritto).
-        path_column: nome della colonna che contiene i path (default: 'Path').
-        cwe_joiner: separatore per i CWE (default: '; ').
-    """
 
     def norm(p: str) -> str:
         return os.path.normpath(p).replace("\\", "/")
 
-    # --- Carica SARIF
     with open(sarif_path, "r", encoding="utf-8") as f:
         sarif = json.load(f)
 
@@ -1967,7 +1009,6 @@ def add_detected_cwes(
 
     path_to_cwes: Dict[str, Set[str]] = {}
     for run in runs:
-        # 1) Mappa regole -> CWE
         rule_cwe: Dict[str, Set[str]] = {}
         rules = (run.get("tool", {}) or {}).get("driver", {}).get("rules", []) or []
         for idx, rule in enumerate(rules):
@@ -1986,7 +1027,6 @@ def add_detected_cwes(
             if cwes:
                 rule_cwe[rule_id] = cwes
 
-        # 2) Scorri risultati e collega file -> CWE
         for res in run.get("results", []) or []:
             rule_id = res.get("ruleId")
             if not rule_id and "ruleIndex" in res and isinstance(res["ruleIndex"], int):
@@ -2007,7 +1047,6 @@ def add_detected_cwes(
                 file_key = norm(uri)
                 path_to_cwes.setdefault(file_key, set()).update(cwes_for_result)
 
-    # --- Legge e riscrive CSV inplace
     with open(csv_path, "r", encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
         if path_column not in reader.fieldnames:
@@ -2033,155 +1072,10 @@ def add_detected_cwes(
             row["Detected CWEs"] = cwe_joiner.join(sorted(detected)) if detected else ""
             rows.append(row)
 
-    # Sovrascrive lo stesso file
     with open(csv_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-
-
-def compute_vulnerable_snippets(
-    csv_path: str,
-    total_snippets: int,
-    header: Union[bool, str] = "auto",
-) -> float:
-    """
-    Conta gli snippet vulnerabili (righe non vuote nel CSV, opzionalmente
-    escludendo l'header) e stampa:
-      - il totale degli snippet vulnerabili
-      - la percentuale di snippet vulnerabili sul totale degli snippet
-
-    Ritorna comunque la frazione (0–1) per compatibilità.
-
-    Parametri
-    ----------
-    csv_path : str
-        Percorso al CSV che contiene le istanze (una per riga).
-    total_snippets : int
-        Numero totale di snippet (denominatore).
-    header : bool | "auto", opzionale
-        Gestione dell'header:
-        - True  -> la prima riga non vuota è un header e viene esclusa
-        - False -> nessun header
-        - "auto" (default) -> tenta il rilevamento con csv.Sniffer
-
-    Ritorna
-    -------
-    float
-        Frazione snippet vulnerabili / totale_snippet.
-    """
-    if total_snippets <= 0:
-        raise ValueError("total_snippets must be a positive integer.")
-
-    # Determina la presenza dell'header
-    has_header = False
-    with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
-        sample = f.read(2048)
-        f.seek(0)
-        if header == "auto":
-            try:
-                has_header = csv.Sniffer().has_header(sample)
-            except Exception:
-                has_header = True  # default prudente
-        else:
-            has_header = bool(header)
-
-        reader = csv.reader(f)
-        non_empty_rows = []
-        for row in reader:
-            # considera vuote le righe con tutte le celle vuote
-            if not row or not any((cell or "").strip() for cell in row):
-                continue
-            non_empty_rows.append(row)
-
-    cwe_rows = max(len(non_empty_rows) - (1 if has_header and non_empty_rows else 0), 0)
-    rate = cwe_rows / total_snippets
-    percent = rate * 100.0
-
-    # Stampa SOLO quanto richiesto
-    print(f"Snippet vulnerabili totali: {cwe_rows}")
-    print(f"Percentuale snippet vulnerabili: {percent:.2f}%")
-
-    return rate
-
-
-def compute_vulnerable_snippets_merged(
-    csv_paths: Sequence[str],
-    total_snippets: Union[int, Sequence[int]],
-    header: Union[bool, str] = "auto",
-) -> Tuple[int, float, float]:
-    """
-    Dati 3 CSV con la medesima struttura, per ciascuno:
-      - conta le righe non vuote (header escluso se presente);
-      - calcola la percentuale sul totale fornito;
-      - calcola il tasso CWE/snippet (= vulnerabili / totale).
-
-    Stampa SOLO:
-      - il numero medio (arrotondato) di snippet vulnerabili;
-      - la percentuale media di snippet vulnerabili.
-
-    Ritorna (invariato):
-      - media intera del numero di snippet vulnerabili (int);
-      - percentuale media (float);
-      - tasso medio CWE/snippet (float).
-    """
-    if len(csv_paths) != 3:
-        raise ValueError("Fornire esattamente 3 CSV in 'csv_paths'.")
-
-    # Normalizza i totali per file
-    if isinstance(total_snippets, int):
-        totals: List[int] = [total_snippets, total_snippets, total_snippets]
-    else:
-        totals = list(total_snippets)
-        if len(totals) != 3:
-            raise ValueError("Se si passano totali per-file, fornirne esattamente 3.")
-    if any(t <= 0 for t in totals):
-        raise ValueError("Ogni valore di 'total_snippets' deve essere un intero positivo.")
-
-    counts: List[int] = []
-    percentages: List[float] = []
-    rates: List[float] = []
-
-    # Per ciascun CSV: conta righe non vuote, escludendo l'eventuale header
-    for path, tot in zip(csv_paths, totals):
-        has_header = False
-        with open(path, "r", encoding="utf-8-sig", newline="") as f:
-            sample = f.read(2048)
-            f.seek(0)
-            if header == "auto":
-                try:
-                    has_header = csv.Sniffer().has_header(sample)
-                except Exception:
-                    has_header = True  # default prudente
-            else:
-                has_header = bool(header)
-
-            reader = csv.reader(f)
-            non_empty_rows = []
-            for row in reader:
-                if not row or not any((cell or "").strip() for cell in row):
-                    continue
-                non_empty_rows.append(row)
-
-        vulnerable_rows = max(len(non_empty_rows) - (1 if has_header and non_empty_rows else 0), 0)
-        rate = vulnerable_rows / tot
-        pct = rate * 100.0
-
-        counts.append(vulnerable_rows)
-        percentages.append(pct)
-        rates.append(rate)
-
-    # Medie finali
-    mean_count = sum(counts) / 3.0
-    mean_count_int = int(Decimal(mean_count).quantize(0, rounding=ROUND_HALF_UP))
-    mean_percentage = sum(percentages) / 3.0
-    mean_rate = sum(rates) / 3.0
-
-    # Stampa SOLO i valori medi richiesti
-    print(f"Snippet vulnerabili medi: {mean_count_int}")
-    print(f"Percentuale media snippet vulnerabili: {mean_percentage:.2f}%")
-
-    return mean_count_int, mean_percentage, mean_rate
 
 
 def collect_detected_cwes_merged(
@@ -2191,23 +1085,9 @@ def collect_detected_cwes_merged(
     column: str = "Detected CWEs",
     separator: str = ",",
     top_k: int = 5,
-    quiet: bool = False,   # come nella funzione base
-    silent: bool = False,  # se True, non stampa nulla
+    quiet: bool = False,
+    silent: bool = False,
 ) -> float:
-    """
-    Legge tre CSV (csv_path_1, csv_path_2, csv_path_3), estrae i CWE dalla colonna `column`
-    (separati da `separator`) e calcola:
-      - la TOP-K (default 5) delle CWE in base alla MEDIA delle loro cardinalità sui 3 CSV
-        (se un CWE non compare in un file, vale 0 in quel file).
-      - la MEDIA del numero TOTALE di CWE sui 3 CSV (somma occorrenze per file, poi media sui 3).
-
-    STAMPA (solo se `silent` è False e `quiet` è False):
-      - la classifica Top-K con la media delle occorrenze
-      - la media del numero totale di CWE sui 3 CSV
-
-    RITORNA:
-      - la media del numero TOTALE di CWE sui 3 CSV (float)
-    """
     def _count_cwes_in_csv(csv_path: str) -> Counter:
         counts = Counter()
         with open(csv_path, newline="", encoding="utf-8-sig") as f:
@@ -2226,32 +1106,26 @@ def collect_detected_cwes_merged(
                         counts[cwe] += 1
         return counts
 
-    # Conta per ciascun CSV
     c1 = _count_cwes_in_csv(csv_path_1)
     c2 = _count_cwes_in_csv(csv_path_2)
     c3 = _count_cwes_in_csv(csv_path_3)
 
-    # Unione di tutti i CWE
     all_cwes = set(c1) | set(c2) | set(c3)
 
-    # Media delle cardinalità per ogni CWE (considerando 0 dove assente)
     averaged: List[Tuple[str, float]] = []
     for cwe in all_cwes:
         mean_val = (c1.get(cwe, 0) + c2.get(cwe, 0) + c3.get(cwe, 0)) / 3.0
         averaged.append((cwe, mean_val))
 
-    # Ordina per media desc, poi CWE asc
     averaged.sort(key=lambda kv: (-kv[1], kv[0]))
 
     top = averaged[:top_k]
 
-    # Media del numero TOTALE di CWE sui 3 CSV
     t1 = sum(c1.values())
     t2 = sum(c2.values())
     t3 = sum(c3.values())
     mean_total = (t1 + t2 + t3) / 3.0
 
-    # Stampa solo ciò che è richiesto
     if not silent and not quiet:
         if top:
             max_cwe_len = max(len(cwe) for cwe, _ in top)
@@ -2277,18 +1151,6 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
                                          decimal: str = ".",
                                          encoding: str = "utf-8",
                                          sort: bool = True) -> pd.DataFrame:
-    """
-    Legge tre CSV con colonne almeno:
-      'Category', 'Value', 'Frequency', 'Base', 'Result'
-    e salva un nuovo CSV con colonne in questo ordine:
-      ['Category', 'Value', 'Base', 'Result', 'Frequency']
-
-    Regole:
-      - Si considerano SOLO le coppie (Category, Value) comuni a TUTTI e tre i file.
-      - 'Frequency' è la media delle tre Frequency e viene SEMPRE stampata come "00.00%".
-      - 'Result' è la media delle tre Result e viene SEMPRE arrotondata all'intero.
-      - 'Base' deve coincidere nei tre CSV per la stessa coppia; altrimenti errore.
-    """
 
     def _to_float(series: pd.Series, decimal: str, treat_percent: bool = True) -> tuple[pd.Series, bool]:
         s_raw = series.astype(str)
@@ -2300,10 +1162,10 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
             s = s.str.replace("%", "", regex=False)
 
         if decimal == ",":
-            s = s.str.replace(".", "", regex=False)   # migliaia
-            s = s.str.replace(",", ".", regex=False)  # decimali
+            s = s.str.replace(".", "", regex=False)
+            s = s.str.replace(",", ".", regex=False)
         else:
-            s = s.str.replace(",", "", regex=False)   # migliaia
+            s = s.str.replace(",", "", regex=False)
 
         out = pd.to_numeric(s, errors="coerce")
         if treat_percent:
@@ -2323,12 +1185,11 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
         df["Value"]    = df["Value"].astype(str).str.strip()
 
         df["Frequency"], _ = _to_float(df["Frequency"], decimal, treat_percent=True)
-        df["Result"],    _ = _to_float(df["Result"],    decimal, treat_percent=True)   # input può avere %
-        df["Base"],      _ = _to_float(df["Base"],      decimal, treat_percent=False)  # Base non % in input
+        df["Result"],    _ = _to_float(df["Result"],    decimal, treat_percent=True)
+        df["Base"],      _ = _to_float(df["Base"],      decimal, treat_percent=False)
 
         df = df.dropna(subset=["Frequency", "Result", "Base"])
 
-        # consolida eventuali duplicati
         df = (df.groupby(["Category", "Value"], as_index=False)
                 .agg(Frequency=("Frequency", "mean"),
                      Result=("Result", "mean"),
@@ -2355,7 +1216,6 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
             f"A∩B: {len(a_keys & b_keys)}  A∩C: {len(a_keys & c_keys)}  B∩C: {len(b_keys & c_keys)}  A∩B∩C: 0"
         )
 
-    # Coerenza Base
     tol = 1e-9
     mismatch_mask = ~(
         (merged["Base_a"] - merged["Base_b"]).abs().le(tol) &
@@ -2368,10 +1228,8 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
             "Esempi (prime 10):\n" + bad.to_string(index=False)
         )
 
-    # Base coerente
     merged["Base"] = merged["Base_a"]
 
-    # Medie
     merged["Frequency"] = merged[["Frequency_a", "Frequency_b", "Frequency_c"]].mean(axis=1)
     merged["Result"]    = merged[["Result_a", "Result_b", "Result_c"]].mean(axis=1)
 
@@ -2380,14 +1238,12 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
     if sort:
         out = out.sort_values(["Category", "Value"]).reset_index(drop=True)
 
-    # --- formattazione output ---
     def _format_number(x: float, decimal: str, sig: int = 6) -> str:
         s = f"{x:.{sig}g}"
         if decimal == ",":
             s = s.replace(".", ",")
         return s
 
-    # Base: numero secco
     def _fmt_base(x: float) -> str:
         if pd.isna(x):
             return ""
@@ -2397,7 +1253,6 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
 
     out["Base"] = out["Base"].apply(_fmt_base)
 
-    # Result: media arrotondata all'intero (half-away-from-zero)
     def _round_half_away_from_zero(v: float) -> int:
         if pd.isna(v):
             return ""
@@ -2405,7 +1260,6 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
 
     out["Result"] = out["Result"].apply(_round_half_away_from_zero).astype(str)
 
-    # Frequency: sempre "00.00%"
     def _fmt_pct(x: float) -> str:
         val = x * 100.0
         s = f"{val:.2f}"
@@ -2415,7 +1269,6 @@ def single_feature_frequency_mean_to_csv(csv_a: str,
 
     out["Frequency"] = out["Frequency"].apply(_fmt_pct)
 
-    # scrivi CSV
     Path(out_csv).parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(out_csv, index=False, sep=sep, encoding=encoding)
 
@@ -2430,16 +1283,6 @@ def combined_feature_frequency_mean_to_csv(csv_a: str,
                                            decimal: str = ".",
                                            encoding: str = "utf-8",
                                            sort: bool = True) -> pd.DataFrame:
-    """
-    Crea un CSV 'csv_out' con colonne:
-      ['Combination','Features','Granularity','Sentence Index','Syntagm Type', 'Base','Result','Frequency']
-
-    - Frequency = media (0–1) delle tre fonti, formattata come 00.00% (o 00,00%) nel CSV.
-    - Result     = media dei tre CSV (normalizzata come Frequency se espressa in %), poi arrotondata all'intero.
-    - 'Sentence Index' scritto come intero.
-    - I metadati (Features, Granularity, Sentence Index, Syntagm Type) sono presi da csv_a (primo valore non nullo).
-    - 'Base' deve essere identica nei tre CSV per ogni 'Combination'; in caso contrario si solleva un errore.
-    """
 
     META_COLS = ["Features", "Granularity", "Sentence Index", "Syntagm Type"]
 
@@ -2449,17 +1292,11 @@ def combined_feature_frequency_mean_to_csv(csv_a: str,
         return s
 
     def _parse_value(series: pd.Series) -> pd.Series:
-        """
-        Converte valori numerici/percentuali:
-        - 0.42 / 0,42 -> 0.42
-        - 42% / 42,0 % -> 0.42
-        """
         raw = series.astype(str)
         has_percent = raw.str.contains("%", na=False)
         clean = raw.str.replace("%", "", regex=False).str.strip()
         clean = clean.str.replace(",", ".", regex=False)
         num = pd.to_numeric(clean, errors="coerce")
-        # se in almeno una cella della colonna compaiono '%', interpretiamo la colonna come percentuale
         num = num / 100.0 if has_percent.any() else num
         return num
 
@@ -2516,16 +1353,13 @@ def combined_feature_frequency_mean_to_csv(csv_a: str,
             "Controlla spazi/maiuscole/punteggiatura delle 'Combination'."
         )
 
-    # media finale (0–1) per Frequency
     freq_cols = [c for c in merged.columns if c.startswith("Frequency_")]
     merged["Frequency"] = merged[freq_cols].mean(axis=1)
 
-    # media per Result -> arrotonda all'intero
     result_cols = [c for c in merged.columns if c.startswith("Result_")]
     merged["Result"] = merged[result_cols].mean(axis=1)
-    merged["Result"] = merged["Result"].round().astype("Int64")  # intero approssimato, preserva NA
+    merged["Result"] = merged["Result"].round().astype("Int64")
 
-    # 'Base' unificata e coerente
     base_cols = [c for c in merged.columns if c.startswith("Base_")]
     if base_cols:
         def _pick_and_check(row):
@@ -2542,167 +1376,29 @@ def combined_feature_frequency_mean_to_csv(csv_a: str,
     else:
         merged["Base"] = pd.NA
 
-    # metadati e tipi
     for col in META_COLS:
         if col not in merged.columns:
             merged[col] = pd.NA
     merged["Sentence Index"] = pd.to_numeric(merged["Sentence Index"], errors="coerce").astype("Int64")
 
-    # ORDINE COLONNE: Base, Result, Frequency come ultime 3
     out_cols = ["Combination"] + META_COLS + ["Base", "Result", "Frequency"]
     out = merged[out_cols]
 
     if sort:
         out = out.sort_values(["Combination"]).reset_index(drop=True)
 
-    # formatter percentuale solo per 'Frequency' al momento della scrittura
     def _format_pct(x: float) -> str:
         s = f"{x * 100:.2f}%"
         return s.replace(".", ",") if decimal == "," else s
 
     to_write = out.copy()
     to_write["Frequency"] = to_write["Frequency"].map(lambda v: _format_pct(float(v)) if pd.notna(v) else "")
-    # 'Result' resta intero; gli Int64 vengono scritti come interi (celle vuote per NA)
 
     to_write.to_csv(csv_out, sep=sep, index=False, encoding=encoding)
 
-    # riepilogo console
     for _, row in out.iterrows():
         freq_str = _format_pct(float(row["Frequency"])) if pd.notna(row["Frequency"]) else ""
         print(f"{row['Combination']}: Result={row['Result']} | Frequency={freq_str}")
-
-    return out
-
-
-def cwe_scenarios_frequency_mean(csv_a: str,
-                                 csv_b: str,
-                                 csv_c: str,
-                                 out_csv: str,
-                                 sep: str = ",",
-                                 decimal: str = ".",
-                                 encoding: str = "utf-8",
-                                 sort: bool = True) -> pd.DataFrame:
-    """
-    Legge tre CSV con colonne 'CWE', 'Frequency' e 'Base' (opzionale: 'Result'),
-    e salva un CSV con ['CWE','Base','Result','Frequency'].
-
-    - Frequency (output): media delle tre frequenze (in frazione) formattata '00.00%'.
-    - Result (output): vera media intera (half-up) dei tre 'Result' per CWE;
-      se mancano, deriva per-file da Frequency*100 prima di mediare.
-    - Base: deve coincidere tra i file per ciascun CWE (altrimenti errore).
-    """
-
-    def _norm_cwe_val(x: str) -> str | None:
-        s = str(x).strip()
-        m = re.search(r"(\d+)", s)
-        return f"CWE-{int(m.group(1))}" if m else None
-
-    def _parse_frequency_col(s: pd.Series) -> pd.Series:
-        t = s.astype(str).str.strip()
-        is_pct = t.str.contains("%", na=False)
-        t = t.str.replace("%", "", regex=False)
-        if decimal != ".":
-            t = t.str.replace(decimal, ".", regex=False)
-        vals = pd.to_numeric(t, errors="coerce")
-        return pd.Series(np.where(is_pct, vals/100, vals), index=s.index)  # frazione 0–1
-
-    def _parse_result_col(s: pd.Series) -> pd.Series:
-        t = s.astype(str).str.strip()
-        is_pct = t.str.contains("%", na=False)
-        t = t.str.replace("%", "", regex=False)
-        if decimal != ".":
-            t = t.str.replace(decimal, ".", regex=False)
-        vals = pd.to_numeric(t, errors="coerce")
-        return pd.Series(vals, index=s.index)  # 0–100 (float) o NA
-
-    def _half_up(x) -> pd.Series:
-        s = pd.Series(x, dtype="Float64")  # consente NA
-        return s.add(0.5).apply(np.floor).astype("Int64")
-
-    def _prep(path: str) -> pd.DataFrame:
-        df = pd.read_csv(path, sep=sep, decimal=decimal, encoding=encoding)
-        required = {"CWE", "Frequency", "Base"}
-        missing = required - set(df.columns)
-        if missing:
-            raise ValueError(f"{path}: mancano le colonne {missing}")
-
-        df = df.copy()
-        df.loc[:, "CWE"] = df["CWE"].map(_norm_cwe_val)
-        df.loc[:, "Frequency"] = _parse_frequency_col(df["Frequency"])
-        if "Result" in df.columns:
-            df.loc[:, "_ResultParsed"] = _parse_result_col(df["Result"])
-        else:
-            df.loc[:, "_ResultParsed"] = pd.Series([pd.NA] * len(df), dtype="Float64")
-
-        df = df.dropna(subset=["CWE", "Frequency", "Base"]).copy()
-
-        # Aggregazioni per CWE
-        g = df.groupby("CWE", sort=False)
-        freq_mean = g["Frequency"].mean()                            # frazione 0–1 (Series indicizzata da CWE)
-        res_mean  = g["_ResultParsed"].mean()                        # 0–100 float o NA
-        base_agg  = g["Base"].agg(lambda s: s.dropna().astype(str).unique()[0])
-
-        # Riempie i Result mancanti derivando dal file: Frequency*100 half-up
-        derived_from_freq = _half_up(freq_mean * 100).astype("Float64")
-        res_mean = res_mean.astype("Float64").fillna(derived_from_freq)
-
-        stem = Path(path).stem
-
-        # *** EVITA ambiguità: costruisci il DF con indice pulito e senza riallineamento ***
-        out = pd.DataFrame({
-            "CWE": freq_mean.index.astype(str)              # colonna esplicita
-        })
-        out[f"Frequency_{stem}"] = freq_mean.to_numpy()     # nessun allineamento per indice
-        out[f"Base_{stem}"]      = base_agg.to_numpy()
-        out[f"Result_{stem}"]    = _half_up(res_mean).to_numpy()
-
-        # assicurati che non ci sia un indice nominato "CWE"
-        out.index.name = None
-        return out
-
-    a = _prep(csv_a)
-    b = _prep(csv_b)
-    c = _prep(csv_c)
-
-    # Merge sui CWE (solo colonne, nessun indice CWE)
-    merged = a.merge(b, on="CWE", how="inner").merge(c, on="CWE", how="inner")
-    if merged.empty:
-        raise ValueError("Nessun 'CWE' in comune tra tutti e tre i file (controlla formati/coerenza dei CWE).")
-
-    # Frequenze: media su frazioni (0–1)
-    freq_cols = [col for col in merged.columns if col.startswith("Frequency_")]
-    merged.loc[:, "Frequency"] = merged[freq_cols].mean(axis=1)
-
-    # Base: deve coincidere
-    base_cols = [col for col in merged.columns if col.startswith("Base_")]
-    base_equal = merged[base_cols].apply(lambda r: len(set(map(str, r))) == 1, axis=1)
-    if not base_equal.all():
-        bad = merged.loc[~base_equal, ["CWE"] + base_cols]
-        raise ValueError(
-            "Valori 'Base' non coerenti tra i tre file per alcuni CWE. "
-            f"Righe interessate:\n{bad.to_string(index=False)}"
-        )
-    merged.loc[:, "Base"] = merged[base_cols[0]].astype(str)
-
-    # Result: vera media dei tre Result_* (0–100), half-up all'intero
-    result_cols = [col for col in merged.columns if col.startswith("Result_")]
-    result_mean = merged[result_cols].astype("Float64").mean(axis=1)
-    merged.loc[:, "Result"] = _half_up(result_mean)
-
-    # Fallback se NA (non dovrebbe più succedere)
-    na_mask = merged["Result"].isna()
-    if na_mask.any():
-        merged.loc[na_mask, "Result"] = _half_up(merged.loc[na_mask, "Frequency"] * 100)
-
-    out = merged.loc[:, ["CWE", "Base", "Result", "Frequency"]].copy()
-    if sort:
-        out = out.sort_values(["CWE"], kind="stable").reset_index(drop=True)
-
-    # Frequency -> '00.00%'
-    out.loc[:, "Frequency"] = (out["Frequency"] * 100).map(lambda x: f"{x:.2f}%")
-
-    Path(out_csv).parent.mkdir(parents=True, exist_ok=True)
-    out.to_csv(out_csv, index=False, sep=sep, encoding=encoding)
 
     return out
 
@@ -2712,47 +1408,13 @@ def single_feature_statistical_analysis_merged(
     csv_path_2,
     csv_path_3,
     alpha=0.05,
-    mostra_non_significativi_vicini=False,  # non usato qui: la nuova funzione riporta solo le intersezioni significative
-    k_vicini=5,
+    show_non_significant_close=False,
+    k_close=5,
     min_events=0
 ):
-    """
-    Analizza tre CSV (stessa struttura: colonne Category, Value, Base, Result) e riporta:
-      1) OMNIBUS: feature che risultano significative (FDR) in TUTTI e 3 i file.
-      2) PER-VALORE: (Category, Value) significativi (FDR) in TUTTI e 3 i file.
-
-    NOVITÀ: per ogni singolo file, l'analisi PER-VALORE è eseguita SOLO sulle feature
-    il cui OMNIBUS (dopo FDR) è significativo; altrimenti la feature viene saltata.
-
-    Per gli elementi COMUNI calcola aggregati “logicamentente corretti”:
-      - P-value combinato con metodo di Fisher (evita la media semplice di p).
-      - OMNIBUS: N_tot combinato (somma), Cramér’s V media pesata su N_tot.
-      - PER-VALORE: pooling dei conteggi (somma di Base/Result sia per il valore sia per il “resto”),
-                    tassi pooled, RR pooled = rate_valore_pooled / rate_resto_pooled,
-                    media geometrica dei RR come metrica ausiliaria.
-
-    Ritorna un dict con:
-        {
-          'omnibus_common': DataFrame,
-          'per_value_common': DataFrame,
-          'details': {
-              'single_runs': [
-                  {'omnibus': df1_omni, 'per_value': df1_perval},  # per ciascun file
-                  ...
-              ]
-          }
-        }
-    e stampa anche un breve report testuale.
-
-    Note:
-    - Usa Barnard’s exact test (two-sided, NO odds ratio) per i test per-valore.
-    - FDR (Benjamini–Hochberg) applicata all’interno di ciascun singolo file come nel comportamento originale.
-    - L’intersezione “comune” è fatta sulle entità risultate significative (dopo FDR) in ciascun file.
-    """
     import pandas as pd
     import numpy as np
 
-    # ---------- util ----------
     def bh_fdr(pvals):
         p = np.asarray(pvals, dtype=float)
         n = len(p)
@@ -2767,14 +1429,13 @@ def single_feature_statistical_analysis_merged(
         return out
 
     try:
-        from scipy.stats import barnard_exact as _barnard_exact  # type: ignore
+        from scipy.stats import barnard_exact as _barnard_exact
         from scipy.stats import chi2
     except Exception as e:
         raise ImportError(
             "SciPy con 'barnard_exact' è richiesto. Installa/aggiorna SciPy."
         ) from e
 
-    # ---------- helper: p-value Barnard (NO OR) ----------
     ALT = "two-sided"
     def p_value_no_or(k1, n1, k2, n2):
         if n1 <= 0 or n2 <= 0:
@@ -2790,7 +1451,6 @@ def single_feature_statistical_analysis_merged(
             p = float(p)
         return p
 
-    # ---------- OMNIBUS permutazionale ----------
     rng = np.random.default_rng(None)
     _B_PERM = 5000
 
@@ -2827,12 +1487,10 @@ def single_feature_statistical_analysis_merged(
         if not np.isfinite(stat_obs):
             return np.nan, stat_obs, exp_mins, np.nan
 
-        # Cramér’s V (r=2)
         c = len(bases)
         denom = N * max(1, min(2 - 1, c - 1))
         V = float(np.sqrt(stat_obs / denom)) if (denom > 0 and np.isfinite(stat_obs)) else np.nan
 
-        # Precomputo split per shuffle
         idx_cuts = np.cumsum(bases)[:-1]
         vec = np.zeros(N, dtype=np.int8); vec[:K] = 1
 
@@ -2848,7 +1506,6 @@ def single_feature_statistical_analysis_merged(
         pval = (exceed + 1.0) / (B + 1.0)
         return float(pval), float(stat_obs), exp_mins, V
 
-    # ---------- analisi singolo CSV -> (omnibus_df, per_value_df) ----------
     def _analyze_one(csv_path):
         df = pd.read_csv(csv_path)
         need = {"Category", "Value", "Base", "Result"}
@@ -2860,7 +1517,6 @@ def single_feature_statistical_analysis_merged(
         df["Result"] = df[["Result", "Base"]].min(axis=1).clip(lower=0)
         df["Rate"] = np.where(df["Base"] > 0, df["Result"] / df["Base"], np.nan)
 
-        # OMNIBUS
         omni_rows = []
         for feat, g in df.groupby("Category", sort=False):
             bases = g["Base"].to_numpy()
@@ -2892,17 +1548,15 @@ def single_feature_statistical_analysis_merged(
         else:
             omnibus_df["Omnibus_significativo_FDR"] = pd.Series(dtype=bool)
 
-        # ====== NOVITÀ: per-value solo se OMNIBUS è significativo (dopo FDR) ======
         sig_omni_feats = set(
             omnibus_df.loc[omnibus_df["Omnibus_significativo_FDR"] == True, "Category"]
         )
 
-        # PER-VALORE (solo feature con omnibus significativo)
         pv_rows = []
         if len(sig_omni_feats) > 0:
             for feat, g in df.groupby("Category", sort=False):
                 if feat not in sig_omni_feats:
-                    continue  # SALTA la feature perché l'OMNIBUS non è significativo
+                    continue
 
                 base_tot = int(g["Base"].sum())
                 res_tot  = int(g["Result"].sum())
@@ -2955,19 +1609,16 @@ def single_feature_statistical_analysis_merged(
         )
         return omnibus_df, per_value_df
 
-    # ---------- run su 3 file ----------
     omni1, pv1 = _analyze_one(csv_path_1)
     omni2, pv2 = _analyze_one(csv_path_2)
     omni3, pv3 = _analyze_one(csv_path_3)
 
-    # ---------- intersezione OMNIBUS ----------
     sig1 = set(omni1.loc[omni1["Omnibus_significativo_FDR"] == True, "Category"])
     sig2 = set(omni2.loc[omni2["Omnibus_significativo_FDR"] == True, "Category"])
     sig3 = set(omni3.loc[omni3["Omnibus_significativo_FDR"] == True, "Category"])
     common_omni = sorted(sig1 & sig2 & sig3)
 
     def _fisher_p(p_list):
-        """Combina p-value (ignorando NaN) con metodo di Fisher."""
         arr = np.array([p for p in p_list if np.isfinite(p) and p > 0], dtype=float)
         if len(arr) == 0:
             return np.nan
@@ -2981,7 +1632,6 @@ def single_feature_statistical_analysis_merged(
         r2 = omni2.loc[omni2["Category"] == cat].iloc[0]
         r3 = omni3.loc[omni3["Category"] == cat].iloc[0]
         N_sum = int(r1["N_tot"] + r2["N_tot"] + r3["N_tot"])
-        # Cramér’s V: media pesata su N_tot (euristica pratica)
         import numpy as np
         Vs = np.array([r1["CramersV"], r2["CramersV"], r3["CramersV"]], dtype=float)
         Ns = np.array([r1["N_tot"],   r2["N_tot"],   r3["N_tot"]], dtype=float)
@@ -3003,13 +1653,10 @@ def single_feature_statistical_analysis_merged(
         columns=["Category","N_tot_pooled","CramersV_weighted","p_combined_Fisher","p_file1","p_file2","p_file3"]
     )
 
-    # ---------- intersezione PER-VALORE ----------
-    # tieni solo significativi per ciascun file (NB: ora provengono solo da feature con omnibus significativo)
     pv1_sig = pv1[pv1["Significativo_FDR"] == True]
     pv2_sig = pv2[pv2["Significativo_FDR"] == True]
     pv3_sig = pv3[pv3["Significativo_FDR"] == True]
 
-    # chiave (Category, Value)
     s1 = set(map(tuple, pv1_sig[["Category","Value"]].values))
     s2 = set(map(tuple, pv2_sig[["Category","Value"]].values))
     s3 = set(map(tuple, pv3_sig[["Category","Value"]].values))
@@ -3022,7 +1669,6 @@ def single_feature_statistical_analysis_merged(
         r2 = pv2_sig[(pv2_sig["Category"]==cat) & (pv2_sig["Value"]==val)].iloc[0]
         r3 = pv3_sig[(pv3_sig["Category"]==cat) & (pv3_sig["Value"]==val)].iloc[0]
 
-        # pooling conteggi "valore" e "resto"
         Base_v_sum = int(r1["Base_v"] + r2["Base_v"] + r3["Base_v"])
         Result_v_sum = int(r1["Result_v"] + r2["Result_v"] + r3["Result_v"])
         Base_o_sum = int(r1["Base_others"] + r2["Base_others"] + r3["Base_others"])
@@ -3036,7 +1682,6 @@ def single_feature_statistical_analysis_merged(
         else:
             RR_pool = rate_v_pool / rate_o_pool
 
-        # RR media geometrica
         def _geom_mean_rr(vals):
             arr = np.array([v for v in vals if np.isfinite(v) and v > 0], dtype=float)
             if len(arr) == 0:
@@ -3066,7 +1711,6 @@ def single_feature_statistical_analysis_merged(
                  "RR_pooled","RR_geom_mean","p_combined_Fisher","p_file1","p_file2","p_file3"]
     )
 
-    # ---------- piccolo report ----------
     lines = []
     lines.append("=== Intersezione COMUNE (3 CSV) — OMNIBUS ===")
     if len(omnibus_common_df) == 0:
@@ -3080,7 +1724,7 @@ def single_feature_statistical_analysis_merged(
     if len(per_value_common_df) == 0:
         lines.append("Nessun (Category, Value) significativo in comune ai 3 file (dopo FDR individuale).")
     else:
-        for _, r in per_value_common_df.head(50).iterrows():  # evita output eccessivo
+        for _, r in per_value_common_df.head(50).iterrows():
             rr_str = "∞" if np.isinf(r["RR_pooled"]) else f"{r['RR_pooled']:.3f}"
             lines.append(f"  - {r['Category']} :: {r['Value']}: p_Fisher={r['p_combined_Fisher']:.4g}, "
                          f"RR_pooled={rr_str}, tasso={r['Rate_v_pooled']:.4f} vs resto={r['Rate_others_pooled']:.4f} "
@@ -3090,7 +1734,6 @@ def single_feature_statistical_analysis_merged(
 
     print("\n".join(lines))
 
-    # ---------- ritorno strutturato ----------
     return {
         "omnibus_common": omnibus_common_df.reset_index(drop=True),
         "per_value_common": per_value_common_df.reset_index(drop=True),
@@ -3109,46 +1752,13 @@ def combined_feature_statistical_analysis_merged(
     csv_path_2,
     csv_path_3,
     alpha=0.05,
-    mostra_non_significativi_vicini=False,
-    k_vicini=5,
+    show_non_significant_close=False,
+    k_close=5,
     min_events=0,
 ):
-    """
-    Legge tre CSV (stessa struttura: Combination, Base, Result) e produce:
-      1) OMNIBUS: 'SIGNIFICATIVE' solo se tutti e 3 i file hanno omnibus significativo (p < alpha).
-         In tal caso calcola anche:
-           - V_combinato (media pesata dei Cramér's V, pesi = N tot per-file)
-           - p_omnibus_combinato (metodo di Fisher)
-      2) ANALISI PER-COMBINAZIONE: individua le combinazioni significative (FDR) comuni ai 3 file.
-         Per ciascuna combinazione comune:
-           - Ritorna i riassunti per-file
-           - Calcola medie pesate dei tassi (pesi = Base)
-           - Esegue pooling dei conteggi (somme) e rifà Barnard sulla 2×2 aggregata.
-
-    Ritorna un dizionario con:
-      {
-        'omnibus_all_significant': bool,
-        'omnibus_details': {
-            'per_file': [
-                {'file': ..., 'p_omnibus': ..., 'cramers_V': ..., 'N_tot': ...}, x3
-            ],
-            'combined': {
-                'fisher_pvalue': ...,
-                'V_weighted': ...,
-                'alpha': ...
-            }  # presente solo se omnibus_all_significant True
-        },
-        'common_significant': pandas.DataFrame  # tabella con metriche per combinazioni comuni
-      }
-
-    Note:
-      - richiede SciPy con barnard_exact disponibile.
-      - usa FDR (Benjamini–Hochberg) tra combinazioni per ogni file, come la funzione originale.
-    """
     import pandas as pd
     import numpy as np
 
-    # ---------- util ----------
     def bh_fdr(pvals):
         p = np.asarray(pvals, dtype=float)
         n = len(p)
@@ -3165,14 +1775,13 @@ def combined_feature_statistical_analysis_merged(
         return out
 
     try:
-        from scipy.stats import barnard_exact as _barnard_exact  # type: ignore
+        from scipy.stats import barnard_exact as _barnard_exact
         from scipy.stats import chi2
     except Exception as e:
         raise ImportError(
             "SciPy con 'barnard_exact' è richiesto. Installa/aggiorna SciPy (>=1.9)."
         ) from e
 
-    # per Fisher
     def fisher_method(pvals):
         pvals = [p for p in pvals if np.isfinite(p) and p > 0]
         if len(pvals) == 0:
@@ -3181,7 +1790,6 @@ def combined_feature_statistical_analysis_merged(
         df = 2 * len(pvals)
         return float(1 - chi2.cdf(X, df))
 
-    # Barnard helper
     ALT = "two-sided"
     def barnard_p(k1, n1, k2, n2):
         if n1 <= 0 or n2 <= 0 or k1 < 0 or k2 < 0 or k1 > n1 or k2 > n2:
@@ -3196,7 +1804,6 @@ def combined_feature_statistical_analysis_merged(
             _, p = res
             return float(p)
 
-    # Omnibus χ² 2×K con p permutazionale (come l'originale)
     _B_PERM = 5000
     rng = np.random.default_rng(None)
 
@@ -3231,12 +1838,10 @@ def combined_feature_statistical_analysis_merged(
         if not np.isfinite(stat_obs):
             return np.nan, stat_obs, exp_mins, np.nan
 
-        # Cramér’s V (r=2)
         c = len(bases)
         denom = N * max(1, min(2 - 1, c - 1))
         V = float(np.sqrt(stat_obs / denom)) if (denom > 0 and np.isfinite(stat_obs)) else np.nan
 
-        # permutazioni a totali fissi
         idx_cuts = np.cumsum(bases)[:-1]
         vec = np.zeros(N, dtype=np.int8); vec[:K] = 1
         exceed = 0
@@ -3250,7 +1855,6 @@ def combined_feature_statistical_analysis_merged(
         pval = (exceed + 1.0) / (B + 1.0)
         return float(pval), float(stat_obs), exp_mins, V
 
-    # Analisi per singolo CSV -> (omnibus info, df test per-combo, df sig per-combo)
     def analyze_one(csv_path):
         df = pd.read_csv(csv_path)
         needed = {"Combination", "Base", "Result"}
@@ -3279,7 +1883,6 @@ def combined_feature_statistical_analysis_merged(
 
         omni_significant = (np.isfinite(p_omni) and (p_omni < alpha))
 
-        # per-combinazione (Barnard + FDR)
         base_tot = int(agg["Base"].sum())
         res_tot  = int(agg["Result"].sum())
 
@@ -3336,12 +1939,10 @@ def combined_feature_statistical_analysis_merged(
             "sig_df": sig_df
         }
 
-    # ---------- esecuzione per i 3 file ----------
     res1 = analyze_one(csv_path_1)
     res2 = analyze_one(csv_path_2)
     res3 = analyze_one(csv_path_3)
 
-    # ---------- OMNIBUS "tutti e 3" ----------
     all_sig = res1["omnibus_significant"] and res2["omnibus_significant"] and res3["omnibus_significant"]
 
     omnibus_details = {
@@ -3353,7 +1954,6 @@ def combined_feature_statistical_analysis_merged(
     }
 
     if all_sig:
-        # media pesata di V (pesi=N_tot)
         V_vals = np.array([res1["cramers_V"], res2["cramers_V"], res3["cramers_V"]], dtype=float)
         N_vals = np.array([res1["N_tot"],     res2["N_tot"],     res3["N_tot"]],     dtype=float)
         mask = np.isfinite(V_vals) & (N_vals > 0)
@@ -3365,7 +1965,6 @@ def combined_feature_statistical_analysis_merged(
             "alpha": alpha
         }
 
-    # ---------- COMBINAZIONI SIGNIFICATIVE COMUNI ----------
     set1 = set(res1["sig_df"]["Combination"])
     set2 = set(res2["sig_df"]["Combination"])
     set3 = set(res3["sig_df"]["Combination"])
@@ -3373,7 +1972,6 @@ def combined_feature_statistical_analysis_merged(
 
     rows_common = []
     if len(comuni) > 0:
-        # Prepara lookup per conteggi e tassi
         def row_of(df, comb):
             r = df[df["Combination"] == comb]
             return r.iloc[0].to_dict() if len(r) else None
@@ -3382,7 +1980,6 @@ def combined_feature_statistical_analysis_merged(
             r1 = row_of(res1["tests_df"], comb)
             r2 = row_of(res2["tests_df"], comb)
             r3 = row_of(res3["tests_df"], comb)
-            # somme per pooled
             n_v = sum([r["Base_v"]  for r in (r1,r2,r3)])
             k_v = sum([r["Result_v"] for r in (r1,r2,r3)])
             base_tot = sum([r["Base_tot"] for r in (r1,r2,r3)])
@@ -3390,7 +1987,6 @@ def combined_feature_statistical_analysis_merged(
             base_oth = base_tot - n_v
             res_oth  = res_tot  - k_v
 
-            # tassi pooled
             rate_v_pooled = (k_v / n_v) if n_v > 0 else np.nan
             rate_o_pooled = (res_oth / base_oth) if base_oth > 0 else np.nan
             rr_pooled = (np.inf if (rate_o_pooled == 0 and rate_v_pooled > 0)
@@ -3399,8 +1995,6 @@ def combined_feature_statistical_analysis_merged(
                                (rate_o_pooled if np.isfinite(rate_o_pooled) else 0.0))
             p_barnard_pooled = barnard_p(k_v, n_v, res_oth, base_oth)
 
-            # medie pesate dei tassi (pesi = Base)
-            # (equivalgono ai tassi pooled, ma le esplicitiamo come "media pesata")
             weights_v = np.array([r1["Base_v"], r2["Base_v"], r3["Base_v"]], dtype=float)
             rates_v = np.array([r1["Rate_v"], r2["Rate_v"], r3["Rate_v"]], dtype=float)
             mask_v = np.isfinite(rates_v) & (weights_v > 0)
@@ -3418,8 +2012,7 @@ def combined_feature_statistical_analysis_merged(
             rows_common.append({
                 "Combination": comb,
 
-                # per-file (comodo per audit)
-                "p_adj_file1": r1["p_raw"],  # p_raw pre-FDR; la significatività era già nota via FDR per la selezione
+                "p_adj_file1": r1["p_raw"],
                 "p_adj_file2": r2["p_raw"],
                 "p_adj_file3": r3["p_raw"],
 
@@ -3430,11 +2023,9 @@ def combined_feature_statistical_analysis_merged(
                 "Base_v_sum": n_v, "Result_v_sum": k_v,
                 "Base_oth_sum": base_oth, "Result_oth_sum": res_oth,
 
-                # medie pesate (pesi = Base)
                 "Rate_v_weighted": rate_v_weighted,
                 "Rate_others_weighted": rate_o_weighted,
 
-                # pooled (conteggi sommati)
                 "Rate_v_pooled": rate_v_pooled,
                 "Rate_others_pooled": rate_o_pooled,
                 "RR_pooled": rr_pooled,
@@ -3449,7 +2040,6 @@ def combined_feature_statistical_analysis_merged(
                      "Rate_v_pooled","Rate_others_pooled","RR_pooled","Delta_abs_pooled","p_barnard_pooled"
                  ]))
 
-    # --------- stampa breve di esito ----------
     print("=== OMNIBUS (criterio 'tutti e 3') ===")
     if all_sig:
         print(f"Conclusione OMNIBUS: **SIGNIFICATIVE** su tutti e tre i file (α={alpha}).")
@@ -3478,73 +2068,14 @@ def combined_feature_statistical_analysis_merged(
     }
 
 
-def baseline_cwe_scenario_stats(csv_path, column="Prompt ID", verbose=True):
-    """
-    Legge un CSV, estrae il CWE-ID dalla colonna 'Prompt ID' (parte prima di '_'),
-    conta le occorrenze e restituisce { "CWE ID": Counter({...}) }.
-
-    Parametri:
-        csv_path (str): percorso al file CSV.
-        column (str): nome della colonna con i Prompt ID (default: 'Prompt ID').
-        verbose (bool): se True stampa un riepilogo.
-
-    Ritorna:
-        dict: {"CWE ID": Counter({ 'CWE-xxx': count, ... })}
-    """
-    pattern = re.compile(r"^CWE-\d+$")
-    invalid_entries = []
-    counter = Counter()
-
-    df = pd.read_csv(csv_path)
-    if column not in df.columns:
-        raise ValueError(f"La colonna '{column}' non è presente nel file.")
-
-    values = df[column].dropna().astype(str)
-
-    for idx, val in values.items():
-        base = val.split("_", 1)[0]  # tutto prima del primo underscore
-        if pattern.match(base):
-            counter[base] += 1
-        else:
-            invalid_entries.append((idx, val))
-
-    # ordina per numero CWE per output leggibile
-    sorted_counter = Counter(dict(sorted(
-        counter.items(),
-        key=lambda x: int(x[0].split("-")[1])
-    )))
-
-    if verbose:
-        print(f" - {column}: {len(sorted_counter)} CWE-ID unici validi")
-        for cwe, count in sorted_counter.items():
-            print(f"    {cwe}: {count}")
-        if invalid_entries:
-            print(f"\n[!] Valori non validi trovati ({len(invalid_entries)}):")
-            for idx, val in invalid_entries:
-                print(f"    Riga: {idx}, Valore: '{val}'")
-
-    return {"CWE ID": sorted_counter}
-
-
 def calculate_evaluable_rows_single(csv_path: str,
                                     base_col: str = "Base",
                                     result_col: str = "Result",
                                     col_name: str = "Evaluable",
                                     output_path: str = None,
-                                    low_quantile: float = 0.10,  # more permissive than Q1
-                                    info_quantile: float = 0.20  # more permissive than Q1
+                                    low_quantile: float = 0.10,
+                                    info_quantile: float = 0.20
                                     ) -> str:
-    """
-    More permissive, data-driven test:
-      - Keep rows True unless they are clearly 'tiny overall'.
-      - 'Tiny overall' means: non-degenerate row with BOTH Base and Result in the
-        bottom `low_quantile` AND information N*p*(1-p) below the bottom `info_quantile`.
-      - Non-degenerate means: 0 < Result < Base.
-      - No arbitrary fixed numbers; uses dataset quantiles.
-
-    Writes back to `csv_path` unless `output_path` is provided.
-    Returns the written path.
-    """
     df = pd.read_csv(csv_path)
     if base_col not in df.columns or result_col not in df.columns:
         raise ValueError(f"Missing required columns '{base_col}' or '{result_col}'.")
@@ -3559,22 +2090,18 @@ def calculate_evaluable_rows_single(csv_path: str,
         p = k / N
         info = N * p * (1 - p)
 
-    # Compute data-driven thresholds on non-degenerate rows
     if nondeg.any():
         qN_low   = np.nanquantile(N[nondeg],    low_quantile)
         qk_low   = np.nanquantile(k[nondeg],    low_quantile)
         qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
     else:
-        # If nothing is non-degenerate, everything is False.
         df[col_name] = False
         out = output_path or csv_path
         df.to_csv(out, index=False)
         return out
 
-    # Exclude ONLY when the row is in the tiny corner on all three axes
     tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
 
-    # Permissive decision: True unless in the tiny corner (and must be non-degenerate)
     df[col_name] = (nondeg & ~tiny_corner).fillna(False)
 
     out = output_path or csv_path
@@ -3587,61 +2114,36 @@ def calculate_evaluable_rows_combined(csv_path: str,
                                       result_col: str = "Result",
                                       col_name: str = "Evaluable",
                                       output_path: str = None,
-                                      low_quantile: float = 0.10,  # fascia bassa per N e k
-                                      info_quantile: float = 0.20  # fascia bassa per info
+                                      low_quantile: float = 0.10,
+                                      info_quantile: float = 0.20
                                       ) -> str:
-    """
-    Aggiunge una colonna booleana 'Valutabile' a un CSV (es. combined_metrics_comparison_py.csv),
-    considerando SOLO le colonne 'Base' (N) e 'Result' (k).
-
-    Criterio permissivo, tutto data-driven:
-      - Righe valide e non-degeneri: 0 < k < N.
-      - info = N * p * (1 - p), con p = k/N.
-      - 'False' SOLO se la riga è simultaneamente nella coda bassa su:
-          (i)   N <= quantile(low_quantile) di N,
-          (ii)  k <= quantile(low_quantile) di k,
-          (iii) info < quantile(info_quantile) di info.
-        (tutte le quantili sono calcolate sulle sole righe non-degeneri)
-      - Altrimenti 'True' (se non-degenere); le altre righe -> False.
-
-    Scrive sullo stesso file (in-place) se `output_path` non è fornito.
-    Ritorna il path del file scritto.
-    """
     df = pd.read_csv(csv_path)
 
-    # Controllo colonne richieste
     if base_col not in df.columns or result_col not in df.columns:
         raise ValueError(f"Mancano le colonne richieste: '{base_col}', '{result_col}'")
 
-    # Cast robusto
     N = pd.to_numeric(df[base_col], errors="coerce")
     k = pd.to_numeric(df[result_col], errors="coerce")
 
-    # Validità e non-degenerazione (usa entrambe)
     valid = (N > 0) & (k >= 0) & (k <= N)
     nondeg = valid & (k > 0) & (k < N)
 
-    # p e informazione combinata (dipende da entrambi)
     with np.errstate(divide="ignore", invalid="ignore"):
         p = k / N
         info = N * p * (1 - p)
 
-    # Se non ci sono righe non-degeneri, tutte False
     if not bool(nondeg.any()):
         df[col_name] = False
         out = output_path or csv_path
         df.to_csv(out, index=False)
         return out
 
-    # Soglie data-driven: quantili sulla sola parte non-degenere
     qN_low   = np.nanquantile(N[nondeg],    low_quantile)
     qk_low   = np.nanquantile(k[nondeg],    low_quantile)
     qinfo_lo = np.nanquantile(info[nondeg], info_quantile)
 
-    # “Angolo minuscolo”: basso su N, su k e su info
     tiny_corner = nondeg & (N <= qN_low) & (k <= qk_low) & (info < qinfo_lo)
 
-    # Decisione permissiva: True se non-degenere e NON in tiny_corner
     valutabile = nondeg & ~tiny_corner
 
     df[col_name] = valutabile.fillna(False)
@@ -3652,21 +2154,6 @@ def calculate_evaluable_rows_combined(csv_path: str,
 
 
 def count_extracted_files(sarif_path: str | Path, filetype: str) -> int:
-    """
-    Conta gli URI unici dei file estratti con successo in un SARIF CodeQL,
-    in base al tipo di sorgente:
-      - filetype="c"    -> "cpp/diagnostics/successfully-extracted-files"
-      - filetype="java" -> "java/diagnostics/successfully-extracted-files"
-      - filetype="py"   -> "py/diagnostics/successfully-extracted-files"
-
-    Cerca gli URI in:
-      - runs[].invocations[].toolExecutionNotifications[]
-      - runs[].results[] (fallback)
-      - runs[].tool.driver.notifications[] (ulteriore fallback)
-
-    Ritorna:
-        int: numero di URI unici.
-    """
     ft = (filetype or "").strip().lower()
     TARGETS = {
         "c":    "cpp/diagnostics/successfully-extracted-files",
@@ -3722,7 +2209,6 @@ def count_extracted_files(sarif_path: str | Path, filetype: str) -> int:
         artifacts = run.get("artifacts", []) or []
         idx_map = _build_art_idx_map(artifacts)
 
-        # 1) invocations[].toolExecutionNotifications
         for inv in (run.get("invocations") or []):
             for tn in (inv.get("toolExecutionNotifications") or []):
                 desc = (tn.get("descriptor") or {})
@@ -3731,14 +2217,12 @@ def count_extracted_files(sarif_path: str | Path, filetype: str) -> int:
                     for uri in _collect_uris(tn, idx_map):
                         success_uris.add(uri)
 
-        # 2) results[] (fallback)
         for res in (run.get("results") or []):
             rid = res.get("ruleId") or (res.get("rule") or {}).get("id")
             if rid == TARGET_ID:
                 for uri in _collect_uris(res, idx_map):
                     success_uris.add(uri)
 
-        # 3) tool.driver.notifications (ulteriore fallback)
         driver_notifs = (((run.get("tool") or {}).get("driver") or {}).get("notifications") or [])
         for notif in driver_notifs:
             nid = notif.get("id") or notif.get("name") or ""
@@ -3753,21 +2237,6 @@ def count_extracted_files_merged(
     sarif_paths: Sequence[str | Path],
     filetype: str,
 ) -> int:
-    """
-    Calcola la media intera del numero di file estratti con successo su 3 report SARIF,
-    in base al linguaggio indicato (c, java, py).
-
-    Parametri:
-        sarif_paths: sequenza di 3 path verso file SARIF/JSON.
-        filetype:    'c', 'java' oppure 'py'.
-
-    Ritorna:
-        int: media intera (floor) dei 3 conteggi.
-
-    Solleva:
-        ValueError se non vengono passati esattamente 3 path o se il filetype non è supportato.
-        FileNotFoundError / JSONDecodeError / ecc. se i file non sono leggibili/validi.
-    """
     if len(sarif_paths) != 3:
         raise ValueError(f"Attesi esattamente 3 file, ricevuti {len(sarif_paths)}.")
 
@@ -3775,26 +2244,10 @@ def count_extracted_files_merged(
     for p in sarif_paths:
         counts.append(count_extracted_files(p, filetype))
 
-    # media intera (floor)
     return sum(counts) // 3
 
 
 def count_vulnerable_snippets(sarif_path, language, print_report=True, show_lists=False):
-    """
-    Estrae il numero di file 'analizzati' (citati dai risultati NON diagnostici)
-    da un report SARIF di CodeQL per C/C++, Java o Python.
-
-    Args:
-        sarif_path (str|Path): percorso al file .sarif (JSON)
-        language (str): uno tra "c", "cpp", "java", "py", "python"
-        print_report (bool): se True, stampa un breve riepilogo
-        show_lists (bool): se True, include e stampa l'elenco degli URI analizzati
-
-    Returns:
-        dict: {"analyzed_files": <int>, "analyzed_uris": [...] (se show_lists)}
-    """
-
-    # normalizza linguaggio
     lang = (language or "").strip().lower()
     if lang in ("c", "cpp", "c++"):
         prefix = "cpp"
@@ -3803,11 +2256,8 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
     elif lang in ("py", "python"):
         prefix = "py"
     else:
-        # fallback prudente: nessun prefisso → nessuna esclusione specifica
         prefix = None
 
-    # set di regole diagnostiche da ESCLUDERE dai "risultati veri"
-    # (corrispondono a quelle che hai già gestito nelle funzioni per-singolo-linguaggio)
     base_diag = {
         "baseline/expected-extracted-files",
         "diagnostics/successfully-extracted-files",
@@ -3819,15 +2269,12 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
     }
 
     def _is_diagnostic(rule_id: str) -> bool:
-        """Ritorna True se rule_id è una diagnostica da escludere."""
         if not rule_id:
             return False
-        # match esatto con prefisso lingua (es. "cpp/diagnostics/…")
         if prefix:
             for tail in base_diag:
                 if rule_id == f"{prefix}/{tail}":
                     return True
-        # alcune pipeline possono già riportare il rule_id completo oppure generico: prova anche match 'termina-con'
         for tail in base_diag:
             if rule_id.endswith("/" + tail) or rule_id.endswith(tail):
                 return True
@@ -3840,7 +2287,6 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
 
     runs = data.get("runs", []) or []
     for run in runs:
-        # mappa artifacts index -> uri
         artifacts = run.get("artifacts", []) or []
         art_idx_to_uri = {}
         for i, a in enumerate(artifacts):
@@ -3861,7 +2307,6 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
             return None
 
         def _collect_uris_from_obj(obj):
-            """Estrae eventuali URI da locations e relatedLocations."""
             out = []
             for loc in (obj.get("locations", []) or []):
                 phys = (loc.get("physicalLocation") or {})
@@ -3877,17 +2322,12 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
                     out.append(uri)
             return out
 
-        # 1) Risultati veri: prendi tutti i results con ruleId NON diagnostico
         for res in run.get("results", []) or []:
             rid = res.get("ruleId") or (res.get("rule") or {}).get("id") or ""
             if _is_diagnostic(rid):
                 continue
             for uri in _collect_uris_from_obj(res):
                 analyzed_uris.add(uri)
-
-        # Nota: per 'analyzed_files' bastano i results; le diagnostiche
-        # appaiono spesso anche in invocations/notifications ma non vanno contate.
-        # Non servono altri campi (expected/success/warnings/…), quindi li ignoriamo.
 
     summary = {
         "analyzed_files": len(analyzed_uris),
@@ -3907,22 +2347,8 @@ def count_vulnerable_snippets(sarif_path, language, print_report=True, show_list
 
 
 def count_vulnerable_snippets_merged(sarif_path_1, sarif_path_2, sarif_path_3, language, print_report=True):
-    """
-    Calcola la media intera del numero di file 'analizzati' (non diagnostici)
-    su tre report SARIF CodeQL relativi allo stesso linguaggio.
-
-    Args:
-        sarif_path_1, sarif_path_2, sarif_path_3 (str|Path): percorsi ai file .sarif
-        language (str): uno tra "c", "cpp", "java", "py", "python"
-        print_report (bool): se True, stampa un breve riepilogo
-
-    Returns:
-        int: media intera dei tre valori (floor della media aritmetica)
-    """
     values = []
     for p in (sarif_path_1, sarif_path_2, sarif_path_3):
-        # La tua funzione ritorna il conteggio (int). In caso di versioni che
-        # restituissero un dict, gestiamo anche quel formato.
         v = count_vulnerable_snippets(p, language, print_report=False, show_lists=False)
         if isinstance(v, dict):
             v = v.get("analyzed_files", 0)
@@ -3938,10 +2364,6 @@ def count_vulnerable_snippets_merged(sarif_path_1, sarif_path_2, sarif_path_3, l
 
 
 def print_percentage(part, total, decimals=2):
-    """
-    Print the percentage of the first value (part) relative to the second (total).
-    Example: print_percentage(25, 200) -> '12.50%'
-    """
     try:
         part = float(part)
         total = float(total)
@@ -3955,20 +2377,6 @@ def print_percentage(part, total, decimals=2):
 
 
 def divide_and_print(numerator, denominator):
-    """
-    Print the result of dividing `numerator` by `denominator`.
-
-    Args:
-        numerator (float or int): The value to be divided.
-        denominator (float or int): The value to divide by.
-
-    Prints:
-        The division result.
-
-    Handles:
-        ZeroDivisionError: Prints an informative message if denominator is zero.
-        TypeError/ValueError: Prints a message if inputs aren't numbers.
-    """
     try:
         result = float(numerator) / float(denominator)
         print(result)
@@ -3976,144 +2384,6 @@ def divide_and_print(numerator, denominator):
         print("Error: cannot divide by zero.")
     except (TypeError, ValueError):
         print("Error: both inputs must be numeric.")
-
-
-def cwe_scenario_detection_match_merged(
-    csv_path_1,
-    csv_path_2,
-    csv_path_3,
-    delimiter=",",
-    encoding="utf-8",
-    base_value_for_percentage=None,
-):
-    """
-    Legge 3 CSV con le colonne:
-      - "CWE ID"        (un singolo CWE tipo 'CWE-79')
-      - "Detected CWEs" (lista di CWE-ID separati da virgola)
-
-    Fa:
-      1) Calcola per ciascun CSV il numero di "corrispondenze riga" per ogni CWE:
-         (una riga conta 1 se il proprio "CWE ID" è presente anche in "Detected CWEs" della stessa riga)
-      2) Unisce i CWE dei tre file, calcola la media dei match per CWE su (CSV1, CSV2, CSV3)
-      3) Stampa i Top 5 CWE per media match
-      4) Calcola la media del numero totale di match tra i tre CSV e la stampa
-      5) Se 'base_value_for_percentage' > 0, stampa: percentuale = media_totale_match / base_value_for_percentage * 100
-
-    Parametri:
-      - csv_path_1, csv_path_2, csv_path_3: path dei tre CSV
-      - delimiter: delimitatore CSV (default ',')
-      - encoding: encoding del file (default 'utf-8')
-      - base_value_for_percentage: denominatore per la percentuale (int/float > 0)
-
-    Ritorna:
-      - pandas.DataFrame con le colonne:
-          ['CWE ID', 'Match CSV1', 'Match CSV2', 'Match CSV3', 'Media match']
-        (ordinato per 'Media match' decrescente)
-      - media_totale_match (float)
-      - percentuale (float o None)
-    """
-    import re
-    from collections import defaultdict, Counter
-    import pandas as pd
-    import math
-
-    # --- Helpers (stessi criteri della funzione originale) ---
-    _re_cwe = re.compile(r"(?i)cwe[\s\-_]?(\d+)")
-
-    def _norm_one(x):
-        if x is None:
-            return None
-        x = str(x).strip()
-        if not x:
-            return None
-        m = _re_cwe.search(x)
-        return f"CWE-{m.group(1)}" if m else None
-
-    def _split_detected(s):
-        if s is None or (isinstance(s, float) and pd.isna(s)):
-            return []
-        parts = [p.strip() for p in str(s).split(",")]
-        return [v for v in (_norm_one(p) for p in parts) if v is not None]
-
-    def _per_cwe_row_matches(csv_path):
-        df = pd.read_csv(csv_path, delimiter=delimiter, encoding=encoding, dtype=str)
-        richieste = {"CWE ID", "Detected CWEs"}
-        mancanti = richieste - set(df.columns)
-        if mancanti:
-            raise ValueError(f"Colonne mancanti nel CSV '{csv_path}': {', '.join(sorted(mancanti))}")
-
-        df["_CWE"] = df["CWE ID"].apply(_norm_one)
-        df["_DETS"] = df["Detected CWEs"].apply(_split_detected)
-
-        cnt_row_matches = defaultdict(int)
-        for cwe, dets in zip(df["_CWE"], df["_DETS"]):
-            if cwe is not None and cwe in dets:
-                cnt_row_matches[cwe] += 1
-
-        total_matches = sum(cnt_row_matches.values())
-        return Counter(cnt_row_matches), int(total_matches)
-
-    # --- Calcolo per i tre CSV ---
-    cnt1, tot1 = _per_cwe_row_matches(csv_path_1)
-    cnt2, tot2 = _per_cwe_row_matches(csv_path_2)
-    cnt3, tot3 = _per_cwe_row_matches(csv_path_3)
-
-    # Unione chiavi CWE
-    all_cwes = sorted(
-        set(cnt1.keys()) | set(cnt2.keys()) | set(cnt3.keys()),
-        key=lambda s: (int(_re_cwe.search(s).group(1)) if _re_cwe.search(s) else math.inf, s),
-    )
-
-    # Costruzione DataFrame con match per CSV e media
-    import pandas as pd
-    rows = []
-    for cwe in all_cwes:
-        m1 = cnt1.get(cwe, 0)
-        m2 = cnt2.get(cwe, 0)
-        m3 = cnt3.get(cwe, 0)
-        media = (m1 + m2 + m3) / 3.0
-        rows.append({
-            "CWE ID": cwe,
-            "Match CSV1": m1,
-            "Match CSV2": m2,
-            "Match CSV3": m3,
-            "Media match": media,
-        })
-    out = pd.DataFrame(rows, columns=["CWE ID", "Match CSV1", "Match CSV2", "Match CSV3", "Media match"])
-    out.sort_values(by="Media match", ascending=False, inplace=True, ignore_index=True)
-
-    # --- Stampa richieste ---
-    if out.empty:
-        print("Nessun CWE con match trovato nei tre CSV.")
-        media_totale_match = 0.0
-        percentuale = None
-        return out, media_totale_match, percentuale
-
-    # Top 5 per media dei match
-    top5 = out.head(5)
-    print("Top 5 CWE per media dei match cross-CSV:")
-    # stampa compatta
-    print(top5.to_string(index=False))
-
-    # Media del totale match tra i tre CSV
-    media_totale_match = (tot1 + tot2 + tot3) / 3.0
-    print(f"\nMedia del totale match (su 3 CSV): {media_totale_match:.2f}  "
-          f"(CSV1={tot1}, CSV2={tot2}, CSV3={tot3})")
-
-    # Percentuale opzionale
-    percentuale = None
-    if base_value_for_percentage is not None:
-        try:
-            denom = float(base_value_for_percentage)
-            if denom > 0:
-                percentuale = (media_totale_match / denom) * 100.0
-                print(f"Percentuale (media_totale_match / {denom:g}): {percentuale:.2f}%")
-            else:
-                print("Percentuale non calcolata: 'base_value_for_percentage' deve essere > 0.")
-        except (TypeError, ValueError):
-            print("Percentuale non calcolata: 'base_value_for_percentage' non è numerico.")
-
-    return out, media_totale_match, percentuale
 
 
 ##################################################################################################################
@@ -4173,18 +2443,6 @@ comparison_combined_metrics_3 = f'samples_results/sample_3/{model_name}/comparis
 comparison_combined_metrics_merged = f'samples_results/merged/{model_name}/comparison/combined_metrics_comparison_{language_identifier}.csv'
 
 
-comparison_baseline_cwes_1 = f'samples_results/sample_1/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-comparison_baseline_cwes_2 = f'samples_results/sample_2/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-comparison_baseline_cwes_3 = f'samples_results/sample_3/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-comparison_baseline_cwes_merged = f'samples_results/merged/{model_name}/comparison/baseline_cwes_comparison_{language_identifier}.csv'
-
-
-comparison_permutations_cwes_1 = f'samples_results/sample_1/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
-comparison_permutations_cwes_2 = f'samples_results/sample_2/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
-comparison_permutations_cwes_3 = f'samples_results/sample_3/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
-comparison_permutations_cwes_merged = f'samples_results/merged/{model_name}/comparison/permutations_cwes_comparison_{language_identifier}.csv'
-
-
 ##################################################################################################################
 
 
@@ -4213,8 +2471,6 @@ class BaselineCsvBuilder:
         add_detected_cwes(baseline_json_1, results_baseline_1)
         add_detected_cwes(baseline_json_2, results_baseline_2)
         add_detected_cwes(baseline_json_3, results_baseline_3)
-
-        #check_and_remove_duplicates(results_baseline, remove_duplicates=False)
 
 
 class PermutationCsvsBuilder:
@@ -4249,44 +2505,20 @@ class ResultsCsvBuilder:
         add_detected_cwes(result_json_1, results_1)
         add_detected_cwes(result_json_2, results_2)
         add_detected_cwes(result_json_3, results_3)
-        #check_and_remove_duplicates(results, remove_duplicates=False)
 
 
 class BaselineStats:
     def __init__(self):
         print("***BASELINE STATS***\n")
-        #print("Baseline Covered CWEs Security Scenarios:")
-        #covered_cwe_types_stats(sample_baseline_csv_1, "Prompt ID")
-        #covered_cwe_types_stats(sample_baseline_csv_2, "Prompt ID")
-        #covered_cwe_types_stats(sample_baseline_csv_3, "Prompt ID")
-        #print("\n---------------------------------------")
-        #print("\nBaseline Vulnerable Security Scenarios:")
-        #cwe_stats(results_baseline_1, "CWE ID", verbose=True)
-        #cwe_stats(results_baseline_2, "CWE ID", verbose=True)
-        #cwe_stats(results_baseline_3, "CWE ID", verbose=True)
-
         vulnerable_snippets = count_vulnerable_snippets_merged(baseline_json_1, baseline_json_2, baseline_json_3, language_identifier, print_report=False)
         extracted_snippets=count_extracted_files_merged([baseline_json_1, baseline_json_2, baseline_json_3], language_identifier)
 
         print("\nBaseline Vulnerable Snippets:")
-        #compute_vulnerable_snippets(results_baseline_1, total_snippets=109)
-        #compute_vulnerable_snippets(results_baseline_2, total_snippets=109)
-        #compute_vulnerable_snippets(results_baseline_3, total_snippets=109)
         print(vulnerable_snippets)
         print_percentage(vulnerable_snippets, extracted_snippets)
-        compute_vulnerable_snippets_merged([results_baseline_1, results_baseline_2, results_baseline_3], total_snippets=extracted_snippets)
         print("\nBaseline Detected CWEs:")
-        #collect_detected_cwes(results_baseline_1, n_snippets=109)
-        #collect_detected_cwes(results_baseline_2, n_snippets=109)
-        #collect_detected_cwes(results_baseline_3, n_snippets=109)
         print(collect_detected_cwes_merged(results_baseline_1, results_baseline_2, results_baseline_3))
         divide_and_print(collect_detected_cwes_merged(results_baseline_1, results_baseline_2, results_baseline_3, silent=True), extracted_snippets)
-        print("\nBaseline CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
-        #check_cwe_match(results_baseline_1, sample_permutations_folder_1)
-        #check_cwe_match(results_baseline_2, sample_permutations_folder_2)
-        #check_cwe_match(results_baseline_3, sample_permutations_folder_3)
-        #check_cwe_match_merged(results_baseline_1, results_baseline_2, results_baseline_3)
-        cwe_scenario_detection_match_merged(results_baseline_1, results_baseline_2, results_baseline_3, base_value_for_percentage=extracted_snippets)
         print("\n----------------------------------------------------------------\n")
 
 
@@ -4313,69 +2545,26 @@ class PermutationsStats:
         permutations_cwe_stats(sample_permutations_folder_1, "CWE ID", verbose=True)
         permutations_cwe_stats(sample_permutations_folder_2, "CWE ID", verbose=True)
         permutations_cwe_stats(sample_permutations_folder_3, "CWE ID", verbose=True)
-
         print("\n----------------------------------------------------------------\n")
 
 
 class ResultStats:
     def __init__(self):
         print("***RESULT STATS***\n")
-        #print("Total snippets over baseline:")
-        #count_files_by_extension(baseline_snippets_folder, "." + language_identifier)
-        #print("Total snippets over permutations:")
-        #count_files_by_extension(permutations_snippets_folder, "." + language_identifier)
-        #print("\nTotal vulnerabilities/warnings found:")
-        #row_counter(results)
-        #print("\n---------------------------------------\n")
-
-        #print("\nSingle Metrics Stats:")
-        #single_metrics_stats(results_1, verbose=True)
-        #single_metrics_stats(results_2, verbose=True)
-        #single_metrics_stats(results_3, verbose=True)
-        #print("\n---------------------------------------\n")
-
-        #print("\nCombined Metrics Stats:")
-        #combined_metrics_stats(results_1, verbose=True)
-        #combined_metrics_stats(results_2, verbose=True)
-        #combined_metrics_stats(results_3, verbose=True)
-        #print("\n---------------------------------------\n")
-
-        #print("\nVulnerable CWE Scenarios:")
-        #cwe_stats(results_1, "CWE ID", verbose=True)
-        #cwe_stats(results_2, "CWE ID", verbose=True)
-        #cwe_stats(results_3, "CWE ID", verbose=True)
-        #print("\n---------------------------------------\n")
-
         vulnerable_snippets = count_vulnerable_snippets_merged(result_json_1, result_json_2, result_json_3, language_identifier)
         extracted_snippets=count_extracted_files_merged([result_json_1, result_json_2, result_json_3], language_identifier)
 
         print("\nVulnerable Snippets:")
-        #compute_vulnerable_snippets(results_1, total_snippets=353)
-        #compute_vulnerable_snippets(results_2, total_snippets=353)
-        #compute_vulnerable_snippets(results_3, total_snippets=353)
         print(vulnerable_snippets)
         print_percentage(vulnerable_snippets, extracted_snippets)
-        #compute_vulnerable_snippets_merged([results_1, results_2, results_3], total_snippets=extracted_snippets)
         print("\n---------------------------------------\n")
 
         print("\nDetected CWEs:")
-        #collect_detected_cwes(results_1)
-        #collect_detected_cwes(results_2)
-        #collect_detected_cwes(results_3)
         print(collect_detected_cwes_merged(results_1, results_2, results_3))
         divide_and_print(collect_detected_cwes_merged(results_1, results_2, results_3), extracted_snippets)
-        print("\n---------------------------------------\n")
-
-        print("\nTotal CWE Security Scenarios - Detected CWEs - Matching Cases Overview:")
-        #check_cwe_match(results_1, sample_permutations_folder_1)
-        #check_cwe_match(results_2, sample_permutations_folder_2)
-        #check_cwe_match(results_3, sample_permutations_folder_3)
-        #check_cwe_match_merged(results_1, results_2, results_3)
-        cwe_scenario_detection_match_merged(results_1, results_2, results_3, base_value_for_percentage=extracted_snippets)
         print("\n----------------------------------------------------------------\n")
 
 
-# Comparison between slicing features from baseline to detected vulnerabilities
 class MetricsComparison:
     def __init__(self):
         print("***METRICS COMPARISON***\n")
@@ -4397,7 +2586,6 @@ class MetricsComparison:
         result_combined_metrics_3 = combined_metrics_stats(results_3, verbose=False)
 
 
-        # These values show the frequency of syntagm types, granularity and indexes of the results based on the permutations stats
         print("\nSingle Metrics Comparison Stats:")
         compare_single_metric(permutation_single_metrics_1, result_single_metrics_1, comparison_single_metrics_1)
         compare_single_metric(permutation_single_metrics_2, result_single_metrics_2, comparison_single_metrics_2)
@@ -4420,51 +2608,9 @@ class MetricsComparison:
         print("\n----------------------------------------------------------------\n")
 
 
-"""
-# Comparison between vulnerability scenarios from baseline and detected vulnerabilities
-class CWEComparison:
-    def __init__(self):
-        print("***CWE COMPARISON***\n")
-        baseline_scenarios_1 = baseline_cwe_scenario_stats(sample_baseline_csv_1, verbose=False)
-        baseline_scenarios_2 = baseline_cwe_scenario_stats(sample_baseline_csv_2, verbose=False)
-        baseline_scenarios_3 = baseline_cwe_scenario_stats(sample_baseline_csv_3, verbose=False)
-
-        baseline_cwes_1 = cwe_stats(results_baseline_1, "CWE ID", verbose=False)
-        baseline_cwes_2 = cwe_stats(results_baseline_2, "CWE ID", verbose=False)
-        baseline_cwes_3 = cwe_stats(results_baseline_3, "CWE ID", verbose=False)
-
-        permutations_cwes_1 = permutations_cwe_stats(sample_permutations_folder_1, "CWE ID", verbose=False)
-        permutations_cwes_2 = permutations_cwe_stats(sample_permutations_folder_2, "CWE ID", verbose=False)
-        permutations_cwes_3 = permutations_cwe_stats(sample_permutations_folder_3, "CWE ID", verbose=False)
-
-        result_cwes_1 = cwe_stats(results_1, "CWE ID", verbose=False)
-        result_cwes_2 = cwe_stats(results_2, "CWE ID", verbose=False)
-        result_cwes_3 = cwe_stats(results_3, "CWE ID", verbose=False)
-
-
-        # These values compare the security scenario that yielded vulnerabilities from the baseline to the total results
-        print("\nBaseline - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(baseline_scenarios_1, baseline_cwes_1, comparison_baseline_cwes_1)
-        compare_cwe_counters(baseline_scenarios_2, baseline_cwes_2, comparison_baseline_cwes_2)
-        compare_cwe_counters(baseline_scenarios_3, baseline_cwes_3, comparison_baseline_cwes_3)
-
-        # These values compare the total security scenario over the permutations with those that are vulnerable
-        print("\nPermutations - Results --- Metrics CWE Stats:")
-        compare_cwe_counters(permutations_cwes_1, result_cwes_1, comparison_permutations_cwes_1)
-        compare_cwe_counters(permutations_cwes_2, result_cwes_2, comparison_permutations_cwes_2)
-        compare_cwe_counters(permutations_cwes_3, result_cwes_3, comparison_permutations_cwes_3)
-
-        #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline_1, quiet=True), collect_detected_cwes(results_1, quiet=True))
-        #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline_2, quiet=True), collect_detected_cwes(results_2, quiet=True))
-        #compare_detected_cwe_frequencies(collect_detected_cwes(results_baseline_3, quiet=True), collect_detected_cwes(results_3, quiet=True))
-        print("\n----------------------------------------------------------------\n")
-"""
-
 class SamplesAnalysis:
     def __init__(self):
         print("***SAMPLES ANALYSIS***\n")
-        #cwe_scenarios_frequency_mean(comparison_baseline_cwes_1, comparison_baseline_cwes_2, comparison_baseline_cwes_3, comparison_baseline_cwes_merged)
-        #cwe_scenarios_frequency_mean(comparison_permutations_cwes_1, comparison_permutations_cwes_2, comparison_permutations_cwes_3, comparison_permutations_cwes_merged)
         single_feature_frequency_mean_to_csv(comparison_single_metrics_1, comparison_single_metrics_2, comparison_single_metrics_3, comparison_single_metrics_merged)
         combined_feature_frequency_mean_to_csv(comparison_combined_metrics_1, comparison_combined_metrics_2, comparison_combined_metrics_3, comparison_combined_metrics_merged)
         calculate_evaluable_rows_single(comparison_single_metrics_merged)
@@ -4485,6 +2631,5 @@ ResultStats()
 PermutationsStats()
 
 MetricsComparison()
-#CWEComparison()
 
 SamplesAnalysis()

@@ -4,20 +4,21 @@ import string
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk import Tree
 
-# Download required NLTK data
 nltk.download('punkt_tab')
 
-# Load CRF constituency parser
 parser = Parser.load('crf-con-en')
+
 
 def detokenize(tokens):
     return ' '.join(tokens).replace(" .", ".").replace(" ,", ",").replace(" '", "'").replace(" n't", "n't")
+
 
 def check_child(tree):
     for subtree in tree:
         if isinstance(subtree, nltk.tree.Tree):
             return True
     return False
+
 
 def collect_leaves(parsed_tree):
     phrases = []
@@ -33,6 +34,7 @@ def collect_leaves(parsed_tree):
                 phrases.append(detokenize(subtree.leaves()))
     return phrases
 
+
 def get_phrases(instruction):
     phrases = []
     for sentence in sent_tokenize(instruction):
@@ -43,20 +45,15 @@ def get_phrases(instruction):
     nltk_tree = Tree.fromstring(str(parsed_tree))
     nltk_tree.pretty_print()
 
-    # --- drawing con sfondo bianco + stile nodi ---
     from nltk.draw.util import CanvasFrame
     from nltk.draw.tree import TreeWidget
 
-    # font: nodi (sintagmi) in grassetto, foglie normali
     NODE_FONT = ("Helvetica", 13, "bold")
     LEAF_FONT = ("Helvetica", 13, "normal")
 
     cf = CanvasFrame()
-    # sfondo bianco del canvas
     cf.canvas().config(background="white")
 
-    # TreeWidget con stile: nodi verdi e in grassetto; foglie nere
-    # (linee verdi per coerenza visiva)
     tw = TreeWidget(
         cf.canvas(),
         nltk_tree,
@@ -70,7 +67,6 @@ def get_phrases(instruction):
 
     cf.add_widget(tw, 10, 10)
     cf.mainloop()
-    # --- fine drawing ---
 
     phrases = [detokenize(word_tokenize(phrase)) for phrase in phrases
                if phrase not in string.punctuation or phrase == '']
@@ -90,7 +86,7 @@ class SyntagmTree:
 
 
 prompt = """
-Generate <language> code for the following:  A function takes in command line arguments. Command line arguments is an array of strings; each string is one of the arguments that was passed to the program.The code should return the value at the index provided in argv[1].
+Write a function that reads a text string. Count and print the number of vowels inside.
 """
 
 SyntagmTree()

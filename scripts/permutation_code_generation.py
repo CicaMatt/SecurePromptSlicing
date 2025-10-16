@@ -6,26 +6,22 @@ import time
 import re
 
 
-# === Settings ===
-LM_STUDIO_ENDPOINT = "http://localhost:1235/v1/chat/completions"  # Set to your LM Studio endpoint
+
+LM_STUDIO_ENDPOINT = "http://localhost:1235/v1/chat/completions"
 BASELINE_FILE = "LLMSecEvalDataset.csv"
-SLEEP_BETWEEN_REQUESTS = 1 #seconds
+SLEEP_BETWEEN_REQUESTS = 1
 
 DEFAULT_OUTPUT_FOLDER = "generated_code"
 DEFAULT_CSV_FILE = "syntactic_permutations.csv"
 
 
 
-# === Clean code block from model output ===
 def extract_code(text):
-    # Remove any markdown-style code fences (```), just keep raw code
     code = re.sub(r"```[a-z]*", "", text, flags=re.IGNORECASE).replace("```", "")
     return code.strip()
 
 
-# === LM Studio call ===
 def call_lmstudio(prompt):
-    # === Strict system prompt ===
     SYSTEM_PROMPT = system_prompt
 
     headers = {"Content-Type": "application/json"}
@@ -50,21 +46,11 @@ def call_lmstudio(prompt):
 
 
 def validate_snippets_and_csv(snippet_folder, csv_folder=None, snippet_amount=150):
-    """
-    Validates the consistency between a snippet folder and a corresponding CSV folder:
-    - If `snippet_folder` contains files directly, checks that there are exactly 150 visible files (ignores hidden files).
-    - If it contains subfolders, for each subfolder:
-        - Counts the number of visible snippet files inside it.
-        - Looks for a CSV file in `csv_folder` with the same name as the subfolder.
-        - Verifies that the number of data rows in the CSV (excluding the header) matches the number of snippet files.
-        - At the end, prints the number of subfolders analyzed and the total number of mismatches or missing elements.
-    """
     entries = [e for e in os.listdir(snippet_folder) if not e.startswith('.')]
     entry_paths = [os.path.join(snippet_folder, e) for e in entries]
     total_missing_or_mismatched = 0
 
     if all(os.path.isfile(p) for p in entry_paths):
-        # Case 1: folder contains snippets directly
         snippet_files = [p for p in entry_paths if os.path.isfile(p) and not os.path.basename(p).startswith('.')]
         if len(snippet_files) == snippet_amount:
             print(f"OK: Exactly {snippet_amount} snippet files found.")
@@ -72,7 +58,6 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None, snippet_amount=15
             print(f"ERROR: Expected {snippet_amount} snippet files, found {len(snippet_files)}.")
             total_missing_or_mismatched += abs(snippet_amount - len(snippet_files))
     else:
-        # Case 2: folder contains subfolders with snippets
         folder_count = 0
         for entry in entries:
             subfolder_path = os.path.join(snippet_folder, entry)
@@ -109,14 +94,6 @@ def validate_snippets_and_csv(snippet_folder, csv_folder=None, snippet_amount=15
         
 
 def count_wrong_extension(folder, target_extension):
-    """
-    Recursively counts visible files that do NOT have the specified extension,
-    and prints the different extensions found along with their counts.
-
-    :param folder: Path to the starting folder
-    :param target_extension: Extension to exclude (e.g., '.txt')
-    :return: Total number of files with a different extension
-    """
     if not target_extension.startswith('.'):
         target_extension = '.' + target_extension
     target_extension = target_extension.lower()
@@ -145,17 +122,6 @@ def count_wrong_extension(folder, target_extension):
 
 
 def count_empty_files(directory, extension):
-    """
-    Recursively analyzes a directory and counts the empty files
-    with a specific extension.
-
-    Args:
-        directory (str): The path of the directory to analyze.
-        extension (str): The file extension to consider (e.g., ".txt").
-
-    Returns:
-        int: The number of empty files found.
-    """
     count = 0
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -231,8 +197,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
             return lines[:last_idx + 1], True
         return lines, False
 
-    # --- PRE-CLEAN: HTML/comments/JSP/XML + dependencies { ... } ----------------
-
     def remove_html_blocks(lines):
         start_pat = re.compile(
             r'^\s*(?:<!DOCTYPE\s+html\b|<(?:html|head|body|div|section|article|main|header|footer|nav|aside|script|style|table|thead|tbody|tfoot|tr|td|th|ul|ol|li|pre|code)\b)',
@@ -274,7 +238,7 @@ def clean_snippets(base_path, extensions=None, remove=False):
                     if not force_until_html_end and not stack:
                         break
                     j += 1
-                i = j + 1  # drop whole HTML block
+                i = j + 1
             else:
                 new_lines.append(line)
                 i += 1
@@ -318,10 +282,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
         return text.splitlines(keepends=True)
 
     def remove_dependencies_blocks(lines):
-        """
-        Remove any `dependencies { ... }` block (Gradle/Groovy style) with nested braces.
-        Robust to //, /* */, and quoted strings.
-        """
         text = ''.join(lines)
 
         def is_word_boundary(ch):
@@ -336,7 +296,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
             while i < n:
                 ch = text[i]
 
-                # handle comment/string states
                 if in_sl_comment:
                     if ch == '\n': in_sl_comment = False
                     i += 1; continue
@@ -353,7 +312,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
                     if ch == '"': in_dquote = False
                     i += 1; continue
 
-                # enter comments/strings
                 if ch == '/' and i + 1 < n:
                     nxt = text[i+1]
                     if nxt == '/': in_sl_comment = True; i += 2; continue
@@ -361,18 +319,15 @@ def clean_snippets(base_path, extensions=None, remove=False):
                 if ch == "'": in_squote = True; i += 1; continue
                 if ch == '"': in_dquote = True; i += 1; continue
 
-                # look for "dependencies" as a word
                 if text[i:i+12].lower() == 'dependencies':
                     prev_ok = (i == 0) or is_word_boundary(text[i-1])
                     after = i + 12
                     next_ok = (after >= n) or is_word_boundary(text[after])
                     if prev_ok and next_ok:
-                        # skip whitespace/newlines to the next non-space
                         j = after
                         while j < n and text[j].isspace():
                             j += 1
                         if j < n and text[j] == '{':
-                            # scan for matching brace
                             k = j + 1
                             depth = 1
                             in_sl2 = in_ml2 = in_sq2 = in_dq2 = False
@@ -405,8 +360,7 @@ def clean_snippets(base_path, extensions=None, remove=False):
                                 elif c == '}': depth -= 1
                                 k += 1
 
-                            # remove the whole "dependencies { ... }" block
-                            text = text[:i] + text[k:]  # k is after the matching '}'
+                            text = text[:i] + text[k:]
                             found = True
                             break
 
@@ -417,7 +371,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
 
         return text.splitlines(keepends=True)
 
-    # ---------------- END PRE-CLEAN --------------------------------------------
 
     total_found = total_removed = files_changed = 0
 
@@ -431,7 +384,6 @@ def clean_snippets(base_path, extensions=None, remove=False):
 
                     original_lines = list(lines)
 
-                    # 🔴 apply all pre-cleans BEFORE any existing logic
                     lines = strip_html_comments(lines)
                     lines = strip_jsp_directives(lines)
                     lines = remove_specific_tag_blocks(lines, tag_names=('dependency',))
@@ -516,7 +468,6 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
     def remove_lines_starting_with_stars(lines):
         return [ln for ln in lines if not ln.lstrip().startswith("**")]
 
-    # ---------- Protezione triple-quoted (con prefissi r/f/br, ecc.) ----------
     _PREFIX1 = {'r','u','b','f','R','U','B','F'}
     _PREFIX2 = {a+b for a in 'rRuUbBfF' for b in 'rRuUbBfF'}
 
@@ -557,7 +508,6 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
         out.append(transform(text[pos:]))
         return ''.join(out)
 
-    # ---------------------- PRE-CLEAN (solo fuori dai TQS) ----------------------
     def strip_html_comments_text(t):
         return re.sub(r'<!--[\s\S]*?-->', '', t)
 
@@ -721,7 +671,6 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
             return t
         return _apply_outside_tqs(text, _chain)
 
-    # --------- NUOVO: taglia tutto dopo "if __name__ == '__main__': app.run(debug=True)" ---------
     _MAIN_RUN_RE = re.compile(
         r'''(?ms)
         ^[ \t]*if[ \t]+__name__[ \t]*==[ \t]*['"]__main__['"][ \t]*:\s*\r?\n
@@ -730,7 +679,6 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
     )
 
     def trim_after_main_app_run(text):
-        # evita match dentro triple-quoted strings
         spans = find_tqs_spans(text)
         def in_tqs(idx):
             for s, e in spans:
@@ -739,7 +687,6 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
             return False
 
         m = None
-        # troviamo il PRIMO match valido fuori dai TQS
         for candidate in _MAIN_RUN_RE.finditer(text):
             if not in_tqs(candidate.start()):
                 m = candidate
@@ -748,11 +695,9 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
             return text
 
         end = m.end()
-        # se c'è altra roba dopo, tronca lì
         if end < len(text):
             return text[:end]
         return text
-    # ---------------------------------------------------------------------------------------------
 
     total_found = total_removed = files_changed = 0
 
@@ -764,10 +709,7 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                         original_text = f.read()
 
-                    # 1) PRE-CLEAN fuori dai triple-quoted
                     text_after_preclean = preclean_text(original_text)
-
-                    # 2) Gestione snippet ### + rimozione righe "**"
                     lines = text_after_preclean.splitlines(keepends=True)
 
                     new_lines = []
@@ -806,11 +748,8 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
                     new_lines = remove_lines_starting_with_stars(new_lines)
                     removed_star_lines = before_len - len(new_lines)
 
-                    # 3) NUOVO TAGLIO: dopo il main/app.run(debug=True)
                     text_out = ''.join(new_lines)
                     text_out = trim_after_main_app_run(text_out)
-
-                    # niente trimming a base di parentesi
                     trimmed = False
 
                     changed = (text_out != original_text)
@@ -833,24 +772,14 @@ def clean_python_snippets(base_path, extensions=None, remove=False):
 
 
 def change_file_extensions(base_folder, correct_extension):
-    """
-    Recursively scans all non-hidden files in the given base_folder.
-    If a file does not have the correct extension, it renames it to have the correct one.
-
-    Args:
-        base_folder (str): Path to the folder to scan.
-        correct_extension (str): Desired file extension, e.g., '.txt'.
-    """
     if not correct_extension.startswith('.'):
         correct_extension = '.' + correct_extension
 
     for root, _, files in os.walk(base_folder):
-        # Skip hidden folders
         if any(part.startswith('.') for part in root.split(os.sep)):
             continue
 
         for filename in files:
-            # Skip hidden files
             if filename.startswith('.'):
                 continue
 
@@ -865,19 +794,8 @@ def change_file_extensions(base_folder, correct_extension):
 
 
 def count_files_with_extension(folder, extension):
-    """
-    Recursively counts all non-hidden files with a given extension within a folder.
-
-    Args:
-        folder (str): Path to the starting folder.
-        extension (str): File extension to look for (e.g., ".txt").
-
-    Returns:
-        int: Number of matching files.
-    """
     count = 0
     for root, dirs, files in os.walk(folder):
-        # Skip hidden directories
         dirs[:] = [d for d in dirs if not d.startswith('.')]
         for file in files:
             if not file.startswith('.') and file.endswith(extension):
@@ -887,24 +805,20 @@ def count_files_with_extension(folder, extension):
     return count
 
 
-
 ###################################################################################################################
-
 
 
 class BaselineCodeGeneration:
     def __init__(self):
         os.makedirs(baseline_folder, exist_ok=True)
-        # === Main processing ===
         with open(BASELINE_FILE, newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
                 prompt = row["Manually-fixed NL Prompt"]
 
-                # Sostituzione del placeholder <language> con "Python"
                 prompt = prompt.replace("<language>", language)
 
-                ext = extension  # Estensione di default
+                ext = extension
                 filename = f"code_row_{i + 1}{ext}"
                 filepath = os.path.join(baseline_folder, filename)
 
@@ -922,16 +836,14 @@ class BaselineCodeGeneration:
 class SampledBaselineCodeGeneration:
     def __init__(self):
         os.makedirs(samples_baseline_code, exist_ok=True)
-        # === Main processing ===
         with open(samples_baseline_csv, newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for i, row in enumerate(reader):
                 prompt = row["Manually-fixed NL Prompt"]
 
-                # Sostituzione del placeholder <language> con "Python"
                 prompt = prompt.replace("<language>", language)
 
-                ext = extension  # Estensione di default
+                ext = extension
                 filename = f"code_row_{i + 1}{ext}"
                 filepath = os.path.join(samples_baseline_code, filename)
 
@@ -945,46 +857,18 @@ class SampledBaselineCodeGeneration:
                 except Exception as e:
                     print(f"❌ Error generating code for row {i + 1}: {e}")
 
-"""
-class SinglePermutationCodeGeneration:
-    def __init__(self):
-        os.makedirs(DEFAULT_OUTPUT_FOLDER, exist_ok=True)
-        # === Main processing ===
-        with open(DEFAULT_CSV_FILE, newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for i, row in enumerate(reader):
-                prompt_template = row["Resulting Prompt"]
-                prompt = prompt_template.replace("<language>", language)
-                print(prompt)
-                ext = extension
-                filename = f"code_row_{i}{ext}"
-                filepath = os.path.join(DEFAULT_OUTPUT_FOLDER, filename)
-
-                try:
-                    print(f"▶️ Generating code for row {i}...")
-                    code = call_lmstudio(prompt)
-                    with open(filepath, "w", encoding="utf-8") as f:
-                        f.write(code)
-                    print(f"✅ Saved to {filepath}")
-                    time.sleep(SLEEP_BETWEEN_REQUESTS)
-                except Exception as e:
-                    print(f"❌ Error generating code for row {i}: {e}")
-"""
 
 class PermutationsCodeGeneration:
     def __init__(self, skip_existing=False):
         os.makedirs(result_folder, exist_ok=True)
-        # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(permutations_folder):
             if filename.endswith(".csv"):
                 csv_path = os.path.join(permutations_folder, filename)
                 csv_name_no_ext = os.path.splitext(filename)[0]
 
-                # Crea sottocartella di output
                 output_subfolder = os.path.join(result_folder, csv_name_no_ext)
                 os.makedirs(output_subfolder, exist_ok=True)
 
-                # Inizia la logica di elaborazione CSV qui
                 with open(csv_path, newline='', encoding='utf-8') as csvfile:
                     reader = csv.DictReader(csvfile)
                     for i, row in enumerate(reader):
@@ -995,7 +879,6 @@ class PermutationsCodeGeneration:
                         filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
 
-                        # Salta se già esiste e modalità attiva
                         if skip_existing and os.path.exists(filepath):
                             print(f"⏭️ Snippet già esistente: {filepath}, salto.")
                             continue
@@ -1014,17 +897,14 @@ class PermutationsCodeGeneration:
 class SampledPermutationsCodeGeneration:
     def __init__(self, skip_existing=False):
         os.makedirs(samples_permutations_folder, exist_ok=True)
-        # Itera su tutti i file CSV nella cartella di input
         for filename in os.listdir(samples_permutations_folder):
             if filename.endswith(".csv"):
                 csv_path = os.path.join(samples_permutations_folder, filename)
                 csv_name_no_ext = os.path.splitext(filename)[0]
 
-                # Crea sottocartella di output
                 output_subfolder = os.path.join(samples_permutations_code, csv_name_no_ext)
                 os.makedirs(output_subfolder, exist_ok=True)
 
-                # Inizia la logica di elaborazione CSV qui
                 with open(csv_path, newline='', encoding='utf-8') as csvfile:
                     reader = csv.DictReader(csvfile)
                     for i, row in enumerate(reader):
@@ -1035,7 +915,6 @@ class SampledPermutationsCodeGeneration:
                         filename_out = f"code_row_{i+1}{ext}"
                         filepath = os.path.join(output_subfolder, filename_out)
 
-                        # Salta se già esiste e modalità attiva
                         if skip_existing and os.path.exists(filepath):
                             print(f"⏭️ Snippet già esistente: {filepath}, salto.")
                             continue
@@ -1077,12 +956,16 @@ class Cleaning:
             clean_snippets(snippets_folder, extension, remove=True)
 
 
-model_identifier = "qwen2.5-coder-32b-instruct"
-#model_identifier = "athene-v2-chat"
-#model_identifier = "phi-4"
+###################################################################################################################
 
+
+model_identifier = "qwen2.5-coder-32b-instruct"
+#model_identifier = "phi-4"
+#model_identifier = "athene-v2-chat"
 
 model_name = "qwen"
+
+
 sample_folder_id = 1
 
 language = "C"
@@ -1108,22 +991,22 @@ system_prompt = f"""
 
 
 
-#BaselineCodeGeneration()
-#PermutationsCodeGeneration(skip_existing=True)
+BaselineCodeGeneration()
+PermutationsCodeGeneration(skip_existing=True)
 
-#IntegrityCheck(baseline_folder)
-#IntegrityCheck(result_folder, permutations_folder)
+IntegrityCheck(baseline_folder)
+IntegrityCheck(result_folder, permutations_folder)
 
-#Cleaning(baseline_folder)
-#Cleaning(result_folder)
+Cleaning(baseline_folder)
+Cleaning(result_folder)
 
 
 
-#SampledBaselineCodeGeneration()
-#SampledPermutationsCodeGeneration()
+SampledBaselineCodeGeneration()
+SampledPermutationsCodeGeneration()
 
-#IntegrityCheck(samples_baseline_code, snippet_amount=109)
-#IntegrityCheck(samples_permutations_code, samples_permutations_folder)
+IntegrityCheck(samples_baseline_code, snippet_amount=109)
+IntegrityCheck(samples_permutations_code, samples_permutations_folder)
 
-#Cleaning(samples_baseline_code)
-#Cleaning(samples_permutations_code)
+Cleaning(samples_baseline_code)
+Cleaning(samples_permutations_code)
