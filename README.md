@@ -1,56 +1,6 @@
 # The Language of Security: Prompt Language and Its Influence on the Security of LLM-Generated Code</h2>
 
 
-### Syntactical Parser: [_crf-con-en_ (SuPar)](https://parser.readthedocs.io/en/stable/models/const.html?highlight=crf%20con%20en#supar.models.const.CRFConstituencyModel)
-
-### Phrasing Standard: ([Penn Treebank II Standard](https://surdeanu.cs.arizona.edu/mihai/teaching/ista555-fall13/readings/PennTreebankConstituents.html))
-
-
-## CSV Labels Explanation
-
-### Results CSV Labels
-- **Name** — Vulnerability name (from CodeQL query)
-- **Description** — Vulnerability description (from CodeQL query)
-- **Severity** — Vulnerability severity
-- **Message** — Vulnerability message (from CodeQL query)
-- **Path** — Path of analyzed snippet
-- **StartLine** — Vulnerability start line
-- **StartColumn** — Vulnerability start column
-- **EndLine** — Vulnerability end line
-- **EndColumn** — Vulnerability end column
-- **Dataset ID** — ID of related prompt (based on LLMSecEval dataset)
-- **Prompt ID** — Prompt ID of related prompt (based on LLMSecEval dataset)
-- **CWE ID** — CWE-ID of considered vulnerability
-- **Sliced Prompt** — Sliced prompt used to produce the related snippet
-- **Original Sentence** — Original prompt
-- **Removed part** — Removed part from original prompt
-- **Sentence Index** — Index of the sentence from which the syntagm has been removed
-- **Syntagm Type** — Type of the removed syntagm from the original prompt
-- **Granularity** — Granularity of the removed syntagm
-- **Resulting prompt** — Resulting prompt from the slicing operation
-<br>
-### Single Metrics Comparison Labels
-- **Category** — Considered metric category
-- **Value** — Considered metric value
-- **Base** — Total values over permutation snippets
-- **Result** — Total values over vulnerable permutation snippets
-- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
-
-### Combined Metrics Comparison Labels
-- **Combination** — Considered combination of metrics
-- **Features** — Number of considered metrics
-- **Granularity** — Value of _Granularity_ metric
-- **Sentence Index** — Value of _Sentence Index_ metric
-- **Syntagm Type** — Value of _Syntagm Type_ metric
-- **Base** — Total values over permutation snippets
-- **Result** — Total values over vulnerable permutation snippets
-- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
-
-
-## CodeQL and queries version
-Code
-
-
 ## Repository Contents
 ### _LLMSecEvalDataset.csv_
 Baseline dataset used for the experiment
@@ -82,11 +32,11 @@ Contains all the csv files related to the results of the sample experimental run
 ### _scripts_
 Contains all the necessary scripts needed to perform the experiment:
 - _syntagm_tree_generation.py_: Prompt syntagm tree generation
-- _prompt_permutation_generation.py_: Generates all possible permutations out of a prompt and output a csv
+- _prompt_permutation_generation.py_: Generates all possible permutations out of a prompt set
 - _permutations_code_generation.py_: Generates snippets based on the available permutations
-- _security_analysis.py__: Code analysis for C, Java, Python through out compilation pipeline and CodeQL analysis process
+- _security_analysis.py__: Code analysis for C, Java, Python through out compilation pipeline and CodeQL analysis
 - _result_analysis.py_: Result analysis for the main experiment based on the CodeQL reports
-- _samples_analysis.py_: Result analysis for the main experiment based on the CodeQL reports
+- _samples_analysis.py_: Sample analysis for the main experiment based on the CodeQL reports
 
 <br><br>
 
@@ -222,7 +172,7 @@ werkzeug
 <br>
 
    
-### How to replicate
+## How to replicate
 
 To replicate the experiment, the following scripts must be run:
 - _prompt_permutation_generation.py_:\
@@ -236,10 +186,52 @@ Performs all the analysis steps for the main experiment, produces the result csv
 - _samples_analysis.py_:\
 Performs all the analysis steps for the sample experiment, produces the result csvs and prints the remaining information on console, based on the specified model and language (defined through the ___model_name_, _language_ and _language_id_ variables).
 
-   
+<br>
 
+## Useful Info
 
+### Syntactical Parser: [_crf-con-en_ (SuPar)](https://parser.readthedocs.io/en/stable/models/const.html?highlight=crf%20con%20en#supar.models.const.CRFConstituencyModel)
 
+### Phrasing Standard: ([Penn Treebank II Standard](https://surdeanu.cs.arizona.edu/mihai/teaching/ista555-fall13/readings/PennTreebankConstituents.html))
 
+<br>
 
+## CSV Labels Explanation
 
+### Results CSV Labels
+- **Name** — Vulnerability name (from CodeQL query)
+- **Description** — Vulnerability description (from CodeQL query)
+- **Severity** — Vulnerability severity
+- **Message** — Vulnerability message (from CodeQL query)
+- **Path** — Path of analyzed snippet
+- **StartLine** — Vulnerability start line
+- **StartColumn** — Vulnerability start column
+- **EndLine** — Vulnerability end line
+- **EndColumn** — Vulnerability end column
+- **Dataset ID** — ID of related prompt (based on LLMSecEval dataset)
+- **Prompt ID** — Prompt ID of related prompt (based on LLMSecEval dataset)
+- **CWE ID** — CWE-ID of considered vulnerability
+- **Sliced Prompt** — Sliced prompt used to produce the related snippet
+- **Original Sentence** — Original prompt
+- **Removed part** — Removed part from original prompt
+- **Sentence Index** — Index of the sentence from which the syntagm has been removed
+- **Syntagm Type** — Type of the removed syntagm from the original prompt
+- **Granularity** — Granularity of the removed syntagm
+- **Resulting prompt** — Resulting prompt from the slicing operation
+
+### Single Metrics Comparison Labels
+- **Category** — Considered metric category
+- **Value** — Considered metric value
+- **Base** — Total values over permutation snippets
+- **Result** — Total values over vulnerable permutation snippets
+- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
+
+### Combined Metrics Comparison Labels
+- **Combination** — Considered combination of metrics
+- **Features** — Number of considered metrics
+- **Granularity** — Value of _Granularity_ metric
+- **Sentence Index** — Value of _Sentence Index_ metric
+- **Syntagm Type** — Value of _Syntagm Type_ metric
+- **Base** — Total values over permutation snippets
+- **Result** — Total values over vulnerable permutation snippets
+- **Frequency** — Percentage of vulnerable permutation snippets over total permutation snippets
